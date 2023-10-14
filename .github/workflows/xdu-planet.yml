@@ -38,6 +38,6 @@ jobs:
     - name: Deploy
       uses: JamesIves/github-pages-deploy-action@releases/v3
       with:
-        REPOSITORY_NAME: xeonds/xdu-planet
+        REPOSITORY_NAME: xdlinux/planet
         BRANCH: web
         FOLDER: public
