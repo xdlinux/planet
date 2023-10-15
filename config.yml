@@ -2,9 +2,9 @@ version: 1
 feeds:
   - "https://xeonds.github.io/atom"
   - "https://www.superbart.xyz/index.xml"
-  - "https://holynia.github.io/atom"
   - "https://ray.al/feed"
   - "https://blog.woooo.tech/index.xml"
   - "https://blog.ksfu.top/atom.xml"
   - "http://blog.xiaobeo.top/index.php/feed/"
   - "https://canxin121.github.io/index.xml"
+  - "https://blog.frankli.site/atom.xml"
