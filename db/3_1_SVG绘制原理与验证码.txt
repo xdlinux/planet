@@ -1,0 +1,75 @@
+<html><head></head><body><p>SVG矢量图形拥有很多优点，例如体积小、清晰度不受缩放影响、支持广泛等等。我一直是个SVG<del>批</del>爱好者，致力于在各种地方用SVG替代位图，比如本文要介绍的验证码。</p>
+<h2 id="图像验证码">图像验证码</h2>
+<p>图像验证码是一种挑战-应答机制，通过在位图里渲染几个字母并加入很多干扰图像，来防止机器人填写表单。这种方式一般是由以下步骤组成的：</p>
+<ol>
+<li>生成随机字符串</li>
+<li>将字符串渲染到位图上</li>
+<li>将干扰图像渲染到位图上</li>
+<li>将位图发送到前端，服务器端存储对应的字符串答案</li>
+<li>用户填写答案，提交表单</li>
+<li>服务器端验证答案是否正确</li>
+</ol>
+<p>我们可以发现这种验证方式比较类似于hash，即过程是不可逆的，只能利用人眼的识别能力将字符串恢复出来，只通过机器的准确计算能力无法将耦合在一起的位图信息分离，这就是图像验证码的保护原理。但是近些年随着机器学习的发展，图像识别已经变成一个很轻松的匹配任务了，图像验证码的保护能力愈发下降。不过图像验证码在某些场景下还是有用的，比如你的服务器在一些和疯狗一样的保护措施之下，甚至无法访问外网，也无法接入第三方验证码提供商服务，这个时候只能通过图像验证码来提供一些简单的保护了（没错我还在给你电信息化处擦屁股）。</p>
+<h2 id="最开始的想法">最开始的想法</h2>
+<p>SVG是一种基于XML的矢量图形格式，其源文件就是一个纯文本文件，对于服务器端处理来说，SVG可比位图友好太多了（虽然客户端渲染下SVG性能远低于位图），所以我在想，能不能用SVG来代替位图实现验证码？</p>
+<p>我试着用Inkscape绘制了一点文字，然后发现在SVG中默认使用 <code>&lt;text&gt;</code> 标签渲染文字，这样就失去验证码的意义了，脚本只需要提取一下 <code>&lt;text&gt;</code> 标签的内容就能拿到验证码，很蠢。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-xml" data-lang="xml"><span class="line"><span class="cl"><span class="nt">&lt;svg</span> <span class="na">xmlns=</span><span class="s">&#34;http://www.w3.org/2000/svg&#34;</span> <span class="na">width=</span><span class="s">&#34;100&#34;</span> <span class="na">height=</span><span class="s">&#34;100&#34;</span> <span class="na">viewBox=</span><span class="s">&#34;0 0 100 100&#34;</span><span class="nt">&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&lt;text</span> <span class="na">x=</span><span class="s">&#34;0&#34;</span> <span class="na">y=</span><span class="s">&#34;50&#34;</span> <span class="na">font-size=</span><span class="s">&#34;50&#34;</span><span class="nt">&gt;</span>Hello World<span class="nt">&lt;/text&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="nt">&lt;/svg&gt;</span>
+</span></span></code></pre></div><p>即使使用多个标签分割文字并做混淆处理，也只是玩文字游戏罢了，机器处理的难度与性能损失远不及位图验证码。</p>
+<p>因此，想要实现SVG验证码，必须要使用另一些不依赖文本的绘制技术，并在此基础上将噪音与文本信息耦合起来，使得机器无法轻松分离这些信息，而人眼可以通过渲染出来的图像轻松识别。</p>
+<h2 id="svg-绘制原理">SVG 绘制原理</h2>
+<p>在SVG里除了 <code>&lt;text&gt;</code>、<code>&lt;circle&gt;</code>、<code>&lt;rect&gt;</code> 等绘制简单图形的标签，还有一个万能标签 <code>&lt;path&gt;</code>。<code>&lt;path&gt;</code> 标签可以通过一系列的指令来绘制任意复杂的图形，这些指令包括：</p>
+<ul>
+<li><code>M x y</code> 或者 <code>m dx dy</code>：移动到指定的坐标</li>
+<li><code>L x y</code> 或者 <code>l dx dy</code>：从当前坐标画一条直线到指定的坐标</li>
+<li><code>H x</code> 或者 <code>h dx</code>：从当前坐标画一条水平线到指定的x坐标</li>
+<li><code>V y</code> 或者 <code>V dy</code>：从当前坐标画一条垂直线到指定的y坐标</li>
+<li>… 等等</li>
+<li><code>Z</code> 或者 <code>z</code>：闭合路径</li>
+</ul>
+<p>在绘图的时候，SVG画布采用左上角为原点 <code>0, 0</code>，向右为x轴正方向，向下为y轴正方向。在上述四个指令里，大写指令意味着绝对坐标，小写指令意味着相对坐标。<code>M</code> 指令是用来移动画笔的，不会在画布上画出任何图形，而其余指令 <code>L H V</code> 以及有关贝塞尔曲线的一些指令会进行绘制。绘制完毕之后，画笔位置会停留在绘制完成的坐标上。</p>
+<p>比如，下面的代码会绘制一个三角形：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-xml" data-lang="xml"><span class="line"><span class="cl"><span class="nt">&lt;svg</span> <span class="na">xmlns=</span><span class="s">&#34;http://www.w3.org/2000/svg&#34;</span> <span class="na">width=</span><span class="s">&#34;100&#34;</span> <span class="na">height=</span><span class="s">&#34;100&#34;</span> <span class="na">viewBox=</span><span class="s">&#34;0 0 100 100&#34;</span><span class="nt">&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&lt;path</span> <span class="na">d=</span><span class="s">&#34;M 0 0 L 100 0 L 50 100 Z&#34;</span> <span class="nt">/&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="nt">&lt;/svg&gt;</span>
+</span></span></code></pre></div><p>上面的绘图指令先将画笔移动到 <code>0, 0</code>，然后向右侧画一条直线到 <code>100, 0</code>，再向左下方画一条直线到 <code>50, 100</code>，最后从当前点绘制一条直线回到 <code>M</code> 指令指定的起始点，闭合路径，这样就绘制出了一个三角形。</p>
+<p>上述SVG图形还可以用另一种相对坐标的方式来绘制：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-xml" data-lang="xml"><span class="line"><span class="cl"><span class="nt">&lt;svg</span> <span class="na">xmlns=</span><span class="s">&#34;http://www.w3.org/2000/svg&#34;</span> <span class="na">width=</span><span class="s">&#34;100&#34;</span> <span class="na">height=</span><span class="s">&#34;100&#34;</span> <span class="na">viewBox=</span><span class="s">&#34;0 0 100 100&#34;</span><span class="nt">&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&lt;path</span> <span class="na">d=</span><span class="s">&#34;M 0 0 l 100 0 l -50 100 z&#34;</span> <span class="nt">/&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="nt">&lt;/svg&gt;</span>
+</span></span></code></pre></div><p>这两种方式绘制出来的图形是完全一样的。</p>
+<h2 id="验证码的绘制">验证码的绘制</h2>
+<p>在绘制验证码时，我们会先生成一个随机字符串，然后将每个字符绘制到画布上。根据前面的说法，使用 <code>&lt;text&gt;</code> 标签是不行的，于是需要使用 <code>&lt;path&gt;</code> 标签来绘制每个字符。这需要一个SVG字库方便我们拼接文本。我搜了一圈，找到了<a href="https://gitlab.com/oskay/svg-fonts/" target="_blank" rel="noopener noreffer ">这个</a>（但其实用 Inkscape 的 <code>对象转路径</code> 功能手动处理一下系统字体也OK，我是懒狗），里面包括了一些字体，都被整理成 <code>&lt;glyph&gt;</code> 路径格式，看起来是能用的。但是实际准备使用的时候我发现这个字库里面的所有路径都采用绝对定位的方式进行绘制，这样在我们拼接的时候就需要去解析每条绘制指令，并使用矩阵变换将其转换到正确的位置上，这样会增加很多复杂度。</p>
+<p>这个时候我想到的第一个方法是通过 SVG 的 <code>transform</code> 来实现位置变换，这样就可以很方便的在不修改path的情况下将字母移动并渲染到任何位置，但很快我发现这条路并不可行。如果每个字符都采用transform来移动，那么就会造成一个后果：<strong>同一个字符的所有绘制指令是完全相同的</strong>。因此，脚本可以通过统计与全文匹配的方式，很轻松的破解出验证码。因此，想要实现SVG验证码，必须要想办法将随机噪音添加到每个字符的绘制指令中。为了实现这一点，我们还必须使用矩阵变换的方式来进行绘制，必要情况下还需要对某几条路径进行偏移。</p>
+<p>对于绝对坐标，所有点位都是相对于画布原点 <code>0, 0</code> 的，而相对坐标则是相对于上一个点的坐标。变换坐标位置时，平移只需要 <code>x&#39;, y&#39; = x + dx, y + dy</code>，旋转需要 <code>x&#39;, y&#39; = x * cosθ - y * sinθ, x * sinθ + y * cosθ</code>，缩放需要 <code>x&#39;, y&#39; = x * sx, y * sy</code>。</p>
+<p>如果字符采用绝对坐标绘制的话，需要确定一个临时原点，比如字符的字面框中心或者字面框左上角，省事的话也可以直接使用第一个<code>M</code>指令的点位。将所有点位都变换到由临时点位规定的坐标系后，再进行平移、旋转、缩放等操作，最后再将所有点位变换回原来的坐标系，这样就可以实现对字符的位置变换了。如果采用相对坐标绘制的话，情况可能会稍微发生变化。相对坐标的每一条指令坐标都是相对于上一个结束点位的，因此我们会发现平移操作下，只需要移动第一个<code>M</code>点位即可，其他点位根本不需要改动；而在旋转操作下，所有点位都需要进行变动；在缩放操作下所有点位也都需要改动。这样以来，相对坐标的变换方式就会损失一个随机噪音插入点，即平移位置。因此，实现SVG验证码时，我们需要将所有的字符采用绝对坐标绘制，这样才能够保证噪音能够更好的耦合进文本信息中。</p>
+<h2 id="更进一步地混淆">更进一步地混淆</h2>
+<p>上面的实现方式已经为文本信息添加了足够多的随机化，但是如果想在视觉上添加障碍，我们可能还需要加入一些随机噪音线条。然后我在实现的时候就发现了一个问题：噪音线条的的 <code>path</code> 相比字符的 <code>path</code> 会短很多很多，只要稍加过滤再渲染，然后再套个OCR什么的，破解难度大大降低。因此，我想了个更进一步的办法。</p>
+<p>在处理过程中，我们要把每条 <code>path</code> 中的所有 <code>command</code> 都提取出来，因此每个 <code>path</code> 都有一个 <code>command</code> 列表，我们可以把一个很长的 <code>path</code> 切成若干个很短的 <code>path</code>，并在每个 <code>path</code> 开头补齐相应的 <code>M</code> 指令，这样就可以将字符和噪音线条的 <code>path</code> 长度统一到一个很小的范围内，这样就可以防止长度过滤了。</p>
+<h2 id="具体实现">具体实现</h2>
+<p>戳这里：<a href="https://github.com/Reverier-Xu/biosvg" target="_blank" rel="noopener noreffer ">BioSVG - GitHub</a></p>
+<blockquote>
+<p>我很可爱，请给我star.jpg</p>
+</blockquote>
+<p>欢迎带伙对这个想法提出更进一步的issue和PR。</p>
+<p>以及这个crate我发布到<a href="https://crates.io/crates/biosvg" target="_blank" rel="noopener noreffer ">crates.io</a>上了，如果想要使用的话可以直接：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">cargo add biosvg
+</span></span></code></pre></div><p>使用起来很方便：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="kd">let</span><span class="w"> </span><span class="p">(</span><span class="n">answer</span><span class="p">,</span><span class="w"> </span><span class="n">svg</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">BiosvgBuilder</span>::<span class="n">new</span><span class="p">()</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">.</span><span class="n">length</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">.</span><span class="n">difficulty</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">.</span><span class="n">colors</span><span class="p">(</span><span class="fm">vec!</span><span class="p">[</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="s">&#34;#0078D6&#34;</span><span class="p">.</span><span class="n">to_string</span><span class="p">(),</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="s">&#34;#aa3333&#34;</span><span class="p">.</span><span class="n">to_string</span><span class="p">(),</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="s">&#34;#f08012&#34;</span><span class="p">.</span><span class="n">to_string</span><span class="p">(),</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="s">&#34;#33aa00&#34;</span><span class="p">.</span><span class="n">to_string</span><span class="p">(),</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="s">&#34;#aa33aa&#34;</span><span class="p">.</span><span class="n">to_string</span><span class="p">(),</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">])</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">.</span><span class="n">build</span><span class="p">()</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">.</span><span class="n">unwrap</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="fm">println!</span><span class="p">(</span><span class="s">&#34;answer: {}&#34;</span><span class="p">,</span><span class="w"> </span><span class="n">answer</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="fm">println!</span><span class="p">(</span><span class="s">&#34;svg: {}&#34;</span><span class="p">,</span><span class="w"> </span><span class="n">svg</span><span class="p">);</span><span class="w">
+</span></span></span></code></pre></div><p>颜色越多越好，请至少传入四种颜色。</p>
+<p>另外，由于SVG验证码最终的生成结果是透明背景色，因此请确保你选择的这一大堆颜色在你的网站背景色下都是能够轻松分辨的。</p>
+</body></html>
