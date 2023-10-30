@@ -1,0 +1,1 @@
+<html><head></head><body><p>TNND，终于到这里了Hello World什么经典开局程序样例[aweip@manjaro ~]$ mkdir bin; cd bin[aweip@manjaro ~]$ vim hello....</p></body></html>
