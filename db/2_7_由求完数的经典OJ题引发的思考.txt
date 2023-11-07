@@ -1,1 +1,0 @@
-<html><head></head><body><p>XD-OJ T30 标题: 完数 类别: 时间限制: 2 S 内存限制: 10000 Kb 问题描述: 请写一 […]</p></body></html>
