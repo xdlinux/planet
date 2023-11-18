@@ -1,0 +1,36 @@
+<html><head></head><body><p>一点记录，持续更新。</p>
+<h2 id="颜色主题遵循原生系统设置">颜色主题遵循原生系统设置</h2>
+<p>如果Web端有提供主题切换的话，默认主题应当遵循系统或者浏览器设置。</p>
+<p>可以使用以下js片段获取浏览器/系统默认主题：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="kr">const</span> <span class="nx">isDarkMode</span> <span class="o">=</span> <span class="nb">window</span><span class="p">.</span><span class="nx">matchMedia</span> <span class="o">&amp;&amp;</span> <span class="nb">window</span><span class="p">.</span><span class="nx">matchMedia</span><span class="p">(</span><span class="s1">&#39;(prefers-color-scheme: dark)&#39;</span><span class="p">).</span><span class="nx">matches</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">...</span>
+</span></span></code></pre></div><h2 id="语言统一">语言统一</h2>
+<p>应当提供完善的i18n支持，但是对于某些专有名词和惯用约定不要乱翻译。</p>
+<h2 id="区分已访问链接与未访问链接">区分已访问链接与未访问链接</h2>
+<p>很多时候为了让链接的原本颜色与主题背景颜色区分开，我们都会重新设定链接的显示颜色。但是设定的时候通常会忘掉将已访问链接与未访问链接做一个区分，这样会影响可访问性。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-css" data-lang="css"><span class="line"><span class="cl"><span class="nt">a</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="k">color</span><span class="p">:</span> <span class="mh">#0078D6</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nt">a</span><span class="p">:</span><span class="nd">visited</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="k">color</span><span class="p">:</span> <span class="kc">purple</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><h2 id="保证可交互元素的outline">保证可交互元素的outline</h2>
+<p>在使用键盘tab聚焦某个元素的时候，应当有outline或者其他的视觉变化标识这个元素被聚焦了。</p>
+<h2 id="内容页面需要具有独立的url">内容页面需要具有独立的URL</h2>
+<p>某些单页应用的多个页面切换不会更新URL，导致刷新或者将链接分享与他人的时候往往无法直接得到所需要的页面。</p>
+<h2 id="不应当有user-agent限制">不应当有User-Agent限制</h2>
+<p>实际上其他浏览器也能够正常浏览页面（骂的就是你，西电一站式服务大厅）。</p>
+<h2 id="对可交互元素改变鼠标指针">对可交互元素改变鼠标指针</h2>
+<p>而不是点到哪儿都是一个箭头。</p>
+<h2 id="不要使用js进行链接跳转">不要使用js进行链接跳转</h2>
+<p>浏览器支持悬浮预览URL，也支持中键在新标签页中打开等快速操作，不要到处搞<code>div</code>然后用js监听事件并重写<code>location</code>（骂的就是你，Bilibili）。</p>
+<h2 id="内容文本支持用户选择操作控件反之">内容文本支持用户选择，操作控件反之</h2>
+<p>对于展示内容的文本，要能够支持用户使用鼠标选中（骂的就是你，学习通）；对于操作控件而言，其文本支持鼠标选中后会使样式看起来奇奇怪怪。</p>
+<h2 id="将-submit-操作包含在-html-form-中">将 submit 操作包含在 HTML form 中</h2>
+<p>对于一些网页表单，应当把 “提交” 按钮包括在表单之中，这样就可以通过 Tab 进行切换，而不需要用户。</p>
+<p>在实现支持的情况下，可以在所有表单项均填写完毕时，支持回车直接提交表单。但是请不要在表单未填写完毕的时候支持回车提交，这样会很破坏用户的使用体验。</p>
+<h2 id="更多">更多……</h2>
+<p>还有什么想到的，以后再写吧。</p>
+</body></html>
