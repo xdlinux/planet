@@ -1,0 +1,1 @@
+<html><head></head><body><p>计组前半部分可看计组期中复习笔记。存储系统常用半导体存储器RAMSRAM （速度最快）DRAM → SDRAM → DDR SDRAM（DDR2、DDR3、DDR4、DDR5）ROM（虽然叫 R...</p></body></html>
