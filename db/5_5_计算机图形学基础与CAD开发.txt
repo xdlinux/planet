@@ -1,1 +1,0 @@
-<html><head></head><body><p>计算机图形学基础与CAD开发;This  program prints the ASCIIs(30-90) to the screen.(defun C:PASCII (/ as)       ...</p></body></html>
