@@ -1,0 +1,1 @@
+<html><head></head><body><p>今天听了节课，感觉这个应该会很有用。记下来以备后用。</p><p>公式本体：  |ecosθ|=|(λ-1)/(λ+1)|</p><p><img src="https://mxts.jiujiuer.xyz/blog/images/pasted-0.png" alt="焦点弦重要定理证明"/></p></body></html>
