@@ -1,7 +1,7 @@
 version: 1
 feeds:
   - "https://xeonds.github.io/atom"
-  - "https://www.superbart.xyz/index.xml"
+  - "https://www.superbart.top/index.xml"
   - "https://ray.al/feed"
   - "https://blog.woooo.tech/index.xml"
   - "https://blog.ksfu.top/atom.xml"
@@ -15,3 +15,4 @@ feeds:
   - "https://www.aweip.com/index.php/feed/"
   - "https://www.forestlee.top/atom.xml"
   - "https://www.indevn.com/index.xml"
+  - "https://xiue233.github.io/atom.xml"
