@@ -1,0 +1,1 @@
+<html><head></head><body><p>现象宝塔面板点击 Docker 菜单，提示 当前未安装 docker 或 docker-compose 未安装 。终端输入 docker -v 能正常看到 Docker 版本信息。重启或重装 D...</p></body></html>
