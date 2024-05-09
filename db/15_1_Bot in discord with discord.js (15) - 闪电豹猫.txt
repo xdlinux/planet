@@ -1,0 +1,1 @@
+<html><head></head><body>【摘要】Chapter 18 - 命令冷却时间 很多时候，我们不希望频道被单一用户用洪水般的命令消息所淹没，又或者出于对服务器性能的考虑，我们不得不为命令加上一个冷却时间（Cooldown）作为使用限制。下面我们来看看如何在我们已有的代码上进行改造，以获得命令冷却的效果。 <a href="https://www.cnblogs.com/hhzm/p/17300482.html" target="_blank">阅读全文</a></body></html>

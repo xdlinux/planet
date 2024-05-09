@@ -1,0 +1,1 @@
+<html><head></head><body>【摘要】Bot in discord with discrod.js  Chapter 17 - Reaction 反应 在 Discord 里，emoji 有两类，一种是跨平台、跨软件、跨设备都通用的 Unicode 标准 emoji，还有一种是 Discord 自定义 emoji。前者属于 unicode 标准，一个表情属于一个字符，后者则不属于 unicode 标准，只限在 Discord 平台里流通。 <a href="https://www.cnblogs.com/hhzm/p/17066472.html" target="_blank">阅读全文</a></body></html>
