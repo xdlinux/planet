@@ -20,4 +20,4 @@
 <li>注入成功后在QQ侧滑栏设置页面即可看到QAuxiliary选项，至此大功告成(๑•̀ㅂ•́)و✧</li>
 </ul>
 <h2 id="结语"><a href="http://wanglanhuajiaofen.fun/2024/04/29/QAuxiliary/#%E7%BB%93%E8%AF%AD" class="headerlink" title="结语"></a>结语</h2><p>我好喜欢开源w(ﾟДﾟ)w，虽然还只是一个刚刚接触的小趴菜Σ( ° △ °|||)︴<br/>伟大，无需多言Ψ(￣∀￣)Ψ！</p>
-</body></html>
+ </body></html>

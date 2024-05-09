@@ -122,4 +122,4 @@ echo -e &#34;export http_proxy=&lt;http://127.0.0.1:7890\nexport&gt; https_proxy
 <h1 id="小结"><a href="http://wanglanhuajiaofen.fun/2024/02/29/clash/#%E5%B0%8F%E7%BB%93" class="headerlink" title="小结"></a>小结</h1><p>ubuntu安装和配置clash确实是一个繁琐的过程，而网上的教程没有对一些问题的解决方案，我把自己在配置过程中遇到的问题写了出来，供大家参考!!!</p>
 <hr/>
 <!-- &lt;font face=&#34;逐浪新宋&#34; color=cyan size=10&gt;谢啦!!☆⌒(*＾-゜)v&lt;/font&gt; -->
-</body></html>
+ </body></html>
