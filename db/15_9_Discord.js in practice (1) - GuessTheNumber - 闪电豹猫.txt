@@ -1,3 +1,0 @@
-<html><head></head><body>【摘要】Discord.js in practice (1) - GuessTheNumber
-
-我们要完成一个机器人小游戏：猜数字。玩家猜的数字比正确答案大时，机器人回复：大了；小的时候同理。 <a href="https://www.cnblogs.com/hhzm/p/16508453.html" target="_blank">阅读全文</a></body></html>

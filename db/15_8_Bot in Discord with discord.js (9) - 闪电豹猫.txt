@@ -1,1 +1,0 @@
-<html><head></head><body>【摘要】Discord.js 交互组件之按钮的介绍，介绍了如何新建了按钮，按钮的样式，通过收集器确定按钮按下后的事件等。本文是系列文章（9）。 <a href="https://www.cnblogs.com/hhzm/p/16476082.html" target="_blank">阅读全文</a></body></html>

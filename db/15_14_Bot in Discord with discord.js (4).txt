@@ -1,0 +1,1 @@
+<html><head></head><body><p>这是一份非常详细和系统化的利用 NodeJS 进行 Discord bot 开发的教程，本文对slash command /斜杠命令、注册斜杠命令的方法、斜杠命令的服务端逻辑进行说明，并完成了 /ping 命令及其变体。</p></body></html>

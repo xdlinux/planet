@@ -1,1 +1,0 @@
-<html><head></head><body>【摘要】Chapter 19 - 命令本地化 本文编写时，项目已升级至 discord.js@v14.9.0。 本地化（Localization）是什么 本地化是指将软件或产品适应不同的语言、文化和地区的过程。 本地化可以帮助你的程序在全球范围内更好地接受和使用，从而提高用户体验和满意度。 本地化可以帮助你 <a href="https://www.cnblogs.com/hhzm/p/17301564.html" target="_blank">阅读全文</a></body></html>
