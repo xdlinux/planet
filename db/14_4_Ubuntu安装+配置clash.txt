@@ -1,1 +1,125 @@
-<html><head></head><body><h1 id="Ubuntu23-10安装clash全过程-各种问题解决方案"><a href="http://example.com/2024/02/29/clash/#Ubuntu23-10%E5%AE%89%E8%A3%85clash%E5%85%A8%E8%BF%87%E7%A8%8B-%E5%90%84%E7%A7%8D%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88" class="headerlink" title="Ubuntu23.10安装clash全过程(各种问题解决方案)"></a>Ubuntu23.10安装clash全过程(各种问题解决方案)</h1><!-- &lt;font face=&#34;逐浪新宋&#34; color=grey size=6&gt;该篇blog将详细描述自己在ubuntu系统下安装clash的过程和遇到的各种问题与bug_ o(￣ヘ￣o＃)&lt;/font&gt; --><hr/><h2 id="操作步骤"><a href="http://example.com/2024/02/29/clash/#%E6%93%8D%E4%BD%9C%E6%AD%A5%E9%AA%A4" class="headerlink" title="操作步骤"></a>操作步骤</h2><hr/><ul><li>安装clash包<ul><li><p>在终端中首先开启root权限</p><figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br/></pre></td><td class="code"><pre><span class="line">su</span><br/></pre></td></tr></tbody></table></figure></li><li><p>在当前用户目录中创建名为clash的文件夹（名字自取即可）然后切换到该目录</p><figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br/><span class="line">2</span><br/></pre></td><td class="code"><pre><span class="line">mkdir ./clash</span><br/><span class="line">cd ./clash</span><br/></pre></td></tr></tbody></table></figure></li><li><p>下载clash的几种方式(因为clash作者删库跑路了，所以无法从作者的仓库中下载)</p><ul><li><p>wget + 下载url</p>  <figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br/></pre></td><td class="code"><pre><span class="line">wget https://github.com/Dreamacro/clash/releases/download/v1.14.0/clash-linux-amd64-v1.14.0.gz</span><br/></pre></td></tr></tbody></table></figure></li><li><p>在ubuntu firefox浏览器找github备份仓库直接下载(考验你的网络(☆´益`)c)</p><ul><li>这里我直接贴备用仓库的url   <a href="https://github.com/doreamon-design/clash/releases" title="bushi">备用仓库</a></li><li>注意选择对应的版本<br/><img onerror="imgOnError(this);" data-fancybox="gallery" src="https://s2.loli.net/2024/02/29/76kTCNn4QjL5ehA.png" alt="这是我选的版本" data-caption="这是我选的版本" loading="lazy"/></li></ul></li><li><p>如果显示无法连接，则可能是系统代理的问题(对于我是这样(￣△￣；)),参考下面blog<br/> <a href="https://blog.csdn.net/kids_budong_c/article/details/123479499," title="bushi">这是解决大法!</a></p></li></ul></li></ul></li></ul><hr/><ul><li>解压clash包<br/>我下载的clash包的后缀是.tar.gz<br/>这里可能会遇到如下问题:<ul><li>解压后tar后缀还在<br/>解决方法:   <code>tar -zxvf 压缩文件名.tar.gz</code></li><li>大部分教程给的都是gzip解压，这个方式对我不适用</li></ul></li></ul><hr/><ul><li><p>赋予权限</p>  <figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br/></pre></td><td class="code"><pre><span class="line">chmod +x 解压缩后的文件名</span><br/></pre></td></tr></tbody></table></figure></li></ul><hr/><ul><li><p>移动</p> <figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br/></pre></td><td class="code"><pre><span class="line">mv 解压缩后的文件名 /usr/local/bin/clash</span><br/></pre></td></tr></tbody></table></figure></li></ul><hr/><ul><li><p>查看版本</p><figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br/></pre></td><td class="code"><pre><span class="line">clash -v</span><br/></pre></td></tr></tbody></table></figure><ul><li>如果这一步报错：无法执行二进制文件，那就是大概你下载的clash包有问题，我的解决方法是用上述第二种方式o(*≧▽≦)ツ┏━┓</li></ul><p>如果没有报错，正常显示出了clash版本号，那么到目前为止都非常顺利的成功了( ￣ー￣)人(^▽^ )</p></li></ul><hr/><ul><li>启动clash<ul><li><p>启动clash</p><figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br/></pre></td><td class="code"><pre><span class="line">clash</span><br/></pre></td></tr></tbody></table></figure><p>这一步会显示系统缺失有些配置文件，自动会给你下载好</p></li><li><p>导入配置文件(配置文件获取方式不再赘述)<br/>配置文件所在目录:</p><figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br/></pre></td><td class="code"><pre><span class="line">$home/.config/clash/</span><br/></pre></td></tr></tbody></table></figure><p>.config为隐藏文件夹，对于不熟悉终端的小伙伴在图形界面的文件夹按下CTRL+H即可<br/>将获得的配置文件改名为config.yaml替换上述目录中的config.yaml即可</p></li><li><p>重新启动clash</p><figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br/></pre></td><td class="code"><pre><span class="line">clash</span><br/></pre></td></tr></tbody></table></figure><p>此时会显示出你的订阅的相关信息，即表示成功<br/><strong>在启动clash的条件下，访问以下链接可以进入clash图形控制页面</strong><br/><a href="https://clash.razord.top/#/proxies" title="就是我啦Σ(っ °Д °;)っ">clash图形控制页面</a></p></li></ul></li></ul><hr/><ul><li>Ubuntu系统网络代理设置<br/><img onerror="imgOnError(this);" data-fancybox="gallery" src="https://s2.loli.net/2024/02/29/8INVmetSdK9gRWk.png" alt="Alt text" data-caption="Alt text" loading="lazy"/><br/>这里我遇到一个问题是，我成功连接了梯子之后仍然翻不了墙，就一直在调这个代理设置，最终在按照上图输入之后可以了 <strong>但是我不知道是不是因为这个原因才成功的Ｏ(≧口≦)Ｏ</strong></li></ul><hr/><ul><li>设置开机自启<ul><li><p>复制以下片段</p> <figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br/><span class="line">2</span><br/><span class="line">3</span><br/><span class="line">4</span><br/><span class="line">5</span><br/><span class="line">6</span><br/><span class="line">7</span><br/><span class="line">8</span><br/><span class="line">9</span><br/><span class="line">10</span><br/></pre></td><td class="code"><pre><span class="line">Description=Clash - A rule-based tunnel in Go</span><br/><span class="line">Documentation=https://github.com/Dreamacro/clash/wiki</span><br/><span class="line">[Service]</span><br/><span class="line">OOMScoreAdjust=-1000</span><br/><span class="line">ExecStart=/usr/local/bin/clash -f /home/rongrong/.config/clash/config.yaml # 注意这里要根据自己的配置路径进行相应的修改</span><br/><span class="line">Restart=on-failure</span><br/><span class="line">RestartSec=5</span><br/><span class="line">[Install]</span><br/><span class="line">WantedBy=multi-user.target</span><br/><span class="line"></span><br/></pre></td></tr></tbody></table></figure></li><li><p>依次输入以下命令即可</p> <figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br/><span class="line">2</span><br/><span class="line">3</span><br/><span class="line">4</span><br/></pre></td><td class="code"><pre><span class="line"></span><br/><span class="line">systemctl enable clash</span><br/><span class="line">systemctl start clash</span><br/><span class="line">echo -e &#34;export http_proxy=&lt;http://127.0.0.1:7890\nexport&gt; https_proxy=&lt;http://127.0.0.1:7890&gt;&#34; &gt;&gt; ~/.bashrc</span><br/></pre></td></tr></tbody></table></figure></li></ul></li></ul><hr/><h1 id="小结"><a href="http://example.com/2024/02/29/clash/#%E5%B0%8F%E7%BB%93" class="headerlink" title="小结"></a>小结</h1><p>ubuntu安装和配置clash确实是一个繁琐的过程，而网上的教程没有对一些问题的解决方案，我把自己在配置过程中遇到的问题写了出来，供大家参考!!!</p><hr/><!-- &lt;font face=&#34;逐浪新宋&#34; color=cyan size=10&gt;谢啦!!☆⌒(*＾-゜)v&lt;/font&gt; --></body></html>
+<html><head></head><body><h1 id="Ubuntu23-10安装clash全过程-各种问题解决方案"><a href="http://wanglanhuajiaofen.fun/2024/02/29/clash/#Ubuntu23-10%E5%AE%89%E8%A3%85clash%E5%85%A8%E8%BF%87%E7%A8%8B-%E5%90%84%E7%A7%8D%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88" class="headerlink" title="Ubuntu23.10安装clash全过程(各种问题解决方案)"></a>Ubuntu23.10安装clash全过程(各种问题解决方案)</h1><!-- &lt;font face=&#34;逐浪新宋&#34; color=grey size=6&gt;该篇blog将详细描述自己在ubuntu系统下安装clash的过程和遇到的各种问题与bug_ o(￣ヘ￣o＃)&lt;/font&gt; -->
+
+<hr/>
+<h2 id="操作步骤"><a href="http://wanglanhuajiaofen.fun/2024/02/29/clash/#%E6%93%8D%E4%BD%9C%E6%AD%A5%E9%AA%A4" class="headerlink" title="操作步骤"></a>操作步骤</h2><hr/>
+<ul>
+<li>安装clash包<ul>
+<li><p>在终端中首先开启root权限</p>
+<pre><code class="linux">su
+</code></pre>
+</li>
+</ul>
+</li>
+</ul>
+<span id="more"></span>
+<ul>
+<li><p>在当前用户目录中创建名为clash的文件夹（名字自取即可）然后切换到该目录</p>
+<pre><code class="linux">mkdir ./clash
+cd ./clash
+</code></pre>
+</li>
+<li><p>下载clash的几种方式(因为clash作者删库跑路了，所以无法从作者的仓库中下载)</p>
+<ul>
+<li><p>wget + 下载url</p>
+<pre><code>wget https://github.com/Dreamacro/clash/releases/download/v1.14.0/clash-linux-amd64-v1.14.0.gz
+</code></pre>
+</li>
+<li><p>在ubuntu firefox浏览器找github备份仓库直接下载(考验你的网络(☆´益`)c)</p>
+<ul>
+<li>这里我直接贴备用仓库的url   <a href="https://github.com/doreamon-design/clash/releases" title="bushi">备用仓库</a></li>
+<li>注意选择对应的版本<br/><img src="https://s2.loli.net/2024/02/29/76kTCNn4QjL5ehA.png" alt="这是我选的版本" title="myversion"/></li>
+</ul>
+</li>
+<li><p>如果显示无法连接，则可能是系统代理的问题(对于我是这样(￣△￣；)),参考下面blog<br/> <a href="https://blog.csdn.net/kids_budong_c/article/details/123479499," title="bushi">这是解决大法!</a></p>
+</li>
+</ul>
+</li>
+</ul>
+<hr/>
+<ul>
+<li>解压clash包<br/>我下载的clash包的后缀是.tar.gz<br/>这里可能会遇到如下问题:<ul>
+<li>解压后tar后缀还在<br/>解决方法:   <code>tar -zxvf 压缩文件名.tar.gz</code></li>
+<li>大部分教程给的都是gzip解压，这个方式对我不适用</li>
+</ul>
+</li>
+</ul>
+<hr/>
+<ul>
+<li><p>赋予权限</p>
+<pre><code class="linux">chmod +x 解压缩后的文件名
+</code></pre>
+</li>
+</ul>
+<hr/>
+<ul>
+<li><p>移动</p>
+<pre><code class="linux"> mv 解压缩后的文件名 /usr/local/bin/clash
+</code></pre>
+</li>
+</ul>
+<hr/>
+<ul>
+<li><p>查看版本</p>
+<pre><code class="linux">clash -v
+</code></pre>
+<ul>
+<li>如果这一步报错：无法执行二进制文件，那就是大概你下载的clash包有问题，我的解决方法是用上述第二种方式o(*≧▽≦)ツ┏━┓</li>
+</ul>
+<p>如果没有报错，正常显示出了clash版本号，那么到目前为止都非常顺利的成功了( ￣ー￣)人(^▽^ )</p>
+</li>
+</ul>
+<hr/>
+<ul>
+<li>启动clash<ul>
+<li><p>启动clash</p>
+<pre><code>clash
+</code></pre>
+<p>这一步会显示系统缺失有些配置文件，自动会给你下载好</p>
+</li>
+<li><p>导入配置文件(配置文件获取方式不再赘述)<br/>配置文件所在目录:</p>
+<pre><code>$home/.config/clash/
+</code></pre>
+<p>.config为隐藏文件夹，对于不熟悉终端的小伙伴在图形界面的文件夹按下CTRL+H即可<br/>将获得的配置文件改名为config.yaml替换上述目录中的config.yaml即可</p>
+</li>
+<li><p>重新启动clash</p>
+<pre><code>clash
+</code></pre>
+<p>此时会显示出你的订阅的相关信息，即表示成功<br/><strong>在启动clash的条件下，访问以下链接可以进入clash图形控制页面</strong><br/><a href="https://clash.razord.top/#/proxies" title="就是我啦Σ(っ °Д °;)っ">clash图形控制页面</a></p>
+</li>
+</ul>
+</li>
+</ul>
+<hr/>
+<ul>
+<li>Ubuntu系统网络代理设置<br/><img src="https://s2.loli.net/2024/02/29/8INVmetSdK9gRWk.png" alt="Alt text"/><br/>这里我遇到一个问题是，我成功连接了梯子之后仍然翻不了墙，就一直在调这个代理设置，最终在按照上图输入之后可以了 <strong>但是我不知道是不是因为这个原因才成功的Ｏ(≧口≦)Ｏ</strong></li>
+</ul>
+<hr/>
+<ul>
+<li>设置开机自启<ul>
+<li><p>复制以下片段</p>
+<pre><code>Description=Clash - A rule-based tunnel in Go
+Documentation=https://github.com/Dreamacro/clash/wiki
+[Service]
+OOMScoreAdjust=-1000
+ExecStart=/usr/local/bin/clash -f /home/rongrong/.config/clash/config.yaml # 注意这里要根据自己的配置路径进行相应的修改
+Restart=on-failure
+RestartSec=5
+[Install]
+WantedBy=multi-user.target
+</code></pre>
+</li>
+<li><p>依次输入以下命令即可</p>
+<pre><code>
+systemctl enable clash
+systemctl start clash
+echo -e &#34;export http_proxy=&lt;http://127.0.0.1:7890\nexport&gt; https_proxy=&lt;http://127.0.0.1:7890&gt;&#34; &gt;&gt; ~/.bashrc
+</code></pre>
+</li>
+</ul>
+</li>
+</ul>
+<hr/>
+<h1 id="小结"><a href="http://wanglanhuajiaofen.fun/2024/02/29/clash/#%E5%B0%8F%E7%BB%93" class="headerlink" title="小结"></a>小结</h1><p>ubuntu安装和配置clash确实是一个繁琐的过程，而网上的教程没有对一些问题的解决方案，我把自己在配置过程中遇到的问题写了出来，供大家参考!!!</p>
+<hr/>
+<!-- &lt;font face=&#34;逐浪新宋&#34; color=cyan size=10&gt;谢啦!!☆⌒(*＾-゜)v&lt;/font&gt; -->
+</body></html>
