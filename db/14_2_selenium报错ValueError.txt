@@ -1,8 +1,8 @@
 <html><head></head><body><h1 id="Selenium-报错ValueError解决"><a href="http://wanglanhuajiaofen.fun/2024/03/24/selenium/#Selenium-%E6%8A%A5%E9%94%99ValueError%E8%A7%A3%E5%86%B3" class="headerlink" title="Selenium 报错ValueError解决"></a>Selenium 报错ValueError解决</h1><ul>
 <li><p>错误<br/>  在python中使用selenium进行网页自动化/爬虫操作时，执行下面语句</p>
-<pre><code class="python">from selenium import webdriver
-driver = webdriver.Edge()
-</code></pre>
+  <pre><code class="hljs python"><span class="hljs-keyword">from</span> selenium <span class="hljs-keyword">import</span> webdriver
+driver = webdriver.Edge()</code></pre>
+
 <p>  可能会报错：ValueError: Timeout value connect was ……, but it must be an int, float or None…..(/- -)/</p>
 </li>
 </ul>
@@ -11,9 +11,7 @@ driver = webdriver.Edge()
 <li><p>原因<br/>出错原因：selenium当前版本与urllib3版本不兼容╮（﹀_﹀）╭</p>
 </li>
 <li><p>解决方法<br/>只需要更新为最新版本的selenium与urllib3即可Σ( ° △ °|||)︴</p>
-<pre><code class="python">pip install -U selenimu
-pip install -U urllib3
-</code></pre>
-</li>
+<pre><code class="hljs python">pip install -U selenimu
+pip install -U urllib3</code></pre></li>
 </ul>
  </body></html>

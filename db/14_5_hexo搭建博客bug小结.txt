@@ -10,9 +10,9 @@
 </ul>
 <span id="more"></span>
 <p>下面贴上代码:</p>
-<pre><code class="node.js">
-    npm i -g cnpm --registry=https://registry.npmmirror.com
-</code></pre>
+<pre><code class="hljs node.js">
+npm i -g cnpm --registry=https://registry.npmmirror.com</code></pre>
+
 <ul>
 <li>目录权限问题：如果遇到npm下载报错说权限不够等问题，win + r 输入cmd之后不着急回车，此时ctrl+shift+回车即可以管理员身份打开cmd，即可解决问题。</li>
 </ul>
@@ -25,10 +25,11 @@
 <li><p><em><strong>重点</strong></em>：hexo init报错: 此时只需要在根目录输入:</p>
 </li>
 </ul>
-<pre><code>
-cnpm install
+<pre><code class="hljs cmake">
+cnpm <span class="hljs-keyword">install</span>
 hexo s
 </code></pre>
+
 <p>即可解决。</p>
 <hr/>
 <h2 id="部署到github"><a href="http://wanglanhuajiaofen.fun/2024/02/20/hexo%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2bug%E5%B0%8F%E7%BB%93/#%E9%83%A8%E7%BD%B2%E5%88%B0github" class="headerlink" title="部署到github"></a>部署到github</h2><ul>

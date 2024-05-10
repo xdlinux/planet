@@ -5,24 +5,20 @@
 <ul>
 <li>安装clash包<ul>
 <li><p>在终端中首先开启root权限</p>
-<pre><code class="linux">su
-</code></pre>
-</li>
+<pre><code class="hljs linux">su</code></pre></li>
 </ul>
 </li>
 </ul>
 <span id="more"></span>
 <ul>
 <li><p>在当前用户目录中创建名为clash的文件夹（名字自取即可）然后切换到该目录</p>
-<pre><code class="linux">mkdir ./clash
-cd ./clash
-</code></pre>
+<pre><code class="hljs linux">mkdir ./clash
+cd ./clash</code></pre>
 </li>
 <li><p>下载clash的几种方式(因为clash作者删库跑路了，所以无法从作者的仓库中下载)</p>
 <ul>
 <li><p>wget + 下载url</p>
-<pre><code>wget https://github.com/Dreamacro/clash/releases/download/v1.14.0/clash-linux-amd64-v1.14.0.gz
-</code></pre>
+  <pre><code class="hljs apache"><span class="hljs-attribute">wget</span> https://github.com/Dreamacro/clash/releases/download/v1.<span class="hljs-number">14</span>.<span class="hljs-number">0</span>/clash-linux-amd64-v1.<span class="hljs-number">14</span>.<span class="hljs-number">0</span>.gz</code></pre>
 </li>
 <li><p>在ubuntu firefox浏览器找github备份仓库直接下载(考验你的网络(☆´益`)c)</p>
 <ul>
@@ -46,22 +42,18 @@ cd ./clash
 <hr/>
 <ul>
 <li><p>赋予权限</p>
-<pre><code class="linux">chmod +x 解压缩后的文件名
-</code></pre>
-</li>
+  <pre><code class="hljs linux">chmod +x 解压缩后的文件名</code></pre></li>
 </ul>
 <hr/>
 <ul>
 <li><p>移动</p>
-<pre><code class="linux"> mv 解压缩后的文件名 /usr/local/bin/clash
-</code></pre>
-</li>
+ <pre><code class="hljs linux">mv 解压缩后的文件名 /usr/local/bin/clash</code></pre></li>
 </ul>
 <hr/>
 <ul>
 <li><p>查看版本</p>
-<pre><code class="linux">clash -v
-</code></pre>
+<pre><code class="hljs linux">clash -v</code></pre>
+
 <ul>
 <li>如果这一步报错：无法执行二进制文件，那就是大概你下载的clash包有问题，我的解决方法是用上述第二种方式o(*≧▽≦)ツ┏━┓</li>
 </ul>
@@ -72,18 +64,18 @@ cd ./clash
 <ul>
 <li>启动clash<ul>
 <li><p>启动clash</p>
-<pre><code>clash
-</code></pre>
+<pre><code class="hljs ebnf"><span class="hljs-attribute">clash</span></code></pre>
+
 <p>这一步会显示系统缺失有些配置文件，自动会给你下载好</p>
 </li>
 <li><p>导入配置文件(配置文件获取方式不再赘述)<br/>配置文件所在目录:</p>
-<pre><code>$home/.config/clash/
-</code></pre>
+<pre><code class="hljs arduino">$home/.config/clash/</code></pre>
+
 <p>.config为隐藏文件夹，对于不熟悉终端的小伙伴在图形界面的文件夹按下CTRL+H即可<br/>将获得的配置文件改名为config.yaml替换上述目录中的config.yaml即可</p>
 </li>
 <li><p>重新启动clash</p>
-<pre><code>clash
-</code></pre>
+<pre><code class="hljs ebnf"><span class="hljs-attribute">clash</span></code></pre>
+
 <p>此时会显示出你的订阅的相关信息，即表示成功<br/><strong>在启动clash的条件下，访问以下链接可以进入clash图形控制页面</strong><br/><a href="https://clash.razord.top/#/proxies" title="就是我啦Σ(っ °Д °;)っ">clash图形控制页面</a></p>
 </li>
 </ul>
@@ -97,24 +89,22 @@ cd ./clash
 <ul>
 <li>设置开机自启<ul>
 <li><p>复制以下片段</p>
-<pre><code>Description=Clash - A rule-based tunnel in Go
-Documentation=https://github.com/Dreamacro/clash/wiki
-[Service]
-OOMScoreAdjust=-1000
-ExecStart=/usr/local/bin/clash -f /home/rongrong/.config/clash/config.yaml # 注意这里要根据自己的配置路径进行相应的修改
-Restart=on-failure
-RestartSec=5
-[Install]
-WantedBy=multi-user.target
+ <pre><code class="hljs ini"><span class="hljs-attr">Description</span>=Clash - A rule-based tunnel in Go
+<span class="hljs-attr">Documentation</span>=https://github.com/Dreamacro/clash/wiki
+<span class="hljs-section">[Service]</span>
+<span class="hljs-attr">OOMScoreAdjust</span>=-<span class="hljs-number">1000</span>
+<span class="hljs-attr">ExecStart</span>=/usr/local/bin/clash -f /home/rongrong/.config/clash/config.yaml <span class="hljs-comment"># 注意这里要根据自己的配置路径进行相应的修改</span>
+<span class="hljs-attr">Restart</span>=<span class="hljs-literal">on</span>-failure
+<span class="hljs-attr">RestartSec</span>=<span class="hljs-number">5</span>
+<span class="hljs-section">[Install]</span>
+<span class="hljs-attr">WantedBy</span>=multi-user.target
 </code></pre>
 </li>
 <li><p>依次输入以下命令即可</p>
-<pre><code>
-systemctl enable clash
+ <pre><code class="hljs bash">
+systemctl <span class="hljs-built_in">enable</span> clash
 systemctl start clash
-echo -e &#34;export http_proxy=&lt;http://127.0.0.1:7890\nexport&gt; https_proxy=&lt;http://127.0.0.1:7890&gt;&#34; &gt;&gt; ~/.bashrc
-</code></pre>
-</li>
+<span class="hljs-built_in">echo</span> -e <span class="hljs-string">&#34;export http_proxy=&lt;http://127.0.0.1:7890\nexport&gt; https_proxy=&lt;http://127.0.0.1:7890&gt;&#34;</span> &gt;&gt; ~/.bashrc</code></pre></li>
 </ul>
 </li>
 </ul>
