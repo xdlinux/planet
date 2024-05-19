@@ -269,6 +269,33 @@
 </li>
 </ul>
 </details>
+<details>
+<summary>修改 Feed 代码以兼容 <a href="https://github.com/xdlinux/planet" target="_blank">xdu-planet</a></summary>
+<ul>
+<li>
+<a rel="noopener noreferrer" href="https://github.com/xdlinux/planet">xdu-planet</a> 是学长写的一个简单的 RSS 博客聚合站，使用 <code>Golang+Vue3+ElementPlus</code> 构建，借助 GitHub Action 实现自动更新 Feed 数据并生成页面，并由 GitHub Pages 呈现</li>
+<li>上面都是<del>同学</del>网友，于是我也去凑了热闹</li>
+<li>但把 feed 链接 pr 上去之后，我发现展示的并不是我的完整文章，而是文章的简短摘要</li>
+<li>我先是把 <a href="https://blog.lsy223622.com/feed/">rss</a> 链接换成了 <a href="https://blog.lsy223622.com/feed/atom/">atom</a> 链接，但效果还是没有变化</li>
+<li>在对 xdu-planet 后端代码的胡乱分析（因为不会 go）之后，感觉应该是在获取文章内容的时候没有对正文的变量名进行判断，只是照着位置获取了 <del>（这段我也不知道怎么表达清楚反正大概就是这个意思）</del>
+</li>
+<li>和别人博客的 feed 对比之后，我发现和他们的相比，我的 <code>&lt;content&gt;</code> 前面还有一个 <code>&lt;summary&gt;</code>
+</li>
+<li>于是我编辑 <code>var/Typecho/Feed.php</code>
+</li>
+<li>把 <strong>332~335</strong> 行输出 <code>&lt;summary&gt;</code> 的代码注释掉了：</li>
+</ul>
+<pre><code class="language-php">/**
+                if (!empty($item[&#39;excerpt&#39;])) {
+                    $content .= &#39;&lt;summary type=&#34;html&#34;&gt;&lt;![CDATA[&#39; . htmlspecialchars($item[&#39;excerpt&#39;])
+                        . &#39;]]&gt;&lt;/summary&gt;&#39; . self::EOL;
+                }
+*/
+</code></pre>
+<ul>
+<li>完美解决问题~</li>
+</ul>
+</details>
 <h1><a id="content-更新记录" href="https://blog.lsy223622.com/archives/25/#content-%E6%9B%B4%E6%96%B0%E8%AE%B0%E5%BD%95" class="heading-permalink" aria-hidden="true" title="Permalink"></a>更新记录</h1>
 <ul>
 <li>2024-05-14 第一次发布</li>
@@ -277,6 +304,7 @@
 </li>
 <li>2024-05-17 增加：插件 <code>AAEditor</code> <code>Shields</code> <code>Sitemap</code>
 </li>
+<li>2024-05-20 增加：修改 Feed 代码以兼容 xdu-planet</li>
 </ul>
 
 </body></html>
