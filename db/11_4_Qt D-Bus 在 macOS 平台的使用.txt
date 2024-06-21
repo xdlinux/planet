@@ -1,0 +1,1 @@
+<html><head></head><body><p>D-Bus 与 Qt最近的操作系统实验要求写个进程间通信程序，我注意到了 D-Bus 这个可以双向通信的协议，它能够通知到接收方。D-Bus 协议是 Unix 平台下的用于进程间通信（IPC，I...</p></body></html>
