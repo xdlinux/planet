@@ -51,7 +51,7 @@
 <strong>图片延迟加载：</strong> 支持浏览器原生的图片延迟加载技术，<a rel="noopener noreferrer" href="https://developer.mozilla.org/en-US/docs/Web/Performance/Lazy_loading">MDN-Lazy loading</a>
 </li>
 <li>
-<strong>文本高亮：</strong> 通过 <code>&lt;mark&gt;</code> HTML 标签实现文本高亮效果，<a rel="noopener noreferrer" href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/mark">MDN-Mark</a>
+<strong>文本高亮：</strong> 通过 <code>&amp;lt;mark&amp;gt;</code> HTML 标签实现文本高亮效果，<a rel="noopener noreferrer" href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/mark">MDN-Mark</a>
 </li>
 </ol>
 </blockquote>
@@ -165,7 +165,7 @@
 <ul>
 <li>编辑 <code>usr/themes/jasmine/post.php</code>
 </li>
-<li>在 <strong>16</strong> 行的 <code>&lt;?php $this-&gt;content(); ?&gt;</code> 之后写入 <code>&lt;?php $this-&gt;copyDog($this); ?&gt;</code>
+<li>在 <strong>16</strong> 行的 <code>&amp;lt;?php $this-&gt;content(); ?&amp;gt;</code> 之后写入 <code>&amp;lt;?php $this-&gt;copyDog($this); ?&amp;gt;</code>
 </li>
 <li>
 <a rel="noopener noreferrer" href="https://github.com/BigCoke233/typecho-plugin-CopyDog/blob/main/README.md#%E4%BD%BF%E7%94%A8" title="参考文档">参考文档</a>
@@ -200,7 +200,7 @@
 <ul>
 <li>所以编辑 <code>usr/themes/jasmine/footer.php</code>
 </li>
-<li>删除 <strong>11</strong> 行的 <code> by &lt;a href=&#34;https://www.liaocp.cn/&#34; title=&#34;Kent Liao&#34; target=&#34;_blank&#34;&gt;Kent Liao&lt;/a&gt;</code>
+<li>删除 <strong>11</strong> 行的 <code> by &amp;lt;a href=&#34;https://www.liaocp.cn/&#34; title=&#34;Kent Liao&#34; target=&#34;_blank&#34;&amp;gt;Kent Liao&amp;lt;/a&amp;gt;</code>
 </li>
 </ul>
 </details>
@@ -296,7 +296,7 @@
 </li>
 <li>修改后的这一行代码：</li>
 </ul>
-<pre><code class="language-html">&lt;img src=&#34;{image}&#34;class=&#34;w-14 h-14 rounded-full&#34; loading=&#34;lazy&#34;&gt;
+<pre><code class="language-html">&amp;lt;img src=&#34;{image}&#34;class=&#34;w-14 h-14 rounded-full&#34; loading=&#34;lazy&#34;&amp;gt;
 </code></pre>
 </li>
 <li>感谢小北学长发现和提供解决方法</li>
@@ -343,7 +343,7 @@
 </li>
 <li>修改后的这一行代码：</li>
 </ul>
-<pre><code class="language-html">&lt;h4 class=&#34;text-sm word-break&#34;&gt;{name}&lt;/h4&gt;
+<pre><code class="language-html">&amp;lt;h4 class=&#34;text-sm word-break&#34;&amp;gt;{name}&amp;lt;/h4&amp;gt;
 </code></pre>
 </li>
 </ul>
@@ -358,16 +358,16 @@
 <li>我先是把 <a href="https://blog.lsy223622.com/feed/">rss</a> 链接换成了 <a href="https://blog.lsy223622.com/feed/atom/">atom</a> 链接，但效果还是没有变化</li>
 <li>在对 xdu-planet 后端代码的胡乱分析（因为不会 go）之后，感觉应该是在获取文章内容的时候没有对正文的变量名进行判断，只是照着位置获取了 <del>（这段我也不知道怎么表达清楚反正大概就是这个意思）</del>
 </li>
-<li>和别人博客的 feed 对比之后，我发现和他们的相比，我的 <code>&lt;content&gt;</code> 前面还有一个 <code>&lt;summary&gt;</code>
+<li>和别人博客的 feed 对比之后，我发现和他们的相比，我的 <code>&amp;lt;content&amp;gt;</code> 前面还有一个 <code>&amp;lt;summary&amp;gt;</code>
 </li>
 <li>于是我编辑 <code>var/Typecho/Feed.php</code>
 </li>
-<li>把 <strong>332~335</strong> 行输出 <code>&lt;summary&gt;</code> 的代码注释掉了：</li>
+<li>把 <strong>332~335</strong> 行输出 <code>&amp;lt;summary&amp;gt;</code> 的代码注释掉了：</li>
 </ul>
 <pre><code class="language-php">/**
                 if (!empty($item[&#39;excerpt&#39;])) {
-                    $content .= &#39;&lt;summary type=&#34;html&#34;&gt;&lt;![CDATA[&#39; . htmlspecialchars($item[&#39;excerpt&#39;])
-                        . &#39;]]&gt;&lt;/summary&gt;&#39; . self::EOL;
+                    $content .= &#39;&amp;lt;summary type=&#34;html&#34;&amp;gt;&amp;lt;![CDATA[&#39; . htmlspecialchars($item[&#39;excerpt&#39;])
+                        . &#39;]]&amp;gt;&amp;lt;/summary&amp;gt;&#39; . self::EOL;
                 }
 */
 </code></pre>

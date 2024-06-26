@@ -112,7 +112,7 @@
 <li>没啥特别的，照文档做就行</li>
 <li>关于站长部分的 <code>GitHub</code> 等信息添加超链接可以使用以下 <code>HTML</code> 代码</li>
 </ul>
-<pre><code class="language-html"><a href="https://github.com/lsy223622" target="_blank">lsy223622</a>
+<pre><code class="language-html">&lt;a href=&#34;https://github.com/lsy223622&#34; target=&#34;_blank&#34;&gt;lsy223622&lt;/a&gt;
 </code></pre>
 <h1><a id="content-截图" href="https://blog.lsy223622.com/archives/14/#content-%E6%88%AA%E5%9B%BE" class="heading-permalink" aria-hidden="true" title="Permalink"></a>截图</h1>
 <p><img src="https://blog.lsy223622.com/usr/uploads/2024/04/623228307.png" alt="浅色模式" loading="lazy"/>
