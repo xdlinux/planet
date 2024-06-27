@@ -1,4 +1,30 @@
-<html><head></head><body><h1><a id="content-并不是出厂即完美" href="https://blog.lsy223622.com/archives/25/#content-%E5%B9%B6%E4%B8%8D%E6%98%AF%E5%87%BA%E5%8E%82%E5%8D%B3%E5%AE%8C%E7%BE%8E" class="heading-permalink" aria-hidden="true" title="Permalink"></a>并不是出厂即完美</h1>
+<html><head></head><body><h1><a id="content-目录" href="https://blog.lsy223622.com/archives/25/#content-%E7%9B%AE%E5%BD%95" class="heading-permalink" aria-hidden="true" title="Permalink"></a>目录</h1>
+<ul class="table-of-contents">
+<li>
+<a href="https://blog.lsy223622.com/archives/25/#content-%E7%9B%AE%E5%BD%95">目录</a>
+</li>
+<li>
+<a href="https://blog.lsy223622.com/archives/25/#content-%E5%B9%B6%E4%B8%8D%E6%98%AF%E5%87%BA%E5%8E%82%E5%8D%B3%E5%AE%8C%E7%BE%8E">并不是出厂即完美</a>
+</li>
+<li>
+<a href="https://blog.lsy223622.com/archives/25/#content-%E4%BD%86%E6%98%AF%E6%88%91%E8%83%BD%E8%AE%A9%E5%AE%83%E5%8F%98%E5%BE%97%E6%9B%B4%E5%AE%8C%E7%BE%8E">但是我能让它变得更完美！</a>
+<ul>
+<li>
+<a href="https://blog.lsy223622.com/archives/25/#content-%E5%AE%89%E8%A3%85%E6%8F%92%E4%BB%B6">安装插件</a>
+</li>
+<li>
+<a href="https://blog.lsy223622.com/archives/25/#content-%E4%BF%AE%E6%94%B9%E4%BB%A3%E7%A0%81">修改代码</a>
+</li>
+<li>
+<a href="https://blog.lsy223622.com/archives/25/#content-debug">Debug</a>
+</li>
+</ul>
+</li>
+<li>
+<a href="https://blog.lsy223622.com/archives/25/#content-%E6%9B%B4%E6%96%B0%E8%AE%B0%E5%BD%95">更新记录</a>
+</li>
+</ul>
+<h1><a id="content-并不是出厂即完美" href="https://blog.lsy223622.com/archives/25/#content-%E5%B9%B6%E4%B8%8D%E6%98%AF%E5%87%BA%E5%8E%82%E5%8D%B3%E5%AE%8C%E7%BE%8E" class="heading-permalink" aria-hidden="true" title="Permalink"></a>并不是出厂即完美</h1>
 <ul>
 <li>虽然 Typecho 已经是非常简单而且成熟的开源博客程序，这并不代表它不需要修改。</li>
 <li>首先是可以安装一些主题和插件。主题之前有单独的文章讲过，这次就不重复了。</li>
@@ -17,11 +43,10 @@
 <blockquote>
 <ul>
 <li>TagSelector 是一款用于 Typecho 的插件，用于方便地添加和管理文章的标签。这个插件的主要功能是在文章编辑页面添加一个标签选择框，显示所有之前创建过的标签，让你可以直观地看到所有可用的标签。只需点击选择框中的标签，即可快速将其添加到文章的标签输入框中。</li>
-<li>使用 Typecho 内建的标签管理功能时，我们经常面临一个问题：每次添加或编辑文章时，我们很难记住之前使用过哪些标签，因此很容易重复创建相似的标签或忘记使用某些标签。这就是 TagSelector 插件诞生的原因。有了这个插件，你可以轻松地查看和选择已有的标签，从而避免了重复创建标签和忘记使用标签的痛点。
-<img src="https://s11.ax1x.com/2023/05/05/p9NDQit.png" alt="" loading="lazy"/>
-</li>
+<li>使用 Typecho 内建的标签管理功能时，我们经常面临一个问题：每次添加或编辑文章时，我们很难记住之前使用过哪些标签，因此很容易重复创建相似的标签或忘记使用某些标签。这就是 TagSelector 插件诞生的原因。有了这个插件，你可以轻松地查看和选择已有的标签，从而避免了重复创建标签和忘记使用标签的痛点。</li>
 </ul>
 </blockquote>
+<p><img src="https://s11.ax1x.com/2023/05/05/p9NDQit.png" alt="TagSelector" loading="lazy"/></p>
 </details>
 <details>
 <summary><a href="https://github.com/typecho-fans/plugins/tree/master/EditorMD" target="_blank">EditorMD</a>：Markdown 编辑器 <a href="https://pandao.github.io/editor.md/" target="_blank">Editor.md</a> for Typecho</summary>
@@ -76,7 +101,7 @@
 <p>英语里有个词叫做「Copycat」，指的是喜欢模仿、抄袭他人的人；中文里又有个词叫做「版权狗」，指那些喜欢把版权一事挂在嘴边批评别人，以此来显得自己十分伟大光荣正确的那些人。<br/>
 而在人们普遍的思想里，猫（Cat）的对立面是狗（Dog），我们不妨把这两个词的意思中和一下，造一个新词「CopyDog」，来指那些真正愿意捍卫版权的人。<br/>
 <strong>CopyDog</strong> 是一个简单的 Typecho 插件，它能让你在文章末尾生成一个显示文章版权信息的小卡片，就像这样：<br/>
-<img src="https://github.com/BigCoke233/typecho-plugin-CopyDog/raw/main/screenshot.png" alt="" loading="lazy"/>
+<img src="https://github.com/BigCoke233/typecho-plugin-CopyDog/raw/main/screenshot.png" alt="CopyDog" loading="lazy"/>
 你可能看出来了，这个卡片的设计参考了 Hexo 的 <a rel="noopener noreferrer" href="https://github.com/ppoffice/hexo-theme-icarus">icarus 主题</a>。<br/>
 并且这里采用的许可协议是著名的 Creative Commons。</p>
 </blockquote>
@@ -161,7 +186,8 @@
 <details>
 <summary>添加 CopyDog 卡片和修改卡片字体</summary>
 <ol>
-<li>添加卡片
+<li>
+<p>添加卡片</p>
 <ul>
 <li>编辑 <code>usr/themes/jasmine/post.php</code>
 </li>
@@ -172,7 +198,8 @@
 </li>
 </ul>
 </li>
-<li>修改卡片字体
+<li>
+<p>修改卡片字体</p>
 <ul>
 <li>编辑 <code>usr/plugins/CopyDog/style.css</code>
 </li>
@@ -183,10 +210,11 @@
 <pre><code class="language-css">font-family: HarmonyOS-Sans,-apple-system,BlinkMacSystemFont,Segoe UI,system-ui,Roboto,PingFang SC,Hiragino Sans GB,Source Han Sans SC,Noto Sans CJK SC,Noto Sans SC,WenQuanYi Micro Hei,WenQuanYi Zen Hei,Microsoft YaHei,Helvetica Neue,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol;
 </code></pre>
 </li>
-<li>效果展示
-<img src="https://blog.lsy223622.com/usr/uploads/2024/05/1694562549.png" alt="" loading="lazy"/>
+<li>
+<p>效果展示</p>
 </li>
 </ol>
+<p><img src="https://blog.lsy223622.com/usr/uploads/2024/05/1694562549.png" alt="Preview" loading="lazy"/></p>
 </details>
 <details>
 <summary>简化页脚</summary>
@@ -287,19 +315,28 @@
 <details>
 <summary>修正友链页面在苹果设备的头像尺寸异常</summary>
 <ul>
-<li>原版 Jasmine 主题的友链页面在苹果设备上查看会出现友链头像尺寸异常大且布局混乱的情况</li>
-<li>解决方法：
+<li>
+<p>原版 Jasmine 主题的友链页面在苹果设备上查看会出现友链头像尺寸异常大且布局混乱的情况</p>
+</li>
+<li>
+<p>解决方法：</p>
 <ul>
-<li>编辑 <code>usr/themes/jasmine/page-links.php</code>
+<li>
+<p>编辑 <code>usr/themes/jasmine/page-links.php</code></p>
 </li>
-<li>删除 <strong>29</strong> 行的 <code>min-w-fit min-h-fit</code>
+<li>
+<p>删除 <strong>29</strong> 行的 <code>min-w-fit min-h-fit</code></p>
 </li>
-<li>修改后的这一行代码：</li>
-</ul>
+<li>
+<p>修改后的这一行代码：</p>
 <pre><code class="language-html">&amp;lt;img src=&#34;{image}&#34;class=&#34;w-14 h-14 rounded-full&#34; loading=&#34;lazy&#34;&amp;gt;
 </code></pre>
 </li>
-<li>感谢小北学长发现和提供解决方法</li>
+</ul>
+</li>
+<li>
+<p>感谢小北学长发现和提供解决方法</p>
+</li>
 </ul>
 </details>
 <details>
@@ -324,27 +361,32 @@
 <summary>修正友链名称中过长单词不能正常换行导致长度溢出</summary>
 <ul>
 <li>原版 Jasmine 主题友链页面的卡片中友链名称在含有英文单词的时候不会在单词中间断行，所以长单词会导致所在行长度溢出，现象如下：
-<img src="https://blog.lsy223622.com/usr/uploads/2024/05/2876920829.png" alt="" loading="lazy"/>
+<img src="https://blog.lsy223622.com/usr/uploads/2024/05/2876920829.png" alt="Phenomenon" loading="lazy"/>
 </li>
 <li>解决方法：
 <ul>
-<li>打开 <strong>Typecho 后台-控制台-外观-设置外观</strong>
+<li>
+<p>打开 <strong>Typecho 后台-控制台-外观-设置外观</strong></p>
 </li>
-<li>在<strong>自定义样式</strong>添加如下代码：</li>
-</ul>
+<li>
+<p>在<strong>自定义样式</strong>添加如下代码：</p>
 <pre><code class="language-css">.word-break {
     word-break: break-all;
 }
 </code></pre>
-<ul>
-<li>编辑 <code>usr/themes/jasmine/page-links.php</code>
 </li>
-<li>在 <strong>32</strong> 行的 <code>class=&#34;text-sm &#34;</code> 里面添加 <code>word-break</code>
+<li>
+<p>编辑 <code>usr/themes/jasmine/page-links.php</code></p>
 </li>
-<li>修改后的这一行代码：</li>
-</ul>
+<li>
+<p>在 <strong>32</strong> 行的 <code>class=&#34;text-sm &#34;</code> 里面添加 <code>word-break</code></p>
+</li>
+<li>
+<p>修改后的这一行代码：</p>
 <pre><code class="language-html">&amp;lt;h4 class=&#34;text-sm word-break&#34;&amp;gt;{name}&amp;lt;/h4&amp;gt;
 </code></pre>
+</li>
+</ul>
 </li>
 </ul>
 </details>

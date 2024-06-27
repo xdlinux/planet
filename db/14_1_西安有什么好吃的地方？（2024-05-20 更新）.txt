@@ -1,4 +1,24 @@
-<html><head></head><body><h1><a id="content-创建新分类" href="https://blog.lsy223622.com/archives/41/#content-%E5%88%9B%E5%BB%BA%E6%96%B0%E5%88%86%E7%B1%BB" class="heading-permalink" aria-hidden="true" title="Permalink"></a>创建新分类！</h1>
+<html><head></head><body><h1><a id="content-目录" href="https://blog.lsy223622.com/archives/41/#content-%E7%9B%AE%E5%BD%95" class="heading-permalink" aria-hidden="true" title="Permalink"></a>目录</h1>
+<ul class="table-of-contents">
+<li>
+<a href="https://blog.lsy223622.com/archives/41/#content-%E7%9B%AE%E5%BD%95">目录</a>
+</li>
+<li>
+<a href="https://blog.lsy223622.com/archives/41/#content-%E5%88%9B%E5%BB%BA%E6%96%B0%E5%88%86%E7%B1%BB">创建新分类！</a>
+</li>
+<li>
+<a href="https://blog.lsy223622.com/archives/41/#content-%E8%A5%BF%E5%AE%89%E6%9C%89%E4%BB%80%E4%B9%88%E5%A5%BD%E5%90%83%E7%9A%84%E5%9C%B0%E6%96%B9">西安有什么好吃的地方？</a>
+<ul>
+<li>
+<a href="https://blog.lsy223622.com/archives/41/#content-%E5%A5%BD%E5%90%83%E5%A4%9A%E5%90%83">好吃多吃</a>
+</li>
+</ul>
+</li>
+<li>
+<a href="https://blog.lsy223622.com/archives/41/#content-%E6%9B%B4%E6%96%B0%E8%AE%B0%E5%BD%95">更新记录</a>
+</li>
+</ul>
+<h1><a id="content-创建新分类" href="https://blog.lsy223622.com/archives/41/#content-%E5%88%9B%E5%BB%BA%E6%96%B0%E5%88%86%E7%B1%BB" class="heading-permalink" aria-hidden="true" title="Permalink"></a>创建新分类！</h1>
 <ul>
 <li>感觉博客光写一些技术文章也太单调了，于是打算新增一个<a href="https://blog.lsy223622.com/category/life/">生活分类</a>，或者暂时这么叫吧。</li>
 <li>如果还是只想看技术文章的话（如果我写的文章真有什么技术含量），就点<a href="https://blog.lsy223622.com/category/tech/">这个链接</a>。</li>

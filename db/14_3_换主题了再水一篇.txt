@@ -1,4 +1,36 @@
-<html><head></head><body><h1><a id="content-之前的主题太丑了啦" href="https://blog.lsy223622.com/archives/14/#content-%E4%B9%8B%E5%89%8D%E7%9A%84%E4%B8%BB%E9%A2%98%E5%A4%AA%E4%B8%91%E4%BA%86%E5%95%A6" class="heading-permalink" aria-hidden="true" title="Permalink"></a>之前的主题太丑了啦</h1>
+<html><head></head><body><h1><a id="content-目录" href="https://blog.lsy223622.com/archives/14/#content-%E7%9B%AE%E5%BD%95" class="heading-permalink" aria-hidden="true" title="Permalink"></a>目录</h1>
+<ul class="table-of-contents">
+<li>
+<a href="https://blog.lsy223622.com/archives/14/#content-%E7%9B%AE%E5%BD%95">目录</a>
+</li>
+<li>
+<a href="https://blog.lsy223622.com/archives/14/#content-%E4%B9%8B%E5%89%8D%E7%9A%84%E4%B8%BB%E9%A2%98%E5%A4%AA%E4%B8%91%E4%BA%86%E5%95%A6">之前的主题太丑了啦</a>
+</li>
+<li>
+<a href="https://blog.lsy223622.com/archives/14/#content-%E5%AF%BB%E6%89%BE%E6%96%B0%E4%B8%BB%E9%A2%98">寻找新主题！</a>
+</li>
+<li>
+<a href="https://blog.lsy223622.com/archives/14/#content-%E4%B8%BB%E9%A2%98%E5%AE%89%E8%A3%85">主题安装</a>
+<ul>
+<li>
+<a href="https://blog.lsy223622.com/archives/14/#content-%E7%8E%AF%E5%A2%83">环境</a>
+</li>
+<li>
+<a href="https://blog.lsy223622.com/archives/14/#content-%E5%AE%89%E8%A3%85">安装</a>
+</li>
+<li>
+<a href="https://blog.lsy223622.com/archives/14/#content-%E6%9B%B4%E6%96%B0">更新</a>
+</li>
+</ul>
+</li>
+<li>
+<a href="https://blog.lsy223622.com/archives/14/#content-%E4%B8%BB%E9%A2%98%E8%AE%BE%E7%BD%AE">主题设置</a>
+</li>
+<li>
+<a href="https://blog.lsy223622.com/archives/14/#content-%E6%88%AA%E5%9B%BE">截图</a>
+</li>
+</ul>
+<h1><a id="content-之前的主题太丑了啦" href="https://blog.lsy223622.com/archives/14/#content-%E4%B9%8B%E5%89%8D%E7%9A%84%E4%B8%BB%E9%A2%98%E5%A4%AA%E4%B8%91%E4%BA%86%E5%95%A6" class="heading-permalink" aria-hidden="true" title="Permalink"></a>之前的主题太丑了啦</h1>
 <ul>
 <li>刚弄好这个博客的时候随便找了个网上搜到的 <a rel="noopener noreferrer" href="https://github.com/HaoOuBa/Joe" title="Joe 主题">Joe 主题</a>。</li>
 <li>感觉这主题有点。。花里胡哨的，功能确实比较强大，但是花花绿绿的，不能满足我的简约审美，设计风格也有点过时了，符合我对多年老博客的刻板印象。</li>

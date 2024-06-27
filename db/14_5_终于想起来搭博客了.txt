@@ -1,4 +1,32 @@
-<html><head></head><body><h1><a id="content-写在前面" href="https://blog.lsy223622.com/archives/3/#content-%E5%86%99%E5%9C%A8%E5%89%8D%E9%9D%A2" class="heading-permalink" aria-hidden="true" title="Permalink"></a>写在前面</h1>
+<html><head></head><body><h1><a id="content-目录" href="https://blog.lsy223622.com/archives/3/#content-%E7%9B%AE%E5%BD%95" class="heading-permalink" aria-hidden="true" title="Permalink"></a>目录</h1>
+<ul class="table-of-contents">
+<li>
+<a href="https://blog.lsy223622.com/archives/3/#content-%E7%9B%AE%E5%BD%95">目录</a>
+</li>
+<li>
+<a href="https://blog.lsy223622.com/archives/3/#content-%E5%86%99%E5%9C%A8%E5%89%8D%E9%9D%A2">写在前面</a>
+</li>
+<li>
+<a href="https://blog.lsy223622.com/archives/3/#content-%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E6%90%AD%E5%8D%9A%E5%AE%A2%E8%AE%B2%E6%95%85%E4%BA%8B%E7%8E%AF%E8%8A%82">为什么要搭博客（讲故事环节）</a>
+</li>
+<li>
+<a href="https://blog.lsy223622.com/archives/3/#content-%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E8%AE%B0%E5%BD%95">博客搭建记录</a>
+<ul>
+<li>
+<a href="https://blog.lsy223622.com/archives/3/#content-%E5%AE%89%E8%A3%85%E8%BF%87%E7%A8%8B">安装过程</a>
+<ul>
+<li>
+<a href="https://blog.lsy223622.com/archives/3/#content-%E6%9F%A5%E9%94%99%E8%AE%B0%E5%BD%95">查错记录</a>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<a href="https://blog.lsy223622.com/archives/3/#content-%E5%86%99%E5%9C%A8%E5%90%8E%E9%9D%A2">写在后面</a>
+</li>
+</ul>
+<h1><a id="content-写在前面" href="https://blog.lsy223622.com/archives/3/#content-%E5%86%99%E5%9C%A8%E5%89%8D%E9%9D%A2" class="heading-permalink" aria-hidden="true" title="Permalink"></a>写在前面</h1>
 <blockquote>
 <p>博客刚搭好，先 bb 一篇文章出来，顺便作为测试了。</p>
 </blockquote>
@@ -11,7 +39,7 @@
 <p>上大学时候发现腾讯云有 <strong>178 三年</strong> 的优惠服务器， <strong>2c4g8m80g</strong> ，算下来性价比比学生机还要高，于是购买。没过多久竟然还推出了这款服务器 <strong>免费升级 4c</strong> 的活动，性价比再升一级。又过几个月又发现了 <strong>1000g 云硬盘三年只要不到 30 块</strong> ，四舍五入几乎等于不要钱，下单挂载。</p>
 </li>
 <li>
-<p>现在这个服务器这两年来一直在增加不少的网站应用，也有些别的非网站应用。这样的配置在普通玩家的境内云服务器里面已经算挺不错的了，无论是性能、带宽还是硬盘容量都是非常的宽裕。不过之前在这个服务器上放的基本上都是给自己用的服务，像是 <code>NextCloud</code>  <code>Tailscale</code> 之类的，别人虽然看得见，但也不能在这里得到什么信息。</p>
+<p>现在这个服务器这两年来一直在增加不少的网站应用，也有些别的非网站应用。这样的配置在普通玩家的境内云服务器里面已经算挺不错的了，无论是性能、带宽还是硬盘容量都是非常的宽裕。不过之前在这个服务器上放的基本上都是给自己用的服务，像是 <code>NextCloud``Tailscale</code> 之类的，别人虽然看得见，但也不能在这里得到什么信息。</p>
 </li>
 <li>
 <p>之前用阿里云学生机的时候也试过几个博客应用，但应该也没写什么东西。一方面是觉得 <strong>写了也没什么人看</strong> ，另一方面是觉得 <strong>我表达能力也不怎么样</strong> ，写出来不好看，于是后来到腾讯云也没再放博客了。</p>

@@ -1,4 +1,19 @@
-<html><head></head><body><h1><a id="content-现象" href="https://blog.lsy223622.com/archives/4/#content-%E7%8E%B0%E8%B1%A1" class="heading-permalink" aria-hidden="true" title="Permalink"></a>现象</h1>
+<html><head></head><body><h1><a id="content-目录" href="https://blog.lsy223622.com/archives/4/#content-%E7%9B%AE%E5%BD%95" class="heading-permalink" aria-hidden="true" title="Permalink"></a>目录</h1>
+<ul class="table-of-contents">
+<li>
+<a href="https://blog.lsy223622.com/archives/4/#content-%E7%9B%AE%E5%BD%95">目录</a>
+</li>
+<li>
+<a href="https://blog.lsy223622.com/archives/4/#content-%E7%8E%B0%E8%B1%A1">现象</a>
+</li>
+<li>
+<a href="https://blog.lsy223622.com/archives/4/#content-%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95">解决方法</a>
+</li>
+<li>
+<a href="https://blog.lsy223622.com/archives/4/#content-%E7%9B%B8%E5%85%B3%E9%93%BE%E6%8E%A5">相关链接</a>
+</li>
+</ul>
+<h1><a id="content-现象" href="https://blog.lsy223622.com/archives/4/#content-%E7%8E%B0%E8%B1%A1" class="heading-permalink" aria-hidden="true" title="Permalink"></a>现象</h1>
 <ul>
 <li>
 <p>宝塔面板点击 <code>Docker</code> 菜单，提示 <code>当前未安装 docker 或 docker-compose 未安装</code> 。</p>
