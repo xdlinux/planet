@@ -1,1 +1,0 @@
-<html><head></head><body><p>这是一份非常详细和系统化的利用 NodeJS 进行 Discord bot 开发的教程，本文介绍了什么是命令本地化 Localization，也就是“多语言化”，或者叫“本地翻译”。本地化降低了不同语言导致的语言障碍，提高用户满意度。</p></body></html>
