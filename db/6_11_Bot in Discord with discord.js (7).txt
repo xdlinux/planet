@@ -1,0 +1,1 @@
+<html><head></head><body><p>这是一份非常详细和系统化的利用 NodeJS 进行 Discord bot 开发的教程，本文介绍了什么是斜杠命令的子命令 subcommand 以及为同一套命令逻辑起别名的方法。</p></body></html>
