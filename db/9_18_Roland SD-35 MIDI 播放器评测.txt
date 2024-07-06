@@ -1,0 +1,62 @@
+<html><head></head><body><img src="https://s2.loli.net/2022/08/01/TerCUsW3QqVIRbh.jpg" alt="Featured image of post Roland SD-35 MIDI 播放器评测"/><p>我一直想要一个硬音源，所以我搞来了这台Roland SD-35 MIDI播放器。因为这是闲鱼上我所找到的最便宜，也是最具特点的Roland MIDI设备。这台机器吸引我的地方，就是其能播放软盘里的MIDI音乐。不过这个机器当音源是真的不行，不过情有可原。接下来，我给大家详细介绍这个机器。</p>
+<p></p><figure>
+	<a href="https://s2.loli.net/2022/08/01/TerCUsW3QqVIRbh.jpg">
+		<img src="https://s2.loli.net/2022/08/01/TerCUsW3QqVIRbh.jpg" loading="lazy" alt="开学才一周，桌面就很乱了:-P"/>
+	</a>
+	
+	<figcaption>开学才一周，桌面就很乱了:-P</figcaption>
+	
+</figure><p></p>
+<h2 id="part-1历史背景">Part 1：历史背景</h2>
+<p>Roland公司在1991发布了Roland SC-55 MIDI硬音源，将高品质MIDI音源给大众化了。很多游戏音乐，比如《毁灭战士》的音乐，就是用SC-55写的。之后，Roland在1993年发布了SC-55 MK II，算是一个小幅升级版。1994年则是SC-50，较SC-55 MK II砍掉了MT-32模拟功能，并且只有一个MIDI输入接口。</p>
+<p>在1993年，SD-35 MIDI播放器问世，本质上就是SC-50，不过加了一个软盘播放器。它还有一个姐妹型号，SB-55。</p>
+<p></p><figure>
+	<a href="https://s2.loli.net/2022/08/01/89bCa4Rz5VlhukN.jpg">
+		<img src="https://s2.loli.net/2022/08/01/89bCa4Rz5VlhukN.jpg" loading="lazy" alt="上图来源：Wikipedia “Roland Sound Canvas”"/>
+	</a>
+	
+	<figcaption>上图来源：Wikipedia “Roland Sound Canvas”</figcaption>
+	
+</figure><p></p>
+<h2 id="part-2作为一个midi播放器">Part 2：作为一个MIDI播放器</h2>
+<p>这个机器最主要的功能，就是播放MIDI文件。播放的话，有两种方式：一种是通过软盘播放，一种是通过MIDI线缆输入。它前面板上有一个软驱，插入720K软盘后，如果是空盘，它可以给格式化，如果有标准MIDI文件的话，它就会播放。另外一种，就是通过MIDI线缆，传入信号并播放，或者录制MIDI信号到软盘。</p>
+<p>这个机器的主打功能是软盘MIDI播放和MIDI信号录制，所以这两个我就不说了。前面的使用完美，后面的我没有条件测试。而后者呢，算是这个机器的弱项。经常传输信号的时候，机器报缓存已满。根据说明书，机器由于传入太多的MIDI信号而无法处理。说明书还建议把Soft Thru关掉，因为这玩意占着资源，但这样我就听不到音乐了。我根据群友的建议，用TMIDI播放器调整了传输速率，但还是不行。这类情况在传输一些复杂的MIDI信号的时候，十分明显。</p>
+<p></p><figure>
+	<a href="https://s2.loli.net/2022/08/01/YA5DlKdLg8Bh9Ra.jpg">
+		<img src="https://s2.loli.net/2022/08/01/YA5DlKdLg8Bh9Ra.jpg" loading="lazy" alt="bFL = buffer FULL"/>
+	</a>
+	
+	<figcaption>bFL = buffer FULL</figcaption>
+	
+</figure><p></p>
+<p>这个机器，由于本质是SC-55，所以合成的音效嘛，就是SC-55的样子。但是这也带来了一个问题，就是对于一些面向SC-88编写的MIDI音乐，可能合成会有问题。我在用机器播放《东方红魔乡》的MIDI音乐（GS标准，面向SC88Pro编写）时，经常看到地址报错，而且有一首歌，把最后部分的长音小号给合成错了。</p>
+<p>这个机器还有一个功能，就是GM标准和GS标准之间的转换。当然，其他的音源估计也有。这两个标准合成的音乐有些许不同，值得注意。</p>
+<p>这台机器还有很多其他功能，诸如只播放一个通道之类，这里我就不说了，对我而言实用性不强。</p>
+<h2 id="part-3这台机器到底是用来干啥的">Part 3：这台机器到底是用来干啥的？</h2>
+<p>根据上面的用途和说明书上的提示，我觉得这个机器不是面向MIDI音乐编写/播放设计的，而是面向现场播放用途设计的。这里我放上该机器的后面板。</p>
+<p></p><figure>
+	<a href="https://s2.loli.net/2022/08/01/pJ9OcGgDfjQRNUr.jpg">
+		<img src="https://s2.loli.net/2022/08/01/pJ9OcGgDfjQRNUr.jpg" loading="lazy" alt="由左至右：输入电平调整 输入声音信号 输出声音信号 控制信号 输出MIDI信号 电源接口 开关"/>
+	</a>
+	
+	<figcaption>由左至右：输入电平调整 输入声音信号 输出声音信号 控制信号 输出MIDI信号 电源接口 开关</figcaption>
+	
+</figure><p></p>
+<p>你们可以看到，这里除了MIDI接口，还有两对6.5mm接口。一对接收输入信号，一对向外输出信号。最左侧还有输入电平调节，分别是吉他，麦克风和线缆输入。可见，这个机器可以输入信号，然后和软盘音乐混合后输出。对于做Genesis那样的流行电音来说，还挺有用的呢。</p>
+<p></p><figure>
+	<a href="https://s2.loli.net/2022/08/01/OWZGydp3Hl2UAV1.jpg">
+		<img src="https://s2.loli.net/2022/08/01/OWZGydp3Hl2UAV1.jpg" loading="lazy" alt="说明书上关于输入设备的演示"/>
+	</a>
+	
+	<figcaption>说明书上关于输入设备的演示</figcaption>
+	
+</figure><p></p>
+<p>至于为啥我前面说当音源不行，但是情有可原。一方面，这个机器要录制MIDI的话，一般接的是键盘啥的。键盘我觉得，再怎么折腾，也不会超过三个频道吧，估计它的处理能力也就这样了。另外一个方面，说明书暗示，传入MIDI信号相比软盘播放，机器得处理更多的东西，所以我觉得，可能是算力不够+缓存被砍的原因。</p>
+<p>（还有一方面，估计我买的MIDI线很垃圾。那家的评论有一些差评，不过由于我买了这个机器，存款接近告罄，只能在这方面省钱了:-P）</p>
+<h2 id="part-4我对这台机器的看法">Part 4：我对这台机器的看法</h2>
+<p>虽然我买这个机器的目的是为了当音源，而这方面，机器可谓是相当不合格。但是，这个机器的特点很鲜明，还有很多的可玩性。我可以用这个机器水做很多的演示视频呢。而且这个机器涉及到了软盘，我也在Linux下体验了格式化软盘，没有某些人说的那么离谱啊。</p>
+<p>不过既然不能当音源，我还要攒一年的钱，买一个SC-88去:-P（卖溢价二手货的都给我下地狱吧）</p>
+<h2 id="part-5相关计划">Part 5：相关计划</h2>
+<p>根据之前的投票结果和我的个人意愿，下期MIDI演示视频，我要用《红魔乡》的音乐演示，经由软盘播放。然后是《毁灭战士II》，经由MIDI线。可能还会用《RoTT》和《Heretic》的部分音轨出一个bug演示视频。制作方面呢，我要改MIDI，录制，画封面啥的。所以各位耐心等着吧:-P</p>
+<p>进度视我的课程难度和我陷入不合理竞争的深度而定:-(</p>
+</body></html>
