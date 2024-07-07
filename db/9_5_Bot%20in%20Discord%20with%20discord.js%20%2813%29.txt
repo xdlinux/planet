@@ -1,1 +1,0 @@
-<html><head></head><body><p>这是一份非常详细和系统化的利用 NodeJS 进行 Discord bot 开发的教程，本文介绍了什么是 Discord 的嵌入式元素 Embed，用于丰富机器人的输出样式。</p></body></html>
