@@ -1,0 +1,590 @@
+<html><head></head><body><img src="https://legacy.superbart.top/picture/xdyou/homepage.jpg" alt="Featured image of post Traintime PDA v0.1.0 发行简记"/><p>终于，经过一年多的断断续续的编写，Traintime PDA v0.1.0 发布了。虽然功能还算较少，但可以算是稳定版了。
+Traintime PDA 是西电同志们的又一个个人信息查看应用，很明显，是电表的模仿产品。</p>
+<p>v0.1.0 可以算是这个软件第一个稳定版本，我自然需要花上一小段篇幅来跟大家介绍这个软件。</p>
+<p>说是发行简记，实际上我要写很多的技术相关细节。</p>
+<h2 id="功能介绍">功能介绍</h2>
+<ol>
+<li>根据Timetable重写的 Flutter 课程表，这个课程表我尽力模仿这个插件，解决课程冲突，还能添加一张背景图片，能挂着你喜欢的 idol 之类()
+<figure>
+	<a href="https://legacy.superbart.top/picture/xdyou/classtable.jpg">
+		<img src="https://legacy.superbart.top/picture/xdyou/classtable.jpg" loading="lazy" alt="课程表页面"/>
+	</a>
+	
+	<figcaption>课程表页面</figcaption>
+	
+</figure></li>
+<li>体育查询，打卡记录和体测成绩。
+<figure>
+	<a href="https://legacy.superbart.top/picture/xdyou/sport.jpg">
+		<img src="https://legacy.superbart.top/picture/xdyou/sport.jpg" loading="lazy" alt="体育查询页面"/>
+	</a>
+	
+	<figcaption>体育查询页面</figcaption>
+	
+</figure></li>
+<li>成绩查询，包括可以自行选择科目计算均分。计算均分功能看来同学们十分喜欢使用，但我是大摆子(逃)
+<figure>
+	<a href="https://legacy.superbart.top/picture/xdyou/score.jpg">
+		<img src="https://legacy.superbart.top/picture/xdyou/score.jpg" loading="lazy" alt="成绩计算"/>
+	</a>
+	
+	<figcaption>成绩计算</figcaption>
+	
+</figure></li>
+<li>自行选择学期的考试安排查询，自行选择学期功能是疫情的后遗症。
+<figure>
+	<a href="https://legacy.superbart.top/picture/xdyou/exam.jpg">
+		<img src="https://legacy.superbart.top/picture/xdyou/exam.jpg" loading="lazy" alt="考试查询"/>
+	</a>
+	
+	<figcaption>考试查询</figcaption>
+	
+</figure></li>
+<li>电量查询和欠费查询，这个功能只是在首页上的卡片。</li>
+<li>校园卡流水查询和(如果有的话)校园卡余额查询。 <br/>
+(显示余额功能我考虑到手机支付十分广泛，首页就不显示了)
+<figure>
+	<a href="https://legacy.superbart.top/picture/xdyou/school.card.record.jpg">
+		<img src="https://legacy.superbart.top/picture/xdyou/school.card.record.jpg" loading="lazy" alt="流水查询"/>
+	</a>
+	
+	<figcaption>流水查询</figcaption>
+	
+</figure></li>
+<li>图书馆信息查询，个人借书状况和学校书库状况。 <br/>
+(扫码借书，扫码转借功能担心风险，尚未支持)
+<figure>
+	<a href="https://legacy.superbart.top/picture/xdyou/library.png">
+		<img src="https://legacy.superbart.top/picture/xdyou/library.png" loading="lazy" alt="图书馆信息"/>
+	</a>
+	
+	<figcaption>图书馆信息</figcaption>
+	
+</figure></li>
+<li>西电目录，曾经在疫情封校期间运行的学校综合楼目录 + 食堂目录。
+<figure>
+	<a href="https://legacy.superbart.top/picture/xdyou/xddir.jpg">
+		<img src="https://legacy.superbart.top/picture/xdyou/xddir.jpg" loading="lazy" alt="西电目录"/>
+	</a>
+	
+	<figcaption>西电目录</figcaption>
+	
+</figure></li>
+<li>XDU Planet：查看同学的博客，富含先辈的恩情（学习资料），另该功能代行转发学校教务处通知。
+<figure>
+	<a href="https://legacy.superbart.top/picture/xdyou/xduplanet.jpg">
+		<img src="https://legacy.superbart.top/picture/xdyou/xduplanet.jpg" loading="lazy" alt="XDU Planet"/>
+	</a>
+	
+	<figcaption>XDU Planet</figcaption>
+	
+</figure></li>
+</ol>
+<h2 id="关于相比电表的优势">关于相比电表的优势</h2>
+<p>我的程序打不过电表，这是肯定的。但我可以说出几点我的软件优势。</p>
+<ul>
+<li>我的程序使用 Flutter 开发，天生能适应 iOS 和 Android 两个移动端，使用范围肯定更广。我已经为 iOS 和 Android 都编译了目标端，在双端的运行效率都很流畅。</li>
+<li>我的程序代码完全开源，而且结构清晰明了。我给我的程序编写了<a class="link" href="https://legacy.superbart.top/writing/XDYou%20SAD.html" target="_blank" rel="noopener">架构图介绍</a>。这么做，可以保证别人可以阅读我的代码，然后修改代码，诞生他们学校的学生信息查看应用。而且我确信，这个是最能在开发者方面，保障用户隐私的最好方式。</li>
+<li>我的程序一定程度上适配了横屏，平板使用体验应该更好。看看上面图书馆的图片就能看出来了。</li>
+<li>我的程序很不正经。首先，开发者很不正经，而且保守的不得了；其次，程序里充满了彩蛋，甚至，我的字很好看(不是)。</li>
+</ul>
+<h2 id="关于接下来的任务">关于接下来的任务</h2>
+<ol>
+<li>空闲教室查看功能，这个我感觉使用量应该不高（也许是因为我是个大摆子）</li>
+<li>物理实验查询，我目前不做实验了，所以可能得找人帮忙了()</li>
+<li>校园网流量查询，目前学校校园网免费，啥时候要收费我赶紧写一个</li>
+<li>很多的 WebView 功能，比如报修啥的，我需要进一步研究</li>
+<li>iOS 和 Android 小部件，我需要进一步研究，而且感觉影响不大</li>
+<li>扫码借书，扫码转借。这个我担心会对学校库存有所影响，而且难以测试，所以暂时不写</li>
+</ol>
+<h2 id="关于技术相关">关于技术相关</h2>
+<p>这些东西是进一步介绍我程序里面的技术，很多在我看来不是最优解，欢迎大家指正。</p>
+<p>我之前写了两篇：</p>
+<ul>
+<li>关于我们学校的系统后端，只有一站式服务中心</li>
+<li>关于我程序的架构</li>
+</ul>
+<p>可能以后版本的发行简记不会这么详细了吧。</p>
+<h3 id="课程表">课程表</h3>
+<p>这里我尽量用 MVVC 模式介绍。</p>
+<p>课程表写在了一个 StatefulWidget 里，方便维持一整个页面的状态，这个就是 View 。课程表的业务代码已经全部剥离到 classtable_controller.dart 里面，这个就是 Controller。</p>
+<p>关于如何将 Controller 里数据传输到部件方面，也就是 ViewModel 方面，我使用的 GetX 框架，用了他两个状态管理方式，我再啰嗦一句吧：</p>
+<ul>
+<li><code>.obs + Obx()</code>将数据和状态绑定，部件观察数据更新而进行更新，这个是单向的状态传递;</li>
+<li><code>Controller.update() + 控制器注入或绑定到部件</code>，这个方式可以让部件发起控制器更新，是双向的。</li>
+</ul>
+<p>课程表使用的是后一种，使用 <code>Get.put()</code> 方式，将控制器注入到课程表部件里面。</p>
+<p>最后，是关于 Model 方面，这个是 Repo 里的东西，这里省去。</p>
+<h4 id="数据模型介绍">数据模型介绍</h4>
+<p>这里我先介绍数据模型，也就是我将学校数据处理后的结果。文件在 lib/model/xidian_ids/classtable.dart 。</p>
+<p>提前说明，有关于 json 序列化模板代码可以忽略。</p>
+<h5 id="课程信息">课程信息</h5>
+<p>包括课程名称及序号，教师名称，和班级序号。这里有很多可选选项，只能说学校就这么搞的（）
+涉及到渲染时候判断课程信息相同，我重载了 hashCode 和 == 运算符。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-dart" data-lang="dart"><span class="line"><span class="cl"><span class="err">@</span><span class="n">JsonSerializable</span><span class="p">(</span><span class="nl">explicitToJson:</span> <span class="kc">true</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="kd">class</span> <span class="nc">ClassDetail</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="kt">String</span> <span class="n">name</span><span class="p">;</span> <span class="c1">// 名称
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="kt">String</span><span class="o">?</span> <span class="n">teacher</span><span class="p">;</span> <span class="c1">// 老师
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="kt">String</span><span class="o">?</span> <span class="n">code</span><span class="p">;</span> <span class="c1">// 课程序号
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="kt">String</span><span class="o">?</span> <span class="n">number</span><span class="p">;</span> <span class="c1">// 班级序号
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl">  <span class="c1">/// 略去初始化代码
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl">  <span class="err">@</span><span class="n">override</span>
+</span></span><span class="line"><span class="cl">  <span class="kt">int</span> <span class="kd">get</span> <span class="n">hashCode</span> <span class="o">=&gt;</span> <span class="n">name</span><span class="p">.</span><span class="n">hashCode</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="err">@</span><span class="n">override</span>
+</span></span><span class="line"><span class="cl">  <span class="kt">bool</span> <span class="kd">operator</span> <span class="o">==</span><span class="p">(</span><span class="kt">Object</span> <span class="n">other</span><span class="p">)</span> <span class="o">=&gt;</span>
+</span></span><span class="line"><span class="cl">      <span class="n">other</span> <span class="k">is</span> <span class="n">ClassDetail</span> <span class="o">&amp;&amp;</span>
+</span></span><span class="line"><span class="cl">      <span class="n">other</span><span class="p">.</span><span class="n">runtimeType</span> <span class="o">==</span> <span class="n">runtimeType</span> <span class="o">&amp;&amp;</span>
+</span></span><span class="line"><span class="cl">      <span class="n">name</span> <span class="o">==</span> <span class="n">other</span><span class="p">.</span><span class="n">name</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><h5 id="时间安排">时间安排</h5>
+<p>包括以下部分：</p>
+<ul>
+<li>课程索引，也就是上面课程信息在课程信息数组中的位置。下面我将介绍课程信息数组。</li>
+<li>上课周次，这里我继承了学校处理这个信息的方式。学校返回的是 0 和 1 组成的数组，0 代表这周没课程，1 代表这周有课。</li>
+<li>星期几上课，第几节上课，第几节下课。请注意这里是将一天分成十节课来处理的，课程时间参见文件。</li>
+<li>一个可选的教室信息。</li>
+</ul>
+<p>另外有一个引申变量：</p>
+<ul>
+<li>上课长度就是下课减去上课。</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-dart" data-lang="dart"><span class="line"><span class="cl"><span class="err">@</span><span class="n">JsonSerializable</span><span class="p">(</span><span class="nl">explicitToJson:</span> <span class="kc">true</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="kd">class</span> <span class="nc">TimeArrangement</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="kt">int</span> <span class="n">index</span><span class="p">;</span> <span class="c1">// 课程索引
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="c1">// 返回的是 0 和 1 组成的数组，0 代表这周没课程，1 代表这周有课
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="err">@</span><span class="n">JsonKey</span><span class="p">(</span><span class="nl">name:</span> <span class="s1">&#39;week_list&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">  <span class="kt">String</span> <span class="n">weekList</span><span class="p">;</span> <span class="c1">// 上课周次
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="kt">int</span> <span class="n">day</span><span class="p">;</span> <span class="c1">// 星期几上课
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="kt">int</span> <span class="n">start</span><span class="p">;</span> <span class="c1">// 上课开始
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="kt">int</span> <span class="n">stop</span><span class="p">;</span> <span class="c1">// 上课结束
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="err">@</span><span class="n">JsonKey</span><span class="p">(</span><span class="nl">includeIfNull:</span> <span class="kc">false</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">  <span class="kt">String</span><span class="o">?</span> <span class="n">classroom</span><span class="p">;</span> <span class="c1">// 上课教室
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl">  <span class="kt">int</span> <span class="kd">get</span> <span class="n">step</span> <span class="o">=&gt;</span> <span class="n">stop</span> <span class="o">-</span> <span class="n">start</span><span class="p">;</span> <span class="c1">// 上课长度
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl">  <span class="c1">/// 略去初始化代码
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span>
+</span></span></code></pre></div><h5 id="总体信息">总体信息</h5>
+<p>不仅包括上面提到的东西，还包括：</p>
+<ul>
+<li>学期长度：通过所有时间安排的上课周次数组中，最长的那个。</li>
+<li>开学日期和当前学期代码。</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-dart" data-lang="dart"><span class="line"><span class="cl"><span class="err">@</span><span class="n">JsonSerializable</span><span class="p">(</span><span class="nl">explicitToJson:</span> <span class="kc">true</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="kd">class</span> <span class="nc">ClassTableData</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="kt">int</span> <span class="n">semesterLength</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="kt">String</span> <span class="n">semesterCode</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="kt">String</span> <span class="n">termStartDay</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="n">List</span><span class="o">&lt;</span><span class="n">ClassDetail</span><span class="o">&gt;</span> <span class="n">classDetail</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="n">List</span><span class="o">&lt;</span><span class="n">ClassDetail</span><span class="o">&gt;</span> <span class="n">notArranged</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="n">List</span><span class="o">&lt;</span><span class="n">TimeArrangement</span><span class="o">&gt;</span> <span class="n">timeArrangement</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="c1">/// 略去初始化代码
+</span></span></span></code></pre></div><h4 id="控制器文件">控制器文件</h4>
+<p>控制器里包括了：</p>
+<ul>
+<li>课程数据，默认是空的。</li>
+<li>预先渲染好的课程表数据。</li>
+<li>当前是全学期第几周。</li>
+<li>当前课程信息。</li>
+</ul>
+<h5 id="日期相关计算">日期相关计算</h5>
+<p>首先，我的课程表要处理课次偏移信息，所以在获取学校的开学日期后，还得加减相应的周次，虽然可以不搞的()</p>
+<p>计算利用到开学日期，一个公式就可以解决：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-dart" data-lang="dart"><span class="line"><span class="cl"><span class="n">currentWeek</span> <span class="o">=</span> <span class="p">(</span><span class="n">Jiffy</span><span class="p">.</span><span class="n">now</span><span class="p">().</span><span class="n">dayOfYear</span> <span class="o">-</span>
+</span></span><span class="line"><span class="cl">              <span class="n">Jiffy</span><span class="p">.</span><span class="n">parseFromDateTime</span><span class="p">(</span><span class="n">startDay</span><span class="p">).</span><span class="n">dayOfYear</span><span class="p">)</span> <span class="o">~/</span>
+</span></span><span class="line"><span class="cl">          <span class="m">7</span><span class="p">;</span>
+</span></span></code></pre></div><p>其中 Jiffy 是一个计算时间的库，这里我利用了他计算当前是全年第几天。</p>
+<h5 id="预先渲染好的课程表数据">预先渲染好的课程表数据</h5>
+<p>这里的数据将会在控制器初始化时候生成，在获取到 Repo ，或称 Model ，提供的课程信息后进行合成。</p>
+<p>我这里直接使用了四维度数组，你们可以认为是稀疏矩阵。虽然这不是最优解，但是他还算容易访问；虽然复杂度很高，但是由于数据量很小，对性能影响不大。</p>
+<p>四维度数组是这样的表示：</p>
+<p>周次-星期-第几节课-这节课重叠了几节课</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-dart" data-lang="dart"><span class="line"><span class="cl"><span class="c1">// A list as an index of the classtable items.
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">late</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">List</span><span class="o">&lt;</span><span class="n">List</span><span class="o">&lt;</span><span class="n">List</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&gt;&gt;&gt;</span> <span class="n">pretendLayout</span><span class="p">;</span>
+</span></span></code></pre></div><p>合成方法是：</p>
+<ol>
+<li>生成数组：周次 * 一周七天 * 一天十节课 * 一节课有几门安排。我们计算一下： <br/>
+假设一个学期二十周，没有课程重叠，这就是 20 x 7 x 10 x 1 = 1400 个单元。 <br/>
+数据量确实很小，总体上耗时也是很均衡。所以理论上这是个 O(n4) 复杂度算法，实际上可以认为这是个 O(1) 复杂度算法，这个在接下来渲染时候更加体现。</li>
+<li>遍历每一周的每一天，进行插入课程操作。方法是对时间安排进行遍历，如果在这一天有安排，先将其安排到一个 <code>thisDay</code> 数组，然后对冲突处理后，插入到课程单元种</li>
+<li>关于课程冲突，也就是一个单元内有两个安排，以课程长度长的优先。在步骤中，先对 <code>thisDay</code> 数组进行排序，然后进行插入。</li>
+<li>剩下的单元，如果是空白，插入 -1 索引，表示不存在。</li>
+</ol>
+<p>我解释完了，希望有个人帮我优化一下吧，我算法课成绩太差了:-P</p>
+<p>目前想法是把后面那一堆简化掉，使用一个 Map 词典解决问题，也就是说：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-dart" data-lang="dart"><span class="line"><span class="cl"><span class="kd">typedef</span> <span class="n">Map</span><span class="o">&lt;</span><span class="kt">int</span><span class="p">,</span><span class="n">List</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&gt;</span> <span class="o">=</span> <span class="n">WeekClassTable</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="n">List</span><span class="o">&lt;</span><span class="n">WeekClassTable</span><span class="o">&gt;</span> <span class="n">pretendLayout</span><span class="p">;</span>
+</span></span></code></pre></div><p>其中词典的 int 元素是一周中的第几节课，比如说，周三的第三节课就是 2*7+3 = 17，那它的索引就是 17。</p>
+<h5 id="获取当前时间课次">获取当前时间课次</h5>
+<p>主要是时间段计算，我有一个时间段列表。交替开始结束时间。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-dart" data-lang="dart"><span class="line"><span class="cl"><span class="c1">// Time arrangements.
+</span></span></span><span class="line"><span class="cl"><span class="c1">// Even means start, odd means end.
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">List</span><span class="o">&lt;</span><span class="kt">String</span><span class="o">&gt;</span> <span class="n">time</span> <span class="o">=</span> <span class="p">[</span>
+</span></span><span class="line"><span class="cl">  <span class="s2">&#34;8:30&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="s2">&#34;9:15&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="s2">&#34;9:20&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="s2">&#34;10:05&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="s2">&#34;10:25&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="s2">&#34;11:10&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="s2">&#34;11:15&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="s2">&#34;12:00&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="s2">&#34;14:00&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="s2">&#34;14:45&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="s2">&#34;14:50&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="s2">&#34;15:35&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="s2">&#34;15:55&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="s2">&#34;16:40&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="s2">&#34;16:45&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="s2">&#34;17:30&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="s2">&#34;19:00&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="s2">&#34;19:45&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="s2">&#34;19:55&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="s2">&#34;20:30&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl"><span class="p">];</span>
+</span></span></code></pre></div><ol>
+<li>首先，介于 8:20 到 20:35 之间的时间才进行计算。</li>
+<li>获取当前时间，然后在上面的数组中卡出时间在哪个之后。</li>
+<li>如果那个时间属于上课时间，就是在上课，进行相关课程查找，否则，就是在课间。在课间就要考虑下一节课是啥状况，是和上一节课相同还是下一节课。</li>
+</ol>
+<h4 id="课表渲染">课表渲染</h4>
+<p>课表使用了 StatefulWidget 的原因是，课表渲染需要涉及到一些 View 里面相关的变量，我需要使用 initState 函数初始化，所以就这样了。虽然可以搞个 Stateless 组件，在它的初始化函数中初始化，但是保不齐将来我需要写啥保存页面状态，我就需要有状态了。</p>
+<p>看过我上面的课程表图，可以发现，除了 AppBar ，我的课程表分成上面的周次选择列，和下面的课程表。除此之外，点开课程显示的课程信息又是一个组件。</p>
+<p>这个组件里面定义了很多的常量，这里我不赘述。</p>
+<h5 id="课表页面初始化">课表页面初始化</h5>
+<p>首先介绍三个 Controller ，其中前两个十分重要，因为涉及到页面切换：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-dart" data-lang="dart"><span class="line"><span class="cl"><span class="n">late</span> <span class="n">PageController</span> <span class="n">pageControl</span><span class="p">;</span>  <span class="c1">/// 记录页面信息的控制器
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">late</span> <span class="n">ScrollController</span> <span class="n">rowControl</span><span class="p">;</span> <span class="c1">/// 滚动控制器
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">late</span> <span class="n">BoxDecoration</span> <span class="n">decoration</span><span class="p">;</span>	 <span class="c1">/// 一个 Container 的装饰配置信息
+</span></span></span></code></pre></div><p>第一个 pageControl 涉及到 PageView ，这里就是课程表信息的页面，我们使用这个来方便换页。</p>
+<p>第二个 rowControl 涉及到最上面的周次选择列，控制上面周次选择的滚动。</p>
+<p>前两个控制器共享 currentWeekIndex 这个状态。</p>
+<p>第三个 decoration 就是我课程表可以搞背景的东西，这个我不打算在博文里面说了，因为太简单了。</p>
+<p>页面初始化，本质上就是这三个控制器的初始化了。首先判断当前应该显示第几周的课，然后分别使前两个控制器的初始值在对应的周次，最后初始化背景图（如果有的话）。</p>
+<p>在判断显示周次上，如果当前不在上课周期，判断开学前还是刚放假，然后相应设置为第一周和最后一周。</p>
+<h5 id="最上面的表列">最上面的表列</h5>
+<p>这个是一列按钮，分别是周次按钮，和该周课表大致显示。</p>
+<p>这个东西有个锁，叫做 <code>isTopRowLocked</code> ，保证按下按钮的时候数据的统一性，毕竟页面状态有两个控制器都在读。</p>
+<p>每个按钮都有个函数，这个函数定义如下：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-dart" data-lang="dart"><span class="line"><span class="cl"><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="n">isTopRowLocked</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="n">setState</span><span class="p">(()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="n">currentWeekIndex</span> <span class="o">=</span> <span class="n">index</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="n">pageControl</span><span class="p">.</span><span class="n">animateToPage</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">		<span class="n">index</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">		<span class="nl">curve:</span> <span class="n">Curves</span><span class="p">.</span><span class="n">easeInOutCubic</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">		<span class="nl">duration:</span>
+</span></span><span class="line"><span class="cl">		<span class="kd">const</span> <span class="n">Duration</span><span class="p">(</span><span class="nl">milliseconds:</span> <span class="n">changePageTime</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">	<span class="p">);</span>
+</span></span><span class="line"><span class="cl">	<span class="n">changeTopRow</span><span class="p">(</span><span class="n">index</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">	<span class="p">});</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p>详情查看 <code>_topRow</code> 函数。</p>
+<p>当按下按钮的时候，最顶部的锁锁上，然后刷新状态，这其中：</p>
+<ol>
+<li>设置页面信息为目标页面</li>
+<li>pageControl 控制器进行换页操作，这其中有动画和动画时长。</li>
+<li>最上面表列进行换页操作，然后开锁。</li>
+</ol>
+<p>其中上面换表列的操作比较复杂，因为不是 PageView，每次的偏移量需要提前算好，这也是我将换周次按钮的一些装饰信息写作常量的原因。</p>
+<p>另外，为了适应横屏幕，尤其是手机窄屏幕的横屏幕，我设置了高度 500 px 限制，小于这个数时候，只显示文字，不显示大致课表概览。</p>
+<h5 id="索引行">索引行</h5>
+<p>这一行，在代码里面叫 <code>_middleRow</code>，是用来显示日期信息的。这块代码有三处值得注意：</p>
+<ol>
+<li>需要计算那一周周一的日期。</li>
+<li>今天的颜色需要不一样。</li>
+<li>长宽比不同的时候，字体的颜色不同。</li>
+</ol>
+<h5 id="课程表具体内容">课程表具体内容</h5>
+<p>课程表你可以发现有八列，最左面一列是显示数字索引的，这里不过多说明。右面七列就是课表了。</p>
+<p>关于课表，希望大家还记得我上面说到的稀疏数组，那个数组实际上对应了这里。我们的渲染是按照周一到周日七天七列来处理的。</p>
+<p>每一列都是由若干 classCard 生成的，classCard 需要三个变量：课程索引，课程长度，以及一个冲突课程 Set 。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-dart" data-lang="dart"><span class="line"><span class="cl"><span class="n">Widget</span> <span class="n">classCard</span><span class="p">(</span><span class="kt">int</span> <span class="n">index</span><span class="p">,</span> <span class="kt">double</span> <span class="n">height</span><span class="p">,</span> <span class="n">Set</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">conflict</span><span class="p">)</span>
+</span></span></code></pre></div><p>卡片根据索引来渲染：如果索引是 -1，我们认为这个地方没课，渲染一个空白的卡片占位；如果索引不是 -1，我们将直接渲染对应课程，同时引入一个按钮，在按下去的时候显示所有冲突课程的信息。卡片高度是基于课程表高度计算的，稍后我将介绍。</p>
+<p>当渲染每一周的时候，我们查询在那个稀疏数组中对应的元素，然后提取出第一个元素，也就是给用户渲染的课程信息。然后决定长度，方法是向后遍历，并且累加循环标志变量和长度。这其中，所有在这个范围内的冲突课程都要记录下来，为防止重复信息，使用 Set ，也就是不重复序列。最后，不重复序列去掉 -1 元素，因为代表没有课程信息。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-dart" data-lang="dart"><span class="line"><span class="cl"><span class="k">if</span> <span class="p">(</span><span class="n">index</span> <span class="o">!=</span> <span class="m">0</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="n">List</span><span class="o">&lt;</span><span class="n">Widget</span><span class="o">&gt;</span> <span class="n">thisRow</span> <span class="o">=</span> <span class="p">[];</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">// Choice the day and render it!
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="m">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="m">10</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="c1">// 提取出第一个元素
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>		<span class="kt">int</span> <span class="n">places</span> <span class="o">=</span> <span class="n">controller</span><span class="p">.</span><span class="n">pretendLayout</span><span class="p">[</span><span class="n">weekIndex</span><span class="p">][</span><span class="n">index</span> <span class="o">-</span> <span class="m">1</span><span class="p">][</span><span class="n">i</span><span class="p">].</span><span class="n">first</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">		<span class="c1">// The length to render.
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>		<span class="kt">int</span> <span class="n">count</span> <span class="o">=</span> <span class="m">1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">		<span class="n">Set</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">conflict</span> <span class="o">=</span> 
+</span></span><span class="line"><span class="cl">			<span class="n">controller</span><span class="p">.</span><span class="n">pretendLayout</span><span class="p">[</span><span class="n">weekIndex</span><span class="p">][</span><span class="n">index</span> <span class="o">-</span> <span class="m">1</span><span class="p">][</span><span class="n">i</span><span class="p">].</span><span class="n">toSet</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">        
+</span></span><span class="line"><span class="cl">        <span class="c1">// 决定长度，向后遍历，并且累加循环标志变量和长度
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="k">while</span> <span class="p">(</span><span class="n">i</span> <span class="o">&lt;</span> <span class="m">9</span> <span class="o">&amp;&amp;</span> 
+</span></span><span class="line"><span class="cl">		<span class="n">controller</span><span class="p">.</span><span class="n">pretendLayout</span><span class="p">[</span><span class="n">weekIndex</span><span class="p">][</span><span class="n">index</span> <span class="o">-</span> <span class="m">1</span><span class="p">][</span><span class="n">i</span> <span class="o">+</span> <span class="m">1</span><span class="p">].</span><span class="n">first</span> <span class="o">==</span> 
+</span></span><span class="line"><span class="cl">		<span class="n">places</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">count</span><span class="o">++</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="n">i</span><span class="o">++</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="n">conflict</span><span class="p">.</span><span class="n">addAll</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">				<span class="n">controller</span><span class="p">.</span><span class="n">pretendLayout</span><span class="p">[</span><span class="n">weekIndex</span><span class="p">][</span><span class="n">index</span> <span class="o">-</span> <span class="m">1</span><span class="p">][</span><span class="n">i</span><span class="p">].</span><span class="n">toSet</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">			<span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="c1">// 不重复序列去掉 -1 元素
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="n">conflict</span><span class="p">.</span><span class="n">remove</span><span class="p">(</span><span class="o">-</span><span class="m">1</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="c1">// Generate the row.
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="n">thisRow</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="n">classCard</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">          <span class="n">places</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">          <span class="n">classTableContentHeight</span><span class="p">(</span><span class="n">count</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">          <span class="n">conflict</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="p">));</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="n">thisRow</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p>最后说明课程表高度的计算。页面高度在 800px 是个节点，小于 800 的话，直接乘以 0.85 ，来隐去九十节课；大于 800 的话，页面高度减去上面两层的高度。
+最后，我使用了 <code>SingleChildScrollView</code> 包裹整个课程表，让八列可以同时滚动，防止页面高度小于 800px 的情况。</p>
+<h5 id="课程详细信息">课程详细信息</h5>
+<p>代码在 <code>_buttomInformation</code>函数中，他接受那个冲突课程 Set 。根据这个 Set 提供的索引，输出对应课程的时间信息，和该课程安排在第几周生效。</p>
+<p>(这块我是抄某个同学的，他还提醒我要写上课程序号啥的)</p>
+<p>使用 <code>showDialog</code> 函数弹出信息，弹出的是一个 Column 列，总共是这个时间段内的所有课程。</p>
+<h5 id="未安排课程信息">未安排课程信息</h5>
+<p>很简单地用新页面胡乱搓了个()代码很简单：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-dart" data-lang="dart"><span class="line"><span class="cl"><span class="kd">class</span> <span class="nc">NotArrangedClassList</span> <span class="kd">extends</span> <span class="n">StatelessWidget</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="kd">final</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">ClassDetail</span><span class="o">&gt;</span> <span class="n">list</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="kd">const</span> <span class="n">NotArrangedClassList</span><span class="p">({</span><span class="k">super</span><span class="p">.</span><span class="n">key</span><span class="p">,</span> <span class="kd">required</span> <span class="k">this</span><span class="p">.</span><span class="n">list</span><span class="p">});</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="err">@</span><span class="n">override</span>
+</span></span><span class="line"><span class="cl">  <span class="n">Widget</span> <span class="n">build</span><span class="p">(</span><span class="n">BuildContext</span> <span class="n">context</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">Scaffold</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">      <span class="nl">appBar:</span> <span class="n">AppBar</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">        <span class="nl">title:</span> <span class="kd">const</span> <span class="n">Text</span><span class="p">(</span><span class="s2">&#34;没有时间安排的科目&#34;</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">      <span class="p">),</span>
+</span></span><span class="line"><span class="cl">      <span class="nl">body:</span> <span class="n">dataList</span><span class="o">&lt;</span><span class="n">Card</span><span class="p">,</span> <span class="n">Card</span><span class="o">&gt;</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">        <span class="n">List</span><span class="p">.</span><span class="n">generate</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">          <span class="n">list</span><span class="p">.</span><span class="n">length</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">          <span class="p">(</span><span class="n">index</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="n">Card</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">            <span class="nl">child:</span> <span class="n">ListTile</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">              <span class="nl">title:</span> <span class="n">Text</span><span class="p">(</span><span class="n">list</span><span class="p">[</span><span class="n">index</span><span class="p">].</span><span class="n">name</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">              <span class="nl">subtitle:</span> <span class="n">Text</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">                <span class="s2">&#34;编号: </span><span class="si">${</span><span class="n">list</span><span class="p">[</span><span class="n">index</span><span class="p">].</span><span class="n">code</span><span class="si">}</span><span class="s2"> | </span><span class="si">${</span><span class="n">list</span><span class="p">[</span><span class="n">index</span><span class="p">].</span><span class="n">number</span><span class="si">}</span><span class="se">\n</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl">                <span class="s2">&#34;老师: </span><span class="si">${</span><span class="n">list</span><span class="p">[</span><span class="n">index</span><span class="p">].</span><span class="n">teacher</span> <span class="o">??</span> <span class="s2">&#34;没有数据&#34;</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">              <span class="p">),</span>
+</span></span><span class="line"><span class="cl">            <span class="p">),</span>
+</span></span><span class="line"><span class="cl">          <span class="p">),</span>
+</span></span><span class="line"><span class="cl">        <span class="p">),</span>
+</span></span><span class="line"><span class="cl">        <span class="p">(</span><span class="n">toUse</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="n">toUse</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">      <span class="p">),</span>
+</span></span><span class="line"><span class="cl">    <span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><h3 id="横屏幕和竖屏幕">横屏幕和竖屏幕</h3>
+<p>我的程序做了一点平板的优化，主要是我为了学 Flutter 响应式开发而搞出的副产品。</p>
+<h4 id="如何在-flutter-侦测横屏幕竖屏幕">如何在 Flutter 侦测横屏幕竖屏幕</h4>
+<p>Flutter 本身有很多的属性部件，比如 Theme 用来访问主题属性，Navigator 访问路由栈之类。这里我使用的是 MediaQuery.of(context).size，这是用来侦测当前页面长宽高状态的。实际上，上面我提到的很多高度检测啥的，都是用这个实现的。</p>
+<p>而侦测屏幕位置，有两个思路：</p>
+<ul>
+<li>长宽比，长大于宽就是横着，否则就是竖着。</li>
+<li>之前我看到一篇文章说宽度 480 是个坎，小于算竖着。
+我这里使用了后者的想法，前面的想法我就不写了：</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-dart" data-lang="dart"><span class="line"><span class="cl"><span class="kt">bool</span> <span class="n">isPhone</span><span class="p">(</span><span class="n">context</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="n">MediaQuery</span><span class="p">.</span><span class="n">of</span><span class="p">(</span><span class="n">context</span><span class="p">).</span><span class="n">size</span><span class="p">.</span><span class="n">width</span> <span class="o">&lt;</span> <span class="m">480</span><span class="p">;</span>
+</span></span></code></pre></div><p>顺便说一句 LayoutBuilder， 是用来给部件加约束的组件，具体看官方指南吧。</p>
+<h4 id="我的-bothsideview">我的 BothSideView</h4>
+<p>先给大家看看这玩意到底是个啥东西：</p>
+<p></p><figure>
+	<a href="https://legacy.superbart.top/picture/xdyou/both.side.sheet.gif">
+		<img src="https://legacy.superbart.top/picture/xdyou/both.side.sheet.gif" loading="lazy"/>
+	</a>
+	
+</figure><p></p>
+<p>如你所见，在竖屏的时候，他是从底往上呼出的，跟 <a class="link" href="https://m3.material.io/components/bottom-sheets/guidelines" target="_blank" rel="noopener">BottomSheet</a> 一样；在横屏的时候，他是从右向左呼出的，和 <a class="link" href="https://m3.material.io/components/side-sheets/overview" target="_blank" rel="noopener">SideSheet</a> 一样。</p>
+<p>Flutter 的 Material 框架本身没有实现 SideSheet ，而对于横屏来说，BottomSheet 是十分浪费屏幕，而且不太好看，从左面呼出是更合适的。得亏有很多的大佬，自行实现了 SideSheet 插件，我可以直接拿来使用他们的概念，但我想把这两个结合在一起。</p>
+<p>而为啥要将这两个东西合在一起呢？这就涉及到实际使用中，我们是如何呼出 BottomSheet 了。</p>
+<p>呼出 BottomSheet 和呼出 Dialog 一样，是使用了一个函数，在这里，叫 <code>showBottomSheet</code>。这玩意有个问题，他本质上是往路由栈里面压入一个 BottomSheet 页面栈，也就是说，无论横屏幕还是竖屏幕，他永远是 BottomSheet，而不会变化一点。我一开始用了 SideSheet，结果发现横屏开了 SideSheet，竖屏过来了还是 SideSheet，他们之间不会互相转化。</p>
+<p>那我就缝合吧，SideSheet 好办，抄过来先辈的代码就好了，顺便我抄过来使用 <code>showGeneralDialog</code> 来显示弹窗了。但是 BottomSheet 本身并没有任何代码资料，我只能自己写了。我使用了 StatefulWidget 来保存 heightForVertical 变量，这是个高度变量，默认为页面高度的 80% 。然后我使用了一个 GestureDetector ，手势侦测器。这个侦测器在拖拽最上面的小横杠时候进行当前高度检测，然后更新高度。这里我将收起的高度定为页面高度的 40% 。</p>
+<p>这里我说明一下 BottomSheet 和 SideSheet 的特点，他们都可以分成两个部分，上面的和下面的。下面的是传参传进来的部件，上面的就是属于部件的东西了。</p>
+<p>最后再说一句，原来的 SideSheet 的最上面是使用 <code>AppBar</code> 实现的，但是 AppBar 会侦测手机的状态栏，最终导致在某些情况下，上面的高度过高。我被迫自行实现了这里，搞得很难看。</p>
+<p>现在我贴出来代码，欢迎改善完发个包：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-dart" data-lang="dart"><span class="line"><span class="cl"><span class="k">import</span> <span class="s1">&#39;package:flutter/material.dart&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">import</span> <span class="s1">&#39;package:watermeter/page/widget.dart&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">class</span> <span class="nc">BothSideSheet</span> <span class="kd">extends</span> <span class="n">StatefulWidget</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="c1">/// child 是子部件，title 是标题，用于 SideSheet
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="kd">final</span> <span class="n">Widget</span> <span class="n">child</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="kd">final</span> <span class="kt">String</span> <span class="n">title</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="kd">const</span> <span class="n">BothSideSheet</span><span class="p">({</span>
+</span></span><span class="line"><span class="cl">    <span class="k">super</span><span class="p">.</span><span class="n">key</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">required</span> <span class="k">this</span><span class="p">.</span><span class="n">child</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">required</span> <span class="k">this</span><span class="p">.</span><span class="n">title</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="p">});</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="c1">// 这里我是抄的那个 SideSheet 组件，他也是写了个静态方法来显示
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="kd">static</span> <span class="kt">void</span> <span class="n">show</span><span class="p">({</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">required</span> <span class="n">BuildContext</span> <span class="n">context</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">required</span> <span class="n">Widget</span> <span class="n">child</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">required</span> <span class="kt">String</span> <span class="n">title</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="p">})</span> <span class="o">=&gt;</span>
+</span></span><span class="line"><span class="cl">      <span class="n">showGeneralDialog</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">        <span class="nl">barrierDismissible:</span> <span class="kc">true</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="nl">context:</span> <span class="n">context</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="nl">pageBuilder:</span> <span class="p">(</span><span class="n">context</span><span class="p">,</span> <span class="n">animation1</span><span class="p">,</span> <span class="n">animation2</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">          <span class="k">return</span> <span class="n">BothSideSheet</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">            <span class="nl">title:</span> <span class="n">title</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="nl">child:</span> <span class="n">child</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">          <span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="p">},</span>
+</span></span><span class="line"><span class="cl">        <span class="nl">barrierLabel:</span> <span class="n">title</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">		<span class="c1">// 这个动画就是从右呼出还是从下面呼出
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="nl">transitionBuilder:</span> <span class="p">(</span><span class="n">context</span><span class="p">,</span> <span class="n">animation</span><span class="p">,</span> <span class="n">secondaryAnimation</span><span class="p">,</span> <span class="n">child</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">          <span class="k">return</span> <span class="n">SlideTransition</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">            <span class="nl">position:</span> <span class="n">Tween</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">              <span class="nl">begin:</span> <span class="n">isPhone</span><span class="p">(</span><span class="n">context</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">                  <span class="o">?</span> <span class="kd">const</span> <span class="n">Offset</span><span class="p">(</span><span class="m">0.0</span><span class="p">,</span> <span class="m">1.0</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">                  <span class="o">:</span> <span class="kd">const</span> <span class="n">Offset</span><span class="p">(</span><span class="m">1.0</span><span class="p">,</span> <span class="m">0.0</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">              <span class="nl">end:</span> <span class="n">Offset</span><span class="p">.</span><span class="n">zero</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="p">).</span><span class="n">chain</span><span class="p">(</span><span class="n">CurveTween</span><span class="p">(</span><span class="nl">curve:</span> <span class="n">Curves</span><span class="p">.</span><span class="n">easeOutCubic</span><span class="p">)).</span><span class="n">animate</span><span class="p">(</span><span class="n">animation</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">            <span class="nl">child:</span> <span class="n">child</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">          <span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="p">},</span>
+</span></span><span class="line"><span class="cl">      <span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="err">@</span><span class="n">override</span>
+</span></span><span class="line"><span class="cl">  <span class="n">State</span><span class="o">&lt;</span><span class="n">BothSideSheet</span><span class="o">&gt;</span> <span class="n">createState</span><span class="p">()</span> <span class="o">=&gt;</span> <span class="n">_BothSideSheetState</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">class</span> <span class="nc">_BothSideSheetState</span> <span class="kd">extends</span> <span class="n">State</span><span class="o">&lt;</span><span class="n">BothSideSheet</span><span class="o">&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="c1">// 这就是 BottomSheet 的高度问题了
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="n">late</span> <span class="kt">double</span> <span class="n">heightForVertical</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="c1">// 这里涉及到 StatefulWidget 的声明周期，这是在 build 之前执行的函数，用来设定高度
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="c1">// 没记错的话，这么写的目的是，防止子组件的某些东西重新加载，这里我快忘了
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="err">@</span><span class="n">override</span>
+</span></span><span class="line"><span class="cl">  <span class="kt">void</span> <span class="n">didChangeDependencies</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">heightForVertical</span> <span class="o">=</span> <span class="n">MediaQuery</span><span class="p">.</span><span class="n">of</span><span class="p">(</span><span class="n">context</span><span class="p">).</span><span class="n">size</span><span class="p">.</span><span class="n">height</span> <span class="o">*</span> <span class="m">0.8</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">super</span><span class="p">.</span><span class="n">didChangeDependencies</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="n">BorderRadius</span> <span class="n">radius</span><span class="p">(</span><span class="n">context</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="n">BorderRadius</span><span class="p">.</span><span class="n">only</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">        <span class="nl">topLeft:</span> <span class="kd">const</span> <span class="n">Radius</span><span class="p">.</span><span class="n">circular</span><span class="p">(</span><span class="m">16</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">        <span class="nl">bottomLeft:</span> <span class="o">!</span><span class="n">isPhone</span><span class="p">(</span><span class="n">context</span><span class="p">)</span> <span class="o">?</span> <span class="kd">const</span> <span class="n">Radius</span><span class="p">.</span><span class="n">circular</span><span class="p">(</span><span class="m">16</span><span class="p">)</span> <span class="o">:</span> <span class="n">Radius</span><span class="p">.</span><span class="n">zero</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="nl">topRight:</span> <span class="n">isPhone</span><span class="p">(</span><span class="n">context</span><span class="p">)</span> <span class="o">?</span> <span class="kd">const</span> <span class="n">Radius</span><span class="p">.</span><span class="n">circular</span><span class="p">(</span><span class="m">16</span><span class="p">)</span> <span class="o">:</span> <span class="n">Radius</span><span class="p">.</span><span class="n">zero</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="nl">bottomRight:</span> <span class="n">Radius</span><span class="p">.</span><span class="n">zero</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">      <span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="kt">double</span> <span class="kd">get</span> <span class="n">width</span> <span class="o">=&gt;</span> <span class="n">isPhone</span><span class="p">(</span><span class="n">context</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">      <span class="o">?</span> <span class="n">MediaQuery</span><span class="p">.</span><span class="n">of</span><span class="p">(</span><span class="n">context</span><span class="p">).</span><span class="n">size</span><span class="p">.</span><span class="n">width</span>
+</span></span><span class="line"><span class="cl">      <span class="o">:</span> <span class="n">MediaQuery</span><span class="p">.</span><span class="n">of</span><span class="p">(</span><span class="n">context</span><span class="p">).</span><span class="n">size</span><span class="p">.</span><span class="n">width</span> <span class="o">*</span> <span class="m">0.4</span> <span class="o">&lt;</span> <span class="m">360</span>
+</span></span><span class="line"><span class="cl">          <span class="o">?</span> <span class="m">360</span>
+</span></span><span class="line"><span class="cl">          <span class="o">:</span> <span class="n">MediaQuery</span><span class="p">.</span><span class="n">of</span><span class="p">(</span><span class="n">context</span><span class="p">).</span><span class="n">size</span><span class="p">.</span><span class="n">width</span> <span class="o">*</span> <span class="m">0.4</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="c1">// 这就是上面的东西，根据 SideSheet 和 BottomSheet 有所不同
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="n">Widget</span> <span class="kd">get</span> <span class="n">onTop</span> <span class="o">=&gt;</span> <span class="n">isPhone</span><span class="p">(</span><span class="n">context</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">      <span class="o">?</span> <span class="n">GestureDetector</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">          <span class="nl">onVerticalDragUpdate:</span> <span class="p">(</span><span class="n">DragUpdateDetails</span> <span class="n">details</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">setState</span><span class="p">(()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">              <span class="n">heightForVertical</span> <span class="o">=</span> <span class="n">MediaQuery</span><span class="p">.</span><span class="n">of</span><span class="p">(</span><span class="n">context</span><span class="p">).</span><span class="n">size</span><span class="p">.</span><span class="n">height</span> <span class="o">-</span>
+</span></span><span class="line"><span class="cl">                  <span class="n">details</span><span class="p">.</span><span class="n">globalPosition</span><span class="p">.</span><span class="n">dy</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">              <span class="k">if</span> <span class="p">(</span><span class="n">heightForVertical</span> <span class="o">&lt;</span>
+</span></span><span class="line"><span class="cl">                  <span class="n">MediaQuery</span><span class="p">.</span><span class="n">of</span><span class="p">(</span><span class="n">context</span><span class="p">).</span><span class="n">size</span><span class="p">.</span><span class="n">height</span> <span class="o">*</span> <span class="m">0.4</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                <span class="n">Navigator</span><span class="p">.</span><span class="n">pop</span><span class="p">(</span><span class="n">context</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">              <span class="p">}</span>
+</span></span><span class="line"><span class="cl">            <span class="p">});</span>
+</span></span><span class="line"><span class="cl">          <span class="p">},</span>
+</span></span><span class="line"><span class="cl">          <span class="nl">child:</span> <span class="n">Container</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">            <span class="nl">height:</span> <span class="m">30</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="nl">width:</span> <span class="kt">double</span><span class="p">.</span><span class="n">infinity</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="nl">color:</span> <span class="n">Theme</span><span class="p">.</span><span class="n">of</span><span class="p">(</span><span class="n">context</span><span class="p">).</span><span class="n">colorScheme</span><span class="p">.</span><span class="n">surface</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="nl">child:</span> <span class="n">Stack</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">              <span class="nl">alignment:</span> <span class="n">AlignmentDirectional</span><span class="p">.</span><span class="n">center</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">              <span class="nl">children:</span> <span class="p">[</span>
+</span></span><span class="line"><span class="cl">                <span class="n">Container</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">                  <span class="nl">color:</span> <span class="n">Colors</span><span class="p">.</span><span class="n">transparent</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                  <span class="nl">width:</span> <span class="kt">double</span><span class="p">.</span><span class="n">infinity</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                <span class="p">),</span>
+</span></span><span class="line"><span class="cl">                <span class="n">Container</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">                  <span class="nl">width:</span> <span class="m">32</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                  <span class="nl">height:</span> <span class="m">4</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                  <span class="nl">decoration:</span> <span class="n">BoxDecoration</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">                    <span class="nl">borderRadius:</span> <span class="n">BorderRadius</span><span class="p">.</span><span class="n">circular</span><span class="p">(</span><span class="m">15</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">                    <span class="nl">color:</span> <span class="n">Theme</span><span class="p">.</span><span class="n">of</span><span class="p">(</span><span class="n">context</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">                        <span class="p">.</span><span class="n">colorScheme</span>
+</span></span><span class="line"><span class="cl">                        <span class="p">.</span><span class="n">onSurfaceVariant</span>
+</span></span><span class="line"><span class="cl">                        <span class="p">.</span><span class="n">withOpacity</span><span class="p">(</span><span class="m">0.4</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">                  <span class="p">),</span>
+</span></span><span class="line"><span class="cl">                <span class="p">)</span>
+</span></span><span class="line"><span class="cl">              <span class="p">],</span>
+</span></span><span class="line"><span class="cl">            <span class="p">),</span>
+</span></span><span class="line"><span class="cl">          <span class="p">),</span>
+</span></span><span class="line"><span class="cl">        <span class="p">)</span>
+</span></span><span class="line"><span class="cl">      <span class="o">:</span> <span class="c1">// 这里就是原先使用 AppBar 的地方，我这里被迫自己写了个类似的
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>		<span class="n">Container</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">          <span class="nl">height:</span> <span class="n">kToolbarHeight</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">          <span class="nl">width:</span> <span class="kt">double</span><span class="p">.</span><span class="n">infinity</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">          <span class="nl">color:</span> <span class="n">Theme</span><span class="p">.</span><span class="n">of</span><span class="p">(</span><span class="n">context</span><span class="p">).</span><span class="n">colorScheme</span><span class="p">.</span><span class="n">surface</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">          <span class="nl">child:</span> <span class="n">Row</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">            <span class="nl">children:</span> <span class="p">[</span>
+</span></span><span class="line"><span class="cl">              <span class="n">IconButton</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">                <span class="nl">onPressed:</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="n">Navigator</span><span class="p">.</span><span class="n">pop</span><span class="p">(</span><span class="n">context</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">                <span class="nl">icon:</span> <span class="kd">const</span> <span class="n">Icon</span><span class="p">(</span><span class="n">Icons</span><span class="p">.</span><span class="n">arrow_back</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">              <span class="p">),</span>
+</span></span><span class="line"><span class="cl">              <span class="n">Text</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">                <span class="n">widget</span><span class="p">.</span><span class="n">title</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                <span class="nl">style:</span> <span class="n">Theme</span><span class="p">.</span><span class="n">of</span><span class="p">(</span><span class="n">context</span><span class="p">).</span><span class="n">textTheme</span><span class="p">.</span><span class="n">titleLarge</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">              <span class="p">),</span>
+</span></span><span class="line"><span class="cl">            <span class="p">],</span>
+</span></span><span class="line"><span class="cl">          <span class="p">),</span>
+</span></span><span class="line"><span class="cl">        <span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="err">@</span><span class="n">override</span>
+</span></span><span class="line"><span class="cl">  <span class="n">Widget</span> <span class="n">build</span><span class="p">(</span><span class="n">BuildContext</span> <span class="n">context</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">Align</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">      <span class="c1">// 使用 Align 来侦测这个组件在右面还是底下
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>      <span class="nl">alignment:</span>
+</span></span><span class="line"><span class="cl">          <span class="n">isPhone</span><span class="p">(</span><span class="n">context</span><span class="p">)</span> <span class="o">?</span> <span class="n">Alignment</span><span class="p">.</span><span class="n">bottomCenter</span> <span class="o">:</span> <span class="n">Alignment</span><span class="p">.</span><span class="n">centerRight</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">      <span class="nl">child:</span> <span class="n">Container</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">        <span class="nl">width:</span> <span class="n">width</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">		<span class="c1">// 页面高度
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="nl">height:</span> <span class="n">isPhone</span><span class="p">(</span><span class="n">context</span><span class="p">)</span> <span class="o">?</span> <span class="n">heightForVertical</span> <span class="o">:</span> <span class="kt">double</span><span class="p">.</span><span class="n">infinity</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="nl">decoration:</span> <span class="n">BoxDecoration</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">          <span class="nl">color:</span> <span class="n">Theme</span><span class="p">.</span><span class="n">of</span><span class="p">(</span><span class="n">context</span><span class="p">).</span><span class="n">colorScheme</span><span class="p">.</span><span class="n">surface</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">          <span class="nl">borderRadius:</span> <span class="n">radius</span><span class="p">(</span><span class="n">context</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">        <span class="p">),</span>
+</span></span><span class="line"><span class="cl">        <span class="nl">child:</span> <span class="n">Padding</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">          <span class="nl">padding:</span> <span class="n">EdgeInsets</span><span class="p">.</span><span class="n">symmetric</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">            <span class="nl">horizontal:</span> <span class="n">isPhone</span><span class="p">(</span><span class="n">context</span><span class="p">)</span> <span class="o">?</span> <span class="m">15</span> <span class="o">:</span> <span class="m">10</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="nl">vertical:</span> <span class="n">isPhone</span><span class="p">(</span><span class="n">context</span><span class="p">)</span> <span class="o">?</span> <span class="m">0</span> <span class="o">:</span> <span class="m">10</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">          <span class="p">),</span>
+</span></span><span class="line"><span class="cl">          <span class="nl">child:</span> <span class="n">Scaffold</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">            <span class="nl">extendBodyBehindAppBar:</span> <span class="kc">true</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="nl">appBar:</span> <span class="n">isPhone</span><span class="p">(</span><span class="n">context</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">                <span class="o">?</span> <span class="n">PreferredSize</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">                    <span class="nl">preferredSize:</span> <span class="kd">const</span> <span class="n">Size</span><span class="p">.</span><span class="n">fromHeight</span><span class="p">(</span><span class="m">20</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">                    <span class="nl">child:</span> <span class="n">onTop</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                  <span class="p">)</span>
+</span></span><span class="line"><span class="cl">                <span class="o">:</span> <span class="n">PreferredSize</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">                    <span class="nl">preferredSize:</span> <span class="kd">const</span> <span class="n">Size</span><span class="p">.</span><span class="n">fromHeight</span><span class="p">(</span><span class="n">kToolbarHeight</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">                    <span class="nl">child:</span> <span class="n">onTop</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                  <span class="p">),</span>
+</span></span><span class="line"><span class="cl">            <span class="nl">body:</span> <span class="n">widget</span><span class="p">.</span><span class="n">child</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">          <span class="p">),</span>
+</span></span><span class="line"><span class="cl">        <span class="p">),</span>
+</span></span><span class="line"><span class="cl">      <span class="p">),</span>
+</span></span><span class="line"><span class="cl">    <span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><h4 id="pageview-组件使用">PageView 组件使用</h4>
+<p>还是跟组件状态玩命。</p>
+<p>原先，我的首页是抄的 <a class="link" href="https://flutter.github.io/samples/material_3.html" target="_blank" rel="noopener">Flutter 的 M3 实例</a>。这样我就可以在横屏幕时候使用左侧的 <a class="link" href="https://m3.material.io/components/navigation-rail/overview" target="_blank" rel="noopener">NavigationRail</a>，竖屏幕的时候使用底部的 <a class="link" href="https://m3.material.io/components/navigation-bar/overview" target="_blank" rel="noopener">NavigationBar</a>。</p>
+<p>那么，问题在哪？我原先写的组件，将横屏渲染和竖屏渲染函数给分开写了。结果就导致前几天我迁移首页四个卡片到 PageView 的时候，出现了横屏和竖屏切换时候，页面永远会刷新到第一页。一开始我看了好久的 StatefulWidget 的状态周期，我也没明白。最后我发现，我这是两个组件，每次刷新的时候都会重新绘制这两个组件。解决方法就是，将这两个组件合二为一，在一个组件里面渲染，使用 <code>Visibility</code> 组件按需隐藏。</p>
+<h2 id="关于开源的想法">关于开源的想法</h2>
+<p>我对软件，按照开源和开发者，这么看：</p>
+<blockquote>
+<p>个人开发的开源软件或半开源软件 &gt; 集体开发的开源软件 &gt; 个人开发的闭源软件 &gt; 集体开发的半开源软件 &gt; 集体开发的闭源软件</p>
+</blockquote>
+<p>其中，半开源软件请参考 <a class="link" href="https://f-droid.org/zh_Hans/docs/Anti-Features/" target="_blank" rel="noopener">FDroid 的负面特征定义</a>。显然我的软件属于半开源软件，我这个软件实质上模拟了你在浏览器中，对学校后端的访问。</p>
+<p>实际上软件的开源与否，并不重要，重要的是软件本身能不能很好用，而按照我的经验，软件的好用也可以这么排序，尤其是手机端应用()</p>
+<p>所以，我虽然经常说开源很重要，但这个实际上是因为我认为个人开发者的产品更好而导致的。而开源软件放前面，是因为代码开放让人用着更舒服，可能我长期用 Linux 留下来的某种遗留症状。而且我某种意义上，真的不喜欢封闭的东西，虽然我发现大家都喜欢。</p>
+<p>而为啥我要将这个软件按照 MPL 授权，是因为我的软件有很多可以复用的东西，比如上面我大幅度提到的课程表和那个 BothSide 。这些复用的东西我将来是打算做成程序内的 package，如果按照 GPL ，不利于传播。而我目前程序状态，如果使用 MIT 之类的，那可能会有很多的魔改版，然后闭源了。MPL 是按照文件强制开源的，就目前状态所言，假如你只是用了我的课程表代码文件，那么，你只需要开源课程表代码文件+你对这个代码的修改，就好了。</p>
+</body></html>
