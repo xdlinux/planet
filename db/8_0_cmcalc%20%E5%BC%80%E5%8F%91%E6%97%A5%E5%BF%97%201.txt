@@ -1,0 +1,99 @@
+<html><head></head><body><img src="https://legacy.superbart.top/picture/Random/Coding%20to%20a%20cure%20girl.jpg" alt="Featured image of post cmcalc 开发日志 1"/><p>在我醉酒三次之后，今天好歹搓出来一个 Flutter-Rust 的计算器。总结下一些东西吧。</p>
+<h2 id="数学表达式处理器和计算机代数系统">数学表达式处理器和计算机代数系统</h2>
+<p>在我编程之前，我对这俩没啥概念，就是觉得都是计算器:P</p>
+<p>后来我大致上网查了下（顺便唤醒了我死去的数学分析回忆），才知道这俩是有差别的。</p>
+<p>先介绍数学表达式处理器，它的输入是一串字符串，通过预先规定好的文法处理方法，生成语法树用于下一步处理。这个基本上是编译原理的东西，我早忘了，目前只记得的步骤如下：</p>
+<p>首先，在得到字符串后。开发者需要通过一些方式定义并解析符号，也就是一段字符串里面的元素。如果是一串数学表达式，则字符串里面必然包含数字（比如十进制数字1、十六进制数字0xDEADBEFF等），计算符号（加减乘除，乘方运算，积分符号等），特殊数字表达形式（比如pi，e）等符号。在我的印象中，flex 是干这个的。开发者定义后，字符串会通过词法分析（正则表达式狂喜）将字符串中的符号元素标记出来，用于接下来的处理。</p>
+<p>然后，在标识出字符串的元素后，开发者需要对这些符号进行优先级排序和结合性定义，形成易于处理的语法树。语法树作为树数据结构，计算机比较容易处理，并可以从低向上处理这个计算公式，得出该运算公式的运行步骤。这个工作应该是 bison 的特长。定义之后，将这些符号进行排序生成树的过程称为语法分析。这个应该挺抽象的，所以看起来我得举个例子了。</p>
+<p>再之后，开发者要把符号对应的操作定义好。比如说，遇到了数字符号就要将数字字符串转换为数字存储，遇到加法符号就要对他两边的数进行累加，遇到特定数字表达符号pi就要直接引用3.1415926535啥的。这个步骤同上面提到的运算公式运行步骤结合，就能得出字符串的运行结果了。</p>
+<p>上面步骤中，第二部涉及到树，所以抽象。这里用<code>1+pi</code>来说明。再次说明，第一步涉及正则表达式、第二部涉及树的遍历。</p>
+<p>首先定义符号：十进制数字字符串符号[0-9]*，加法符号+，pi符号。将字符串处理后，得到<code>{十进制数字字符串符号1}{加法符号+0}{pi符号}</code>。</p>
+<p>然后定义符号优先级：加法符号+最高，pi符号和十进制数字字符串符号同级。在此基础上，定义加法符号可以两边都有东西，或者只在右边有东西，先观察右边的东西。在此基础上进行排序，获得<code>{加法符号+0}{十进制数字字符串符号1}{pi符号}</code>。将其构成一棵树，就是：</p>
+<pre tabindex="0"><code>      +
+    /   \
+   1    pi
+</code></pre><p>通过这棵树，程序可以得出执行顺序。这里我们程序从树的根<code>+</code>开始处理，先看左下的孩子<code>1</code>，然后看右下的孩子<code>pi</code>，最后看到根自己，得出来运行顺序：</p>
+<pre><code>1. 1 对应的步骤
+2. pi 对应的步骤
+3. + 对应的步骤
+</code></pre>
+<p>在此基础上，拿出开发者定义好的符号对应步骤如下：</p>
+<pre><code>1. 遇到十进制数字字符串符号，使用`parse(String str)-&gt;float`将其转换成浮点数，存到一个临时变量temp1中。
+2. 遇到 pi，直接将其转换成浮点数3.1415926，存到临时变量temp2中。
+3. 遇到加号，分析计算与其结合的符号，然后相加得出结果。相当于`add(left,right)-&gt;float`或者`add(right)-&gt;float`。
+</code></pre>
+<p>将其和上面结合一下，就是：</p>
+<pre><code>1. temp1 &lt;- parse(&#34;1&#34;)
+2. temp2 &lt;- 3.1415926
+3. add(temp1,temp2)
+</code></pre>
+<p>至少大致上是这样，肯定有很多地方我说错了或者和课本上的不太符号，仅供参考。</p>
+<p>上面大致上就是数学表达式处理器要干的事情，也就是很多普通数值计算器要干的事情。至少我碰到的<code>libqalculator</code>@C++，<code>math_parser</code>@Dart，还有这次使用的<code>kalk</code>@Rust，都是干这个用的。这些计算器最大的特点是基于数字进行运算，而在符号运算方面就不太可以了。毕竟日常使用普通计算器时候也没人想让其化简多项式啥的吧。</p>
+<p>这就引出了计算机代数系统，他们是基于符号进行运算的。个人理解是，对于方程中的符号<code>x</code>，<code>y</code>等，他都可以进行运算，而不仅仅是数字啥的。这些系统中，比较出名的开源项目是<code>xcas/giac</code>，它被搭载在大量的计算器上面作为运算引擎。</p>
+<p>本项目最开始的想法是使用数学表达式处理库<code>libqalculate</code>，但是ffi构建失败。然后我转向了<code>xcas/giac</code>计算器代数引擎编译，也是失败。虽然我尝试写好了一些cmake示例，能够下载代码进行编译，但是他们一扔到ffi项目中就不运行了，原因就是不下载编译这些库代码，而仅仅编译了我写的胶水函数。</p>
+<p>最后我转向了 Rust 和 Flutter 协同开发，因为一行代码就能解决，同时可以使用大量的优良 Rust 库。kalker 在 Wikipedia 上面有一段介绍，星标也多，更新还算频繁，同时还有网页版本的图形化界面可以借鉴，于是我用了这个作为高精度计算器的后端。</p>
+<h2 id="回忆计算机积分算法">回忆计算机积分算法</h2>
+<p>说是回忆，是因为大二上有数值分析课讲过，但是我和大多数人一样，一句话都没听过。现在显然吃亏了:P</p>
+<p>kalk 库使用的是牛顿-科特斯公式，将积分区间分成若干区间，在区间节点上计算要积分公式的结果，然后通过一个权重公式得出积分最终结果。本来该软件使用的是辛普森公式变种，精度不高，我给改成波尔的变种，目前pr还在等作者回复，估计他在忙别的事情吧(刚看 reddit 他还挺活跃)。</p>
+<p>同时，我还注意到了高斯-勒格让积分方法，它是直接变换区间后上权重直接代入得出结果。结果更直接，数值精准度相较更高。目前我对该方法和其改进方法比较感兴趣，目前想尝试在 kalker 里面实现。</p>
+<p>上面两个方法都有一定的缺点。首先，必须是定积分，积分区间不能出现无限。同时，积分区间内最好不要有奇异点（比如函数f(x)=1/x，x=0时候是各种无穷），否则会积分不出来。</p>
+<p>至少改这些代码比较简单，没让我对 rust 有多可怕。这些算法在 mathru 项目中都有实现，回来大不了照抄233</p>
+<h2 id="交叉编译">交叉编译</h2>
+<p>kalk 库使用了 rug 库，一个处理高精度浮点数的库。这个库是对高精度运算库 GMP，高精度浮点数库 MPFR 和高精度复数库 MPC 的 Rust 包装。前面提到的库用了 C 和汇编编程，使用 autoconf 来构建。如果要是原生构建还好，但是要是给安卓苹果编译，那就完蛋了，毕竟默认的编译器也不支持他们的平台啊。</p>
+<p>在这方面我一方面将 kalk 库的精度降低，先使用 64 位浮点数混几天日子，一方面想找个合适的浮点数库换掉 rug 。然后花了两天半一无所获，不仅被 rust 本身恶心到了，那啥借用引用所有权原则，而且找的库不是功能太缺，就是根本没完成。这里我提一下 malachite，这个库就差浮点数没实现了，目标是借鉴前面提到库的算法，完成一个高效率的高精度数学库。目前我很看好。</p>
+<p>最后也不知道我看到了啥，说安卓的开发套装里面有 clang 编译器可以直接用。这下可把我乐坏了，改下变量让其直接用编译器交叉编译就好了啊。于是下面这个脚本诞生了。我相信，如果将来我要将 C++ 库搞到安卓或者苹果，这将是个很好的参考。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="cp">#!/bin/bash
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span><span class="k">if</span> <span class="o">[</span><span class="nv">$NDK_TOOLCHAIN</span> <span class="o">==</span> <span class="s2">&#34;&#34;</span><span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">echo</span> <span class="s2">&#34;Please export NDK_TOOLCHAIN in your shell.&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">exit</span> <span class="m">1</span>
+</span></span><span class="line"><span class="cl"><span class="k">fi</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nb">declare</span> -A <span class="nv">platform</span><span class="o">=([</span><span class="s2">&#34;android-arm64&#34;</span><span class="o">]=</span><span class="s2">&#34;aarch64-linux-android&#34;</span> <span class="o">[</span><span class="s2">&#34;android-arm&#34;</span><span class="o">]=</span><span class="s2">&#34;armv7a-linux-androideabi&#34;</span> <span class="o">[</span><span class="s2">&#34;android-x64&#34;</span><span class="o">]=</span><span class="s2">&#34;x86_64-linux-android&#34;</span><span class="o">)</span>
+</span></span><span class="line"><span class="cl"><span class="nb">export</span> <span class="nv">LD</span><span class="o">=</span><span class="s2">&#34;</span><span class="nv">$NDK_TOOLCHAIN</span><span class="s2">/bin/ld&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nb">export</span> <span class="nv">RANLIB</span><span class="o">=</span><span class="s2">&#34;</span><span class="nv">$NDK_TOOLCHAIN</span><span class="s2">/bin/llvm-ranlib&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nb">export</span> <span class="nv">STRIP</span><span class="o">=</span><span class="s2">&#34;</span><span class="nv">$NDK_TOOLCHAIN</span><span class="s2">/bin/llvm-strip&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nb">export</span> <span class="nv">AR</span><span class="o">=</span><span class="s2">&#34;</span><span class="nv">$NDK_TOOLCHAIN</span><span class="s2">/bin/llvm-ar&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">for</span> i in <span class="s2">&#34;</span><span class="si">${</span><span class="p">!platform[@]</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">;</span> <span class="k">do</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">echo</span> <span class="nv">$i</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">echo</span> <span class="s2">&#34;</span><span class="si">${</span><span class="nv">platform</span><span class="p">[</span><span class="nv">$i</span><span class="p">]</span><span class="si">}</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">export</span> <span class="nv">CC</span><span class="o">=</span><span class="s2">&#34;</span><span class="nv">$NDK_TOOLCHAIN</span><span class="s2">/bin/</span><span class="si">${</span><span class="nv">platform</span><span class="p">[</span><span class="nv">$i</span><span class="p">]</span><span class="si">}</span><span class="s2">21-clang&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">export</span> <span class="nv">AS</span><span class="o">=</span><span class="nv">$CC</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">export</span> <span class="nv">CXX</span><span class="o">=</span><span class="s2">&#34;</span><span class="nv">$NDK_TOOLCHAIN</span><span class="s2">/bin/a</span><span class="si">${</span><span class="nv">platform</span><span class="p">[</span><span class="nv">$i</span><span class="p">]</span><span class="si">}</span><span class="s2">-clang++&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">export</span> <span class="nv">CXXCPP</span><span class="o">=</span><span class="s2">&#34;</span><span class="nv">$NDK_TOOLCHAIN</span><span class="s2">/bin/clang -E&#34;</span>
+</span></span><span class="line"><span class="cl">    flutter build apk --split-per-abi --target-platform<span class="o">=</span><span class="nv">$i</span>
+</span></span><span class="line"><span class="cl"><span class="k">done</span>
+</span></span></code></pre></div><p>注意上面提到的<code>clang -E</code>，这是C语言的预处理器，一定要设置，否则 GMP 库的 configure 步骤无法通过。同时这样构建的库是风险引入编译器产生的 bug。因为 GMP 使用了大量的汇编，也许会导致编译出来的产物有问题，但是目前交叉编译也没法测试啊:(</p>
+<h2 id="为啥我想写计算器">为啥我想写计算器</h2>
+<p>最近我很孤独，想找对象或者搭子啥的。很显然对于很不讨喜的我来说是比较困难的，于是最近每周我会喝一罐啤酒，反正“啤酒不算酒，就是白水嘛”。有一天晚上我知道了苹果在开发者大会上将平板上的计算器当作特性大加介绍，我对苹果一直以来对批判态度就又一次觉醒了。当然，用笔写完公式直接算很酷，但是计算器本身没啥特色啊。我就想用 Flutter 写个新计算器，顺便练手 ffi 插件到底咋搞的。</p>
+<p>至于市面上目前太多的高级计算器，直接去 F-Droid 搜会有大量超级高级的计算器。所以为了独特一下，我想了东方萌妹子，AI 画图不算版权，大不了我自己练手画二次元画也不是不行，画饼，啥都能画()</p>
+<p>最后来点杂乱的东西一览：</p>
+<h3 id="6月11日-0158">6月11日 01:58</h3>
+<p>pda 下个彩蛋来了，直接集成科学计算器<br/>
+八成会写成 swiftui ，八成会是另一个程序，八成会仿照某卡西欧玩意，八成是两个模式：科学计算器ui或命令行模式，十成是gpl<br/>
+好想把 speedcrouch 给移植过来，不能碾压这玩意，除了笔迹<br/>
+画饼，咋画都行，我喝高了</p>
+<h3 id="7月7日-0130">7月7日 01:30</h3>
+<p>那个为了骂街苹果平板的破计算器终于有了想法：</p>
+<ol>
+<li>琪露诺的数学教室：简单科学计算，可能兼职 LaTeX 代码输出</li>
+<li>灵梦汇率转换器（可能会有 FOSS - 非自由顾虑）</li>
+<li>魔理沙物理转换器，就是第一个加个输入单位的方式？</li>
+<li>幽幽子卡路里计算器（有这个必要吗）</li>
+<li>小石头时间转换器</li>
+<li>早苗积分极限计算器（这个更是说不好）</li>
+<li>xxx(这个真没想好)矩阵计算器（NumPlusPlus）的移植过来就好，估计唯一不用 ffi 的功能。</li>
+<li>xxx(某图书馆管理员)高级输入模式（用户自己看着办吧），兼职高级模式说明书和示例。</li>
+</ol>
+<p>这些玩意基本上就是 Qalculator! 功能，想法就是把 libqalculator 搞成 ffi 让 Flutter 调用。用户界面基本可以大量参考现有案例，等写完了还得找点人花点玩意在上面，反正东方的玩意可以 GPL 。</p>
+<h3 id="7月10日-0058">7月10日 00:58</h3>
+<p>今天被 cmake 气炸</p>
+<h3 id="7月11日-0120">7月11日 01:20</h3>
+<p>两个问题：<br/>
+为啥计算器不是法国人发明的，数学库都是他们写的，数学理论大多也是他们搞的<br/>
+为啥 clang 那么想装成 gcc 招摇过市</p>
+<h3 id="7月12日-0003">7月12日 00:03</h3>
+<p>费了一周时间后，我放弃了 cmake<br/>
+然后被迫被 rust 同化<br/>
+然后原型机出来了</p>
+</body></html>
