@@ -1,0 +1,25 @@
+<html><head></head><body><h2 id="前言">前言</h2>
+<p>有人想不开要学双拼输入法.jpg</p>
+<p>这篇博客打算全部用双拼写，看看我能坚持多久，要是中途放弃了，我会标出来在哪里放弃的。</p>
+<h2 id="摄影">摄影</h2>
+<p><a href="https://blog.woooo.tech/posts/night_talk_001/#%E6%B6%88%E8%B4%B9" target="_blank" rel="external nofollow noopener noreferrer">接上文</a>，最后还是没忍住，花了9999大洋买回了人生中第一台相机，Nikon Zfc。镜头配了两个，一个是 Nikkor 18-140mm f/3.5-6.3 的变焦镜头，后来带出去拍星星发现光圈小的离谱，曝光时间需要很长很长，星轨都出来了，于是又整了个 25mm f/2 的定焦手动镜头。这两个镜头加起来差不多跟相机本体一样贵了。</p>
+<p>要是有时间，我就写篇有关摄影的文章，讲点烂大街的摄影基础知识，这篇就算了。</p>
+<h2 id="拍星星">拍星星</h2>
+<p><code>人类从未停止过对星空的渴望</code> —— 这是谁的台词来着。</p>
+<p>不过确实，我经常半夜两三点出门去便利店整点吃的，有时候难得天气好，路过礼仪广场，抬头就能看到比较亮的星星，比如木星火星天狼星牛郎织女星，如果多驻足一会儿，等眼睛适应了黑暗，还能看见更多一点。不过西电光污染有点过分，即使在半夜三四点，地上的路灯和建筑灯光也能打亮半个天穹。</p>
+<p>有时候觉得这样的景不拍下来可惜了，然后打开手机摄像头，手机表示它什么也看不见，然后开始使劲上调软件曝光，给你生产一张噪点比星星大的照片，就很。。。</p>
+<p>买相机的想法就是那个时候萌生的。</p>
+<p>买回来之后拍了很多张很多张，最开始以为跟手机拍摄应该没什么区别，瞎拍了几十张之后发现没有一张清楚的，于是去请教棒子和以太，看了一些摄影基础知识，然后才拍得像那么回事，堪堪赶上手机拍摄。</p>
+<blockquote>
+<p>：拍了个什么玩意儿</p>
+</blockquote>
+<p>不过西电的光污染还是太严重了，最后拍出来一张差不多能看的。</p>
+<p><img loading="lazy" src="https://blog.woooo.tech/posts/night_talk_003/DSC_0051.jpg" srcset="DSC_0051.jpg?size=small, DSC_0051.jpg?size=medium 1.5x, DSC_0051.jpg?size=large 2x" sizes="auto" data-title="星星" data-alt="星星" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const i of [&#39;style&#39;, &#39;data-title&#39;,&#39;data-alt&#39;,&#39;onerror&#39;,&#39;onload&#39;]){this.removeAttribute(i);}this.dataset.lazyloaded=&#39;&#39;;" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const i of [&#39;style&#39;, &#39;data-title&#39;,&#39;data-alt&#39;,&#39;onerror&#39;,&#39;onload&#39;]){this.removeAttribute(i);}"/></p>
+<p>尽力了，真的尽力了。</p>
+<p>此后又过了大概一个月，迎来了美好的寒假，于是想在村里完成拍星星的夙愿，结果发现三脚架没带，哦嚯，完蛋。</p>
+<p>还好瓦楞屋顶救了我一命。</p>
+<p><img loading="lazy" src="https://blog.woooo.tech/posts/night_talk_003/old_woof.jpg" srcset="old_woof.jpg?size=small, old_woof.jpg?size=medium 1.5x, old_woof.jpg?size=large 2x" sizes="auto" data-title="古典三脚架.jpg" data-alt="古典三脚架.jpg" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const i of [&#39;style&#39;, &#39;data-title&#39;,&#39;data-alt&#39;,&#39;onerror&#39;,&#39;onload&#39;]){this.removeAttribute(i);}this.dataset.lazyloaded=&#39;&#39;;" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const i of [&#39;style&#39;, &#39;data-title&#39;,&#39;data-alt&#39;,&#39;onerror&#39;,&#39;onload&#39;]){this.removeAttribute(i);}"/></p>
+<p>农村光污染情况确实好了很多，最后修出来的照片比我肉眼看到的星星数量还多：</p>
+<p><img loading="lazy" src="https://blog.woooo.tech/posts/night_talk_003/DSC_0474.jpg" srcset="DSC_0474.jpg?size=small, DSC_0474.jpg?size=medium 1.5x, DSC_0474.jpg?size=large 2x" sizes="auto" data-title="肉眼都没看到过这么多" data-alt="肉眼都没看到过这么多" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const i of [&#39;style&#39;, &#39;data-title&#39;,&#39;data-alt&#39;,&#39;onerror&#39;,&#39;onload&#39;]){this.removeAttribute(i);}this.dataset.lazyloaded=&#39;&#39;;" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const i of [&#39;style&#39;, &#39;data-title&#39;,&#39;data-alt&#39;,&#39;onerror&#39;,&#39;onload&#39;]){this.removeAttribute(i);}"/></p>
+<p><img loading="lazy" src="https://blog.woooo.tech/posts/night_talk_003/DSC_0476.jpg" srcset="DSC_0476.jpg?size=small, DSC_0476.jpg?size=medium 1.5x, DSC_0476.jpg?size=large 2x" sizes="auto" data-title="旁边的树效果意外的不错" data-alt="旁边的树效果意外的不错" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const i of [&#39;style&#39;, &#39;data-title&#39;,&#39;data-alt&#39;,&#39;onerror&#39;,&#39;onload&#39;]){this.removeAttribute(i);}this.dataset.lazyloaded=&#39;&#39;;" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const i of [&#39;style&#39;, &#39;data-title&#39;,&#39;data-alt&#39;,&#39;onerror&#39;,&#39;onload&#39;]){this.removeAttribute(i);}"/></p>
+</body></html>

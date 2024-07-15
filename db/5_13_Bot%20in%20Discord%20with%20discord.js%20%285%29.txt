@@ -1,0 +1,1 @@
+<html><head></head><body><p>这是一份非常详细和系统化的利用 NodeJS 进行 Discord bot 开发的教程，本文介绍了什么是响应 response、bot 如何抓取响应、如何删除响应的方法，以及简单拓展介绍了 Discord 所有消息、用户、频道、服务器的统一 ID 类型：Snowflake 类型。</p></body></html>
