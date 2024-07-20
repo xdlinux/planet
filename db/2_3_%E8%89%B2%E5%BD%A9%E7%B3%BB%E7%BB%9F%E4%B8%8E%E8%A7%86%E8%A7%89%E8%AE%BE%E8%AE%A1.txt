@@ -1,0 +1,268 @@
+<html><head></head><body><h2 id="起源">起源</h2>
+<p><strong>光</strong>，<del>一种用来拯救世界的信仰</del> 通常指的是人类眼睛可见的电磁波，<strong>视知觉</strong> 就是对于可见光的知觉。</p>
+<p>可见光只是电磁波谱上介于 400nm - 700nm 之间的部分（也有一些资料定义不同，较窄的定义在 420nm - 680nm 之间，较宽的定义在 380nm - 800nm 之间），在教材上通常以这样一张<a href="https://zh.wikipedia.org/wiki/File:EM_spectrum_zh-hans.svg" target="_blank" rel="external nofollow noopener noreferrer">频谱图</a>来表示：</p>
+<p><img loading="lazy" src="https://blog.woooo.tech/posts/overview_with_colors/EM_spectrum_zh-hans.png" srcset="EM_spectrum_zh-hans.png?size=small, EM_spectrum_zh-hans.png?size=medium 1.5x, EM_spectrum_zh-hans.png?size=large 2x" sizes="auto" data-title="可见光-电磁波谱" data-alt="可见光-电磁波谱" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const i of [&#39;style&#39;, &#39;data-title&#39;,&#39;data-alt&#39;,&#39;onerror&#39;,&#39;onload&#39;]){this.removeAttribute(i);}this.dataset.lazyloaded=&#39;&#39;;" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const i of [&#39;style&#39;, &#39;data-title&#39;,&#39;data-alt&#39;,&#39;onerror&#39;,&#39;onload&#39;]){this.removeAttribute(i);}"/></p>
+<p>每种不同的波长对应的颜色各不相同，因此我们可以根据这个原理制作显示设备，只要找到一种在可控条件下发射不同波长的光的方法就可以了。但是这个想法不现实，首先是设备大小问题。想要制造出任意波长的光需要比较复杂的设备和条件，而这样制造出来的光线还只能显示单个像素。想象一下用这样的技术制造出一个标准1080p显示器，设备本身的大小会十分感人。</p>
+<p>在进一步探索后，20世纪30年代，国际照明委员会（英文：International Commission on Illumination，法文：Commission internationale de l’éclairage，采用法文缩写：CIE）设计了一套色彩系统，用于描述人眼所能感受到的色彩，并对其进行量化。</p>
+<h2 id="cie-1931-色彩空间">CIE 1931 色彩空间</h2>
+<p>经过医学研究，人眼感知色彩主要依靠三种色锥细胞，分别对应红、绿、蓝三种颜色，后来将其称为光的三原色。所以，使用三种原色的光线就可以混合出五彩斑斓的颜色。在此基础上，CIE设计了一个实验，使用四个光源来量化颜色，并招募志愿者通过人眼感知对色彩进行匹配，称之为颜色匹配实验。从这个试验中，CIE最终构建出了一套色彩模型，称为CIE 1931 xyz色彩空间，也可以直接称为CIE 1931色彩空间。</p>
+<h3 id="色彩实验">色彩实验</h3>
+<p>实验过程大致如下：</p>
+<ol>
+<li>通过三个单色光源（红、绿、蓝）发射出三种光线，照射到一个白色的试验板上，汇聚成一个色彩光斑；</li>
+<li>通过另一个单色光源调整出待测光线，照射在刚刚光斑的附近形成另一个光斑；</li>
+<li>使用黑色的不透光材料作为两个光斑的分界线，并移动光源使两个光斑靠在一起；</li>
+<li>实验者通过同时观察左右光斑，并根据观测结果不断调整三个单色光源的强度，使得两个光斑看起来显示出同一种颜色；</li>
+<li>记录三个单色光源的强度，这样就得到了一个颜色的RGB值，被称为三刺激值。</li>
+</ol>
+<p>更加直观的视频描述可以<a href="https://www.bilibili.com/video/BV1E2421c7NM/" target="_blank" rel="external nofollow noopener noreferrer">参考这里</a>，以下实验图像也来自于此。</p>
+<p><img loading="lazy" src="https://blog.woooo.tech/posts/overview_with_colors/color_lab1.png" srcset="color_lab1.png?size=small, color_lab1.png?size=medium 1.5x, color_lab1.png?size=large 2x" sizes="auto" data-title="色彩实验" data-alt="色彩实验" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const i of [&#39;style&#39;, &#39;data-title&#39;,&#39;data-alt&#39;,&#39;onerror&#39;,&#39;onload&#39;]){this.removeAttribute(i);}this.dataset.lazyloaded=&#39;&#39;;" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const i of [&#39;style&#39;, &#39;data-title&#39;,&#39;data-alt&#39;,&#39;onerror&#39;,&#39;onload&#39;]){this.removeAttribute(i);}"/></p>
+<p>在这个实验中，实验者们发现了一个问题：一些待测光线的色彩是无法通过三原色混合出来的，例如下面的例子，想要混合出这种绿色，似乎需要继续降低红光，但是红色光源已经完全关闭了：</p>
+<p><img loading="lazy" src="https://blog.woooo.tech/posts/overview_with_colors/color_lab2.png" srcset="color_lab2.png?size=small, color_lab2.png?size=medium 1.5x, color_lab2.png?size=large 2x" sizes="auto" data-title="待测光线的色彩是无法通过三原色混合出来" data-alt="待测光线的色彩是无法通过三原色混合出来" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const i of [&#39;style&#39;, &#39;data-title&#39;,&#39;data-alt&#39;,&#39;onerror&#39;,&#39;onload&#39;]){this.removeAttribute(i);}this.dataset.lazyloaded=&#39;&#39;;" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const i of [&#39;style&#39;, &#39;data-title&#39;,&#39;data-alt&#39;,&#39;onerror&#39;,&#39;onload&#39;]){this.removeAttribute(i);}"/></p>
+<p>于是实验者通过将红色光源移到右边进行混色，并通过调整使得两边色彩一致：</p>
+<p><img loading="lazy" src="https://blog.woooo.tech/posts/overview_with_colors/color_lab3.png" srcset="color_lab3.png?size=small, color_lab3.png?size=medium 1.5x, color_lab3.png?size=large 2x" sizes="auto" data-title="通过将红色光源移到右边进行混色" data-alt="通过将红色光源移到右边进行混色" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const i of [&#39;style&#39;, &#39;data-title&#39;,&#39;data-alt&#39;,&#39;onerror&#39;,&#39;onload&#39;]){this.removeAttribute(i);}this.dataset.lazyloaded=&#39;&#39;;" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const i of [&#39;style&#39;, &#39;data-title&#39;,&#39;data-alt&#39;,&#39;onerror&#39;,&#39;onload&#39;]){this.removeAttribute(i);}"/></p>
+<p>最终就可以确定出这个颜色的三刺激值了，只不过红色是负的。</p>
+<p>在获取了大量的实验数据后，CIE在亮度-波长坐标系中绘制出了这样3条曲线：</p>
+<p><img loading="lazy" src="https://blog.woooo.tech/posts/overview_with_colors/color_lab_result1.png" srcset="color_lab_result1.png?size=small, color_lab_result1.png?size=medium 1.5x, color_lab_result1.png?size=large 2x" sizes="auto" data-title="色彩混合结果" data-alt="色彩混合结果" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const i of [&#39;style&#39;, &#39;data-title&#39;,&#39;data-alt&#39;,&#39;onerror&#39;,&#39;onload&#39;]){this.removeAttribute(i);}this.dataset.lazyloaded=&#39;&#39;;" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const i of [&#39;style&#39;, &#39;data-title&#39;,&#39;data-alt&#39;,&#39;onerror&#39;,&#39;onload&#39;]){this.removeAttribute(i);}"/></p>
+<p>在这个曲线图中，λ轴代表波长，y轴代表亮度，而三条色彩曲线则代表了要混合出视觉上与此波长光线同等时，红、绿、蓝三种光线的强度。</p>
+<h3 id="cie-1931-rgb-色彩空间">CIE 1931 RGB 色彩空间</h3>
+<p>我们发现了一个问题，在这个坐标系中表示颜色很不直观。于是，CIE又在以RGB亮度为轴的三维坐标系中绘制出了这些点：</p>
+<p><img loading="lazy" src="https://blog.woooo.tech/posts/overview_with_colors/color_space_rgb.png" srcset="color_space_rgb.png?size=small, color_space_rgb.png?size=medium 1.5x, color_space_rgb.png?size=large 2x" sizes="auto" data-title="color_space_rgb.png" data-alt="color_space_rgb.png" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const i of [&#39;style&#39;, &#39;data-title&#39;,&#39;data-alt&#39;,&#39;onerror&#39;,&#39;onload&#39;]){this.removeAttribute(i);}this.dataset.lazyloaded=&#39;&#39;;" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const i of [&#39;style&#39;, &#39;data-title&#39;,&#39;data-alt&#39;,&#39;onerror&#39;,&#39;onload&#39;]){this.removeAttribute(i);}"/></p>
+<p>这样，我们就得到了一个色彩空间定义，称为 CIE 1931 RGB色彩空间。</p>
+<h3 id="格拉斯曼定律">格拉斯曼定律</h3>
+<p><a href="https://zh.wikipedia.org/wiki/%E6%A0%BC%E6%8B%89%E6%96%AF%E6%9B%BC%E5%AE%9A%E5%BE%8B_%28%E8%89%B2%E5%BD%A9%29" target="_blank" rel="external nofollow noopener noreferrer"><strong>格拉斯曼定律</strong></a>是一个关于光学理论的经验法则，它说明了人类对色彩的感知（大约）是<strong>线性</strong>的。</p>
+<p>简单来说，取两个单色可见光，那么这两个可见光在RGB色彩空间里可以用两个坐标 $Color_1 = (R_1, G_1, B_1)$，$Color_2 = (R_2, G_2, B_2)$ 来表示，那么这两个色彩混合一起得到的色彩就可以依照以下的简单加法公式计算出来：</p>
+<p>$$
+Color_1 + Color_2 = (R_1 + R_2, G_1 + G_2, B_1 + B_2)
+$$</p>
+<p>这个公式就是格拉斯曼定律的简单表达。但是请注意格拉斯曼定律是由实验总结得出的，由于现代医学技术的限制，我们无法直接严格证明色彩空间就是一个线性空间。</p>
+<p>格拉斯曼定律的更一般形式可以表达为：</p>
+<p>$$
+\begin{align}
+&amp;R = \int_{0}^{\infty}I(\lambda)\bar{r}(\lambda)d\lambda \\
+&amp;G = \int_{0}^{\infty}I(\lambda)\bar{g}(\lambda)d\lambda \\
+&amp;B = \int_{0}^{\infty}I(\lambda)\bar{b}(\lambda)d\lambda
+\end{align}
+$$</p>
+<p>其中，$ I(\lambda ) $ 为该光束对波长的强度分布；${\displaystyle {\bar {r}}(\lambda )}$，${\displaystyle {\bar {g}}(\lambda )}$，${\displaystyle {\bar {b}}(\lambda )}$ 则分别为人眼中三种锥状细胞对不同波长的反应强度。</p>
+<h3 id="cie-1931-xyz-色彩空间">CIE 1931 XYZ 色彩空间</h3>
+<p>在构建了人类视觉的 RGB 模型之后，CIE 特别委员会的成员希望开发出与 CIE RGB 色彩空间有关的另一个色彩空间，它假定格拉斯曼定律是成立的，这意味着新的色彩空间能够通过线性变换有关于 CIE RGB 色彩空间。</p>
+<p>于是，CIE 1931 XYZ 色彩空间诞生了。在这个色彩空间中，X、Y、Z 三个坐标轴的定义是：</p>
+<p>$$
+\begin{align}
+&amp;X = \int_{0}^{\infty}I(\lambda)\bar{x}(\lambda)d\lambda \\
+&amp;Y = \int_{0}^{\infty}I(\lambda)\bar{y}(\lambda)d\lambda \\
+&amp;Z = \int_{0}^{\infty}I(\lambda)\bar{z}(\lambda)d\lambda
+\end{align}
+$$</p>
+<p>在这个新的色彩空间中，大部分定义与 RGB 色彩空间是相同的，但 XYZ 坐标轴则是歪过来的，这套坐标轴相对于 RGB 坐标轴的大致图例如下：</p>
+<p><img loading="lazy" src="https://blog.woooo.tech/posts/overview_with_colors/color_space_xyz.png" srcset="color_space_xyz.png?size=small, color_space_xyz.png?size=medium 1.5x, color_space_xyz.png?size=large 2x" sizes="auto" data-title="color_space_xyz.png" data-alt="color_space_xyz.png" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const i of [&#39;style&#39;, &#39;data-title&#39;,&#39;data-alt&#39;,&#39;onerror&#39;,&#39;onload&#39;]){this.removeAttribute(i);}this.dataset.lazyloaded=&#39;&#39;;" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const i of [&#39;style&#39;, &#39;data-title&#39;,&#39;data-alt&#39;,&#39;onerror&#39;,&#39;onload&#39;]){this.removeAttribute(i);}"/></p>
+<p>在这个色彩空间中，所有的点都在第一卦限中，因此避免了负值。不过如果仅仅只是为了将所有的点都放在第一卦限中，那其实可以有很多种选择。而 XYZ 色彩空间如此选择的一个重要原因是 Y 轴精确满足了“CIE标准适应光观察者”（CIE 1926）的<a href="https://zh.wikipedia.org/wiki/%E5%85%89%E5%BA%A6%E5%87%BD%E6%95%B0" target="_blank" rel="external nofollow noopener noreferrer">适应光发光效率函数（光度函数）</a> $V(\lambda)$。</p>
+<p>光度函数描述了人眼对于不同波长光的平均视觉灵敏度，可用于将辐射能量转化为可见光的计算。</p>
+<p>从 XYZ 色彩空间中，我们可以通过以下的变换得到 RGB 色彩空间：</p>
+<p>$$
+\begin{align}
+&amp;\left[\begin{array}{c}
+X\\ Y\\ Z\\
+\end{array}\right]=\frac{1}{b_{21}}
+\left[\begin{array}{ccc}
+b_{11}&amp;b_{12}&amp;b_{13}\\
+b_{21}&amp;b_{22}&amp;b_{23}\\
+b_{31}&amp;b_{32}&amp;b_{33}
+\end{array}\right]
+\left[\begin{array}{c}R \\ G\\ B\end{array}\right]
+\\
+&amp;\left[\begin{array}{c}
+X\\ Y\\ Z\\
+\end{array}\right]=\frac{1}{0.17697}
+\left[\begin{array}{lll}
+0.49&amp;0.31&amp;0.20\\
+0.17697&amp;0.81240&amp;0.01063\\
+0.00&amp;0.01&amp;0.99
+\end{array}\right]
+\left[\begin{array}{c}R\\ G \\ B\end{array}\right]
+\end{align}
+$$</p>
+<h3 id="插话绝对色彩空间">插话：绝对色彩空间</h3>
+<p><a href="https://zh.wikipedia.org/wiki/%E7%BB%9D%E5%AF%B9%E8%89%B2%E5%BD%A9%E7%A9%BA%E9%97%B4" target="_blank" rel="external nofollow noopener noreferrer"><strong>绝对色彩空间</strong></a>就是不依赖任何外部因素就可以准确表示颜色的色彩空间。</p>
+<p>RGB 色彩模型（这里指的不是 CIE 1931 RGB 色彩空间）就是一个非绝对色彩空间，因为它的三个坐标轴并没有量化意义，一种颜色是通过RGB三种颜色通过调整亮度混合出来的，而这些颜色并不是标准、精确的定义。在两个不同计算机显示器上，同一个RGB颜色可能看起来大不相同。为了表示 RGB 色彩在绝对色彩中的位置，其中一种方法是定义一个 International Color Consortium（ICC） 色彩配置文件，目前这种方法是业界标准，广泛采用的RGB配置文件有 <a href="https://zh.wikipedia.org/wiki/SRGB%E8%89%B2%E5%BD%A9%E7%A9%BA%E9%97%B4" target="_blank" rel="external nofollow noopener noreferrer">sRGB</a>、<a href="https://zh.wikipedia.org/wiki/Adobe_RGB_%E8%89%B2%E5%BD%A9%E7%A9%BA%E9%97%B4" target="_blank" rel="external nofollow noopener noreferrer">Adobe RGB</a> 等。</p>
+<h3 id="插话白点">插话：白点</h3>
+<p><a href="https://zh.wikipedia.org/wiki/%E7%99%BD%E7%82%B9" target="_blank" rel="external nofollow noopener noreferrer"><strong>白点（white point）</strong></a>，在技术文档中常被称作参考白色（reference white）或目标白色（target white），用来在处理颜色时定义 <strong>白色</strong>。白点通常是在色彩空间中的一个点，它定义了色彩空间中的<strong>中性白色</strong>，并且也定义了色彩空间中的<strong>亮度</strong>。</p>
+<p>白点不是一个绝对的概念，比如说在午后日光的照射下，色彩整体会偏向暖色；而在阴天或者室内冷色 LED 灯的环境下，色彩整体会偏向冷色。但是白点在视觉中的感知是不变的，因此在不同的光照环境下，白点的色彩定义也会有所不同。</p>
+<p>在 <a href="https://zh.wikipedia.org/wiki/SRGB%E8%89%B2%E5%BD%A9%E7%A9%BA%E9%97%B4" target="_blank" rel="external nofollow noopener noreferrer">sRGB</a> 色彩空间中，白点的定义模拟了平均北方天空的日光条件，是以地球上不同地点对日光进行光谱辐射的大量数据为基础，总结出的一组相对光谱功率分布数据，色温为 6500K，近似平均昼光。我们把这个白点称为 <strong>D65 白点（Daylight Neutral）</strong>。</p>
+<h2 id="hsl-和-hsv-色彩空间">HSL 和 HSV 色彩空间</h2>
+<p>HSL（Hue 色相；Saturation 饱和度；Lightness 亮度） 和 HSV（Hue 色相；Saturation 饱和度；Value 明度） 都是将 RGB 色彩模型中的点表示在圆柱坐标系中的方法。这两种表示法试图做到比基于笛卡尔坐标系几何结构的 RGB 模型更加直观。</p>
+<p>其中，Lightness 和 Value 都是表示颜色的亮度，但是它们的含义有所不同，参考下图：</p>
+<p><img loading="lazy" src="https://blog.woooo.tech/posts/overview_with_colors/hsl_hsv_models.webp" srcset="hsl_hsv_models.webp?size=small, hsl_hsv_models.webp?size=medium 1.5x, hsl_hsv_models.webp?size=large 2x" sizes="auto" data-title="hsl_hsv_models.webp" data-alt="hsl_hsv_models.webp" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const i of [&#39;style&#39;, &#39;data-title&#39;,&#39;data-alt&#39;,&#39;onerror&#39;,&#39;onload&#39;]){this.removeAttribute(i);}this.dataset.lazyloaded=&#39;&#39;;" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const i of [&#39;style&#39;, &#39;data-title&#39;,&#39;data-alt&#39;,&#39;onerror&#39;,&#39;onload&#39;]){this.removeAttribute(i);}"/></p>
+<p>HSV以人类更熟悉的方式封装了关于颜色的信息：“这是什么颜色？深浅如何？明暗如何？”，因此在早期被广泛应用于设计行业与计算机设计中。但是HSV仍旧是RGB色彩空间的线性变换，RGB模型的缺点HSV也并没有解决，对于亮度/明度相同的颜色来说，人眼感受到的视觉亮度不一定相同。</p>
+<h2 id="cie-lab-色彩空间">CIE L*a*b* 色彩空间</h2>
+<p>显然，RGB色彩空间很适合机器实现，只需要使用三个单色灯泡即可。但是对于需要量化色彩的设计行业而言，RGB色彩空间却显得不那么直观。在RGB色彩空间里，人眼对于红色的感知程度相对较低，而对绿色的感知程度则相对较高，这导致了使用RGB色彩空间进行色彩搭配的时候，很难保证所选择的色彩能够带给用户“匹配”的感觉，例如很亮的绿色 <code>#00FF00</code> 和很亮的红色 <code>#FF0000</code> 放在一起时，人类倾向于感知到绿色的亮度更高。</p>
+<p><img loading="lazy" src="https://blog.woooo.tech/posts/overview_with_colors/red_green_comp.png" srcset="red_green_comp.png?size=small, red_green_comp.png?size=medium 1.5x, red_green_comp.png?size=large 2x" sizes="auto" data-title="red_green_comp.png" data-alt="red_green_comp.png" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const i of [&#39;style&#39;, &#39;data-title&#39;,&#39;data-alt&#39;,&#39;onerror&#39;,&#39;onload&#39;]){this.removeAttribute(i);}this.dataset.lazyloaded=&#39;&#39;;" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const i of [&#39;style&#39;, &#39;data-title&#39;,&#39;data-alt&#39;,&#39;onerror&#39;,&#39;onload&#39;]){this.removeAttribute(i);}"/></p>
+<p>如上图，显然红色背景下的白色字体可读性更好，而绿色背景下可读性差多了。这是因为红色的视觉亮度更低，与白色的对比度更高。</p>
+<p>如果想要得到一套对于人眼而言亮度更加均匀的颜色，那么使用RGB色彩空间是没有办法直观进行计算的，只能通过设计师的直觉慢慢进行调整，最终得到一个近似的结果。这么做导致调色的过程费事费力，而且最终的效果和设计师本身的经验和水平有很大关系。</p>
+<p>CIE 1931 色彩空间的另一个问题是，它并没有给出估量颜色差别的直接方式。</p>
+<p>测量两个颜色之间的差别的想法是 D.L. MacAdam 开发的并总结于 <a href="https://en.wikipedia.org/wiki/MacAdam_ellipse" target="_blank" rel="external nofollow noopener noreferrer">MacAdam 椭圆</a> 的概念中，而在 XYZ 色彩空间中，两个颜色之间的欧氏距离并不能很好地表示人类视觉系统对于两个颜色之间的<strong>差异</strong>的感知。基于 MacAdam 的工作，在1960年开发了 CIE L*u*v* 色彩空间，并经过改良后得到了 CIE L*a*b* 色彩空间。</p>
+<p><strong>CIELAB 色彩空间（英语：CIELAB color space）</strong> 又写为 L*a*b*，是 CIE 在 1976 年定义的色彩空间，是惯常用来描述人眼可见的所有颜色的最完备的色彩模型。</p>
+<p>在这个模型中，L* 代表颜色的<strong>亮度</strong>（Lightness）（ L* = 0 指示黑色而 L* = 100 指示白色），a* 和 b* 代表颜色的<strong>色度偏移</strong>（a* 指示颜色在红色/品红到绿色之间的位置，负值指示绿色，正值指示品红；b* 指示颜色在黄色和蓝色之间的位置，负值指示蓝色，正值指示黄色）。这个色彩模型用于充当做参照的设备无关的模型，用于描述颜色的感知。</p>
+<p>L*a*b* 色彩空间也可以表达为 L*c*h*，其中 L* 的含义不变，而 c* 代表颜色的<strong>色度</strong>（Chroma），色度的含义与灰度类似，取值越高颜色越鲜艳；而 h* 代表颜色的<strong>色相</strong>（Hue），色相的含义与角度类似，更改色相就可以遍历色彩。下图展示了 L*a*b* 色彩空间在 L* 取不同值的色彩分布，只展示可充入 <a href="https://zh.wikipedia.org/wiki/SRGB%E8%89%B2%E5%BD%A9%E7%A9%BA%E9%97%B4" target="_blank" rel="external nofollow noopener noreferrer">sRGB</a> 色域的颜色（因此可以显示在典型的计算机显示器上）。每个正方形的每个轴取值于 -128 到 127。</p>
+<p><img loading="lazy" src="https://blog.woooo.tech/posts/overview_with_colors/Lab_color_space.png" srcset="Lab_color_space.png?size=small, Lab_color_space.png?size=medium 1.5x, Lab_color_space.png?size=large 2x" sizes="auto" data-title="Lab_color_space.png" data-alt="Lab_color_space.png" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const i of [&#39;style&#39;, &#39;data-title&#39;,&#39;data-alt&#39;,&#39;onerror&#39;,&#39;onload&#39;]){this.removeAttribute(i);}this.dataset.lazyloaded=&#39;&#39;;" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const i of [&#39;style&#39;, &#39;data-title&#39;,&#39;data-alt&#39;,&#39;onerror&#39;,&#39;onload&#39;]){this.removeAttribute(i);}"/></p>
+<h3 id="颜色距离">颜色距离</h3>
+<p>在 L*a*b* 色彩空间中，两个颜色之间的欧氏距离可以很好地表示人类视觉系统对于两个颜色之间的<strong>差异</strong>的感知。在 L*a*b* 中的均匀改变对应在感知颜色中的均匀改变。我们定义两个颜色的欧氏距离为$\Delta E*_{ab}$，那么两个颜色$(L_1^*, a_1^*, b_1^*)$和$(L_2^*, a_2^*, b_2^*)$之间的距离就是：</p>
+<p>$$
+\Delta E*_{ab} = \sqrt{(L_2^* - L_1^*)^2 + (a_2^* - a_1^*)^2 + (b_2^* - b_1^*)^2}
+$$</p>
+<h3 id="rgb--cmyk-与-lab-的转换">RGB / CMYK 与 L*a*b* 的转换</h3>
+<p>从 L*a*b* 色彩空间到 RGB / CMYK 等设备相关色彩的转换是一个复杂的过程，我们需要借助 XYZ 色彩空间作为中间桥梁。</p>
+<h3 id="xyz-与-lab-的转换">XYZ 与 L*a*b* 的转换</h3>
+<p>正向变换：</p>
+<p>$$
+\begin{align}
+&amp;L* = 116 f(\frac{Y}{Y_n}) - 16\\
+&amp;a* = 500(f(\frac{X}{X_n}) - f(\frac{Y}{Y_n}))\\
+&amp;b* = 200(f(\frac{Y}{Y_n}) - f(\frac{Z}{Z_n}))\\
+\end{align}
+$$</p>
+<p>其中 $(X_n, Y_n, Z_n)$ 是参照白点的三刺激值（下标 n 的含义是 <em>Normalized</em>）；其中 $f$ 函数的定义为：</p>
+<p>$$
+f(t) = \begin{cases}
+t^{\frac{1}{3}} &amp; t &gt; (\frac{6}{29})^3 \\
+\frac{1}{3}(\frac{29}{6})^2t + \frac{16}{116} &amp; t \leq (\frac{6}{29})^3
+\end{cases}
+$$</p>
+<p>这里 $f$ 函数被分开定义是为了防止在 $t = 0$ 时的无限斜率，在某个 $t = t_0$ 之下，$f(t)$ 被假定是线性的，并且被假定为匹配函数的 $t^{1/3}$部分在 $t_0$ 处的值和斜率。</p>
+<p>$$
+\begin{align}
+t_0^{1/3} &amp;= at_0 + b\\
+a &amp;= \frac{1}{3t_0^{2/3}}
+\end{align}
+$$</p>
+<p>我们指定一个 $\delta = \frac{6}{29}$，并令 $b = \frac{2}{3}\delta = \frac{16}{116}$，上述两个方程对 $a$ 和 $t_0$ 有解：</p>
+<p>$$
+\begin{align}
+a &amp;= \frac{1}{3\delta^2} &amp;= 7.787037…\\
+t_0 &amp;= \delta^3 &amp;= 0.008856…
+\end{align}
+$$</p>
+<p>逆向变换：</p>
+<p>$$
+\begin{align}
+&amp;f_Y &amp;= \frac{L^* + 16}{116}\\
+&amp;f_X &amp;= f_Y + \frac{a^*}{500}\\
+&amp;f_Z &amp;= f_Y - \frac{b^*}{200}\\
+\end{align}
+$$</p>
+<p>$$
+\begin{align}
+Y &amp;= \begin{cases}
+Y_n(f_Y)^3 &amp; f_Y &gt; \delta \\
+Y_n(f_Y - \frac{16}{116}) 3\delta^2Y_n &amp; f_Y \leq \delta
+\end{cases}\\
+X &amp;= \begin{cases}
+X_n(f_X)^3 &amp; f_X &gt; \delta \\
+X_n(f_X - \frac{16}{116}) 3\delta^2X_n &amp; f_X \leq \delta
+\end{cases}\\
+Z &amp;= \begin{cases}
+Z_n(f_Z)^3 &amp; f_Z &gt; \delta \\
+Z_n(f_Z - \frac{16}{116}) 3\delta^2Z_n &amp; f_Z \leq \delta
+\end{cases}
+\end{align}
+$$</p>
+<h2 id="oklab-色彩空间">OKLAB 色彩空间</h2>
+<p>CIELAB 色彩空间已经基本完备，但是它存在一个小问题：它的<em>色彩预测</em>是不准确的。这里的色彩预测指的是给定色相和饱和度，预测颜色的亮度。但是在 CIELAB 中我们发现，亮度的预测并不是很准确，尤其是对蓝色来说，随着亮度的提高，整体颜色会往紫色偏移。</p>
+<p>而 <a href="https://bottosson.github.io/posts/oklab/" target="_blank" rel="external nofollow noopener noreferrer">OKLAB</a> 通过重新设计色彩空间，解决了这个问题。如下对比图可以看出两者区别：</p>
+<p><img loading="lazy" src="https://blog.woooo.tech/posts/overview_with_colors/lch_blue_hue_difference.avif" srcset="lch_blue_hue_difference.avif?size=small, lch_blue_hue_difference.avif?size=medium 1.5x, lch_blue_hue_difference.avif?size=large 2x" sizes="auto" data-title="lch_blue_hue_difference.avif" data-alt="lch_blue_hue_difference.avif" class="suffix-invalid suffix-invalid__small suffix-invalid__large" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const i of [&#39;style&#39;, &#39;data-title&#39;,&#39;data-alt&#39;,&#39;onerror&#39;,&#39;onload&#39;]){this.removeAttribute(i);}this.dataset.lazyloaded=&#39;&#39;;" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const i of [&#39;style&#39;, &#39;data-title&#39;,&#39;data-alt&#39;,&#39;onerror&#39;,&#39;onload&#39;]){this.removeAttribute(i);}"/></p>
+<p>另外我们还可以对比 HSL/HSV（RGB）色彩空间通过固定亮度和色度颜色渐变：</p>
+<p>HSV:</p>
+<p><img loading="lazy" src="https://blog.woooo.tech/posts/overview_with_colors/hue_hsv.png" srcset="hue_hsv.png?size=small, hue_hsv.png?size=medium 1.5x, hue_hsv.png?size=large 2x" sizes="auto" data-title="HSV" data-alt="HSV" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const i of [&#39;style&#39;, &#39;data-title&#39;,&#39;data-alt&#39;,&#39;onerror&#39;,&#39;onload&#39;]){this.removeAttribute(i);}this.dataset.lazyloaded=&#39;&#39;;" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const i of [&#39;style&#39;, &#39;data-title&#39;,&#39;data-alt&#39;,&#39;onerror&#39;,&#39;onload&#39;]){this.removeAttribute(i);}"/></p>
+<p>OKLAB:</p>
+<p><img loading="lazy" src="https://blog.woooo.tech/posts/overview_with_colors/hue_oklab.png" srcset="hue_oklab.png?size=small, hue_oklab.png?size=medium 1.5x, hue_oklab.png?size=large 2x" sizes="auto" data-title="OKLAB" data-alt="OKLAB" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const i of [&#39;style&#39;, &#39;data-title&#39;,&#39;data-alt&#39;,&#39;onerror&#39;,&#39;onload&#39;]){this.removeAttribute(i);}this.dataset.lazyloaded=&#39;&#39;;" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const i of [&#39;style&#39;, &#39;data-title&#39;,&#39;data-alt&#39;,&#39;onerror&#39;,&#39;onload&#39;]){this.removeAttribute(i);}"/></p>
+<blockquote>
+<p>由于没有一种比较好的办法来比较视觉亮度，这里以灰度做一个简单代替，需要注意的是灰度并不能等同于视觉亮度，只能大致描述。</p>
+</blockquote>
+<p>可以很明显的感知出两者的区别，OKLAB产生的渐变色彩在亮度上更加统一，而且色相的变化更加平滑。</p>
+<p>OKLAB 色彩空间的定义如下：</p>
+<ul>
+<li><strong>L</strong>：视觉亮度；</li>
+<li><strong>a</strong>：颜色有多绿/红；</li>
+<li><strong>b</strong>：颜色有多蓝/黄；</li>
+</ul>
+<p>更常用的是极坐标形式的 $LCh^∘$ 色彩空间，其中</p>
+<p>$$
+C = \sqrt{a^2 + b^2}, h^∘ = \arctan2(b, a)
+$$</p>
+<p>而在实用意义上，$C$ 代表 Chroma，即颜色的饱和度，而 $h^∘$ 代表 Hue，即颜色的色相。</p>
+<p>在<a href="https://lch.oklch.com/#48.934546402228335,57.11239581426788,269.670268110566,100" target="_blank" rel="external nofollow noopener noreferrer">LCH Color Picker &amp; Converter</a>中我们可以直观的调整 OKLAB 色彩的参数，以便更好地理解这个色彩空间：</p>
+<p><img loading="lazy" src="https://blog.woooo.tech/posts/overview_with_colors/oklch_color_picker.webp" srcset="oklch_color_picker.webp?size=small, oklch_color_picker.webp?size=medium 1.5x, oklch_color_picker.webp?size=large 2x" sizes="auto" data-title="oklch_color_picker.webp" data-alt="oklch_color_picker.webp" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const i of [&#39;style&#39;, &#39;data-title&#39;,&#39;data-alt&#39;,&#39;onerror&#39;,&#39;onload&#39;]){this.removeAttribute(i);}this.dataset.lazyloaded=&#39;&#39;;" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const i of [&#39;style&#39;, &#39;data-title&#39;,&#39;data-alt&#39;,&#39;onerror&#39;,&#39;onload&#39;]){this.removeAttribute(i);}"/></p>
+<h3 id="推导">推导</h3>
+<p>为了定义 OKLAB，作者使用了三个数据集：</p>
+<ol>
+<li>使用 CAM16 和正常观看条件生成的具有相同亮度但随机色调和色度的颜色对的生成数据集。颜色仅限于指针色域（即一组可能的表面颜色）内；</li>
+<li>使用 CAM16 和正常观看条件生成的具有相同色度但随机色调和亮度的颜色对的生成数据集。颜色仅限于指针色域（即一组可能的表面颜色）内；</li>
+<li>用于导出 <a href="https://scholarworks.rit.edu/theses/2858/" target="_blank" rel="external nofollow noopener noreferrer">IPT</a> 的<a href="https://doi.org/10.1117/12.298269" target="_blank" rel="external nofollow noopener noreferrer">统一感知色相数据</a>。在这些数据中，颜色被组合成具有相同感知色调的颜色对。</li>
+</ol>
+<p>这些数据集可用于分别测试亮度、色度和色调的<em>预测</em>。如果颜色空间准确地模拟 $L$、$C$ 和 $h$，则亮度数据集中的颜色对应该具有相同的 $L$，色度数据集中的颜色对应该具有相同的 $C$，而色调数据集中的颜色对应该具有相同的 $h$。</p>
+<h3 id="rgb--cmyk-与-oklab-的转换">RGB / CMYK 与 OKLAB 的转换</h3>
+<p>RGB / CMYK 与 OKLAB 的转换同样需要借助 XYZ 色彩空间作为中间桥梁。</p>
+<h3 id="xyz-与-oklab-的转换">XYZ 与 OKLAB 的转换</h3>
+<p>给定 XYZ 坐标中的颜色，D65 白点 和 白色值 Y=1，我们可以通过以下过程计算出 OKLAB 色彩空间中的颜色：</p>
+<p>首先，我们将 XYZ 坐标转换为近似的圆锥响应：</p>
+<p>$$
+\left[
+\begin{array}{c}
+l\\ m\\ s
+\end{array}
+\right] = M_1 \times
+\left[
+\begin{array}{c}
+X\\ Y\\ Z
+\end{array}
+\right]
+$$</p>
+<p>再应用一轮非线性变换：</p>
+<p>$$
+\left[
+\begin{array}{c}
+l’\\ m’\\ s&#39;
+\end{array}
+\right] = \left[
+\begin{array}{c}
+l^{1/3}\\ m^{1/3}\\ s^{1/3}
+\end{array}
+\right]
+$$</p>
+<p>最后将其转换为 $Lab$ 坐标：</p>
+<p>$$
+\left[
+\begin{array}{c}
+L\\ a\\ b
+\end{array}
+\right] = M_2 \times
+\left[
+\begin{array}{c}
+l’\\ m’\\ s&#39;
+\end{array}
+\right]
+$$</p>
+<p>$M_1$ 和 $M_2$ 是两个矩阵，定义如下：</p>
+<p>$$
+\begin{align}
+M_1 = \left[
+\begin{array}{ccc}
++0.8189330101 ​&amp;+0.3618667424 &amp;−0.1288597137\\
++0.0329845436 ​&amp;+0.9293118715 &amp;+0.0361456387\\
++0.0482003018 ​&amp;+0.2643662691 &amp;+0.6338517070
+\end{array}
+\right]
+\\
+M_2 = \left[
+\begin{array}{ccc}
++0.2104542553 &amp;+0.7936177850 &amp;-0.0040720468\\
++1.9779984951 &amp;−2.4285922050 &amp;+0.4505937099\\
++0.0259040371 &amp;+0.7827717662 &amp;-0.8086757660
+\end{array}
+\right]
+\end{align}
+$$</p>
+<p>OKLAB 色彩空间目前已经在现代浏览器中普及，可以通过 CSS 的 <code>oklch()</code> 函数直接使用。</p>
+<p>利用 OKLAB 色彩空间，我们终于能够从人类感官的层面来定义一个颜色，并通过色彩空间模型对整个设计色彩体系进行预测与计算。</p>
+</body></html>
