@@ -1,0 +1,153 @@
+<html><head></head><body><h1><a id="content-目录" href="https://blog.lsy223622.com/archives/14/#content-%E7%9B%AE%E5%BD%95" class="heading-permalink" aria-hidden="true" title="Permalink"></a>目录</h1>
+<ul class="table-of-contents">
+<li>
+<a href="https://blog.lsy223622.com/archives/14/#content-%E7%9B%AE%E5%BD%95">目录</a>
+</li>
+<li>
+<a href="https://blog.lsy223622.com/archives/14/#content-%E4%B9%8B%E5%89%8D%E7%9A%84%E4%B8%BB%E9%A2%98%E5%A4%AA%E4%B8%91%E4%BA%86%E5%95%A6">之前的主题太丑了啦</a>
+</li>
+<li>
+<a href="https://blog.lsy223622.com/archives/14/#content-%E5%AF%BB%E6%89%BE%E6%96%B0%E4%B8%BB%E9%A2%98">寻找新主题！</a>
+</li>
+<li>
+<a href="https://blog.lsy223622.com/archives/14/#content-%E4%B8%BB%E9%A2%98%E5%AE%89%E8%A3%85">主题安装</a>
+<ul>
+<li>
+<a href="https://blog.lsy223622.com/archives/14/#content-%E7%8E%AF%E5%A2%83">环境</a>
+</li>
+<li>
+<a href="https://blog.lsy223622.com/archives/14/#content-%E5%AE%89%E8%A3%85">安装</a>
+</li>
+<li>
+<a href="https://blog.lsy223622.com/archives/14/#content-%E6%9B%B4%E6%96%B0">更新</a>
+</li>
+</ul>
+</li>
+<li>
+<a href="https://blog.lsy223622.com/archives/14/#content-%E4%B8%BB%E9%A2%98%E8%AE%BE%E7%BD%AE">主题设置</a>
+</li>
+<li>
+<a href="https://blog.lsy223622.com/archives/14/#content-%E6%88%AA%E5%9B%BE">截图</a>
+</li>
+</ul>
+<h1><a id="content-之前的主题太丑了啦" href="https://blog.lsy223622.com/archives/14/#content-%E4%B9%8B%E5%89%8D%E7%9A%84%E4%B8%BB%E9%A2%98%E5%A4%AA%E4%B8%91%E4%BA%86%E5%95%A6" class="heading-permalink" aria-hidden="true" title="Permalink"></a>之前的主题太丑了啦</h1>
+<ul>
+<li>刚弄好这个博客的时候随便找了个网上搜到的 <a rel="noopener noreferrer" href="https://github.com/HaoOuBa/Joe" title="Joe 主题">Joe 主题</a>。</li>
+<li>感觉这主题有点。。花里胡哨的，功能确实比较强大，但是花花绿绿的，不能满足我的简约审美，设计风格也有点过时了，符合我对多年老博客的刻板印象。</li>
+</ul>
+<h1><a id="content-寻找新主题" href="https://blog.lsy223622.com/archives/14/#content-%E5%AF%BB%E6%89%BE%E6%96%B0%E4%B8%BB%E9%A2%98" class="heading-permalink" aria-hidden="true" title="Permalink"></a>寻找新主题！</h1>
+<ul>
+<li>在网上搜索之后，发现一个不错的 <a rel="noopener noreferrer" href="https://typechx.com/" title="Typecho 主题模板站">Typecho 主题模板站</a>，在上面翻到了不少比较喜欢的主题，整理如下：</li>
+</ul>
+<blockquote>
+<p><del>（万一以后还想换就能在这里找</del></p>
+</blockquote>
+<table>
+<tbody><tr>
+<td>栏数</td>
+<td>名称</td>
+<td>模板站链接</td>
+<td>GitHub 链接</td>
+</tr>
+<tr>
+<td rowspan="4" colspan="1">单栏</td>
+<td>MeaWord</td>
+<td><a href="https://typechx.com/themes/meaword.html" target="_blank">MeaWord</a></td>
+<td><a href="https://github.com/Meayair/Typecho-Theme-MeaWord" target="_blank">Meayair/Typecho-Theme-MeaWord</a></td>
+</tr>
+<tr>
+<td>DayDream</td>
+<td><a href="https://typechx.com/themes/1592.html" target="_blank">DayDream</a></td>
+<td><a href="https://github.com/Skywt2003/Daydream" target="_blank">Skywt2003/Daydream</a></td>
+</tr>
+<tr>
+<td>Ying</td>
+<td><a href="https://typechx.com/themes/1581.html" target="_blank">Ying</a></td>
+<td><a href="https://github.com/Siuyo/Ying" target="_blank">Siuyo/Ying</a></td>
+</tr>
+<tr>
+<td>Keeping</td>
+<td><a href="https://typechx.com/themes/1327.html" target="_blank">Keeping</a></td>
+<td><a href="https://github.com/adm2369710264/Keeping" target="_blank">adm2369710264/Keeping</a></td>
+</tr>
+<tr>
+<td rowspan="5" colspan="1">双栏</td>
+<td>Anatole</td>
+<td><a href="https://typechx.com/themes/anatole.html" target="_blank">Anatole</a></td>
+<td>似乎没有</td>
+</tr>
+<tr>
+<td>Matcha</td>
+<td><a href="https://typechx.com/themes/1577.html" target="_blank">Matcha</a></td>
+<td><a href="https://github.com/BigCoke233/matcha" target="_blank">BigCoke233/matcha</a></td>
+</tr>
+<tr>
+<td>Initial</td>
+<td><a href="https://typechx.com/themes/1247.html" target="_blank">Initial</a></td>
+<td><a href="https://github.com/jielive/initial" target="_blank">jielive/initial</a></td>
+</tr>
+<tr>
+<td>WIKI</td>
+<td><a href="https://typechx.com/themes/793.html" target="_blank">WIKI</a></td>
+<td>似乎没有</td>
+</tr>
+<tr>
+<td>Eston</td>
+<td><a href="https://typechx.com/themes/eston.html" target="_blank">Eston</a></td>
+<td>似乎没有</td>
+</tr>
+<tr>
+<td rowspan="3" colspan="1">三栏</td>
+<td>Moz</td>
+<td><a href="https://typechx.com/themes/moz.html" target="_blank">Moz</a></td>
+<td><a href="https://github.com/17px/typecho-theme-Moz" target="_blank">17px/typecho-theme-Moz</a></td>
+</tr>
+<tr>
+<td>Jasmine</td>
+<td><a href="https://typechx.com/themes/1566.html" target="_blank">Jasmine</a></td>
+<td><a href="https://github.com/liaocp666/Jasmine" target="_blank">liaocp666/Jasmine</a></td>
+</tr>
+</tbody></table>
+<ul>
+<li>经过漫长的比较，我决定在 <a rel="noopener noreferrer" href="https://github.com/BigCoke233/matcha" title="Matcha">Matcha</a> 和 <a rel="noopener noreferrer" href="https://github.com/liaocp666/Jasmine" title="Jasmine">Jasmine</a> 中选一个。</li>
+<li>犹豫再三之后，我最后选择了 <a rel="noopener noreferrer" href="https://github.com/liaocp666/Jasmine" title="Jasmine">Jasmine</a>。</li>
+</ul>
+<h1><a id="content-主题安装" href="https://blog.lsy223622.com/archives/14/#content-%E4%B8%BB%E9%A2%98%E5%AE%89%E8%A3%85" class="heading-permalink" aria-hidden="true" title="Permalink"></a>主题安装</h1>
+<blockquote>
+<p>官方文档 <a rel="noopener noreferrer" href="https://github.com/liaocp666/Jasmine/wiki/%E4%B8%BB%E9%A2%98%E5%AE%89%E8%A3%85" title="GitHub">GitHub</a></p>
+</blockquote>
+<h2><a id="content-环境" href="https://blog.lsy223622.com/archives/14/#content-%E7%8E%AF%E5%A2%83" class="heading-permalink" aria-hidden="true" title="Permalink"></a>环境</h2>
+<p>需要以下环境运行</p>
+<ul>
+<li>Typecho 1.2+</li>
+<li>PHP 7.2+</li>
+<li>MySQL 5.7+</li>
+</ul>
+<h2><a id="content-安装" href="https://blog.lsy223622.com/archives/14/#content-%E5%AE%89%E8%A3%85" class="heading-permalink" aria-hidden="true" title="Permalink"></a>安装</h2>
+<ul>
+<li>下载主题压缩包 <a rel="noopener noreferrer" href="https://github.com/liaocp666/Jasmine/releases/latest/download/jasmine.zip" title="jasmine.zip">jasmine.zip</a>
+</li>
+<li>解压下载文件，并上传至 <code>usr/themes/</code> 目录下</li>
+<li>启用此主题</li>
+</ul>
+<h2><a id="content-更新" href="https://blog.lsy223622.com/archives/14/#content-%E6%9B%B4%E6%96%B0" class="heading-permalink" aria-hidden="true" title="Permalink"></a>更新</h2>
+<ul>
+<li>在主题选项中，点击创建备份，可备份现有主题选项**（可选）**</li>
+<li>参考安装</li>
+</ul>
+<h1><a id="content-主题设置" href="https://blog.lsy223622.com/archives/14/#content-%E4%B8%BB%E9%A2%98%E8%AE%BE%E7%BD%AE" class="heading-permalink" aria-hidden="true" title="Permalink"></a>主题设置</h1>
+<blockquote>
+<p>官方文档 <a rel="noopener noreferrer" href="https://github.com/liaocp666/Jasmine/wiki/%E8%AE%BE%E7%BD%AE%E6%96%87%E6%A1%A3" title="GitHub">GitHub</a></p>
+</blockquote>
+<p><code>控制台</code>/<code>外观</code>/<code>设置外观</code></p>
+<ul>
+<li>没啥特别的，照文档做就行</li>
+<li>关于站长部分的 <code>GitHub</code> 等信息添加超链接可以使用以下 <code>HTML</code> 代码</li>
+</ul>
+<pre><code class="language-html">&lt;a href=&#34;https://github.com/lsy223622&#34; target=&#34;_blank&#34;&gt;lsy223622&lt;/a&gt;
+</code></pre>
+<h1><a id="content-截图" href="https://blog.lsy223622.com/archives/14/#content-%E6%88%AA%E5%9B%BE" class="heading-permalink" aria-hidden="true" title="Permalink"></a>截图</h1>
+<p><img src="https://blog.lsy223622.com/usr/uploads/2024/04/623228307.png" alt="浅色模式" loading="lazy"/>
+<img src="https://blog.lsy223622.com/usr/uploads/2024/04/595186996.png" alt="深色模式" loading="lazy"/></p>
+
+</body></html>
