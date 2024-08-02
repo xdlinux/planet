@@ -1,1 +1,0 @@
-<html><head></head><body><p>这是一份非常详细和系统化的利用 NodeJS 进行 Discord bot 开发的教程，本文介绍了什么是上下文菜单 Context Menu。该命令仅适用于任何用户在服务器内右键单击任何用户与消息产生的事件，而不适用于此前一直讨论的发送消息 message 产生的事件。</p></body></html>
