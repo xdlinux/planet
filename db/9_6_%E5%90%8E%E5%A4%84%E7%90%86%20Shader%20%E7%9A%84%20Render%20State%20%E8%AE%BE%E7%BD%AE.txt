@@ -1,9 +1,0 @@
-<html><head></head><body><h1 id="后处理-Shader-的-Render-State-设置">后处理 Shader 的 Render State 设置<a class="headerlink" href="https://note.stalomeow.com/blog/posts/unity-postprocess-shader-render-state/#%E5%90%8E%E5%A4%84%E7%90%86-Shader-%E7%9A%84-Render-State-%E8%AE%BE%E7%BD%AE" title="Permanent link">¶</a></h1>
-<!-- more -->
-
-<p>后处理 Shader 或者一些 Blit 用的 Shader，一定要记得加下面几行！</p>
-<div class="highlight"><pre><span></span><code>Cull Off
-ZTest Always
-ZWrite Off
-</code></pre></div>
-<p>不加的话在<strong>某些平台</strong>绘制不了，会被剔除！比如 MuMu 模拟器上，我就遇到过这个问题。</p></body></html>
