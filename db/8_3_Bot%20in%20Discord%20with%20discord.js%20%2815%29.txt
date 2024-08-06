@@ -1,0 +1,1 @@
+<html><head></head><body><p>这是一份非常详细和系统化的利用 NodeJS 进行 Discord bot 开发的教程，本文介绍了可以用于降低服务器压力的命令冷却时间 Cooldown 小技巧。</p></body></html>
