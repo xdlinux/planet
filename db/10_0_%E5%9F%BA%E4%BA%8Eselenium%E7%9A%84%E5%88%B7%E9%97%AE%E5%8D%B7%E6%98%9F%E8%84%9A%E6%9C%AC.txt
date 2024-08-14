@@ -1,0 +1,50 @@
+<html><head></head><body><h2 id="前言"><a href="http://wanglanhuajiaofen.fun/2024/08/14/wjx/#%E5%89%8D%E8%A8%80" class="headerlink" title="前言"></a>前言</h2><p>西安电子科技大学大二下学期有一门课叫做思想政治理论实践课，这门课要求学生收集至少<strong>800份</strong>问卷星问卷(ノへ￣、)，诗人握持(￣_,￣ )<br/>本着之前学过一点selenium，并且发现问卷星问卷只不过是一个网页，并且问卷可以设置每个人可以填无数份，于是就想着用selenium写一个刷问卷星脚本。</p>
+<h2 id="注意"><a href="http://wanglanhuajiaofen.fun/2024/08/14/wjx/#%E6%B3%A8%E6%84%8F" class="headerlink" title="注意"></a>注意</h2><p>该脚本只针对<strong>只有多选</strong>的问卷，如果有其他需求，请直接在github向我提issue<a href="https://github.com/WangLanHuaJiaoFen/-selenium-/issues">王兰花椒粉</a></p>
+<h2 id="环境要求"><a href="http://wanglanhuajiaofen.fun/2024/08/14/wjx/#%E7%8E%AF%E5%A2%83%E8%A6%81%E6%B1%82" class="headerlink" title="环境要求"></a>环境要求</h2><p>Python                    3.11.8<br/>urllib3                   2.2.2<br/>selenium                  4.23.1<br/>pyinstaller               6.10.0</p>
+<p>可以直接用pip/conda进行安装对应版本的包。</p>
+<h2 id="Get-Started"><a href="http://wanglanhuajiaofen.fun/2024/08/14/wjx/#Get-Started" class="headerlink" title="Get Started"></a>Get Started</h2><ul>
+<li><a href="https://github.com/WangLanHuaJiaoFen/-selenium-">点击进入仓库</a>获取代码，或者通过git进行克隆</li>
+<li>获取你问卷的url：微信扫码打开你们的问卷，右上角三个点选择在浏览器打开，打开后复制问卷链接。</li>
+<li><img src="https://s2.loli.net/2024/08/14/zDcB7Zxl8OTIopQ.png" alt="image.png"/><br/>在代码这一行的引号中写入你问卷的url</li>
+<li>然后直接运行即可(如果没有谷歌的webdriver，可以在网上找个教程配一下，注意安装对应版本的chromedriver)。</li>
+</ul>
+<h2 id="关于实现自动化运行"><a href="http://wanglanhuajiaofen.fun/2024/08/14/wjx/#%E5%85%B3%E4%BA%8E%E5%AE%9E%E7%8E%B0%E8%87%AA%E5%8A%A8%E5%8C%96%E8%BF%90%E8%A1%8C" class="headerlink" title="关于实现自动化运行"></a>关于实现自动化运行</h2><p>由于不理解问卷星反爬机制，网上的反爬教程也是老到掉毛了，所以这里只介绍一种实现自动化运行的方法。</p>
+<ul>
+<li>windows<ul>
+<li>安装pyinstaller，在命令行对应环境中输入<code>pip install pyinstaller</code></li>
+<li>安装好后在代码文件夹中运行<pre><code class="hljs bash">pyinstaller -F -w 文件名.py</code></pre></li>
+<li>最后生成的可执行文件在dist文件夹中，直接运行即可。</li>
+</ul>
+</li>
+<li>linux<ul>
+<li>基本步骤和windows一致，不过参数方面有些许不同，可自行查找资料。</li>
+</ul>
+</li>
+</ul>
+<h2 id="设置定时任务"><a href="http://wanglanhuajiaofen.fun/2024/08/14/wjx/#%E8%AE%BE%E7%BD%AE%E5%AE%9A%E6%97%B6%E4%BB%BB%E5%8A%A1" class="headerlink" title="设置定时任务"></a>设置定时任务</h2><ul>
+<li><p>windows</p>
+<ul>
+<li>win+r打开运行，输入<code>taskschd.msc</code>，回车。</li>
+<li><img src="https://s2.loli.net/2024/08/14/5wcWbZQHKjCizP6.png" alt="image-1.png"/>点击创建任务</li>
+<li><img src="https://s2.loli.net/2024/08/14/3iVdRICDuAfEy5n.png" alt="image-2.png"/>输入名称，选择最高权限运行</li>
+<li><img src="https://s2.loli.net/2024/08/14/TbSAux3lJakcFNW.png" alt="image-3.png"/>新建触发器</li>
+<li><img src="https://s2.loli.net/2024/08/14/FPaOYUieSnW4tAy.png" alt="image-4.png"/>按照图示勾选</li>
+<li><img src="https://s2.loli.net/2024/08/14/Wu4gsyP2xSKc6lh.png" alt="image-5.png"/>新建操作</li>
+<li><img src="https://s2.loli.net/2024/08/14/ENFnY6uOp3H7cM1.png" alt="image-6.png"/>在这里点击浏览，选择你生成的可执行文件</li>
+<li>最后点击确定即可。</li>
+</ul>
+</li>
+<li><p>linux</p>
+<ul>
+<li>linux下设置定时任务比较简单，直接在命令行中输入<code>crontab -e</code>，然后按照提示操作即可。</li>
+<li><img src="https://s2.loli.net/2024/08/14/hiCTEHDrcUmgFKJ.png" alt="image-7.png"/>这里给出我设置的定时任务，*/2表示每两分钟执行一次。/home/rongrong/PycharmProjects/pc_wjx/dist/p1c即为可执行文件的路径，p1c为我的可执行文件。后面的表示输入日志文件，可自行修改或者不写即可。</li>
+<li>设置完后在终端输入<pre><code class="hljs bash">crontab -l <span class="hljs-comment"># 查看定时任务列表</span>
+sudo systemctl start cron <span class="hljs-comment"># 开始执行定时任务</span>
+sudo systemctl <span class="hljs-built_in">enable</span> cron <span class="hljs-comment"># 设置开机自动启动定时任务</span></code></pre></li>
+</ul>
+</li>
+</ul>
+<h2 id="结语"><a href="http://wanglanhuajiaofen.fun/2024/08/14/wjx/#%E7%BB%93%E8%AF%AD" class="headerlink" title="结语"></a>结语</h2><p>如果这篇文章对你有帮助，欢迎star/fork(๑•̀ㅂ•́)و✧</p>
+<p>如果有其他需求或者发现bug，欢迎issue/prヽ(✿ﾟ▽ﾟ)ノ</p>
+<p>如果懒得动手，你可以在issue中给我问卷url和联系方式，我把可执行文件直接发给你♪(^∇^*)</p>
+ </body></html>
