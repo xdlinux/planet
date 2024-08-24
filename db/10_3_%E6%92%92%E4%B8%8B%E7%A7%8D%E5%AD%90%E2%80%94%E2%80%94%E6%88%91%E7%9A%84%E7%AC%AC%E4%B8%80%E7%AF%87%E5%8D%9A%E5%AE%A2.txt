@@ -1,3 +1,0 @@
-<html><head></head><body><p>使用WordPress简单搭建了一个个人博客网站，谈谈写博客的原因和今后的准备。</p>
-<p><a href="https://nancunchild.cn/2024/07/10/cultivation_first_blog/">撒下种子——我的第一篇博客</a>最先出现在<a href="https://nancunchild.cn">NanCunChild的个人随想</a>。</p>
-</body></html>
