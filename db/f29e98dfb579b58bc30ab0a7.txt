@@ -1,0 +1,169 @@
+<html><head></head><body><h1 id="游戏注册登录和鉴权">游戏注册、登录和鉴权<a class="headerlink" href="https://note.stalomeow.com/blog/posts/game-register-login-auth/#%E6%B8%B8%E6%88%8F%E6%B3%A8%E5%86%8C%E7%99%BB%E5%BD%95%E5%92%8C%E9%89%B4%E6%9D%83" title="Permanent link">¶</a></h1>
+<!-- more -->
+
+<p>很多游戏公司都会搞一个通行证，官网、旗下所有游戏都用它登录。为了泛用性，这部分用的是 https 协议。我尝试用 golang + <a href="https://github.com/gin-gonic/gin">gin 框架</a> + <a href="https://www.mongodb.com/zh-cn">MongoDB</a> 搞了个类似的服务，包括注册、登录和鉴权。然后，用 C# 写了一套 SDK，方便在 Unity 里用。</p>
+<h2 id="前端大致流程">前端大致流程<a class="headerlink" href="https://note.stalomeow.com/blog/posts/game-register-login-auth/#%E5%89%8D%E7%AB%AF%E5%A4%A7%E8%87%B4%E6%B5%81%E7%A8%8B" title="Permanent link">¶</a></h2>
+<pre class="mermaid"><code>flowchart TD
+    A[尝试自动登录] --&gt;|Old Token| B{后端}
+    B --&gt;|成功，返回 New Token| C[登录成功]
+    B --&gt;|失败| D[登录/注册]
+    D --&gt;|账号密码| B</code></pre>
+<p>登录成功后，每次请求 API 都带上 Token，后端会做鉴权。</p>
+<h2 id="密码传输与保存">密码传输与保存<a class="headerlink" href="https://note.stalomeow.com/blog/posts/game-register-login-auth/#%E5%AF%86%E7%A0%81%E4%BC%A0%E8%BE%93%E4%B8%8E%E4%BF%9D%E5%AD%98" title="Permanent link">¶</a></h2>
+<p>很多人都是所有账号用一个密码，如果一个地方密码明文泄露了，黑客拿去撞库的话，一大堆账号都没了。只要明文不泄露，出意外的时候，损失就能仅仅控制在当前的站点。</p>
+<p>传输密码的时候，用的是 https 协议，一般情况下已经足够安全了。Google 在传输密码时就没额外做加密。百度是自己又做了一次 RSA。还有些网站是前端 hash 一次，把结果作为用户的密码传给后端，不使用密码明文。</p>
+<p>我用的是类似百度的方案。服务器启动时，会生成 RSA 密钥 + 公钥。公钥是公开的，前端直接请求后端 API 就能拿到。密码用公钥加密后传给后端，后端用密钥解密。</p>
+<div class="highlight"><pre><span></span><code><span class="kd">var</span><span class="w"> </span><span class="nx">rsaPrivateKey</span><span class="w"> </span><span class="o">*</span><span class="nx">rsa</span><span class="p">.</span><span class="nx">PrivateKey</span>
+<span class="kd">var</span><span class="w"> </span><span class="nx">rsaPublicKey</span><span class="w"> </span><span class="o">*</span><span class="nx">rsa</span><span class="p">.</span><span class="nx">PublicKey</span>
+<span class="kd">var</span><span class="w"> </span><span class="nx">rsaPublicKeyB64Str</span><span class="w"> </span><span class="kt">string</span>
+
+<span class="kd">func</span><span class="w"> </span><span class="nx">GenerateRSAKeys</span><span class="p">()</span><span class="w"> </span><span class="kt">error</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">privateKey</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">rsa</span><span class="p">.</span><span class="nx">GenerateKey</span><span class="p">(</span><span class="nx">rand</span><span class="p">.</span><span class="nx">Reader</span><span class="p">,</span><span class="w"> </span><span class="mi">1024</span><span class="p">)</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="nx">err</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="nx">rsaPrivateKey</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">privateKey</span>
+<span class="w">    </span><span class="nx">rsaPublicKey</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="o">&amp;</span><span class="nx">privateKey</span><span class="p">.</span><span class="nx">PublicKey</span>
+
+<span class="w">    </span><span class="nx">derPkcs1</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">x509</span><span class="p">.</span><span class="nx">MarshalPKCS1PublicKey</span><span class="p">(</span><span class="nx">rsaPublicKey</span><span class="p">)</span>
+<span class="w">    </span><span class="nx">rsaPublicKeyB64Str</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">base64</span><span class="p">.</span><span class="nx">StdEncoding</span><span class="p">.</span><span class="nx">EncodeToString</span><span class="p">(</span><span class="nx">derPkcs1</span><span class="p">)</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="kc">nil</span>
+<span class="p">}</span>
+
+<span class="kd">func</span><span class="w"> </span><span class="nx">GetRSAPublicKey</span><span class="p">()</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nx">rsaPublicKeyB64Str</span>
+<span class="p">}</span>
+
+<span class="kd">func</span><span class="w"> </span><span class="nx">DecryptStringRSA</span><span class="p">(</span><span class="nx">str</span><span class="w"> </span><span class="kt">string</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="kt">string</span><span class="p">,</span><span class="w"> </span><span class="kt">error</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">data</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">base64</span><span class="p">.</span><span class="nx">StdEncoding</span><span class="p">.</span><span class="nx">DecodeString</span><span class="p">(</span><span class="nx">str</span><span class="p">)</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="s">&#34;&#34;</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="nx">buf</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">rsa</span><span class="p">.</span><span class="nx">DecryptPKCS1v15</span><span class="p">(</span><span class="nx">rand</span><span class="p">.</span><span class="nx">Reader</span><span class="p">,</span><span class="w"> </span><span class="nx">rsaPrivateKey</span><span class="p">,</span><span class="w"> </span><span class="nx">data</span><span class="p">)</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="s">&#34;&#34;</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nb">string</span><span class="p">(</span><span class="nx">buf</span><span class="p">),</span><span class="w"> </span><span class="kc">nil</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>在 Unity 里，C# 部分解析 RSA 公钥的方法是不能用的，会报 <code>PlatformNotSupportedException</code>，原因不明。可以用开源的 Bouncy Castle 来解析公钥：</p>
+<ul>
+<li><a href="https://www.bouncycastle.org/csharp/">Bouncy Castle 官网</a></li>
+<li><a href="https://github.com/bcgit/bc-csharp">Bouncy Castle GitHub 镜像</a></li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="k">public</span><span class="w"> </span><span class="n">RSA</span><span class="w"> </span><span class="nf">CreateRSA</span><span class="p">()</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="kt">var</span><span class="w"> </span><span class="n">provider</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">RSACryptoServiceProvider</span><span class="p">();</span>
+<span class="w">    </span><span class="n">provider</span><span class="p">.</span><span class="n">ImportParameters</span><span class="p">(</span><span class="n">ParsePKCS1DERPublicKey</span><span class="p">(</span><span class="n">Data</span><span class="p">));</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">provider</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="c1">// 解析 DER 格式的 PKCS#1 公钥</span>
+<span class="k">private</span><span class="w"> </span><span class="k">static</span><span class="w"> </span><span class="n">RSAParameters</span><span class="w"> </span><span class="nf">ParsePKCS1DERPublicKey</span><span class="p">(</span><span class="kt">string</span><span class="w"> </span><span class="n">derPublicKey</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="c1">// 将 DER 编码的公钥转换为字节数组</span>
+<span class="w">    </span><span class="kt">byte</span><span class="p">[]</span><span class="w"> </span><span class="n">derBytes</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Convert</span><span class="p">.</span><span class="n">FromBase64String</span><span class="p">(</span><span class="n">derPublicKey</span><span class="p">);</span>
+
+<span class="w">    </span><span class="c1">// 使用 BouncyCastle 进行 DER 解码</span>
+<span class="w">    </span><span class="n">Asn1Object</span><span class="w"> </span><span class="n">obj</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Asn1Object</span><span class="p">.</span><span class="n">FromByteArray</span><span class="p">(</span><span class="n">derBytes</span><span class="p">);</span>
+<span class="w">    </span><span class="n">RsaPublicKeyStructure</span><span class="w"> </span><span class="n">rsaPubKey</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">RsaPublicKeyStructure</span><span class="p">.</span><span class="n">GetInstance</span><span class="p">(</span><span class="n">obj</span><span class="p">);</span>
+
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">RSAParameters</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">Modulus</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rsaPubKey</span><span class="p">.</span><span class="n">Modulus</span><span class="p">.</span><span class="n">ToByteArrayUnsigned</span><span class="p">(),</span>
+<span class="w">        </span><span class="n">Exponent</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rsaPubKey</span><span class="p">.</span><span class="n">PublicExponent</span><span class="p">.</span><span class="n">ToByteArrayUnsigned</span><span class="p">()</span>
+<span class="w">    </span><span class="p">};</span>
+<span class="p">}</span>
+
+<span class="k">private</span><span class="w"> </span><span class="k">static</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">EncryptStringRSA</span><span class="p">(</span><span class="n">RSA</span><span class="w"> </span><span class="n">rsa</span><span class="p">,</span><span class="w"> </span><span class="k">ref</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="n">str</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="kt">byte</span><span class="p">[]</span><span class="w"> </span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Encoding</span><span class="p">.</span><span class="n">UTF8</span><span class="p">.</span><span class="n">GetBytes</span><span class="p">(</span><span class="n">str</span><span class="p">);</span>
+<span class="w">    </span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rsa</span><span class="p">.</span><span class="n">Encrypt</span><span class="p">(</span><span class="n">data</span><span class="p">,</span><span class="w"> </span><span class="n">RSAEncryptionPadding</span><span class="p">.</span><span class="n">Pkcs1</span><span class="p">);</span>
+<span class="w">    </span><span class="n">str</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Convert</span><span class="p">.</span><span class="n">ToBase64String</span><span class="p">(</span><span class="n">data</span><span class="p">,</span><span class="w"> </span><span class="n">Base64FormattingOptions</span><span class="p">.</span><span class="n">None</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>保存密码时，不能用可逆加密，更不能直接存明文。<a href="https://zh.wikipedia.org/wiki/2011%E5%B9%B4%E4%B8%AD%E5%9B%BD%E7%BD%91%E7%AB%99%E7%94%A8%E6%88%B7%E4%BF%A1%E6%81%AF%E6%B3%84%E9%9C%B2%E4%BA%8B%E4%BB%B6">2011 年中国网站用户信息泄露事件</a> 中 CSDN 就因此泄露了大量密码。</p>
+<p>现在一般都是给密码加盐（salt）再 hash，然后存进数据库。加盐就是给密码加上一个<strong>长长长长的随机字符串，每个用户都不一样</strong>。这样相当于提高了密码强度，而且相同密码的不同用户的 hash 值是不一样的。黑客就很难再建立彩虹表（Rainbow table）逆向 hash。</p>
+<h3 id="Bcrypt-算法">Bcrypt 算法<a class="headerlink" href="https://note.stalomeow.com/blog/posts/game-register-login-auth/#Bcrypt-%E7%AE%97%E6%B3%95" title="Permanent link">¶</a></h3>
+<p>golang 内置了 <a href="https://pkg.go.dev/golang.org/x/crypto/bcrypt">bcrypt 算法</a>。</p>
+<ul>
+<li>
+<p>生成 Hash</p>
+<div class="highlight"><pre><span></span><code><span class="c1">// bcrypt 算法将盐和 hash 结果拼在一起存进 passwordHash 里</span>
+<span class="nx">passwordHash</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">bcrypt</span><span class="p">.</span><span class="nx">GenerateFromPassword</span><span class="p">([]</span><span class="nb">byte</span><span class="p">(</span><span class="nx">password</span><span class="p">),</span><span class="w"> </span><span class="nx">bcrypt</span><span class="p">.</span><span class="nx">DefaultCost</span><span class="p">)</span>
+<span class="k">if</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nb">panic</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="c1">// 把 passwordHash 存进数据库里</span>
+</code></pre></div>
+</li>
+<li>
+<p>检查密码</p>
+<div class="highlight"><pre><span></span><code><span class="c1">// 从数据库里取出 passwordHash</span>
+
+<span class="k">if</span><span class="w"> </span><span class="nx">bcrypt</span><span class="p">.</span><span class="nx">CompareHashAndPassword</span><span class="p">(</span><span class="nx">passwordHash</span><span class="p">,</span><span class="w"> </span><span class="p">[]</span><span class="nb">byte</span><span class="p">(</span><span class="nx">password</span><span class="p">))</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="c1">// 密码错误</span>
+<span class="p">}</span>
+</code></pre></div>
+</li>
+</ul>
+<h2 id="Token-鉴权">Token 鉴权<a class="headerlink" href="https://note.stalomeow.com/blog/posts/game-register-login-auth/#Token-%E9%89%B4%E6%9D%83" title="Permanent link">¶</a></h2>
+<p>每次请求需要鉴权的 API 时都带上账号密码很麻烦，一般会用 Token 代替。为了安全，Token 是有过期时间的，每次登录时会刷新时间。常用 JSON Web Token，<a href="https://www.ruanyifeng.com/blog/2018/07/json_web_token-tutorial.html">阮一峰的博客</a> 里讲得很清楚。</p>
+<p>可以用开源的 <a href="https://github.com/golang-jwt/jwt">jwt-go</a> 生成 Token：</p>
+<div class="highlight"><pre><span></span><code><span class="kd">func</span><span class="w"> </span><span class="nx">generateJWTToken</span><span class="p">(</span><span class="nx">userName</span><span class="w"> </span><span class="kt">string</span><span class="p">,</span><span class="w"> </span><span class="nx">secret</span><span class="w"> </span><span class="p">[]</span><span class="kt">byte</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="kt">string</span><span class="p">,</span><span class="w"> </span><span class="kt">error</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">token</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">jwt</span><span class="p">.</span><span class="nx">NewWithClaims</span><span class="p">(</span><span class="nx">jwt</span><span class="p">.</span><span class="nx">SigningMethodHS256</span><span class="p">,</span><span class="w"> </span><span class="nx">jwt</span><span class="p">.</span><span class="nx">MapClaims</span><span class="p">{</span>
+<span class="w">        </span><span class="s">&#34;sub&#34;</span><span class="p">:</span><span class="w"> </span><span class="nx">userName</span><span class="p">,</span>
+<span class="w">        </span><span class="s">&#34;exp&#34;</span><span class="p">:</span><span class="w"> </span><span class="nx">time</span><span class="p">.</span><span class="nx">Now</span><span class="p">().</span><span class="nx">Add</span><span class="p">(</span><span class="mi">3</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">24</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">time</span><span class="p">.</span><span class="nx">Hour</span><span class="p">).</span><span class="nx">Unix</span><span class="p">(),</span>
+<span class="w">    </span><span class="p">})</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nx">token</span><span class="p">.</span><span class="nx">SignedString</span><span class="p">(</span><span class="nx">secret</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>鉴权功能一般用 gin 的中间件来实现：</p>
+<div class="highlight"><pre><span></span><code><span class="kd">func</span><span class="w"> </span><span class="nx">parseJWTToken</span><span class="p">(</span><span class="nx">tokenString</span><span class="w"> </span><span class="kt">string</span><span class="p">,</span><span class="w"> </span><span class="nx">secret</span><span class="w"> </span><span class="p">[]</span><span class="kt">byte</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="nx">userName</span><span class="w"> </span><span class="kt">string</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="kt">error</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">token</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">jwt</span><span class="p">.</span><span class="nx">Parse</span><span class="p">(</span><span class="nx">tokenString</span><span class="p">,</span><span class="w"> </span><span class="kd">func</span><span class="p">(</span><span class="nx">token</span><span class="w"> </span><span class="o">*</span><span class="nx">jwt</span><span class="p">.</span><span class="nx">Token</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="kd">interface</span><span class="p">{},</span><span class="w"> </span><span class="kt">error</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="nx">secret</span><span class="p">,</span><span class="w"> </span><span class="kc">nil</span>
+<span class="w">    </span><span class="p">})</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="s">&#34;&#34;</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">!</span><span class="nx">token</span><span class="p">.</span><span class="nx">Valid</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="s">&#34;&#34;</span><span class="p">,</span><span class="w"> </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Errorf</span><span class="p">(</span><span class="s">&#34;jwt token is invalid&#34;</span><span class="p">)</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nx">token</span><span class="p">.</span><span class="nx">Claims</span><span class="p">.</span><span class="nx">GetSubject</span><span class="p">()</span>
+<span class="p">}</span>
+
+<span class="kd">func</span><span class="w"> </span><span class="nx">JWTAuth</span><span class="p">(</span><span class="nx">jwtSecret</span><span class="w"> </span><span class="p">[]</span><span class="kt">byte</span><span class="p">)</span><span class="w"> </span><span class="nx">gin</span><span class="p">.</span><span class="nx">HandlerFunc</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="kd">func</span><span class="p">(</span><span class="nx">c</span><span class="w"> </span><span class="o">*</span><span class="nx">gin</span><span class="p">.</span><span class="nx">Context</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">userName</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">parseJWTToken</span><span class="p">(</span><span class="nx">c</span><span class="p">.</span><span class="nx">GetHeader</span><span class="p">(</span><span class="s">&#34;Authorization&#34;</span><span class="p">),</span><span class="w"> </span><span class="nx">jwtSecret</span><span class="p">)</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nx">c</span><span class="p">.</span><span class="nx">AbortWithStatusJSON</span><span class="p">(</span><span class="nx">http</span><span class="p">.</span><span class="nx">StatusUnauthorized</span><span class="p">,</span><span class="w"> </span><span class="nx">model</span><span class="p">.</span><span class="nx">CommonRsp</span><span class="p">{</span>
+<span class="w">                </span><span class="nx">ReturnCode</span><span class="p">:</span><span class="w"> </span><span class="nx">model</span><span class="p">.</span><span class="nx">ReturnCodeInvalidAuthToken</span><span class="p">,</span>
+<span class="w">                </span><span class="nx">Message</span><span class="p">:</span><span class="w">    </span><span class="s">&#34;Invalid auth token&#34;</span><span class="p">,</span>
+<span class="w">                </span><span class="nx">Data</span><span class="p">:</span><span class="w">       </span><span class="kc">nil</span><span class="p">,</span>
+<span class="w">            </span><span class="p">})</span>
+<span class="w">            </span><span class="k">return</span>
+<span class="w">        </span><span class="p">}</span>
+
+<span class="w">        </span><span class="c1">// 查询用户信息</span>
+<span class="w">        </span><span class="kd">var</span><span class="w"> </span><span class="nx">user</span><span class="w"> </span><span class="nx">db</span><span class="p">.</span><span class="nx">UserData</span>
+<span class="w">        </span><span class="nx">err</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">db</span><span class="p">.</span><span class="nx">GetUserAccounts</span><span class="p">().</span><span class="nx">FindOne</span><span class="p">(</span><span class="nx">context</span><span class="p">.</span><span class="nx">TODO</span><span class="p">(),</span><span class="w"> </span><span class="nx">bson</span><span class="p">.</span><span class="nx">D</span><span class="p">{</span>
+<span class="w">            </span><span class="p">{</span><span class="s">&#34;user_name&#34;</span><span class="p">,</span><span class="w"> </span><span class="nx">userName</span><span class="p">},</span>
+<span class="w">        </span><span class="p">}).</span><span class="nx">Decode</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">user</span><span class="p">)</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nx">c</span><span class="p">.</span><span class="nx">AbortWithStatusJSON</span><span class="p">(</span><span class="nx">http</span><span class="p">.</span><span class="nx">StatusUnauthorized</span><span class="p">,</span><span class="w"> </span><span class="nx">model</span><span class="p">.</span><span class="nx">CommonRsp</span><span class="p">{</span>
+<span class="w">                </span><span class="nx">ReturnCode</span><span class="p">:</span><span class="w"> </span><span class="nx">model</span><span class="p">.</span><span class="nx">ReturnCodeInvalidAuthToken</span><span class="p">,</span>
+<span class="w">                </span><span class="nx">Message</span><span class="p">:</span><span class="w">    </span><span class="s">&#34;Invalid auth token&#34;</span><span class="p">,</span>
+<span class="w">                </span><span class="nx">Data</span><span class="p">:</span><span class="w">       </span><span class="kc">nil</span><span class="p">,</span>
+<span class="w">            </span><span class="p">})</span>
+<span class="w">            </span><span class="k">return</span>
+<span class="w">        </span><span class="p">}</span>
+
+<span class="w">        </span><span class="c1">// 之后可以直接取用 user 信息</span>
+<span class="w">        </span><span class="nx">c</span><span class="p">.</span><span class="nx">Set</span><span class="p">(</span><span class="s">&#34;UserData&#34;</span><span class="p">,</span><span class="w"> </span><span class="nx">user</span><span class="p">)</span>
+<span class="w">        </span><span class="nx">c</span><span class="p">.</span><span class="nx">Next</span><span class="p">()</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>JWT 的缺点是它只保存在前端，后端不能随意废弃某一个 JWT。如果对安全性要求很高，可以自己生成 uuid 作为 Token，然后存在数据库里。还可以把用户的登录设备、IP 和 Token 关联起来，存进数据库，实现将某设备踢下线的功能。</p></body></html>
