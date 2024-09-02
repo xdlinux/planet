@@ -1,1 +1,300 @@
-<html><head></head><body><p>这是一份非常详细和系统化的利用 NodeJS 进行 Discord bot 开发的教程，本文介绍了什么是命令本地化 Localization，也就是“多语言化”，或者叫“本地翻译”。本地化降低了不同语言导致的语言障碍，提高用户满意度。</p></body></html>
+<html><head></head><body><h1>Chapter 19 - 命令本地化</h1>
+<p>本文编写时，项目已升级至 discord.js@v14.9.0。</p>
+<h3>本地化（Localization）是什么</h3>
+<p>本地化是指将软件或产品适应不同的语言、文化和地区的过程。</p>
+<p>本地化可以帮助你的程序在全球范围内更好地接受和使用，从而提高用户体验和满意度。</p>
+<p>本地化可以帮助你的程序更好地适应当地的文化、习惯和法律法规，从而避免很多问题，特别是你考虑不到的习惯和文化细节的问题。</p>
+<p>引入本地化可以带来以下好处：提高竞争优势、增加业务收入、减少市场进入障碍。</p>
+<p>如果你想要进军国际市场，那么本地化是非常重要的。</p>
+<h3>为命令引入本地化</h3>
+<p>首先我们需要判断用户的语言/区域设置（locale），这个值就是用户使用 Discord 发送命令时，使用的 Discord 客户端（包括网页版、手机 App、桌面 App 等）里的语言设置。这个设置是跨平台使用的，即用户在一处设置语言，Discord 将处处使用该语言作为客户端 UI 展示用语言。</p>
+<p>截至本文撰写时，Discord 有效 locale值有：</p>
+<table>
+<thead>
+<tr>
+<th>Locale</th>
+<th>Language Name</th>
+<th>语言名称</th>
+<th>Native Name</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>id</td>
+<td>Indonesian</td>
+<td>印度尼西亚语</td>
+<td>Bahasa Indonesia</td>
+</tr>
+<tr>
+<td>da</td>
+<td>Danish</td>
+<td>丹麦语</td>
+<td>Dansk</td>
+</tr>
+<tr>
+<td>de</td>
+<td>German</td>
+<td>德语</td>
+<td>Deutsch</td>
+</tr>
+<tr>
+<td>en-GB</td>
+<td>English, UK</td>
+<td>英语（英国）</td>
+<td>English, UK</td>
+</tr>
+<tr>
+<td>en-US</td>
+<td>English, US</td>
+<td>英语（美国）</td>
+<td>English, US</td>
+</tr>
+<tr>
+<td>es-ES</td>
+<td>Spanish</td>
+<td>西班牙语</td>
+<td>Español</td>
+</tr>
+<tr>
+<td>fr</td>
+<td>French</td>
+<td>法语</td>
+<td>Français</td>
+</tr>
+<tr>
+<td>hr</td>
+<td>Croatian</td>
+<td>克罗地亚语</td>
+<td>Hrvatski</td>
+</tr>
+<tr>
+<td>it</td>
+<td>Italian</td>
+<td>意大利语</td>
+<td>Italiano</td>
+</tr>
+<tr>
+<td>lt</td>
+<td>Lithuanian</td>
+<td>立陶宛语</td>
+<td>Lietuviškai</td>
+</tr>
+<tr>
+<td>hu</td>
+<td>Hungarian</td>
+<td>匈牙利语</td>
+<td>Magyar</td>
+</tr>
+<tr>
+<td>nl</td>
+<td>Dutch</td>
+<td>荷兰语</td>
+<td>Nederlands</td>
+</tr>
+<tr>
+<td>no</td>
+<td>Norwegian</td>
+<td>挪威语</td>
+<td>Norsk</td>
+</tr>
+<tr>
+<td>pl</td>
+<td>Polish</td>
+<td>波兰语</td>
+<td>Polski</td>
+</tr>
+<tr>
+<td>pt-BR</td>
+<td>Portuguese, Brazilian</td>
+<td>葡萄牙语（巴西）</td>
+<td>Português do Brasil</td>
+</tr>
+<tr>
+<td>ro</td>
+<td>Romanian, Romania</td>
+<td>罗马尼亚语（罗马尼亚）</td>
+<td>Română</td>
+</tr>
+<tr>
+<td>fi</td>
+<td>Finnish</td>
+<td>芬兰语</td>
+<td>Suomi</td>
+</tr>
+<tr>
+<td>sv-SE</td>
+<td>Swedish</td>
+<td>瑞典语</td>
+<td>Svenska</td>
+</tr>
+<tr>
+<td>vi</td>
+<td>Vietnamese</td>
+<td>越南语</td>
+<td>Tiếng Việt</td>
+</tr>
+<tr>
+<td>tr</td>
+<td>Turkish</td>
+<td>土耳其语</td>
+<td>Türkçe</td>
+</tr>
+<tr>
+<td>cs</td>
+<td>Czech</td>
+<td>捷克语</td>
+<td>Čeština</td>
+</tr>
+<tr>
+<td>el</td>
+<td>Greek</td>
+<td>希腊语</td>
+<td>Ελληνικά</td>
+</tr>
+<tr>
+<td>bg</td>
+<td>Bulgarian</td>
+<td>保加利亚语</td>
+<td>български</td>
+</tr>
+<tr>
+<td>ru</td>
+<td>Russian</td>
+<td>俄语</td>
+<td>Pусский</td>
+</tr>
+<tr>
+<td>uk</td>
+<td>Ukrainian</td>
+<td>乌克兰语</td>
+<td>Українська</td>
+</tr>
+<tr>
+<td>hi</td>
+<td>Hindi</td>
+<td>印地语</td>
+<td>हिन्दी</td>
+</tr>
+<tr>
+<td>th</td>
+<td>Thai</td>
+<td>泰语</td>
+<td>ไทย</td>
+</tr>
+<tr>
+<td>zh-CN</td>
+<td>Chinese, China</td>
+<td>简体中文</td>
+<td>中文</td>
+</tr>
+<tr>
+<td>ja</td>
+<td>Japanese</td>
+<td>日语</td>
+<td>日本語</td>
+</tr>
+<tr>
+<td>zh-TW</td>
+<td>Chinese, Taiwan</td>
+<td>繁体中文</td>
+<td>繁體中文</td>
+</tr>
+<tr>
+<td>ko</td>
+<td>Korean</td>
+<td>韩语</td>
+<td>한국어</td>
+</tr>
+</tbody>
+</table>
+<p>我们下面使用一个示例斜杠命令来解释如何为命令实现本地化。</p>
+<p>下面我们将实现多语言回复“你好”的命令 <code>/hello</code>：</p>
+<pre><code>const { SlashCommandBuilder, ButtonBuilder, ActionRowBuilder, ButtonStyle } = require(&#39;discord.js&#39;);
+
+module.exports = {
+    data: new SlashCommandBuilder()
+        .setName(&#39;hello&#39;)
+        // you can set localized names in bulk
+        .setNameLocalizations({
+            &#39;en-GB&#39;: &#39;hello2&#39;,
+            &#39;zh-CN&#39;: &#39;你好&#39;,
+            &#39;zh-TW&#39;: &#39;你好&#39;,
+            &#39;cs&#39;: &#39;ahoj&#39;,
+            &#39;ru&#39;: &#39;привет&#39;,
+            &#39;ko&#39;: &#39;안녕하세요&#39;,
+            &#39;es-ES&#39;: &#39;hola&#39;
+        })
+        .setDescription(&#39;Replies with hello, but in localized response!&#39;)
+        // you can set localized descriptions in bulk
+        .setDescriptionLocalizations({
+            &#39;zh-TW&#39;: &#39;回复你好，但以本地化回复！&#39;,
+            &#39;cs&#39;: &#39;Odpovědi ahoj, ale v lokalizované odpovědi!&#39;,
+            &#39;en-GB&#39;: &#39;Replies with hello, but in localized response2!&#39;,
+            &#39;es-ES&#39;: &#39;¡Responde con hola, pero en respuesta localizada!&#39;,
+            &#39;ko&#39;: &#39;안녕하세요로 회신하지만 현지화된 응답으로!&#39;,
+            &#39;zh-CN&#39;: &#39;回复你好，但以本地化回复！&#39;,
+            &#39;ru&#39;: &#39;Отвечает приветствием, но локализованным ответом!&#39;
+        })
+    ,
+    async execute(interaction) {
+        const HelloWorldLocales = {
+            &#39;zh-CN&#39;: &#39;你好世界！&#39;,
+            &#39;en-GB&#39;: &#39;Hello world2!&#39;,
+            &#39;zh-TW&#39;: &#39;你好世界！&#39;,
+            &#39;cs&#39;: &#39;Ahoj světe&#39;,
+            &#39;ko&#39;: &#39;안녕 세상!&#39;,
+            &#39;es-ES&#39;: &#39;¡Hola Mundo!&#39;,
+            &#39;ru&#39;: &#39;Привет, мир!&#39;,
+        };
+
+        const eatLocales = {
+            &#39;en-GB&#39;: &#39;Eat2&#39;,
+            &#39;zh-CN&#39;: &#39;吃&#39;,
+            &#39;es-ES&#39;: &#39;Comer&#39;
+        }
+        const sleepLocales = {
+            &#39;zh-CN&#39;: &#39;睡觉&#39;,
+            &#39;es-ES&#39;: &#39;Dormir&#39;
+        }
+
+        // add two buttons that are absolutely useless
+        // just a localization example
+        const row = new ActionRowBuilder()
+            .addComponents(
+                new ButtonBuilder()
+                    .setCustomId(`b1`)
+                    .setLabel(eatLocales[interaction.locale] ?? &#39;Eat&#39;)
+                    .setStyle(ButtonStyle.Primary),
+                new ButtonBuilder()
+                    .setCustomId(`b2`)
+                    .setLabel(sleepLocales[interaction.locale] ?? &#39;Sleep&#39;)
+                    .setStyle(ButtonStyle.Danger),
+            );
+
+        // default is English: Hello world!
+        await interaction.reply({
+            content: `${HelloWorldLocales[interaction.locale] ?? &#39;Hello world!&#39;}, locale:(${interaction.locale}})`,
+            components: [row]
+        });
+    },
+};
+</code></pre>
+<h3>效果图</h3>
+<h4>语言设置为 zh-CN （已完全翻译）</h4>
+<p><img src="https://img2023.cnblogs.com/blog/2455224/202304/2455224-20230410004054782-1296409362.png" alt="image"/></p>
+<p><img src="https://img2023.cnblogs.com/blog/2455224/202304/2455224-20230410004100726-1586746703.png" alt="image"/></p>
+<p><img src="https://img2023.cnblogs.com/blog/2455224/202304/2455224-20230410004107247-1693431343.png" alt="image"/></p>
+<h4>语言设置为 es-ES （已完全翻译）</h4>
+<p><img src="https://img2023.cnblogs.com/blog/2455224/202304/2455224-20230410004132736-805387899.png" alt="image"/></p>
+<p><img src="https://img2023.cnblogs.com/blog/2455224/202304/2455224-20230410004137916-1397801290.png" alt="image"/></p>
+<p><img src="https://img2023.cnblogs.com/blog/2455224/202304/2455224-20230410004148445-414270500.png" alt="image"/></p>
+<h4>语言设置为 ru （未翻译按钮）</h4>
+<p><img src="https://img2023.cnblogs.com/blog/2455224/202304/2455224-20230410004455186-775268293.png" alt="image"/></p>
+<p><img src="https://img2023.cnblogs.com/blog/2455224/202304/2455224-20230410004503871-1561345516.png" alt="image"/></p>
+<h4>语言设置为 ja （完全未翻译）</h4>
+<p><img src="https://img2023.cnblogs.com/blog/2455224/202304/2455224-20230410004613590-2078259659.png" alt="image"/></p>
+<p><img src="https://img2023.cnblogs.com/blog/2455224/202304/2455224-20230410004616652-516882406.png" alt="image"/></p>
+<h3>小结</h3>
+<p>我们学习了在 discord.js 里进行本地化翻译的基本操作</p>
+<p>原文作者闪电豹猫，原文链接https://www.cnblogs.com/hhzm/p/17301564.html 转载注明出处</p>
+</body></html>

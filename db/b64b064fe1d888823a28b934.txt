@@ -1,1 +1,130 @@
-<html><head></head><body><p>欢迎使用 Gyoza，Gyoza 是一款 Astro 博客主题，它保持简洁和可爱的风格。本篇文章将会介绍如何使用并部署 Gyoza。</p></body></html>
+<html><head></head><body><h2>前置条件</h2>
+<ul>
+<li>node 版本 &gt;= 18.18.0</li>
+<li>pnpm 版本 &gt; 8.1.0</li>
+</ul>
+<h2>安装</h2>
+<h3>克隆仓库</h3>
+<p>登录 Github 账号，打开 <a href="https://github.com/lxchapu/astro-gyoza">lxchapu/astro-gyoza</a>，点击右上角的 Fork 按钮，将仓库克隆到你自己的账号下。</p>
+<p>复制这个仓库的地址，打开终端，使用 <code>git clone</code> 命令将仓库克隆到本地。</p>
+<blockquote>
+<p>本项目推荐使用 pnpm 作为你的包管理器，如果你还没有安装 pnpm，请先安装 pnpm。</p>
+</blockquote>
+<h3>安装依赖</h3>
+<pre><code>cd astro-gyoza
+pnpm install
+</code></pre>
+<h3>命令介绍</h3>
+<p>本地运行</p>
+<pre><code>pnpm dev
+</code></pre>
+<p>打包静态文件</p>
+<pre><code>pnpm build
+</code></pre>
+<p>本地预览</p>
+<pre><code>pnpm preview
+</code></pre>
+<h3>配置项</h3>
+<p>本项目中的绝大部分配置都定义在 <code>src/config.json</code> 文件中。</p>
+<p>你应该首先将 <code>site.url</code> 修改成自己的域名，避免导航错误。</p>
+<p>以下是配置项的说明：</p>
+<pre><code>{
+  &#34;site&#34;: {
+    &#34;url&#34;: &#34;&#34;, // 网站地址
+    &#34;title&#34;: &#34;&#34;, // 网站标题
+    &#34;description&#34;: &#34;&#34;, // 通用的网站描述 SEO
+    &#34;keywords&#34;: &#34;&#34;, // 通用的网站关键词 SEO
+    &#34;lang&#34;: &#34;zh-CN&#34;, // 网站的语言
+    &#34;favicon&#34;: &#34;&#34;, // 浏览器图标，存放在 public 目录下
+    &#34;appleTouchIcon&#34;: &#34;&#34; // 苹果设备图标，存放在 public 目录下
+  },
+  &#34;author&#34;: {
+    &#34;name&#34;: &#34;&#34;, // 作者名称
+    &#34;twitterId&#34;: &#34;&#34;, // 推特账号 ID，以 @ 开头，用于 Open Graph
+    &#34;avatar&#34;: &#34;&#34; // 作者头像地址
+  },
+  // 首页 Hero 组件
+  &#34;hero&#34;: {
+    &#34;name&#34;: &#34;&#34;, // 显示的名称
+    &#34;bio&#34;: &#34;&#34;, // 一句话介绍
+    &#34;description&#34;: &#34;&#34;, // 补充描述
+    // 社交账号
+    &#34;socials&#34;: [
+      {
+        &#34;name&#34;: &#34;&#34;, // 社交平台类型
+        &#34;icon&#34;: &#34;&#34;, // 社交平台图标
+        &#34;url&#34;: &#34;&#34;, // 链接
+        &#34;color&#34;: &#34;&#34; // 图标颜色
+      }
+    ],
+    &#34;yiyan&#34;: &#34;&#34; // 显示一言
+  },
+  &#34;color&#34;: {
+    // 强调色，请填写 16 进制颜色值。每次会从中随机取出一组
+    &#34;accent&#34;: [{ &#34;light&#34;: &#34;&#34;, &#34;dark&#34;: &#34;&#34; }],
+    // 背景色
+    &#34;bg&#34;: {
+      &#34;primary&#34;: { &#34;light&#34;: &#34;&#34;, &#34;dark&#34;: &#34;&#34; },
+      &#34;secondary&#34;: { &#34;light&#34;: &#34;&#34;, &#34;dark&#34;: &#34;&#34; }
+    },
+    // 文字颜色
+    &#34;text&#34;: {
+      &#34;primary&#34;: { &#34;light&#34;: &#34;&#34;, &#34;dark&#34;: &#34;&#34; },
+      &#34;secondary&#34;: { &#34;light&#34;: &#34;&#34;, &#34;dark&#34;: &#34;&#34; }
+    },
+    // 边框颜色
+    &#34;border&#34;: {
+      &#34;primary&#34;: { &#34;light&#34;: &#34;&#34;, &#34;dark&#34;: &#34;&#34; }
+    }
+  },
+  // 顶部导航栏
+  &#34;menus&#34;: [
+    {
+      &#34;name&#34;: &#34;首页&#34;,
+      &#34;link&#34;: &#34;/&#34;,
+      &#34;icon&#34;: &#34;icon-pantone&#34;
+    }
+  ],
+  &#34;posts&#34;: {
+    &#34;perPage&#34;: 10 // 每一页显示的文章数量
+  },
+  &#34;footer&#34;: {
+    &#34;startTime&#34;: &#34;&#34; // 博客网站开始时间 请使用 ISO 格式
+  },
+  // Waline 评论系统，前往 https://waline.js.org/ 查看
+  &#34;waline&#34;: {
+    &#34;serverURL&#34;: &#34;&#34;
+  },
+  // 赞助
+  &#34;sponsor&#34;: {
+    &#34;wechat&#34;: &#34;&#34; // 微信赞赏码图片地址
+  },
+  // 如果需要使用网站数据统计，将 enable 修改为 true，并填写对应的配置
+  &#34;analytics&#34;: {
+    &#34;enable&#34;: false,
+    // https://analytics.google.com
+    &#34;google&#34;: {
+      &#34;measurementId&#34;: &#34;&#34;
+    },
+    // https://umami.is/docs
+    &#34;umami&#34;: {
+      &#34;serverUrl&#34;: &#34;&#34;,
+      &#34;websiteId&#34;: &#34;&#34;
+    },
+    // https://clarity.microsoft.com/
+    &#34;microsoftClarity&#34;: {
+      &#34;projectId&#34;: &#34;&#34;
+    }
+  }
+}
+</code></pre>
+<h2>部署</h2>
+<blockquote>
+<p>这里只介绍了 Vercel，你当然可以选择其他平台例如：Cloudflare Pages 或你自己的服务器。<br/>
+部署之前，确保你已经修改 <code>site.url</code>。</p>
+</blockquote>
+<h3>部署到 Vercel</h3>
+<p>登录 Vercel 账号，点击右上角的 Add new... 选择 Project。然后在 Import Git Repository 中选择刚刚 Fork 的仓库，点击 Import 按钮。</p>
+<p>进入项目配置页面，直接点击 Deploy 按钮，静静等待部署完成就  了。</p>
+<p>Vercel 会为你分配一个域名，你可以在项目设置中设置自定义域名，更多操作请参考 Vercel 文档。</p>
+</body></html>

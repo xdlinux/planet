@@ -1,1 +1,160 @@
-<html><head></head><body><p>这是一份非常详细和系统化的利用 NodeJS 进行 Discord bot 开发的教程，本文介绍了什么是事件处理 Event handling。NodeJS 本身就是一个事件驱动的框架，DiscordJS 也完全按照事件驱动的思路进行构建的，因此，学习事件处理的方法是很重要的。除此之外，还完成了自动完成 Autocomplete，可类比于搜索引擎的自动填充。</p></body></html>
+<html><head></head><body><h2>Chapter 10 - 事件处理 Event handling</h2>
+<p>这一章只是根据新的 discord.js v14.8.0，对已有文件进行小修小补。</p>
+<blockquote>
+<p>如果你是跟着本教程前几章来的，不要跳过本章！</p>
+</blockquote>
+<p>根据官方的说法，Node.js 使用事件驱动的架构，使得在特定事件发生时执行特定代码成为可能。discord.js 库就充分利用了这一点。</p>
+<h4>修改后的 <code>events/interactionCreate.js</code></h4>
+<pre><code>const { Events } = require(&#39;discord.js&#39;);
+
+module.exports = {
+	name: Events.InteractionCreate,
+	execute(interaction) {
+		console.log(`${interaction.user.tag} in #${interaction.channel.name} triggered an interaction.`);
+	},
+};
+</code></pre>
+<h4>修改后的 <code>events/ready.js</code></h4>
+<pre><code>const { Events } = require(&#39;discord.js&#39;);
+
+module.exports = {  
+   name: Events.ClientReady,  
+   once: true,  
+   execute(client) {  
+      console.log(`Ready! Logged in as ${client.user.tag}`);  
+   },  
+};
+</code></pre>
+<h4>修改后的 <code>index.js</code></h4>
+<p>这个文件改动的地方不算多，但是把完整源码粘贴过来又显得冗杂，因此，我把这次的 git commit 地址放在这里，大家可以自己点开去看。</p>
+<p>https://github.com/wtflmao/discord_bot_example/commit/f6eeddd2d975cb43803075e884bbc4d7174f6dfe</p>
+<p>如果上面的 Github 链接在国内打不开，你可以使用下面的 Gitee 链接：</p>
+<p>https://gitee.com/wtflmao/discord_bot_example/commit/f6eeddd2d975cb43803075e884bbc4d7174f6dfe</p>
+<h2>Chapter 11 自动完成 Autocomplete</h2>
+<p>自动完成允许根据用户的输入动态地向用户提供一系列值，而不是依赖于静态选项。你需要学习 Chapter 6 的 Option 才能继续学习本章。换句话说，Autocomplete 只是服务于 Option 的。</p>
+<p>用户被自动完成提供了一些 choices，但是用户可以键入执行除了给定的 choices 以外的其他任意合法值。想像一个新闻搜索机器人，<code>query</code> 项用于接收关键词。用户可以键入任何字符串，但是为了方便用户使用，机器人维护了一个“24小时热搜前一百”的列表，用户只需输入某个字或词，就能把列表里所有相关的新闻标题作为选项展示给用户，以减少用户输入量。当然用户也可以输入自己任何想搜的，不受热搜的限制。</p>
+<p>在使用自动完成之前，一定要根据 Chapter 9 的内容，修改你的机器人代码，因为 Chapter 9 对 index.js 和 events/interactionCreate.js 做了大改。本章开始的代码直接跑在前八章里是会报错的。</p>
+<p>自动完成举例：<code>commands/autocomplete.js</code>
+https://github.com/wtflmao/discord_bot_example/commit/625dcad5fc03f28a0faf14bf66e35400c4ad767b
+https://gitee.com/wtflmao/discord_bot_example/commit/625dcad5fc03f28a0faf14bf66e35400c4ad767b</p>
+<pre><code>const { SlashCommandBuilder } = require(&#39;discord.js&#39;);
+
+module.exports = {
+	data: new SlashCommandBuilder()
+		.setName(&#39;autocomplete&#39;)
+		.setDescription(&#39;Autocomplete test.&#39;)
+		.addStringOption(option =&gt;
+			option.setName(&#34;category&#34;)
+				.setDescription(&#34;The category you&#39;d like to dive in&#34;)
+				.setAutocomplete(true)),
+	async autocomplete(interaction) {
+		
+		const focusedValue = interaction.options.getFocused();
+		const choices = [&#39;beer&#39;, &#39;coffee&#39;, &#39;milk&#39;, &#39;apple&#39;, &#39;banana&#39;, &#39;tea&#39;, &#39;zebra&#39;];
+		const filtered = choices.filter(choice =&gt; choice.includes(focusedValue));
+		await interaction.respond(
+			filtered.map(choice =&gt;({ name: choice, value: &#39;v_&#39; + choice })),
+		).then(() =&gt; console.log(&#39;Successfully responded to the autocomplete interaction&#39;))
+ 		.catch(console.error);
+	},
+	async execute(interaction) {
+		const category = interaction.options.getString(&#34;category&#34;);
+		await interaction.reply(`You acquired some ${category}.`);
+	},
+};
+</code></pre>
+<p>解析：通过 <code>.setAutoComplete(true)</code> 来开启一个 Option 的自动完成。</p>
+<p>在 <code>autocomplete()</code> 函数里：</p>
+<p>通过 <code>interaction.options.getFocused()</code> 获取用户在该域内实时键入的值。</p>
+<p>我们用 choices 数组维护了一些用户可能会输入的字符串，通过 <code>choices.filter(choice =&gt; choice.includes(focusedValue)</code> （实时键入的字符串是否是 choices 数组某个元素的字串与否）来判断是否要将该元素加入到针对目前实时键入的值的自动完成响应里去。比如，用户输入 &#34;ee&#34;，能匹配 &#34;beer&#34; 和 &#34;coffee&#34;。</p>
+<p><code>interaction.respond()</code> 用于向用户响应自动完成列表。</p>
+<p>程序执行到现在，用户应还未回车执行命令。</p>
+<p>在 <code>execute()</code> 函数里：</p>
+<p>这里是我们最常见的斜杠命令的函数主题了，执行到这里意味着用户已经敲击了回车，执行了斜杠命令。</p>
+<p>这里是实时输入&#34;ee&#34;时，根据我们 filter 设定的规则，自动完成匹配到的：
+<img src="https://img2022.cnblogs.com/blog/2455224/202211/2455224-20221117172041533-543123094.png" alt="image"/></p>
+<p>当我们执行 <code>/autocomplete category: news</code>时：
+<img src="https://img2022.cnblogs.com/blog/2455224/202211/2455224-20221117172055915-1546936651.png" alt="image"/></p>
+<p>用户的最终输入可以与自动完成的无关，就像没有自动完成的普通 Option 那样对待：
+执行 <code>/autocomplete category: news</code>
+<img src="https://img2022.cnblogs.com/blog/2455224/202211/2455224-20221117172117377-303406663.png" alt="image"/></p>
+<p>我们没有对 category 域设置必填，等价于 .setRequired(false)。因此不理会这个域执行命令也是可以的：
+执行 <code>/autocomplete</code>
+<img src="https://img2022.cnblogs.com/blog/2455224/202211/2455224-20221117172123011-1830908788.png" alt="image"/></p>
+<h3>多个 Option 的 Autocomplete</h3>
+<p>上代码：<code>commands/autocomplete2.js</code>
+https://github.com/wtflmao/discord_bot_example/commit/625dcad5fc03f28a0faf14bf66e35400c4ad767b
+https://gitee.com/wtflmao/discord_bot_example/commit/625dcad5fc03f28a0faf14bf66e35400c4ad767b</p>
+<pre><code>const { SlashCommandBuilder } = require(&#39;discord.js&#39;);
+
+module.exports = {
+	data: new SlashCommandBuilder()
+		.setName(&#39;autocomplete2&#39;)
+		.setDescription(&#39;Multi-Autocomplete test.&#39;)
+		.addStringOption(option =&gt;
+			option.setName(&#34;category&#34;)
+				.setDescription(&#34;The category you&#39;d like to dive in&#34;)
+				.setAutocomplete(true)
+				.setRequired(true))
+		.addNumberOption(option =&gt;
+			option.setName(&#34;amount&#34;)
+				.setDescription(&#34;How many you want&#34;)
+				.setAutocomplete(true)
+				.setRequired(true)),
+	async autocomplete(interaction) {
+		
+		const focusedOption = interaction.options.getFocused(true);
+
+		if(focusedOption.name === &#34;category&#34;) {
+
+			const choices = [&#39;beer&#39;, &#39;coffee&#39;, &#39;milk&#39;, &#39;apple&#39;, &#39;banana&#39;, &#39;tea&#39;, &#39;zebra&#39;];
+			const filtered = choices.filter(choice =&gt; choice.includes(focusedOption.value));
+			await interaction.respond(
+				filtered.map(choice =&gt;({ name: choice, value: choice })),
+			).then(() =&gt; console.log(&#39;Successfully responded to the autocomplete interaction&#39;))
+	 		.catch(console.error);
+
+		}
+
+		if(focusedOption.name === &#34;amount&#34;) {
+
+			const choices = [12, 24, 48, 81, 9];
+			const filtered = choices.filter(choice =&gt; `${choice}`.includes(`${focusedOption.value}`));
+			await interaction.respond(
+				filtered.map(choice =&gt;({ name: `${choice}`, value: choice })),
+			).then(() =&gt; console.log(&#39;Successfully responded to the autocomplete interaction&#39;))
+	 		.catch(console.error);
+ 		
+		}
+	},
+	async execute(interaction) {
+		const category = interaction.options.getString(&#34;category&#34;);
+		const amount = interaction.options.getNumber(&#34;amount&#34;);
+		// P.S. .getUser(), .getMember(), .getRole(), .getChannel(), .getMentionable() and .getAttachment() methods are not available to autocomplete interactions.
+		// but .getBoolean(), .getInteger() are available
+		await interaction.reply(`You acquired ${amount} of ${category}.`);
+	},
+};
+</code></pre>
+<p>我们设置了两个 Option，一个叫 category，类型是字符串型；另一个叫 amount，类型是 Number 型。</p>
+<p>针对字符串和 Number 的值处理是不同的，这也使得我们用 <code>if(focusedOption.name === &#34;category&#34;)</code> <code>if(focusedOption.name === &#34;amount&#34;)</code> 来分别处理他们。</p>
+<p>注意，对 <code>autocomplete()</code> 的调用是实时关于用户键入的。这意味着，用户（以一个不太快的速度）每敲一个字符，Discord 客户端都会向机器人后台请求一遍新的 Autocomplete 结果列表。</p>
+<p>执行 <code>/autocomplete2 category: tea amount: 24</code>：
+<img src="https://img2022.cnblogs.com/blog/2455224/202211/2455224-20221117174254952-147312660.png" alt="image"/></p>
+<p>执行 <code>/autocomplete2 category: zombie amount: 7</code>：
+<img src="https://img2022.cnblogs.com/blog/2455224/202211/2455224-20221117174259390-53278945.png" alt="image"/></p>
+<p>允许设置 Autocomplete 的只有 string、integer、boolean 和 number 四类 Option。</p>
+<pre><code>const string = interaction.options.getString(&#39;input&#39;);
+const integer = interaction.options.getInteger(&#39;int&#39;);
+const boolean = interaction.options.getBoolean(&#39;choice&#39;);
+const number = interaction.options.getNumber(&#39;num&#39;);
+</code></pre>
+<p>像 .getUser(), .getMember(), .getRole(), .getChannel(), .getMentionable() and .getAttachment()，都不能设置自动完成。</p>
+<h4>其他注意的地方</h4>
+<ul>
+<li>与其他应用程序命令交互一样，自动完成交互必须在 3 秒内收到响应。</li>
+<li>你不能推迟对自动完成交互的响应。 如果你正在处理异步建议，例如等待来自 API 的数据，请考虑保留本地缓存。</li>
+<li>用户选择一个值并发送命令后，将作为常规接收 <code>ChatInputCommandInteraction</code> 与 Option 的值。</li>
+<li>你一次最多只能回复 25 项，但如果超过这个数，则可能意味着你应该修改过滤器以进一步缩小选择范围。</li>
+</ul>
+</body></html>

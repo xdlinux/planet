@@ -1,1 +1,628 @@
-<html><head></head><body><p>这是一份非常详细和系统化的利用 NodeJS 进行 Discord bot 开发的教程，本文介绍了选项 Option 命令的构建方法，包括单选和多选。</p></body></html>
+<html><head></head><body><h2>Chapter 9 - 斜杠命令的参数：Options 和 Choices</h2>
+<h3>注册斜杠命令是前提</h3>
+<p>Discord 为开发人员提供了创建客户端集成斜杠命令的选项。 在本节中，我们将介绍如何使用 discord.js 注册这些命令！任何斜杠命令在可以被使用前，都需要先向 Discord 服务器注册。命令在没做出改动的情况下，不需要每次启动机器人之前注册一遍命令。</p>
+<h3>选项 Options</h3>
+<p>应用程序命令可以有选项。你可以将这些选项视为函数的参数并指定它们，如下所示：</p>
+<p>比如 <code>commands/echo.js</code>：</p>
+<pre><code>const { SlashCommandBuilder } = require(&#39;discord.js&#39;);
+
+module.exports = {
+	data: new SlashCommandBuilder()
+		.setName(&#39;echo&#39;)
+		.setDescription(&#39;Replies with your input!&#39;)
+		.addStringOption(option =&gt;
+			option.setName(&#39;input&#39;)
+				.setDescription(&#39;The input to echo back&#39;)
+				.setRequired(true)),
+	async execute(interaction) {
+		const input = interaction.options.getString(&#34;input&#34;);
+		await interaction.reply(input);
+	},
+};
+</code></pre>
+<p>我们为这个斜杠命令设置了命令名：<code>echo</code>，设置了简介说明：<code>Replies with your input!</code>。</p>
+<p>除此之外，我们为这个命令添加了 option 用于接受命令参数，就像 c 语言函数接收参数那样。</p>
+<p>这里只有一个 option，类型是字符串类型，只接收字符串（由 <code>.addStringOption</code> 看出）。我们为这个 option 设置了名称 <code>input</code>，设置了说明 <code>The input to echo back</code>，并设置其为必填（由 <code>.setRequired(true)</code> 指定）。</p>
+<p>命令效果图：
+<img src="https://img2022.cnblogs.com/blog/2455224/202207/2455224-20220712100547224-825130046.png" alt="image"/>
+<img src="https://img2022.cnblogs.com/blog/2455224/202207/2455224-20220712100330532-1982660812.png" alt="image"/></p>
+<p>除了字符串选项外，discord.js 提供了很多 Option 类型：</p>
+<table>
+<thead>
+<tr>
+<th><strong>类型</strong></th>
+<th><strong>设置方法名</strong></th>
+<th><strong>说明</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>STRING</td>
+<td>.setStringOption()</td>
+<td>将选项设置为需要字符串值</td>
+</tr>
+<tr>
+<td>INTEGET</td>
+<td>.setIntegetOption()</td>
+<td>将选项设置为需要整数值</td>
+</tr>
+<tr>
+<td>BOOLEAN</td>
+<td>.setBooleanOption()</td>
+<td>将选项设置为需要布尔值</td>
+</tr>
+<tr>
+<td>USER</td>
+<td>.setUserOption()</td>
+<td>设置选项以要求 Discord 用户或 snowflake 作为值</td>
+</tr>
+<tr>
+<td>CHANNEL</td>
+<td>.setChannelOption()</td>
+<td>将选项设置为需要 Discord 服务器频道(Server Channel) 或 snowflake 作为值</td>
+</tr>
+<tr>
+<td>ROLE</td>
+<td>.setRoleOption()</td>
+<td>将选项设置为需要 Discord 身份组或 snowflake 作为值</td>
+</tr>
+<tr>
+<td>MENTIONABLE</td>
+<td>.setMentionableOption()</td>
+<td>设置选项以要求用户、身份组或 snowflake 作为值</td>
+</tr>
+<tr>
+<td>NUMBER</td>
+<td>.setNumberOption()</td>
+<td>将选项设置为需要小数（也称为浮点数）值</td>
+</tr>
+<tr>
+<td>ATTACHMENT</td>
+<td>.setAttachmentOption()</td>
+<td>将选项设置为需要附件</td>
+</tr>
+<tr>
+<td>SUB_COMMAND</td>
+<td>-</td>
+<td>将选项设置为子命令</td>
+</tr>
+<tr>
+<td>SUB_COMMAND_GROUP</td>
+<td>-</td>
+<td>将选项设置为子命令组</td>
+</tr>
+</tbody>
+</table>
+<p>Option 经常和 Choice 搭配，因此下面我们先介绍 Choice，再给出更多的例子。</p>
+<h3>选择 Choices</h3>
+<p>“选项” 和 “选择” 我感觉都翻译的不咋样，容易弄混，所以我还是用回英文 Option 和 Choice 吧。</p>
+<p>Choice 只能作用于 Option。</p>
+<p>Choice 只能是 STRING（字符串） 或 INTEGER（整型）类型的 Option 才可以拥有的。</p>
+<p>Option 很自由，用户想输入什么合法的内容就接收什么内容。</p>
+<p>Choice 就像 C 语言的 <code>enum</code>，用户只能从一些程序给定的选择里挑一个出来。</p>
+<p>如果一个 Option 被 Choice “绑定”了，那么 Option 的输入值，有效值只能是 Choices。</p>
+<p>我们通过 <code>.addChoice()</code> 方法来构造 Choice。</p>
+<p>给个例子：<code>commands/subOption.js</code>：</p>
+<pre><code>const { SlashCommandBuilder } = require(&#39;discord.js&#39;);
+
+module.exports = {
+	data: new SlashCommandBuilder()
+		.setName(&#39;giftest&#39;)
+		.setDescription(&#39;MultiOption test.&#39;)
+		.addStringOption(option =&gt;
+			option.setName(&#34;category&#34;)
+				.setDescription(&#34;The choices category&#34;)
+				.setRequired(true)
+				.addChoices(
+					{ name: &#39;Funny&#39;, value: &#39;gif_funny&#39;},
+					{ name: &#39;Meme&#39;, value: &#39;gif_meme&#39;},
+					{ name: &#39;Movie&#39;, value: &#39;gif_movie&#39;}))
+		.addIntegerOption(option =&gt;
+			option.setName(&#34;amount&#34;)
+				.setDescription(&#34;The amount of gifs you want&#34;)
+				.setRequired(true)
+				.setMinValue(1)
+				.setMaxValue(5)),
+	async execute(interaction) {
+		const category = interaction.options.getString(&#34;category&#34;);
+		await interaction.reply(category);
+		for (var i=2; i &lt;= interaction.options.getInteger(&#34;amount&#34;); i++) {
+			await interaction.followUp(category);
+		}
+	},
+};
+</code></pre>
+<p>分析一下这个例子之前，我们先看效果图。</p>
+<p>错误用法之一：amount 的给定值小于允许的最小值(1)，或大于了允许的最大值(5)
+<code>/giftest category:Funny amount:7</code>
+<img src="https://img2022.cnblogs.com/blog/2455224/202207/2455224-20220712125309697-519004000.png" alt="image"/></p>
+<p>错误用法之二：amount 类型为整数，却输入了浮点数
+<code>/giftest category:Movie amount:4.9</code>
+<img src="https://img2022.cnblogs.com/blog/2455224/202207/2455224-20220712130257095-983666074.png" alt="image"/></p>
+<p>错误用法之三：未填所有必填项
+<code>/giftest category: amount:1</code>
+<img src="https://img2022.cnblogs.com/blog/2455224/202207/2455224-20220712130812688-1865799060.png" alt="image"/></p>
+<p>错误用法之四：category 字段 作为 Option 类型，用户填入了非有效选择
+<code>/giftest category:ddd amount:2</code>
+<img src="https://img2022.cnblogs.com/blog/2455224/202207/2455224-20220712125311439-904337394.png" alt="image"/></p>
+<p>正确用法：<code>/giftest category:Funny amount:3</code>
+<img src="https://img2022.cnblogs.com/blog/2455224/202207/2455224-20220712125441257-1308943218.png" alt="image"/>
+好，我们来解释代码。</p>
+<p>这是一个同时使用了 Options 和 Choices 的代码例子。</p>
+<p>这段节选代码，它指示了斜杠命令的命令名：<code>giftest</code>，和命令描述：<code>MultiOption test.</code>。</p>
+<pre><code>...
+
+data: new SlashCommandBuilder()
+		.setName(&#39;giftest&#39;)
+		.setDescription(&#39;MultiOption test.&#39;)
+
+...
+</code></pre>
+<p>这段节选代码，它为 <code>/giftest</code> 构造了第一个 Option 参数，而且是 string 类型的。</p>
+<p>这个 Option 它的 “参数名” 是 <code>category</code>，必填，且有效值只可以是由紧跟其后的 Choices 的一项（Funny、Meme 或 Movie）。</p>
+<p>这个 Choices 组有三条项目，每条都可以看成是 “键值对”。</p>
+<p>同一个 Option 的 Choices 中，name 字段必须唯一，value字段倒是可以相同。</p>
+<pre><code>...
+
+		.addStringOption(option =&gt;
+			option.setName(&#34;category&#34;)
+				.setDescription(&#34;The choices category&#34;)
+				.setRequired(true)
+				.addChoices(
+					{ name: &#39;Funny&#39;, value: &#39;gif_funny&#39;},
+					{ name: &#39;Meme&#39;, value: &#39;gif_meme&#39;},
+					{ name: &#39;Movie&#39;, value: &#39;gif_movie&#39;}))
+					
+...
+</code></pre>
+<p>这段节选代码，为斜杠命令构造了第二个 Option 参数，名为 amount，类型是 Integer，必填。</p>
+<p>我们为 amount 这个值设定了输入时允许的最小值：1，和最大值：5。</p>
+<pre><code>...
+
+		.addIntegerOption(option =&gt;
+			option.setName(&#34;amount&#34;)
+				.setDescription(&#34;The amount of gifs you want&#34;)
+				.setRequired(true)
+				.setMinValue(1)
+				.setMaxValue(5)),
+
+...
+</code></pre>
+<p>下面的 execute() 函数，功能是回复 amount 遍 category 字段对应的键值对的值（gif_funny、git_meme 或 gif_movie）。</p>
+<p>我们通过方法 <code>interaction.options.getString(&#34;category&#34;)</code> 来获取 category 的值，即选定 choice 的键值对的值（value）。</p>
+<p>我们通过方法 <code>interaction.options.getInteger(&#34;amount&#34;)</code> 来获取 amount 的值，这是个用户输入的整数。</p>
+<pre><code>...
+
+	async execute(interaction) {
+		const category = interaction.options.getString(&#34;category&#34;);
+		await interaction.reply(category);
+		for (var i=2; i &lt;= interaction.options.getInteger(&#34;amount&#34;); i++) {
+			await interaction.followUp(category);
+		}
+	},
+
+...
+</code></pre>
+<p>我们发现，discord.js 提供的方法丰富多样，对于 bot 开发来说，是够用的。</p>
+<p>我们在上面的 <code>commands/subOption.js</code> 中看到，我们通过 <code>.setName(&#34;giftest&#34;)</code> 设置了 name 字段的值，通过 <code>.setDescription(&#34;MultiOption test.&#34;)</code> 设置了 description 字段的值，通过 <code>.setMinValue(1)</code> 设置了 minValue 的值。这些都是利用 discord.js 定义好的方法来设置属性的值，它们有个共同特点，就是都是 “set” 开头的方法名称，我们叫它们 set 方法。</p>
+<p>类似地，我们通过 <code>.getString(&#34;category&#34;)</code>、<code>.getInteger(&#34;amount&#34;)</code> 来获取相应字段的值，它们有个共同特点，就是都是 “get” 开头的方法名称，我们叫它们 get 方法。</p>
+<p>set和get一般一起出现，如果只定义了一个会有特殊意义：</p>
+<ul>
+<li>
+<p>如果只有get，表示该属性只可读，不可写</p>
+</li>
+<li>
+<p>如果只有set，表示该属性只可写，不可读</p>
+</li>
+</ul>
+<h3>ApplicationCommandOptionData 类</h3>
+<p>应用程序命令或子命令的选项。来自 https://discord.js.org/#/docs/discord.js/main/typedef/ApplicationCommandOptionData</p>
+<p>请注意，为任何 snake_case (下划线风格）属性提供 camelCase (驼峰风格) 对应项的值将丢弃提供的 snake_case (下划线风格) 属性。</p>
+<table>
+<thead>
+<tr>
+<th>属性名</th>
+<th>类型</th>
+<th>可选？</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>.type</td>
+<td>ApplicationCommandOptionType</td>
+<td></td>
+<td>Option 的类型</td>
+</tr>
+<tr>
+<td>.name</td>
+<td>string</td>
+<td></td>
+<td>Option 的名称</td>
+</tr>
+<tr>
+<td>.nameLocalizations</td>
+<td>Object &lt; Locale, string &gt;</td>
+<td>Y</td>
+<td>Option 名称的本地化</td>
+</tr>
+<tr>
+<td>.description</td>
+<td>string</td>
+<td></td>
+<td>Option 说明</td>
+</tr>
+<tr>
+<td>.descriptionLocalizations</td>
+<td>Object &lt; Locale, string &gt;</td>
+<td>Y</td>
+<td>Option 描述的本地化</td>
+</tr>
+<tr>
+<td>.required</td>
+<td>boolean</td>
+<td>Y</td>
+<td>是否必须需要该项  Option</td>
+</tr>
+<tr>
+<td>.autocomplete</td>
+<td>boolean</td>
+<td>Y</td>
+<td>是否为 ApplicationCommandOptionType.String 、 ApplicationCommandOptionType.Integer 或 ApplicationCommandOptionType.Number 类型的 Option 启用自动完成</td>
+</tr>
+<tr>
+<td>.choices</td>
+<td>Array &lt; ApplicationCommandOptionChoice &gt;</td>
+<td>Y</td>
+<td>供用户选择的 Choices</td>
+</tr>
+<tr>
+<td>.options</td>
+<td>Array &lt; ApplicationCommandOption &gt;</td>
+<td>Y</td>
+<td>如果此选项是子命令（组），则附加 Option</td>
+</tr>
+<tr>
+<td>.channelTypes</td>
+<td>Array &lt; ChannelType &gt;</td>
+<td>Y</td>
+<td>当Option 类型为频道 (channel) 时，可以选择的允许的频道 (channel) 类型</td>
+</tr>
+<tr>
+<td>.minValue</td>
+<td>number</td>
+<td>Y</td>
+<td>ApplicationCommandOptionType.Integer 或 ApplicationCommandOptionType.Number 类型的 Option 的最小值</td>
+</tr>
+<tr>
+<td>.maxValue</td>
+<td>number</td>
+<td>Y</td>
+<td>ApplicationCommandOptionType.Integer 或 ApplicationCommandOptionType.Number 类型的 Option 的最大值</td>
+</tr>
+<tr>
+<td>.minLength</td>
+<td>number</td>
+<td>Y</td>
+<td>ApplicationCommandOptionType.String 类型的 Option 的最小长度（最大 6000）</td>
+</tr>
+<tr>
+<td>.maxLength</td>
+<td>number</td>
+<td>Y</td>
+<td>ApplicationCommandOptionType.String 类型的 Option 的最大长度（最大 6000）</td>
+</tr>
+</tbody>
+</table>
+<p>对于上面提到的 ApplicationCommandOptionData 类，有效的 set 方法有：</p>
+<p>.setName(name)</p>
+<p>.setNameLocalizations(nameLocalizations)</p>
+<p>.setDescription(description)</p>
+<p>.setDescriptionLocalizations(descriptionLocalizations)</p>
+<p>.setOptions(options)</p>
+<p>而 get option 的值时，方法会返回<code>CommandInteractionOptionResolver</code>。</p>
+<h3>ApplicationCommandOptionChoiceData 类</h3>
+<table>
+<thead>
+<tr>
+<th>属性名</th>
+<th>类型</th>
+<th>可选？</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>.name</td>
+<td>string</td>
+<td>N</td>
+<td>Choice 的名称</td>
+</tr>
+<tr>
+<td>.nameLocalizations</td>
+<td>Object&lt; Locale,string&gt;</td>
+<td>Y</td>
+<td>此 Choice 的本地化名称</td>
+</tr>
+<tr>
+<td>.value</td>
+<td>string 或 number</td>
+<td>N</td>
+<td>Choice 的值</td>
+</tr>
+</tbody>
+</table>
+<h3>CommandInteractionOptionResolver 类</h3>
+<p>命令交互选项的解析器。</p>
+<p>方法（Methods）：</p>
+<table>
+<thead>
+<tr>
+<th>方法名</th>
+<th>第一个参数</th>
+<th>第二个参数</th>
+<th>返回值类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>.get()</td>
+<td>name</td>
+<td>[required]</td>
+<td>CommandInteractionOption</td>
+<td>按名称获取选项</td>
+</tr>
+<tr>
+<td>.getAttachment()</td>
+<td>name</td>
+<td>[required]</td>
+<td>Attachment</td>
+<td>获取附件选项</td>
+</tr>
+<tr>
+<td>.getBoolean()</td>
+<td>name</td>
+<td>[required]</td>
+<td>boolean</td>
+<td>获取一个布尔选项</td>
+</tr>
+<tr>
+<td>.getChannel()</td>
+<td>name</td>
+<td>[required]</td>
+<td>GuildChannelThreadChannelAPIChannel</td>
+<td>获取频道选项</td>
+</tr>
+<tr>
+<td>.getFocused()</td>
+<td>[getFull]</td>
+<td>无</td>
+<td>string 或 AutocompleteFocusedOption</td>
+<td>获取关注点选项</td>
+</tr>
+<tr>
+<td>.getInteger()</td>
+<td>name</td>
+<td>[required]</td>
+<td>number</td>
+<td>获取整数选项</td>
+</tr>
+<tr>
+<td>.getMember()</td>
+<td>name</td>
+<td>无</td>
+<td>GuildMemberAPIGuildMember</td>
+<td>获取服务器成员选项</td>
+</tr>
+<tr>
+<td>.getMentionable()</td>
+<td>name</td>
+<td>[required]</td>
+<td>UserGuildMemberAPIGuildMember 或 RoleAPIRole</td>
+<td>获得一个服务器成员或身份组的选项</td>
+</tr>
+<tr>
+<td>.getMessage()</td>
+<td>name</td>
+<td>[required]</td>
+<td>Message</td>
+<td>获取消息选项</td>
+</tr>
+<tr>
+<td>.getNumber()</td>
+<td>name</td>
+<td>[required]</td>
+<td>number</td>
+<td>获取数字选项</td>
+</tr>
+<tr>
+<td>.getRole()</td>
+<td>name</td>
+<td>[required]</td>
+<td>RoleAPIRole</td>
+<td>获取身份组选项</td>
+</tr>
+<tr>
+<td>.getString()</td>
+<td>name</td>
+<td>[required]</td>
+<td>string</td>
+<td>获取字符串选项</td>
+</tr>
+<tr>
+<td>.getSubcommand()</td>
+<td>[required]</td>
+<td>无</td>
+<td>string</td>
+<td>获取选定的子命令</td>
+</tr>
+<tr>
+<td>.getSubcommandGroup()</td>
+<td>[required]</td>
+<td>无</td>
+<td>string</td>
+<td>获取选定的子命令组</td>
+</tr>
+<tr>
+<td>.getUser()</td>
+<td>name</td>
+<td>[required]</td>
+<td>User</td>
+<td>获取用户选项</td>
+</tr>
+</tbody>
+</table>
+<p>属性（Properties）：</p>
+<table>
+<thead>
+<tr>
+<th>属性名</th>
+<th>类型</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>.client</td>
+<td>Client</td>
+<td>实例化这个的 client</td>
+</tr>
+<tr>
+<td>.data</td>
+<td>Array&lt; CommandInteractionOption &gt;</td>
+<td>交互的 options 数组</td>
+</tr>
+<tr>
+<td>.resolved</td>
+<td>&lt; CommandInteractionResolvedData &gt;</td>
+<td>交互解析数据</td>
+</tr>
+</tbody>
+</table>
+<p>介绍了这么多个类，用代码举个例子 <code>commands/multiOption.js</code>：</p>
+<pre><code>const { SlashCommandBuilder } = require(&#39;discord.js&#39;);
+
+module.exports = {
+	data: new SlashCommandBuilder()
+	.setName(&#39;multioption&#39;)
+	.setDescription(&#39;Multiple options.&#39;)
+	.addStringOption(option =&gt; option.setName(&#39;input&#39;).setDescription(&#39;Enter a string&#39;))
+	.addIntegerOption(option =&gt; option.setName(&#39;int&#39;).setDescription(&#39;Enter an integer&#39;))
+	.addBooleanOption(option =&gt; option.setName(&#39;choice&#39;).setDescription(&#39;Select a boolean&#39;))
+	.addUserOption(option =&gt; option.setName(&#39;target&#39;).setDescription(&#39;Select a user&#39;))
+	.addChannelOption(option =&gt; option.setName(&#39;destination&#39;).setDescription(&#39;Select a channel&#39;))
+	.addRoleOption(option =&gt; option.setName(&#39;muted&#39;).setDescription(&#39;Select a role&#39;))
+	.addMentionableOption(option =&gt; option.setName(&#39;mentionable&#39;).setDescription(&#39;Mention something&#39;))
+	.addNumberOption(option =&gt; option.setName(&#39;num&#39;).setDescription(&#39;Enter a number&#39;))
+	.addAttachmentOption(option =&gt; option.setName(&#39;attachment&#39;).setDescription(&#39;Attach something&#39;)),
+
+	async execute(interaction) {
+		const string = interaction.options.getString(&#39;input&#39;);
+		const integer = interaction.options.getInteger(&#39;int&#39;);
+		const boolean = interaction.options.getBoolean(&#39;choice&#39;);
+		const user = interaction.options.getUser(&#39;target&#39;);
+		const member = interaction.options.getMember(&#39;target&#39;);
+		const channel = interaction.options.getChannel(&#39;destination&#39;);
+		const role = interaction.options.getRole(&#39;muted&#39;);
+		const mentionable = interaction.options.getMentionable(&#39;mentionable&#39;);
+		const number = interaction.options.getNumber(&#39;num&#39;);
+		const attachment = interaction.options.getAttachment(&#39;attachment&#39;);
+
+		await console.log(string, integer, boolean, user, member, channel, role, mentionable, number, attachment)
+		await interaction.reply(&#34;done&#34;);
+	},
+};
+
+</code></pre>
+<p>我们输入如下图所示，注意有些项没填，所以输出将是 null：
+<img src="https://img2022.cnblogs.com/blog/2455224/202207/2455224-20220712150435869-1215124464.png" alt="image"/></p>
+<p>控制台输出：</p>
+<pre><code>222 null false null null null Role {
+  guild: &lt;ref *1&gt; Guild {
+    id: &#39;xxxxxxxxxxxxxx0988&#39;,
+    name: &#39;---隐私打码---&#39;,
+    icon: null,
+    features: [],
+    commands: GuildApplicationCommandManager {
+      permissions: [ApplicationCommandPermissionsManager],
+      guild: [Circular *1]
+    },
+    members: GuildMemberManager { guild: [Circular *1] },
+    channels: GuildChannelManager { guild: [Circular *1] },
+    bans: GuildBanManager { guild: [Circular *1] },
+    roles: RoleManager { guild: [Circular *1] },
+    presences: PresenceManager {},
+    voiceStates: VoiceStateManager { guild: [Circular *1] },
+    stageInstances: StageInstanceManager { guild: [Circular *1] },
+    invites: GuildInviteManager { guild: [Circular *1] },
+    scheduledEvents: GuildScheduledEventManager { guild: [Circular *1] },
+    available: true,
+    shardId: 0,
+    splash: null,
+    banner: null,
+    description: null,
+    verificationLevel: &#39;NONE&#39;,
+    vanityURLCode: null,
+    nsfwLevel: &#39;DEFAULT&#39;,
+    premiumSubscriptionCount: 0,
+    discoverySplash: null,
+    memberCount: 3,
+    large: false,
+    premiumProgressBarEnabled: false,
+    applicationId: null,
+    afkTimeout: 300,
+    afkChannelId: null,
+    systemChannelId: &#39;xxxxxxxxxxxxxx2250&#39;,
+    premiumTier: &#39;NONE&#39;,
+    explicitContentFilter: &#39;DISABLED&#39;,
+    mfaLevel: &#39;NONE&#39;,
+    joinedTimestamp: xxxxxxxxxx691,
+    defaultMessageNotifications: &#39;ALL_MESSAGES&#39;,
+    systemChannelFlags: SystemChannelFlags { bitfield: 0 },
+    maximumMembers: 500000,
+    maximumPresences: null,
+    approximateMemberCount: null,
+    approximatePresenceCount: null,
+    vanityURLUses: null,
+    rulesChannelId: null,
+    publicUpdatesChannelId: null,
+    preferredLocale: &#39;en-US&#39;,
+    ownerId: &#39;xxxxxxxxxxxxxx4590&#39;,
+    emojis: GuildEmojiManager { guild: [Circular *1] },
+    stickers: GuildStickerManager { guild: [Circular *1] }
+  },
+  icon: null,
+  unicodeEmoji: null,
+  id: &#39;xxxxxxxxxxxxxx2137&#39;,
+  name: &#39;BlogTest&#39;,
+  color: 0,
+  hoist: false,
+  rawPosition: 1,
+  permissions: Permissions { bitfield: 8n },
+  managed: true,
+  mentionable: false,
+  tags: { botId: &#39;xxxxxxxxxxxxxx4939&#39; }
+} null 7.5 MessageAttachment {
+  attachment: &#39;https://cdn.discordapp.com/ephemeral-attachments/xxxxxxxxxxxxxx0592/xxxxxxxxxxxxxx9424/1_BPSx-c--z6r7tY29L19ukQ.png&#39;,
+  name: &#39;1_BPSx-c--z6r7tY29L19ukQ.png&#39;,
+  id: &#39;xxxxxxxxxxxxxx9424&#39;,
+  size: 50120,
+  url: &#39;https://cdn.discordapp.com/ephemeral-attachments/xxxxxxxxxxxxxx0592/xxxxxxxxxxxxxx9424/1_BPSx-c--z6r7tY29L19ukQ.png&#39;,
+  proxyURL: &#39;https://media.discordapp.net/ephemeral-attachments/xxxxxxxxxxxxxx0592/xxxxxxxxxxxxxx9424/1_BPSx-c--z6r7tY29L19ukQ.png&#39;,
+  height: 768,
+  width: 1366,
+  contentType: &#39;image/png&#39;,
+  description: null,
+  ephemeral: true
+}
+</code></pre>
+<p>还是 <code>commands/multiOption.js</code>：</p>
+<p>我们输入：
+<img src="https://img2022.cnblogs.com/blog/2455224/202207/2455224-20220712151051919-1157319136.png" alt="image"/></p>
+<p>控制台输出：</p>
+<pre><code>a1b2c3d4 null true null null null null null 9 null
+</code></pre>
+<h3>结语</h3>
+<p>Options 和 Choices 作为斜杠命令参数很强大。</p>
+</body></html>

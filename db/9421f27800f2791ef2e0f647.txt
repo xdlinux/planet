@@ -1,1 +1,146 @@
-<html><head></head><body><p>这是一份非常详细和系统化的利用 NodeJS 进行 Discord bot 开发的教程，本文介绍了什么是斜杠命令的子命令 subcommand 以及为同一套命令逻辑起别名的方法。</p></body></html>
+<html><head></head><body><h2>Chapter 7 - 斜杠命令的子命令 Subcommands</h2>
+<p>如果你有一个包含子命令的命令，你可以以使用与解析 Options 和 Choices 的值那样相似的方式解析它们。 以下代码片段详细说明了解析子命令并使用 <code>CommandInteractionOptionResolver#getSubcommand()</code> 方法做出相应响应所需的逻辑：</p>
+<p>代码 <code>commands/subCmd.js</code>：</p>
+<pre><code>const { SlashCommandBuilder } = require(&#39;discord.js&#39;);
+
+module.exports = {
+	data: new SlashCommandBuilder()
+		.setName(&#39;subcmd&#39;)
+		.setDescription(&#39;Subcommand! Reply with user\&#39;s or server \&#39;s info.&#39;)
+		.addSubcommand(subcommand =&gt; 
+			subcommand.setName(&#39;user&#39;)
+			.setDescription(&#39;Info about a user&#39;)
+			.addUserOption(option =&gt; option.setName(&#39;target&#39;).setDescription(&#39;The user&#39;)))
+		.addSubcommand(subcommand =&gt;
+			subcommand.setName(&#39;server&#39;)
+			.setDescription(&#39;Info about the server&#39;)),
+
+	async execute(interaction) {
+		if (interaction.options.getSubcommand() === &#39;user&#39;) {
+			const theUser = interaction.options.getUser(&#39;target&#39;);
+
+			if (theUser) {
+				await interaction.reply(`Username: ${theUser.username}\nID: ${theUser.id}`);
+			} else {
+				// 用户没有指定 target user，我们输出命令发起者自己就好
+				await interaction.reply(`Your username: ${interaction.user.username}\nYour ID: ${interaction.user.id}`);
+			}
+		} else if (interaction.options.getSubcommand() === &#39;server&#39;) {
+			await interaction.reply(`Server name: ${interaction.guild.name}\nTotal members: ${interaction.guild.memberCount}`);
+		}
+	},
+};
+</code></pre>
+<p>注意，只有子命令才是真正可以执行的命令，比如上面的代码中 <code>/subcmd</code> 没有真正的函数逻辑实现来支撑这个命令，只有子命令 <code>/subcmd server</code> 和 <code>/subcmd user</code> 才是真正有函数实现的命令。直接执行 <code>/subcmd</code> 指望它能干事是不可能的。</p>
+<p>还是先上效果图，再分析代码：</p>
+<ul>
+<li>
+<p>输入命令 <code>/subcmd</code> 时，提示了两个子命令：
+<img src="https://img2022.cnblogs.com/blog/2455224/202207/2455224-20220713000603222-1244642579.png" alt="image"/></p>
+</li>
+<li>
+<p>执行 <code>/subcmd server</code> ：
+<img src="https://img2022.cnblogs.com/blog/2455224/202207/2455224-20220713000606307-524172865.png" alt="image"/></p>
+</li>
+<li>
+<p>执行 <code>/subcmd user @BlogTest</code>：（注意你需要从提示栏中回车选定 target 用户，可不能直接输入 &#34;@ + 用户名&#34; 就完活了，因为可能存在重名用户）
+<img src="https://img2022.cnblogs.com/blog/2455224/202207/2455224-20220713014652764-1775725127.png" alt="image"/></p>
+</li>
+<li>
+<p>执行 <code>/subcmd user</code>：
+<img src="https://img2022.cnblogs.com/blog/2455224/202207/2455224-20220713010022170-1269680805.png" alt="image"/></p>
+</li>
+</ul>
+<p>分析代码：</p>
+<p>下面的节选代码，它声明了一个叫 user 的子命令，它的输入参数是一个 Option，一个 User 类型的 Option。这个 Option 叫 target。</p>
+<pre><code>...
+
+		.addSubcommand(subcommand =&gt; 
+			subcommand.setName(&#39;user&#39;)
+			.setDescription(&#39;Info about a user&#39;)
+			.addUserOption(option =&gt; option.setName(&#39;target&#39;).setDescription(&#39;The user&#39;)))
+
+...
+</code></pre>
+<p>下面的节选代码，它声明了一个叫 server 的子命令，没有参数。</p>
+<pre><code>...
+
+		.addSubcommand(subcommand =&gt;
+			subcommand.setName(&#39;server&#39;)
+			.setDescription(&#39;Info about the server&#39;)),
+
+...
+</code></pre>
+<p>下面的代码，首先上来，判断子命令是 user 还是 server。</p>
+<ul>
+<li>如果子命令是 user，则通过 <code>interaction.options.getUser(target)</code> 获取 target 字段的值，并赋值给 theUser 变量。
+<ul>
+<li>如果 theUser 为 null，则用户没有给定值，则会回复用户的信息（用户名和用户的 Snowflake ID）。</li>
+<li>如果 theUser 非 null，则输出这个用户的信息（用户名和用户的 Snowflake ID）。注意这里的 user 将是一个有效 Discord 用户，不会是无效的 Discord 用户作为输入。</li>
+</ul>
+</li>
+<li>如果子命令是 server，则回复服务器的信息（服务器名称和服务器人数）。</li>
+</ul>
+<pre><code>...
+
+	async execute(interaction) {
+		if (interaction.options.getSubcommand() === &#39;user&#39;) {
+			const theUser = interaction.options.getUser(&#39;target&#39;);
+
+			if (theUser) {
+				await interaction.reply(`Username: ${theUser.username}\nID: ${theUser.id}`);
+			} else {
+				// 用户没有指定 target user，我们输出命令发起者自己就好
+				await interaction.reply(`Your username: ${interaction.user.username}\nYour ID: ${interaction.user.id}`);
+			}
+		} else if (interaction.options.getSubcommand() === &#39;server&#39;) {
+			await interaction.reply(`Server name: ${interaction.guild.name}\nTotal members: ${interaction.guild.memberCount}`);
+		}
+	},
+
+...
+</code></pre>
+<h2>Chapter 8 - 斜杠命令的多重命令名</h2>
+<p>比如代码 <code>commands/utils/sameCmd.js</code>，改造自 <code>commands/subCmd.js</code>：</p>
+<pre><code>const { SlashCommandBuilder } = require(&#39;discord.js&#39;);  
+  
+module.exports = {  
+   data: new SlashCommandBuilder()  
+      .setName(&#39;samecmd&#39;)  
+      .setDescription(&#39;Subcommand! Reply with user\&#39;s or server \&#39;s info.&#39;)  
+      .addSubcommand(subcommand =&gt;   
+         subcommand.setName(&#39;user&#39;)  
+         .setDescription(&#39;Info about a user&#39;)  
+         .addUserOption(option =&gt; option.setName(&#39;target&#39;).setDescription(&#39;The user&#39;)))  
+      .addSubcommand(subcommand =&gt;  
+         subcommand.setName(&#39;server&#39;)  
+         .setDescription(&#39;Info about the server&#39;)),  
+   akaNames: [&#39;samecmd2&#39;, &#39;samecmd3&#39;, &#34;samecmd4&#34;],  
+  
+   async execute(interaction) {  
+      if (interaction.options.getSubcommand() === &#39;user&#39;) {  
+         const theUser = interaction.options.getUser(&#39;target&#39;);  
+  
+         if (theUser) {  
+            await interaction.reply(`Username: ${theUser.username}\nID: ${theUser.id}`);  
+         } else {  
+            // 用户没有指定 target user，我们输出命令发起者自己就好  
+            await interaction.reply(`Your username: ${interaction.user.username}\nYour ID: ${interaction.user.id}`);  
+         }  
+      } else if (interaction.options.getSubcommand() === &#39;server&#39;) {  
+         await interaction.reply(`Server name: ${interaction.guild.name}\nTotal members: ${interaction.guild.memberCount}`);  
+      }  
+   },  
+};
+</code></pre>
+<p>关键就是中间的 <code>akaNames: [&#39;samecmd2&#39;, &#39;samecmd3&#39;, &#34;samecmd4&#34;], </code>。</p>
+<p>我们为该命令起了 4 个名字：一开始的 <code>samecmd</code>，和 akaNames 描述的 <code>sameCmd2</code>、 <code>sameCmd3</code>、 <code>sameCmd4</code> 。</p>
+<p>对了，我们把代码保存到了 <code>commands/utils</code> 这个新文件夹，为了使得 <code>sameCmd.js</code> 注册，需要修改 <code>cmdPaths.js</code>：</p>
+<pre><code>module.exports = {  
+    data: [&#34;./commands&#34;, &#34;./commands/utils&#34;],  
+};
+</code></pre>
+<p>效果图：
+<img src="https://img2022.cnblogs.com/blog/2455224/202207/2455224-20220723060051400-163673119.png" alt="image"/></p>
+<p><img src="https://img2022.cnblogs.com/blog/2455224/202207/2455224-20220723060119552-533298490.png" alt="image"/></p>
+</body></html>

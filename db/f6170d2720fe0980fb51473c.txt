@@ -1,1 +1,462 @@
-<html><head></head><body><p>这是一份非常详细和系统化的利用 NodeJS 进行 Discord bot 开发的教程，本文介绍了什么是响应 response、bot 如何抓取响应、如何删除响应的方法，以及简单拓展介绍了 Discord 所有消息、用户、频道、服务器的统一 ID 类型：Snowflake 类型。</p></body></html>
+<html><head></head><body><h2>Chapter 6 - 交互：对斜杠命令回复的那些事儿（2）</h2>
+<p>本章是 Chapter 5 的续集。</p>
+<h3>抓取响应 Fetching responses</h3>
+<p>除了对斜杠命令进行回复外，我们还可以抓取这个回复，比如用于给这个回复添加表情回复（reactions）。</p>
+<p>靠这个：<code>CommandInteraction#fetchReply()</code>。</p>
+<p>来个例子，<code>commands/pingFetch.js</code>：</p>
+<pre><code>const { SlashCommandBuilder } = require(&#39;discord.js&#39;);
+
+module.exports = {
+	data: new SlashCommandBuilder()
+		.setName(&#39;ping7&#39;)
+		.setDescription(&#39;Replies with Pong, and fetch!&#39;),
+	async execute(interaction) {
+	    await interaction.reply(&#34;Pong!&#34;);
+		const message = await interaction.fetchReply();
+		console.log(message); // 控制台输出抓取的消息对象本身
+	},
+};
+</code></pre>
+<p>控制台输出：</p>
+<pre><code>&lt;ref *1&gt; Message {
+  channelId: &#39;---隐私打码---&#39;,
+  guildId: &#39;---隐私打码---&#39;,
+  id: &#39;---隐私打码---&#39;,
+  createdTimestamp: xxxxxxxxxx021,
+  type: &#39;APPLICATION_COMMAND&#39;,
+  system: false,
+  content: &#39;Pong!&#39;,
+  author: ClientUser {
+    id: &#39;---隐私打码---&#39;,
+    bot: true,
+    system: false,
+    flags: UserFlags { bitfield: 0 },
+    username: &#39;BlogTest&#39;,
+    discriminator: &#39;---隐私打码---&#39;,
+    avatar: null,
+    banner: undefined,
+    accentColor: undefined,
+    verified: true,
+    mfaEnabled: false
+  },
+  pinned: false,
+  tts: false,
+  nonce: null,
+  embeds: [],
+  components: [],
+  attachments: Collection(0) [Map] {},
+  stickers: Collection(0) [Map] {},
+  editedTimestamp: null,
+  reactions: ReactionManager { message: [Circular *1] },
+  mentions: MessageMentions {
+    everyone: false,
+    users: Collection(0) [Map] {},
+    roles: Collection(0) [Map] {},
+    _members: null,
+    _channels: null,
+    crosspostedChannels: Collection(0) [Map] {},
+    repliedUser: null
+  },
+  webhookId: &#39;---隐私打码---&#39;,
+  groupActivityApplication: null,
+  applicationId: &#39;---隐私打码---&#39;,
+  activity: null,
+  flags: MessageFlags { bitfield: 0 },
+  reference: null,
+  interaction: {
+    id: &#39;---隐私打码---&#39;,
+    type: &#39;APPLICATION_COMMAND&#39;,
+    commandName: &#39;ping7&#39;,
+    user: User {
+      id: &#39;---隐私打码---&#39;,
+      bot: false,
+      system: false,
+      flags: [UserFlags],
+      username: &#39;---隐私打码---&#39;,
+      discriminator: &#39;---隐私打码---&#39;,
+      avatar: &#39;---隐私打码---&#39;,
+      banner: undefined,
+      accentColor: undefined
+    }
+  }
+}
+</code></pre>
+<p>这里返回的 json 信息很丰富，从命令发起者到机器人自己的信息，都包括了。</p>
+<h3>删除响应 Deleting responses</h3>
+<p>靠这个 <code>CommandInteraction#deleteReply()</code> 。</p>
+<p>注意：你不能删除一个“短暂回复”（Ephemeral response）。</p>
+<p>比如：<code>commands/pingDelete.js</code>：</p>
+<pre><code>const { SlashCommandBuilder } = require(&#39;discord.js&#39;);
+const wait = require(&#39;node:timers/promises&#39;).setTimeout;
+
+module.exports = {
+	data: new SlashCommandBuilder()
+		.setName(&#39;ping&#39;)
+		.setDescription(&#39;Replies with Pong!&#39;),
+	async execute(interaction) {
+		await interaction.reply(&#34;Pong!&#34;);
+		await wait(1000);
+	    await interaction.deleteReply();
+	},
+};
+</code></pre>
+<p>它会在回复 <code>Pong!</code> 1 秒后，删除这条回复。</p>
+<h3>服务器命令 Guild commands</h3>
+<p>如果您的应用程序具有 applications.commands 的 scope 授权（我们在 Chapter 1 生成机器人时，已经选定过这个 scpoe 了），则服务器应用程序命令仅在创建它们的服务器中可用。</p>
+<p>我们在 Chapter 2 中所注册的斜杠命令(ping.js)和斜杠命令部署器(deploy_commands.js)都是围绕服务器命令展开的。</p>
+<h3>全局命令 Global commands</h3>
+<p>全局应用程序命令将在您的应用程序具有 applications.commands 的 scpoe 授权（我们在 Chapter 1 生成机器人时，已经选定过这个 scpoe 了）的所有服务器以及 DM（私聊） 中可用。</p>
+<p>要部署全局命令，您可以使用服务器命令部分中的相同脚本并将脚本中的路由调整为</p>
+<pre><code>...
+
+// 利用 .applicationCommands 注册全局命令
+rest.put(Routes.applicationCommands(clientId),{ body: commands },)
+    .then(() =&gt; console.log(&#39;Successfully registered application commands.&#39;))  
+    .catch(console.error);
+    
+...
+</code></pre>
+<h3>补充：snowflake 类型</h3>
+<p>Snowflake 类型源自推特（Twitter）公司。Snowflake 是 64 位无符号整数，具有全局唯一性，基于时间生成，而不是按顺序生成。</p>
+<p>在 Javascript 中，整数最大只有 53 位，因此在 JavaScript 中，我们一般选用字符串来存储 snowflake 值。</p>
+<p>在 Discord 中，假设我们有一个 Snowflake l类型的值 ‘266241948824764416’，它会被这样解读：</p>
+<pre><code>64                                          22     17     12          0
+ 000000111011000111100001101001000101000000  00001  00000  000000000000
+ number of milliseconds since Discord epoch  worker  pid    increment
+</code></pre>
+<p>63 代表最高位，0代表最低位。</p>
+<table>
+<thead>
+<tr>
+<th>项目</th>
+<th>含义</th>
+<th>位</th>
+<th>位的个数</th>
+<th>说明</th>
+<th>提取方法</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Timestamp</td>
+<td>时间戳，单位毫秒</td>
+<td>63 to 22</td>
+<td>42 bits</td>
+<td>自 Discord Epoch 以来的毫秒数，即 2015 年的第一毫秒（即 UNIX 时间戳 1420070400000 所对应的那一毫秒）</td>
+<td>(snowflake &gt;&gt; 22) + 1420070400000</td>
+</tr>
+<tr>
+<td>Internal worker ID</td>
+<td>Discord 集群编号</td>
+<td>21 to 17</td>
+<td>5 bits</td>
+<td>无需理会</td>
+<td>(snowflake &amp; 0x3E0000) &gt;&gt; 17</td>
+</tr>
+<tr>
+<td>Internal process ID</td>
+<td>集群内部进程编号</td>
+<td>16 to 12</td>
+<td>5 bits</td>
+<td>无需理会</td>
+<td>(snowflake &amp; 0x1F000) &gt;&gt; 12</td>
+</tr>
+<tr>
+<td>Increment</td>
+<td>这 1 毫秒内，条目的增量</td>
+<td>11 to 0</td>
+<td>12 bits</td>
+<td>对于在该进程上生成的每个 ID，此数字都会递增</td>
+<td>snowflake &amp; 0xFFF</td>
+</tr>
+</tbody>
+</table>
+<h3>CommandInteraction 类</h3>
+<p>表示命令交互。</p>
+<p>来自文档 https://discord.js.org/#/docs/discord.js/main/class/CommandInteraction</p>
+<h4>类方法</h4>
+<p>我们在上面谈到的许多方法，都是来自于 <code>CommandInteraction</code> 类，这个类拓展自 <code>BaseInteraction</code> 类。</p>
+<p>我们已经见过了 <code>.deferReply()</code> 、<code>.deleteReply()</code> 、<code>.editReply()</code> 、<code>.fetchReply()</code> 、<code>.followUp()</code> 、<code>.reply()</code>，不再赘述。</p>
+<p>下面来看 <code>CommandInteraction</code> 类自己非继承来的方法：</p>
+<table>
+<thead>
+<tr>
+<th>方法名</th>
+<th>有参数吗</th>
+<th>返回值类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>.awaitModalSubmit()</td>
+<td>Y</td>
+<td>Promise &lt; ModalSubmitInteraction &gt;</td>
+<td>收集通过过滤器的单个模态提交交互。 如果时间到期，Promise 将拒绝</td>
+</tr>
+<tr>
+<td>.deferReply()</td>
+<td>Y</td>
+<td>Promise &lt; (Message or InteractionResponse) &gt;</td>
+<td>推迟对此交互的回复</td>
+</tr>
+<tr>
+<td>.deleteReply()</td>
+<td>N</td>
+<td>Promise &lt; void &gt;</td>
+<td>删除对此交互的初始回复</td>
+</tr>
+<tr>
+<td>.editReply()</td>
+<td>Y</td>
+<td>Promise &lt; Message &gt;</td>
+<td>编辑对此交互的初始回复</td>
+</tr>
+<tr>
+<td>.fetchReply()</td>
+<td>N</td>
+<td>Promise &lt; Message &gt;</td>
+<td>获取对此交互的初始回复</td>
+</tr>
+<tr>
+<td>.followUp()</td>
+<td>Y</td>
+<td>Promise &lt; Message &gt;</td>
+<td>向此交互发送后续消息</td>
+</tr>
+<tr>
+<td>.reply()</td>
+<td>Y</td>
+<td>Promise &lt; (Message or InteractionResponse) &gt;</td>
+<td>创建对此交互的回复</td>
+</tr>
+<tr>
+<td>.showModel()</td>
+<td>Y</td>
+<td>void</td>
+<td>显示模态组件</td>
+</tr>
+</tbody>
+</table>
+<p>以下方法来自父类 <code>BaseInteraction</code>：</p>
+<table>
+<thead>
+<tr>
+<th>方法名</th>
+<th>有参数吗</th>
+<th>返回值类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>.inCachedGuild()</td>
+<td>N</td>
+<td>Boolean</td>
+<td>指示此交互是否同时被缓存并从服务器接收</td>
+</tr>
+<tr>
+<td>.inGuild()</td>
+<td>N</td>
+<td>Boolean</td>
+<td>指示此交互是否来自服务器</td>
+</tr>
+<tr>
+<td>.inRawGuild()</td>
+<td>N</td>
+<td>Boolean</td>
+<td>指示此交互是否来自未缓存的服务器</td>
+</tr>
+<tr>
+<td>.isButton()</td>
+<td>N</td>
+<td>Boolean</td>
+<td>指示此交互是否为 ButtonInteraction</td>
+</tr>
+<tr>
+<td>.isChatInputCommand()</td>
+<td>N</td>
+<td>Boolean</td>
+<td>指示此交互是否为 ChatInputCommandInteraction</td>
+</tr>
+<tr>
+<td>.isContextMenuCommand()</td>
+<td>N</td>
+<td>Boolean</td>
+<td>指示此交互是否为 ContextMenuCommandInteraction</td>
+</tr>
+<tr>
+<td>.isMessageContextMenuCommand()</td>
+<td>N</td>
+<td>Boolean</td>
+<td>指示此交互是否为 MessageContextMenuCommandInteraction</td>
+</tr>
+<tr>
+<td>.isRepliable()</td>
+<td>N</td>
+<td>Boolean</td>
+<td>指示是否可以回复此交互</td>
+</tr>
+<tr>
+<td>.isSelectMenu()</td>
+<td>N</td>
+<td>Boolean</td>
+<td>指示此交互是否为 SelectMenuInteraction</td>
+</tr>
+<tr>
+<td>.isUserContextMenuCommand()</td>
+<td>N</td>
+<td>Boolean</td>
+<td>指示此交互是否为 UserContextMenuCommandInteraction</td>
+</tr>
+</tbody>
+</table>
+<h4>类属性</h4>
+<table>
+<thead>
+<tr>
+<th>属性名</th>
+<th>类型</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>.applicationId</td>
+<td>Snowflake</td>
+<td>应用程序的 ID</td>
+</tr>
+<tr>
+<td>.appPermissions</td>
+<td>&lt; PermissionsBitField &gt;</td>
+<td>应用程序或机器人在发送交互的频道内拥有的权限集</td>
+</tr>
+<tr>
+<td>.channel</td>
+<td>TextBasedChannels</td>
+<td>发送此交互的频道</td>
+</tr>
+<tr>
+<td>.channelId</td>
+<td>Snowflake</td>
+<td>发送此交互的频道的 ID</td>
+</tr>
+<tr>
+<td>.client</td>
+<td>Client</td>
+<td>实例化这个交互的客户端</td>
+</tr>
+<tr>
+<td>.command</td>
+<td>ApplicationCommand</td>
+<td>调用的应用程序命令（如果之前已获取）</td>
+</tr>
+<tr>
+<td>.commandGuildId</td>
+<td>Snowflake</td>
+<td>调用的应用程序命令注册到的服务器 id</td>
+</tr>
+<tr>
+<td>.commandId</td>
+<td>Snowflake</td>
+<td>调用的应用程序命令的 id</td>
+</tr>
+<tr>
+<td>.commandName</td>
+<td>string</td>
+<td>调用的应用程序命令的名称</td>
+</tr>
+<tr>
+<td>.commandType</td>
+<td>ApplicationCommandType</td>
+<td>调用的应用程序命令的类型</td>
+</tr>
+<tr>
+<td>.createdAt</td>
+<td>Date</td>
+<td>创建交互的时间</td>
+</tr>
+<tr>
+<td>.createdTimestamp</td>
+<td>number</td>
+<td>创建交互的时间戳</td>
+</tr>
+<tr>
+<td>.deferred</td>
+<td>boolean</td>
+<td>是否已推迟对此交互的回复</td>
+</tr>
+<tr>
+<td>.ephemeral</td>
+<td>boolean</td>
+<td>对此交互的回复是否是短暂的</td>
+</tr>
+<tr>
+<td>.guild</td>
+<td>Guild</td>
+<td>发送此交互的服务器</td>
+</tr>
+<tr>
+<td>.guildId</td>
+<td>Snowflake</td>
+<td>发送此交互的服务器 ID</td>
+</tr>
+<tr>
+<td>.guildLocale</td>
+<td>Locale</td>
+<td>发送此交互的服务器的首选语言环境</td>
+</tr>
+<tr>
+<td>.id</td>
+<td>Snowflake</td>
+<td>交互的 ID</td>
+</tr>
+<tr>
+<td>.locale</td>
+<td>Locale</td>
+<td>调用此交互的用户的语言环境</td>
+</tr>
+<tr>
+<td>.member</td>
+<td>GuildMember or APIGuildMember</td>
+<td>如果此交互是在公会中发送的，发送它的成员</td>
+</tr>
+<tr>
+<td>.memberPermissions</td>
+<td>PermissionsBitField</td>
+<td>执行此交互的通道中成员的权限（如果存在）</td>
+</tr>
+<tr>
+<td>.replied</td>
+<td>Guild</td>
+<td>发送此交互的服务器</td>
+</tr>
+<tr>
+<td>.token</td>
+<td>string</td>
+<td>交互的令牌</td>
+</tr>
+<tr>
+<td>.type</td>
+<td>InteractionType</td>
+<td>交互的类型</td>
+</tr>
+<tr>
+<td>.user</td>
+<td>User</td>
+<td>发送此交互的用户</td>
+</tr>
+<tr>
+<td>.version</td>
+<td>number</td>
+<td>版本</td>
+</tr>
+<tr>
+<td>.webhook</td>
+<td>InteractionWebhook</td>
+<td>关联的交互 webhook，可用于进一步与此交互进行交互</td>
+</tr>
+</tbody>
+</table>
+<p>很多我们都用不上，当然很多能节约我们的敲代码的时间。要学会在不断地尝试中学习，学会在错误中吸取经验。</p>
+</body></html>

@@ -1,1 +1,322 @@
-<html><head></head><body><p>这是一份非常详细和系统化的利用 NodeJS 进行 Discord bot 开发的教程，本文介绍了什么是 Discord 的表情反应 Reaction。</p></body></html>
+<html><head></head><body><h1>Chapter 17 - Reaction 反应</h1>
+<p>反应（Reactions）是这样的一种东西：</p>
+<p><img src="https://img2023.cnblogs.com/blog/2455224/202301/2455224-20230124221854869-52977036.png" alt="image"/></p>
+<p>你可以这样为一条消息添加反应：</p>
+<p><img src="https://img2023.cnblogs.com/blog/2455224/202301/2455224-20230124221912227-851394996.png" alt="image"/></p>
+<p>不是任何消息都可以被添加反应的。比如管理员设置了成员在某些频道不允许添加反应，或者只允许某些身份组的人可以为某些消息添加反应。</p>
+<p>这样看来，“反应” 就是一种 emoji 回复。下面我们来看看机器人如何为一条消息识别、添加和移除反应。</p>
+<h3>Discord Emoji 的种类</h3>
+<p>在 Discord 里，emoji 有两类，一种是跨平台、跨软件、跨设备都通用的 Unicode 标准 emoji，还有一种是 Discord 自定义 emoji。前者属于 unicode 标准，一个表情属于一个字符，后者则不属于 unicode 标准，只限在 Discord 平台里流通。</p>
+<p>下面我们来举个例子：</p>
+<p>微笑  是一个 Unicode emoji，在 discord 里，它可被记为 <code>:smile:</code>。</p>
+<p>我们在服务器设置里上传了个自己的表情，叫 <code>:WumpusMistletoe2:</code>。</p>
+<p>下面就是对表情反应的示例图：</p>
+<p><img src="https://img2023.cnblogs.com/blog/2455224/202301/2455224-20230124222209218-1136736470.png" alt="image"/></p>
+<h3>给服务器上传一个表情符号</h3>
+<p>假设你的服务器没有任何表情符号，如果你有，可以跳过上传这一步，直接跳到获取 id。</p>
+<p>打开 Discord，点击一个你拥有管理员或服主身份的服务器，打开服务器设置，点击 “表情符号” 选项卡，上传一个表情符号并命名。比如我们选择了一张 Wumpus 图片上传，并命名为 “WumpusMistletoe2”。</p>
+<p><img src="https://img2023.cnblogs.com/blog/2455224/202301/2455224-20230124222242340-743465457.png" alt="image"/></p>
+<p><img src="https://img2023.cnblogs.com/blog/2455224/202301/2455224-20230124222229823-1884263309.png" alt="image"/></p>
+<blockquote>
+<p>注意，不同服务器里的表情名字可以重复，但是它们的 id 将不会相同。当机器人使用 .find() 通过名字寻找表情时，该方法总会返回它找到的第一项，这可能与你所期望的表情不匹配。</p>
+</blockquote>
+<h3>获取表情 id</h3>
+<p>相同的图片在相同的服务器里上传，也会得到不同的 id。这是因为 Discord 的 id 是 Snowflake 值。具体关于 Discord snowflake id，我在系列文章 Chapter 6 的最后介绍过，这里不重复介绍。</p>
+<h4>方法一</h4>
+<p>接下来回到服务器聊天区获取表情 id。</p>
+<p>延续上一步举例的例子。在聊天框输入 <code>\:WumpusMistletoe2:</code> 并回车发送，你的消息会被自动替换成表情 id。：</p>
+<p><img src="https://img2023.cnblogs.com/blog/2455224/202301/2455224-20230125124039064-1376380584.png" alt="image"/></p>
+<p>这样，我们就获取到本例中关键的 id： <code>&lt;:WumpusMistletoe2:1067024784057184266&gt;</code>。</p>
+<p>不要复制我的 id，这个 id 只在我的服务器里有效。</p>
+<h4>方法二</h4>
+<p>打开 PC 端浏览器，按下 <code>Ctrl + Shift + C</code>，将鼠标指向你需要获取 id 的表情图标上，单击。</p>
+<p><img src="https://img2023.cnblogs.com/blog/2455224/202301/2455224-20230125124113720-849754551.png" alt="image"/></p>
+<p>在开发者工具中，你能看到高亮区域代码里的 alt 值是 <code>:WumpusMistletoe2:</code>，data-id 值是 <code>1067024784057184266</code>。将其用格式 &lt;:alt:data-id&gt; 组合一下就得到了关键的信息： <code>&lt;:WumpusMistletoe2:1067024784057184266&gt;</code>。</p>
+<h3>向 index.js 添加关键 GatewayBitField</h3>
+<h1><strong>这很重要！！</strong></h1>
+<p>给 client 增加一个 <code>GatewayIntentBits.GuildMessageReactions</code>，这样才可以获取消息的反应。</p>
+<p>修改后的那一行如下：</p>
+<pre><code>...
+const client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.MessageContent, GatewayIntentBits.GuildMessageReactions] });
+...
+</code></pre>
+<p>具体的 commit：
+Github: https://github.com/wtflmao/discord_bot_example/commit/dfbad3ca953e2ca25ac4673fbcea3a549eff9c77
+Gitee: https://gitee.com/wtflmao/discord_bot_example/commit/dfbad3ca953e2ca25ac4673fbcea3a549eff9c77</p>
+<blockquote>
+<p>P.S. 这里我们在 index.js 只使用一个 Client 实例并赋予所有可能用到的 Intents，后续交互复用这个实例，其实是一种偷懒且具有潜在风险的做法。建议不要学我这么做。但是我们的代码已经都这样了，何况我只是以学习为目的的写这个项目，没打算直接上生产环境，那就让它维持现在这样的屎山状态吧哈哈。</p>
+</blockquote>
+<h3>回复表情</h3>
+<p>下面修改文件 <code>/cmdPaths.js</code>，在 data 域里加入新的一条 &#34;./commands/reactions&#34;。</p>
+<pre><code>module.exports = {
+    data: [&#34;./commands&#34;, &#34;./commands/utils&#34;, &#34;./commands/buttons&#34;, &#34;./commands/menus&#34;, &#34;./commands/modals&#34;, &#34;./commands/contextMenus&#34;, &#34;./commands/embeds&#34;, &#34;./commands/reactions&#34;],
+};
+</code></pre>
+<p>新建文件 <code>/commands/reactions/reaction.js</code>：</p>
+<pre><code>const { SlashCommandBuilder} = require(&#39;discord.js&#39;);
+
+module.exports = {
+    data: new SlashCommandBuilder()
+        .setName(&#39;react&#39;)
+        .setDescription(&#39;Replies with reaction!&#39;),
+    async execute(interaction) {
+
+        const message = await interaction.reply({ content: &#39;You can react with Unicode emojis!&#39;, fetchReply: true });
+        await message.react(&#39;&#39;);
+
+        const message2 = await interaction.followUp({ content: &#34;Here&#39;s a custom emoji!&#34;, fetchReply: true });
+        await message2.react(&#39;&lt;:WumpusMistletoe2:1067024784057184266&gt;&#39;);
+    },
+...
+</code></pre>
+<p>运行 /react，得到结果：</p>
+<p><img src="https://img2023.cnblogs.com/blog/2455224/202301/2455224-20230124222348664-314695206.png" alt="image"/></p>
+<blockquote>
+<p>.react() 还支持多种不同格式的传入值，比如
+meaasge.react(&#34;&lt;:WumpusMistletoe2:1067024784057184266&gt;&#34;);
+meaasge.react(&#34;&lt;a:WumpusMistletoe2:1067024784057184266&gt;&#34;);
+meaasge.react(&#34;a:WumpusMistletoe2:1067024784057184266&#34;);
+meaasge.react(&#34;WumpusMistletoe2:1067024784057184266&#34;);
+meaasge.react(&#34;1067024784057184266&#34;);</p>
+</blockquote>
+<p>下面我们使用 <code>.find()</code> 来用表情名称寻找一个表情。</p>
+<pre><code>...
+        const message3 = await interaction.followUp({ content: &#34;Here we grab an emoji by its name&#34;, fetchReply: true });
+        await message3.react(message3.guild.emojis.cache.find(emoji =&gt; emoji.name === &#39;WumpusMistletoe2&#39;));
+...
+</code></pre>
+<p>效果图：</p>
+<p><img src="https://img2023.cnblogs.com/blog/2455224/202301/2455224-20230124222404785-1141340977.png" alt="image"/></p>
+<p>下面我们使用 <code>.get()</code> 来用纯数字 id 指定一个表情。</p>
+<pre><code>...
+        const message4 = await interaction.followUp({ content: &#34;Here we grab an emoji by its id&#34;, fetchReply: true });
+        // Emoji must be a string or GuildEmoji/ReactionEmoji
+        await message4.react(interaction.client.emojis.cache.get(&#39;1067024784057184266&#39;));
+...
+</code></pre>
+<p>效果图：</p>
+<p><img src="https://img2023.cnblogs.com/blog/2455224/202301/2455224-20230124222416426-220121391.png" alt="image"/></p>
+<p>我们得到了 <code>commands/reactions/reaction.js</code> 的完整代码：</p>
+<pre><code>const { SlashCommandBuilder} = require(&#39;discord.js&#39;);
+
+module.exports = {
+    data: new SlashCommandBuilder()
+        .setName(&#39;react&#39;)
+        .setDescription(&#39;Replies with reaction!&#39;),
+    async execute(interaction) {
+
+        const message = await interaction.reply({ content: &#39;You can react with Unicode emojis!&#39;, fetchReply: true });
+        await message.react(&#39;&#39;);
+
+        const message2 = await interaction.followUp({ content: &#34;Here&#39;s a custom emoji!&#34;, fetchReply: true });
+        await message2.react(&#39;&lt;:WumpusMistletoe2:1067024784057184266&gt;&#39;);
+
+        const message3 = await interaction.followUp({ content: &#34;Here we grab an emoji by its name&#34;, fetchReply: true });
+        await message3.react(message3.guild.emojis.cache.find(emoji =&gt; emoji.name === &#39;WumpusMistletoe2&#39;));
+
+        const message4 = await interaction.followUp({ content: &#34;Here we grab an emoji by its id&#34;, fetchReply: true });
+        // Emoji must be a string or GuildEmoji/ReactionEmoji
+        await message4.react(interaction.client.emojis.cache.get(&#39;1067024784057184266&#39;));
+    },
+};
+</code></pre>
+<h3>多表情的按顺序逐个反应</h3>
+<p>用 <code>commands/reactions/multiReactions.js</code> 来举例：</p>
+<pre><code>const { SlashCommandBuilder} = require(&#39;discord.js&#39;);
+
+module.exports = {
+    data: new SlashCommandBuilder()
+        .setName(&#39;multireact&#39;)
+        .setDescription(&#39;Replies with reaction!&#39;),
+    async execute(interaction) {
+        const message = await interaction.reply({ content: &#39;You can react with Unicode emojis!&#39;, fetchReply: true });
+        // &#34;c u m&#34; in order
+        // the first way to do this is using serial .then() on the previous .react()
+        await message.react(&#39;&#39;)
+            .then(() =&gt; message.react(&#39;&#39;)
+                .then(() =&gt; message.react(&#39;&#39;)
+                    .then(() =&gt; message.react(&#39;❗&#39;))));
+
+        const msg = await interaction.channel.send({ content: &#39;AHHhhhhhhHHHhh&#39;, fetchReply: true });
+        // the second way to do this, is using paralleled .then() on the msg
+        await msg.react(&#39;&#39;)
+            .then(() =&gt; msg.react(&#39;&#39;))
+            .then(() =&gt; msg.react(&#39;&#39;))
+            .then(() =&gt; msg.react(&#39;&#39;));
+
+        // the third way to do this is using .react() multiple times
+        const menu = await interaction.channel.send({ content: &#39;Library search result:\n\n\tThe Art of War, Sun Tzu, Filiquarian 2017, PDF\n\tMinecraft: The Shipwreck, C. B. Lee, Del Ray 2020, Paperback\n\tand more...\n\nPage 1/4&#39;, fetchReply: true });
+        await menu.react(&#39;⬅️&#39;);
+        await menu.react(&#39;1️⃣&#39;);
+        await menu.react(&#39;2️⃣&#39;);
+        await menu.react(&#39;3️⃣&#39;);
+        await menu.react(&#39;4️⃣&#39;);
+        await menu.react(&#39;➡️&#39;);
+    },
+};
+</code></pre>
+<p>表情会按顺序逐个添加到指定的消息上去。</p>
+<p>效果图：</p>
+<p><img src="https://img2023.cnblogs.com/blog/2455224/202301/2455224-20230124222436755-471884608.png" alt="image"/></p>
+<h3>多表情的无特定顺序反应</h3>
+<p>用 <code>commands/reactions/multiReactions2.js</code> 来举例：</p>
+<pre><code>const { SlashCommandBuilder} = require(&#39;discord.js&#39;);
+
+module.exports = {
+    data: new SlashCommandBuilder()
+        .setName(&#39;multireact2&#39;)
+        .setDescription(&#39;Replies with reaction!&#39;),
+    async execute(interaction) {
+        const message = await interaction.reply({ content: &#39;You can react with Unicode emojis!&#39;, fetchReply: true });
+
+        Promise.all([
+            message.react(&#39;&#39;),
+            message.react(&#39;&#39;),
+            message.react(&#39;&#39;),
+            message.react(&#39;❗&#39;),
+            message.react(&#39;&#39;),
+            message.react(&#39;&#39;),
+            message.react(&#39;&#39;),
+            message.react(&#39;&#39;),
+        ])
+            .catch(error =&gt; console.error(&#39;One of the emojis failed to react:&#39;, error));
+    },
+};
+</code></pre>
+<p>效果图：</p>
+<p><img src="https://img2023.cnblogs.com/blog/2455224/202301/2455224-20230124222449548-985445736.png" alt="image"/></p>
+<h3>移除表情反应</h3>
+<blockquote>
+<p>所有这些方法都需要机器人在服务器里有 ManageMessages 权限。请确保你的机器人具有权限，否则它将出错。</p>
+</blockquote>
+<blockquote>
+<p><strong>确保不要过多地删除表情符号或用户的反应。如果短时间内添加或删除了很多反应，它可以被认为是 API 滥用。</strong></p>
+</blockquote>
+<h4>按表情移除反应</h4>
+<pre><code>message.reactions.cache.get(&#39;&#39;).remove()
+	.catch(error =&gt; console.error(&#39;Failed to remove reactions:&#39;, error));
+</code></pre>
+<p>下面给出 <code>commands/reactions/rmReaction.js</code> :</p>
+<pre><code>const { SlashCommandBuilder} = require(&#39;discord.js&#39;);
+
+module.exports = {
+    data: new SlashCommandBuilder()
+        .setName(&#39;rmreact&#39;)
+        .setDescription(&#39;Replies with reaction!&#39;),
+    async execute(interaction) {
+
+        const message = await interaction.reply({ content: &#39;You can react with Unicode emojis!&#39;, fetchReply: true });
+        await message.react(&#39;&#39;);
+        await message.react(&#39;&#39;);
+        await message.react(&#39;&#39;);
+        await message.react(&#39;&#39;);
+
+        message.reactions.cache.get(&#39;&#39;).remove()
+            .catch(error =&gt; console.error(&#39;Failed to remove reactions:&#39;, error));
+    },
+};
+</code></pre>
+<p>效果的话，读代码就行，很好懂的。</p>
+<h4>按用户移除反应</h4>
+<pre><code>// 获取用户 id 为 “userId” 的用户对消息 “message” 所有的反应
+const userReactions = message.reactions.cache.filter(reaction =&gt; reaction.users.cache.has(userId));
+
+try {
+	// 遍历这些反应，并从消息底下移除
+	for (const reaction of userReactions.values()) {
+		await reaction.users.remove(userId);
+	}
+} catch (error) {
+	console.error(&#39;Failed to remove reactions.&#39;);
+}
+
+</code></pre>
+<h4>移除消息全部反应</h4>
+<pre><code>message.reactions.removeAll()
+	.catch(error =&gt; console.error(&#39;Failed to clear reactions:&#39;, error));
+</code></pre>
+<h3>等待反应</h3>
+<p>使用曾经用过的 Collector 可以轻松解决这个问题。在咱们的另一个项目 guess_the_number (https://github.com/wtflmao/guess_the_number) 里，我们已经用过了简单的消息收集器 (https://www.cnblogs.com/hhzm/p/16508453.html) ；在 Chapter 12 按钮的 collector，把它们拿来改成适用于表情反应事件的收集器也是很容易的。</p>
+<p>下面给出 <code>commands/reactions/collectReaction.js</code> ：</p>
+<pre><code>const { SlashCommandBuilder } = require(&#39;discord.js&#39;);
+
+module.exports = {
+    data: new SlashCommandBuilder()
+        .setName(&#39;collectreact&#39;)
+        .setDescription(&#39;Replies with reaction!&#39;),
+    async execute(interaction) {
+
+        const message = await interaction.reply({ content: &#39;You can react with a thumbs UP or a thumbs DOWN.&#39;, fetchReply: true })
+        message.react(&#39;&#39;).then(() =&gt; message.react(&#39;&#39;).then(() =&gt; message.react(&#39;&#39;)));
+        const filter = (reaction, user) =&gt; {
+            return ([&#39;&#39;, &#39;&#39;,&#39;&#39;].includes(reaction.emoji.name)) &amp;&amp; (user.id === interaction.user.id);
+        };
+
+        const collector = message.createReactionCollector({ filter, time: 10000 });
+
+        collector.on(&#39;collect&#39;, (reaction, user) =&gt; {
+            console.log(`Collected ${reaction.emoji} from ${user}`);
+        });
+
+        collector.on(&#39;end&#39;, collected =&gt; {
+            if (collected.size === 0) {
+                message.reply(&#34;Nothing valid you&#39;ve reacted.&#34;);
+                return;
+            }
+
+            collected.forEach(reaction =&gt; {
+                if (reaction.emoji.name === &#39;&#39;) {
+                    interaction.channel.send(&#39;You reacted with a thumbs UP.&#39;);
+                } else if (reaction.emoji.name === &#39;&#39;) {
+                    interaction.channel.send(&#39;You reacted with a thumbs DOWN.&#39;);
+                } else {
+                    interaction.channel.send(&#39;You reacted with a YUM.&#39;);
+                }
+            })
+        });
+    },
+};
+</code></pre>
+<p>效果图：</p>
+<p><img src="https://img2023.cnblogs.com/blog/2455224/202301/2455224-20230124222637643-85320352.png" alt="image"/></p>
+<p><img src="https://img2023.cnblogs.com/blog/2455224/202301/2455224-20230124222643342-919030606.png" alt="image"/></p>
+<p>上面的代码写起来很繁琐。幸好我们还有简单的写法。</p>
+<p>下面给出 <code>commands/reactions/awaitReact.js</code> 的代码：</p>
+<pre><code>const { SlashCommandBuilder } = require(&#39;discord.js&#39;);
+
+module.exports = {
+    data: new SlashCommandBuilder()
+        .setName(&#39;awaitreact&#39;)
+        .setDescription(&#39;Replies with reaction!&#39;),
+    async execute(interaction) {
+
+        const message = await interaction.reply({ content: &#39;You can react with a thumbs UP or a thumbs DOWN.&#39;, fetchReply: true })
+        message.react(&#39;&#39;).then(() =&gt; message.react(&#39;&#39;).then(() =&gt; message.react(&#39;&#39;)));
+        const filter = (reaction, user) =&gt; {
+            return ([&#39;&#39;, &#39;&#39;,&#39;&#39;].includes(reaction.emoji.name)) &amp;&amp; (user.id === interaction.user.id);
+        };
+
+		// 注意这里的 errors: [&#39;time&#39;] 不要忘了
+        await message.awaitReactions({ filter, time: 10000, errors: [&#39;time&#39;] })
+            .then(collected =&gt; {
+                collected.forEach(reaction =&gt; {
+                    if (reaction.emoji.name === &#39;&#39;) {
+                        interaction.channel.send(&#39;You reacted with a thumbs UP.&#39;);
+                    } else if (reaction.emoji.name === &#39;&#39;) {
+                        interaction.channel.send(&#39;You reacted with a thumbs DOWN.&#39;);
+                    } else {
+                        interaction.channel.send(&#39;You reacted with a YUM.&#39;);
+                    }
+                })
+            })
+            .catch(() =&gt; {
+                interaction.channel.send(&#34;Nothing valid you&#39;ve reacted.&#34;);
+            });
+    },
+};
+</code></pre>
+<p>效果图：</p>
+<p><img src="https://img2023.cnblogs.com/blog/2455224/202301/2455224-20230124222701824-1624056038.png" alt="image"/></p>
+<p><img src="https://img2023.cnblogs.com/blog/2455224/202301/2455224-20230124222754424-506222329.png" alt="image"/></p>
+<p>利用 <code>message.awaitReactions([options])</code> 来代替 <code>message.createReactionCollector([options])</code> 要更简单明了。</p>
+</body></html>

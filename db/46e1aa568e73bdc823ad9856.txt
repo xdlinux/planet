@@ -1,1 +1,312 @@
-<html><head></head><body><p>这是一份非常详细和系统化的利用 NodeJS 进行 Discord bot 开发的教程，本文介绍了什么是 Discord 的嵌入式元素 Embed，用于丰富机器人的输出样式。</p></body></html>
+<html><head></head><body><h1>Chapter 16 - 嵌入式元素</h1>
+<h3>embed</h3>
+<p>嵌入式元素（Embed）是一种一般由机器人发送的、通常具有彩色边框、嵌入图像、文本字段和其他奇特的属性的消息。比如下图：</p>
+<p><img src="https://img2023.cnblogs.com/blog/2455224/202301/2455224-20230110203322898-288340297.png" alt="image"/></p>
+<p>Embed 一般来说，可以具有以下域：</p>
+<ul>
+<li>author</li>
+<li>color</li>
+<li>description</li>
+<li>fields</li>
+<li>footer</li>
+<li>image</li>
+<li>thumbnail</li>
+<li>title</li>
+<li>url</li>
+<li>video</li>
+</ul>
+<p>其中，各 fields 的格式为 <code>{ name: &#39;名字&#39;, value: &#39;值&#39;, inline: true或false }</code> ，
+footer 的格式为 <code>{ text: &#39;页脚文字&#39;, icon_url: &#39;页脚图标地址&#39; }</code> ，
+author 的格式为 <code>{ name: &#39;作者名&#39;, icon_url: &#39;作者图标地址&#39;, url: &#39;作者网站&#39; }</code> ，
+thumbnail 和 image 的格式：<code>{ url: &#39;图片地址&#39; }</code> ，
+timestamp 只接受 ISO8601 格式的时间值。</p>
+<p>有了上面这些知识，我们就可以组建一个 embed JSON 对象了：</p>
+<pre><code>// directly use a JSON object to represents an embed
+const exampleJSONEmbed = {
+    color: 0xC1F8C0,
+    title: &#39;标题标题&#39;,
+    url: &#39;https://discord.js.org/&#39;,
+    author: {
+        name: &#39;作者名字&#39;,
+        url: &#39;https://discord.js.org&#39;,
+        icon_url: &#39;https://i.imgur.com/AfFp7pu.png&#39;
+    },
+    description: &#39;这里给出一些介绍&#39;,
+    thumbnail: {
+        url: &#39;https://i.imgur.com/fwO0TqB.jpeg&#39;
+    },
+    fields: [
+        { name: &#39;普通域标题&#39;, value: &#39;Some value here1&#39; },
+        { name: &#39;普通域标题&#39;, value: &#39;Some value here11，下面那个是空白域&#39; },
+        { name: &#39;\u200B&#39;, value: &#39;\u200B&#39; },
+        { name: &#39;内联域标题1&#39;, value: &#39;Some value here111&#39;, inline: true },
+        { name: &#39;内联域标题2&#39;, value: &#39;Some value here3&#39;, inline: true },
+        { name: &#39;内联域标题3&#39;, value: &#39;Some value here4&#39;, inline: true }
+    ],
+    image: {
+        url: &#39;https://i.imgur.com/yA1u8wt.jpeg&#39;
+    },
+    // here timestamp field only accepts ISO8601 number or string
+    timestamp: (new Date()).toISOString(),
+    footer: {
+        text: &#39;页脚文字&#39;,
+        icon_url: &#39;https://i.imgur.com/AfFp7pu.png&#39;
+    }
+};
+</code></pre>
+<p>然后我们构建一个叫 <code>/embed</code> 的简单斜杠命令，把它放进去，在接着，将 JSON 对象 exampleJSONEmbed 直接放入 .reply 的 embeds 参数列表，用于回复斜杠命令：</p>
+<pre><code>await interaction.reply({ embeds: [exampleJSONEmbed] });
+</code></pre>
+<p>效果图：</p>
+<p><img src="https://img2023.cnblogs.com/blog/2455224/202301/2455224-20230110203513175-1561572284.png" alt="image"/></p>
+<p>每次都要从 JSON 对象开始构建的话，代码就不好看了。更何况，我们之前使用的按钮、下拉列表等组件都有自己的 Builder。难道嵌入式元素没有这样的一个 Builder 吗？</p>
+<p>有的。这个 Builder 叫 EmbedBuilder。</p>
+<p>我们删掉上面的代码，将上面 “直接用 JSON 对象描述的 embed” 重新用 “new EmbedBuilder()” 来构建。</p>
+<pre><code>// This EmbedBuilder() has to be inside a command or listener
+const exampleEmbed = new EmbedBuilder()
+    .setColor(0xC1F8C0)
+    .setTitle(&#39;标题标题&#39;)
+    .setURL(&#39;https://discord.js.org/&#39;)
+    .setAuthor({ name: &#39;作者名字&#39;, iconURL: &#39;https://i.imgur.com/AfFp7pu.png&#39;, url: &#39;https://discord.js.org&#39; })
+    .setDescription(&#39;这里给出一些介绍&#39;)
+    .setThumbnail(&#39;https://i.imgur.com/fwO0TqB.jpeg&#39;)
+    .addFields(
+        { name: &#39;普通域标题&#39;, value: &#39;Some value here1&#39; },
+        { name: &#39;普通域标题&#39;, value: &#39;Some value here11，下面那个是空白域&#39; },
+        // add a blank field in the embed
+        { name: &#39;\u200B&#39;, value: &#39;\u200B&#39; },
+        { name: &#39;内联域标题1&#39;, value: &#39;Some value here111&#39;, inline: true },
+        { name: &#39;内联域标题2&#39;, value: &#39;Some value here3&#39;, inline: true },
+    )
+    .addFields({ name: &#39;内联域标题3&#39;, value: &#39;Some value here4&#39;, inline: true })
+    .setImage(&#39;https://i.imgur.com/yA1u8wt.jpeg&#39;)
+    // .setTimestamp() accept a Number, a null or a Date value
+    .setTimestamp()
+    .setFooter({ text: &#39;页脚文字&#39;, iconURL: &#39;https://i.imgur.com/AfFp7pu.png&#39; });
+</code></pre>
+<p>这时的 exampleEmbed 已经不是 JSON 了，而是一个 Embed 类型的对象。</p>
+<p>接着回复斜杠命令：</p>
+<pre><code>await interaction.reply({ embeds: [exampleEmbed] });
+</code></pre>
+<p>效果图：</p>
+<p><img src="https://img2023.cnblogs.com/blog/2455224/202301/2455224-20230110203548338-815519423.png" alt="image"/></p>
+<p>两种构建方法做出来的 embed 是一模一样的。</p>
+<p>很多时候，我们用不着指定这么多值，可能只需要 title、thumbnail 和 description 等就够了。我们给出一个简单的 embed：</p>
+<pre><code>const simpleEmbed = new EmbedBuilder()
+    .setTitle(&#39;Columbus, Ohio: Weather report&#39;)
+    .setURL(&#39;https://weather.com/weather/today/l/8db513f8f8993797550b32062dfa5d4d83dd97b28ad0b55ec0033a14fe58a86dc0163883d8c5bf8f66aa6173005f3ebc&#39;)
+    .setThumbnail(&#39;https://i.imgur.com/sRwMnNA.jpeg&#39;)
+    .setDescription(&#39;31 °F\nMostly Cloudy&#39;)
+    .setFields(
+        { name:&#39;High&#39;, value: &#39;41 °F&#39;, inline: true},
+        { name:&#39;Low&#39;, value: &#39;28 °F&#39;, inline: true},
+    );
+
+await interaction.channel.send({ content: &#34;Here&#39;s a simple embed&#34;, embeds: [simpleEmbed] });
+</code></pre>
+<p>效果图：</p>
+<p><img src="https://img2023.cnblogs.com/blog/2455224/202301/2455224-20230110203606341-1221751048.png" alt="image"/></p>
+<p>为了三个 embed 放在一起对比，我写了 <code>commands/embeds/embed.js</code> ，但是这个文件基本上只是三个 embed 的复制粘贴，所以为了避免本文冗长，我把相关 commit 留在这里，读者可以自己去看：</p>
+<p>https://github.com/wtflmao/discord_bot_example/commit/642a555373d40759fb7afce1c32bb0d16d16fb56
+https://gitee.com/wtflmao/discord_bot_example/commit/642a555373d40759fb7afce1c32bb0d16d16fb56</p>
+<h3>fileds</h3>
+<p>你可能注意到了, fields 是个数组，接受最多 25 个 field。</p>
+<p>内联（inline）的 field 可用于将连续的几个 field 并排显示而不是默认的一行一个。</p>
+<p>要并排显示字段，你至少需要将两个连续的字段设置为内联。</p>
+<p>比如：</p>
+<pre><code>const exampleEmbed = new EmbedBuilder()
+    .setTitle(&#39;test&#39;)
+    .addFields(
+        { name: &#39;B1&#39;, value: &#39;1&#39;, inline: true },
+        { name: &#39;B2&#39;, value: &#39;2&#39;, inline: true }
+    )
+    .addFields({ name: &#39;C1&#39;, value: &#39;3&#39; })
+    .addFields(
+        { name: &#39;D1&#39;, value: &#39;4&#39;, inline: true },
+        { name: &#39;D2&#39;, value: &#39;5&#39;, inline: true },
+        { name: &#39;D3&#39;, value: &#39;6&#39;, inline: true }
+    );
+</code></pre>
+<p>效果图：</p>
+<p><img src="https://img2023.cnblogs.com/blog/2455224/202301/2455224-20230110203804465-603098193.png" alt="image"/></p>
+<p>上面的代码是为了美观，才将位于同一行上显示的 fields 在源代码这边也聚在了一块儿。事实上，下面的代码虽然看起来和上面的不一样，但是效果是一模一样的。</p>
+<p><code>commands/embeds/inlineFields.js</code></p>
+<pre><code>const exampleEmbed = new EmbedBuilder()
+    .setTitle(&#39;test&#39;)
+    .addFields({ name: &#39;B1&#39;, value: &#39;1&#39;, inline: true })
+    .addFields(
+        { name: &#39;B2&#39;, value: &#39;2&#39;, inline: true },
+        { name: &#39;C1&#39;, value: &#39;3&#39; },
+        { name: &#39;D1&#39;, value: &#39;4&#39;, inline: true }
+    )
+    .addFields(
+        { name: &#39;D2&#39;, value: &#39;5&#39;, inline: true },
+        { name: &#39;D3&#39;, value: &#39;6&#39;, inline: true }
+    );
+</code></pre>
+<p><img src="https://img2023.cnblogs.com/blog/2455224/202301/2455224-20230110203831492-1186402763.png" alt="image"/></p>
+<p>要构建一个空白 field，可以这样做：</p>
+<pre><code>.addFields({ name: &#39;\u200B​&#39;, value: &#39;\u200B​&#39; }),
+</code></pre>
+<p>空白 field 既可以独立成行，也可以作为内联 fields 的成员之一。</p>
+<p>Discord API 对 embed 做出了一些限制：</p>
+<ul>
+<li>title 最长 256 字符</li>
+<li>description 最长 4096 字符</li>
+<li>最多 25 个 field</li>
+<li>一个 field 的 name 最长 256 字符</li>
+<li>一个 field 的 value 最长 1024 字符</li>
+<li>footer 的 text 最长 2048 字符</li>
+<li>author 的 name 最长 256 字符</li>
+<li>embed 所构成的 JSON 最长不超过 6000 字符</li>
+<li>一条消息最多 10 个 embeds</li>
+</ul>
+<h3>使用附件（attachment）的 embed</h3>
+<p>通过使用 AttachmentBuilder()，我们可以利用 URL 为 embed 的相关域构建一个图片附件，这样，我们就可以使用 <code>attachment://fileName.extension</code> 来访问相关附件。</p>
+<p>虽然我们还没学到 AttachmentBuilder，但是我们先简单用一下还是可以的。</p>
+<p>什么时候应该使用（本地上传的）附件？什么时候应该使用（存储于远程服务器的）图片的 URL？</p>
+<p>对于那些经常重复使用的、相同的图片，建议提前上传存储至云端并确定文件 URL，比如 aws，这样就可以加速机器人的响应了。如果由附件上传，将会导致相同的图片被一遍又一遍的等候上传至 Discord 服务器，浪费时间。</p>
+<p>对于那些机器人动态生成的图片，直接使用附件上传就好了，附件将上传至 Discord 的 CDN 服务器，无需由你来确定文件位置的 URL。</p>
+<p><code>commands/embeds/embedWithAttachment.js</code>：</p>
+<pre><code>const { AttachmentBuilder, EmbedBuilder, SlashCommandBuilder } = require(&#39;discord.js&#39;);
+
+module.exports = {
+    data: new SlashCommandBuilder()
+        .setName(&#39;embedattachment&#39;)
+        .setDescription(&#39;Replies with embed!&#39;),
+    async execute(interaction) {
+        // 这里的工作目录 “./” 是 &#34;discord_bot_example&#34;
+        const dogeCoffee = new AttachmentBuilder(&#39;assets/dogeCoffee.jpg&#39;);
+        const githubIcon = new AttachmentBuilder(&#39;assets/githubIcon.jpg&#39;);
+
+        // 这个 EmbedBuilder() 必须位于命令里或者监听器里
+        const embed = new EmbedBuilder()
+            .setTitle(&#39;embed with image attachments&#39;)
+            .setThumbnail(&#39;attachment://githubIcon.jpg&#39;)
+            .setDescription(&#39;Github&#39;)
+        await interaction.reply({ embeds: [embed], files: [githubIcon]});
+
+        // 直接使用 JSON 描述一个 embed
+        const embed2json = {
+            title: &#39;A cup of coffee&#39;,
+            image: {
+                url: &#39;attachment://dogeCoffee.jpg&#39;,
+            },
+        };
+        const embed2 = new EmbedBuilder(embed2json);
+        await interaction.channel.send({ embeds: [embed2], files: [dogeCoffee]});
+
+        // 把两个 embed 撺掇撺掇，组成个新的 embed
+        const embed3 = new EmbedBuilder()
+            .setTitle(embed.toJSON().title + embed2json.title)
+            .setImage(embed2.toJSON().image.url)
+            .setThumbnail(embed.toJSON().thumbnail.url)
+            .setDescription(&#34;Ahhh&#34;);
+        await interaction.channel.send({ embeds: [embed3], files: [dogeCoffee, githubIcon]});
+    },
+};
+</code></pre>
+<p>其中，<code>assets/dogeCoffee.jpg</code>：
+<img src="https://img2023.cnblogs.com/blog/2455224/202301/2455224-20230110203858900-2012855056.jpg" alt="image"/></p>
+<p><code>assets/githubIcon.jpg</code>：
+<img src="https://img2023.cnblogs.com/blog/2455224/202301/2455224-20230110203905410-594641637.jpg" alt="image"/></p>
+<p>效果图：</p>
+<p><img src="https://img2023.cnblogs.com/blog/2455224/202301/2455224-20230110203928080-1841871113.png" alt="image"/></p>
+<p>相关commit：
+https://github.com/wtflmao/discord_bot_example/commit/642a555373d40759fb7afce1c32bb0d16d16fb56
+https://gitee.com/wtflmao/discord_bot_example/commit/642a555373d40759fb7afce1c32bb0d16d16fb56</p>
+<p>如果图像不是显示在嵌入内部而是显示在外部，请仔细检查你的语法以确保它如上所示。</p>
+<h3>embed edit</h3>
+<p>如果你需要将已回复的消息的 embed 做出修改并立即生效，你需要可以使用 message.edit()。</p>
+<p>下面咱们来一块儿看看：</p>
+<p>首先建立个斜杠命令，并搞个叫做 embed 的 embed：</p>
+<pre><code>const { EmbedBuilder, SlashCommandBuilder } = require(&#39;discord.js&#39;);
+const wait = require(&#39;node:timers/promises&#39;).setTimeout;
+
+module.exports = {
+    data: new SlashCommandBuilder()
+        .setName(&#39;embededit&#39;)
+        .setDescription(&#39;Replies with embed!&#39;),
+    async execute(interaction) {
+        const infoLogoUrl = &#34;https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSOsaJUWS9y-_JQWtIggodoouMyxM-lJyPa1Q&amp;usqp=CAU&#34;;
+
+        // This EmbedBuilder() has to be inside a command or listener
+        const embed = new EmbedBuilder()
+            .setTitle(&#39;Resource Usage Panel&#39;)
+            .setColor(0x955F20)
+            .setThumbnail(&#39;https://i.imgur.com/rVtny54.jpeg&#39;)
+            .setDescription(&#39;\u200B&#39;)
+            .addFields(
+                { name: &#39;CPU Usage&#39;, value: &#39;14 %&#39;, inline: true },
+                { name: &#39;Memory Usage&#39;, value: &#39;70 %&#39;, inline: true },
+            )
+            .setTimestamp()
+            .setFooter({ text: &#39;Updated 0 second ago&#39;, iconURL: infoLogoUrl })
+
+        await interaction.reply({ embeds: [embed], content: `${(new Date()).toISOString()}` });
+
+...
+</code></pre>
+<p>效果图：</p>
+<p><img src="https://img2023.cnblogs.com/blog/2455224/202301/2455224-20230110203951267-240113733.png" alt="image"/></p>
+<p>接着，我们利用之前在 “Chapter 12 - 按钮” 学到的 message collector 对我们刚 <code>interaction.reply()</code> 回复的消息进行捕获，并保存到 message 变量里：</p>
+<pre><code>...
+        // 生成 2 到 9 闭区间内的一个整数作为随机数
+        // 这里生成随机数用于程序暂停执行 x 秒
+        let time = 2 + Math.floor(8 * Math.random());
+        await wait(time * 1000);
+
+        // 捕获我们刚回复的消息
+        const message = await interaction.fetchReply();
+
+        // 将 message 的第一个 embed（embed[0]）复制一份作为模板
+        const receivedEmbed = message.embeds[0];
+        // 这里 EmbedBuilder.from() 接受一个 JSON 对象或 Embed 类型值
+        // 由于 EmbedBuilder() 构造出来的 embed 都是 immutable 不可修改的值，因此我们不能在原 embed 上做修改，只好以原 embed 为底子，在新 embed 上面做出修改。
+        const newEmbed = EmbedBuilder.from(receivedEmbed)
+            .setFields(
+                { name: &#39;CPU Usage&#39;, value: `${Math.floor(100 * Math.random())} %`, inline: true },
+                { name: &#39;Memory Usage&#39;, value: `${Math.floor(100 * Math.random())} %`, inline: true },
+            )
+            .setFooter({ text: `Updated ${time} seconds ago`, iconURL: infoLogoUrl });
+
+        // 直接调用 message.edit() 来修改我们这条消息并生效，无需多余的 interaction.editReply()
+        await message.edit({ embeds: [newEmbed], content: `${(new Date()).toISOString()}` })
+
+
+        // 再次生成 2 到 9 的随机整数
+        time = 2 + Math.floor(8 * Math.random());
+        await wait(time * 1000);
+
+        // 再次从已有的 embed 构建一个新 embed，省事
+        const newEmbed2 = EmbedBuilder.from(newEmbed)
+            .setDescription(&#34;Connection lost&#34;)
+            .setFields(
+                { name: &#39;CPU Usage&#39;, value: `N/A`, inline: true },
+                { name: &#39;Memory Usage&#39;, value: `N/A`, inline: true },
+            )
+            .setFooter({ text: `Updated ${time} seconds ago`, iconURL: infoLogoUrl });
+
+        // 直接删除斜杠命令回复的那条 message，然后直接在相同的频道里发一条新的消息
+        await interaction.deleteReply();
+        await interaction.channel.send({ embeds: [newEmbed2], content: `${(new Date()).toISOString()}` });
+    },
+};
+</code></pre>
+<p>把上面两端代码 拼接在一块儿，就是 <code>commands/embeds/embedEdit.js</code> 的完整代码，相关 commit：</p>
+<p>https://github.com/wtflmao/discord_bot_example/commit/642a555373d40759fb7afce1c32bb0d16d16fb56
+https://gitee.com/wtflmao/discord_bot_example/commit/642a555373d40759fb7afce1c32bb0d16d16fb56</p>
+<p>完整效果图：</p>
+<p><img src="https://img2023.cnblogs.com/blog/2455224/202301/2455224-20230110204059777-1674192226.png" alt="image"/>
+<img src="https://img2023.cnblogs.com/blog/2455224/202301/2455224-20230110204104458-6997804.png" alt="image"/>
+<img src="https://img2023.cnblogs.com/blog/2455224/202301/2455224-20230110204109749-457999174.png" alt="image"/></p>
+<h3>补充</h3>
+<ul>
+<li>在 embed 里，你可以 @ 用户或身份组，但是这不会触发任何 @ 的提醒。</li>
+<li>任何在 embed 里的 @ 只能在  description 和 field 的 value 里被正确渲染，否则就会被渲染成普通文字（@加snowflake id）。</li>
+<li>embed 允许 masked links，比如 <code>[我的博客](https://cnblogs.com/hhzm &#39;可选的悬浮文字&#39;)</code> ，但这也只允许出现在 description 和 field 的 value 里。</li>
+<li>timestamp 的值是 ISO8601 标准值（GMT+0），但是 Discord 会根据客户端时区，展示时区转换后的时间。</li>
+</ul>
+<h3>小结</h3>
+<p>我学习了 Embed。</p>
+</body></html>

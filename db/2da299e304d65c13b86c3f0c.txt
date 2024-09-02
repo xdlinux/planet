@@ -1,1 +1,13 @@
-<html><head></head><body><p>这篇文章介绍了如何在文章中嵌入视频和代码。</p></body></html>
+<html><head></head><body><h2>Codepen</h2>
+<pre><code>::codepen{#gOyLepE author=&#34;lxchapu&#34;}
+</code></pre>
+<p>::codepen{#gOyLepE author=&#34;lxchapu&#34;}</p>
+<h2>YouTube</h2>
+<pre><code>::youtube{#BuKft9LpL_0}
+</code></pre>
+<p>::youtube{#BuKft9LpL_0}</p>
+<h2>Bilibili</h2>
+<pre><code>::bilibili{#BV1Mx4y1Y7pJ}
+</code></pre>
+<p>::bilibili{#BV1Mx4y1Y7pJ}</p>
+</body></html>
