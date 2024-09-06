@@ -1,0 +1,1 @@
+<html><head></head><body><p>事件运算转逻辑运算$A \cup B=A+B$ $A \cap B=A \cdot B$ $A-B=A \bar{B}$$A$ 事件发生 $B$ 事件不发生，由韦恩图易证。可以将 $-B$ 理解...</p></body></html>
