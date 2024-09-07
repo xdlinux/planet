@@ -1,1 +1,1 @@
-<html><head></head><body><p>流体静力学基础气体性质压缩性体积弹性模数定义：产生单位相对体积变化所需压强增高$$E=-\frac{dp}{dV/V}$$对于一定质量气体，体积与密度成反比例关系，即$$\frac{d \rho...</p></body></html>
+<html><head></head><body><p># 流体静力学基础<br/>气体性质<br/>压缩性<br/>体积弹性模数<br/>定义：产生单位相对体积变化所需压强增高<br/>$$<br/>E=-\frac{dp}{dV/V}<br/>$$<br/>对于一定质量气体，体积与密度成反比例关系，即<br/>$$<br/>\frac{d \rho}{\rho}=-\frac{dV}{...</p></body></html>
