@@ -1,1 +1,1764 @@
-<html><head></head><body><p># 物理量<br/>内能 U<br/>$$<br/>\Delta U=Q+W<br/>$$<br/>Q为系统吸热，W为系统对外做功<br/>熵 S<br/>熵是一种测量在动力学方面不能做功的能量总数，也就是当总体的熵增加，其做功能力也下降，熵的量度正是能量退化的指标。<br/>==可逆过程==中<br/>$$<br/>\Delta S...</p></body></html>
+<html><head></head><body><h1>物理量</h1>
+<h2>内能 U</h2>
+<p>$$<br/>
+\Delta U=Q+W<br/>
+$$<br/>
+Q为系统吸热，W为系统对外做功</p>
+<h2>熵 S</h2>
+<p>熵是一种测量在动力学方面<strong>不能做功</strong>的能量总数，也就是当总体的熵增加，其做功能力也下降，熵的量度正是能量退化的指标。<br/>
+==可逆过程==中<br/>
+$$<br/>
+\Delta S=\frac {Q}{T}<br/>
+$$<br/>
+Q：在一个可逆过程中，系统在恒温情况下吸热</p>
+<h2>焓 H</h2>
+<p>$$<br/>
+H=U+pV<br/>
+$$</p>
+<h2>自由能 F</h2>
+<p>$$<br/>
+F=U-TS<br/>
+$$<br/>
+系统内能-不能做工的能量=能做工的能量（自由能）</p>
+<h2>吉布斯函数（自由焓）G</h2>
+<p>$$<br/>
+G=F+pV=U-TS+pV=H-TS<br/>
+$$</p>
+<h2>化学势 $\mu$</h2>
+<p>$$<br/>
+\mu=(\frac{\partial G}{\partial n})_{T,p}=G_m<br/>
+$$<br/>
+其中：</p>
+<ul>
+<li>n：物质的量（$mol$）</li>
+<li>$G_m$：摩尔吉布斯函数</li>
+</ul>
+<h1>方程</h1>
+<h2>状态函数全微分 (可逆过程)</h2>
+<h3>内能全微分（热力学基本方程）</h3>
+<p>$$<br/>
+dU=dQ+dW=TdS-pdV<br/>
+$$<br/>
+即$U=U(S,V)$<br/>
+$$<br/>
+(\frac{\partial U}{\partial S})_V=T,(\frac{\partial U}{\partial V})_S=-p<br/>
+$$<br/>
+$\because$ U二阶偏导相等<br/>
+$\therefore$ 得到<strong>第一麦氏关系</strong>：<br/>
+$$<br/>
+(\frac{\partial T}{\partial V})_S=-(\frac{\partial p}{\partial S})_V<br/>
+$$</p>
+<h3>焓全微分</h3>
+<p>$$<br/>
+dH=dU+d(pV)=TdS-pdV+pdV+Vdp=TdS+Vdp<br/>
+$$</p>
+<h3>自由能全微分</h3>
+<p>$$<br/>
+dF=-SdT-pdV<br/>
+$$</p>
+<h3>吉布斯函数全微分</h3>
+<p>$$<br/>
+dG=-SdT+Vdp<br/>
+$$</p>
+<h3>熵全微分</h3>
+<p>$$<br/>
+dS=\frac{dU+pdV}{T}<br/>
+$$</p>
+<h2>麦氏关系</h2>
+<p>麦氏关系（Maxwell Relations）是在热力学中描述状态变量之间关系的重要方程。<br/>
+以下是四个麦氏关系：</p>
+<ol>
+<li>
+<p><strong>第一麦氏关系</strong>:<br/>
+$$<br/>
+\left ( \frac{\partial T}{\partial V} \right)_S = - \left ( \frac{\partial P}{\partial S} \right)_V<br/>
+$$</p>
+</li>
+<li>
+<p><strong>第二麦氏关系</strong>:<br/>
+$$<br/>
+\left ( \frac{\partial T}{\partial P} \right)_S = \left ( \frac{\partial V}{\partial S} \right)_P<br/>
+$$</p>
+</li>
+<li>
+<p><strong>第三麦氏关系</strong>:<br/>
+$$<br/>
+\left ( \frac{\partial S}{\partial V} \right)_T = \left ( \frac{\partial P}{\partial T} \right)_V<br/>
+$$</p>
+</li>
+<li>
+<p><strong>第四麦氏关系</strong>:<br/>
+$$<br/>
+\left ( \frac{\partial S}{\partial P} \right)_T = -\left ( \frac{\partial V}{\partial T} \right)_P<br/>
+$$<br/>
+<strong>推论</strong>：<br/>
+$$<br/>
+C_p-C_V=T(\frac{\partial p}{\partial T})_V(\frac{\partial V}{\partial T})_p<br/>
+$$<br/>
+对于理想气体$pV=nRT$ 带入得<br/>
+$$<br/>
+C_p-C_V=nR,为常数<br/>
+$$</p>
+</li>
+</ol>
+<h2>物态方程</h2>
+<p>定义：温度与状态参量之间的函数关系方程。<br/>
+$$<br/>
+f(p,V,T)=0<br/>
+$$</p>
+<h3>理想气体物态方程</h3>
+<p>$$<br/>
+pV=nRT=NkT<br/>
+$$</p>
+<ul>
+<li>n：物质的量</li>
+<li>R：气体常数</li>
+<li>N：系统总粒子数</li>
+<li>k：玻尔兹曼常数<h3>范德瓦尔兹方程</h3>
+<p>$$<br/>
+(p+\frac{an^2}{V^2})(V-nb)=nRT<br/>
+$$</p>
+</li>
+<li>a、b为常数<h2>常见系数</h2>
+<h3>体胀系数$\alpha$</h3>
+<p>$$<br/>
+\alpha=\frac{1}{V}(\frac{\partial V}{\partial T})_p=\frac{1}{T},理想气体<br/>
+$$</p>
+</li>
+</ul>
+<h3>压强系数$\beta$</h3>
+<p>$$<br/>
+\beta=\frac{1}{V}(\frac{\partial p}{\partial T})_V=\frac{1}{T},理想气体<br/>
+$$</p>
+<h3>等温压缩系数$\kappa_T$</h3>
+<p>$$<br/>
+\kappa_T=-\frac{1}{V}(\frac{\partial V}{\partial P})_T=\frac{1}{p},理想气体<br/>
+$$</p>
+<h2>热容C</h2>
+<p>$$<br/>
+C=\lim_{\Delta T \to 0}\frac{\Delta Q}{\Delta T}<br/>
+$$</p>
+<h3>定容热容$C_V$</h3>
+<p>$$<br/>
+C_V=(\frac{\partial U}{\partial T})_V=T(\frac{\partial S}{\partial T})_V<br/>
+$$</p>
+<h3>定压热容$C_p$</h3>
+<p>$$<br/>
+C_p=(\frac{\partial H}{\partial T})_p=T(\frac{\partial S}{\partial T})_p<br/>
+$$</p>
+<h3>多方热容$C_n$</h3>
+<p>$$<br/>
+C_n=T(\frac{\partial S}{\partial T})_n<br/>
+$$</p>
+<h2>理想气体绝热方程</h2>
+<p>$\gamma$：[[#绝热系数]]<br/>
+C：常数<br/>
+$$<br/>
+pV^\gamma=C_1<br/>
+$$<br/>
+$$<br/>
+TV^{\gamma-1}=C_2<br/>
+$$<br/>
+$$<br/>
+P^{1-\gamma}T^\gamma=C_3<br/>
+$$</p>
+<h2>==热力学第二定律==</h2>
+<p>$$<br/>
+dS\ge \frac{dQ}{T}<br/>
+$$</p>
+<ol>
+<li>两条绝热线不能相交</li>
+<li>T：外界温度</li>
+<li>当且仅当该过程为可逆过程时，外界温度=系统温度=T</li>
+</ol>
+<h2>可逆热机效率$\eta$</h2>
+<p>[[#卡诺定理]]<br/>
+$$<br/>
+\eta=1-\frac{T_1}{T_2}<br/>
+$$</p>
+<ul>
+<li>$T_2$：高温热源温度</li>
+<li>$T_1$：低温热源温度</li>
+<li>$0&lt;\eta&lt;1$</li>
+</ul>
+<h2>节流过程中的能量方程</h2>
+<p>对于节流过程，可以写出以下能量平衡方程：<br/>
+$$<br/>
+H_1 = H_2<br/>
+$$</p>
+<p>其中，$H_1$ 和 $H_2$ 分别是节流前后的焓。<br/>
+<strong>证明</strong>：<br/>
+系统绝热，$\Delta U=W$<br/>
+$U_2-U_1=p_1V_1-p_2V_2$<br/>
+$U_2+p_2V_2=U_1+p_1V_1$<br/>
+$H_2=H_1$</p>
+<h2>焦汤系数</h2>
+<p>[[#节流过程]]<br/>
+$$<br/>
+\mu=(\frac{\partial T}{\partial p})_H=\frac{V}{C_p}(T\alpha-1)<br/>
+$$</p>
+<h2>开系的热力学基本方程（$+\mu dn$）</h2>
+<h3>内能全微分</h3>
+<p>$$<br/>
+dU=dQ+dW+\mu dn=TdS-pdV+\mu dn<br/>
+$$</p>
+<h3>焓全微分</h3>
+<p>$$<br/>
+dH=dU+d(pV)+\mu dn=TdS+Vdp+\mu dn<br/>
+$$</p>
+<h3>自由能全微分</h3>
+<p>$$<br/>
+dF=-SdT-pdV+\mu dn<br/>
+$$</p>
+<h3>吉布斯函数全微分</h3>
+<p>$$<br/>
+dG=-SdT+Vdp+\mu dn<br/>
+$$</p>
+<h3>巨热力势</h3>
+<p>$$<br/>
+J=-pV<br/>
+$$</p>
+<h2>克拉伯龙方程</h2>
+<p>$$<br/>
+\frac{dp}{dT}=\frac{S_m^\beta-S_m^\alpha}{V_m^\beta-V_m^\alpha}=\frac{L}{T(V_m^\beta-V_m^\alpha)}=\frac{s^\beta-s^\alpha}{v^\beta-v^\alpha}<br/>
+$$<br/>
+其中：</p>
+<ul>
+<li>$L=T(S_m^\beta-S_m^\alpha)$为相变潜热。</li>
+<li>$S_m$ 为摩尔熵</li>
+<li>$s$ 为比熵（单位质量熵）</li>
+<li>$v$ 为比体积（单位质量体积）<h2>艾伦菲斯特方程</h2>
+<p>在[[#二级相变]]中，克拉珀龙方程为 $\frac{0}{0}$ 不定式，应用洛必达法则，将分子、分母对 $$ 求偏导，得<br/>
+$$<br/>
+\frac{d}{d}=\frac{\Delta c_}{\Delta\alpha}<br/>
+$$<br/>
+也可以将分子、分母对 $$ 求偏导<br/>
+$$<br/>
+\frac{d}{d}=\frac{\Delta\alpha}{\Delta\kappa_T}<br/>
+$$<br/>
+上两式即为<strong>Ehrenfest方程</strong>。</p>
+<h3>一级相变方程</h3>
+<h4>公式</h4>
+<p>对于一级相变，在相变温度 $T_c$ 处，吉布斯自由能 $G$ 本身是连续的，但其关于温度和压力的一阶导数是存在不连续性的：</p>
+</li>
+<li>$\left ( \frac{\partial G}{\partial T} \right)_P = -S$</li>
+<li>$\left ( \frac{\partial G}{\partial P} \right)_T = V$</li>
+</ul>
+<p>在相变点 $T_c$，这些一阶导数会有跃变：<br/>
+$$<br/>
+\Delta S = S_2 - S_1 \neq 0<br/>
+$$<br/>
+$$<br/>
+\Delta V = V_2 - V_1 \neq 0<br/>
+$$<br/>
+其中，$S$ 是熵，$V$ 是体积，指数 1 和 2 表示相变前后的两个相。</p>
+<h4>证明</h4>
+<p>一级相变的特征在于，<strong>热力学势函数的某些一阶导数</strong>在相变点存在<strong>不连续性</strong>。以熵为例：</p>
+<ol>
+<li><strong>吉布斯自由能的连续性</strong>：<br/>
+在相变温度 $T_c$ 处，吉布斯自由能 $G$ 是连续的：<br/>
+$$<br/>
+G_1 (T_c, P) = G_2 (T_c, P)<br/>
+$$</li>
+<li><strong>熵的不连续性</strong>：<br/>
+对 $G$ 取温度的偏导数，得到熵的表达式：<br/>
+$$<br/>
+S = -\left ( \frac{\partial G}{\partial T} \right)_P<br/>
+$$<br/>
+在 $T_c$ 处，熵的跃变为：<br/>
+$$<br/>
+\Delta S = S_2 - S_1 = -\left ( \frac{\partial G_2}{\partial T} \right)_P + \left ( \frac{\partial G_1}{\partial T} \right)_P \neq 0<br/>
+$$</li>
+</ol>
+<p>这表明熵在相变点存在不连续性。</p>
+<h3>二级相变方程</h3>
+<h4>公式</h4>
+<p>对于二级相变，在相变温度 $T_c$ 处，吉布斯自由能 $G$ 及其一阶导数（如熵和体积）是连续的，但其二阶导数（如热容、压缩系数、热膨胀系数）是不连续的：</p>
+<ul>
+<li>$\left ( \frac{\partial^2 G}{\partial T^2} \right)_P = \frac{\partial S}{\partial T} = \frac{C_P}{T}$</li>
+<li>$\left ( \frac{\partial^2 G}{\partial P^2} \right)_T = \frac{\partial V}{\partial P} = -\kappa_T V$</li>
+</ul>
+<p>在相变点 $T_c$，这些二阶导数会有跃变：<br/>
+$$<br/>
+\Delta C_P = C_{P 2} - C_{P 1} \neq 0<br/>
+$$<br/>
+$$<br/>
+\Delta \kappa_T = \kappa_{T 2} - \kappa_{T 1} \neq 0<br/>
+$$<br/>
+其中，$C_P$ 是定压热容，$\kappa_T$ 是等温压缩系数。</p>
+<h4>证明</h4>
+<p>二级相变的特征在于，<strong>热力学势函数的某些二阶导数在相变点存在不连续性</strong>。以热容为例：</p>
+<ol>
+<li><strong>熵的连续性</strong>：<br/>
+在相变温度 $T_c$ 处，熵 $S$ 是连续的：<br/>
+$$<br/>
+S_1 (T_c, P) = S_2 (T_c, P)<br/>
+$$</li>
+<li><strong>热容的不连续性</strong>：<br/>
+对熵取温度的偏导数，得到热容的表达式：<br/>
+$$<br/>
+C_P = T \left ( \frac{\partial S}{\partial T} \right)_P<br/>
+$$<br/>
+在 $T_c$ 处，热容的跃变为：<br/>
+$$<br/>
+\Delta C_P = C_{P 2} - C_{P 1} = T \left ( \left ( \frac{\partial S_2}{\partial T} \right)_P - \left ( \frac{\partial S_1}{\partial T} \right)_P \right) \neq 0<br/>
+$$</li>
+</ol>
+<p>这表明热容在相变点存在不连续性。</p>
+<h2>多元系吉布斯函数全微分</h2>
+<p>$$<br/>
+dG=-SdT+Vdp+\sum_i\mu_i dn_i<br/>
+$$</p>
+<h2>吉布斯相律</h2>
+<p>$$<br/>
+f=k+2-\varphi<br/>
+$$<br/>
+其中：</p>
+<ul>
+<li>$f$：多元复相系自由度，即独立变化强度量数目</li>
+<li>$k$：组元数</li>
+<li>$\varphi$：相数</li>
+</ul>
+<h2>德布罗意关系</h2>
+<p>[[#德布罗意波]]<br/>
+$$<br/>
+\begin{cases}<br/>
+\varepsilon=\hbar\omega\\<br/>
+\vec{p}=\hbar\vec{k}<br/>
+\end{cases}<br/>
+$$</p>
+<h2>普朗克常数</h2>
+<p>$$<br/>
+\begin{align}<br/>
+h &amp; =6.626069934(89)×10^{-34}J\cdot s \\<br/>
+&amp; =4.135667662(25)×10^{-15}eV\cdot s<br/>
+\end{align}<br/>
+$$<br/>
+约化普朗克常数（狄拉克常数）：<br/>
+$$<br/>
+\hbar \equiv \frac{h}{2\pi}=1.054571800(13)\times10^{-34}J\cdot s<br/>
+$$</p>
+<h2>不确定关系</h2>
+<p>$$<br/>
+\Delta q\Delta p\ge h<br/>
+$$<br/>
+<strong>Or</strong><br/>
+$$<br/>
+\Delta q\Delta p\ge \frac{\hbar}{2}<br/>
+$$<br/>
+==一般地==，取<br/>
+$$<br/>
+\Delta q\Delta p\approx h<br/>
+$$</p>
+<h2>三维自由粒子量子态数</h2>
+<p>==暂时不考虑量子自旋==</p>
+<blockquote>
+<p>粒子在宏观大小容器内运动时，动量值与能量值是<strong>准连续</strong>的。</p>
+<h3>直角坐标动量表征</h3>
+<p>求在体积 $V=L^3$ 内，在 $p_x$ 到 $p_x+dp_x$， $p_y$ 到 $p_y+dp_y$， $p_z$ 到 $p_z+dp_z$ 动量范围内的<strong>自由粒子量子态数</strong>。<br/>
+解法一：<br/>
+由[[#三维自由粒子]]动量与量子数关系，<br/>
+可能的 $p_x$ 数目为：<br/>
+$$<br/>
+dn_x=\frac{L}{2\pi\hbar}dp_x<br/>
+$$<br/>
+即用 $dp_x$ 表征量子数 $dn_x$<br/>
+其他两个方向同理。<br/>
+$$<br/>
+dn_xdn_ydn_z=\frac{V}{h^3}dp_xdp_ydp_z<br/>
+$$<br/>
+解法二：<br/>
+由[[#相格]]定义，三维自由粒子相格大小为 $\Delta q_1\cdots \Delta q_r\Delta p_1\cdots \Delta p_r\approx h^3$。题目中 $\mu$ 空间体积为 $d\Omega=Vdp_xdp_ydp_z$。<br/>
+该体积能容纳相格数即为自由粒子量子态数。<br/>
+$$<br/>
+dn_xdn_ydn_z=\frac{d\Omega}{h^3}=\frac{Vdp_xdp_ydp_z}{h^3}<br/>
+$$</p>
+<h3>球坐标动量表征</h3>
+<p>$$<br/>
+\displaylines{p_x=p\sin \theta \cos \varphi<br/>
+\\p_y=p\sin \theta \sin \varphi<br/>
+\\p_z=p\cos \theta}<br/>
+$$<br/>
+$$<br/>
+dp_xdp_ydp_z=p^2\sin \theta dp d\theta d\varphi<br/>
+$$<br/>
+在体积 $V$ 内，动量大小在 $p$ 到 $p+dp$，方向在 $\theta$ 到 $d\theta$，$\varphi$ 到 $\varphi+d\varphi$ 范围内，自由粒子可能状态数为<br/>
+$$<br/>
+\frac{Vp^2\sin \theta dp d\theta d\varphi}{h^3}<br/>
+$$<br/>
+<em>共 $p,\theta,\varphi$ 三个量子数，对应三个自由度。</em></p>
+<h3>能量表征</h3>
+<p>对 $\theta,\varphi$ 积分（$0&lt;\theta&lt;\pi,0&lt;\varphi&lt;2\pi$）得：<br/>
+$$<br/>
+\frac{4\pi Vp^2}{h^3}dp<br/>
+$$<br/>
+此时动量任意方向，自由度为 1。<br/>
+$\because$ $\varepsilon=\frac{p^2}{2m}$<br/>
+$\therefore$ 在体积 $V$ 内，能量 $\varepsilon$ 到 $\varepsilon+d\varepsilon$ 范围内，自由粒子可能量子态数为<br/>
+$$<br/>
+D(\varepsilon)d\varepsilon=\frac{2\pi V}{h^3}(2m)^{3/2}\varepsilon^{1/2}d\varepsilon<br/>
+$$<br/>
+其中 $D(\varepsilon)$ 表示单位能量间隔内可能状态数，成为==态密度==。</p>
+</blockquote>
+<h3>考虑量子自旋</h3>
+<p>[[#自旋角动量]]<br/>
+量子态数=以上求得的动量量子态数 * 粒子自旋可能状态数<br/>
+eg. 粒子自旋量子数为 $\frac{1}{2}$ ，$S_z=2s+1=1$，上式结果应该乘以 2 。</p>
+<h1>定义及定理</h1>
+<h2>基础定义</h2>
+<h3>平衡态</h3>
+<p>平衡态的定义把握两点：</p>
+<ol>
+<li>系统与外界无<strong>宏观</strong>上的能量物质交换（区别于<strong>稳恒态</strong>）。可以有微观上的能量物质交换。</li>
+<li>系统各部分宏观性质长时间内不发生任何变化。平衡态是<strong>热动平衡</strong>，存在<strong>涨落</strong>。</li>
+</ol>
+<p><strong>弛豫时间</strong>：一个系统从非平衡态恢复到平衡态所需的时间。</p>
+<h3>描述平衡态性质的方法：宏观描写</h3>
+<ul>
+<li>状态参量：确定平衡态性质的宏观变量</li>
+<li>状态函数：由状态参量所确定的宏观变量</li>
+</ul>
+<h3>广延量和强度量</h3>
+<p>在热力学中，均匀系统的<strong>宏观变量</strong>可以分为两类：广延量和强度量。</p>
+<h4>广延量（Extensive Variables）</h4>
+<blockquote>
+<p>广延量是指<strong>依赖于系统规模或大小的热力学变量</strong>。这些变量随着系统的大小成比例地增加或减少。</p>
+</blockquote>
+<ul>
+<li><strong>质量（Mass）</strong>：整个系统的质量。</li>
+<li><strong>体积（Volume, V）</strong>：系统占据的空间体积。</li>
+<li><strong>能量（Energy, E）</strong>：包括内部能量、动能和势能。</li>
+<li><strong>熵（Entropy, S）</strong>：表示系统微观状态的不确定性和混乱度。</li>
+<li><strong>粒子数（Number of particles, N）</strong>：系统中粒子的总数。</li>
+<li><strong>热量（Heat, Q）</strong>：系统所包含或传递的热量。</li>
+<li><strong>电荷（Charge, Q）</strong>：系统中的电荷总量。</li>
+</ul>
+<h4>强度量（Intensive Variables）</h4>
+<blockquote>
+<p>强度量是指<strong>与系统的大小无关</strong>的热力学变量，这些变量<strong>在系统内的任一点都保持一致</strong>，不随系统规模而变化。</p>
+</blockquote>
+<ul>
+<li><strong>温度（Temperature, T）</strong>：表示系统的热状态。</li>
+<li><strong>压力（Pressure, P）</strong>：系统单位面积上所受的力。</li>
+<li><strong>化学势（Chemical potential, μ）</strong>：系统中每增加一个粒子所需要的自由能。</li>
+<li><strong>浓度（Concentration）</strong>：单位体积内粒子的数量。</li>
+<li><strong>电场（Electric field, E）</strong>：单位电荷所受的力。</li>
+<li><strong>磁场（Magnetic field, H）</strong>：单位磁偶极子所受的力矩。</li>
+</ul>
+<h4>广延量和强度量之间的关系</h4>
+<p>广延量和强度量之间有着密切的联系。通常，<strong>广延量可以通过强度量的乘积或积分来计算</strong>。例如：</p>
+<ul>
+<li><strong>内能</strong>（U）：可以通过系统的温度、体积和粒子数来确定。</li>
+<li><strong>体积</strong>：可以通过系统内每个单元体的密度积分来计算。</li>
+<li><strong>热量和功</strong>：是强度量（如温度和压力）与广延量（如熵和体积变化）的乘积。</li>
+</ul>
+<h3>温度</h3>
+<blockquote>
+<p><strong>热平衡定律</strong>：若物体A分别与B和C处于热平衡，那么B和C热接触后也一定处于热平衡。</p>
+</blockquote>
+<ul>
+<li>温度的定义：互为热平衡的物体必定存在一个属于物体本身内在性质的物理量，定义它为温度。</li>
+<li>温标：温度的数值表示方法</li>
+<li>三要素：测温物质的测温属性，固定点和分度。</li>
+</ul>
+<h3>过程的功</h3>
+<p><strong>准静态过程</strong>：$W=\int_{V_1}^{V_2}pdV$ ，其中 $V_1$ 为系统初始体积，$V_2$ 为系统最终体积。</p>
+<p><strong>可逆过程：无耗散的准静态过程</strong></p>
+<blockquote>
+<p>可逆过程外界对系统所作的功可以用系统本身的状态参量来表达。</p>
+</blockquote>
+<p><strong>状态空间：以各独立状态参量为坐标轴构成的空间。</strong></p>
+<blockquote>
+<p>在状态空间中，一个点代表系统的一个平衡态，一条曲线就代表一个准静态过程。</p>
+</blockquote>
+<p><strong>过程方程：准静态过程中，独立状态参量间的函数关系。</strong></p>
+<p>功的表达式（仅讨论可逆过程）：</p>
+<ul>
+<li>流体体积变化过程： −d</li>
+<li>表面膜面积变化过程： d</li>
+<li>细弹性丝长度： d</li>
+<li>极化功（忽略电介质体积变化）：</li>
+<li>磁化功（忽略磁介质体积变化）：</li>
+</ul>
+<p><strong>特殊非静态过程的功</strong>：</p>
+<ul>
+<li>等容 $=0$  </li>
+<li>等压 $=− \Delta $ </li>
+</ul>
+<h2>卡诺定理</h2>
+<p><strong>所有工作于两个确定温度之间的热机中，可逆热机效率最高。</strong><br/>
+推论：两个可逆热机工作温度相同，则效率相等。<br/>
+[[#可逆热机效率$ eta$]]</p>
+<h2>熵增加原理</h2>
+<blockquote>
+<p>在<strong>绝热条件</strong>下，熵减少的过程是不可能实现的（熵永不减少）。</p>
+</blockquote>
+<p><strong>证明</strong>：由热力学第二定律：<br/>
+$$<br/>
+dS\ge \frac{dQ}{T}<br/>
+$$<br/>
+绝热系统$dQ$=0，则$dS\ge 0$ </p>
+<p><strong>推论</strong>：孤立（绝热）系统<strong>不可逆过程</strong>总是朝着熵增加的方向进行，即$dS&gt;0$。</p>
+<h2>节流过程</h2>
+<p>在热力学中，节流过程（Throttling Process）是一种常见的<strong>绝热过程</strong>，通常用于理解气体或液体在通过一个孔口、阀门或多孔塞子时的行为。</p>
+<h3>节流过程的特征</h3>
+<ol>
+<li><strong>绝热性</strong>：节流过程通常被认为是绝热的，因为在快速流动过程中没有足够的时间进行热量交换。</li>
+<li><strong>等焓性</strong>：最重要的特征是节流过程是等焓过程，即焓（Enthalpy，$H$）在节流前后保持不变。这个特性在节流过程中起主要作用。[[#节流过程中的能量方程]]</li>
+<li><strong>不可逆性</strong>：节流过程是<strong>不可逆过程</strong>，系统的<strong>熵通常会增加</strong>。</li>
+<li><strong>压力下降</strong>：在节流过程中，流体的压力会显著下降。</li>
+</ol>
+<h3>焓与温度、压力的关系</h3>
+<p>对于理想气体，焓仅仅是温度的函数，因此节流过程对于理想气体来说温度保持不变（焦耳-汤姆逊效应的特殊情况）。但是对于实际气体，情况更加复杂，温度可能会增加或降低，取决于气体的==焦耳-汤姆逊系数==（Joule-Thomson coefficient，[[#焦汤系数]]），它定义为：<br/>
+$$<br/>
+\mu_{JT} = \left ( \frac{\partial T}{\partial P} \right)_H<br/>
+$$</p>
+<ul>
+<li>如果 $\mu_{JT} &gt; 0$，气体温度在节流过程中下降。</li>
+<li>如果 $\mu_{JT} &lt; 0$，气体温度在节流过程中上升。</li>
+</ul>
+<h3>节流过程的应用</h3>
+<p>节流过程在许多工业应用中非常重要，例如：</p>
+<ul>
+<li><strong>制冷系统</strong>：利用节流阀（如膨胀阀）来降低制冷剂的温度和压力，从而实现冷却效果。</li>
+<li><strong>气体分离</strong>：通过节流使某些气体冷却至液化温度，从而分离出不同成分的气体。<h2>特性函数</h2>
+<p>特性函数（也称为热力学势函数或热力学势）是用来描述热力学系统状态的函数，通过这些函数可以导出各种热力学性质和关系。<br/>
+主要的特性函数有四种：内能、亥姆霍兹自由能、焓和吉布斯自由能。</p>
+</li>
+<li>内能$U(S,V)$：绝热等容系统，U 不变</li>
+<li>焓$H(S,p)$：绝热等压系统，H 不变</li>
+<li>自由能$F(T,V)$：等温等容，F 不变</li>
+<li>吉布斯函数$G(T,p)$：等温等压，G 不变<h2>辐射</h2>
+<h3>平衡辐射</h3>
+<p>平衡辐射（Equilibrium Radiation）是指在<strong>热力学平衡</strong>状态下，系统的电磁辐射特性。此时，系统内的辐射与吸收过程达到动态平衡，电磁辐射的频谱和强度仅由系统的温度决定。</p>
+<h4>平衡辐射的特征</h4>
+</li>
+</ul>
+<ol>
+<li><strong>热平衡</strong>：<ul>
+<li>系统处于热平衡状态，即系统的各部分温度均匀，没有净的热流动。</li>
+</ul>
+</li>
+<li><strong>黑体辐射</strong>：<ul>
+<li>在热平衡状态下，辐射具有黑体辐射的特征。黑体辐射是理想化的完全吸收和再辐射所有频率的辐射，光谱仅依赖于温度。<h3>辐射通量密度</h3>
+<p>辐射通量密度（Radiative Flux Density），也称为辐射出射度或辐射强度，是指单位时间内通过单位面积的辐射能量。它是描述辐射场的重要物理量，在热力学、气象学、天文学等领域有广泛应用。</p>
+<h4>定义</h4>
+<p>辐射通量密度E表示为：<br/>
+$$<br/>
+E = \frac{d\Phi}{dA}<br/>
+$$<br/>
+其中：</p>
+</li>
+</ul>
+</li>
+</ol>
+<ul>
+<li>E是辐射通量密度，单位是瓦特每平方米（$W/m^2$）。</li>
+<li>$d\Phi$ 是通过面积 $dA$ 的辐射能量通量，单位是瓦特（$W$）。</li>
+<li>$dA$ 是面积，单位是平方米（$m^2$）。</li>
+</ul>
+<p>==Or==<br/>
+$$<br/>
+J_u=\frac{c}{4}\frac{U}{V}=\frac{1}{4}cu<br/>
+$$<br/>
+其中：</p>
+<ul>
+<li>$c$：光速</li>
+<li>$u$：辐射能量密度，$u=\frac{U}{V}$，单位体积平衡辐射能量<h4>斯特藩-玻尔兹曼定律中的应用</h4>
+<p>对于一个理想黑体，其辐射通量密度与其温度的四次方成正比，这由斯特藩-玻尔兹曼定律描述：<br/>
+$$<br/>
+E = \sigma T^4<br/>
+$$<br/>
+其中：</p>
+</li>
+<li>$E$ 是黑体的辐射通量密度。</li>
+<li>$\sigma$ 是斯特藩-玻尔兹曼常数，值为 $5.67 \times 10^{-8} \, W \, m^{-2} \, K^{-4}$。</li>
+<li>$T$ 是黑体的绝对温度，单位是开尔文（$K$）。<h4>辐射通量密度的方向性</h4>
+<p>辐射通量密度是一个矢量量，考虑其方向性时称为辐射强度 $I$，表示为单位立体角上的辐射通量密度：<br/>
+$$<br/>
+I = \frac{d\Phi}{dA \cos \theta \, d\Omega}<br/>
+$$<br/>
+其中：</p>
+</li>
+<li>$I$ 是辐射强度，单位是瓦特每平方米每立体角（$W/m^2/sr$）。</li>
+<li>$d\Omega$ 是立体角，单位是球面度（sr）。</li>
+<li>$\theta$ 是辐射方向与法线之间的夹角。<h3>黑体辐射（空窖辐射）</h3>
+<p>黑体辐射（Blackbody Radiation）是指一个理想化的物体（称为黑体）在热平衡状态下发出的电磁辐射。黑体是一个理想化的概念，它具有完全吸收和完全辐射所有频率电磁波的能力。黑体辐射的特性只取决于黑体的温度，而与其材料或表面性质无关。</p>
+<h4>黑体辐射的特征</h4>
+</li>
+</ul>
+<ol>
+<li><strong>完全吸收</strong>：<ul>
+<li>黑体可以完全吸收所有入射的电磁辐射，无论波长或方向如何。因此，黑体在所有波长上没有反射或透射。</li>
+</ul>
+</li>
+<li><strong>完全辐射</strong>：<ul>
+<li>黑体在任何温度下都发出电磁辐射，且在所有波长上都有辐射。这种辐射仅由黑体的温度决定。<h4>黑体辐射的实际应用</h4>
+</li>
+</ul>
+</li>
+<li><strong>宇宙背景辐射</strong>：<ul>
+<li>宇宙微波背景辐射近似为一个温度为 2.725 K 的黑体辐射，是大爆炸理论的重要证据。</li>
+</ul>
+</li>
+<li><strong>恒星光谱</strong>：<ul>
+<li>恒星的辐射近似为黑体辐射，通过分析恒星的光谱，可以推算出其表面温度。</li>
+</ul>
+</li>
+<li><strong>红外测温</strong>：<ul>
+<li>利用黑体辐射原理，通过测量物体辐射出的红外线强度，可以推算出其表面温度。</li>
+</ul>
+</li>
+<li><strong>热成像</strong>：<ul>
+<li>热成像设备利用黑体辐射原理，检测物体表面辐射的红外线来形成温度图像。<h2>热动平衡判据</h2>
+<h3>孤立系统</h3>
+<p>孤立（绝热）系统 S 增大或不变，平衡态时$S_\max$。<br/>
+若发生微动，$\Delta S&lt;0$，将其展开为二阶泰勒级数$\Delta S=\delta S+\frac{1}{2}\delta^2 S$<br/>
+平衡时，满足$\delta S=0,\delta^2 S&lt;0$</p>
+<h3>等温等容系统</h3>
+<p>等温等容系统 F 减小或不变，平衡态时$F_\min$。<br/>
+若发生微动，$\Delta F&gt;0$，将其展开为二阶泰勒级数$\Delta F=\delta F+\frac{1}{2}\delta^2 F$<br/>
+平衡时，满足$\delta F=0,\delta^2 F&gt;0$</p>
+<h3>等温等压系统</h3>
+<p>等温等压系统 G 减小或不变，平衡态时$G_\min$。<br/>
+若发生微动，$\Delta G&gt;0$，将其展开为二阶泰勒级数$\Delta G=\delta G+\frac{1}{2}\delta^2 G$<br/>
+平衡时，满足$\delta G=0,\delta^2 G&gt;0$</p>
+<h3>单元两相系平衡条件</h3>
+<p>$$<br/>
+\begin{cases}<br/>
+T^\alpha=T^\beta \\<br/>
+p^\alpha=p^\beta \\<br/>
+\mu^\alpha=\mu^\beta<br/>
+\end{cases}<br/>
+$$</p>
+<h2>相变分类</h2>
+<p>[[#艾伦菲斯特方程]]<br/>
+艾伦菲斯特（Paul Ehrenfest）对相变进行了分类，<strong>依据的是热力学势函数在相变点的连续性和导数的连续性</strong>。<br/>
+艾伦菲斯特将相变分为一级相变和二级相变。</p>
+<h3>一级相变</h3>
+<blockquote>
+<p>一级相变（First-order phase transition）是指在相变过程中，热力学势函数（如吉布斯自由能）的一阶导数（如熵、体积）在相变点处是不连续的。</p>
+</blockquote>
+</li>
+</ul>
+</li>
+</ol>
+<p>典型的一级相变包括熔化、汽化和升华等。<br/>
+[[#一级相变方程]]</p>
+<h3>二级相变</h3>
+<blockquote>
+<p>二级相变（Second-order phase transition）是指在相变过程中，热力学势函数的一阶导数在相变点处是连续的，但其二阶导数存在不连续性。</p>
+</blockquote>
+<p>典型的二级相变包括超导体的转变和液晶相变等。<br/>
+[[#二级相变方程]]</p>
+<h2>多元系复相平衡条件</h2>
+<h3>等温等压系统平衡条件</h3>
+<p>$$<br/>
+\begin{cases}<br/>
+T^\alpha=T^\beta \\<br/>
+p^\alpha=p^\beta \\<br/>
+\mu_i^\alpha=\mu_i^\beta<br/>
+\end{cases}<br/>
+$$</p>
+<h3>其它系统同理</h3>
+<h2>吉布斯佯谬</h2>
+<p><strong>描述</strong>：由性质任意接近的两种气体过渡到同种气体，熵增由 $2nR\ln 2$ 突变为 0。<br/>
+<strong>原因</strong>：全同粒子不可分辨。</p>
+<h2>热力学第三定律</h2>
+<h3>能斯特定理</h3>
+<p>凝聚系的熵在等温过程中的改变随热力学温度趋于零。<br/>
+$$<br/>
+\lim_{T \to 0}(\Delta S)_T=0<br/>
+$$</p>
+<h3>绝对零度不能到达原理</h3>
+<p>不可能通过<strong>有限步骤</strong>使一个物体冷却到热力学零度。</p>
+<h3>推论</h3>
+<ol>
+<li>$\lim_{T \to 0}C_n=0$ 爱因斯坦量子统计在[[#固体]]这里证明了该推论。</li>
+<li>$\lim_{T \to 0}\alpha=0,\lim_{T \to 0}\beta=0$ </li>
+<li>绝对零度时熵取值可以为 0</li>
+</ol>
+<h2>粒子运动状态经典描述</h2>
+<h3>$\mu$空间</h3>
+<blockquote>
+<p>用位置坐标和动量坐标描述粒子力学运动状态。$q_1,q_2,...,q_r;p_1,p_2,...,p_r$ 共 2 r 个变量为直角坐标构成 2 r 维空间，成为 $\mu$ 空间。</p>
+</blockquote>
+<p><strong>粒子自由度</strong>：确定一个粒子在空间位置==<strong>或</strong>==位形位置所需最少坐标数。</p>
+<h3>相格</h3>
+<blockquote>
+<p>粒子运动状态在 $\mu$ 空间的体积</p>
+</blockquote>
+<p>自由度为 $r$  的粒子，相格大小为$\Delta q_1\cdots \Delta q_r\Delta p_1\cdots \Delta p_r$<br/>
+当其满足[[#不确定关系]] $\Delta q_i\Delta p_i\approx h$，相格大小 $\approx h^r$</p>
+<h3>自由粒子</h3>
+<blockquote>
+<p>自由粒子是不受力的作用而作自由运动的粒子。<br/>
+当不存在外场时，理想气体的分子或金属中的自由电子都可近似地看作自由粒子。</p>
+</blockquote>
+<p><strong>自由粒子动量</strong>：$p_x=m\dot{x}$，粒子 x 轴方向动量。其中 m 为粒子质量，$\dot{x}$为粒子 x 轴方向速度（位置对时间求一阶导）。<br/>
+<strong>自由粒子能量</strong>：<br/>
+$$<br/>
+\varepsilon=\frac{1}{2m}\sum_ip_i^2<br/>
+$$</p>
+<h3>线性谐振子</h3>
+<blockquote>
+<p>经典力学告诉我们，质量为 $m$ 的粒子在弹性力 $F = -Ax$ 作用下，将沿 $x$ 轴在原点附近作简谐振动，称为线性谐振子。</p>
+</blockquote>
+<ul>
+<li>
+<p>振动的圆频率：$$\omega=\sqrt{\frac{A}{m}}$$</p>
+</li>
+<li>
+<p>$A$：弹性系数</p>
+<h4>自由度为 1 的线性谐振子能量</h4>
+<p>动能和势能之和<br/>
+$$<br/>
+\varepsilon=\frac{p^2}{2m}+\frac{A}{2}x^2=\frac{p^2}{2m}+\frac{1}{2}m\omega^2x^2<br/>
+$$<br/>
+写成椭圆方程标准式<br/>
+$$<br/>
+\frac{p^2}{2m\varepsilon}+\frac{x^2}{\frac{2\varepsilon}{m\omega^2}}=1<br/>
+$$</p>
+<h3>转子（自由度为 2）</h3>
+<blockquote>
+<p>考虑质量为 $m$ 的质点 $P$ 被具有一定长度的轻杆系于原点 $O$ 时所作的运动。</p>
+</blockquote>
+</li>
+<li>
+<p>在直角坐标系中，质点的位置由坐标 $x,y,z$ 确定。</p>
+</li>
+</ul>
+<p>质点能量（动能）：<br/>
+$$<br/>
+\varepsilon=\frac{1}{2}m(\dot{x}^2+\dot{y}^2+\dot{z}^2)<br/>
+$$</p>
+<ul>
+<li>用球极坐标 $r,\theta,\varphi$ 描述质点的位置：$x=r\sin \theta \cos \varphi,y=r\sin \theta \sin \varphi,z=r\cos \theta$</li>
+</ul>
+<p>质点能量：<br/>
+$$<br/>
+\begin{align}<br/>
+\varepsilon &amp;=\frac{1}{2}m(\dot{r}^2+r^2\dot{\theta}^2+r^2\sin^2\theta\dot{\varphi}^2)\\<br/>
+&amp;=\frac{1}{2}m(r^2\dot{\theta}^2+r^2\sin^2\dot{\varphi}^2)<br/>
+\end{align}<br/>
+$$</p>
+<ul>
+<li>引入共轭动量$p_\theta=mr^2\dot{\theta},p_\varphi=mr^2\sin^2\theta \dot{\varphi}$，质点对 $O$ 转动惯量 $I$</li>
+<li>$0&lt;\theta&lt;\pi,0&lt;\varphi&lt;2\pi$，两个自由度</li>
+</ul>
+<p>$$<br/>
+\varepsilon=\frac{1}{2I}(p_\theta^2+\frac{1}{\sin^2\theta}p_\varphi^2)<br/>
+$$</p>
+<h4>双原子分子</h4>
+<blockquote>
+<p>二体问题可以约化为单体问题，在统计物理中，将双原子分子绕其质心的转动看作转子。</p>
+</blockquote>
+<p>根据经典力学，在没有外力作用的情形下，转子的总角动量 $\vec L=\vec r\times \vec p$ 是一个守恒量，其大小和方向都不随时间改变。由于 $\vec r$ 垂直于 $\vec L$ ，质点的运动是在垂直于 $\vec L$ 的平面内的运动。如果选择 $z$ 轴平行于 $\vec L$，质点的运动必在 $xy$ 平面内。这相当于固定$\theta=\frac{\pi}{2},p_\theta=0$。<br/>
+此时粒子能量：<br/>
+$$<br/>
+\varepsilon=\frac{p_\varphi^2}{2I}=\frac{L^2}{2I}<br/>
+$$<br/>
+其中：$L^2=\vec{L}\cdot \vec{L}$<br/>
+<strong>此时，粒子自由度为 1</strong>，即 $\varphi$</p>
+<h2>粒子运动状态量子描述</h2>
+<h3>德布罗意波</h3>
+<blockquote>
+<p>微观粒子（光子、电子、质子、中子乃至原子、分子等）普遍地具有波粒二象性。<br/>
+能量为 $\varepsilon$、动量为 $\vec{p}$ 的自由粒子联系着圆频率为 $\omega$ 波矢为 $\vec{k}$ 的平面波，称为德布罗意波。</p>
+</blockquote>
+<p>[[#德布罗意关系]]</p>
+<h3>量子态</h3>
+<blockquote>
+<p>在量子力学中，微观粒子的运动状态称为量子态。<br/>
+量子态由一组量子数表征，这组<strong>量子数的数目</strong>等于粒子的自由度。</p>
+</blockquote>
+<h3>==线性谐振子能量==</h3>
+<p>[[#自由度为 1 的线性谐振子能量]]<br/>
+==量子物理==中，圆频率为 $\omega$ 的线性谐振子，其能量的可能值为：<br/>
+$$<br/>
+\varepsilon_n=\hbar\omega(n+\frac{1}{2}),n=0,1,2,\cdots<br/>
+$$<br/>
+n 为振子运动状态与能量的量子数，只有一个，即线性谐振子自由度为 1。<br/>
+显然，$\varepsilon_n$的值是<strong>分立的</strong>。</p>
+<h3>能级</h3>
+<blockquote>
+<p>分立的能量称为能级。</p>
+</blockquote>
+<p>$\mu$ 空间中能量相等的曲面为==等能面==，等能面间不连续，因此每个等能面称为<strong>能级</strong>。<br/>
+[[#$ mu$空间]]</p>
+<h3>转子能量</h3>
+<p>[[#双原子分子]]<br/>
+在量子物理中，$L^2$的值只能取分立值：<br/>
+$$<br/>
+L^2=l(l_1)\hbar^2,l=0,1,2,\cdots<br/>
+$$<br/>
+对于一定的 $L$ 角动量在其本征方向（取为 $z$ 轴）的投影 $L_z$ 只能取分立值：<br/>
+$$<br/>
+L_z=m_l\hbar,m_l=-l,-l+1,\cdots,l<br/>
+$$<br/>
+显然，$m_l$有$2l+1$个可能取值。</p>
+<blockquote>
+<p><strong>自由度为 2</strong> 的转子运动状态由 $l,m_l$ <strong>两个量子数</strong>表征。<br/>
+在经典理论中，运动平面在空间的取向是任意的，而在量子理论中，$m_l$ 只能取上述分立值，称为<strong>空间量子化</strong>。</p>
+</blockquote>
+<p>故转子能量也分立：<br/>
+$$<br/>
+\varepsilon_l=\frac{l(l+1)\hbar^2}{2I},l=0,1,2,\cdots<br/>
+$$</p>
+<h3>简并度$\omega_l$</h3>
+<p>$\because$ 观察到：能量只取决于量子数 $l$，量子态取决于 $m_l,l$ 两个量子数<br/>
+$\therefore$ 能级为$\varepsilon_l$ 的量子态有 $2l+1$ 个</p>
+<blockquote>
+<p>一般地说，如果某一能级的量子状态不止一个，该能级就称为简并的。<br/>
+如果某一能级只有一个量子态，该能级称为非简并的。<br/>
+一个能级有 k 个量子态，则简并度为 k</p>
+</blockquote>
+<p>两个相邻[[#能级]]间布满若干[[#相格]]，相格的数目为能级的<strong>简并度</strong>。</p>
+<h3>自旋角动量</h3>
+<blockquote>
+<p>某些基本粒子具有内禀的角动量，称为自旋角动量$S$。</p>
+</blockquote>
+<p>$$<br/>
+S^2=s(s+1)\hbar^2<br/>
+$$<br/>
+$s$：==自旋量子数==。可为整数或半整数，是粒子固有属性，可相加计算。[[#玻色子与费米子]]<br/>
+自旋角动量的状态由自旋角动量的大小（自旋量子数 $s$）及自旋角动量在其<strong>本征方向</strong>的投影确定。以 $z$ 表示本征方向，$S_z$ 的可能值为<br/>
+$$<br/>
+S_z=m_s\hbar,m_s=s,s-1,\cdots,-s<br/>
+$$<br/>
+共$2s+1$个。</p>
+<h3>自由粒子能量</h3>
+<h4>边界条件</h4>
+<blockquote>
+<p>为了确定粒子可能的运动状态，需要知道德布罗意波在器壁的边界条件。<br/>
+通常采用驻波条件或周期性边界条件。</p>
+</blockquote>
+<p>对于<strong>一维</strong>自由粒子，处于长度为 $L$ 的一维容器中，周期性边界条件要求，粒子可能的运动状态，其德布罗意波波长 $\lambda$ 的整数倍等于容器的长度 $L$。即<br/>
+$$<br/>
+L=\left\vert n_x \right\vert\lambda,\left\vert n_x \right\vert=0,1,2,\cdots<br/>
+$$</p>
+<ul>
+<li>$n_x$：量子数 $n$ 在 $x$ 方向的投影。对于一维自由粒子，量子数即为 $n_x$。<h4>一维自由粒子</h4>
+</li>
+<li>波矢量 $k_x$：<br/>
+$$<br/>
+k_x=\frac{2\pi}{L}n_x,n_x=0,\pm 1,\pm 2,\cdots<br/>
+$$</li>
+<li>动量 $p_x$：<br/>
+$$<br/>
+p_x=\frac{2\pi\hbar}{L}n_x,n_x=0,\pm 1,\pm 2,\cdots<br/>
+$$</li>
+<li>能量 $\varepsilon_{n_x}$<br/>
+$$<br/>
+\varepsilon_{n_x}=\frac{p_x^2}{2m}=\frac{2\pi^2\hbar^2}{m}\cdot\frac{n_x^2}{L^2},n_x=0,\pm 1,\pm 2,\cdots<br/>
+$$<h4>三维自由粒子</h4>
+</li>
+<li>动量：<br/>
+$$<br/>
+\begin{cases}<br/>
+p_x=\frac{2\pi\hbar}{L}n_x,n_x=0,\pm 1,\pm 2,\cdots\\<br/>
+p_y=\frac{2\pi\hbar}{L}n_y,n_y=0,\pm 1,\pm 2,\cdots\\<br/>
+p_z=\frac{2\pi\hbar}{L}n_z,n_z=0,\pm 1,\pm 2,\cdots<br/>
+\end{cases}<br/>
+$$</li>
+<li>能量：<br/>
+$$<br/>
+\varepsilon=\frac{1}{2m}(p_x^2+p_y^2+p_z^2)=\frac{2\pi^2\hbar^2}{m}\frac{n_x^2+n_y^2+n_z^2}{L^2}<br/>
+$$</li>
+<li>量子数：$n_x,n_y,n_z$ 共三个，即三个自由度</li>
+<li>能级：取决于 $n_x^2+n_y^2+n_z^2$ </li>
+</ul>
+<h2>系统微观运动状态的描述</h2>
+<h3>微观状态</h3>
+<blockquote>
+<p>系统的微观运动状态就是它的力学运动状态。<br/>
+体现为粒子占据不同能级的不同相格的一种占据方式。</p>
+</blockquote>
+<h3>系统</h3>
+<p>==只限于讨论由全同和近独立粒子组成的系统==</p>
+<ul>
+<li><strong>由全同粒子组成的系统</strong>：由具有完全相同的内禀属性（相同的质量、电荷、自旋等）的同类粒子组成的系统。<br/>
+如自由电子组成的自由电子气体，$^4He$ 原子组成的氦气等。 ^f1b50b</li>
+<li><strong>由近独立粒子组成的系统</strong>：粒子之间的相互作用很弱，相互作用的平均能量远小于单个粒子的平均能量，因而可以忽略粒子之间的相互作用，将整个系统的能量表达为单个粒子的能量之和。<br/>
+如理想气体组成的系统。 ^24ebad<br/>
+$$<br/>
+E=\sum^{N}_{i=1}\varepsilon_i<br/>
+$$<br/>
+其中：</li>
+<li>$\varepsilon_i$：第 i 个粒子能量</li>
+<li>$N$：粒子总数</li>
+</ul>
+<h3>经典力学描述</h3>
+<blockquote>
+<p>在经典物理中，全同粒子 [[#^f1b50b]] 是可以分辨的。<br/>
+确认系统微观运动状态需要确认每个粒子力学运动状态（个体量子态）。</p>
+</blockquote>
+<p>变量数：$2Nr$<br/>
+$r$：单个粒子自由度</p>
+<h3>玻色子与费米子</h3>
+<blockquote>
+<p>自然界中微观粒子可分为两类，称为玻色子和费米子。</p>
+</blockquote>
+<p>[[#自旋角动量]]</p>
+<h4>费米子</h4>
+<blockquote>
+<p>自旋量子数为半整数</p>
+</blockquote>
+<p>如：电子，质子，中子，$\mu$ 子（都为 $\frac{1}{2}$）；$^2H$ 原子，$^3H$ 核（$\frac{3}{2}$）等。</p>
+<h4>玻色子</h4>
+<blockquote>
+<p>自旋量子数为整数</p>
+</blockquote>
+<p>如：光子（1），$\pi$ 介子（0），$^1H$ 原子（1），$^4He$ 原子（4）等。</p>
+<h3>泡利不相容原理</h3>
+<blockquote>
+<p>在含有多个全同近独立的费米子的系统中，一个个体量子态最多能容纳一个费米子。</p>
+</blockquote>
+<h3>分布</h3>
+<blockquote>
+<p>每一个<strong>能级</strong>上的粒子数组成的集合，该集合称为分布。</p>
+</blockquote>
+<p>$$<br/>
+\{a_l\}=a_1,a_2,\cdots,a_l,\cdots<br/>
+$$<br/>
+$a_l$：能级 $\varepsilon_l$ 上的粒子数<br/>
+满足：<br/>
+$$<br/>
+\sum_la_l=N,\sum_la_l\varepsilon_l=E<br/>
+$$<br/>
+一个分布包含大量可能微观状态，一个微观状态对应一个分布。</p>
+<h3>三种系统</h3>
+<h4>玻尔兹曼系统</h4>
+<p>由==可分辨==的<strong>全同</strong> [[#^f1b50b]]<strong>近独立粒子</strong>[[#^24ebad]] 组成，且处在一个个体量子态上的<strong>粒子数不受限制</strong>的系统称作玻耳兹曼系统。</p>
+<h4>玻色系统</h4>
+<p>由玻色子组成的系统，不受泡利不相容原理的约束。<br/>
+由多个<strong>全同近独立</strong>的玻色子组成的玻色系统中，<strong>处在同一个个体量子态的玻色子数目</strong>是不受限制的。</p>
+<h4>费米系统</h4>
+<p>由费米子组成的系统，遵从泡利（Pauli）不相容原理。</p>
+<h3>三种统计</h3>
+<h4>玻尔兹曼统计（经典统计）</h4>
+<p>全同粒子可分辨，每个相格可容纳粒子数不受限制。</p>
+<h4>玻色统计</h4>
+<p>全同粒子不可分辨，每个相格可容纳粒子数不受限制。</p>
+<h4>费米统计</h4>
+<p>全同粒子不可分辨，每个相格最多容纳一个粒子。</p>
+<h3>等概率原理</h3>
+<blockquote>
+<p>对于<strong>处在平衡状态</strong>的<strong>孤立</strong>系统，系统各个可能的微观状态出现的概率是相等的。</p>
+</blockquote>
+<h2>最概然分布</h2>
+<blockquote>
+<p>根据等概率原理，对于处在平衡状态的孤立系统，微观状态数最多的分布出现的概率最大，称为最概然分布。</p>
+</blockquote>
+<h3>玻尔兹曼分布</h3>
+<blockquote>
+<p>玻耳兹曼系统粒子的最概然分布，称为<strong>麦克斯韦-玻耳兹曼分布</strong>，简称玻耳兹曼分布。</p>
+</blockquote>
+<ul>
+<li>近似等式：$\ln m!=m (\ln m-1),m\gg 1$ </li>
+<li>将 $\Omega_{m.B.}$ 简记为 $\Omega$<br/>
+玻尔兹曼统计下，该分布包含微观状态最多，微观状态数 $\Omega$ 最大。<br/>
+$$<br/>
+a_l=\omega_le^{-\alpha-\beta\varepsilon_l}=e^{-\alpha-\beta\varepsilon_l}\frac{\Delta\omega_l}{h_0^r}<br/>
+$$<br/>
+后式为==玻尔兹曼分布经典表达式==<br/>
+$$<br/>
+N=\sum_la_l=\sum_l\omega_le^{-\alpha-\beta\varepsilon_l}=\sum_se^{-\alpha-\beta\varepsilon_s}<br/>
+$$<br/>
+$$<br/>
+E=\sum_l\varepsilon_la_l=\sum_l\omega_l\varepsilon_le^{-\alpha-\beta\varepsilon_l}=\sum_s\varepsilon_se^{-\alpha-\beta\varepsilon_s}<br/>
+$$<br/>
+$$<br/>
+f_s=\frac{a_l}{\omega_l}=e^{-\alpha-\beta\varepsilon_l}<br/>
+$$</li>
+<li>$a_l$：能级 $\varepsilon_l$ 最概然粒子数（平均粒子数），应满足条件 $a_l\gg 1$</li>
+<li>$\alpha$：拉格朗日乘子</li>
+<li>$\beta$：拉格朗日乘子，一般由实验条件确定</li>
+<li>$\omega_l$：能级 $\varepsilon_l$ 上的量子态数，即简并度。应满足条件 $\omega_l\gg 1$</li>
+<li>$s$：能级 $\varepsilon_l$ 上的一个量子态</li>
+<li>$\sum_l$：对量子数 $l$ 求和</li>
+<li>$\sum_s$：对所有量子态求和</li>
+<li>$f_s$：量子态 $s$ 上的平均粒子数</li>
+</ul>
+<h3>玻色分布</h3>
+<blockquote>
+<p>玻色系统中粒子的最概然分布，称为玻色-爱因斯坦（Einstein）分布，简称玻色分布。</p>
+</blockquote>
+<p>$$<br/>
+a_l=\frac{\omega_l}{e^{\alpha+\beta\varepsilon_l}-1}<br/>
+$$<br/>
+$$<br/>
+N=\sum_la_l=\sum_l\frac{\omega_l}{e^{\alpha+\beta\varepsilon_l}-1}<br/>
+$$<br/>
+$$<br/>
+E=\sum_l\varepsilon_la_l=\sum_l\frac{\varepsilon_l\omega_l}{e^{\alpha+\beta\varepsilon_l}-1}<br/>
+$$<br/>
+$$<br/>
+F_s=\frac{a_l}{\omega_l}=\frac{1}{e^{\alpha+\beta\varepsilon_l}-1}<br/>
+$$</p>
+<h3>费米分布</h3>
+<blockquote>
+<p>费米系统的最概然分布。</p>
+</blockquote>
+<p>$$<br/>
+a_l=\frac{\omega_l}{e^{\alpha+\beta\varepsilon_l}+1}<br/>
+$$<br/>
+$$<br/>
+N=\sum_la_l=\sum_l\frac{\omega_l}{e^{\alpha+\beta\varepsilon_l}+1}<br/>
+$$<br/>
+$$<br/>
+E=\sum_l\varepsilon_la_l=\sum_l\frac{\varepsilon_l\omega_l}{e^{\alpha+\beta\varepsilon_l}+1}<br/>
+$$<br/>
+$$<br/>
+F_s=\frac{a_l}{\omega_l}=\frac{1}{e^{\alpha+\beta\varepsilon_l}+1}<br/>
+$$</p>
+<h3>三种分布关系</h3>
+<p>若 $\alpha$ 满足条件（[[#经典极限条件]]，非简并性条件）<br/>
+$$<br/>
+e^\alpha \gg 1<br/>
+$$<br/>
+则玻色分布与费米分布式中 $\pm$ 可忽略，两种分布都过渡到玻尔兹曼分布。<br/>
+此时，对所有 $l$，有<br/>
+$$<br/>
+\frac{a_l}{\omega_l}\ll 1<br/>
+$$<br/>
+$$<br/>
+\Omega_{B.E.}\approx\frac{\Omega_{M.B.}}{N!}\approx\Omega_{F.D.}<br/>
+$$</p>
+<h3>定域</h3>
+<ul>
+<li>自然界中有些系统可以看作由定域的粒子组成。<br/>
+例如，晶体中的原子或离子定域在其平衡位置附近作微振动。</li>
+<li>这些粒子虽然就其<strong>量子本性来说是不可分辨</strong>的，但可以根据其位置而加以区分，故可以将==定域粒子==看作可以分辨的粒子。</li>
+<li>由定域粒子组成的系统，称为<em>定域系统</em>。<br/>
+如顺磁性固体和核自旋系统。</li>
+</ul>
+<blockquote>
+<p>定域系统和满足经典极限条件的玻色 (费米) 系统都遵从玻耳兹曼分布。<br/>
+但他们的微观状态数是不同的。</p>
+</blockquote>
+<h2>热力学量的统计表达式</h2>
+<h3>内能</h3>
+<p>$$<br/>
+U=\sum_la_l\varepsilon_l=\sum_l\varepsilon_l\omega_le^{-\alpha-\beta\varepsilon_l}<br/>
+$$</p>
+<h4>粒子配分函数</h4>
+<p>简称配分函数<br/>
+$$<br/>
+Z_1=\sum_l\omega_le^{-\beta\varepsilon_l}=\sum_se^{-\beta\varepsilon_s}<br/>
+$$<br/>
+<strong>适用范围：近独立粒子系统，粒子可分辨，每个相格（量子态）可容纳粒子数不受限制。</strong></p>
+<p>$$<br/>
+N=e^{-\alpha}\sum_l\omega_le^{-\beta\varepsilon_l}=e^{-\alpha}Z_1<br/>
+$$</p>
+<p>由以上三式消去 $\alpha$ 得==内能的统计表达式==：<br/>
+$$<br/>
+U=-N\frac{\partial}{\partial\beta}\ln Z_1<br/>
+$$</p>
+<h4>内能全微分</h4>
+<p>$$<br/>
+dU=\sum_la_ld\varepsilon_l+\sum_l\varepsilon_lda_l<br/>
+$$</p>
+<ul>
+<li>$\sum_la_ld\varepsilon_l$ ：粒子分布不变时，由于外参量改变导致的能级改变而引起的内能变化，即过程中<strong>外界对系统所做的功</strong>。</li>
+<li>$\sum_l\varepsilon_lda_l$ ：粒子能级不变时，由于粒子分布改变所引起的内能变化，即过程中<strong>系统从外界吸收的热量</strong>。</li>
+<li>在无穷小的准静态过程中，系统从外界吸收的热量等于<strong>粒子在各能级重新分布</strong>所增加的内能。<br/>
+显然，热量没有微观量，是在热现象中所特有的<strong>宏观量</strong>。<br/>
+$dQ$ 不是全微分而只是一个<strong>无穷小量</strong>。</li>
+</ul>
+<h3>熵</h3>
+<p>$$<br/>
+dS=\frac{1}{T}dQ=\frac{1}{T}(dU-Ydy)<br/>
+$$<br/>
+$$<br/>
+\beta(dU-Ydy)=Nd(\ln Z_1-\beta\frac{\partial}{\partial\beta}\ln Z_1)<br/>
+$$<br/>
+$\beta$ 是温度的函数，令<br/>
+$$<br/>
+\beta=\frac{1}{kT}<br/>
+$$<br/>
+$$<br/>
+k=R/N_A<br/>
+$$</p>
+<ul>
+<li>$k$：玻尔兹曼常量，$k=1.381\times10^{-23}J\cdot K^{-1}$</li>
+<li>$N_A$：阿伏伽德罗常量，$N_A=6.022\times10^{23}mol^{-1}$</li>
+<li>$R$：摩尔气体常量，$R=8.314J\cdot K^{-1}\cdot mol^{-1}$</li>
+</ul>
+<p>$$<br/>
+dS=Nkd(\ln Z_1-\beta\frac{\partial}{\partial \beta}\ln Z_1)<br/>
+$$<br/>
+积分得：<br/>
+$$<br/>
+S=Nk(\ln Z_1-\beta\frac{\partial}{\partial \beta}\ln Z_1)<br/>
+$$<br/>
+积分常量选择为 0 。</p>
+<p>$$<br/>
+\ln Z_1=\ln N+\alpha<br/>
+$$<br/>
+由玻尔兹曼分布<br/>
+$$<br/>
+a_l=\omega_le^{-\alpha-\beta\varepsilon_l}<br/>
+$$<br/>
+可得<br/>
+$$<br/>
+\alpha+\beta\varepsilon_l=\ln\frac{\omega_l}{\alpha_l}<br/>
+$$<br/>
+化简熵得<br/>
+$$<br/>
+\begin{align}<br/>
+S&amp;=k(N\ln N+\sum_l(\alpha+\beta\varepsilon_l)a_l)\\<br/>
+&amp;=k(N\ln N+\sum_la_l\ln \omega_l-\sum_la_l\ln a_l)\\<br/>
+&amp;=k\ln \Omega<br/>
+\end{align}<br/>
+$$</p>
+<h3>玻尔兹曼关系</h3>
+<p>$$<br/>
+S=k\ln \Omega<br/>
+$$</p>
+<blockquote>
+<p>某个宏观状态对应的微观状态数越多，它的混乱度就越大，熵也越大。</p>
+</blockquote>
+<ul>
+<li>对于粒子可分辨系统（定域系统），$\Omega=\Omega_{M.B.}$</li>
+<li>对于满足经典极限条件的玻色（费米）系统，$\Omega=\frac{\Omega_{M.B.}}{N!}$</li>
+</ul>
+<h3>自由能</h3>
+<p>$$<br/>
+F=<br/>
+\begin{cases}<br/>
+-NkT\ln Z_1,定域系统\\<br/>
+-NkT\ln Z_1+kT\ln N!,满足经典极限条件的玻色/费米系统<br/>
+\end{cases}<br/>
+$$</p>
+<h3>理想气体物态方程</h3>
+<p>$$<br/>
+p=\frac{N}{\beta}\frac{\partial}{\partial V}\ln Z_1=\frac{NkT}{V}<br/>
+$$</p>
+<h2>经典极限条件</h2>
+<p>[[#三种分布关系]]<br/>
+$$<br/>
+e^\alpha=\frac{Z_1}{N}=\frac{V}{N}(\frac{2\pi mkT}{h^2})^{\frac{3}{2}}\gg 1<br/>
+$$</p>
+<ol>
+<li>$N/V$ 越小，气体越稀薄；</li>
+<li>温度 $T$ 越高；</li>
+<li>分子质量 $m$ 越大<br/>
+经典极限条件越容易满足。<br/>
+另一种表述：<br/>
+$$<br/>
+n\lambda^3=e^{-\alpha}\ll 1<br/>
+$$<h2>麦克斯韦速度分布律</h2>
+<p>一般情形下，<strong>气体满足经典极限条件</strong>。</p>
+<blockquote>
+<p>根据<strong>玻耳兹曼分布</strong>研究气体分子质心的平移运动，导出气体分子的速度分布律。</p>
+</blockquote>
+</li>
+</ol>
+<h3>麦克斯韦速度分布率</h3>
+<p>$$<br/>
+f(v_x,x_y,x_z)dv_xdv_ydv_z=n(\frac{m}{2\pi kT})^{3/2}e^{-\frac{m}{2kT}(v_x^2+v_y^2+v_z^2)}dv_xdv_ydv_z<br/>
+$$<br/>
+$f(v_x,x_y,x_z)$ 应满足<br/>
+$$<br/>
+f(v_x,x_y,x_z)=\int_{-\infty}^{\infty}\int_{-\infty}^{\infty}\int_{-\infty}^{\infty}f(v_x,x_y,x_z)dv_xdv_ydv_z=n<br/>
+$$<br/>
+$n=\frac{N}{V}$：单位体积内分子数</p>
+<h3>麦克斯韦速率分布律</h3>
+<p>以<strong>球极坐标</strong>体积元 $v^2\sin \theta dv d \theta d \varphi$ 代替直角坐标体积元 $dv_xdv_ydv_z$ ，对 $\theta,\varphi$ 积分得，在单位体积内，速率在 $dv$ 范围内的分子数为<br/>
+$$<br/>
+f(v)dv=4\pi n(\frac{m}{2\pi kT})^{3/2}e^{-\frac{m}{2kT}v^2}v^2dv<br/>
+$$<br/>
+上式称为气体分子速率分布。<br/>
+$$<br/>
+f(v)=4\pi n(\frac{m}{2\pi kT})^{3/2}\int_{0}^{\infty}e^{-\frac{m}{2kT}v^2}v^2dv=n<br/>
+$$</p>
+<h3>最概然速率$v_p$</h3>
+<blockquote>
+<p>速率分布函数有一极大值，使速率分布函数取极大值的速率称为最概然速率。<br/>
+如果把速率分为相等的间隔，$v_p$ 所在的间隔分子数最多。</p>
+</blockquote>
+<p>$$<br/>
+\frac{d}{dv}(e^{-\frac{m}{2kT}v^2}v^2)=0<br/>
+$$<br/>
+$$<br/>
+v_p=\sqrt{\frac{2kT}{m}}<br/>
+$$<br/>
+平均速率 $\overline{v}$：速率 $v$ 平均值<br/>
+$$<br/>
+\overline{v}=4\pi(\frac{m}{2\pi kT})^{3/2}\int_{0}^{\infty}ve^{-\frac{m}{2kT}v^2}v^2dv=\sqrt{\frac{8kT}{\pi m}}<br/>
+$$<br/>
+方均根速率 $v_s$：$v^2$ 的平均值的平方根<br/>
+$$<br/>
+v_s^2=\overline{v_2}=4\pi(\frac{m}{2\pi kT})^{3/2}\int_{0}^{\infty}v^2e^{-\frac{m}{2kT}v^2}v^2dv=\frac{3kT}{m}<br/>
+$$<br/>
+$$<br/>
+v_s=\sqrt{\frac{3kT}{m}}=\sqrt{\frac{3RT}{M}}<br/>
+$$<br/>
+$M$：摩尔质量</p>
+<h2>碰壁数（泄流）</h2>
+<blockquote>
+<p>单位时间内碰到单位面积器壁上的分子数，称为碰壁数。<br/>
+单位时间从器壁上单位面积空洞逃逸的粒子数，称为泄流。<br/>
+显然：碰壁数=泄流</p>
+</blockquote>
+<p>$dA$ 是器壁上的一个面积元，法线方向沿 $x$ 轴，以 $d\varGamma dA dt$ 表示在 $dt$ 时间内，碰到 $dA$ 面积，速度在 $dv_xdv_ydv_z$ 范围内的分子数。<br/>
+$$<br/>
+d\varGamma dA dt=fv_xdv_xdv_ydv_zdAdt<br/>
+$$<br/>
+$$<br/>
+d\varGamma=fv_xdv_xdv_ydv_z<br/>
+$$<br/>
+对速度积分，<br/>
+$$<br/>
+\begin{cases}<br/>
+v_x,0\to \infty\\<br/>
+v_y,-\infty \to +\infty\\<br/>
+v_z,-\infty \to +\infty<br/>
+\end{cases}<br/>
+$$<br/>
+得<br/>
+$$<br/>
+\varGamma=n\sqrt{\frac{kT}{2\pi m}}=<br/>
+\frac{1}{4}n\overline{v}<br/>
+$$</p>
+<h2>能量均分定理（经典统计）</h2>
+<blockquote>
+<p>对于处在温度为 $T$ 的平衡状态的<strong>经典系统</strong>，粒子能量中每一个独立的平方项的<strong>平均值</strong>等于 $\frac{1}{2}kT$。</p>
+</blockquote>
+<h3>单原子分子气体</h3>
+<p>$$<br/>
+\varepsilon=\frac{1}{2m}(p_x^2+p_y^2+p_z^2)<br/>
+$$<br/>
+上式有三个平方项，应用能量均分定理得：<br/>
+$$<br/>
+\overline{\varepsilon}=\frac{3}{2}kT<br/>
+$$<br/>
+故单原子分子<strong>理想气体</strong>内能为<br/>
+$$<br/>
+U=\frac{3}{2}NkT<br/>
+$$<br/>
+$$<br/>
+C_V=\frac{3}{2}Nk<br/>
+$$<br/>
+由热力学公式 $C_p-C_V=Nk$ 求得定压热容：<br/>
+$$<br/>
+C_p=\frac{5}{2}Nk<br/>
+$$</p>
+<h3>绝热系数</h3>
+<p>$$<br/>
+\gamma=\frac{C_p}{C_V}=\frac{5}{3}=1.667<br/>
+$$<br/>
+[[#理想气体绝热方程]]</p>
+<h3>双原子分子气体</h3>
+<blockquote>
+<p>双原子分子能量有五个平方项（分子三个方向动量，两原子间运动可约化为转子，两个自由度，即两个平方项）。</p>
+</blockquote>
+<p>$$<br/>
+\overline{\varepsilon}=\frac{5}{2}kT<br/>
+$$<br/>
+$$<br/>
+U=\frac{5}{2}NkT<br/>
+$$<br/>
+$$<br/>
+C_V=\frac{5}{2}Nk<br/>
+$$<br/>
+$$<br/>
+C_p=\frac{7}{2}Nk<br/>
+$$<br/>
+$$<br/>
+\gamma=\frac{C_p}{C_V}=\frac{7}{5}=1.4<br/>
+$$</p>
+<h3>固体</h3>
+<blockquote>
+<p>固体中的原子可以在其平衡位置附近作微振动。<br/>
+假设各原子的振动是相互独立的简谐振动。<br/>
+固体原子模型化简为<strong>三维线性振子</strong>。</p>
+</blockquote>
+<p>原子在<strong>一个自由度</strong>上的能量为<br/>
+$$<br/>
+\varepsilon=\frac{1}{2m}p^2+\frac{1}{2}m\omega^2q^2<br/>
+$$<br/>
+共两个平方项。<br/>
+一个原子平均能量为<br/>
+$$<br/>
+\overline{\varepsilon}=3kT<br/>
+$$<br/>
+固体内能为<br/>
+$$<br/>
+U=3NkT<br/>
+$$<br/>
+定容热容为<br/>
+$$<br/>
+C_V=3Nk<br/>
+$$<br/>
+实验室通常测量 $C_p$，由热力学公式<br/>
+$$<br/>
+C_p-C_V=\frac{TV\alpha^2}{\kappa T}<br/>
+$$<br/>
+可求得 $C_V$。<br/>
+室温和高温下 $C_V$ 符合，<strong>低温范围固体热容随温度降低得很快，经典理论不能解释。</strong><br/>
+[[#绝对零度不能到达原理]]</p>
+<h3>金属</h3>
+<p>金属中存在自由电子，如果将能量均分定理应用于电子，自由电子的热容与离子振动的热容将具有相同的量级。<br/>
+实验结果是，在 $3K$ 以上，自由电子的热容与离子振动的热容相比，可以忽略不计。</p>
+<h2>定域/满足经典极限条件的近独立粒子系统的量子统计</h2>
+<h3>双原子理想气体</h3>
+<p>理想气体是==非定域系==，由于满足[[#经典极限条件]]可用玻耳兹曼分布进行讨论。</p>
+<blockquote>
+<p>在一定近似下，双原子分子运动可分为<strong>平动$t$、振动$v$、转动$r$</strong>。</p>
+</blockquote>
+<p>$$<br/>
+\varepsilon=\varepsilon^t+\varepsilon^v+\varepsilon^r<br/>
+$$<br/>
+$$<br/>
+\omega=\omega_t+\omega_v+\omega r<br/>
+$$<br/>
+$$<br/>
+Z_1=Z_1^t\cdot Z_1^v \cdot Z_1^r<br/>
+$$<br/>
+$$<br/>
+U=-N\frac{\partial}{\partial \beta}\ln Z_1=-N\frac{\partial}{\partial \beta}(\ln Z_1^t+\ln Z_1^v+\ln Z_1^r)=U^t+U^v+U^r<br/>
+$$<br/>
+$$<br/>
+C_V=C_V^t+C_V^v+C_V^r<br/>
+$$</p>
+<h4>平动能量</h4>
+<p>$$<br/>
+\begin{cases}<br/>
+Z_1^t=V(\frac{2\pi m}{h^2\beta})^{3/2}\\<br/>
+U^t=\frac{3N}{2\beta}=\frac{3}{2}NkT\\<br/>
+C_V^t=\frac{3}{2}Nk<br/>
+\end{cases}<br/>
+$$<br/>
+与由经典统计的能量均分定理得到的结果一致。</p>
+<h4>振动能量与特征温度</h4>
+<p>$$<br/>
+\begin{cases}<br/>
+Z_1^v=\frac{e^{-\frac{\beta\hbar\omega}{2}}}{1-e^{-\beta\hbar\omega}}\\<br/>
+U^v=\frac{N\hbar\omega}{2}+\frac{N\hbar\omega}{e^{\beta\hbar\omega}-1}\\<br/>
+C_V^v=Nk(\frac{\hbar \omega}{kT})^2\cdot \frac{e^{\hbar \omega /kT}}{(e^{\hbar \omega/kT}-1)^2}<br/>
+\end{cases}<br/>
+$$</p>
+<p>$U^v$ ：</p>
+<ul>
+<li>第一项与温度无关，是 $N$ 个振子的==零点能量==。</li>
+<li>第二项是温度为 $T$ 时 $N$ 个振子==热激发能量==。</li>
+</ul>
+<p>引入==震动特征温度== $\theta_v$ ，满足<br/>
+$$<br/>
+k\theta_v=\hbar\omega<br/>
+$$<br/>
+带入上面方程组得<br/>
+$$<br/>
+\begin{cases}<br/>
+U_v=\frac{Nk \theta_v}{e^{\frac{\theta_v}{T}}-1}\\<br/>
+C_V^v=Nk(\frac{\theta_v}{T})^2\frac{e^{\frac{\theta_v}{T}}}{(e^{\frac{\theta_v}{T}}-1)^2}<br/>
+\end{cases}<br/>
+$$<br/>
+$\because$ ==双原子分子特征温度==是 $10^3K$ 数量级<br/>
+$\therefore$ 在常温范围内，$T\ll \theta_v$ 。在常温范围，振动自由度对热容的贡献接近于零。<br/>
+常温范围，双原子分子的振动能级间距 $\hbar \omega$ 远大于 $kT$，由于能级分立，振子必须取得能量 $\hbar \omega$ 才有可能跃迁到激发态。</p>
+<ul>
+<li>在 $T \ll \theta_v$ 的情形下，振子取得 $\hbar \omega$ 的热运动能量而跃迁到激发态的概率是极小的。因此平均而言，<strong>几乎全部振子都冻结在基态</strong>。<br/>
+当气体温度升高时，它们也几乎不吸收能量（无法向高能级跃迁）。这就是在==常温下振动自由度不参与能量均分==的原因。</li>
+<li>在 $T \gg \theta_v$ 的情形下，$C_V^v \to Nk$ （取极限洛必达可证明）。</li>
+</ul>
+<h4>转动能量</h4>
+<p>转动能级<br/>
+$$<br/>
+\varepsilon^r=\frac{l(l+1)\hbar^2}{2I},l=0,1,2,\cdots<br/>
+$$<br/>
+简并度<br/>
+$$<br/>
+\omega^r=2l+1<br/>
+$$<br/>
+配分函数<br/>
+$$<br/>
+Z_1^r=\sum_{i=0}^\infty(2l+1)e^{-\beta\frac{l(l+1)\hbar^2}{2I}}<br/>
+$$<br/>
+转动特征温度<br/>
+$$<br/>
+\theta_r=\frac{\hbar^2}{2Ik}&lt;100K<br/>
+$$<br/>
+$$<br/>
+Z_1^r=\sum_{i=0}^{\infty}(2l+1)e^{-l(l+1)\frac{\theta_r}{T}}<br/>
+$$<br/>
+==常温时== $\frac{\theta_r}{T}\ll 1$ ，积分得<br/>
+$$<br/>
+Z_1^r=\frac{2I}{\beta \hbar^2}<br/>
+$$<br/>
+由此得<br/>
+$$<br/>
+\begin{cases}<br/>
+U^r=NkT\\<br/>
+C_V^r=Nk<br/>
+\end{cases}<br/>
+$$</p>
+<p>符合经典统计。</p>
+<h4>异核双原子分子</h4>
+<p>$$<br/>
+\begin{cases}<br/>
+Z_1^t=V(\frac{2\pi m}{h_0^2\beta})^{3/2}\\<br/>
+Z_1^v=\frac{2\pi}{h_0\beta \omega}\\<br/>
+Z_1^r=\frac{8\pi^2I}{h_0^2\beta}<br/>
+\end{cases}<br/>
+$$<br/>
+$$<br/>
+\begin{cases}<br/>
+C_V^t=\frac{3}{2}Nk\\<br/>
+C_V^v=Nk\\<br/>
+C_V^r=Nk<br/>
+\end{cases}<br/>
+$$</p>
+<h3>单原子理想气体</h3>
+<h4>熵</h4>
+<p>==单原子理想气体==<br/>
+$$<br/>
+S=Nk(\ln Z_1-\beta\frac{\partial}{\partial \beta})-k \ln N!<br/>
+$$<br/>
+用近似式 $\ln N!=N(\ln N-1)$ 化简得<br/>
+$$<br/>
+S=\frac{3}{2}Nk \ln T+Nk \ln\frac{V}{N}+\frac{3}{2}Nk[\frac{5}{3}+\ln(\frac{2\pi mk}{h^2})]<br/>
+$$<br/>
+上式熵为广延量，且为绝对熵。</p>
+<h4>蒸汽压方程</h4>
+<p>萨克-特多鲁特（Sackur-Tetrode）公式<br/>
+$$<br/>
+\ln p=-\frac{L}{RT}+\frac{5}{2}\ln T+\frac{5}{2}+\ln[k^5/2(\frac{2\pi m}{h^2})^3/2]<br/>
+$$</p>
+<h4>化学势</h4>
+<p>$$<br/>
+\begin{align}<br/>
+\mu &amp;=(\frac{\partial F}{\partial N})_{T,V}\\<br/>
+&amp;=-kT \ln \frac{Z_1}{N}\\<br/>
+&amp;=kT \ln[\frac{N}{V}(\frac{h^2}{2\pi mkT})^3/2]<br/>
+\end{align}<br/>
+$$<br/>
+$\because$ 对于理想气体，$\frac{N}{V}(\frac{h^2}{2\pi mkT})^3/2\ll 1$<br/>
+$\therefore$ ==理想气体化学势为负==。</p>
+<h3>固体</h3>
+<p>固体中原子的热运动可以看成 $3N$ 个振子的振动。<em>爱因斯坦假设这 $3N$ 个振子的频率都相同。</em> 以 $\omega$ 表示振子的圆频率，振子的能级为<br/>
+$$<br/>
+\varepsilon_n=\hbar \omega(n+\frac{1}{2}),n=0,1,2,\cdots<br/>
+$$<br/>
+配分函数<br/>
+$$<br/>
+Z_1=\frac{e^{-\frac{\beta\hbar\omega}{2}}}{1-e^{-\beta\hbar\omega}}<br/>
+$$<br/>
+内能<br/>
+$$<br/>
+U=-3N \frac{\partial}{\partial \beta}\ln Z_1=3N \frac{\hbar \omega}{2}+3N\frac{\hbar \omega}{e^{\beta \hbar \omega}-1}<br/>
+$$<br/>
+热容<br/>
+$$<br/>
+C_V=(\frac{\partial U}{\partial T})_V=3Nk(\frac{\hbar \omega}{kT})^2\frac{e^{\frac{\hbar \omega}{kT}}}{(e^{\frac{\hbar \omega}{kT}}-1)^2}<br/>
+$$<br/>
+引入==爱因斯坦特征温度== $\theta_E=\frac{\hbar \omega}{k}$，则热容改写为<br/>
+$$<br/>
+C_V=3Nk(\frac{\theta_E}{T})^2\frac{e^{\frac{\theta_E}{T}}}{(e^{\frac{\theta_E}{T}}-1)^2}<br/>
+$$</p>
+<ul>
+<li>当 $T \gg \theta_E$ 时，可以取近似 $e^{\theta_E/T}-1\approx \theta_E/T$，得<br/>
+$$<br/>
+C_V=3Nk<br/>
+$$<br/>
+和能量均分定理的结果一致。<br/>
+此时能级间距远小于 $kT$ ，能量量子化效应可忽略。</li>
+<li>当 $T \ll \theta_E$ 时，有近似 $e^{\frac{\theta_E}{T}}-1 \approx e^{\frac{\theta_E}{T}}$，<br/>
+$$<br/>
+C_V=3Nk(\frac{\theta_E}{T})^2e^{-\frac{\theta_E}{T}}<br/>
+$$<br/>
+$T \to 0$ 时，$C_V \to 0$。<br/>
+证明了热力学第三定律[[#推论]]。</li>
+</ul>
+<h2>顺磁性固体</h2>
+<h2>玻色/费米系统</h2>
+<p>[[#玻色系统]]，[[#费米系统]]。</p>
+<h3>玻色系统巨配分函数</h3>
+<p>$$<br/>
+\varXi=\prod_{l}\varXi_l=\prod_{l}(1-e^{-\alpha-\beta \varepsilon_l})^{-\omega_l}<br/>
+$$<br/>
+$$<br/>
+\ln \varXi=-\sum_i \omega_l \ln(1-e^{-\alpha-\beta \varepsilon_l})<br/>
+$$</p>
+<h4>平均粒子数</h4>
+<p>$$<br/>
+\overline{N}=\sum_l \frac{\omega_l}{e^{\alpha+\beta \varepsilon_l}-1}=-\frac{\partial}{\partial \alpha}\ln \varXi<br/>
+$$</p>
+<h4>内能</h4>
+<p>$$<br/>
+U=\sum_l \frac{\varepsilon_l \omega_l}{e^{\alpha+\beta \varepsilon_l}-1}=-\frac{\partial}{\partial \beta}\ln \varXi<br/>
+$$</p>
+<h3>费米系统巨配分函数</h3>
+<p>$$<br/>
+\varXi=\prod_{l}\varXi_l=\prod_{l}(1+e^{-\alpha-\beta \varepsilon_l})^{\omega_l}<br/>
+$$<br/>
+$$<br/>
+\ln \varXi=\sum_i \omega_l \ln(1+e^{-\alpha-\beta \varepsilon_l})<br/>
+$$</p>
+<h4>平均粒子数</h4>
+<p>$$<br/>
+\overline{N}=\sum_l \frac{\omega_l}{e^{\alpha+\beta \varepsilon_l}+1}=-\frac{\partial}{\partial \alpha}\ln \varXi<br/>
+$$</p>
+<h4>内能</h4>
+<p>$$<br/>
+U=\sum_l \frac{\varepsilon_l \omega_l}{e^{\alpha+\beta \varepsilon_l}+1}=-\frac{\partial}{\partial \beta}\ln \varXi<br/>
+$$</p>
+<h3>广义力</h3>
+<p>$$<br/>
+Y=-\frac{1}{\beta}\frac{\partial}{\partial y}\ln \varXi<br/>
+$$</p>
+<h3>物态方程</h3>
+<p>$$<br/>
+p=\frac{1}{\beta}\frac{\partial}{\partial V}\ln \varXi<br/>
+$$</p>
+<h3>熵</h3>
+<p>$$<br/>
+\begin{align}<br/>
+S &amp;=k(\ln \varXi-\alpha \frac{\partial}{\partial \alpha}\ln \varXi-\beta \frac{\partial}{\partial \beta}\ln \varXi)\\<br/>
+&amp;=k(\ln \varXi+\alpha \overline{N}+\beta U)\\<br/>
+&amp;=k \ln \Omega<br/>
+\end{align}<br/>
+$$</p>
+<h3>巨热力势</h3>
+<p>[[#巨热力势]]<br/>
+$$<br/>
+J=U-TS-\overline{N}\mu=-kT \ln \varXi<br/>
+$$</p>
+<h3>拉格朗日乘子</h3>
+<p>$$<br/>
+\beta=\frac{1}{kT},\alpha=-\frac{\mu}{kT}<br/>
+$$</p>
+<h2>玻色-爱因斯坦凝聚</h2>
+<h3>系统性质</h3>
+<blockquote>
+<p>考虑由 $N$ 个全同、近独立的玻色子组成的系统，温度为 $T$ 体积为 $V$ 为明确起见，假设粒子的自旋为零。</p>
+</blockquote>
+<p>根据玻色分布，每条能级上粒子数为<br/>
+$$<br/>
+a_l=\frac{\omega_l}{e^{\alpha+\beta \varepsilon_l}-1}=\frac{\omega_l}{e^{\frac{\varepsilon_l-\mu}{kT}}-1}<br/>
+$$<br/>
+$\because$ 能级上粒子数不能取负值<br/>
+$\therefore$ 以 $\varepsilon_0$ 表示最低能级，$\varepsilon_0&gt;\mu$ 。<br/>
+若最低能级为 0，则 $\mu&lt;0$。</p>
+<h3>化学势</h3>
+<p>玻色系统化学势小于 0，化学势既随温度的降低而升高，当温度降到某一临界温度 $T_C$ 时，$\mu \to 0$ 。<br/>
+$T_C$ 由下式确定<br/>
+$$<br/>
+\frac{2\pi}{h^3}(2m)^{3/2}\int_0^{\infty}\frac{\varepsilon^{1/2d \varepsilon}}{e^{\frac{\varepsilon}{kT_C}}-1}=n<br/>
+$$<br/>
+$$<br/>
+T_C=\frac{2\pi}{2.612^{2/3}}\frac{\hbar^2}{mk}n^{3/2}<br/>
+$$</p>
+<h3>凝聚现象</h3>
+<p>$T \le T_C$ 时，聚集在最低能级 $\varepsilon=0$ 上的==粒子数密度==为<br/>
+$$<br/>
+n_0(T)=n[1-(\frac{T}{T_C})^{3/2}]<br/>
+$$<br/>
+在<strong>绝对零度</strong>下，粒子将尽可能占据能量最低的状态。对于<strong>玻色子</strong>，一个量子态所能容纳的粒子数目不受限制，因此在绝对零度下，玻色粒子将<strong>全部</strong>处在 $\varepsilon=0$ 的最低能级。<br/>
+上式表明，</p>
+<blockquote>
+<p>在 $T &lt; T_C$ 时，就有<strong>宏观量级</strong>粒子在最低能级凝聚，这一现象称为==玻色-爱因斯坦凝聚==</p>
+</blockquote>
+<p>$$<br/>
+U=0.770NkT(\frac{T}{T_C})^{3/2}<br/>
+$$<br/>
+$$<br/>
+C_V=(\frac{\partial U}{\partial T})_V=\frac{5}{2}\frac{U}{T}=1.925Nk(\frac{T}{T_C})^{3/2}<br/>
+$$<br/>
+当 $T=T_C$ 时，$C_V$ 取得最大值 $1.925Nk$ 。<br/>
+当<strong>温度足够高</strong>时，<br/>
+$$<br/>
+C_V=\frac{3}{2}Nk<br/>
+$$</p>
+<h3>理想玻色气体出现凝聚的临界条件</h3>
+<p>$$<br/>
+n(\frac{h}{\sqrt{2\pi mkT_C}})^3=n \lambda^3 \ge 2.612<br/>
+$$<br/>
+$\lambda$ ：原子热波长</p>
+<h2>光子气体（玻色气体）</h2>
+<blockquote>
+<p>根据粒子的观点，可以把空窖内的辐射场看作<strong>光子气体</strong>。<br/>
+空窖内的辐射场可以分解为无穷多个<strong>单色平面波</strong>的叠加。</p>
+</blockquote>
+<p>根据[[#德布罗意关系]]，及光子 $\omega=ck$，得==光子能量动量关系==<br/>
+$$<br/>
+\varepsilon=cp<br/>
+$$</p>
+<ul>
+<li>光子是玻色子，自旋量子数为 1，达到平衡后遵从玻色分布。</li>
+<li>由于窖壁不断发射和吸收光子，光子气体中光子数是不守恒的。在导出玻色分布时只存在 $E$ 是常量的条件而不存在 $N$ 是常量的条件，因而只应引进一个拉格朗日乘子 $\beta$。$\alpha=0$。<h3>光子气体统计分布</h3>
+<p>$$<br/>
+a_l=\frac{\omega_l}{e^{\beta \omega_l}-1}<br/>
+$$</p>
+<h3>热力学势</h3>
+<p>由<br/>
+$$<br/>
+\alpha=-\frac{\mu}{kT}=0<br/>
+$$<br/>
+得光子气体热力学势 $\mu=0$ 。</p>
+</li>
+</ul>
+<h3>量子态数</h3>
+<p>光子的自旋量子数为 1，自旋在动量方向的投影可取 $\pm \hbar$ 两个可能值，相当于左、右圆偏振。考虑到光子自旋有 2 个投影，由[[#三维自由粒子量子态数]]中的[[#能量表征]]可知，</p>
+<blockquote>
+<p>在体积为 $V$ 的空窖内，在 $p$ 到 $p+dp$ 的动量范围内，</p>
+</blockquote>
+<p>光子的量子态数为<br/>
+$$<br/>
+\Omega=\frac{8\pi V}{h^3}p^2dp<br/>
+$$</p>
+<blockquote>
+<p>在体积为 $V$ 的空窖内，在 $\omega$ 到 $\omega+d \omega$ 的圆频率范围内，</p>
+</blockquote>
+<p>光子的量子态数为<br/>
+$$<br/>
+\Omega=\frac{V}{\pi^2c^3}\omega^2d \omega<br/>
+$$</p>
+<h3>内能分布函数</h3>
+<blockquote>
+<p>在体积为 $V$ 的空窖内，在 $\omega$ 到 $\omega+d \omega$ 的圆频率范围内，</p>
+</blockquote>
+<p>平均光子数<br/>
+$$<br/>
+\overline{N}=\frac{V}{\pi^2c^3}\frac{\omega^2d \omega}{e^{\hbar \omega/kT}-1}<br/>
+$$<br/>
+辐射场内能<br/>
+$$<br/>
+U(\omega,T)d \omega=\overline{N}\hbar \omega=\frac{V}{\pi^2c^3}\frac{\hbar \omega^3}{e^{\hbar \omega/kT}-1}d \omega<br/>
+$$</p>
+<h4>瑞利-金斯公式</h4>
+<p>在 $\frac{\hbar \omega}{kT}\ll 1$ 的低频范围内，$e^{\frac{\hbar \omega}{kT}}\approx 1+\frac{\hbar \omega}{kT}$ ，上式可近似为<br/>
+$$<br/>
+U(\omega,T)d \omega=\frac{V}{\pi^2c^3}\omega^2kTd \omega<br/>
+$$<br/>
+上式即为==瑞利-金斯公式==，<strong>低频拟合较好</strong>而高频发生紫外灾难。</p>
+<h4>维恩公式</h4>
+<p>在 $\frac{\hbar \omega}{kT}\gg 1$ 的高频范围内，$e^{\frac{\hbar \omega}{kT}}-1\approx e^{\frac{\hbar \omega}{kT}}$ ，上式可近似为<br/>
+$$<br/>
+U(\omega,T)d \omega=\frac{V}{\pi^2c^3}\hbar \omega^3e^{-\frac{\hbar \omega}{kT}}d \omega<br/>
+$$<br/>
+上式与维恩公式复合，高频拟合好而低频差。</p>
+<blockquote>
+<p>在体积为 $V$ 的空窖内</p>
+</blockquote>
+<p>平衡辐射内能为<br/>
+$$<br/>
+U=\frac{\pi^2k^4}{15c^3\hbar^3}VT^4<br/>
+$$</p>
+<h3>巨配分函数</h3>
+<p>$$<br/>
+\ln \varXi=\frac{pi^2V}{45c^3}\frac{1}{(\beta \hbar)^3}<br/>
+$$</p>
+<h3>光子气体内能</h3>
+<p>$$<br/>
+U=-\frac{\partial}{\partial \beta}\ln \varXi=\frac{\pi^2k^4V}{15c^3\hbar^3}T^4<br/>
+$$<br/>
+与[[#内能分布函数]]一致</p>
+<h3>压强</h3>
+<p>$$<br/>
+p=-\frac{1}{\beta}\frac{\partial}{\partial V}\ln \varXi=\frac{\pi^2k^4}{45c^3\hbar^3}T^4<br/>
+$$<br/>
+比较上两式有<br/>
+$$<br/>
+p=\frac{1}{3}\frac{U}{V}<br/>
+$$</p>
+<h3>熵</h3>
+<p>$$<br/>
+S=k(\ln \varXi+\beta U)=\frac{4}{45}\frac{\pi^2k^4}{c^3\hbar^3}T^3V<br/>
+$$<br/>
+$T \to 0$ 时，$S \to 0$，符合 [[#热力学第三定律]]</p>
+<h3>辐射通量密度</h3>
+<p>由[[#辐射]]中求得的[[#辐射通量密度]]公式<br/>
+$$<br/>
+J_u=\frac{c}{4}\frac{U}{V}=\frac{1}{4}cu<br/>
+$$<br/>
+根据[[#碰壁数（泄流）]]概念求得光子气体辐射通量密度<br/>
+$$<br/>
+J_u=\frac{\pi^2k^4}{60c^2\hbar^3}T^4<br/>
+$$</p>
+<h2>金属中的自由电子气体（费米气体）</h2>
+<blockquote>
+<p>金属中的自由电子形成强简并的费米气体。</p>
+</blockquote>
+<h3>平均电子数</h3>
+<p>根据费米分布，温度为 $T$ 时，处在能量为 $\varepsilon$ 的一个量子态上平均电子数为<br/>
+$$<br/>
+f=\frac{1}{e^{\frac{\varepsilon-\mu}{kT}}+1}<br/>
+$$<br/>
+电子自旋在其动量方向的投影有 2 个可能值，根据[[#三维自由粒子量子态数]]中的[[#能量表征]]，</p>
+<blockquote>
+<p>在体积 $V$ 内，在 $\varepsilon$ 到 $\varepsilon+d \varepsilon$ 的能量范围内，电子的量子态数为</p>
+</blockquote>
+<p>$$<br/>
+D(\varepsilon)d\varepsilon=\frac{4\pi V}{h^3}(2m)^{3/2}\varepsilon^{1/2}d\varepsilon<br/>
+$$<br/>
+故此范围内平均电子数为<br/>
+$$<br/>
+dN=f \cdot D(\varepsilon)d\varepsilon=\frac{4\pi V}{h^3}(2m)^{3/2}\frac{\varepsilon^{1/2}d\varepsilon}{e^{\frac{\varepsilon-\mu}{kT}}+1}<br/>
+$$</p>
+<h3>总电子数</h3>
+<p>对 $d \varepsilon$ 积分得<br/>
+$$<br/>
+\frac{4\pi V}{h^3}(2m)^{3/2}\int_0^{\infty}\frac{\varepsilon^{1/2}d\varepsilon}{e^{\frac{\varepsilon-\mu}{kT}}+1}=N<br/>
+$$<br/>
+在给定电子数 $N$ 、温度 $T$ 和体积 $V$ 时，可根据上式确定化学势 $\mu$ 。</p>
+<h3>$T=0$ 时系统性质</h3>
+<h4>每个量子态平均电子数</h4>
+<p>$$<br/>
+\begin{cases}<br/>
+f=1,\varepsilon&lt;\mu(0)\\<br/>
+f=0,\varepsilon&gt;\mu(0)<br/>
+\end{cases}<br/>
+$$</p>
+<h4>费米能级</h4>
+<blockquote>
+<p>零温化学势也称费米能级，$\mu(0)$，即 $T=0$ 时化学势。</p>
+</blockquote>
+<p>由<br/>
+$$<br/>
+\frac{4\pi V}{h^3}(2m)^{3/2}\int_0^{\mu(0)}\varepsilon^{1/2}d \varepsilon=N<br/>
+$$<br/>
+可得<br/>
+$$<br/>
+\mu(0)=\frac{\hbar^2}{2m}(3\pi^2\frac{N}{V})^{2/3}<br/>
+$$</p>
+<h4>费米动量</h4>
+<p>令<br/>
+$$<br/>
+\mu(0)=\frac{p_F^2}{2m}<br/>
+$$<br/>
+可得<br/>
+$$<br/>
+p_F=(3\pi^2n)^{1/3}\hbar<br/>
+$$<br/>
+该动量称为==费米动量==。</p>
+<h4>费米速率</h4>
+<p>$$<br/>
+v_F=\frac{p_F}{m}<br/>
+$$<br/>
+该速率称为==费米速率==。</p>
+<h4>费米温度</h4>
+<p>$$<br/>
+kT_F=\mu(0)<br/>
+$$<br/>
+$$<br/>
+T_F=\frac{\mu(0)}{k}<br/>
+$$<br/>
+该温度称为==费米温度==。</p>
+<h4>电子气体内能</h4>
+<p>$$<br/>
+U(0)=\frac{4\pi V}{h^3}(2m)^{3/2}\int_0^{\mu(0)}\varepsilon^{3/2}d \varepsilon=\frac{3N}{5}\mu(0)<br/>
+$$</p>
+<h4>电子平均能量</h4>
+<p>$$<br/>
+u(0)=\frac{U(0)}{N}=\frac{3}{5}\mu(0)<br/>
+$$</p>
+<h4>电子气体压强</h4>
+<p>$$<br/>
+p(0)=\frac{2}{3}\frac{U(0)}{V}=\frac{2}{5}n \mu(0)<br/>
+$$</p>
+<h3>玻色气体与费米气体在 $T=0$ 下比较</h3>
+<p>与理想玻色气体在绝对零度下粒子全部处于能量、动量为零的状态且压强为零完全不同，费米气体在绝对零度下具有很高的平均能量、动量，并产生很大的压强。</p>
+</body></html>

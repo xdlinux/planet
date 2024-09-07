@@ -1,1 +1,24 @@
-<html><head></head><body><p>## 破事氵<br/>台式电脑通过网线连校园网要拨号上网，幽默腾子几百年没更新的TIM登录时没网会报错弹窗。</p><p>于是每次开机我都得手动打开设置里的拨号上网，设置的TIM开机自启动会先行一步报错，显得开机自启动这个功能很幽默。<br/>于是写个bat自动联网，任务管理器里设...</p></body></html>
+<html><head></head><body><h2>破事氵</h2>
+<p>台式电脑通过网线连校园网要拨号上网，<strong>幽默</strong>腾子几百年没更新的TIM登录时没网会报错弹窗。<br/>
+<img src="https://guzhengsvt.top/usr/uploads/2024/06/2343467847.png" alt="TIM报错" loading="lazy"/><br/>
+于是每次开机我都得手动打开设置里的拨号上网，设置的TIM开机自启动会先行一步报错，显得开机自启动这个功能很<strong>幽默</strong>。<br/>
+于是写个bat自动联网，任务管理器里设置开机自启动。但它启动和TIM是同一个优先级，往往来不及连上网络TIM就自动登录然后报错弹窗了。<br/>
+在计划程序库里把自动联网程序设置为开机启动，TIM登录后延时15s启动。<br/>
+<img src="https://guzhengsvt.top/usr/uploads/2024/06/2593746197.png" alt="延迟TIM启动" loading="lazy"/></p>
+<p><img src="https://guzhengsvt.top/usr/uploads/2024/06/2438765248.png" alt="断网重连" loading="lazy"/><br/>
+（为方便记忆我把bat放startup文件夹里，开机联网计划程序设为最高优先级隐藏，<strong>幽默</strong>火绒检测不到的计划程序不让运行，以至于调试好几次都是登陆后才开始联网，我一度以为哪里设置有问题。）<br/>
+<img src="https://guzhengsvt.top/usr/uploads/2024/06/2362191046.png" alt="幽默火绒" loading="lazy"/><br/>
+但这样又显得花68大洋买指纹识别器的我很<strong>幽默</strong>。<br/>
+不知道万能的好友列表里有没有懂计算机的大佬有更好的解决方案。</p>
+<p>有一个无线网卡，但性能不好。连接校园网时常要网页验证，我设了梯子开机自启动，挂着梯子就打不开学校网络验证的网页，得先关梯子-&gt;网页验证-&gt;开梯子-&gt;关TIM报错弹窗-&gt;重启TIM。让人十分乃至九分的火大。</p>
+<h2>拨号上网程序</h2>
+<p>先新建文本文档（txt），写入下面内容后<strong>保存</strong>，更改文件名为想要的名称（如reconnect internet，最好为英文），拓展名改为bat。</p>
+<pre><code class="language-bat">rasdial 你的宽带网络名称（如宽带连接，最好用英文） 账号（如学号） 密码</code></pre>
+<h2>开机自动拨号与断网重连</h2>
+<p>Windows图标（开始）右键-&gt;计算机管理-&gt;任务计划程序-&gt;任务计划程序库<br/>
+右边创建任务-&gt;设置任务名称（如断网重连）-&gt;不管用户是否登录都要运行-&gt;使用最高管理权限运行（可选）-&gt;<strong>不要隐藏！！！</strong>-&gt;配置根据自身电脑选（比如Windows11选择最接近的Win10）<br/>
+触发器-&gt;新建-&gt;开始任务选择“启动时”-&gt;确定（开机联网）<br/>
+新建-&gt;开始任务选择“发生事件时”-&gt;日志翻到最下面倒数第二个“应用程序”-&gt;源“RasClient”-&gt;确定（断网重连）<br/>
+转到操作-&gt;新建-&gt;启动程序-&gt;浏览找到你刚写的bat程序选中-&gt;确认</p>
+<p>确认（此时会要求输入Windows系统登录的微软账号密码，不是PIN，总是出错建议检查常规页面里的用户账户是否匹配。）</p>
+</body></html>
