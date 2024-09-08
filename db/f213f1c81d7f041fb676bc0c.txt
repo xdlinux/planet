@@ -1,4 +1,4 @@
-<blockquote><img src="https://legacy.superbart.top/picture/Flutter%20Introduction/Maggie's%20Butterfly%20Longest%20Daycard%20Short.jpg" alt="Featured image of post Flutter 介绍" /><p>有人邀请我去开个沙龙，我决定将这个，这个就是当时我的演讲稿。</p>
+<img src="https://legacy.superbart.top/picture/Flutter%20Introduction/Maggie's%20Butterfly%20Longest%20Daycard%20Short.jpg" alt="Featured image of post Flutter 介绍" /><p>有人邀请我去开个沙龙，我决定将这个，这个就是当时我的演讲稿。</p>
 <h2 id="什么是-flutter--flutter-的好处">什么是 Flutter &amp; Flutter 的好处</h2>
 <p>Flutter 是一个跨平台的客户端(以及网络前端)开发工具，官方定义为：</p>
 <blockquote>
@@ -604,4 +604,4 @@
     >Traintime PDA (Watermeter) 代码</a></p>
 <h2 id="封面">封面</h2>
 <p>Maggie 去日托所的一天。</p>
-<p>主要看中了蝴蝶，因为蝴蝶和 Dart 的吉祥物蜂鸟类似。</p></blockquote>
+<p>主要看中了蝴蝶，因为蝴蝶和 Dart 的吉祥物蜂鸟类似。</p><hr />

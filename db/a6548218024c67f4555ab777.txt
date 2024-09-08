@@ -1,4 +1,4 @@
-<blockquote><h2>Chapter 14 - 交互四大组件之：表单 Modal</h2>
+<h2>Chapter 14 - 交互四大组件之：表单 Modal</h2>
 <p>建议你先学习上上一章的按钮，再来学习这章的 Modal，因为上一章已经比较详细地介绍了 MessageComponentCollector，虽然上一章的 MessageComponentCollector 在本章的 Modal 用不了，但是仍具有借鉴意义。</p>
 <h3>修改 <code>events/interactionCreate.js</code></h3>
 <p>在文件的最后那块儿附近，找到最后一个 else，在这个 else 上面插入一种新情况，用于 Modal：</p>
@@ -139,4 +139,4 @@ module.exports = {
 <ul>
 <li><code>update()</code></li>
 <li><code>deferUpdate()</code></li>
-</ul></blockquote>
+</ul><hr />

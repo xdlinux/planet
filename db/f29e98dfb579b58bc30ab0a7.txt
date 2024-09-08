@@ -1,4 +1,4 @@
-<blockquote><h1 id="游戏注册登录和鉴权">游戏注册、登录和鉴权<a class="headerlink" href="#游戏注册登录和鉴权" title="Permanent link">&para;</a></h1>
+<h1 id="游戏注册登录和鉴权">游戏注册、登录和鉴权<a class="headerlink" href="#游戏注册登录和鉴权" title="Permanent link">&para;</a></h1>
 <!-- more -->
 
 <p>很多游戏公司都会搞一个通行证，官网、旗下所有游戏都用它登录。为了泛用性，这部分用的是 https 协议。我尝试用 golang + <a href="https://github.com/gin-gonic/gin">gin 框架</a> + <a href="https://www.mongodb.com/zh-cn">MongoDB</a> 搞了个类似的服务，包括注册、登录和鉴权。然后，用 C# 写了一套 SDK，方便在 Unity 里用。</p>
@@ -166,4 +166,4 @@
 <span class="w">    </span><span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div>
-<p>JWT 的缺点是它只保存在前端，后端不能随意废弃某一个 JWT。如果对安全性要求很高，可以自己生成 uuid 作为 Token，然后存在数据库里。还可以把用户的登录设备、IP 和 Token 关联起来，存进数据库，实现将某设备踢下线的功能。</p></blockquote>
+<p>JWT 的缺点是它只保存在前端，后端不能随意废弃某一个 JWT。如果对安全性要求很高，可以自己生成 uuid 作为 Token，然后存在数据库里。还可以把用户的登录设备、IP 和 Token 关联起来，存进数据库，实现将某设备踢下线的功能。</p><hr />

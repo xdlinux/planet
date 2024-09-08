@@ -1,4 +1,4 @@
-<blockquote> &lt;h1 id=&#34;Selenium-报错ValueError解决&#34;&gt;&lt;a href=&#34;#Selenium-报错ValueError解决&#34; class=&#34;headerlink&#34; title=&#34;Selenium 报错ValueError解决&#34;&gt;&lt;/a&gt;Selenium 报错ValueError解决&lt;/h1&gt;&lt;ul&gt;
+ &lt;h1 id=&#34;Selenium-报错ValueError解决&#34;&gt;&lt;a href=&#34;#Selenium-报错ValueError解决&#34; class=&#34;headerlink&#34; title=&#34;Selenium 报错ValueError解决&#34;&gt;&lt;/a&gt;Selenium 报错ValueError解决&lt;/h1&gt;&lt;ul&gt;
 &lt;li&gt;&lt;p&gt;错误&lt;br&gt;  在python中使用selenium进行网页自动化&amp;#x2F;爬虫操作时，执行下面语句&lt;/p&gt;
   &lt;pre&gt;&lt;code class=&#34;hljs python&#34;&gt;&lt;span class=&#34;hljs-keyword&#34;&gt;from&lt;/span&gt; selenium &lt;span class=&#34;hljs-keyword&#34;&gt;import&lt;/span&gt; webdriver
 driver = webdriver.Edge()&lt;/code&gt;&lt;/pre&gt;
@@ -14,4 +14,4 @@ driver = webdriver.Edge()&lt;/code&gt;&lt;/pre&gt;
 &lt;pre&gt;&lt;code class=&#34;hljs python&#34;&gt;pip install -U selenimu
 pip install -U urllib3&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
 &lt;/ul&gt;
- </blockquote>
+ <hr />

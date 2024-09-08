@@ -1,4 +1,4 @@
-<blockquote><h1 id="深度重建世界坐标">深度重建世界坐标<a class="headerlink" href="#深度重建世界坐标" title="Permanent link">&para;</a></h1>
+<h1 id="深度重建世界坐标">深度重建世界坐标<a class="headerlink" href="#深度重建世界坐标" title="Permanent link">&para;</a></h1>
 <!-- more -->
 
 <p>在后处理 Shader 还有一些屏幕空间效果中，常需要使用深度还原世界坐标。</p>
@@ -105,4 +105,4 @@
 <ul>
 <li><a href="https://blog.csdn.net/yinfourever/article/details/120935179">Unity URP中根据深度重建世界坐标_computeworldspaceposition-CSDN博客</a></li>
 <li><a href="https://docs.unity3d.com/Packages/com.unity.render-pipelines.universal@14.0/manual/writing-shaders-urp-reconstruct-world-position.html">Reconstruct the world space positions of pixels from the depth texture | Universal RP | 14.0.11 (unity3d.com)</a></li>
-</ul></blockquote>
+</ul><hr />

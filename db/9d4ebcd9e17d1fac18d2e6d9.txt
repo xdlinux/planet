@@ -1,4 +1,4 @@
-<blockquote><h1>Chapter 17 - Reaction 反应</h1>
+<h1>Chapter 17 - Reaction 反应</h1>
 <p>反应（Reactions）是这样的一种东西：</p>
 <p><img src="https://img2023.cnblogs.com/blog/2455224/202301/2455224-20230124221854869-52977036.png" alt="image" /></p>
 <p>你可以这样为一条消息添加反应：</p>
@@ -318,4 +318,4 @@ module.exports = {
 <p>效果图：</p>
 <p><img src="https://img2023.cnblogs.com/blog/2455224/202301/2455224-20230124222701824-1624056038.png" alt="image" /></p>
 <p><img src="https://img2023.cnblogs.com/blog/2455224/202301/2455224-20230124222754424-506222329.png" alt="image" /></p>
-<p>利用 <code>message.awaitReactions([options])</code> 来代替 <code>message.createReactionCollector([options])</code> 要更简单明了。</p></blockquote>
+<p>利用 <code>message.awaitReactions([options])</code> 来代替 <code>message.createReactionCollector([options])</code> 要更简单明了。</p><hr />

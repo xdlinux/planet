@@ -1,4 +1,4 @@
-<blockquote><h1 id="复刻星穹铁道-20-梦境迷钟">复刻星穹铁道 2.0 梦境迷钟<a class="headerlink" href="#复刻星穹铁道-20-梦境迷钟" title="Permanent link">&para;</a></h1>
+<h1 id="复刻星穹铁道-20-梦境迷钟">复刻星穹铁道 2.0 梦境迷钟<a class="headerlink" href="#复刻星穹铁道-20-梦境迷钟" title="Permanent link">&para;</a></h1>
 <!-- more -->
 
 <p>简单复刻，重点在图的构建和寻路上。只做了一种视角，两个关卡。</p>
@@ -272,4 +272,4 @@
 
 <h2 id="更简单更泛用的方法">更简单更泛用的方法<a class="headerlink" href="#更简单更泛用的方法" title="Permanent link">&para;</a></h2>
 <p>人工记录每种情况下的路径，程序根据不同情况选择路径，然后是正确答案就放个动画。</p>
-<p>缺点是配置麻烦。</p></blockquote>
+<p>缺点是配置麻烦。</p><hr />

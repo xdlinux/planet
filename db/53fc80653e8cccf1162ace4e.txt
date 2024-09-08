@@ -1,4 +1,4 @@
-<blockquote><h2 id="项目地址---spark-gpthttpsgithubcomcanxin121spark-gpt">项目地址 -&gt; <a class="link" href="https://github.com/canxin121/Spark-GPT" target="_blank" rel="noopener"
+<h2 id="项目地址---spark-gpthttpsgithubcomcanxin121spark-gpt">项目地址 -&gt; <a class="link" href="https://github.com/canxin121/Spark-GPT" target="_blank" rel="noopener"
 >Spark-GPT</a></h2>
 <h2 id="nonebot框架">Nonebot框架</h2>
 <p>由于SparkGPT由Python开发, 在Python中运行, 而Python目前最佳的bot框架为Nonebot框架,所以 目前2.0.0版本深度绑定Nonebot框架进行开发.</p>
@@ -55,4 +55,4 @@
 <li>依赖<code>Nonebot_plugin_saa</code>进行跨适配器(跨聊天平台)的发送消息,可以实现图文发送</li>
 <li>依赖<code>Nonebot_plugin_htmlrender</code>进行文转图, 实质上就是使用playwright使用我的自制模板进行前端渲染并截图</li>
 <li>使用 <code>dpaste.org</code> 的 逆向api 进行文转网络剪切板链接, 方便用户拿去回答和信息</li>
-</ol></blockquote>
+</ol><hr />

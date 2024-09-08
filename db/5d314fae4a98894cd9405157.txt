@@ -1,4 +1,4 @@
-<blockquote><h1 id="ImGui-适配高-DPI-显示器">ImGui 适配高 DPI 显示器<a class="headerlink" href="#ImGui-适配高-DPI-显示器" title="Permanent link">&para;</a></h1>
+<h1 id="ImGui-适配高-DPI-显示器">ImGui 适配高 DPI 显示器<a class="headerlink" href="#ImGui-适配高-DPI-显示器" title="Permanent link">&para;</a></h1>
 <!-- more -->
 
 <p>解决高 DPI 显示器下 ImGui 字体模糊的问题。</p>
@@ -52,4 +52,4 @@
 </code></pre></div>
 <p>但实际上，Style 里不少参数都是整数，每次 Scale 之后都会进行取整，多次 Scale 就会积累很多误差，因此我个人不推荐。</p>
 <h2 id="参考">参考<a class="headerlink" href="#参考" title="Permanent link">&para;</a></h2>
-<p><a href="https://learn.microsoft.com/en-us/windows/win32/hidpi/high-dpi-desktop-application-development-on-windows">High DPI Desktop Application Development on Windows - Win32 apps | Microsoft Learn</a></p></blockquote>
+<p><a href="https://learn.microsoft.com/en-us/windows/win32/hidpi/high-dpi-desktop-application-development-on-windows">High DPI Desktop Application Development on Windows - Win32 apps | Microsoft Learn</a></p><hr />

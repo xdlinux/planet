@@ -1,4 +1,4 @@
-<blockquote><img src="https://s2.loli.net/2022/08/01/2UrIqVcRG3YiECJ.jpg" alt="Featured image of post archinstall 初体验 (省流文字版)" /><p>再编辑版注：鉴于该软件在我回顾的时候，已经有所改变，故这里不放出所有贴图。各位想了解的话，看<a class="link" href="https://wiki.archlinux.org/title/Archinstall"  target="_blank" rel="noopener"
+<img src="https://s2.loli.net/2022/08/01/2UrIqVcRG3YiECJ.jpg" alt="Featured image of post archinstall 初体验 (省流文字版)" /><p>再编辑版注：鉴于该软件在我回顾的时候，已经有所改变，故这里不放出所有贴图。各位想了解的话，看<a class="link" href="https://wiki.archlinux.org/title/Archinstall"  target="_blank" rel="noopener"
     >这个链接</a>。</p>
 <h2 id="前言">前言</h2>
 <p>继2012年Arch Linux弃用了安装器之后，在今年的4月1日，官方发布了全新的安装器，不过仍在实验阶段。今天我来体验一下。视频版在此，不建议不开倍速观看：<br>
@@ -64,4 +64,4 @@
 <a class="link" href="https://www.bilibili.com/video/BV1s5411N7qN"  target="_blank" rel="noopener"
     >Houge_Langley 在 ZFS 上面装 Arch Linux</a><br>
 <a class="link" href="https://www.bilibili.com/video/BV1X7411K7fo"  target="_blank" rel="noopener"
-    >老莱给大家介绍Linux的十大优越之处！</a></p></blockquote>
+    >老莱给大家介绍Linux的十大优越之处！</a></p><hr />

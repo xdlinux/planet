@@ -1,4 +1,4 @@
-<blockquote><img src="https://s2.loli.net/2022/08/01/53U9OBFlswnKCrV.png" alt="Featured image of post 我的一加8T刷机失败记录" /><p>注意：本文不是详细教程，只是我的痛苦体验罢了，文章末尾我会给链接的。</p>
+<img src="https://s2.loli.net/2022/08/01/53U9OBFlswnKCrV.png" alt="Featured image of post 我的一加8T刷机失败记录" /><p>注意：本文不是详细教程，只是我的痛苦体验罢了，文章末尾我会给链接的。</p>
 <p>最近我的 Nokia(HMD) 7 Plus 的充电口彻底没有办法充电了，所以我妈给我买了一台一加8T:-)</p>
 <p>到手的第一件事嘛&hellip;&hellip;一定是解锁呀。辛亏一加的解锁是相当容易的，开发者模式中开启“OEM 解锁”，然后 adb reboot bootloader 进入fastboot，再运行 fastboot oem unlock，手机上音量加减选择解锁，电源键选择即可。</p>
 <p>然后我没想到的部分还是来了，鉴于本手机刚刚发布，很多第三方系统还没有完全适配。我最想用的Lineage没有官方，而crDroid是Beta品质，这都是我后来才发现的:-P</p>
@@ -33,4 +33,4 @@
 	<figcaption>注意红箭头指示的地方，一定先要选上！否则救砖失败，手机变成假砖</figcaption>
 	
 </figure></p>
-<p>救砖成功了，我又在Windows下尝试了好几遍fastboot，全部失败:-P 我看等成熟的卡刷可以实现的时候再说吧。</p></blockquote>
+<p>救砖成功了，我又在Windows下尝试了好几遍fastboot，全部失败:-P 我看等成熟的卡刷可以实现的时候再说吧。</p><hr />

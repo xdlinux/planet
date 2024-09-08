@@ -1,4 +1,4 @@
-<blockquote> &lt;h2 id=&#34;前言&#34;&gt;&lt;a href=&#34;#前言&#34; class=&#34;headerlink&#34; title=&#34;前言&#34;&gt;&lt;/a&gt;前言&lt;/h2&gt;&lt;p&gt;西安电子科技大学大二下学期有一门课叫做思想政治理论实践课，这门课要求学生收集至少&lt;strong&gt;800份&lt;/strong&gt;问卷星问卷(ノへ￣、)，诗人握持(￣_,￣ )&lt;br&gt;本着之前学过一点selenium，并且发现问卷星问卷只不过是一个网页，并且问卷可以设置每个人可以填无数份，于是就想着用selenium写一个刷问卷星脚本。&lt;/p&gt;
+ &lt;h2 id=&#34;前言&#34;&gt;&lt;a href=&#34;#前言&#34; class=&#34;headerlink&#34; title=&#34;前言&#34;&gt;&lt;/a&gt;前言&lt;/h2&gt;&lt;p&gt;西安电子科技大学大二下学期有一门课叫做思想政治理论实践课，这门课要求学生收集至少&lt;strong&gt;800份&lt;/strong&gt;问卷星问卷(ノへ￣、)，诗人握持(￣_,￣ )&lt;br&gt;本着之前学过一点selenium，并且发现问卷星问卷只不过是一个网页，并且问卷可以设置每个人可以填无数份，于是就想着用selenium写一个刷问卷星脚本。&lt;/p&gt;
 &lt;h2 id=&#34;注意&#34;&gt;&lt;a href=&#34;#注意&#34; class=&#34;headerlink&#34; title=&#34;注意&#34;&gt;&lt;/a&gt;注意&lt;/h2&gt;&lt;p&gt;该脚本只针对&lt;strong&gt;只有多选&lt;/strong&gt;的问卷，如果有其他需求，请直接在github向我提issue&lt;a href=&#34;https://github.com/WangLanHuaJiaoFen/-selenium-/issues&#34;&gt;王兰花椒粉&lt;/a&gt;&lt;/p&gt;
 &lt;h2 id=&#34;环境要求&#34;&gt;&lt;a href=&#34;#环境要求&#34; class=&#34;headerlink&#34; title=&#34;环境要求&#34;&gt;&lt;/a&gt;环境要求&lt;/h2&gt;&lt;p&gt;Python                    3.11.8&lt;br&gt;urllib3                   2.2.2&lt;br&gt;selenium                  4.23.1&lt;br&gt;pyinstaller               6.10.0&lt;/p&gt;
 &lt;p&gt;可以直接用pip&amp;#x2F;conda进行安装对应版本的包。&lt;/p&gt;
@@ -47,4 +47,4 @@ sudo systemctl &lt;span class=&#34;hljs-built_in&#34;&gt;enable&lt;/span&gt; cro
 &lt;h2 id=&#34;结语&#34;&gt;&lt;a href=&#34;#结语&#34; class=&#34;headerlink&#34; title=&#34;结语&#34;&gt;&lt;/a&gt;结语&lt;/h2&gt;&lt;p&gt;如果这篇文章对你有帮助，欢迎star&amp;#x2F;fork(๑•̀ㅂ•́)و✧&lt;/p&gt;
 &lt;p&gt;如果有其他需求或者发现bug，欢迎issue&amp;#x2F;prヽ(✿ﾟ▽ﾟ)ノ&lt;/p&gt;
 &lt;p&gt;如果懒得动手，你可以在issue中给我问卷url和联系方式，我把可执行文件直接发给你♪(^∇^*)&lt;/p&gt;
- </blockquote>
+ <hr />

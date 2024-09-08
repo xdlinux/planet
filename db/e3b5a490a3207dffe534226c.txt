@@ -1,4 +1,4 @@
-<blockquote><h2>Chapter 10 - 事件处理 Event handling</h2>
+<h2>Chapter 10 - 事件处理 Event handling</h2>
 <p>这一章只是根据新的 discord.js v14.8.0，对已有文件进行小修小补。</p>
 <blockquote>
 <p>如果你是跟着本教程前几章来的，不要跳过本章！</p>
@@ -156,4 +156,4 @@ const number = interaction.options.getNumber('num');
 <li>你不能推迟对自动完成交互的响应。 如果你正在处理异步建议，例如等待来自 API 的数据，请考虑保留本地缓存。</li>
 <li>用户选择一个值并发送命令后，将作为常规接收 <code>ChatInputCommandInteraction</code> 与 Option 的值。</li>
 <li>你一次最多只能回复 25 项，但如果超过这个数，则可能意味着你应该修改过滤器以进一步缩小选择范围。</li>
-</ul></blockquote>
+</ul><hr />

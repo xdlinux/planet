@@ -1,4 +1,4 @@
-<blockquote><h2>Chapter 5 - 交互：对斜杠命令回复的那些事儿（1）</h2>
+<h2>Chapter 5 - 交互：对斜杠命令回复的那些事儿（1）</h2>
 <p>斜杠命令是交互的一种。</p>
 <p>我们在 Chapter 2 的 <code>commands/ping.js</code> 里已经完成了一项斜杠命令的建立：</p>
 <pre><code>const { SlashCommandBuilder } = require('discord.js');
@@ -153,4 +153,4 @@ module.exports = {
 };
 </code></pre>
 <p>效果图：
-<img src="https://img2022.cnblogs.com/blog/2455224/202207/2455224-20220711174526099-690908800.png" alt="image" /></p></blockquote>
+<img src="https://img2022.cnblogs.com/blog/2455224/202207/2455224-20220711174526099-690908800.png" alt="image" /></p><hr />

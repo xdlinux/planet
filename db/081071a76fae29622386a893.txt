@@ -1,4 +1,4 @@
-<blockquote><img src="https://s2.loli.net/2022/08/01/XwlnJjUEqyDB6WZ.png" alt="Featured image of post 操作系统：线程" /><h2 id="进程概要">进程概要</h2>
+<img src="https://s2.loli.net/2022/08/01/XwlnJjUEqyDB6WZ.png" alt="Featured image of post 操作系统：线程" /><h2 id="进程概要">进程概要</h2>
 <h3 id="栈区是否是程序的一部分">栈区是否是程序的一部分？</h3>
 <p>不是，栈区是进程的一部分，而程序不是进程。(什么咬文嚼字233)<br>
 概念：进程是正在运行的程序。包括程序计数器，栈区和数据区。</p>
@@ -249,4 +249,4 @@
 消费者用完了所有东西，也睡了:-P</p>
 <p>要点：准备睡眠时切换进程了，唤醒信号被忽略。</p>
 <h3 id="mutex互斥锁和-semaphore信号量的不同">Mutex（互斥锁）和 Semaphore（信号量）的不同</h3>
-<p>Mutex 实现在用户态，代价低，数量上限高。Semaphore 实现在内核态，代价高，数量上限低。</p></blockquote>
+<p>Mutex 实现在用户态，代价低，数量上限高。Semaphore 实现在内核态，代价高，数量上限低。</p><hr />

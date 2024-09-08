@@ -1,4 +1,4 @@
-<blockquote><h2>Chapter 6 - 交互：对斜杠命令回复的那些事儿（2）</h2>
+<h2>Chapter 6 - 交互：对斜杠命令回复的那些事儿（2）</h2>
 <p>本章是 Chapter 5 的续集。</p>
 <h3>抓取响应 Fetching responses</h3>
 <p>除了对斜杠命令进行回复外，我们还可以抓取这个回复，比如用于给这个回复添加表情回复（reactions）。</p>
@@ -458,4 +458,4 @@ rest.put(Routes.applicationCommands(clientId),{ body: commands },)
 </tr>
 </tbody>
 </table>
-<p>很多我们都用不上，当然很多能节约我们的敲代码的时间。要学会在不断地尝试中学习，学会在错误中吸取经验。</p></blockquote>
+<p>很多我们都用不上，当然很多能节约我们的敲代码的时间。要学会在不断地尝试中学习，学会在错误中吸取经验。</p><hr />

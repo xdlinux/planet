@@ -1,4 +1,4 @@
-<blockquote><h1 id="实现-IJobParallelForAppend">实现 IJobParallelForAppend<a class="headerlink" href="#实现-IJobParallelForAppend" title="Permanent link">&para;</a></h1>
+<h1 id="实现-IJobParallelForAppend">实现 IJobParallelForAppend<a class="headerlink" href="#实现-IJobParallelForAppend" title="Permanent link">&para;</a></h1>
 <!-- more -->
 
 <p>Unity 的 <a href="https://docs.unity3d.com/Packages/com.unity.collections@2.4/manual/index.html">Collections package</a> 里有个 <a href="https://docs.unity3d.com/Packages/com.unity.collections@2.4/api/Unity.Jobs.IJobParallelForFilter.html"><code>IJobParallelForFilter</code></a>。我翻了相关的源码，发现虽然它名字带个 Parallel，但根本不是并行的。它的全部逻辑都是在一个线程里做的。后来，Unity 就把它名字里的 Parallel 去掉了，改成 <a href="https://docs.unity3d.com/Packages/com.unity.collections@2.4/api/Unity.Jobs.IJobFilter.html"><code>IJobFilter</code></a>。理由是</p>
@@ -244,4 +244,4 @@
 <p><a href="https://docs.unity3d.com/Packages/com.unity.collections@2.4/api/Unity.Jobs.IJobFilterExtensions.html">https://docs.unity3d.com/Packages/com.unity.collections@2.4/api/Unity.Jobs.IJobFilterExtensions.html</a>&#160;<a class="footnote-backref" href="#fnref:2" title="Jump back to footnote 2 in the text">&#8617;</a></p>
 </li>
 </ol>
-</div></blockquote>
+</div><hr />

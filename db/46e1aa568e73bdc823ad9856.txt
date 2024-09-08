@@ -1,4 +1,4 @@
-<blockquote><h1>Chapter 16 - 嵌入式元素</h1>
+<h1>Chapter 16 - 嵌入式元素</h1>
 <h3>embed</h3>
 <p>嵌入式元素（Embed）是一种一般由机器人发送的、通常具有彩色边框、嵌入图像、文本字段和其他奇特的属性的消息。比如下图：</p>
 <p><img src="https://img2023.cnblogs.com/blog/2455224/202301/2455224-20230110203322898-288340297.png" alt="image" /></p>
@@ -308,4 +308,4 @@ https://gitee.com/wtflmao/discord_bot_example/commit/642a555373d40759fb7afce1c32
 <li>timestamp 的值是 ISO8601 标准值（GMT+0），但是 Discord 会根据客户端时区，展示时区转换后的时间。</li>
 </ul>
 <h3>小结</h3>
-<p>我学习了 Embed。</p></blockquote>
+<p>我学习了 Embed。</p><hr />

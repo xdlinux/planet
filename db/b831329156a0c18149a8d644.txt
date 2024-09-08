@@ -1,4 +1,4 @@
-<blockquote><h2>Chapter 3 - JavaScript 介绍</h2>
+<h2>Chapter 3 - JavaScript 介绍</h2>
 <h3>JS 一窥</h3>
 <p><strong>以下内容来自 runoob.com。感谢。侵删。</strong></p>
 <p><strong>数组（Array）字面量</strong> 定义一个数组：</p>
@@ -631,4 +631,4 @@ if (Object.create === undefined){ // 如果存在则不覆盖
         return new Constructor();
     }
 }
-</code></pre></blockquote>
+</code></pre><hr />

@@ -1,4 +1,4 @@
-<blockquote><img src="https://legacy.superbart.top/picture/xdyou/homepage.jpg" alt="Featured image of post Traintime PDA v0.4.0 发行简记" /><h1 id="traintime-pda-030--040-发行简记">Traintime PDA 0.3.0 &amp; 0.4.0 发行简记</h1>
+<img src="https://legacy.superbart.top/picture/xdyou/homepage.jpg" alt="Featured image of post Traintime PDA v0.4.0 发行简记" /><h1 id="traintime-pda-030--040-发行简记">Traintime PDA 0.3.0 &amp; 0.4.0 发行简记</h1>
 <p>本来我是不想现在就上架 App Store，但是电表突然上架了。虽然目前功能少，但着实打了一惊，我也顾不上我软件的不成熟，也上架了。看来大家还是很认可我的软件，所以感觉可以。我也很感谢很多帮我的人，无论是画吉祥物的，还是帮我发传单的，给我 UI 设计提出建议的。</p>
 <p>之前我好像说过学校“揭榜”的事情，这玩意确实有点用，就是在面试时候问项目背景的时候，至少能扯到学校:-P</p>
 <p>说是发行简记，实际上我要写很多的技术相关细节。</p>
@@ -152,4 +152,4 @@ We&#39;ll change these feelings, we&#39;ll taste and see
 But never guess how the him would scream  
 But never guess how the him would scream  
 But never guess how the him would scream   
-</code></pre><p>Yours and us legacy continues, no matter what happens&hellip;</p></blockquote>
+</code></pre><p>Yours and us legacy continues, no matter what happens&hellip;</p><hr />

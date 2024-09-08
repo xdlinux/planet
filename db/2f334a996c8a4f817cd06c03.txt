@@ -1,4 +1,4 @@
-<blockquote><h1 id="实信号与复信号的频谱实验">实信号与复信号的频谱实验<a class="headerlink" href="#实信号与复信号的频谱实验" title="Permanent link">&para;</a></h1>
+<h1 id="实信号与复信号的频谱实验">实信号与复信号的频谱实验<a class="headerlink" href="#实信号与复信号的频谱实验" title="Permanent link">&para;</a></h1>
 <!-- more -->
 
 <p>大二下，信号与系统作业。</p>
@@ -129,4 +129,4 @@ f_3(t) &amp;= e^{j(3t - 30^\circ)} + e^{j(6t + 60^\circ)}
 </code></pre></div>
 <p><img alt="频谱 3" src="../../../obsidian-vault/attachments/Pasted%20image%2020240617170316.png" /></p>
 <h2 id="结论">结论<a class="headerlink" href="#结论" title="Permanent link">&para;</a></h2>
-<p>实信号的幅值频谱是偶函数，相位频谱是奇函数。复信号的频谱没有这样的特点。</p></blockquote>
+<p>实信号的幅值频谱是偶函数，相位频谱是奇函数。复信号的频谱没有这样的特点。</p><hr />

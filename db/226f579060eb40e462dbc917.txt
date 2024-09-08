@@ -1,4 +1,4 @@
-<blockquote><h1 id="用-RenderDoc-持续截帧-Unity-Editor-Game-View">用 RenderDoc 持续截帧 Unity Editor Game View<a class="headerlink" href="#用-RenderDoc-持续截帧-Unity-Editor-Game-View" title="Permanent link">&para;</a></h1>
+<h1 id="用-RenderDoc-持续截帧-Unity-Editor-Game-View">用 RenderDoc 持续截帧 Unity Editor Game View<a class="headerlink" href="#用-RenderDoc-持续截帧-Unity-Editor-Game-View" title="Permanent link">&para;</a></h1>
 <!-- more -->
 
 <p>某些渲染 bug 只会持续很短的时间，手动抓帧根本抓不到。Unity 在 <code>UnityEditorInternal</code> 命名空间下，提供了 <a href="https://github.com/Unity-Technologies/UnityCsReference/blob/d2eb9c0352229c0268d47ca0efa69e14b5d180f8/Editor/Mono/RenderDoc/RenderDoc.bindings.cs#L32"><code>RenderDoc.BeginCaptureRenderDoc</code></a> 和 <a href="https://github.com/Unity-Technologies/UnityCsReference/blob/d2eb9c0352229c0268d47ca0efa69e14b5d180f8/Editor/Mono/RenderDoc/RenderDoc.bindings.cs#L34C28-L34C47"><code>RenderDoc.EndCaptureRenderDoc</code></a> 方法。可以用它们对 Game View 持续截帧。</p>
@@ -38,4 +38,4 @@
 <span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">EditorWindow</span><span class="p">.</span><span class="n">GetWindow</span><span class="p">(</span><span class="n">type</span><span class="p">);</span>
 <span class="w">    </span><span class="p">}</span>
 <span class="p">}</span>
-</code></pre></div></blockquote>
+</code></pre></div><hr />

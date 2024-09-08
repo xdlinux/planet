@@ -1,4 +1,4 @@
-<blockquote> &lt;h1 id=&#34;Ubuntu23-10安装clash全过程-各种问题解决方案&#34;&gt;&lt;a href=&#34;#Ubuntu23-10安装clash全过程-各种问题解决方案&#34; class=&#34;headerlink&#34; title=&#34;Ubuntu23.10安装clash全过程(各种问题解决方案)&#34;&gt;&lt;/a&gt;Ubuntu23.10安装clash全过程(各种问题解决方案)&lt;/h1&gt;&lt;!-- &lt;font face=&#34;逐浪新宋&#34; color=grey size=6&gt;该篇blog将详细描述自己在ubuntu系统下安装clash的过程和遇到的各种问题与bug_ o(￣ヘ￣o＃)&lt;/font&gt; --&gt;
+ &lt;h1 id=&#34;Ubuntu23-10安装clash全过程-各种问题解决方案&#34;&gt;&lt;a href=&#34;#Ubuntu23-10安装clash全过程-各种问题解决方案&#34; class=&#34;headerlink&#34; title=&#34;Ubuntu23.10安装clash全过程(各种问题解决方案)&#34;&gt;&lt;/a&gt;Ubuntu23.10安装clash全过程(各种问题解决方案)&lt;/h1&gt;&lt;!-- &lt;font face=&#34;逐浪新宋&#34; color=grey size=6&gt;该篇blog将详细描述自己在ubuntu系统下安装clash的过程和遇到的各种问题与bug_ o(￣ヘ￣o＃)&lt;/font&gt; --&gt;
 
 &lt;hr&gt;
 &lt;h2 id=&#34;操作步骤&#34;&gt;&lt;a href=&#34;#操作步骤&#34; class=&#34;headerlink&#34; title=&#34;操作步骤&#34;&gt;&lt;/a&gt;操作步骤&lt;/h2&gt;&lt;hr&gt;
@@ -112,4 +112,4 @@ systemctl start clash
 &lt;h1 id=&#34;小结&#34;&gt;&lt;a href=&#34;#小结&#34; class=&#34;headerlink&#34; title=&#34;小结&#34;&gt;&lt;/a&gt;小结&lt;/h1&gt;&lt;p&gt;ubuntu安装和配置clash确实是一个繁琐的过程，而网上的教程没有对一些问题的解决方案，我把自己在配置过程中遇到的问题写了出来，供大家参考!!!&lt;/p&gt;
 &lt;hr&gt;
 &lt;!-- &lt;font face=&#34;逐浪新宋&#34; color=cyan size=10&gt;谢啦!!☆⌒(*＾-゜)v&lt;/font&gt; --&gt;
- </blockquote>
+ <hr />

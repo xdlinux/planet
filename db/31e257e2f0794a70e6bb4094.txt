@@ -1,4 +1,4 @@
-<blockquote><h2>Chapter 4 - 对 Chapter 2 代码的解释</h2>
+<h2>Chapter 4 - 对 Chapter 2 代码的解释</h2>
 <p>我们在系列文章（1） 中，完成了简单的机器人的建立与交互。</p>
 <p>下面，我们开始针对 discord.js V14.0.3 的特性和方法，通过 Discord 机器人的编写实践，来掌握 discord.js 的使用。</p>
 <h3>首先，从 目录结构 开始看起。</h3>
@@ -245,4 +245,4 @@ module.exports = {
 <p>通过 async 修饰的 <code>execute()</code> 来执行命令该执行的。这里我们就回复了 <code>Pong!</code>，注意加上 await 关键字。</p>
 <p>后面我们还会学到什么是 ephemeral response、如何执行多条回复、如何修改回复、如何删除回复、如何延长回复时间、如何让回复更花哨等。</p>
 <h3>结语</h3>
-<p>这样，我们就完成了对 Chapter 2 的代码的解释。</p></blockquote>
+<p>这样，我们就完成了对 Chapter 2 的代码的解释。</p><hr />

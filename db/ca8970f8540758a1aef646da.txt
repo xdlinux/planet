@@ -1,4 +1,4 @@
-<blockquote><h1 id="Windows-上用-CapsLock-切换中英文">Windows 上用 CapsLock 切换中英文<a class="headerlink" href="#Windows-上用-CapsLock-切换中英文" title="Permanent link">&para;</a></h1>
+<h1 id="Windows-上用-CapsLock-切换中英文">Windows 上用 CapsLock 切换中英文<a class="headerlink" href="#Windows-上用-CapsLock-切换中英文" title="Permanent link">&para;</a></h1>
 <!-- more -->
 
 <p>微软输入法切换中英文的按键选择有 Ctrl、Shift、Ctrl+Space，但它们都是其他软件常用的修饰符/快捷键，肯定没法用。后来，我用一个纯英文键盘布局和一个纯中文键盘布局，靠 Win+Space 切换，但这个快捷键按着也挺麻烦。</p>
@@ -28,4 +28,4 @@
 <p>KeyboardLayoutName 就是 <a href="https://learn.microsoft.com/en-us/windows-hardware/manufacture/desktop/windows-language-pack-default-values?view=windows-11#keyboard-identifiers">Keyboard identifier</a>，简体中文对应的是 <code>"00000804"</code>。</p>
 <h3 id="设置指示灯">设置指示灯<a class="headerlink" href="#设置指示灯" title="Permanent link">&para;</a></h3>
 <p>需要引入头文件  <a href="https://learn.microsoft.com/en-us/windows/win32/api/ntddkbd/">ntddkbd.h</a>。</p>
-<p>具体的思路参考 <a href="https://stackoverflow.com/questions/72679665/is-it-possible-to-control-capslock-light-without-actual-capslocking">windows - Is it possible to control capslock light without actual capslocking? - Stack Overflow</a>。</p></blockquote>
+<p>具体的思路参考 <a href="https://stackoverflow.com/questions/72679665/is-it-possible-to-control-capslock-light-without-actual-capslocking">windows - Is it possible to control capslock light without actual capslocking? - Stack Overflow</a>。</p><hr />

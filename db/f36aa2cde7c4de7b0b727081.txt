@@ -1,4 +1,4 @@
-<blockquote></blockquote><p>我用的自定义提示词，感觉效果蛮好的。
+<hr /><p>我用的自定义提示词，感觉效果蛮好的。
 填在 <code>ChatGPT 网页右上角头像</code> - <code>自定义 ChatGPT</code> - <code>您希望 ChatGPT 如何进行回复？</code> 下面的文本框里，打开 <code>为新聊天启用</code> 并保存。</p>
 <pre><code class="language-markdown">- 深呼吸，沉着冷静。
 - 一步一步思考。

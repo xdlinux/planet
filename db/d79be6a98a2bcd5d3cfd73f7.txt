@@ -1,4 +1,4 @@
-<blockquote><img src="https://legacy.superbart.top/picture/How%20to%20Operate%20an%20Internet%20Radio/Bart%20On%20Radio%203x13.jpg" alt="Featured image of post 如何在网上开自己的电台？" /><p>实际上这个文章我老早就想写了，不过我中间基本上忘了这档子事。</p>
+<img src="https://legacy.superbart.top/picture/How%20to%20Operate%20an%20Internet%20Radio/Bart%20On%20Radio%203x13.jpg" alt="Featured image of post 如何在网上开自己的电台？" /><p>实际上这个文章我老早就想写了，不过我中间基本上忘了这档子事。</p>
 <p>先说明一下，这个电台是纯音乐电台，没有画面。要搞画面的话，建议了解 <code>nginx-module-rtmp</code>。</p>
 <p>开一个电台，需要两个部分：电台推流软件，电台服务器，以及收听软件。就像传统的电台一样，得有个录音室，发射塔，然后是收音机。啊哈，是不是回到了各位童年，听着中国之声呢(不是)。</p>
 <h2 id="电台服务器icecast">电台服务器～Icecast</h2>
@@ -171,4 +171,4 @@
 <p>或者说，你给他们推流链接，让他们拿啥播放器打开&hellip;&hellip;</p>
 <h2 id="最后">最后</h2>
 <p>电台开起来了，放啥东西合适呢？实际上我也不知道，感觉听众不喜欢听新闻&hellip;&hellip;</p>
-<p>毕竟电台已经成为了某种怀旧的东西了，不过想想我在寒假那时候搭的电台，还是很能缓解一下某种孤独感的。我是那种倾向于向公众大喊&quot;来看看我啊&quot;的内向疯子:-P</p></blockquote>
+<p>毕竟电台已经成为了某种怀旧的东西了，不过想想我在寒假那时候搭的电台，还是很能缓解一下某种孤独感的。我是那种倾向于向公众大喊&quot;来看看我啊&quot;的内向疯子:-P</p><hr />

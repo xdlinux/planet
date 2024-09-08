@@ -1,4 +1,4 @@
-<blockquote><img src="https://legacy.superbart.top/picture/Random/Coding%20to%20a%20cure%20girl.jpg" alt="Featured image of post 关于西电一站式服务大厅背后的那点事" /><h1 id="关于如何使用西电一站式服务大厅">关于如何使用西电一站式服务大厅</h1>
+<img src="https://legacy.superbart.top/picture/Random/Coding%20to%20a%20cure%20girl.jpg" alt="Featured image of post 关于西电一站式服务大厅背后的那点事" /><h1 id="关于如何使用西电一站式服务大厅">关于如何使用西电一站式服务大厅</h1>
 <p>好吧，这个假期闲得慌想用 Flutter 把电表重写了(毕竟本人能力很差，就很容易瞎想)。目前开发还是没个身影，但是我感觉，我把核心功能给写出来了，就差套个壳。我觉得，核心功能就是从学校服务器上当下来我需要的数据。根据<a class="link" href="https://github.com/BenderBlog/watermeter"  target="_blank" rel="noopener"
     >我项目的简介</a>，应该是开发完大半了。</p>
 <p>但是呢，鉴于本人的鸽子属性，我感觉我得在我将来大概率弃坑之前，留点材料，以方便将来有比我更无聊，更疯狂的人来完成他心目中的电表。</p>
@@ -545,4 +545,4 @@
 </table>
 <h2 id="总结">总结</h2>
 <p>感觉看了那么多东西，算是把网页请求和 Cookie 啥的了解了一下，保证将来计网学的时候没有陌生感(虽然据说不咋讲)。</p>
-<p>希望那玩意能写出来吧，免得将来找工作说没有编程经验，虽然 Dart 和 Flutter 也是很小众就是了。</p></blockquote>
+<p>希望那玩意能写出来吧，免得将来找工作说没有编程经验，虽然 Dart 和 Flutter 也是很小众就是了。</p><hr />

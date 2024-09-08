@@ -1,4 +1,4 @@
-<blockquote> &lt;h1 id=&#34;起始&#34;&gt;&lt;a href=&#34;#起始&#34; class=&#34;headerlink&#34; title=&#34;起始&#34;&gt;&lt;/a&gt;起始&lt;/h1&gt;&lt;p&gt;最近开始学docker了，感觉docker很厉害o(￣▽￣)ｄ可以很方便的部署各种环境。然鹅果不其然，配环境是一大问题┌(。Д。)┐&lt;br&gt;这里就简单整理下Ubuntu23.10 安装与配置docker的过程叭✧(≖ ◡ ≖)&lt;/p&gt;
+ &lt;h1 id=&#34;起始&#34;&gt;&lt;a href=&#34;#起始&#34; class=&#34;headerlink&#34; title=&#34;起始&#34;&gt;&lt;/a&gt;起始&lt;/h1&gt;&lt;p&gt;最近开始学docker了，感觉docker很厉害o(￣▽￣)ｄ可以很方便的部署各种环境。然鹅果不其然，配环境是一大问题┌(。Д。)┐&lt;br&gt;这里就简单整理下Ubuntu23.10 安装与配置docker的过程叭✧(≖ ◡ ≖)&lt;/p&gt;
 &lt;h2 id=&#34;参考文档&#34;&gt;&lt;a href=&#34;#参考文档&#34; class=&#34;headerlink&#34; title=&#34;参考文档&#34;&gt;&lt;/a&gt;参考文档&lt;/h2&gt;&lt;p&gt;&lt;a href=&#34;https://docs.docker.com/engine/install/ubuntu/#install-using-the-repository&#34;&gt;docker官网&lt;/a&gt;&lt;br&gt;&lt;a href=&#34;https://docker-practice.github.io/zh-cn/install/ubuntu.html&#34;&gt;Docker — 从入门到实践&lt;/a&gt;&lt;/p&gt;
 &lt;span id=&#34;more&#34;&gt;&lt;/span&gt;
 
@@ -50,4 +50,4 @@ docker run --&lt;span class=&#34;hljs-built_in&#34;&gt;rm&lt;/span&gt; hello-wor
 &lt;p&gt;这次应该就可以完美拉取了ヽ(✿ﾟ▽ﾟ)ノ&lt;/p&gt;
 &lt;h1 id=&#34;总结&#34;&gt;&lt;a href=&#34;#总结&#34; class=&#34;headerlink&#34; title=&#34;总结&#34;&gt;&lt;/a&gt;总结&lt;/h1&gt;&lt;p&gt;真是一场酣畅淋漓的docker安装啊Σ(っ °Д °;)っ&lt;/p&gt;
 &lt;p&gt;由于桌面版比较简单，这里就不再赘述了(＠_＠;)&lt;/p&gt;
- </blockquote>
+ <hr />

@@ -1,4 +1,4 @@
-<blockquote><img src="https://s2.loli.net/2022/08/01/2qIsgFjYrfldwuh.webp" alt="Featured image of post 快速逃离Linux指南" /><p>看完了，搞定完操作系统实验，快跑！<br>
+<img src="https://s2.loli.net/2022/08/01/2qIsgFjYrfldwuh.webp" alt="Featured image of post 快速逃离Linux指南" /><p>看完了，搞定完操作系统实验，快跑！<br>
 注意：我不可能把在互联网上随便找到的教程再写一遍，我觉得很啰嗦，所以请各位多多使用互联网。<br>
 如果你是大佬，好好沉下心来帮帮小白，行吗。</p>
 <h2 id="目录">目录</h2>
@@ -584,4 +584,4 @@ Linux的最高权限用户和Windows的管理员有很大不同。Windows的管�
 <a class="link" href="https://www.vbird.org/"  target="_blank" rel="noopener"
     >鸟哥的私房菜</a></p>
 <h2 id="结尾">结尾</h2>
-<p>感谢大家阅读，希望这个文章能帮助大家适应Linux。我提到的很多东西，在Windows下也适用呢。</p></blockquote>
+<p>感谢大家阅读，希望这个文章能帮助大家适应Linux。我提到的很多东西，在Windows下也适用呢。</p><hr />

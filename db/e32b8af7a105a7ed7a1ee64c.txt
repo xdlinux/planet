@@ -1,4 +1,4 @@
-<blockquote><p>本文 Discord.js 版本 v14.7.1</p>
+<p>本文 Discord.js 版本 v14.7.1</p>
 <h2>Chapter 15 - 交互四大组件之：上下文菜单 Context Menu</h2>
 <p>上下文菜单（Context Menu），又称为 App Command。使用它，不需要用户显式的输入斜杠 / ，但是后台逻辑方面，和斜杠命令的函数方法基本一致。</p>
 <p>上下文菜单交互（ContextMenuInteraction），分为 “用户上下文菜单交互”（UserContextMenuInteraction）和 “消息上下文菜单交互”（MessageContextMenuInteraction）。二者的使用方式不一样。</p>
@@ -205,4 +205,4 @@ module.exports = {
 <p>图：
 <img src="https://img2022.cnblogs.com/blog/2455224/202211/2455224-20221124235149626-1654633347.png" alt="image" /></p>
 <p><img src="https://img2022.cnblogs.com/blog/2455224/202211/2455224-20221124235246130-908300400.png" alt="image" /></p>
-<p><img src="https://img2022.cnblogs.com/blog/2455224/202211/2455224-20221124235256218-1399752437.png" alt="image" /></p></blockquote>
+<p><img src="https://img2022.cnblogs.com/blog/2455224/202211/2455224-20221124235256218-1399752437.png" alt="image" /></p><hr />

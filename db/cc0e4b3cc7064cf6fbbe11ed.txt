@@ -1,4 +1,4 @@
-<blockquote><h2>Chapter 9 - 斜杠命令的参数：Options 和 Choices</h2>
+<h2>Chapter 9 - 斜杠命令的参数：Options 和 Choices</h2>
 <h3>注册斜杠命令是前提</h3>
 <p>Discord 为开发人员提供了创建客户端集成斜杠命令的选项。 在本节中，我们将介绍如何使用 discord.js 注册这些命令！任何斜杠命令在可以被使用前，都需要先向 Discord 服务器注册。命令在没做出改动的情况下，不需要每次启动机器人之前注册一遍命令。</p>
 <h3>选项 Options</h3>
@@ -624,4 +624,4 @@ module.exports = {
 <pre><code>a1b2c3d4 null true null null null null null 9 null
 </code></pre>
 <h3>结语</h3>
-<p>Options 和 Choices 作为斜杠命令参数很强大。</p></blockquote>
+<p>Options 和 Choices 作为斜杠命令参数很强大。</p><hr />

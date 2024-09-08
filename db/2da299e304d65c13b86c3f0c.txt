@@ -1,4 +1,4 @@
-<blockquote><h2>Codepen</h2>
+<h2>Codepen</h2>
 <pre><code>::codepen{#gOyLepE author="lxchapu"}
 </code></pre>
 <p>::codepen{#gOyLepE author="lxchapu"}</p>
@@ -9,4 +9,4 @@
 <h2>Bilibili</h2>
 <pre><code>::bilibili{#BV1Mx4y1Y7pJ}
 </code></pre>
-<p>::bilibili{#BV1Mx4y1Y7pJ}</p></blockquote>
+<p>::bilibili{#BV1Mx4y1Y7pJ}</p><hr />

@@ -1,4 +1,4 @@
-<blockquote><img src="https://legacy.superbart.top/picture/xdyou/homepage.jpg" alt="Featured image of post Traintime PDA v0.4.1 发行简记" /><h1 id="traintime-pda-041-发行简记">Traintime PDA 0.4.1 发行简记</h1>
+<img src="https://legacy.superbart.top/picture/xdyou/homepage.jpg" alt="Featured image of post Traintime PDA v0.4.1 发行简记" /><h1 id="traintime-pda-041-发行简记">Traintime PDA 0.4.1 发行简记</h1>
 <p>先写个输出 iCalendar 功能吧，小部件我先慢慢写&hellip;&hellip;</p>
 <p>说是发行简记，实际上我要写很多的技术相关细节。</p>
 <p>可以加入我程序的 <a class="link" href="https://testflight.apple.com/join/pLKe5B4q"  target="_blank" rel="noopener"
@@ -121,4 +121,4 @@ You just get numb
 It&#39;s another tequila sunrise
 This old world still looks the same
 Another frame
-</code></pre><p>Farewell my good time.</p></blockquote>
+</code></pre><p>Farewell my good time.</p><hr />

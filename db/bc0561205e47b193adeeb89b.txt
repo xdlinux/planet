@@ -1,4 +1,4 @@
-<blockquote><img src="http://legacy.superbart.top/picture/Random/adwaita-d.webp" alt="Featured image of post Vala 介绍" /><p><a class="link" href="https://vala.dev/"  target="_blank" rel="noopener"
+<img src="http://legacy.superbart.top/picture/Random/adwaita-d.webp" alt="Featured image of post Vala 介绍" /><p><a class="link" href="https://vala.dev/"  target="_blank" rel="noopener"
     >Vala</a> 是由 <a class="link" href="https://www.gnome.org/"  target="_blank" rel="noopener"
     >GNOME 小矮人</a>开发的面向对象编程语言。编程语法接近 Java，围绕 <a class="link" href="https://gitlab.gnome.org/GNOME/glib/"  target="_blank" rel="noopener"
     >GLib</a> 库展开。编译方式是先翻译成 C 语言代码，然后编译。用途嘛&hellip;&hellip;我来讲个故事吧。</p>
@@ -399,4 +399,4 @@
 <p>接下来第四条，我认为是说明这个语言的性质。C 语言是面向过程的语言，所以主要是函数。而要是面向对象的话，教完函数之后，就是教你如何写一个类，如何搞继承之类的了。</p>
 <p>剩下那三个，说明这个语言的数据结构。数据结构，有链表，栈，队列，字符串，树，图之类，还有集合，键值对字典这些常用的。这些东西给你了实现的工具，不过大多数语言已经实现了，比如 Java 。</p>
 <p>最后，速通了语言，不代表所有。你得找到相对应的库。要是库很缺乏，或者根本没学的话，很有可能你啥都干不了。我暑假两天速通了 Javascript，然后我由于没学任何 Javascript 的库，比如 vue / react 啥的，我都不知道要用这个来干嘛:-P</p>
-<p>最后，如有不完备或错误之处，敬请谅解。我还是水平不够啊:-(</p></blockquote>
+<p>最后，如有不完备或错误之处，敬请谅解。我还是水平不够啊:-(</p><hr />

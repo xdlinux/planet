@@ -1,4 +1,4 @@
-<blockquote><h1 id="仿星铁渲染主光源角色阴影">仿星铁渲染：主光源角色阴影<a class="headerlink" href="#仿星铁渲染主光源角色阴影" title="Permanent link">&para;</a></h1>
+<h1 id="仿星铁渲染主光源角色阴影">仿星铁渲染：主光源角色阴影<a class="headerlink" href="#仿星铁渲染主光源角色阴影" title="Permanent link">&para;</a></h1>
 <!-- more -->
 
 <p>角色阴影使用了逐物体阴影技术。因为代码有点多，所以只挑一些关键的写。</p>
@@ -267,4 +267,4 @@
 <p><a href="https://docs.unity3d.com/ScriptReference/Matrix4x4.Ortho.html">Unity - Scripting API: Matrix4x4.Ortho</a>&#160;<a class="footnote-backref" href="#fnref:1" title="Jump back to footnote 1 in the text">&#8617;</a></p>
 </li>
 </ol>
-</div></blockquote>
+</div><hr />

@@ -1,4 +1,4 @@
-<blockquote><h2>Chapter 7 - 斜杠命令的子命令 Subcommands</h2>
+<h2>Chapter 7 - 斜杠命令的子命令 Subcommands</h2>
 <p>如果你有一个包含子命令的命令，你可以以使用与解析 Options 和 Choices 的值那样相似的方式解析它们。 以下代码片段详细说明了解析子命令并使用 <code>CommandInteractionOptionResolver#getSubcommand()</code> 方法做出相应响应所需的逻辑：</p>
 <p>代码 <code>commands/subCmd.js</code>：</p>
 <pre><code>const { SlashCommandBuilder } = require('discord.js');
@@ -142,4 +142,4 @@ module.exports = {
 </code></pre>
 <p>效果图：
 <img src="https://img2022.cnblogs.com/blog/2455224/202207/2455224-20220723060051400-163673119.png" alt="image" /></p>
-<p><img src="https://img2022.cnblogs.com/blog/2455224/202207/2455224-20220723060119552-533298490.png" alt="image" /></p></blockquote>
+<p><img src="https://img2022.cnblogs.com/blog/2455224/202207/2455224-20220723060119552-533298490.png" alt="image" /></p><hr />

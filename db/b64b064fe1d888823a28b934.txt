@@ -1,4 +1,4 @@
-<blockquote><h2>前置条件</h2>
+<h2>前置条件</h2>
 <ul>
 <li>node 版本 &gt;= 18.18.0</li>
 <li>pnpm 版本 &gt; 8.1.0</li>
@@ -126,4 +126,4 @@ pnpm install
 <h3>部署到 Vercel</h3>
 <p>登录 Vercel 账号，点击右上角的 Add new... 选择 Project。然后在 Import Git Repository 中选择刚刚 Fork 的仓库，点击 Import 按钮。</p>
 <p>进入项目配置页面，直接点击 Deploy 按钮，静静等待部署完成就 👌 了。</p>
-<p>Vercel 会为你分配一个域名，你可以在项目设置中设置自定义域名，更多操作请参考 Vercel 文档。</p></blockquote>
+<p>Vercel 会为你分配一个域名，你可以在项目设置中设置自定义域名，更多操作请参考 Vercel 文档。</p><hr />

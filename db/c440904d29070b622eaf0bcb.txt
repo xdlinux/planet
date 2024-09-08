@@ -1,4 +1,4 @@
-<blockquote><img src="https://legacy.superbart.top/picture/xdyou/homepage.jpg" alt="Featured image of post Traintime PDA v0.2.0 发行简记" /><p>没想到很快我就发了 v0.2.0 版本，和 v0.1.0 版本相比，我感觉更多的是完善，和准备上架。</p>
+<img src="https://legacy.superbart.top/picture/xdyou/homepage.jpg" alt="Featured image of post Traintime PDA v0.2.0 发行简记" /><p>没想到很快我就发了 v0.2.0 版本，和 v0.1.0 版本相比，我感觉更多的是完善，和准备上架。</p>
 <p>说是发行简记，实际上我要写很多的技术相关细节。</p>
 <h2 id="新功能介绍">新功能介绍</h2>
 <ol>
@@ -66,4 +66,4 @@
 <p>关于周次选择轴/滚动锁和页面控制器，貌似 InhheritedWidget 不喜欢变化很大的数据，还是在组件里初始化啥的，我只好写在了别的类。为了保证子部件好监听，我使用了 ChangeNotifier 让他们监听。不过貌似只用在了解锁最顶部的锁:-p</p>
 <p>还有个问题，就是最顶部的初始滚动。目前刚打开的情况下，如果周次很靠后，可能会出现弹的情况。这个要解决，我得保证屏幕变化的时候，我能保证屏幕宽度的数据能让监听器有所察觉。这块……反正我是有点迷糊，不过感觉无伤大碍(希望)。</p>
 <h2 id="结语">结语</h2>
-<p>这就是 v0.2.0 的发行简记，感谢阅读。</p></blockquote>
+<p>这就是 v0.2.0 的发行简记，感谢阅读。</p><hr />

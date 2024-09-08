@@ -1,4 +1,4 @@
-<blockquote><img src="https://legacy.superbart.top/picture/Random/Coding%20to%20a%20cure%20girl.jpg" alt="Featured image of post cmcalc 开发日志 1" /><p>在我醉酒三次之后，今天好歹搓出来一个 Flutter-Rust 的计算器。总结下一些东西吧。</p>
+<img src="https://legacy.superbart.top/picture/Random/Coding%20to%20a%20cure%20girl.jpg" alt="Featured image of post cmcalc 开发日志 1" /><p>在我醉酒三次之后，今天好歹搓出来一个 Flutter-Rust 的计算器。总结下一些东西吧。</p>
 <h2 id="数学表达式处理器和计算机代数系统">数学表达式处理器和计算机代数系统</h2>
 <p>在我编程之前，我对这俩没啥概念，就是觉得都是计算器:P</p>
 <p>后来我大致上网查了下（顺便唤醒了我死去的数学分析回忆），才知道这俩是有差别的。</p>
@@ -95,4 +95,4 @@
 <h3 id="7月12日-0003">7月12日 00:03</h3>
 <p>费了一周时间后，我放弃了 cmake<br>
 然后被迫被 rust 同化<br>
-然后原型机出来了</p></blockquote>
+然后原型机出来了</p><hr />

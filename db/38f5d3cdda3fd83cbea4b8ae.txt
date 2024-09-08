@@ -1,4 +1,4 @@
-<blockquote><img src="https://legacy.superbart.top/picture/XDYou_SAD/general_structure.png" alt="Featured image of post Traintime PDA 架构设计 " /><p>XDYou 就算 Traintime PDA 别称了。</p>
+<img src="https://legacy.superbart.top/picture/XDYou_SAD/general_structure.png" alt="Featured image of post Traintime PDA 架构设计 " /><p>XDYou 就算 Traintime PDA 别称了。</p>
 <h2 id="整体架构设计">整体架构设计</h2>
 <p>由于本程序是一个信息查询工具，其基本是围绕数据运转的，所以我打算使用仓库架构。这个图作为一个大致的示例。</p>
 <p><figure 
@@ -121,4 +121,4 @@
 <li>程序是围绕数据运转的，所以总体上遵循仓库架构，其中仓库分成若干组件。</li>
 <li>各个组件有一条数据流的线性传递方式，控制器作为数据源，也就是仓库，和最终显示组件之间的过滤器和中转站。</li>
 <li>大致可以看作数据-控制器-界面的三层结构。</li>
-</ul></blockquote>
+</ul><hr />

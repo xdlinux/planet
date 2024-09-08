@@ -1,4 +1,4 @@
-<blockquote></blockquote><h1>物理量</h1>
+<hr /><h1>物理量</h1>
 <h2>内能 U</h2>
 <p>$$<br/>
 \Delta U=Q+W<br/>

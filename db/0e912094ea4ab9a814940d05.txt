@@ -1,4 +1,4 @@
-<blockquote><h1 id="仿星铁渲染Bloom">仿星铁渲染：Bloom<a class="headerlink" href="#仿星铁渲染Bloom" title="Permanent link">&para;</a></h1>
+<h1 id="仿星铁渲染Bloom">仿星铁渲染：Bloom<a class="headerlink" href="#仿星铁渲染Bloom" title="Permanent link">&para;</a></h1>
 <!-- more -->
 
 <p>卡通渲染里 Bloom 还是挺重要的，它能对画面起到润色作用，比简单地后期调高饱和度要好看很多。</p>
@@ -194,4 +194,4 @@ G[-1]=\dfrac{n+3}{2^{n+3}-2(4+n)}
 <p><a href="https://stackoverflow.com/questions/15580291/how-to-efficiently-calculate-a-row-in-pascals-triangle">algorithm - How to efficiently calculate a row in pascal's triangle? - Stack Overflow</a>&#160;<a class="footnote-backref" href="#fnref:2" title="Jump back to footnote 2 in the text">&#8617;</a></p>
 </li>
 </ol>
-</div></blockquote>
+</div><hr />

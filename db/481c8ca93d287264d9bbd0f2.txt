@@ -1,4 +1,4 @@
-<blockquote><img src="https://s2.loli.net/2022/08/01/HuqXCyzwJA3N2kE.jpg" alt="Featured image of post 自己编译 Linux 内核，好像一点用都没有？" /><h2 id="目录">目录</h2>
+<img src="https://s2.loli.net/2022/08/01/HuqXCyzwJA3N2kE.jpg" alt="Featured image of post 自己编译 Linux 内核，好像一点用都没有？" /><h2 id="目录">目录</h2>
 <ul>
 <li>为什么我要自己编译内核～ Linux 内核的多元化</li>
 <li>为啥自己编译没用～性能对比和优劣势对比</li>
@@ -302,4 +302,4 @@
 <p><a class="link" href="https://wiki.archlinux.org/title/Kernel/Traditional_compilation"  target="_blank" rel="noopener"
     >Arch Wiki提供的编译内核指南(多系统适用哦)</a><br>
 <a class="link" href="https://moefactory.com/3041.moe"  target="_blank" rel="noopener"
-    >小梦哥哥教大家操作系统实验啦</a></p></blockquote>
+    >小梦哥哥教大家操作系统实验啦</a></p><hr />

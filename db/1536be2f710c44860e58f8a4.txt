@@ -1,4 +1,4 @@
-<blockquote></blockquote><h2>破事氵</h2>
+<hr /><h2>破事氵</h2>
 <p>台式电脑通过网线连校园网要拨号上网，<strong>幽默</strong>腾子几百年没更新的TIM登录时没网会报错弹窗。<br/>
 <img src="https://guzhengsvt.top/usr/uploads/2024/06/2343467847.png" alt="TIM报错" loading="lazy"/><br/>
 于是每次开机我都得手动打开设置里的拨号上网，设置的TIM开机自启动会先行一步报错，显得开机自启动这个功能很<strong>幽默</strong>。<br/>

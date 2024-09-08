@@ -1,4 +1,4 @@
-<blockquote><img src="https://canxin121.github.io/p/sparkgpt/cover.png" alt="Featured image of post SparkGPT" /><h2 id="项目地址---spark-gpthttpsgithubcomcanxin121spark-gpt">项目地址 -&gt; <a class="link" href="https://github.com/canxin121/Spark-GPT" target="_blank" rel="noopener"
+<img src="https://canxin121.github.io/p/sparkgpt/cover.png" alt="Featured image of post SparkGPT" /><h2 id="项目地址---spark-gpthttpsgithubcomcanxin121spark-gpt">项目地址 -&gt; <a class="link" href="https://github.com/canxin121/Spark-GPT" target="_blank" rel="noopener"
 >Spark-GPT</a></h2>
 <h2 id="feature">Feature</h2>
 <ul>
@@ -393,4 +393,4 @@ scrolling="no" frameborder="no" framespacing="0" allowfullscreen="true">
 必填:</p>
 <ol>
 <li>name: 指令名称</li>
-</ol></blockquote>
+</ol><hr />

@@ -1,4 +1,4 @@
-<blockquote><h2 id="cpp中的重定向printf">CPP中的重定向printf</h2>
+<h2 id="cpp中的重定向printf">CPP中的重定向printf</h2>
 <p>cpp不允许重定义 =&gt; 不按照cpp规则编译即可</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -895,4 +895,4 @@
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div></blockquote>
+</div><hr />

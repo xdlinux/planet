@@ -1,4 +1,4 @@
-<blockquote><h1 id="后处理-Shader-的-Render-State-设置">后处理 Shader 的 Render State 设置<a class="headerlink" href="#后处理-Shader-的-Render-State-设置" title="Permanent link">&para;</a></h1>
+<h1 id="后处理-Shader-的-Render-State-设置">后处理 Shader 的 Render State 设置<a class="headerlink" href="#后处理-Shader-的-Render-State-设置" title="Permanent link">&para;</a></h1>
 <!-- more -->
 
 <p>后处理 Shader 或者一些 Blit 用的 Shader，一定要记得加下面几行！</p>
@@ -6,4 +6,4 @@
 ZTest Always
 ZWrite Off
 </code></pre></div>
-<p>不加的话在<strong>某些平台</strong>绘制不了，会被剔除！比如 MuMu 模拟器上，我就遇到过这个问题。</p></blockquote>
+<p>不加的话在<strong>某些平台</strong>绘制不了，会被剔除！比如 MuMu 模拟器上，我就遇到过这个问题。</p><hr />

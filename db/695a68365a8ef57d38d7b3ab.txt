@@ -1,4 +1,4 @@
-<blockquote><h2 id="项目地址---spark-gpthttpsgithubcomcanxin121spark-gpt">项目地址 -&gt; <a class="link" href="https://github.com/canxin121/Spark-GPT" target="_blank" rel="noopener"
+<h2 id="项目地址---spark-gpthttpsgithubcomcanxin121spark-gpt">项目地址 -&gt; <a class="link" href="https://github.com/canxin121/Spark-GPT" target="_blank" rel="noopener"
 >Spark-GPT</a></h2>
 <h2 id="sparkgpt使用示例">SparkGPT使用示例</h2>
 <h2 id="webui">Webui</h2>
@@ -186,4 +186,4 @@ loading="lazy"
 class="gallery-image"
 data-flex-grow="56"
 data-flex-basis="134px"
-></p></blockquote>
+></p><hr />

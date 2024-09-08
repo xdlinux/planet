@@ -1,4 +1,4 @@
-<blockquote><h1 id="LeetCode-题目描述转-Markdown">LeetCode 题目描述转 Markdown<a class="headerlink" href="#LeetCode-题目描述转-Markdown" title="Permanent link">&para;</a></h1>
+<h1 id="LeetCode-题目描述转-Markdown">LeetCode 题目描述转 Markdown<a class="headerlink" href="#LeetCode-题目描述转-Markdown" title="Permanent link">&para;</a></h1>
 <!-- more -->
 
 <p>油猴脚本。代码改自 <a href="https://github.com/tonngw/leetcode-helper">https://github.com/tonngw/leetcode-helper</a>，适配了最新的 UI，并且删掉了没用的功能，主打一个能用就行。</p>
@@ -95,4 +95,4 @@
 <span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="sb">`&gt; [</span><span class="si">${</span><span class="nx">problemTitle</span><span class="si">}</span><span class="sb">](</span><span class="si">${</span><span class="nb">window</span><span class="p">.</span><span class="nx">location</span><span class="p">.</span><span class="nx">href</span><span class="si">}</span><span class="sb">)\n\n`</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">markdown</span>
 <span class="w">    </span><span class="p">}</span>
 <span class="p">})();</span>
-</code></pre></div></blockquote>
+</code></pre></div><hr />

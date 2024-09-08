@@ -1,4 +1,4 @@
-<blockquote><img src="https://legacy.superbart.top/picture/Random/Cirno-Easter%20Egg.png" alt="Featured image of post 我在 2022 年学到了什么" /><p>把去年学到的东西，没说过的拼接一下，回见了您。
+<img src="https://legacy.superbart.top/picture/Random/Cirno-Easter%20Egg.png" alt="Featured image of post 我在 2022 年学到了什么" /><p>把去年学到的东西，没说过的拼接一下，回见了您。
 (之前名称叫 Hadoop 额外技能，不能就这样就和老博客同步，索性把大作业里面我顺手提到的东西都罗列一通)</p>
 <h2 id="c-大作业技术罗列">C++ 大作业技术罗列</h2>
 <p>C++ 大作业学到的偏门东西。</p>
@@ -449,4 +449,4 @@
 </span></span><span class="line"><span class="cl">    <span class="p">}</span>
 </span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></div><p>自行了解用途，我已经忘了。</p></blockquote>
+</span></span></code></pre></div><p>自行了解用途，我已经忘了。</p><hr />

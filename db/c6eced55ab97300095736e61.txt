@@ -1,4 +1,4 @@
-<blockquote><img src="https://canxin121.github.io/p/%E5%B1%8F%E5%B9%95-%E6%8E%A7%E5%88%B6-%E7%94%B5%E6%9C%BApid/images/cover.png" alt="Featured image of post 屏幕 控制 电机(pid)" /><h1 id="保命事项">保命事项</h1>
+<img src="https://canxin121.github.io/p/%E5%B1%8F%E5%B9%95-%E6%8E%A7%E5%88%B6-%E7%94%B5%E6%9C%BApid/images/cover.png" alt="Featured image of post 屏幕 控制 电机(pid)" /><h1 id="保命事项">保命事项</h1>
 <ol>
 <li>VCC等电压和GND接地千万不要接反! 否则板子升天, money打水漂.</li>
 </ol>
@@ -2042,4 +2042,4 @@ scrolling="no" frameborder="no" framespacing="0" allowfullscreen="true">
 </span></span><span class="line"><span class="cl"><span class="cp">#endif </span><span class="cm">/* USE_FULL_ASSERT */</span><span class="cp">
 </span></span></span></code></pre></td></tr></table>
 </div>
-</div></blockquote>
+</div><hr />

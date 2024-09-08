@@ -1,4 +1,4 @@
-<blockquote><h2>前言</h2>
+<h2>前言</h2>
 <p>利用 discord.js 建立一个 Discord 机器人。</p>
 <p>我也是第一次上手，利用博客来记录我的学习过程，定期整理后再发到公众号。</p>
 <p>在简单对比了 discord.js (JavaScript)，discordgo (Go)，discord.py (Python)，Discord4J (Java)，JDA (Java) 和 D++ (C++) 等项目后，我选择了 <a href="https://discord.js.org/#/">discord.js</a>。</p>
@@ -284,4 +284,4 @@ module.exports = {
 <p><img src="https://img2022.cnblogs.com/blog/2455224/202207/2455224-20220711125819594-935091856.png" alt="image" /></p>
 <p><img src="https://img2022.cnblogs.com/blog/2455224/202207/2455224-20220711125834191-696325284.png" alt="image" /></p>
 <p>这样，一个非常简单的机器人就完成了。</p>
-<p>后续我们将学习更多的东西，先写到这吧。记得关注从而收取最新消息。</p></blockquote>
+<p>后续我们将学习更多的东西，先写到这吧。记得关注从而收取最新消息。</p><hr />

@@ -1,4 +1,4 @@
-<blockquote><img src="https://s2.loli.net/2022/08/01/GOzRUgIAKfEQdu3.jpg" alt="Featured image of post 奶油乐队个人回顾" /><p>我最近在搞 CPP 的一卡通管理系统大作业，那里面有三个测试文件。有个测试文件是 resident.txt，我在里面输了两个人：Clapton 和 Baker，他们俩对应 Eric Clapton(guitar) 和 Ginger Baker(drums)，都是奶油乐队的成员。不过我忘输机 Jack Bruce(bass, harmonica, vocal) 了:-P</p>
+<img src="https://s2.loli.net/2022/08/01/GOzRUgIAKfEQdu3.jpg" alt="Featured image of post 奶油乐队个人回顾" /><p>我最近在搞 CPP 的一卡通管理系统大作业，那里面有三个测试文件。有个测试文件是 resident.txt，我在里面输了两个人：Clapton 和 Baker，他们俩对应 Eric Clapton(guitar) 和 Ginger Baker(drums)，都是奶油乐队的成员。不过我忘输机 Jack Bruce(bass, harmonica, vocal) 了:-P</p>
 <p>奶油乐队是上世纪六十年代末的摇滚乐队，所以音乐风格有点复杂。</p>
 <h2 id="上来布鲁斯就超标">上来布鲁斯就超标</h2>
 <p>他们的第一张专辑 <em>Fresh Cream</em>  布鲁斯的味道简直是超标，毕竟有一半的歌曲是翻唱的布鲁斯歌曲。在原创的歌曲中，<em>Sleepy Time Time</em> 体现得很明显。上来的四个音，标准的布鲁斯。后面的三个连音，也是布鲁斯。就连吉他独奏，还是布鲁斯。加上迷幻的歌词，感觉有种奇特的感觉。而在翻唱作品中，<em>Cat’s Squirrel</em> 和 <em>Rollin‘ and Tumblin&rsquo;</em> 是最有那种感觉的，也就是高亢的声调来体现悲伤的感情，这都要归功于出色的口琴表演。</p>
@@ -25,4 +25,4 @@
 <a class="link" href="https://www.bilibili.com/video/BV1Zy4y1y729"  target="_blank" rel="noopener"
     >本乐队鼓手的纪录片</a><br>
 <a class="link" href="https://github.com/BenderBlog/Practise-Programs/tree/main/CPP/exp4"  target="_blank" rel="noopener"
-    >那个大作业</a></p></blockquote>
+    >那个大作业</a></p><hr />

@@ -1,6 +1,6 @@
-<blockquote><p>使用WordPress简单搭建了一个个人博客网站，谈谈写博客的原因和今后的准备。</p>
+<p>使用WordPress简单搭建了一个个人博客网站，谈谈写博客的原因和今后的准备。</p>
 <p><a href="https://nancunchild.cn/2024/07/10/cultivation_first_blog/">撒下种子——我的第一篇博客</a>最先出现在<a href="https://nancunchild.cn">NanCunChild的个人随想</a>。</p>
-</blockquote>
+<hr />
 <h2>先问个好</h2>
 <p>我是NanCunChild！一个不务正业的XDU代码控~，喜欢玩软件、折腾服务器、把整个网络搞宕机等等。今天终于准备在这个个人博客站写博客咯，还是有点激动呢。之前虽然也写过一两篇文章，但是终究还是没有做这么大的准备，因此写的也很零散。这次使用WordPress搭了一个个人网站，正好可以放挺多博客和日记，再加上一些插件，也可以实现RSS订阅，终于可以在XDU Planet里面看到我的文章了。</p></p>
 

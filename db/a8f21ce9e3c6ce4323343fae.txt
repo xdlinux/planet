@@ -1,4 +1,4 @@
-<blockquote><h1 id="Allocate-RT-时记得指定-filterMode-和-wrapMode">Allocate RT 时记得指定 filterMode 和 wrapMode<a class="headerlink" href="#Allocate-RT-时记得指定-filterMode-和-wrapMode" title="Permanent link">&para;</a></h1>
+<h1 id="Allocate-RT-时记得指定-filterMode-和-wrapMode">Allocate RT 时记得指定 filterMode 和 wrapMode<a class="headerlink" href="#Allocate-RT-时记得指定-filterMode-和-wrapMode" title="Permanent link">&para;</a></h1>
 <!-- more -->
 
 <p>最近在 URP 里遇到的坑：C# 里申请了一张 RT</p>
@@ -71,4 +71,4 @@
 <p><a href="https://docs.unity3d.com/Manual/SL-SamplerStates.html">Unity - Manual: Using sampler states</a>&#160;<a class="footnote-backref" href="#fnref:1" title="Jump back to footnote 1 in the text">&#8617;</a></p>
 </li>
 </ol>
-</div></blockquote>
+</div><hr />

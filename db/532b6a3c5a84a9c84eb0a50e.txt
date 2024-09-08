@@ -1,4 +1,4 @@
-<blockquote> &lt;h1 id=&#34;起始&#34;&gt;&lt;a href=&#34;#起始&#34; class=&#34;headerlink&#34; title=&#34;起始&#34;&gt;&lt;/a&gt;起始&lt;/h1&gt;&lt;p&gt;最近搞了一个路由器，360t7，从咸鱼上收的二手，已经刷了openwrt系统(本来还想自己刷的(っ*´Д&amp;#96;)っ雾)，然后今天就在搞各种路由器软件包，找到了luci-unblockneteasemusic后我十分心动，便开始着手配置，结果遇到各种问题，故记下此篇博客(～￣(OO)￣)ブ&lt;/p&gt;
+ &lt;h1 id=&#34;起始&#34;&gt;&lt;a href=&#34;#起始&#34; class=&#34;headerlink&#34; title=&#34;起始&#34;&gt;&lt;/a&gt;起始&lt;/h1&gt;&lt;p&gt;最近搞了一个路由器，360t7，从咸鱼上收的二手，已经刷了openwrt系统(本来还想自己刷的(っ*´Д&amp;#96;)っ雾)，然后今天就在搞各种路由器软件包，找到了luci-unblockneteasemusic后我十分心动，便开始着手配置，结果遇到各种问题，故记下此篇博客(～￣(OO)￣)ブ&lt;/p&gt;
 &lt;h2 id=&#34;Openwrt-UnblockNeteaseMusic-使用记录&#34;&gt;&lt;a href=&#34;#Openwrt-UnblockNeteaseMusic-使用记录&#34; class=&#34;headerlink&#34; title=&#34;Openwrt UnblockNeteaseMusic 使用记录&#34;&gt;&lt;/a&gt;Openwrt UnblockNeteaseMusic 使用记录&lt;/h2&gt;&lt;p&gt;unblockNeteaseMusic可以用来播放网易云音乐中的灰色歌曲，或者实现免vip播放会员歌曲等功能ヽ(✿ﾟ▽ﾟ)ノ&lt;br&gt;但是该软件包出的挺早的了，对于最新版的网易云音乐已经无法实现上述功能了(((φ(◎ロ◎;)φ)))&lt;br&gt;可能是最新版本网易云音乐做了奇奇怪怪的防护措施(-__-)&amp;#x3D;@))&amp;gt; o然后直接把这个东西给ban了。&lt;/p&gt;
 &lt;span id=&#34;more&#34;&gt;&lt;/span&gt;
 
@@ -30,4 +30,4 @@
 &lt;h2 id=&#34;总结&#34;&gt;&lt;a href=&#34;#总结&#34; class=&#34;headerlink&#34; title=&#34;总结&#34;&gt;&lt;/a&gt;总结&lt;/h2&gt;&lt;p&gt;  花了很久很久才搞明白这个东西，一直遇到开启服务后网易云音乐会断网的问题怒ε&amp;#x3D;怒ε&amp;#x3D;( o｀ω′)ノ&lt;/p&gt;
 &lt;p&gt;  查了很多很多资料，时间都挺早的，应该是大家最近搞这个软件包的人不多，然后我四面八方收集信息之后，终于找到了以上解决办法(ー&amp;#96;´ー)&lt;/p&gt;
 &lt;p&gt;  如果有问题可以联系我 ○|￣|_&lt;/p&gt;
- </blockquote>
+ <hr />

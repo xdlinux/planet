@@ -1,4 +1,4 @@
-<blockquote><h1 id="Unity-常用-Render-State-属性-UI">Unity 常用 Render State 属性 UI<a class="headerlink" href="#Unity-常用-Render-State-属性-UI" title="Permanent link">&para;</a></h1>
+<h1 id="Unity-常用-Render-State-属性-UI">Unity 常用 Render State 属性 UI<a class="headerlink" href="#Unity-常用-Render-State-属性-UI" title="Permanent link">&para;</a></h1>
 <!-- more -->
 
 <p>有时候想把 <code>ZTest</code>、<code>Cull</code> 等属性暴露到面板中配置，避免重复写相似的 Shader。这里直接把常用的都整理出来。</p>
@@ -402,4 +402,4 @@ Stencil
 <td style="text-align: left;">7</td>
 </tr>
 </tbody>
-</table></blockquote>
+</table><hr />

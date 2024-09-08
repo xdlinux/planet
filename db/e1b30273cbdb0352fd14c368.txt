@@ -1,4 +1,4 @@
-<blockquote> &lt;h2 id=&#34;Attention&#34;&gt;&lt;a href=&#34;#Attention&#34; class=&#34;headerlink&#34; title=&#34;Attention&#34;&gt;&lt;/a&gt;Attention&lt;/h2&gt;&lt;p&gt;QAuxiliary安装是我第一次从头到尾都是自己一步一步摸索出来的（○｀ 3′○）&lt;br&gt;因此可能会有一些地方存在问题，可联系我进行更改(u‿ฺu✿ฺ)&lt;/p&gt;
+ &lt;h2 id=&#34;Attention&#34;&gt;&lt;a href=&#34;#Attention&#34; class=&#34;headerlink&#34; title=&#34;Attention&#34;&gt;&lt;/a&gt;Attention&lt;/h2&gt;&lt;p&gt;QAuxiliary安装是我第一次从头到尾都是自己一步一步摸索出来的（○｀ 3′○）&lt;br&gt;因此可能会有一些地方存在问题，可联系我进行更改(u‿ฺu✿ฺ)&lt;/p&gt;
 &lt;h3 id=&#34;需要提前下载的软件&#34;&gt;&lt;a href=&#34;#需要提前下载的软件&#34; class=&#34;headerlink&#34; title=&#34;需要提前下载的软件&#34;&gt;&lt;/a&gt;需要提前下载的软件&lt;/h3&gt;&lt;ul&gt;
 &lt;li&gt;LSPatch:用于将QAuxiliary模块插入的QQ的APK中。&lt;/li&gt;
 &lt;li&gt;QAuxiliary:To make OICQ great again(๑•̀ㅂ•́)و✧!!!是一个基于QNotified的开源的Xposed框架。&lt;/li&gt;
@@ -20,4 +20,4 @@
 &lt;li&gt;注入成功后在QQ侧滑栏设置页面即可看到QAuxiliary选项，至此大功告成(๑•̀ㅂ•́)و✧&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h2 id=&#34;结语&#34;&gt;&lt;a href=&#34;#结语&#34; class=&#34;headerlink&#34; title=&#34;结语&#34;&gt;&lt;/a&gt;结语&lt;/h2&gt;&lt;p&gt;我好喜欢开源w(ﾟДﾟ)w，虽然还只是一个刚刚接触的小趴菜Σ( ° △ °|||)︴&lt;br&gt;伟大，无需多言Ψ(￣∀￣)Ψ！&lt;/p&gt;
- </blockquote>
+ <hr />

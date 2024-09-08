@@ -1,4 +1,4 @@
-<blockquote><h3>注意</h3>
+<h3>注意</h3>
 <p>本文起，项目已从 Discord.js v14.6.0 更新至 v14.7.1。</p>
 <p>你可以在项目目录中执行 <code>npm install discord.js@v14.7.1</code> 来更新依赖。</p>
 <h2>Chapter 13 - 交互四大组件之：下拉菜单 Select Menu</h2>
@@ -291,4 +291,4 @@ module.exports = {
 <h3>其他 SelectMenu 的类型</h3>
 <p>在 Discord.js v14.6.0 级更早版本中，SelectMenu 只有它自己这一个类型。</p>
 <p>而自从 v14.7.1 起，原 SelectMenu 改名为 StringSelectMenu，并增加了 UserSelectMenu、ChannelSelectMenu、MentionableSelectMenu、RoleSelectMenu。</p>
-<p>对应的 Builder 就是 StringSelectMenuBuilder()、UserSelectMenuBuilder()、ChannelSelectMenuBuilder()、MentionableSelectMenuBuilder()、RoleSelectMenuBuilder()。</p></blockquote>
+<p>对应的 Builder 就是 StringSelectMenuBuilder()、UserSelectMenuBuilder()、ChannelSelectMenuBuilder()、MentionableSelectMenuBuilder()、RoleSelectMenuBuilder()。</p><hr />

@@ -1,4 +1,4 @@
-<blockquote><p>下面是在 Astro 中编写 Markdown 内容时，可以使用的一些基本 Markdown 语法示例。</p>
+<p>下面是在 Astro 中编写 Markdown 内容时，可以使用的一些基本 Markdown 语法示例。</p>
 <h2>标题</h2>
 <p>你应该避免在 Markdown 正文中重复创建文章标题，因为文章标题会根据 <code>frontmatter</code> 中 <code>title</code> 自动生成。</p>
 <blockquote>
@@ -217,4 +217,4 @@ Most &lt;mark&gt;salamanders&lt;/mark&gt; are nocturnal, and hunt for insects, w
 <h2>Spoiler</h2>
 <pre><code>||hide content||
 </code></pre>
-<p>正常情况下，该内容会隐藏 ||hide content||，鼠标悬浮时才会显示。</p></blockquote>
+<p>正常情况下，该内容会隐藏 ||hide content||，鼠标悬浮时才会显示。</p><hr />

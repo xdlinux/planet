@@ -1,4 +1,4 @@
-<blockquote><h1 id="在-UI-上实现目标追踪">在 UI 上实现目标追踪<a class="headerlink" href="#在-UI-上实现目标追踪" title="Permanent link">&para;</a></h1>
+<h1 id="在-UI-上实现目标追踪">在 UI 上实现目标追踪<a class="headerlink" href="#在-UI-上实现目标追踪" title="Permanent link">&para;</a></h1>
 <!-- more -->
 
 <p>实现目标任务追踪功能。在 UI 上的椭圆区域内，显示目标的方向和距离。</p>
@@ -97,4 +97,4 @@
 <span class="p">}</span>
 </code></pre></div>
 <p><a href="https://docs.unity3d.com/ScriptReference/Matrix4x4.MultiplyPoint.html"><code>MultiplyPoint</code></a> 相比 <a href="https://docs.unity3d.com/ScriptReference/Matrix4x4.MultiplyPoint3x4.html"><code>MultiplyPoint3x4</code></a> 多了透视除法，所以乘出来直接是 NDC 坐标。具体可以看 <code>MultiplyPoint</code> 的源码。</p>
-<p>把结果赋值给 Panel 里一个图标的 <code>localPosition</code> 即可。箭头方向、距离之类的功能比较简单，不写了。</p></blockquote>
+<p>把结果赋值给 Panel 里一个图标的 <code>localPosition</code> 即可。箭头方向、距离之类的功能比较简单，不写了。</p><hr />

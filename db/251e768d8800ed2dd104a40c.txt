@@ -1,4 +1,4 @@
-<blockquote> &lt;h1 id=&#34;hexo搭建博客的过程中遇到的一些问题&#34;&gt;&lt;a href=&#34;#hexo搭建博客的过程中遇到的一些问题&#34; class=&#34;headerlink&#34; title=&#34;hexo搭建博客的过程中遇到的一些问题&#34;&gt;&lt;/a&gt;hexo搭建博客的过程中遇到的一些问题&lt;/h1&gt;&lt;h2 id=&#34;node-js与npm相关&#34;&gt;&lt;a href=&#34;#node-js与npm相关&#34; class=&#34;headerlink&#34; title=&#34;node.js与npm相关&#34;&gt;&lt;/a&gt;node.js与npm相关&lt;/h2&gt;&lt;ul&gt;
+ &lt;h1 id=&#34;hexo搭建博客的过程中遇到的一些问题&#34;&gt;&lt;a href=&#34;#hexo搭建博客的过程中遇到的一些问题&#34; class=&#34;headerlink&#34; title=&#34;hexo搭建博客的过程中遇到的一些问题&#34;&gt;&lt;/a&gt;hexo搭建博客的过程中遇到的一些问题&lt;/h1&gt;&lt;h2 id=&#34;node-js与npm相关&#34;&gt;&lt;a href=&#34;#node-js与npm相关&#34; class=&#34;headerlink&#34; title=&#34;node.js与npm相关&#34;&gt;&lt;/a&gt;node.js与npm相关&lt;/h2&gt;&lt;ul&gt;
 &lt;li&gt;下载&lt;br&gt;从官网下载node.js后，基本只需要一路next即可，最重要的是选择add to path.&lt;/li&gt;
 &lt;li&gt;使用源&lt;ul&gt;
 &lt;li&gt;&lt;p&gt;截止到2024&amp;#x2F;2&amp;#x2F;19为止，网上很多教程中的淘宝源均已无法使用，下面的为最新且有效的淘宝镜像:&lt;a href=&#34;https://registry.npmmirror.com/&#34;&gt;https://registry.npmmirror.com&lt;/a&gt;&lt;/p&gt;
@@ -40,4 +40,4 @@ hexo s
 &lt;h2 id=&#34;主题&#34;&gt;&lt;a href=&#34;#主题&#34; class=&#34;headerlink&#34; title=&#34;主题&#34;&gt;&lt;/a&gt;主题&lt;/h2&gt;&lt;p&gt;只需要在对应开源主题看文档即可按照自己意愿更改。&lt;/p&gt;
 &lt;hr&gt;
 &lt;h1 id=&#34;总结&#34;&gt;&lt;a href=&#34;#总结&#34; class=&#34;headerlink&#34; title=&#34;总结&#34;&gt;&lt;/a&gt;总结&lt;/h1&gt;&lt;p&gt;这篇文章集结了全部(大概)我在用一下午时间hexo搭建博客中遇到的问题，网上的方法有对的也有错的，经历了许久的试错后，终于找到的正确方法都被我记录在上面啦O(∩_∩)O!!!&lt;/p&gt;
- </blockquote>
+ <hr />

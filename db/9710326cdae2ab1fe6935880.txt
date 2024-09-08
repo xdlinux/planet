@@ -1,4 +1,4 @@
-<blockquote><h2>Chapter 12 - 交互四大组件之：按钮</h2>
+<h2>Chapter 12 - 交互四大组件之：按钮</h2>
 <h3>修改 <code>events/interactionCreate.js</code></h3>
 <p>对应的 commit：
 https://github.com/wtflmao/discord_bot_example/commit/eef8c0f3fb0ebed69c63eb776128acb28ceb8b3f
@@ -564,4 +564,4 @@ module.exports = {
 const collector = message.createMessageComponentCollector();
 </code></pre>
 <p>此时，只要监听某条特定消息的收集器停止了工作，那么在本例中，没有其他的收集器可以在收集到该按钮的组件事件了，哪怕满足 filter 的条件了也不行。本例使用的是对象是频道的收集器。</p>
-<p>你可以自由选择是使用对象是频道的消息组件收集器，还是使用对象是消息的消息组件收集器，来简化你的任务。</p></blockquote>
+<p>你可以自由选择是使用对象是频道的消息组件收集器，还是使用对象是消息的消息组件收集器，来简化你的任务。</p><hr />

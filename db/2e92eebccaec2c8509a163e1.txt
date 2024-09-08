@@ -1,4 +1,4 @@
-<blockquote><h1 id="青雀进暗杠的抽牌数期望">青雀进暗杠的抽牌数期望<a class="headerlink" href="#青雀进暗杠的抽牌数期望" title="Permanent link">&para;</a></h1>
+<h1 id="青雀进暗杠的抽牌数期望">青雀进暗杠的抽牌数期望<a class="headerlink" href="#青雀进暗杠的抽牌数期望" title="Permanent link">&para;</a></h1>
 <!-- more -->
 
 <p>用 <a href="https://en.wikipedia.org/wiki/Markov_chain">马尔可夫链（Markov chain）</a> 暴力计算。顺便复习一下线代。</p>
@@ -387,4 +387,4 @@ EX = \dfrac{89}{36} \approx 2.3056
 <p><a href="https://www.miyoushe.com/sr/article/39578076">短生种都能看懂的青雀摸牌概率【科学琼玉论】-崩坏：星穹铁道社区-米游社</a>&#160;<a class="footnote-backref" href="#fnref:2" title="Jump back to footnote 2 in the text">&#8617;</a></p>
 </li>
 </ol>
-</div></blockquote>
+</div><hr />

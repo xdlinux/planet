@@ -1,4 +1,4 @@
-<blockquote><img src="https://s2.loli.net/2022/08/01/TerCUsW3QqVIRbh.jpg" alt="Featured image of post Roland SD-35 MIDI 播放器评测" /><p>我一直想要一个硬音源，所以我搞来了这台Roland SD-35 MIDI播放器。因为这是闲鱼上我所找到的最便宜，也是最具特点的Roland MIDI设备。这台机器吸引我的地方，就是其能播放软盘里的MIDI音乐。不过这个机器当音源是真的不行，不过情有可原。接下来，我给大家详细介绍这个机器。</p>
+<img src="https://s2.loli.net/2022/08/01/TerCUsW3QqVIRbh.jpg" alt="Featured image of post Roland SD-35 MIDI 播放器评测" /><p>我一直想要一个硬音源，所以我搞来了这台Roland SD-35 MIDI播放器。因为这是闲鱼上我所找到的最便宜，也是最具特点的Roland MIDI设备。这台机器吸引我的地方，就是其能播放软盘里的MIDI音乐。不过这个机器当音源是真的不行，不过情有可原。接下来，我给大家详细介绍这个机器。</p>
 <p><figure 
 	>
 	<a href="https://s2.loli.net/2022/08/01/TerCUsW3QqVIRbh.jpg" >
@@ -88,4 +88,4 @@
 <p>不过既然不能当音源，我还要攒一年的钱，买一个SC-88去:-P（卖溢价二手货的都给我下地狱吧）</p>
 <h2 id="part-5相关计划">Part 5：相关计划</h2>
 <p>根据之前的投票结果和我的个人意愿，下期MIDI演示视频，我要用《红魔乡》的音乐演示，经由软盘播放。然后是《毁灭战士II》，经由MIDI线。可能还会用《RoTT》和《Heretic》的部分音轨出一个bug演示视频。制作方面呢，我要改MIDI，录制，画封面啥的。所以各位耐心等着吧:-P</p>
-<p>进度视我的课程难度和我陷入不合理竞争的深度而定:-(</p></blockquote>
+<p>进度视我的课程难度和我陷入不合理竞争的深度而定:-(</p><hr />

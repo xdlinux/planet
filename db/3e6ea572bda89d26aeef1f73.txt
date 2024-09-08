@@ -1,4 +1,4 @@
-<blockquote> &lt;h2 id=&#34;大二下学期收官总结&#34;&gt;&lt;a href=&#34;#大二下学期收官总结&#34; class=&#34;headerlink&#34; title=&#34;大二下学期收官总结&#34;&gt;&lt;/a&gt;大二下学期收官总结&lt;/h2&gt;&lt;p&gt;&lt;strong&gt;结束哩!!!!!&lt;/strong&gt;&lt;br&gt;&lt;strong&gt;✧(≖ ◡ ≖✿)我真是嗨到不行啊✧(≖ ◡ ≖✿)&lt;/strong&gt;&lt;/p&gt;
+ &lt;h2 id=&#34;大二下学期收官总结&#34;&gt;&lt;a href=&#34;#大二下学期收官总结&#34; class=&#34;headerlink&#34; title=&#34;大二下学期收官总结&#34;&gt;&lt;/a&gt;大二下学期收官总结&lt;/h2&gt;&lt;p&gt;&lt;strong&gt;结束哩!!!!!&lt;/strong&gt;&lt;br&gt;&lt;strong&gt;✧(≖ ◡ ≖✿)我真是嗨到不行啊✧(≖ ◡ ≖✿)&lt;/strong&gt;&lt;/p&gt;
 &lt;span id=&#34;more&#34;&gt;&lt;/span&gt;
 
 &lt;h3 id=&#34;结束&#34;&gt;&lt;a href=&#34;#结束&#34; class=&#34;headerlink&#34; title=&#34;结束&#34;&gt;&lt;/a&gt;结束&lt;/h3&gt;&lt;p&gt;  鼠鼠的大二下也是结束哩┗( T﹏T )┛。这学期里面也是学到了许多许多的东西，比如对计算机网络有了比较深入的了解，还收购了一个路由器，玩了玩openwrt（虽然不是自己刷的 ≡ ω ≡）。学习网络的过程非常有趣，也越发觉得自己对网络十分感兴趣，刚好也发现大三可以选一些网络方面的院选课，准备大三再深入学习一下ヾ(￣▽￣)~&lt;/p&gt;
@@ -6,4 +6,4 @@
 &lt;h3 id=&#34;前端&#34;&gt;&lt;a href=&#34;#前端&#34; class=&#34;headerlink&#34; title=&#34;前端&#34;&gt;&lt;/a&gt;前端&lt;/h3&gt;&lt;p&gt;  此外捏，也是学习了一些前端的知识。前端三板斧学了html，css，js还没学完，不过这些是上半学期学的，现在感觉都忘记的差不多了ヽ(*。&amp;gt;Д假期里面再看看吧，不过前端还是蛮有趣的（○｀ 3′○）&lt;/p&gt;
 &lt;h3 id=&#34;计划&#34;&gt;&lt;a href=&#34;#计划&#34; class=&#34;headerlink&#34; title=&#34;计划&#34;&gt;&lt;/a&gt;计划&lt;/h3&gt;&lt;p&gt;  本来这学期的计划是学完前端三剑客，再学个docker，还有时间的话学个rust或者flutter，结果被该死的期末考试拖了太久太久，好在最后的成绩也是还行啊（￣▽￣），最起码也还看得过去ヽ(✿ﾟ▽ﾟ)ノ总之呢，兴趣推动学习确实是很不错捏。如果想要像别人那样厉害的话，那就多学点东西叭o(一︿一+)o&lt;/p&gt;
 &lt;h3 id=&#34;展望&#34;&gt;&lt;a href=&#34;#展望&#34; class=&#34;headerlink&#34; title=&#34;展望&#34;&gt;&lt;/a&gt;展望&lt;/h3&gt;&lt;p&gt;  希望自己可以在大三的时候，能够做出一些自己想要的东西，或者多学到一点喜欢的技术，毕竟自己还是个菜鸟（￣▽￣）&lt;/p&gt;
- </blockquote>
+ <hr />

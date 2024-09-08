@@ -1,4 +1,4 @@
-<blockquote><h1 id="Nuxt-3-开发避坑">Nuxt 3 开发避坑<a class="headerlink" href="#Nuxt-3-开发避坑" title="Permanent link">&para;</a></h1>
+<h1 id="Nuxt-3-开发避坑">Nuxt 3 开发避坑<a class="headerlink" href="#Nuxt-3-开发避坑" title="Permanent link">&para;</a></h1>
 <!-- more -->
 
 <p>开发个人主页时用了 Nuxt 3。虽然有些坑，但它还是很好用的。</p>
@@ -134,4 +134,4 @@ npm<span class="w"> </span>i<span class="w"> </span>--save<span class="w"> </spa
 <p><a href="https://github.com/FortAwesome/vue-fontawesome/issues/394#issuecomment-2092933896">https://github.com/FortAwesome/vue-fontawesome/issues/394#issuecomment-2092933896</a>&#160;<a class="footnote-backref" href="#fnref:1" title="Jump back to footnote 1 in the text">&#8617;</a></p>
 </li>
 </ol>
-</div></blockquote>
+</div><hr />

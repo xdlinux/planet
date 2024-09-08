@@ -1,4 +1,4 @@
-<blockquote><h1>Chapter 19 - 命令本地化</h1>
+<h1>Chapter 19 - 命令本地化</h1>
 <p>本文编写时，项目已升级至 discord.js@v14.9.0。</p>
 <h3>本地化（Localization）是什么</h3>
 <p>本地化是指将软件或产品适应不同的语言、文化和地区的过程。</p>
@@ -296,4 +296,4 @@ module.exports = {
 <p><img src="https://img2023.cnblogs.com/blog/2455224/202304/2455224-20230410004616652-516882406.png" alt="image" /></p>
 <h3>小结</h3>
 <p>我们学习了在 discord.js 里进行本地化翻译的基本操作</p>
-<p>原文作者闪电豹猫，原文链接https://www.cnblogs.com/hhzm/p/17301564.html 转载注明出处</p></blockquote>
+<p>原文作者闪电豹猫，原文链接https://www.cnblogs.com/hhzm/p/17301564.html 转载注明出处</p><hr />

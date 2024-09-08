@@ -1,4 +1,4 @@
-<blockquote><h1 id="集成-RenderDoc">集成 RenderDoc<a class="headerlink" href="#集成-RenderDoc" title="Permanent link">&para;</a></h1>
+<h1 id="集成-RenderDoc">集成 RenderDoc<a class="headerlink" href="#集成-RenderDoc" title="Permanent link">&para;</a></h1>
 <!-- more -->
 
 <p>实现像 Unity 一样，直接从自己程序里调起 RenderDoc 截帧的功能。参考文档：<a href="https://renderdoc.org/docs/in_application_api.html">In-application API — RenderDoc documentation</a>。</p>
@@ -157,4 +157,4 @@
 
 <span class="w">    </span><span class="n">ImGui</span><span class="o">::</span><span class="n">EndMainMenuBar</span><span class="p">();</span>
 <span class="p">}</span>
-</code></pre></div></blockquote>
+</code></pre></div><hr />
