@@ -1,4 +1,4 @@
-<html><head></head><body><h1 id="LeetCode-题目描述转-Markdown">LeetCode 题目描述转 Markdown<a class="headerlink" href="https://note.stalomeow.com/blog/posts/leetcode-problem-desc-to-markdown/#LeetCode-%E9%A2%98%E7%9B%AE%E6%8F%8F%E8%BF%B0%E8%BD%AC-Markdown" title="Permanent link">¶</a></h1>
+<blockquote><h1 id="LeetCode-题目描述转-Markdown">LeetCode 题目描述转 Markdown<a class="headerlink" href="#LeetCode-题目描述转-Markdown" title="Permanent link">&para;</a></h1>
 <!-- more -->
 
 <p>油猴脚本。代码改自 <a href="https://github.com/tonngw/leetcode-helper">https://github.com/tonngw/leetcode-helper</a>，适配了最新的 UI，并且删掉了没用的功能，主打一个能用就行。</p>
@@ -24,19 +24,19 @@
 <span class="w">    </span><span class="nx">addTurndownServiceRules</span><span class="p">();</span>
 
 <span class="w">    </span><span class="c1">// 注入菜单</span>
-<span class="w">    </span><span class="nx">GM_registerMenuCommand</span><span class="p">(</span><span class="s2">&#34;复制 LeetCode 题目为 Markdown，并存入剪切板&#34;</span><span class="p">,</span><span class="w"> </span><span class="nx">copy</span><span class="p">);</span>
+<span class="w">    </span><span class="nx">GM_registerMenuCommand</span><span class="p">(</span><span class="s2">&quot;复制 LeetCode 题目为 Markdown，并存入剪切板&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">copy</span><span class="p">);</span>
 
 <span class="w">    </span><span class="c1">// 添加复制按钮</span>
-<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">copyBtn</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="s2">&#34;button&#34;</span><span class="p">);</span>
-<span class="w">    </span><span class="nx">copyBtn</span><span class="p">.</span><span class="nx">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&#34;copyBtn&#34;</span><span class="p">;</span>
+<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">copyBtn</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="s2">&quot;button&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="nx">copyBtn</span><span class="p">.</span><span class="nx">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;copyBtn&quot;</span><span class="p">;</span>
 <span class="w">    </span><span class="nx">copyBtn</span><span class="p">.</span><span class="nx">innerHTML</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;复制&#39;</span><span class="p">;</span>
-<span class="w">    </span><span class="nx">copyBtn</span><span class="p">.</span><span class="nx">style</span><span class="p">.</span><span class="nx">alignSelf</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&#34;center&#34;</span><span class="p">;</span>
-<span class="w">    </span><span class="nx">copyBtn</span><span class="p">.</span><span class="nx">title</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&#34;复制题目为 Markdown 格式&#34;</span><span class="p">;</span>
+<span class="w">    </span><span class="nx">copyBtn</span><span class="p">.</span><span class="nx">style</span><span class="p">.</span><span class="nx">alignSelf</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;center&quot;</span><span class="p">;</span>
+<span class="w">    </span><span class="nx">copyBtn</span><span class="p">.</span><span class="nx">title</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;复制题目为 Markdown 格式&quot;</span><span class="p">;</span>
 
 <span class="w">    </span><span class="nb">window</span><span class="p">.</span><span class="nx">onload</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">setTimeout</span><span class="p">(</span><span class="kd">function</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="kd">var</span><span class="w"> </span><span class="nx">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementsByClassName</span><span class="p">(</span><span class="s2">&#34;text-title-large font-semibold text-text-primary dark:text-text-primary&#34;</span><span class="p">)[</span><span class="mf">0</span><span class="p">];</span>
+<span class="w">        </span><span class="kd">var</span><span class="w"> </span><span class="nx">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementsByClassName</span><span class="p">(</span><span class="s2">&quot;text-title-large font-semibold text-text-primary dark:text-text-primary&quot;</span><span class="p">)[</span><span class="mf">0</span><span class="p">];</span>
 <span class="w">        </span><span class="nx">x</span><span class="p">.</span><span class="nx">parentNode</span><span class="p">.</span><span class="nx">appendChild</span><span class="p">(</span><span class="nx">copyBtn</span><span class="p">);</span>
-<span class="w">        </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&#34;I was invoked...&#34;</span><span class="p">);</span>
+<span class="w">        </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;I was invoked...&quot;</span><span class="p">);</span>
 <span class="w">    </span><span class="p">},</span><span class="w"> </span><span class="mf">1500</span><span class="p">);</span>
 
 <span class="w">    </span><span class="c1">// 为复制按钮绑定点击功能</span>
@@ -66,19 +66,19 @@
 <span class="w">        </span><span class="nx">turndownService</span><span class="p">.</span><span class="nx">addRule</span><span class="p">(</span><span class="s1">&#39;strikethrough&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">{</span>
 <span class="w">            </span><span class="nx">filter</span><span class="o">:</span><span class="w"> </span><span class="p">[</span><span class="s1">&#39;strong&#39;</span><span class="p">],</span>
 <span class="w">            </span><span class="nx">replacement</span><span class="o">:</span><span class="w"> </span><span class="kd">function</span><span class="w"> </span><span class="p">(</span><span class="nx">content</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">                </span><span class="k">return</span><span class="w"> </span><span class="s1">&#39;**&#39;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">content</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s2">&#34;**&#34;</span>
+<span class="w">                </span><span class="k">return</span><span class="w"> </span><span class="s1">&#39;**&#39;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">content</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s2">&quot;**&quot;</span>
 <span class="w">            </span><span class="p">}</span>
 <span class="w">        </span><span class="p">});</span>
 <span class="w">        </span><span class="nx">turndownService</span><span class="p">.</span><span class="nx">addRule</span><span class="p">(</span><span class="s1">&#39;strikethrough&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">{</span>
 <span class="w">            </span><span class="nx">filter</span><span class="o">:</span><span class="w"> </span><span class="p">[</span><span class="s1">&#39;code&#39;</span><span class="p">],</span>
 <span class="w">            </span><span class="nx">replacement</span><span class="o">:</span><span class="w"> </span><span class="kd">function</span><span class="w"> </span><span class="p">(</span><span class="nx">content</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">                </span><span class="k">return</span><span class="w"> </span><span class="s1">&#39;&lt;code&gt;&#39;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">content</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s2">&#34;&lt;/code&gt;&#34;</span>
+<span class="w">                </span><span class="k">return</span><span class="w"> </span><span class="s1">&#39;&lt;code&gt;&#39;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">content</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s2">&quot;&lt;/code&gt;&quot;</span>
 <span class="w">            </span><span class="p">}</span>
 <span class="w">        </span><span class="p">});</span>
 <span class="w">        </span><span class="nx">turndownService</span><span class="p">.</span><span class="nx">addRule</span><span class="p">(</span><span class="s1">&#39;strikethrough&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">{</span>
 <span class="w">            </span><span class="nx">filter</span><span class="o">:</span><span class="w"> </span><span class="p">[</span><span class="s1">&#39;sup&#39;</span><span class="p">],</span>
 <span class="w">            </span><span class="nx">replacement</span><span class="o">:</span><span class="w"> </span><span class="kd">function</span><span class="w"> </span><span class="p">(</span><span class="nx">content</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">                </span><span class="k">return</span><span class="w"> </span><span class="s1">&#39;&lt;sup&gt;&#39;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">content</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s2">&#34;&lt;/sup&gt;&#34;</span>
+<span class="w">                </span><span class="k">return</span><span class="w"> </span><span class="s1">&#39;&lt;sup&gt;&#39;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">content</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s2">&quot;&lt;/sup&gt;&quot;</span>
 <span class="w">            </span><span class="p">}</span>
 <span class="w">        </span><span class="p">});</span>
 <span class="w">    </span><span class="p">}</span>
@@ -95,4 +95,4 @@
 <span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="sb">`&gt; [</span><span class="si">${</span><span class="nx">problemTitle</span><span class="si">}</span><span class="sb">](</span><span class="si">${</span><span class="nb">window</span><span class="p">.</span><span class="nx">location</span><span class="p">.</span><span class="nx">href</span><span class="si">}</span><span class="sb">)\n\n`</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">markdown</span>
 <span class="w">    </span><span class="p">}</span>
 <span class="p">})();</span>
-</code></pre></div></body></html>
+</code></pre></div></blockquote>

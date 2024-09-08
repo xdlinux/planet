@@ -1,4 +1,4 @@
-<html><head></head><body><h2>破事氵</h2>
+<blockquote></blockquote><h2>破事氵</h2>
 <p>台式电脑通过网线连校园网要拨号上网，<strong>幽默</strong>腾子几百年没更新的TIM登录时没网会报错弹窗。<br/>
 <img src="https://guzhengsvt.top/usr/uploads/2024/06/2343467847.png" alt="TIM报错" loading="lazy"/><br/>
 于是每次开机我都得手动打开设置里的拨号上网，设置的TIM开机自启动会先行一步报错，显得开机自启动这个功能很<strong>幽默</strong>。<br/>
@@ -21,4 +21,3 @@
 新建-&gt;开始任务选择“发生事件时”-&gt;日志翻到最下面倒数第二个“应用程序”-&gt;源“RasClient”-&gt;确定（断网重连）<br/>
 转到操作-&gt;新建-&gt;启动程序-&gt;浏览找到你刚写的bat程序选中-&gt;确认</p>
 <p>确认（此时会要求输入Windows系统登录的微软账号密码，不是PIN，总是出错建议检查常规页面里的用户账户是否匹配。）</p>
-</body></html>

@@ -1,115 +1,115 @@
-<html><head></head><body><h1 id="Ubuntu23-10安装clash全过程-各种问题解决方案"><a href="http://wanglanhuajiaofen.fun/2024/02/29/clash/#Ubuntu23-10%E5%AE%89%E8%A3%85clash%E5%85%A8%E8%BF%87%E7%A8%8B-%E5%90%84%E7%A7%8D%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88" class="headerlink" title="Ubuntu23.10安装clash全过程(各种问题解决方案)"></a>Ubuntu23.10安装clash全过程(各种问题解决方案)</h1><!-- <font face="逐浪新宋" color=grey size=6>该篇blog将详细描述自己在ubuntu系统下安装clash的过程和遇到的各种问题与bug_ o(￣ヘ￣o＃)</font> -->
+<blockquote> &lt;h1 id=&#34;Ubuntu23-10安装clash全过程-各种问题解决方案&#34;&gt;&lt;a href=&#34;#Ubuntu23-10安装clash全过程-各种问题解决方案&#34; class=&#34;headerlink&#34; title=&#34;Ubuntu23.10安装clash全过程(各种问题解决方案)&#34;&gt;&lt;/a&gt;Ubuntu23.10安装clash全过程(各种问题解决方案)&lt;/h1&gt;&lt;!-- &lt;font face=&#34;逐浪新宋&#34; color=grey size=6&gt;该篇blog将详细描述自己在ubuntu系统下安装clash的过程和遇到的各种问题与bug_ o(￣ヘ￣o＃)&lt;/font&gt; --&gt;
 
-<hr/>
-<h2 id="操作步骤"><a href="http://wanglanhuajiaofen.fun/2024/02/29/clash/#%E6%93%8D%E4%BD%9C%E6%AD%A5%E9%AA%A4" class="headerlink" title="操作步骤"></a>操作步骤</h2><hr/>
-<ul>
-<li>安装clash包<ul>
-<li><p>在终端中首先开启root权限</p>
-<pre><code class="hljs linux">su</code></pre></li>
-</ul>
-</li>
-</ul>
-<span id="more"></span>
-<ul>
-<li><p>在当前用户目录中创建名为clash的文件夹（名字自取即可）然后切换到该目录</p>
-<pre><code class="hljs linux">mkdir ./clash
-cd ./clash</code></pre>
-</li>
-<li><p>下载clash的几种方式(因为clash作者删库跑路了，所以无法从作者的仓库中下载)</p>
-<ul>
-<li><p>wget + 下载url</p>
-  <pre><code class="hljs apache"><span class="hljs-attribute">wget</span> https://github.com/Dreamacro/clash/releases/download/v1.<span class="hljs-number">14</span>.<span class="hljs-number">0</span>/clash-linux-amd64-v1.<span class="hljs-number">14</span>.<span class="hljs-number">0</span>.gz</code></pre>
-</li>
-<li><p>在ubuntu firefox浏览器找github备份仓库直接下载(考验你的网络(☆´益`)c)</p>
-<ul>
-<li>这里我直接贴备用仓库的url   <a href="https://github.com/doreamon-design/clash/releases" title="bushi">备用仓库</a></li>
-<li>注意选择对应的版本<br/><img src="https://s2.loli.net/2024/02/29/76kTCNn4QjL5ehA.png" alt="这是我选的版本" title="myversion"/></li>
-</ul>
-</li>
-<li><p>如果显示无法连接，则可能是系统代理的问题(对于我是这样(￣△￣；)),参考下面blog<br/> <a href="https://blog.csdn.net/kids_budong_c/article/details/123479499," title="bushi">这是解决大法!</a></p>
-</li>
-</ul>
-</li>
-</ul>
-<hr/>
-<ul>
-<li>解压clash包<br/>我下载的clash包的后缀是.tar.gz<br/>这里可能会遇到如下问题:<ul>
-<li>解压后tar后缀还在<br/>解决方法:   <code>tar -zxvf 压缩文件名.tar.gz</code></li>
-<li>大部分教程给的都是gzip解压，这个方式对我不适用</li>
-</ul>
-</li>
-</ul>
-<hr/>
-<ul>
-<li><p>赋予权限</p>
-  <pre><code class="hljs linux">chmod +x 解压缩后的文件名</code></pre></li>
-</ul>
-<hr/>
-<ul>
-<li><p>移动</p>
- <pre><code class="hljs linux">mv 解压缩后的文件名 /usr/local/bin/clash</code></pre></li>
-</ul>
-<hr/>
-<ul>
-<li><p>查看版本</p>
-<pre><code class="hljs linux">clash -v</code></pre>
+&lt;hr&gt;
+&lt;h2 id=&#34;操作步骤&#34;&gt;&lt;a href=&#34;#操作步骤&#34; class=&#34;headerlink&#34; title=&#34;操作步骤&#34;&gt;&lt;/a&gt;操作步骤&lt;/h2&gt;&lt;hr&gt;
+&lt;ul&gt;
+&lt;li&gt;安装clash包&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;在终端中首先开启root权限&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;hljs linux&#34;&gt;su&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;span id=&#34;more&#34;&gt;&lt;/span&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;在当前用户目录中创建名为clash的文件夹（名字自取即可）然后切换到该目录&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;hljs linux&#34;&gt;mkdir ./clash
+cd ./clash&lt;/code&gt;&lt;/pre&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;下载clash的几种方式(因为clash作者删库跑路了，所以无法从作者的仓库中下载)&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;wget + 下载url&lt;/p&gt;
+  &lt;pre&gt;&lt;code class=&#34;hljs apache&#34;&gt;&lt;span class=&#34;hljs-attribute&#34;&gt;wget&lt;/span&gt; https://github.com/Dreamacro/clash/releases/download/v1.&lt;span class=&#34;hljs-number&#34;&gt;14&lt;/span&gt;.&lt;span class=&#34;hljs-number&#34;&gt;0&lt;/span&gt;/clash-linux-amd64-v1.&lt;span class=&#34;hljs-number&#34;&gt;14&lt;/span&gt;.&lt;span class=&#34;hljs-number&#34;&gt;0&lt;/span&gt;.gz&lt;/code&gt;&lt;/pre&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;在ubuntu firefox浏览器找github备份仓库直接下载(考验你的网络(☆´益&amp;#96;)c)&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;这里我直接贴备用仓库的url   &lt;a href=&#34;https://github.com/doreamon-design/clash/releases&#34; title=&#34;bushi&#34;&gt;备用仓库&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;注意选择对应的版本&lt;br&gt;&lt;img src=&#34;https://s2.loli.net/2024/02/29/76kTCNn4QjL5ehA.png&#34; alt=&#34;这是我选的版本&#34; title=&#34;myversion&#34;&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;如果显示无法连接，则可能是系统代理的问题(对于我是这样(￣△￣；)),参考下面blog&lt;br&gt; &lt;a href=&#34;https://blog.csdn.net/kids_budong_c/article/details/123479499,&#34; title=&#34;bushi&#34;&gt;这是解决大法!&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;ul&gt;
+&lt;li&gt;解压clash包&lt;br&gt;我下载的clash包的后缀是.tar.gz&lt;br&gt;这里可能会遇到如下问题:&lt;ul&gt;
+&lt;li&gt;解压后tar后缀还在&lt;br&gt;解决方法:   &lt;code&gt;tar -zxvf 压缩文件名.tar.gz&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;大部分教程给的都是gzip解压，这个方式对我不适用&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;赋予权限&lt;/p&gt;
+  &lt;pre&gt;&lt;code class=&#34;hljs linux&#34;&gt;chmod +x 解压缩后的文件名&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;移动&lt;/p&gt;
+ &lt;pre&gt;&lt;code class=&#34;hljs linux&#34;&gt;mv 解压缩后的文件名 /usr/local/bin/clash&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;查看版本&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;hljs linux&#34;&gt;clash -v&lt;/code&gt;&lt;/pre&gt;
 
-<ul>
-<li>如果这一步报错：无法执行二进制文件，那就是大概你下载的clash包有问题，我的解决方法是用上述第二种方式o(*≧▽≦)ツ┏━┓</li>
-</ul>
-<p>如果没有报错，正常显示出了clash版本号，那么到目前为止都非常顺利的成功了( ￣ー￣)人(^▽^ )</p>
-</li>
-</ul>
-<hr/>
-<ul>
-<li>启动clash<ul>
-<li><p>启动clash</p>
-<pre><code class="hljs ebnf"><span class="hljs-attribute">clash</span></code></pre>
+&lt;ul&gt;
+&lt;li&gt;如果这一步报错：无法执行二进制文件，那就是大概你下载的clash包有问题，我的解决方法是用上述第二种方式o(*≧▽≦)ツ┏━┓&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;如果没有报错，正常显示出了clash版本号，那么到目前为止都非常顺利的成功了( ￣ー￣)人(^▽^ )&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;ul&gt;
+&lt;li&gt;启动clash&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;启动clash&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;hljs ebnf&#34;&gt;&lt;span class=&#34;hljs-attribute&#34;&gt;clash&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
 
-<p>这一步会显示系统缺失有些配置文件，自动会给你下载好</p>
-</li>
-<li><p>导入配置文件(配置文件获取方式不再赘述)<br/>配置文件所在目录:</p>
-<pre><code class="hljs arduino">$home/.config/clash/</code></pre>
+&lt;p&gt;这一步会显示系统缺失有些配置文件，自动会给你下载好&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;导入配置文件(配置文件获取方式不再赘述)&lt;br&gt;配置文件所在目录:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;hljs arduino&#34;&gt;$home/.config/clash/&lt;/code&gt;&lt;/pre&gt;
 
-<p>.config为隐藏文件夹，对于不熟悉终端的小伙伴在图形界面的文件夹按下CTRL+H即可<br/>将获得的配置文件改名为config.yaml替换上述目录中的config.yaml即可</p>
-</li>
-<li><p>重新启动clash</p>
-<pre><code class="hljs ebnf"><span class="hljs-attribute">clash</span></code></pre>
+&lt;p&gt;.config为隐藏文件夹，对于不熟悉终端的小伙伴在图形界面的文件夹按下CTRL+H即可&lt;br&gt;将获得的配置文件改名为config.yaml替换上述目录中的config.yaml即可&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;重新启动clash&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;hljs ebnf&#34;&gt;&lt;span class=&#34;hljs-attribute&#34;&gt;clash&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
 
-<p>此时会显示出你的订阅的相关信息，即表示成功<br/><strong>在启动clash的条件下，访问以下链接可以进入clash图形控制页面</strong><br/><a href="https://clash.razord.top/#/proxies" title="就是我啦Σ(っ °Д °;)っ">clash图形控制页面</a></p>
-</li>
-</ul>
-</li>
-</ul>
-<hr/>
-<ul>
-<li>Ubuntu系统网络代理设置<br/><img src="https://s2.loli.net/2024/02/29/8INVmetSdK9gRWk.png" alt="Alt text"/><br/>这里我遇到一个问题是，我成功连接了梯子之后仍然翻不了墙，就一直在调这个代理设置，最终在按照上图输入之后可以了 <strong>但是我不知道是不是因为这个原因才成功的Ｏ(≧口≦)Ｏ</strong></li>
-</ul>
-<hr/>
-<ul>
-<li>设置开机自启<ul>
-<li><p>复制以下片段</p>
- <pre><code class="hljs ini"><span class="hljs-attr">Description</span>=Clash - A rule-based tunnel in Go
-<span class="hljs-attr">Documentation</span>=https://github.com/Dreamacro/clash/wiki
-<span class="hljs-section">[Service]</span>
-<span class="hljs-attr">OOMScoreAdjust</span>=-<span class="hljs-number">1000</span>
-<span class="hljs-attr">ExecStart</span>=/usr/local/bin/clash -f /home/rongrong/.config/clash/config.yaml <span class="hljs-comment"># 注意这里要根据自己的配置路径进行相应的修改</span>
-<span class="hljs-attr">Restart</span>=<span class="hljs-literal">on</span>-failure
-<span class="hljs-attr">RestartSec</span>=<span class="hljs-number">5</span>
-<span class="hljs-section">[Install]</span>
-<span class="hljs-attr">WantedBy</span>=multi-user.target
-</code></pre>
-</li>
-<li><p>依次输入以下命令即可</p>
- <pre><code class="hljs bash">
-systemctl <span class="hljs-built_in">enable</span> clash
+&lt;p&gt;此时会显示出你的订阅的相关信息，即表示成功&lt;br&gt;&lt;strong&gt;在启动clash的条件下，访问以下链接可以进入clash图形控制页面&lt;/strong&gt;&lt;br&gt;&lt;a href=&#34;https://clash.razord.top/#/proxies&#34; title=&#34;就是我啦Σ(っ °Д °;)っ&#34;&gt;clash图形控制页面&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;ul&gt;
+&lt;li&gt;Ubuntu系统网络代理设置&lt;br&gt;&lt;img src=&#34;https://s2.loli.net/2024/02/29/8INVmetSdK9gRWk.png&#34; alt=&#34;Alt text&#34;&gt;&lt;br&gt;这里我遇到一个问题是，我成功连接了梯子之后仍然翻不了墙，就一直在调这个代理设置，最终在按照上图输入之后可以了 &lt;strong&gt;但是我不知道是不是因为这个原因才成功的Ｏ(≧口≦)Ｏ&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;ul&gt;
+&lt;li&gt;设置开机自启&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;复制以下片段&lt;/p&gt;
+ &lt;pre&gt;&lt;code class=&#34;hljs ini&#34;&gt;&lt;span class=&#34;hljs-attr&#34;&gt;Description&lt;/span&gt;=Clash - A rule-based tunnel in Go
+&lt;span class=&#34;hljs-attr&#34;&gt;Documentation&lt;/span&gt;=https://github.com/Dreamacro/clash/wiki
+&lt;span class=&#34;hljs-section&#34;&gt;[Service]&lt;/span&gt;
+&lt;span class=&#34;hljs-attr&#34;&gt;OOMScoreAdjust&lt;/span&gt;=-&lt;span class=&#34;hljs-number&#34;&gt;1000&lt;/span&gt;
+&lt;span class=&#34;hljs-attr&#34;&gt;ExecStart&lt;/span&gt;=/usr/local/bin/clash -f /home/rongrong/.config/clash/config.yaml &lt;span class=&#34;hljs-comment&#34;&gt;# 注意这里要根据自己的配置路径进行相应的修改&lt;/span&gt;
+&lt;span class=&#34;hljs-attr&#34;&gt;Restart&lt;/span&gt;=&lt;span class=&#34;hljs-literal&#34;&gt;on&lt;/span&gt;-failure
+&lt;span class=&#34;hljs-attr&#34;&gt;RestartSec&lt;/span&gt;=&lt;span class=&#34;hljs-number&#34;&gt;5&lt;/span&gt;
+&lt;span class=&#34;hljs-section&#34;&gt;[Install]&lt;/span&gt;
+&lt;span class=&#34;hljs-attr&#34;&gt;WantedBy&lt;/span&gt;=multi-user.target
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;依次输入以下命令即可&lt;/p&gt;
+ &lt;pre&gt;&lt;code class=&#34;hljs bash&#34;&gt;
+systemctl &lt;span class=&#34;hljs-built_in&#34;&gt;enable&lt;/span&gt; clash
 systemctl start clash
-<span class="hljs-built_in">echo</span> -e <span class="hljs-string">&#34;export http_proxy=&lt;http://127.0.0.1:7890\nexport&gt; https_proxy=&lt;http://127.0.0.1:7890&gt;&#34;</span> &gt;&gt; ~/.bashrc</code></pre></li>
-</ul>
-</li>
-</ul>
-<hr/>
-<h1 id="小结"><a href="http://wanglanhuajiaofen.fun/2024/02/29/clash/#%E5%B0%8F%E7%BB%93" class="headerlink" title="小结"></a>小结</h1><p>ubuntu安装和配置clash确实是一个繁琐的过程，而网上的教程没有对一些问题的解决方案，我把自己在配置过程中遇到的问题写了出来，供大家参考!!!</p>
-<hr/>
-<!-- <font face="逐浪新宋" color=cyan size=10>谢啦!!☆⌒(*＾-゜)v</font> -->
- </body></html>
+&lt;span class=&#34;hljs-built_in&#34;&gt;echo&lt;/span&gt; -e &lt;span class=&#34;hljs-string&#34;&gt;&amp;quot;export http_proxy=&amp;lt;http://127.0.0.1:7890\nexport&amp;gt; https_proxy=&amp;lt;http://127.0.0.1:7890&amp;gt;&amp;quot;&lt;/span&gt; &amp;gt;&amp;gt; ~/.bashrc&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h1 id=&#34;小结&#34;&gt;&lt;a href=&#34;#小结&#34; class=&#34;headerlink&#34; title=&#34;小结&#34;&gt;&lt;/a&gt;小结&lt;/h1&gt;&lt;p&gt;ubuntu安装和配置clash确实是一个繁琐的过程，而网上的教程没有对一些问题的解决方案，我把自己在配置过程中遇到的问题写了出来，供大家参考!!!&lt;/p&gt;
+&lt;hr&gt;
+&lt;!-- &lt;font face=&#34;逐浪新宋&#34; color=cyan size=10&gt;谢啦!!☆⌒(*＾-゜)v&lt;/font&gt; --&gt;
+ </blockquote>

@@ -1,31 +1,31 @@
-<html><head></head><body><h1 id="Unity-常用-Render-State-属性-UI">Unity 常用 Render State 属性 UI<a class="headerlink" href="https://note.stalomeow.com/blog/posts/unity-render-state-props-ui/#Unity-%E5%B8%B8%E7%94%A8-Render-State-%E5%B1%9E%E6%80%A7-UI" title="Permanent link">¶</a></h1>
+<blockquote><h1 id="Unity-常用-Render-State-属性-UI">Unity 常用 Render State 属性 UI<a class="headerlink" href="#Unity-常用-Render-State-属性-UI" title="Permanent link">&para;</a></h1>
 <!-- more -->
 
 <p>有时候想把 <code>ZTest</code>、<code>Cull</code> 等属性暴露到面板中配置，避免重复写相似的 Shader。这里直接把常用的都整理出来。</p>
 <p>参考：<a href="https://zhuanlan.zhihu.com/p/93194054">Shader面板上常用的一些内置枚举UI - 知乎</a>。</p>
-<h2 id="Properties">Properties<a class="headerlink" href="https://note.stalomeow.com/blog/posts/unity-render-state-props-ui/#Properties" title="Permanent link">¶</a></h2>
+<h2 id="Properties">Properties<a class="headerlink" href="#Properties" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code>[Header(Option)]
-[Enum(UnityEngine.Rendering.CullMode)] _CullMode(&#34;Cull Mode&#34;, float) = 2
-[Enum(UnityEngine.Rendering.ColorWriteMask)] _ColorMask(&#34;Color Mask&#34;, Float) = 15
-[Enum(Off, 0, On, 1)] _ZWriteMode(&#34;ZWrite Mode&#34;, float) = 1
-[Enum(UnityEngine.Rendering.CompareFunction)] _ZTestMode(&#34;ZTest Mode&#34;, Float) = 4
+[Enum(UnityEngine.Rendering.CullMode)] _CullMode(&quot;Cull Mode&quot;, float) = 2
+[Enum(UnityEngine.Rendering.ColorWriteMask)] _ColorMask(&quot;Color Mask&quot;, Float) = 15
+[Enum(Off, 0, On, 1)] _ZWriteMode(&quot;ZWrite Mode&quot;, float) = 1
+[Enum(UnityEngine.Rendering.CompareFunction)] _ZTestMode(&quot;ZTest Mode&quot;, Float) = 4
 
 [Header(Blend)]
-[Enum(UnityEngine.Rendering.BlendOp)] _BlendOp(&#34;Blend Op&#34;, Float) = 0
-[Enum(UnityEngine.Rendering.BlendMode)] _SrcBlend(&#34;Src Blend&#34;, Float) = 1
-[Enum(UnityEngine.Rendering.BlendMode)] _DstBlend(&#34;Dst Blend&#34;, Float) = 0
+[Enum(UnityEngine.Rendering.BlendOp)] _BlendOp(&quot;Blend Op&quot;, Float) = 0
+[Enum(UnityEngine.Rendering.BlendMode)] _SrcBlend(&quot;Src Blend&quot;, Float) = 1
+[Enum(UnityEngine.Rendering.BlendMode)] _DstBlend(&quot;Dst Blend&quot;, Float) = 0
 
 [Header(Stencil)]
-[IntRange] _StencilRef(&#34;Stencil Ref&#34;, Range(0, 255)) = 0
-[IntRange] _StencilReadMask(&#34;Stencil ReadMask&#34;, Range(0, 255)) = 255
-[IntRange] _StencilWriteMask(&#34;Stencil WriteMask&#34;, Range(0, 255)) = 255
-[Enum(UnityEngine.Rendering.CompareFunction)] _StencilComp(&#34;Stencil Comp&#34;, Float) = 8
-[Enum(UnityEngine.Rendering.StencilOp)] _StencilPass(&#34;Stencil Pass&#34;, Float) = 0
-[Enum(UnityEngine.Rendering.StencilOp)] _StencilFail(&#34;Stencil Fail&#34;, Float) = 0
-[Enum(UnityEngine.Rendering.StencilOp)] _StencilZFail(&#34;Stencil ZFail&#34;, Float) = 0
+[IntRange] _StencilRef(&quot;Stencil Ref&quot;, Range(0, 255)) = 0
+[IntRange] _StencilReadMask(&quot;Stencil ReadMask&quot;, Range(0, 255)) = 255
+[IntRange] _StencilWriteMask(&quot;Stencil WriteMask&quot;, Range(0, 255)) = 255
+[Enum(UnityEngine.Rendering.CompareFunction)] _StencilComp(&quot;Stencil Comp&quot;, Float) = 8
+[Enum(UnityEngine.Rendering.StencilOp)] _StencilPass(&quot;Stencil Pass&quot;, Float) = 0
+[Enum(UnityEngine.Rendering.StencilOp)] _StencilFail(&quot;Stencil Fail&quot;, Float) = 0
+[Enum(UnityEngine.Rendering.StencilOp)] _StencilZFail(&quot;Stencil ZFail&quot;, Float) = 0
 </code></pre></div>
 <p>建议自己写一个 <code>MaterialPropertyDrawer</code> 绘制 <code>_ColorMask</code>。因为 <code>ColorWriteMask</code> 是一个 Flags，但是 <code>[Enum(UnityEngine.Rendering.ColorWriteMask)]</code> 只能绘制成普通 Enum，无法组合多个值。</p>
-<h2 id="Commands">Commands<a class="headerlink" href="https://note.stalomeow.com/blog/posts/unity-render-state-props-ui/#Commands" title="Permanent link">¶</a></h2>
+<h2 id="Commands">Commands<a class="headerlink" href="#Commands" title="Permanent link">&para;</a></h2>
 <p>相关文档：<a href="https://docs.unity3d.com/Manual/shader-shaderlab-commands.html">ShaderLab: commands</a>。</p>
 <div class="highlight"><pre><span></span><code>Cull [_CullMode]
 ColorMask [_ColorMask]
@@ -46,10 +46,10 @@ Stencil
     ZFail [_StencilZFail]
 }
 </code></pre></div>
-<h2 id="Enum-表">Enum 表<a class="headerlink" href="https://note.stalomeow.com/blog/posts/unity-render-state-props-ui/#Enum-%E8%A1%A8" title="Permanent link">¶</a></h2>
+<h2 id="Enum-表">Enum 表<a class="headerlink" href="#Enum-表" title="Permanent link">&para;</a></h2>
 <p>相关的枚举都声明在 <a href="https://github.com/Unity-Technologies/UnityCsReference/blob/master/Runtime/Export/Graphics/GraphicsEnums.cs">Runtime/Export/Graphics/GraphicsEnums.cs</a> 里。</p>
 <p>下面的表基于 Unity 2023.3.0b5 的代码。</p>
-<h3 id="BlendMode">BlendMode<a class="headerlink" href="https://note.stalomeow.com/blog/posts/unity-render-state-props-ui/#BlendMode" title="Permanent link">¶</a></h3>
+<h3 id="BlendMode">BlendMode<a class="headerlink" href="#BlendMode" title="Permanent link">&para;</a></h3>
 <table>
 <thead>
 <tr>
@@ -104,7 +104,7 @@ Stencil
 </tr>
 </tbody>
 </table>
-<h3 id="BlendOp">BlendOp<a class="headerlink" href="https://note.stalomeow.com/blog/posts/unity-render-state-props-ui/#BlendOp" title="Permanent link">¶</a></h3>
+<h3 id="BlendOp">BlendOp<a class="headerlink" href="#BlendOp" title="Permanent link">&para;</a></h3>
 <table>
 <thead>
 <tr>
@@ -259,7 +259,7 @@ Stencil
 </tr>
 </tbody>
 </table>
-<h3 id="CompareFunction">CompareFunction<a class="headerlink" href="https://note.stalomeow.com/blog/posts/unity-render-state-props-ui/#CompareFunction" title="Permanent link">¶</a></h3>
+<h3 id="CompareFunction">CompareFunction<a class="headerlink" href="#CompareFunction" title="Permanent link">&para;</a></h3>
 <table>
 <thead>
 <tr>
@@ -306,7 +306,7 @@ Stencil
 </tr>
 </tbody>
 </table>
-<h3 id="CullMode">CullMode<a class="headerlink" href="https://note.stalomeow.com/blog/posts/unity-render-state-props-ui/#CullMode" title="Permanent link">¶</a></h3>
+<h3 id="CullMode">CullMode<a class="headerlink" href="#CullMode" title="Permanent link">&para;</a></h3>
 <table>
 <thead>
 <tr>
@@ -329,7 +329,7 @@ Stencil
 </tr>
 </tbody>
 </table>
-<h3 id="ColorWriteMask">ColorWriteMask<a class="headerlink" href="https://note.stalomeow.com/blog/posts/unity-render-state-props-ui/#ColorWriteMask" title="Permanent link">¶</a></h3>
+<h3 id="ColorWriteMask">ColorWriteMask<a class="headerlink" href="#ColorWriteMask" title="Permanent link">&para;</a></h3>
 <table>
 <thead>
 <tr>
@@ -360,7 +360,7 @@ Stencil
 </tr>
 </tbody>
 </table>
-<h3 id="StencilOp">StencilOp<a class="headerlink" href="https://note.stalomeow.com/blog/posts/unity-render-state-props-ui/#StencilOp" title="Permanent link">¶</a></h3>
+<h3 id="StencilOp">StencilOp<a class="headerlink" href="#StencilOp" title="Permanent link">&para;</a></h3>
 <table>
 <thead>
 <tr>
@@ -402,4 +402,4 @@ Stencil
 <td style="text-align: left;">7</td>
 </tr>
 </tbody>
-</table></body></html>
+</table></blockquote>

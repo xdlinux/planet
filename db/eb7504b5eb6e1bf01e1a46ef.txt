@@ -1,20 +1,26 @@
-<html><head></head><body><img src="https://s2.loli.net/2022/08/01/ypnIZMGw6FzNAfV.jpg" alt="Featured image of post Genesis - A Trick of the Tail 听后感"/><p>作为前Deep Purple粉丝，现在的Genesis粉丝，如果我要给别人推荐Genesis专辑的话，我会先推荐这张专辑。因为这张专辑的旋律性好，概念性没那么强，听着没有Sell和Lamb那样，又累又难以理解。而且这张专辑的封面也很有意思，很多的人对应着专辑里的歌曲。</p>
+<blockquote><img src="https://s2.loli.net/2022/08/01/ypnIZMGw6FzNAfV.jpg" alt="Featured image of post Genesis - A Trick of the Tail 听后感" /><p>作为前Deep Purple粉丝，现在的Genesis粉丝，如果我要给别人推荐Genesis专辑的话，我会先推荐这张专辑。因为这张专辑的旋律性好，概念性没那么强，听着没有Sell和Lamb那样，又累又难以理解。而且这张专辑的封面也很有意思，很多的人对应着专辑里的歌曲。</p>
 <h2 id="关于封面">关于封面</h2>
-<p></p><figure>
-	<a href="https://s2.loli.net/2022/08/01/ypnIZMGw6FzNAfV.jpg">
-		<img src="https://s2.loli.net/2022/08/01/ypnIZMGw6FzNAfV.jpg" loading="lazy" alt="Copyright 1976 Hignosis &amp; C. Elgie"/>
+<p><figure 
+	>
+	<a href="https://s2.loli.net/2022/08/01/ypnIZMGw6FzNAfV.jpg" >
+		<img src="https://s2.loli.net/2022/08/01/ypnIZMGw6FzNAfV.jpg"
+			
+			
+			
+			loading="lazy"
+			alt="Copyright 1976 Hignosis & C. Elgie">
 	</a>
 	
 	<figcaption>Copyright 1976 Hignosis &amp; C. Elgie</figcaption>
 	
-</figure><p></p>
+</figure></p>
 <p>根据上网找到的内页，个人猜测：</p>
 <ul>
 <li>护士拿着灯：Entangled</li>
 <li>猎人和下面的耗子：Sqounk</li>
 <li>上面的月亮和下面的孩子们：Mad Man Moon</li>
 <li>大盗和狡猾的绅士：Robbery, Assault and Battery</li>
-<li>照镜子的巫婆：Ripples…</li>
+<li>照镜子的巫婆：Ripples&hellip;</li>
 <li>恶魔和指着他的人：A Trick of the Tail</li>
 </ul>
 <h2 id="关于歌曲">关于歌曲</h2>
@@ -28,18 +34,27 @@
 <p>这张专辑是Genesis的转折点，Genesis顺应时代的变化，精简掉歌曲中复杂的结构，将人们重视的旋律弄得十分突出。不过，他们仍然保留了很多的复杂，精巧的元素。这张专辑中，有内容上很有意思的，也有结构复杂的歌曲，也有他们继续前行的决心。下一张专辑中，则有上来就很抓耳的旋律，也有十多分钟长的器乐歌曲串烧，还有一首启发自猫和老鼠的歌曲。而在Hackett退出后，乐队有点离心，在过渡了两张专辑后，彻底转型为流行，那些歌嘛，我就不想说了。这张专辑是他们刚刚开始转型的专辑，前卫性很强，而由于他们做出的变化，让其更能为人所接受。所以，如果你们想了解前卫摇滚的话，可以先拿这张适应一下，适应后再开始你们的前卫之旅(建议拿 Yes 的 Tails of Topographic Ocans 来提升一下)。</p>
 <p>最后，感谢南方翻译的前卫摇滚历史，最后一段的分析实际上在那个视频里面提到过。</p>
 <h2 id="推荐链接">推荐链接</h2>
-<p><a class="link" href="http://www.progarchives.com/album.asp?id=5" target="_blank" rel="noopener">Prog Archive上面的评论</a><br/>
-<a class="link" href="https://www.discogs.com/master/28748-Genesis-A-Trick-Of-The-Tail" target="_blank" rel="noopener">Discogs上面的专辑版本信息</a><br/>
-<a class="link" href="https://www.bilibili.com/video/BV1Af4y1F79H" target="_blank" rel="noopener">本人翻译的一个介绍本专辑的纪录片</a><br/>
-<a class="link" href="https://www.bilibili.com/video/BV1NZ4y1p7fM" target="_blank" rel="noopener">南方翻译纪录片的片段</a></p>
+<p><a class="link" href="http://www.progarchives.com/album.asp?id=5"  target="_blank" rel="noopener"
+    >Prog Archive上面的评论</a><br>
+<a class="link" href="https://www.discogs.com/master/28748-Genesis-A-Trick-Of-The-Tail"  target="_blank" rel="noopener"
+    >Discogs上面的专辑版本信息</a><br>
+<a class="link" href="https://www.bilibili.com/video/BV1Af4y1F79H"  target="_blank" rel="noopener"
+    >本人翻译的一个介绍本专辑的纪录片</a><br>
+<a class="link" href="https://www.bilibili.com/video/BV1NZ4y1p7fM"  target="_blank" rel="noopener"
+    >南方翻译纪录片的片段</a></p>
 <h2 id="彩蛋我画的ripples封面">彩蛋：我画的Ripples封面</h2>
-<p></p><figure>
-	<a href="https://s2.loli.net/2022/08/01/CFQrlqIWV5jDGh8.jpg">
-		<img src="https://s2.loli.net/2022/08/01/CFQrlqIWV5jDGh8.jpg" loading="lazy" alt="右面的是姐姐Remila，左面的是他的妹妹Flandre。姐姐照着魔镜，看到自己的妹妹读着Mad Hatter开的荒诞的茶会而高兴不已。虽然她们俩永远都不会老去，但是姐姐见过的太多了，对妹妹的童真无邪十分羡慕。"/>
+<p><figure 
+	>
+	<a href="https://s2.loli.net/2022/08/01/CFQrlqIWV5jDGh8.jpg" >
+		<img src="https://s2.loli.net/2022/08/01/CFQrlqIWV5jDGh8.jpg"
+			
+			
+			
+			loading="lazy"
+			alt="右面的是姐姐Remila，左面的是他的妹妹Flandre。姐姐照着魔镜，看到自己的妹妹读着Mad Hatter开的荒诞的茶会而高兴不已。虽然她们俩永远都不会老去，但是姐姐见过的太多了，对妹妹的童真无邪十分羡慕。">
 	</a>
 	
 	<figcaption>右面的是姐姐Remila，左面的是他的妹妹Flandre。姐姐照着魔镜，看到自己的妹妹读着Mad Hatter开的荒诞的茶会而高兴不已。虽然她们俩永远都不会老去，但是姐姐见过的太多了，对妹妹的童真无邪十分羡慕。</figcaption>
 	
-</figure><p></p>
-<p>如果你了解东方的话，你很快就能反应过来这两个人的原型是红魔馆的两个主人。但我没有照搬吸血鬼的设定，因为我画的是人啊。还有，我觉得东方里的角色都可以拿过来，稍微修改一下设定，就能给每一首前卫歌曲画一张，这样，我们就能借着东方，宣传前卫摇滚啦。对了，我不太是东方的粉丝，目前真的只对东方里那些女孩子的个性和外观感兴趣……</p>
-</body></html>
+</figure></p>
+<p>如果你了解东方的话，你很快就能反应过来这两个人的原型是红魔馆的两个主人。但我没有照搬吸血鬼的设定，因为我画的是人啊。还有，我觉得东方里的角色都可以拿过来，稍微修改一下设定，就能给每一首前卫歌曲画一张，这样，我们就能借着东方，宣传前卫摇滚啦。对了，我不太是东方的粉丝，目前真的只对东方里那些女孩子的个性和外观感兴趣&hellip;&hellip;</p></blockquote>

@@ -1,27 +1,189 @@
-<html><head></head><body><h2 id="项目地址---spark-gpthttpsgithubcomcanxin121spark-gpt">项目地址 -&gt; <a class="link" href="https://github.com/canxin121/Spark-GPT" target="_blank" rel="noopener">Spark-GPT</a></h2>
+<blockquote><h2 id="项目地址---spark-gpthttpsgithubcomcanxin121spark-gpt">项目地址 -&gt; <a class="link" href="https://github.com/canxin121/Spark-GPT" target="_blank" rel="noopener"
+>Spark-GPT</a></h2>
 <h2 id="sparkgpt使用示例">SparkGPT使用示例</h2>
 <h2 id="webui">Webui</h2>
-<p><img src="https://canxin121.github.io/p/sparkgpt-%E9%A2%84%E8%A7%88/images/webui.png" width="2560" height="1363" srcset="https://canxin121.github.io/p/sparkgpt-%E9%A2%84%E8%A7%88/images/webui_hudfc518bf0e3dff5f58a40d0e9292d707_109343_480x0_resize_box_3.png 480w, https://canxin121.github.io/p/sparkgpt-%E9%A2%84%E8%A7%88/images/webui_hudfc518bf0e3dff5f58a40d0e9292d707_109343_1024x0_resize_box_3.png 1024w" loading="lazy" alt="使用webui配置相关信息 " class="gallery-image" data-flex-grow="187" data-flex-basis="450px"/></p>
+<p><img src="https://canxin121.github.io/p/sparkgpt-%E9%A2%84%E8%A7%88/images/webui.png"
+width="2560"
+height="1363"
+srcset="https://canxin121.github.io/p/sparkgpt-%E9%A2%84%E8%A7%88/images/webui_hudfc518bf0e3dff5f58a40d0e9292d707_109343_480x0_resize_box_3.png 480w, https://canxin121.github.io/p/sparkgpt-%E9%A2%84%E8%A7%88/images/webui_hudfc518bf0e3dff5f58a40d0e9292d707_109343_1024x0_resize_box_3.png 1024w"
+loading="lazy"
+alt="使用webui配置相关信息 "
+class="gallery-image"
+data-flex-grow="187"
+data-flex-basis="450px"
+></p>
 <h2 id="帮助">帮助</h2>
-<p><img src="https://canxin121.github.io/p/sparkgpt-%E9%A2%84%E8%A7%88/images/shelp.png" width="576" height="543" srcset="https://canxin121.github.io/p/sparkgpt-%E9%A2%84%E8%A7%88/images/shelp_hu944c3e2c5f8f713cb74e42c3e320bf12_505859_480x0_resize_box_3.png 480w, https://canxin121.github.io/p/sparkgpt-%E9%A2%84%E8%A7%88/images/shelp_hu944c3e2c5f8f713cb74e42c3e320bf12_505859_1024x0_resize_box_3.png 1024w" loading="lazy" alt=" 获取帮助说明 " class="gallery-image" data-flex-grow="106" data-flex-basis="254px"/>
-<img src="https://canxin121.github.io/p/sparkgpt-%E9%A2%84%E8%A7%88/images/help.png" width="1103" height="1104" srcset="https://canxin121.github.io/p/sparkgpt-%E9%A2%84%E8%A7%88/images/help_hu251595a42a1b5b8f82ad76b655cf6edf_1104940_480x0_resize_box_3.png 480w, https://canxin121.github.io/p/sparkgpt-%E9%A2%84%E8%A7%88/images/help_hu251595a42a1b5b8f82ad76b655cf6edf_1104940_1024x0_resize_box_3.png 1024w" loading="lazy" alt=" 获取某个命令的子命令格式 " class="gallery-image" data-flex-grow="99" data-flex-basis="239px"/></p>
+<p><img src="https://canxin121.github.io/p/sparkgpt-%E9%A2%84%E8%A7%88/images/shelp.png"
+width="576"
+height="543"
+srcset="https://canxin121.github.io/p/sparkgpt-%E9%A2%84%E8%A7%88/images/shelp_hu944c3e2c5f8f713cb74e42c3e320bf12_505859_480x0_resize_box_3.png 480w, https://canxin121.github.io/p/sparkgpt-%E9%A2%84%E8%A7%88/images/shelp_hu944c3e2c5f8f713cb74e42c3e320bf12_505859_1024x0_resize_box_3.png 1024w"
+loading="lazy"
+alt=" 获取帮助说明 "
+class="gallery-image"
+data-flex-grow="106"
+data-flex-basis="254px"
+>
+<img src="https://canxin121.github.io/p/sparkgpt-%E9%A2%84%E8%A7%88/images/help.png"
+width="1103"
+height="1104"
+srcset="https://canxin121.github.io/p/sparkgpt-%E9%A2%84%E8%A7%88/images/help_hu251595a42a1b5b8f82ad76b655cf6edf_1104940_480x0_resize_box_3.png 480w, https://canxin121.github.io/p/sparkgpt-%E9%A2%84%E8%A7%88/images/help_hu251595a42a1b5b8f82ad76b655cf6edf_1104940_1024x0_resize_box_3.png 1024w"
+loading="lazy"
+alt=" 获取某个命令的子命令格式 "
+class="gallery-image"
+data-flex-grow="99"
+data-flex-basis="239px"
+></p>
 <h2 id="模型">模型</h2>
-<p><img src="https://canxin121.github.io/p/sparkgpt-%E9%A2%84%E8%A7%88/images/model_list.png" width="573" height="537" srcset="https://canxin121.github.io/p/sparkgpt-%E9%A2%84%E8%A7%88/images/model_list_hu23029734091389392b7f3cc6c00ab338_504350_480x0_resize_box_3.png 480w, https://canxin121.github.io/p/sparkgpt-%E9%A2%84%E8%A7%88/images/model_list_hu23029734091389392b7f3cc6c00ab338_504350_1024x0_resize_box_3.png 1024w" loading="lazy" alt=" 获取所有模型 " class="gallery-image" data-flex-grow="106" data-flex-basis="256px"/></p>
+<p><img src="https://canxin121.github.io/p/sparkgpt-%E9%A2%84%E8%A7%88/images/model_list.png"
+width="573"
+height="537"
+srcset="https://canxin121.github.io/p/sparkgpt-%E9%A2%84%E8%A7%88/images/model_list_hu23029734091389392b7f3cc6c00ab338_504350_480x0_resize_box_3.png 480w, https://canxin121.github.io/p/sparkgpt-%E9%A2%84%E8%A7%88/images/model_list_hu23029734091389392b7f3cc6c00ab338_504350_1024x0_resize_box_3.png 1024w"
+loading="lazy"
+alt=" 获取所有模型 "
+class="gallery-image"
+data-flex-grow="106"
+data-flex-basis="256px"
+></p>
 <h2 id="会话">会话</h2>
-<p><img src="https://canxin121.github.io/p/sparkgpt-%E9%A2%84%E8%A7%88/images/chat_list.png" width="659" height="706" srcset="https://canxin121.github.io/p/sparkgpt-%E9%A2%84%E8%A7%88/images/chat_list_hu0073cb7dda307cc6b080e3dc900b34a8_691617_480x0_resize_box_3.png 480w, https://canxin121.github.io/p/sparkgpt-%E9%A2%84%E8%A7%88/images/chat_list_hu0073cb7dda307cc6b080e3dc900b34a8_691617_1024x0_resize_box_3.png 1024w" loading="lazy" alt=" 获取所有会话 " class="gallery-image" data-flex-grow="93" data-flex-basis="224px"/>
-<img src="https://canxin121.github.io/p/sparkgpt-%E9%A2%84%E8%A7%88/images/private_chat.png" width="655" height="1100" srcset="https://canxin121.github.io/p/sparkgpt-%E9%A2%84%E8%A7%88/images/private_chat_hud4482fb84500528454f3593a7514105d_1059521_480x0_resize_box_3.png 480w, https://canxin121.github.io/p/sparkgpt-%E9%A2%84%E8%A7%88/images/private_chat_hud4482fb84500528454f3593a7514105d_1059521_1024x0_resize_box_3.png 1024w" loading="lazy" alt=" 创建一个新的私有会话并使用 " class="gallery-image" data-flex-grow="59" data-flex-basis="142px"/>
-<img src="https://canxin121.github.io/p/sparkgpt-%E9%A2%84%E8%A7%88/images/public_chat.png" width="639" height="767" srcset="https://canxin121.github.io/p/sparkgpt-%E9%A2%84%E8%A7%88/images/public_chat_hub91b792aa6ea24cd0e152fda59917491_555628_480x0_resize_box_3.png 480w, https://canxin121.github.io/p/sparkgpt-%E9%A2%84%E8%A7%88/images/public_chat_hub91b792aa6ea24cd0e152fda59917491_555628_1024x0_resize_box_3.png 1024w" loading="lazy" alt=" 创建一个新的公有会话并使用 " class="gallery-image" data-flex-grow="83" data-flex-basis="199px"/><br/>
-<img src="https://canxin121.github.io/p/sparkgpt-%E9%A2%84%E8%A7%88/images/chat_del.png" width="653" height="278" srcset="https://canxin121.github.io/p/sparkgpt-%E9%A2%84%E8%A7%88/images/chat_del_hu470a197b58cd883b82a911a603d25821_243419_480x0_resize_box_3.png 480w, https://canxin121.github.io/p/sparkgpt-%E9%A2%84%E8%A7%88/images/chat_del_hu470a197b58cd883b82a911a603d25821_243419_1024x0_resize_box_3.png 1024w" loading="lazy" alt=" 删除一个会话 " class="gallery-image" data-flex-grow="234" data-flex-basis="563px"/>
-<img src="https://canxin121.github.io/p/sparkgpt-%E9%A2%84%E8%A7%88/images/chat_edit.png" width="657" height="303" srcset="https://canxin121.github.io/p/sparkgpt-%E9%A2%84%E8%A7%88/images/chat_edit_hued1d147889be06e39648a664af08d1ad_225903_480x0_resize_box_3.png 480w, https://canxin121.github.io/p/sparkgpt-%E9%A2%84%E8%A7%88/images/chat_edit_hued1d147889be06e39648a664af08d1ad_225903_1024x0_resize_box_3.png 1024w" loading="lazy" alt=" 编辑一个会话 " class="gallery-image" data-flex-grow="216" data-flex-basis="520px"/></p>
+<p><img src="https://canxin121.github.io/p/sparkgpt-%E9%A2%84%E8%A7%88/images/chat_list.png"
+width="659"
+height="706"
+srcset="https://canxin121.github.io/p/sparkgpt-%E9%A2%84%E8%A7%88/images/chat_list_hu0073cb7dda307cc6b080e3dc900b34a8_691617_480x0_resize_box_3.png 480w, https://canxin121.github.io/p/sparkgpt-%E9%A2%84%E8%A7%88/images/chat_list_hu0073cb7dda307cc6b080e3dc900b34a8_691617_1024x0_resize_box_3.png 1024w"
+loading="lazy"
+alt=" 获取所有会话 "
+class="gallery-image"
+data-flex-grow="93"
+data-flex-basis="224px"
+>
+<img src="https://canxin121.github.io/p/sparkgpt-%E9%A2%84%E8%A7%88/images/private_chat.png"
+width="655"
+height="1100"
+srcset="https://canxin121.github.io/p/sparkgpt-%E9%A2%84%E8%A7%88/images/private_chat_hud4482fb84500528454f3593a7514105d_1059521_480x0_resize_box_3.png 480w, https://canxin121.github.io/p/sparkgpt-%E9%A2%84%E8%A7%88/images/private_chat_hud4482fb84500528454f3593a7514105d_1059521_1024x0_resize_box_3.png 1024w"
+loading="lazy"
+alt=" 创建一个新的私有会话并使用 "
+class="gallery-image"
+data-flex-grow="59"
+data-flex-basis="142px"
+>
+<img src="https://canxin121.github.io/p/sparkgpt-%E9%A2%84%E8%A7%88/images/public_chat.png"
+width="639"
+height="767"
+srcset="https://canxin121.github.io/p/sparkgpt-%E9%A2%84%E8%A7%88/images/public_chat_hub91b792aa6ea24cd0e152fda59917491_555628_480x0_resize_box_3.png 480w, https://canxin121.github.io/p/sparkgpt-%E9%A2%84%E8%A7%88/images/public_chat_hub91b792aa6ea24cd0e152fda59917491_555628_1024x0_resize_box_3.png 1024w"
+loading="lazy"
+alt=" 创建一个新的公有会话并使用 "
+class="gallery-image"
+data-flex-grow="83"
+data-flex-basis="199px"
+><br>
+<img src="https://canxin121.github.io/p/sparkgpt-%E9%A2%84%E8%A7%88/images/chat_del.png"
+width="653"
+height="278"
+srcset="https://canxin121.github.io/p/sparkgpt-%E9%A2%84%E8%A7%88/images/chat_del_hu470a197b58cd883b82a911a603d25821_243419_480x0_resize_box_3.png 480w, https://canxin121.github.io/p/sparkgpt-%E9%A2%84%E8%A7%88/images/chat_del_hu470a197b58cd883b82a911a603d25821_243419_1024x0_resize_box_3.png 1024w"
+loading="lazy"
+alt=" 删除一个会话 "
+class="gallery-image"
+data-flex-grow="234"
+data-flex-basis="563px"
+>
+<img src="https://canxin121.github.io/p/sparkgpt-%E9%A2%84%E8%A7%88/images/chat_edit.png"
+width="657"
+height="303"
+srcset="https://canxin121.github.io/p/sparkgpt-%E9%A2%84%E8%A7%88/images/chat_edit_hued1d147889be06e39648a664af08d1ad_225903_480x0_resize_box_3.png 480w, https://canxin121.github.io/p/sparkgpt-%E9%A2%84%E8%A7%88/images/chat_edit_hued1d147889be06e39648a664af08d1ad_225903_1024x0_resize_box_3.png 1024w"
+loading="lazy"
+alt=" 编辑一个会话 "
+class="gallery-image"
+data-flex-grow="216"
+data-flex-basis="520px"
+></p>
 <h2 id="预设">预设</h2>
-<p><img src="https://canxin121.github.io/p/sparkgpt-%E9%A2%84%E8%A7%88/images/prompt_list.png" width="636" height="575" srcset="https://canxin121.github.io/p/sparkgpt-%E9%A2%84%E8%A7%88/images/prompt_list_hu2a03ea50776fff542bb050407f9d74b3_517821_480x0_resize_box_3.png 480w, https://canxin121.github.io/p/sparkgpt-%E9%A2%84%E8%A7%88/images/prompt_list_hu2a03ea50776fff542bb050407f9d74b3_517821_1024x0_resize_box_3.png 1024w" loading="lazy" alt=" 获取所有预设缩略信息 " class="gallery-image" data-flex-grow="110" data-flex-basis="265px"/>
-<img src="https://canxin121.github.io/p/sparkgpt-%E9%A2%84%E8%A7%88/images/prompt_show.png" width="645" height="643" srcset="https://canxin121.github.io/p/sparkgpt-%E9%A2%84%E8%A7%88/images/prompt_show_hue285e6203402b430e11d1ef58ecd77df_404262_480x0_resize_box_3.png 480w, https://canxin121.github.io/p/sparkgpt-%E9%A2%84%E8%A7%88/images/prompt_show_hue285e6203402b430e11d1ef58ecd77df_404262_1024x0_resize_box_3.png 1024w" loading="lazy" alt=" 查看某个预设 " class="gallery-image" data-flex-grow="100" data-flex-basis="240px"/>
-<img src="https://canxin121.github.io/p/sparkgpt-%E9%A2%84%E8%A7%88/images/prompt_add.png" width="638" height="294" srcset="https://canxin121.github.io/p/sparkgpt-%E9%A2%84%E8%A7%88/images/prompt_add_hu8d9c1abd7b76c69a4f57521c2565bb16_195901_480x0_resize_box_3.png 480w, https://canxin121.github.io/p/sparkgpt-%E9%A2%84%E8%A7%88/images/prompt_add_hu8d9c1abd7b76c69a4f57521c2565bb16_195901_1024x0_resize_box_3.png 1024w" loading="lazy" alt=" 添加新的预设 " class="gallery-image" data-flex-grow="217" data-flex-basis="520px"/>
-<img src="https://canxin121.github.io/p/sparkgpt-%E9%A2%84%E8%A7%88/images/prompt_del.png" width="646" height="304" srcset="https://canxin121.github.io/p/sparkgpt-%E9%A2%84%E8%A7%88/images/prompt_del_hu0c533b535e009a9a041576f870965eb8_279579_480x0_resize_box_3.png 480w, https://canxin121.github.io/p/sparkgpt-%E9%A2%84%E8%A7%88/images/prompt_del_hu0c533b535e009a9a041576f870965eb8_279579_1024x0_resize_box_3.png 1024w" loading="lazy" alt=" 删除一个预设 " class="gallery-image" data-flex-grow="212" data-flex-basis="510px"/></p>
+<p><img src="https://canxin121.github.io/p/sparkgpt-%E9%A2%84%E8%A7%88/images/prompt_list.png"
+width="636"
+height="575"
+srcset="https://canxin121.github.io/p/sparkgpt-%E9%A2%84%E8%A7%88/images/prompt_list_hu2a03ea50776fff542bb050407f9d74b3_517821_480x0_resize_box_3.png 480w, https://canxin121.github.io/p/sparkgpt-%E9%A2%84%E8%A7%88/images/prompt_list_hu2a03ea50776fff542bb050407f9d74b3_517821_1024x0_resize_box_3.png 1024w"
+loading="lazy"
+alt=" 获取所有预设缩略信息 "
+class="gallery-image"
+data-flex-grow="110"
+data-flex-basis="265px"
+>
+<img src="https://canxin121.github.io/p/sparkgpt-%E9%A2%84%E8%A7%88/images/prompt_show.png"
+width="645"
+height="643"
+srcset="https://canxin121.github.io/p/sparkgpt-%E9%A2%84%E8%A7%88/images/prompt_show_hue285e6203402b430e11d1ef58ecd77df_404262_480x0_resize_box_3.png 480w, https://canxin121.github.io/p/sparkgpt-%E9%A2%84%E8%A7%88/images/prompt_show_hue285e6203402b430e11d1ef58ecd77df_404262_1024x0_resize_box_3.png 1024w"
+loading="lazy"
+alt=" 查看某个预设 "
+class="gallery-image"
+data-flex-grow="100"
+data-flex-basis="240px"
+>
+<img src="https://canxin121.github.io/p/sparkgpt-%E9%A2%84%E8%A7%88/images/prompt_add.png"
+width="638"
+height="294"
+srcset="https://canxin121.github.io/p/sparkgpt-%E9%A2%84%E8%A7%88/images/prompt_add_hu8d9c1abd7b76c69a4f57521c2565bb16_195901_480x0_resize_box_3.png 480w, https://canxin121.github.io/p/sparkgpt-%E9%A2%84%E8%A7%88/images/prompt_add_hu8d9c1abd7b76c69a4f57521c2565bb16_195901_1024x0_resize_box_3.png 1024w"
+loading="lazy"
+alt=" 添加新的预设 "
+class="gallery-image"
+data-flex-grow="217"
+data-flex-basis="520px"
+>
+<img src="https://canxin121.github.io/p/sparkgpt-%E9%A2%84%E8%A7%88/images/prompt_del.png"
+width="646"
+height="304"
+srcset="https://canxin121.github.io/p/sparkgpt-%E9%A2%84%E8%A7%88/images/prompt_del_hu0c533b535e009a9a041576f870965eb8_279579_480x0_resize_box_3.png 480w, https://canxin121.github.io/p/sparkgpt-%E9%A2%84%E8%A7%88/images/prompt_del_hu0c533b535e009a9a041576f870965eb8_279579_1024x0_resize_box_3.png 1024w"
+loading="lazy"
+alt=" 删除一个预设 "
+class="gallery-image"
+data-flex-grow="212"
+data-flex-basis="510px"
+></p>
 <h2 id="指令">指令</h2>
-<p><img src="https://canxin121.github.io/p/sparkgpt-%E9%A2%84%E8%A7%88/images/command_list.png" width="658" height="309" srcset="https://canxin121.github.io/p/sparkgpt-%E9%A2%84%E8%A7%88/images/command_list_hudf42e09201443fce7f9a642b48866969_274942_480x0_resize_box_3.png 480w, https://canxin121.github.io/p/sparkgpt-%E9%A2%84%E8%A7%88/images/command_list_hudf42e09201443fce7f9a642b48866969_274942_1024x0_resize_box_3.png 1024w" loading="lazy" alt=" 获取所有指令缩略信息 " class="gallery-image" data-flex-grow="212" data-flex-basis="511px"/>
-<img src="https://canxin121.github.io/p/sparkgpt-%E9%A2%84%E8%A7%88/images/command_show.png" width="636" height="541" srcset="https://canxin121.github.io/p/sparkgpt-%E9%A2%84%E8%A7%88/images/command_show_huaa6fe30c97db4a6fbb3f7b189f90ba8e_310978_480x0_resize_box_3.png 480w, https://canxin121.github.io/p/sparkgpt-%E9%A2%84%E8%A7%88/images/command_show_huaa6fe30c97db4a6fbb3f7b189f90ba8e_310978_1024x0_resize_box_3.png 1024w" loading="lazy" alt=" 查看某个指令 " class="gallery-image" data-flex-grow="117" data-flex-basis="282px"/>
-<img src="https://canxin121.github.io/p/sparkgpt-%E9%A2%84%E8%A7%88/images/command_add.png" width="654" height="315" srcset="https://canxin121.github.io/p/sparkgpt-%E9%A2%84%E8%A7%88/images/command_add_hucf6b8b789b7e075a413aee63eed81613_210970_480x0_resize_box_3.png 480w, https://canxin121.github.io/p/sparkgpt-%E9%A2%84%E8%A7%88/images/command_add_hucf6b8b789b7e075a413aee63eed81613_210970_1024x0_resize_box_3.png 1024w" loading="lazy" alt=" 添加新的指令 " class="gallery-image" data-flex-grow="207" data-flex-basis="498px"/>
-<img src="https://canxin121.github.io/p/sparkgpt-%E9%A2%84%E8%A7%88/images/command_del.png" width="649" height="292" srcset="https://canxin121.github.io/p/sparkgpt-%E9%A2%84%E8%A7%88/images/command_del_hu4ae45de794030bbc9548e0c4cd8cbc9e_260364_480x0_resize_box_3.png 480w, https://canxin121.github.io/p/sparkgpt-%E9%A2%84%E8%A7%88/images/command_del_hu4ae45de794030bbc9548e0c4cd8cbc9e_260364_1024x0_resize_box_3.png 1024w" loading="lazy" alt=" 删除一个指令 " class="gallery-image" data-flex-grow="222" data-flex-basis="533px"/></p>
+<p><img src="https://canxin121.github.io/p/sparkgpt-%E9%A2%84%E8%A7%88/images/command_list.png"
+width="658"
+height="309"
+srcset="https://canxin121.github.io/p/sparkgpt-%E9%A2%84%E8%A7%88/images/command_list_hudf42e09201443fce7f9a642b48866969_274942_480x0_resize_box_3.png 480w, https://canxin121.github.io/p/sparkgpt-%E9%A2%84%E8%A7%88/images/command_list_hudf42e09201443fce7f9a642b48866969_274942_1024x0_resize_box_3.png 1024w"
+loading="lazy"
+alt=" 获取所有指令缩略信息 "
+class="gallery-image"
+data-flex-grow="212"
+data-flex-basis="511px"
+>
+<img src="https://canxin121.github.io/p/sparkgpt-%E9%A2%84%E8%A7%88/images/command_show.png"
+width="636"
+height="541"
+srcset="https://canxin121.github.io/p/sparkgpt-%E9%A2%84%E8%A7%88/images/command_show_huaa6fe30c97db4a6fbb3f7b189f90ba8e_310978_480x0_resize_box_3.png 480w, https://canxin121.github.io/p/sparkgpt-%E9%A2%84%E8%A7%88/images/command_show_huaa6fe30c97db4a6fbb3f7b189f90ba8e_310978_1024x0_resize_box_3.png 1024w"
+loading="lazy"
+alt=" 查看某个指令 "
+class="gallery-image"
+data-flex-grow="117"
+data-flex-basis="282px"
+>
+<img src="https://canxin121.github.io/p/sparkgpt-%E9%A2%84%E8%A7%88/images/command_add.png"
+width="654"
+height="315"
+srcset="https://canxin121.github.io/p/sparkgpt-%E9%A2%84%E8%A7%88/images/command_add_hucf6b8b789b7e075a413aee63eed81613_210970_480x0_resize_box_3.png 480w, https://canxin121.github.io/p/sparkgpt-%E9%A2%84%E8%A7%88/images/command_add_hucf6b8b789b7e075a413aee63eed81613_210970_1024x0_resize_box_3.png 1024w"
+loading="lazy"
+alt=" 添加新的指令 "
+class="gallery-image"
+data-flex-grow="207"
+data-flex-basis="498px"
+>
+<img src="https://canxin121.github.io/p/sparkgpt-%E9%A2%84%E8%A7%88/images/command_del.png"
+width="649"
+height="292"
+srcset="https://canxin121.github.io/p/sparkgpt-%E9%A2%84%E8%A7%88/images/command_del_hu4ae45de794030bbc9548e0c4cd8cbc9e_260364_480x0_resize_box_3.png 480w, https://canxin121.github.io/p/sparkgpt-%E9%A2%84%E8%A7%88/images/command_del_hu4ae45de794030bbc9548e0c4cd8cbc9e_260364_1024x0_resize_box_3.png 1024w"
+loading="lazy"
+alt=" 删除一个指令 "
+class="gallery-image"
+data-flex-grow="222"
+data-flex-basis="533px"
+></p>
 <h2 id="群二维码">群二维码</h2>
-<p><img src="https://canxin121.github.io/p/sparkgpt-%E9%A2%84%E8%A7%88/images/qrcode.png" width="1284" height="2283" srcset="https://canxin121.github.io/p/sparkgpt-%E9%A2%84%E8%A7%88/images/qrcode_hu51b203c4463a8d8fd4df1bc6f83211bb_239525_480x0_resize_box_3.png 480w, https://canxin121.github.io/p/sparkgpt-%E9%A2%84%E8%A7%88/images/qrcode_hu51b203c4463a8d8fd4df1bc6f83211bb_239525_1024x0_resize_box_3.png 1024w" loading="lazy" class="gallery-image" data-flex-grow="56" data-flex-basis="134px"/></p></body></html>
+<p><img src="https://canxin121.github.io/p/sparkgpt-%E9%A2%84%E8%A7%88/images/qrcode.png"
+width="1284"
+height="2283"
+srcset="https://canxin121.github.io/p/sparkgpt-%E9%A2%84%E8%A7%88/images/qrcode_hu51b203c4463a8d8fd4df1bc6f83211bb_239525_480x0_resize_box_3.png 480w, https://canxin121.github.io/p/sparkgpt-%E9%A2%84%E8%A7%88/images/qrcode_hu51b203c4463a8d8fd4df1bc6f83211bb_239525_1024x0_resize_box_3.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="56"
+data-flex-basis="134px"
+></p></blockquote>

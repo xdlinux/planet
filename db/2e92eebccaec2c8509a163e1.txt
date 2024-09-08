@@ -1,33 +1,33 @@
-<html><head></head><body><h1 id="青雀进暗杠的抽牌数期望">青雀进暗杠的抽牌数期望<a class="headerlink" href="https://note.stalomeow.com/blog/posts/exp-val-to-enter-qingque-hidden-hand/#%E9%9D%92%E9%9B%80%E8%BF%9B%E6%9A%97%E6%9D%A0%E7%9A%84%E6%8A%BD%E7%89%8C%E6%95%B0%E6%9C%9F%E6%9C%9B" title="Permanent link">¶</a></h1>
+<blockquote><h1 id="青雀进暗杠的抽牌数期望">青雀进暗杠的抽牌数期望<a class="headerlink" href="#青雀进暗杠的抽牌数期望" title="Permanent link">&para;</a></h1>
 <!-- more -->
 
 <p>用 <a href="https://en.wikipedia.org/wiki/Markov_chain">马尔可夫链（Markov chain）</a> 暴力计算。顺便复习一下线代。</p>
-<p><img alt="让我摸个鱼吧~" src="https://note.stalomeow.com/obsidian-vault/attachments/qingque.jpg"/></p>
-<h2 id="起因">起因<a class="headerlink" href="https://note.stalomeow.com/blog/posts/exp-val-to-enter-qingque-hidden-hand/#%E8%B5%B7%E5%9B%A0" title="Permanent link">¶</a></h2>
+<p><img alt="让我摸个鱼吧~" src="../../../obsidian-vault/attachments/qingque.jpg" /></p>
+<h2 id="起因">起因<a class="headerlink" href="#起因" title="Permanent link">&para;</a></h2>
 <p>看到这两个视频以后，心血来潮算的。</p>
 <div class="responsive-video-container">
-    <iframe src="https://player.bilibili.com/player.html?aid=1752122559&amp;bvid=BV1vx421k77C&amp;cid=1479621819&amp;p=1&amp;autoplay=0" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"> </iframe>
+    <iframe src="https://player.bilibili.com/player.html?aid=1752122559&bvid=BV1vx421k77C&cid=1479621819&p=1&autoplay=0" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"> </iframe>
 </div>
 
 <div class="responsive-video-container">
-    <iframe src="https://player.bilibili.com/player.html?aid=996148265&amp;bvid=BV16s4y1B7jm&amp;cid=1129947597&amp;p=1&amp;autoplay=0" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"> </iframe>
+    <iframe src="https://player.bilibili.com/player.html?aid=996148265&bvid=BV16s4y1B7jm&cid=1129947597&p=1&autoplay=0" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"> </iframe>
 </div>
 
 <p>这下真看 V 看的了。</p>
-<h2 id="青雀的抽牌机制">青雀的抽牌机制<a class="headerlink" href="https://note.stalomeow.com/blog/posts/exp-val-to-enter-qingque-hidden-hand/#%E9%9D%92%E9%9B%80%E7%9A%84%E6%8A%BD%E7%89%8C%E6%9C%BA%E5%88%B6" title="Permanent link">¶</a></h2>
+<h2 id="青雀的抽牌机制">青雀的抽牌机制<a class="headerlink" href="#青雀的抽牌机制" title="Permanent link">&para;</a></h2>
 <blockquote>
 <p><em>天赋</em> 帝垣琼玉</p>
 <p>我方目标回合开始时，青雀会从 3 种不同花色的琼玉牌中随机抽取 1 张，最多持有 4 张琼玉牌。青雀回合开始时，若持有的琼玉牌数为 4 且花色相同，青雀消耗所有琼玉牌进入【暗杠】状态。处于【暗杠】状态时无法再次施放战技，同时使自身攻击力提高，普攻【门前清】强化为【杠上开花！】，【暗杠】状态会在施放【杠上开花！】后结束。</p>
-<hr/>
+<hr />
 <p><em>战技</em> 海底捞月</p>
-<p>立即抽取 2 张琼玉牌，使自身造成的伤害提高，持续至本回合结束。该效果可以叠加 4 次。施放该战技后，本回合不会结束。<sup id="fnref:1"><a class="footnote-ref" href="https://note.stalomeow.com/blog/posts/exp-val-to-enter-qingque-hidden-hand/#fn:1">1</a></sup></p>
+<p>立即抽取 2 张琼玉牌，使自身造成的伤害提高，持续至本回合结束。该效果可以叠加 4 次。施放该战技后，本回合不会结束。<sup id="fnref:1"><a class="footnote-ref" href="#fn:1">1</a></sup></p>
 </blockquote>
 <p>牌堆里有 3 种花色，最多同时持有 4 张牌，4 个花色相同则进暗杠。可以忽略牌的具体花色，把牌型抽象成 AABC、AABB、AAAB、AAAA 四种，AAAA 表示进入暗杠。</p>
 <blockquote>
-<p>青雀的摸牌是一个将琼玉牌从牌堆中取出并记录其内容，然后再将刚刚摸到的牌归还牌堆的过程，而非从牌堆中摸取琼玉牌并保留于手中的过程。根据青雀的摸牌规则（留多去少）我们又可以推导出：AAAA、AAAB、AABB、AABC是一个层级系统，后者可以向前者晋升，前者却不可向后者跌落。<sup id="fnref:2"><a class="footnote-ref" href="https://note.stalomeow.com/blog/posts/exp-val-to-enter-qingque-hidden-hand/#fn:2">2</a></sup></p>
+<p>青雀的摸牌是一个将琼玉牌从牌堆中取出并记录其内容，然后再将刚刚摸到的牌归还牌堆的过程，而非从牌堆中摸取琼玉牌并保留于手中的过程。根据青雀的摸牌规则（留多去少）我们又可以推导出：AAAA、AAAB、AABB、AABC是一个层级系统，后者可以向前者晋升，前者却不可向后者跌落。<sup id="fnref:2"><a class="footnote-ref" href="#fn:2">2</a></sup></p>
 </blockquote>
 <p>假设青雀牌堆里，各花色的牌都有无穷多张。战技抽牌流程：先抽 2 张，再去掉手里 6 张中花色数量最少的 2 张。</p>
-<h2 id="马尔可夫链">马尔可夫链<a class="headerlink" href="https://note.stalomeow.com/blog/posts/exp-val-to-enter-qingque-hidden-hand/#%E9%A9%AC%E5%B0%94%E5%8F%AF%E5%A4%AB%E9%93%BE" title="Permanent link">¶</a></h2>
+<h2 id="马尔可夫链">马尔可夫链<a class="headerlink" href="#马尔可夫链" title="Permanent link">&para;</a></h2>
 <pre class="mermaid"><code>flowchart LR
     AABC([AABC]) -- 6/9 --&gt; AAAB
     AABC -- 2/9 --&gt; AABB
@@ -113,7 +113,7 @@ c_0\\
 d_0
 \end{bmatrix}
 \]</div>
-<h2 id="不同牌型的抽牌数期望">不同牌型的抽牌数期望<a class="headerlink" href="https://note.stalomeow.com/blog/posts/exp-val-to-enter-qingque-hidden-hand/#%E4%B8%8D%E5%90%8C%E7%89%8C%E5%9E%8B%E7%9A%84%E6%8A%BD%E7%89%8C%E6%95%B0%E6%9C%9F%E6%9C%9B" title="Permanent link">¶</a></h2>
+<h2 id="不同牌型的抽牌数期望">不同牌型的抽牌数期望<a class="headerlink" href="#不同牌型的抽牌数期望" title="Permanent link">&para;</a></h2>
 <p>先要把 <span class="arithmatex">\(A\)</span> 对角化。由</p>
 <div class="arithmatex">\[
 \left | \lambda E - A \right | = \begin{vmatrix}
@@ -177,7 +177,7 @@ c_0\\
 d_0
 \end{bmatrix}
 \]</div>
-<p><span class="arithmatex">\(P\)</span> 的<a href="https://note.stalomeow.com/ecaa-acdj-cecf/">伴随矩阵</a></p>
+<p><span class="arithmatex">\(P\)</span> 的<a href="../../../ecaa-acdj-cecf/">伴随矩阵</a></p>
 <div class="arithmatex">\[
 P^*=\begin{bmatrix}
 1 &amp; 0 &amp; 0 &amp; 0\\
@@ -214,7 +214,7 @@ c_0\\
 d_0
 \end{bmatrix}
 \]</div>
-<p>上式中 <span class="arithmatex">\(n \ge 1\)</span>。抽牌数的<a href="https://note.stalomeow.com/eccb-afei-ceba/">数学期望</a></p>
+<p>上式中 <span class="arithmatex">\(n \ge 1\)</span>。抽牌数的<a href="../../../eccb-afei-ceba/">数学期望</a></p>
 <div class="arithmatex">\[
 EX=(d_1-d_0) + \sum_{n=2}^{\infty} n(d_n-d_{n-1})
 \]</div>
@@ -234,7 +234,7 @@ EX=(d_1-d_0) + S(\dfrac{1}{9})
 \]</div>
 <p>由</p>
 <div class="arithmatex">\[
-S(q) = \left(\sum_{n=2}^{\infty} \left( \dfrac{1}{4}k_1(4q)^n + k_2q^n \right) \right)&#39;
+S(q) = \left(\sum_{n=2}^{\infty} \left( \dfrac{1}{4}k_1(4q)^n + k_2q^n \right) \right)'
 \]</div>
 <p>得</p>
 <div class="arithmatex">\[
@@ -277,7 +277,7 @@ d_0
 </tr>
 </tbody>
 </table>
-<h2 id="抽牌数综合期望">抽牌数综合期望<a class="headerlink" href="https://note.stalomeow.com/blog/posts/exp-val-to-enter-qingque-hidden-hand/#%E6%8A%BD%E7%89%8C%E6%95%B0%E7%BB%BC%E5%90%88%E6%9C%9F%E6%9C%9B" title="Permanent link">¶</a></h2>
+<h2 id="抽牌数综合期望">抽牌数综合期望<a class="headerlink" href="#抽牌数综合期望" title="Permanent link">&para;</a></h2>
 <p>起始牌型的概率分布</p>
 <table>
 <thead>
@@ -307,7 +307,7 @@ d_0
 <div class="arithmatex">\[
 EX = \dfrac{89}{36} \approx 2.3056
 \]</div>
-<h2 id="牌型分布">牌型分布<a class="headerlink" href="https://note.stalomeow.com/blog/posts/exp-val-to-enter-qingque-hidden-hand/#%E7%89%8C%E5%9E%8B%E5%88%86%E5%B8%83" title="Permanent link">¶</a></h2>
+<h2 id="牌型分布">牌型分布<a class="headerlink" href="#牌型分布" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
 <tr>
@@ -378,13 +378,13 @@ EX = \dfrac{89}{36} \approx 2.3056
 </tbody>
 </table>
 <div class="footnote">
-<hr/>
+<hr />
 <ol>
 <li id="fn:1">
-<p><a href="https://bbs.mihoyo.com/sr/wiki/content/497/detail?bbs_presentation_style=no_header">青雀-崩坏:星穹铁道WIKI-开拓者笔记-米游社</a> <a class="footnote-backref" href="https://note.stalomeow.com/blog/posts/exp-val-to-enter-qingque-hidden-hand/#fnref:1" title="Jump back to footnote 1 in the text">↩</a></p>
+<p><a href="https://bbs.mihoyo.com/sr/wiki/content/497/detail?bbs_presentation_style=no_header">青雀-崩坏:星穹铁道WIKI-开拓者笔记-米游社</a>&#160;<a class="footnote-backref" href="#fnref:1" title="Jump back to footnote 1 in the text">&#8617;</a></p>
 </li>
 <li id="fn:2">
-<p><a href="https://www.miyoushe.com/sr/article/39578076">短生种都能看懂的青雀摸牌概率【科学琼玉论】-崩坏：星穹铁道社区-米游社</a> <a class="footnote-backref" href="https://note.stalomeow.com/blog/posts/exp-val-to-enter-qingque-hidden-hand/#fnref:2" title="Jump back to footnote 2 in the text">↩</a></p>
+<p><a href="https://www.miyoushe.com/sr/article/39578076">短生种都能看懂的青雀摸牌概率【科学琼玉论】-崩坏：星穹铁道社区-米游社</a>&#160;<a class="footnote-backref" href="#fnref:2" title="Jump back to footnote 2 in the text">&#8617;</a></p>
 </li>
 </ol>
-</div></body></html>
+</div></blockquote>

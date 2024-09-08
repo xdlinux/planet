@@ -1,4 +1,4 @@
-<html><head></head><body><h2>前言</h2>
+<blockquote></blockquote><h2>前言</h2>
 <p>俗话说的好，<strong>美化的尽头是默认</strong>。<br/>
 虽然默认的 Windows 已经能高效地胜任各项工作，但它确实 ugly 啊。<br/>
 在拥有一台性能过剩 PC 的情况下，适度追求美化和简化，满足本私斋的<del>高端审美</del>是极有必要的（）</p>
@@ -8,7 +8,7 @@
 <li>TranslucentTB：任务栏透明/亚克力效果</li>
 <li>Sapphire：桌面图标交互优化</li>
 <li>Wallpaper Engine：为减少 GPU 消耗和内存占用，只选了 Blue Archive 中 Noa 的记忆大厅作为壁纸，几秒的 4 K 视频，整个 Wallpaper 内存占用约 100 Mb。</li>
-<li>Rainmeter：只用了一个音频条作为美化，因为 Noa 已经够美了<br/>
+<li>Rainmeter：只用了一个音频条作为美化，因为 Noa 已经够美了😋<br/>
 原来用过查看硬件信息的组件，发现除了增加焦虑外没什么用，遂放弃。</li>
 <li>QQ 美化、网易云音乐美化、光标美化、Obsidian 主题、插件安排上。再加上 Edge 浏览器的 iTab 标签页和各类实用插件，目前的工作流完全舒适。</li>
 </ul>
@@ -225,4 +225,3 @@ Steam（褒贬不一）：<a href="https://store.steampowered.com/app/1694750/St
 <li>蔚蓝档案千年光标，简约可爱，在用。<br/>
 GitHub项目地址：<a href="https://github.com/makipom/BlueArchive-Cursors">BlueArchive-Cursors</a></li>
 </ol>
-</body></html>

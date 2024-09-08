@@ -1,4 +1,4 @@
-<html><head></head><body><h1>Chapter 20 - Webhook 钩子</h1>
+<blockquote><h1>Chapter 20 - Webhook 钩子</h1>
 <p>Webhook 是一种将消息发布到 Discord 频道的而无需使用 Discord 的省力方式。它不需要你有一个机器人账号或身份验证即可使用这个东西。和 Discord API 一样，Webhook 对于自动化程序来说是十分友好的。</p>
 <p>创建和管理一个频道 Webhook 钩子是很轻松的，但是你不能直接修改或删除由 Webhook 发送的消息。</p>
 <p>下面我们来讲如何创建一个 Webhook 钩子。</p>
@@ -166,5 +166,4 @@
 </li>
 </ul>
 <p>你还可以进一步对要发送的消息 JSON 数据进行高级编辑。点击 <code>JSON Editor</code> 按钮，可以看到完整的消息 JSON 数据以及报错提示（比如你点击添加了表格域但是没有设置表格域的题头）。在编辑器里，点击 <code>Copy to Clipboard</code> 复制到剪切板，点击 <code>Apply Changes</code> 保存更改。</p>
-<p>在这一切完毕后，你可以回到网页最上方，点击 Send 使用 Webhook 向频道里发送消息。</p>
-</body></html>
+<p>在这一切完毕后，你可以回到网页最上方，点击 Send 使用 Webhook 向频道里发送消息。</p></blockquote>

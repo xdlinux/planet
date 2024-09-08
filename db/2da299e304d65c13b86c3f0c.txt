@@ -1,7 +1,7 @@
-<html><head></head><body><h2>Codepen</h2>
-<pre><code>::codepen{#gOyLepE author=&#34;lxchapu&#34;}
+<blockquote><h2>Codepen</h2>
+<pre><code>::codepen{#gOyLepE author="lxchapu"}
 </code></pre>
-<p>::codepen{#gOyLepE author=&#34;lxchapu&#34;}</p>
+<p>::codepen{#gOyLepE author="lxchapu"}</p>
 <h2>YouTube</h2>
 <pre><code>::youtube{#BuKft9LpL_0}
 </code></pre>
@@ -9,5 +9,4 @@
 <h2>Bilibili</h2>
 <pre><code>::bilibili{#BV1Mx4y1Y7pJ}
 </code></pre>
-<p>::bilibili{#BV1Mx4y1Y7pJ}</p>
-</body></html>
+<p>::bilibili{#BV1Mx4y1Y7pJ}</p></blockquote>

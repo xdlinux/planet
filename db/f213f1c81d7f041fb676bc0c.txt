@@ -1,4 +1,4 @@
-<html><head></head><body><img src="https://legacy.superbart.top/picture/Flutter%20Introduction/Maggie&#39;s%20Butterfly%20Longest%20Daycard%20Short.jpg" alt="Featured image of post Flutter 介绍"/><p>有人邀请我去开个沙龙，我决定将这个，这个就是当时我的演讲稿。</p>
+<blockquote><img src="https://legacy.superbart.top/picture/Flutter%20Introduction/Maggie's%20Butterfly%20Longest%20Daycard%20Short.jpg" alt="Featured image of post Flutter 介绍" /><p>有人邀请我去开个沙龙，我决定将这个，这个就是当时我的演讲稿。</p>
 <h2 id="什么是-flutter--flutter-的好处">什么是 Flutter &amp; Flutter 的好处</h2>
 <p>Flutter 是一个跨平台的客户端(以及网络前端)开发工具，官方定义为：</p>
 <blockquote>
@@ -19,7 +19,7 @@
 <p>目前这个和 React Native 并列两大最流行的跨平台开发平台。而 React Native 还是占用了 React 前端开发框架（Flutter 受 React 影响很大）的优势，Flutter 相比之下就比较小众了，找工作不太好找:-P</p>
 <p>对我而言，有了 Flutter 的基础，后面要适应其他的类似框架就方便多了。最近我被(zi)人(ji)拉(zhao)过(shi)去(qing)写 vue 去了，我之前没有接触过。但是我稍微看了一下 vue 组合式的教程，就能给人打下手了。CSS 我现在还不会，感觉要会了，我就又会了一个框架(逃)。</p>
 <h2 id="dart-语言介绍">Dart 语言介绍</h2>
-<p>Flutter 使用的是 Dart 语言，目前是 Google 专门为 Flutter 设计的语言，因为我根本没找到任何在其他方面用 Dart 编程的例子。而且这玩意曾经还想嵌入到 Chrome……</p>
+<p>Flutter 使用的是 Dart 语言，目前是 Google 专门为 Flutter 设计的语言，因为我根本没找到任何在其他方面用 Dart 编程的例子。而且这玩意曾经还想嵌入到 Chrome&hellip;&hellip;</p>
 <h3 id="dart--javascript--java">Dart = Javascript + Java</h3>
 <p>语法像 Javascript，运行时环境像 Java。</p>
 <p>像 Javascript 在于存在箭头函数，函数变量之类。Dart 对异步的实现 Future 也借鉴了 JS 的 Promise。因为 Dart 设计的时候，对标的就是 JavaScript。</p>
@@ -97,7 +97,7 @@
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1">// 可以使用 late 表示稍后赋值，但你不能忘了
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">late</span> <span class="kt">int</span> <span class="n">a</span><span class="p">;</span>
-</span></span></code></pre></div><p>当然还有很多，想知道的话请去看官方介绍。我当时看了俩下就上手了……</p>
+</span></span></code></pre></div><p>当然还有很多，想知道的话请去看官方介绍。我当时看了俩下就上手了&hellip;&hellip;</p>
 <h2 id="flutter-的基本部件介绍">Flutter 的基本部件介绍</h2>
 <p>Flutter 的 Widget 是一个一个的类，描述了在当前的配置和状态下视图所应该呈现的样子。在 Flutter 里面，万物都是围绕部件旋转的。</p>
 <p>接下来我要展示一个信息卡，用这个方式给大家展示 Flutter 的基本组件。顺便我搞点 HTML 之类的东西，来给大家做点对比。接下来的部件，都是按照 Material 部件来说明的，iOS 的不在此说明。</p>
@@ -418,7 +418,7 @@
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-dart" data-lang="dart"><span class="line"><span class="cl"><span class="n">GetBuilder</span><span class="o">&lt;</span><span class="n">Controller</span><span class="o">&gt;</span><span class="p">(</span><span class="nl">builder:</span> <span class="p">(</span><span class="n">c</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="n">Widget</span><span class="p">(</span><span class="n">xxx</span><span class="p">));</span>
 </span></span></code></pre></div><p>建议阅读 Traintime PDA 代码中的<code>controller/sport_controller.dart</code>，<code>repository/xidian_sport/xidian_sport_session.dart</code>，以及 page 下面关于体育部件的代码。以下这段展示的是我程序对应的模型各组成的部分。</p>
 <blockquote>
-<p>Controller(GetX Controller) – Model(Dio网络库) – View(Flutter)</p>
+<p>Controller(GetX Controller) &ndash; Model(Dio网络库) &ndash; View(Flutter)</p>
 </blockquote>
 <h2 id="杂项">杂项</h2>
 <h3 id="路由栈">路由栈</h3>
@@ -594,11 +594,14 @@
 </span></span><span class="line"><span class="cl"><span class="c1">// 清除所有设置
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">prefs</span><span class="p">.</span><span class="n">clear</span><span class="p">();</span>
 </span></span></code></pre></div><h2 id="推荐阅读">推荐阅读</h2>
-<p><a class="link" href="https://dart.dev/language" target="_blank" rel="noopener">Dart 语言官方简介</a><br/>
-<a class="link" href="https://flutter.cn/docs/get-started/codelab" target="_blank" rel="noopener">Flutter 上手教程</a><br/>
-<a class="link" href="https://flutter.cn/docs/development/ui/layout/tutorial" target="_blank" rel="noopener">布局构建教程</a><br/>
-<a class="link" href="https://github.com/BenderBlog/watermeter" target="_blank" rel="noopener">Traintime PDA (Watermeter) 代码</a></p>
+<p><a class="link" href="https://dart.dev/language"  target="_blank" rel="noopener"
+    >Dart 语言官方简介</a><br>
+<a class="link" href="https://flutter.cn/docs/get-started/codelab"  target="_blank" rel="noopener"
+    >Flutter 上手教程</a><br>
+<a class="link" href="https://flutter.cn/docs/development/ui/layout/tutorial"  target="_blank" rel="noopener"
+    >布局构建教程</a><br>
+<a class="link" href="https://github.com/BenderBlog/watermeter"  target="_blank" rel="noopener"
+    >Traintime PDA (Watermeter) 代码</a></p>
 <h2 id="封面">封面</h2>
 <p>Maggie 去日托所的一天。</p>
-<p>主要看中了蝴蝶，因为蝴蝶和 Dart 的吉祥物蜂鸟类似。</p>
-</body></html>
+<p>主要看中了蝴蝶，因为蝴蝶和 Dart 的吉祥物蜂鸟类似。</p></blockquote>

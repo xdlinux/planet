@@ -1,4 +1,4 @@
-<html><head></head><body><img src="https://legacy.superbart.top/picture/Random/Cirno-Easter%20Egg.png" alt="Featured image of post 我在 2022 年学到了什么"/><p>把去年学到的东西，没说过的拼接一下，回见了您。
+<blockquote><img src="https://legacy.superbart.top/picture/Random/Cirno-Easter%20Egg.png" alt="Featured image of post 我在 2022 年学到了什么" /><p>把去年学到的东西，没说过的拼接一下，回见了您。
 (之前名称叫 Hadoop 额外技能，不能就这样就和老博客同步，索性把大作业里面我顺手提到的东西都罗列一通)</p>
 <h2 id="c-大作业技术罗列">C++ 大作业技术罗列</h2>
 <p>C++ 大作业学到的偏门东西。</p>
@@ -127,15 +127,22 @@
 <li>(可选但推荐) 修改所有虚拟机的 host 文件，标记所有虚拟机的地址</li>
 </ol>
 <h3 id="截图主机网络管理器">截图~主机网络管理器</h3>
-<p></p><figure>
-	<a href="https://legacy.superbart.top/picture/Random/VirtualBox-1.png">
-		<img src="https://legacy.superbart.top/picture/Random/VirtualBox-1.png" loading="lazy"/>
+<p><figure 
+	>
+	<a href="https://legacy.superbart.top/picture/Random/VirtualBox-1.png" >
+		<img src="https://legacy.superbart.top/picture/Random/VirtualBox-1.png"
+			
+			
+			
+			loading="lazy"
+			>
 	</a>
 	
-</figure><p></p>
+</figure></p>
 <p>如果设置成功的话，你的宿主机应该可以 ping 到你的虚拟机。查看你电脑的 ip，可以执行 <code>ifconfig</code> 或者 <code>ip a</code>。</p>
 <h3 id="如何关闭网络防火墙">如何关闭网络防火墙</h3>
-<p>基本上我见到的 Linux 系统，防火墙软件都是 <a class="link" href="https://firewalld.org/" target="_blank" rel="noopener">firewalld</a>。关闭防火墙，也就是关掉这个服务。所以我们要执行</p>
+<p>基本上我见到的 Linux 系统，防火墙软件都是 <a class="link" href="https://firewalld.org/"  target="_blank" rel="noopener"
+    >firewalld</a>。关闭防火墙，也就是关掉这个服务。所以我们要执行</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo systemctl stop firewalld.service <span class="c1"># 停止防火墙服务</span>
 </span></span><span class="line"><span class="cl">sudo systemctl disable firewalld.service <span class="c1"># 防止防火墙开机自启动</span>
 </span></span></code></pre></div><p>说到这了，看看 Systemd 还能搞啥</p>
@@ -442,5 +449,4 @@
 </span></span><span class="line"><span class="cl">    <span class="p">}</span>
 </span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></div><p>自行了解用途，我已经忘了。</p>
-</body></html>
+</span></span></code></pre></div><p>自行了解用途，我已经忘了。</p></blockquote>

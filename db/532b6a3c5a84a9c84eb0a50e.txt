@@ -1,33 +1,33 @@
-<html><head></head><body><h1 id="起始"><a href="http://wanglanhuajiaofen.fun/2024/05/03/%E6%9C%8D%E5%8A%A1%E5%99%A8%E8%BD%AF%E4%BB%B6%E6%8A%98%E8%85%BE/#%E8%B5%B7%E5%A7%8B" class="headerlink" title="起始"></a>起始</h1><p>最近搞了一个路由器，360t7，从咸鱼上收的二手，已经刷了openwrt系统(本来还想自己刷的(っ*´Д`)っ雾)，然后今天就在搞各种路由器软件包，找到了luci-unblockneteasemusic后我十分心动，便开始着手配置，结果遇到各种问题，故记下此篇博客(～￣(OO)￣)ブ</p>
-<h2 id="Openwrt-UnblockNeteaseMusic-使用记录"><a href="http://wanglanhuajiaofen.fun/2024/05/03/%E6%9C%8D%E5%8A%A1%E5%99%A8%E8%BD%AF%E4%BB%B6%E6%8A%98%E8%85%BE/#Openwrt-UnblockNeteaseMusic-%E4%BD%BF%E7%94%A8%E8%AE%B0%E5%BD%95" class="headerlink" title="Openwrt UnblockNeteaseMusic 使用记录"></a>Openwrt UnblockNeteaseMusic 使用记录</h2><p>unblockNeteaseMusic可以用来播放网易云音乐中的灰色歌曲，或者实现免vip播放会员歌曲等功能ヽ(✿ﾟ▽ﾟ)ノ<br/>但是该软件包出的挺早的了，对于最新版的网易云音乐已经无法实现上述功能了(((φ(◎ロ◎;)φ)))<br/>可能是最新版本网易云音乐做了奇奇怪怪的防护措施(-__-)=@))&gt; o然后直接把这个东西给ban了。</p>
-<span id="more"></span>
+<blockquote> &lt;h1 id=&#34;起始&#34;&gt;&lt;a href=&#34;#起始&#34; class=&#34;headerlink&#34; title=&#34;起始&#34;&gt;&lt;/a&gt;起始&lt;/h1&gt;&lt;p&gt;最近搞了一个路由器，360t7，从咸鱼上收的二手，已经刷了openwrt系统(本来还想自己刷的(っ*´Д&amp;#96;)っ雾)，然后今天就在搞各种路由器软件包，找到了luci-unblockneteasemusic后我十分心动，便开始着手配置，结果遇到各种问题，故记下此篇博客(～￣(OO)￣)ブ&lt;/p&gt;
+&lt;h2 id=&#34;Openwrt-UnblockNeteaseMusic-使用记录&#34;&gt;&lt;a href=&#34;#Openwrt-UnblockNeteaseMusic-使用记录&#34; class=&#34;headerlink&#34; title=&#34;Openwrt UnblockNeteaseMusic 使用记录&#34;&gt;&lt;/a&gt;Openwrt UnblockNeteaseMusic 使用记录&lt;/h2&gt;&lt;p&gt;unblockNeteaseMusic可以用来播放网易云音乐中的灰色歌曲，或者实现免vip播放会员歌曲等功能ヽ(✿ﾟ▽ﾟ)ノ&lt;br&gt;但是该软件包出的挺早的了，对于最新版的网易云音乐已经无法实现上述功能了(((φ(◎ロ◎;)φ)))&lt;br&gt;可能是最新版本网易云音乐做了奇奇怪怪的防护措施(-__-)&amp;#x3D;@))&amp;gt; o然后直接把这个东西给ban了。&lt;/p&gt;
+&lt;span id=&#34;more&#34;&gt;&lt;/span&gt;
 
-<h2 id="Setup"><a href="http://wanglanhuajiaofen.fun/2024/05/03/%E6%9C%8D%E5%8A%A1%E5%99%A8%E8%BD%AF%E4%BB%B6%E6%8A%98%E8%85%BE/#Setup" class="headerlink" title="Setup"></a>Setup</h2><p>360t7路由器 237系统(LuCI openwrt-21.02 / LuCI openwrt-21.02)<br/><a href="https://github.com/UnblockNeteaseMusic/luci-app-unblockneteasemusic">luci-unblockneteasemusic(JavaScript) 3.2</a> ps:也可以在luci管理页面下载<br/><a href="https://www.lanzoui.com/ioPkInxh8yf">网易云音乐2.7.2(上古版本)</a><br/><a href="https://pan.baidu.com/s/18zVWFPHZ4PXaKgjc0LXMMg?pwd=8q64">安卓极速版网易云音乐</a> 提取码:8q64</p>
-<h2 id="步骤"><a href="http://wanglanhuajiaofen.fun/2024/05/03/%E6%9C%8D%E5%8A%A1%E5%99%A8%E8%BD%AF%E4%BB%B6%E6%8A%98%E8%85%BE/#%E6%AD%A5%E9%AA%A4" class="headerlink" title="步骤"></a>步骤</h2><ul>
-<li><p>下载好软件包后，在路由器luci设置页面选择服务，选中解除网易云音乐播放限制。</p>
-</li>
-<li><p>点击启用服务，其他选项可按照自己意愿选择。</p>
-</li>
-<li><p>开启进阶设置，在命令行输入</p>
-<pre><code class="hljs cmd"><span class="hljs-built_in">ping</span> music.<span class="hljs-number">163</span>.com</code></pre>
+&lt;h2 id=&#34;Setup&#34;&gt;&lt;a href=&#34;#Setup&#34; class=&#34;headerlink&#34; title=&#34;Setup&#34;&gt;&lt;/a&gt;Setup&lt;/h2&gt;&lt;p&gt;360t7路由器 237系统(LuCI openwrt-21.02 &amp;#x2F; LuCI openwrt-21.02)&lt;br&gt;&lt;a href=&#34;https://github.com/UnblockNeteaseMusic/luci-app-unblockneteasemusic&#34;&gt;luci-unblockneteasemusic(JavaScript) 3.2&lt;/a&gt; ps:也可以在luci管理页面下载&lt;br&gt;&lt;a href=&#34;https://www.lanzoui.com/ioPkInxh8yf&#34;&gt;网易云音乐2.7.2(上古版本)&lt;/a&gt;&lt;br&gt;&lt;a href=&#34;https://pan.baidu.com/s/18zVWFPHZ4PXaKgjc0LXMMg?pwd=8q64&#34;&gt;安卓极速版网易云音乐&lt;/a&gt; 提取码:8q64&lt;/p&gt;
+&lt;h2 id=&#34;步骤&#34;&gt;&lt;a href=&#34;#步骤&#34; class=&#34;headerlink&#34; title=&#34;步骤&#34;&gt;&lt;/a&gt;步骤&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;下载好软件包后，在路由器luci设置页面选择服务，选中解除网易云音乐播放限制。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;点击启用服务，其他选项可按照自己意愿选择。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;开启进阶设置，在命令行输入&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;hljs cmd&#34;&gt;&lt;span class=&#34;hljs-built_in&#34;&gt;ping&lt;/span&gt; music.&lt;span class=&#34;hljs-number&#34;&gt;163&lt;/span&gt;.com&lt;/code&gt;&lt;/pre&gt;
 
-<p>然后将网易云音乐的ip复制，粘贴到网易云服务器ip。</p>
-</li>
-<li><p>设置/下载证书及公钥私钥<br/>参考链接<a href="https://github.com/nondanee/UnblockNeteaseMusic/issues/48#issuecomment-477870013">证书下载</a><br/>然后在luci设置页面选择自签发证书的公钥私钥为自签的公钥私钥。</p>
-</li>
-<li><p>附上我的配置图<br/><img src="https://s2.loli.net/2024/05/04/Mob3xTjPWkhZGat.png" alt="meow"/></p>
-</li>
-<li><p>在windows网易云音乐中设置代理，服务器为你的路由器ip，端口为5200(默认)，然后重启网易云音乐，即可实现开头提的功能。</p>
-</li>
-<li><p>如果还是不行，考虑将路由器的ipv6给禁用</p>
-<pre><code class="hljs shell">/etc/init.d/odhcpd disable
-/etc/init.d/odhcpd stop</code></pre></li>
-<li><p><del>安卓端设置路由器wifi代理：PAC地址为http://你的路由器ip/proxy.pac</del><br/><del>ps：可以在设置前先登录你的账号，然后再设置代理，否则设置代理后你就无法登录了。</del><br/><strong>上述方法会导致哔哩哔哩报错：无网络连接，其它app是否有这个问题暂时不清楚。</strong><br/><strong>注：经本人测试，只要连接路由器WIFI，就可以实现上述功能，不需要设置代理。</strong></p>
-</li>
-<li><p>此时你就可以在连接你路由器局域网的情况下在windows和安卓机上面畅享  脚臭  了(///￣皿￣)○～</p>
-</li>
-</ul>
-<h2 id="总结"><a href="http://wanglanhuajiaofen.fun/2024/05/03/%E6%9C%8D%E5%8A%A1%E5%99%A8%E8%BD%AF%E4%BB%B6%E6%8A%98%E8%85%BE/#%E6%80%BB%E7%BB%93" class="headerlink" title="总结"></a>总结</h2><p>  花了很久很久才搞明白这个东西，一直遇到开启服务后网易云音乐会断网的问题怒ε=怒ε=( o｀ω′)ノ</p>
-<p>  查了很多很多资料，时间都挺早的，应该是大家最近搞这个软件包的人不多，然后我四面八方收集信息之后，终于找到了以上解决办法(ー`´ー)</p>
-<p>  如果有问题可以联系我 ○|￣|_</p>
- </body></html>
+&lt;p&gt;然后将网易云音乐的ip复制，粘贴到网易云服务器ip。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;设置&amp;#x2F;下载证书及公钥私钥&lt;br&gt;参考链接&lt;a href=&#34;https://github.com/nondanee/UnblockNeteaseMusic/issues/48#issuecomment-477870013&#34;&gt;证书下载&lt;/a&gt;&lt;br&gt;然后在luci设置页面选择自签发证书的公钥私钥为自签的公钥私钥。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;附上我的配置图&lt;br&gt;&lt;img src=&#34;https://s2.loli.net/2024/05/04/Mob3xTjPWkhZGat.png&#34; alt=&#34;meow&#34;&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;在windows网易云音乐中设置代理，服务器为你的路由器ip，端口为5200(默认)，然后重启网易云音乐，即可实现开头提的功能。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;如果还是不行，考虑将路由器的ipv6给禁用&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;hljs shell&#34;&gt;/etc/init.d/odhcpd disable
+/etc/init.d/odhcpd stop&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;del&gt;安卓端设置路由器wifi代理：PAC地址为http:&amp;#x2F;&amp;#x2F;你的路由器ip&amp;#x2F;proxy.pac&lt;/del&gt;&lt;br&gt;&lt;del&gt;ps：可以在设置前先登录你的账号，然后再设置代理，否则设置代理后你就无法登录了。&lt;/del&gt;&lt;br&gt;&lt;strong&gt;上述方法会导致哔哩哔哩报错：无网络连接，其它app是否有这个问题暂时不清楚。&lt;/strong&gt;&lt;br&gt;&lt;strong&gt;注：经本人测试，只要连接路由器WIFI，就可以实现上述功能，不需要设置代理。&lt;/strong&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;此时你就可以在连接你路由器局域网的情况下在windows和安卓机上面畅享  脚臭  了(&amp;#x2F;&amp;#x2F;&amp;#x2F;￣皿￣)○～&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;总结&#34;&gt;&lt;a href=&#34;#总结&#34; class=&#34;headerlink&#34; title=&#34;总结&#34;&gt;&lt;/a&gt;总结&lt;/h2&gt;&lt;p&gt;  花了很久很久才搞明白这个东西，一直遇到开启服务后网易云音乐会断网的问题怒ε&amp;#x3D;怒ε&amp;#x3D;( o｀ω′)ノ&lt;/p&gt;
+&lt;p&gt;  查了很多很多资料，时间都挺早的，应该是大家最近搞这个软件包的人不多，然后我四面八方收集信息之后，终于找到了以上解决办法(ー&amp;#96;´ー)&lt;/p&gt;
+&lt;p&gt;  如果有问题可以联系我 ○|￣|_&lt;/p&gt;
+ </blockquote>

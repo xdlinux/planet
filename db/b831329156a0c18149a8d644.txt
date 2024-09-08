@@ -1,10 +1,10 @@
-<html><head></head><body><h2>Chapter 3 - JavaScript 介绍</h2>
+<blockquote><h2>Chapter 3 - JavaScript 介绍</h2>
 <h3>JS 一窥</h3>
 <p><strong>以下内容来自 runoob.com。感谢。侵删。</strong></p>
 <p><strong>数组（Array）字面量</strong> 定义一个数组：</p>
 <p>[40, 100, 1, 5, 25, 10]</p>
 <p><strong>对象（Object）字面量</strong> 定义一个对象：</p>
-<p>{firstName:&#34;John&#34;, lastName:&#34;Doe&#34;, age:50, eyeColor:&#34;blue&#34;}</p>
+<p>{firstName:"John", lastName:"Doe", age:50, eyeColor:"blue"}</p>
 <p><strong>函数（Function）字面量</strong> 定义一个函数：</p>
 <p>function myFunction(a, b) { return a * b;}</p>
 <p>JavaScript 使用关键字 <strong>var</strong> 来定义变量， 使用等号来为变量赋值：</p>
@@ -48,41 +48,41 @@ y = x * 10;
 <p>JavaScript 拥有动态类型。这意味着相同的变量可用作不同的类型：</p>
 <pre><code>var x;               // x 为 undefined  
 var x = 5;           // 现在 x 为数字  
-var x = &#34;John&#34;;      // 现在 x 为字符串
+var x = "John";      // 现在 x 为字符串
 
-typeof &#34;John&#34;                // 返回 string  
+typeof "John"                // 返回 string  
 typeof 3.14                  // 返回 number  
 typeof false                 // 返回 boolean  
 typeof [1,2,3,4]             // 返回 object  
-typeof {name:&#39;John&#39;, age:34} // 返回 object
+typeof {name:'John', age:34} // 返回 object
 </code></pre>
 <p>JavaScript 对象由花括号分隔。在括号内部，对象的属性以名称和值对的形式 (name : value) 来定义。属性由逗号分隔：</p>
 <pre><code>var person = {
-    firstname:&#34;John&#34;,
-    lastname:&#34;Doe&#34;,
+    firstname:"John",
+    lastname:"Doe",
     id:5566
 };
 </code></pre>
 <p>上面例子中的对象 (person) 有三个属性：firstname、lastname 以及 id。</p>
 <p>空格和折行无关紧要。声明可横跨多行：</p>
 <pre><code>var person={  
-firstname : &#34;John&#34;,  
-lastname  : &#34;Doe&#34;,  
+firstname : "John",  
+lastname  : "Doe",  
 id        :  5566  
 };
 </code></pre>
 <p>对象属性有两种寻址方式：</p>
 <pre><code>name=person.lastname;  
-name=person[&#34;lastname&#34;];
+name=person["lastname"];
 </code></pre>
 <p>下面的代码创建名为 cars 的数组：</p>
 <pre><code>var cars=new Array();  
-cars[0]=&#34;Saab&#34;;  
-cars[1]=&#34;Volvo&#34;;  
-cars[2]=&#34;BMW&#34;;
+cars[0]="Saab";  
+cars[1]="Volvo";  
+cars[2]="BMW";
 </code></pre>
 <p>或者 (condensed array):</p>
-<pre><code>var cars=new Array(&#34;Saab&#34;,&#34;Volvo&#34;,&#34;BMW&#34;);
+<pre><code>var cars=new Array("Saab","Volvo","BMW");
 </code></pre>
 <p>undefined 这个值表示变量不含有值。</p>
 <p>可以通过将变量的值设置为 null 来清空变量。</p>
@@ -90,13 +90,13 @@ cars[2]=&#34;BMW&#34;;
 <p>假设 <strong>x 等于 5</strong>：</p>
 <p>x == 8：<em>false</em>；
 x == 5： <em>true</em>；
-x == &#34;5&#34; ：<em>true</em>；
-x === &#34;5&#34;：<em>false</em>；
+x == "5" ：<em>true</em>；
+x === "5"：<em>false</em>；
 x === 5：<em>true</em>；
 x != 8：<em>true</em>；
-x != &#34;5&#34;：<em>false</em>；
+x != "5"：<em>false</em>；
 x !== 5：<em>false</em>；
-x !== &#34;5&#34;：<em>true</em>；
+x !== "5"：<em>true</em>；
 x &gt; 8：<em>false</em>；
 x &lt; 8：<em>true</em>；
 x &gt;= 8：<em>false</em>；
@@ -132,7 +132,7 @@ z === undefined：<em>false</em></p>
 const getToken = async () =&gt; {
   global.token=await new Promise((resolve) =&gt; {
     setTimeout(() =&gt; {
-      resolve(&#34;loftyamb&#34;);
+      resolve("loftyamb");
     }, 3000); // 模拟通过 post 请求获取 token 返回token的过程
   });
   console.log(`成功获取到了token${global.token}`);
@@ -144,7 +144,7 @@ const createMenu = async () =&gt; {
   if (token !== undefined) {
     console.log(`利用token${token}成功创建了菜单`);
   } else {
-    console.log(&#34;创建失败&#34;);
+    console.log("创建失败");
   }
 };
 </code></pre>
@@ -172,7 +172,7 @@ const getToken = async () =&gt; {
   try {
     token = await new Promise((resolve, reject) =&gt; {
       setTimeout(() =&gt; {
-        reject(&#34;error&#34;);
+        reject("error");
       }, 3000); // 模拟过了 3 秒才获取 token 失败
     });
   } catch (err) {
@@ -234,8 +234,8 @@ true;
 false;
 
 // 可以通过单引号或双引号来构造字符串。
-&#39;abc&#39;;
-&#34;Hello, world&#34;;
+'abc';
+"Hello, world";
 
 // 用！来取非
 !true; // = false
@@ -256,38 +256,38 @@ false;
 2 &gt;= 2; // = true
 
 // 字符串用+连接
-&#34;Hello &#34; + &#34;world!&#34;; // = &#34;Hello world!&#34;
+"Hello " + "world!"; // = "Hello world!"
 
 // 字符串也可以用 &lt; 、&gt; 来比较
-&#34;a&#34; &lt; &#34;b&#34;; // = true
+"a" &lt; "b"; // = true
 
 // 使用“==”比较时会进行类型转换...
-&#34;5&#34; == 5; // = true
+"5" == 5; // = true
 null == undefined; // = true
 
 // ...除非你是用 ===
-&#34;5&#34; === 5; // = false
+"5" === 5; // = false
 null === undefined; // = false 
 
 // ...但会导致奇怪的行为
 13 + !0; // 14
-&#34;13&#34; + !0; // &#39;13true&#39;
+"13" + !0; // '13true'
 
 // 你可以用`charAt`来得到字符串中的字符
-&#34;This is a string&#34;.charAt(0);  // = &#39;T&#39;
+"This is a string".charAt(0);  // = 'T'
 
 // ...或使用 `substring` 来获取更大的部分。
-&#34;Hello world&#34;.substring(0, 5); // = &#34;Hello&#34;
+"Hello world".substring(0, 5); // = "Hello"
 
 // `length` 是一个属性，所以不要使用 ().
-&#34;Hello&#34;.length; // = 5
+"Hello".length; // = 5
 
 // 还有两个特殊的值：`null`和`undefined`
 null;      // 用来表示刻意设置的空值
 undefined; // 用来表示还没有设置的值(尽管`undefined`自身实际是一个值)
 
-// false, null, undefined, NaN, 0 和 &#34;&#34; 都是假的；其他的都视作逻辑真
-// 注意 0 是逻辑假而  &#34;0&#34;是逻辑真，尽管 0 == &#34;0&#34;。
+// false, null, undefined, NaN, 0 和 "" 都是假的；其他的都视作逻辑真
+// 注意 0 是逻辑假而  "0"是逻辑真，尽管 0 == "0"。
 
 ///////////////////////////////////
 // 2. 变量、数组和对象
@@ -313,31 +313,31 @@ someVar++; // someVar 是 101
 someVar--; // 回到 100
 
 // 数组是任意类型组成的有序列表
-var myArray = [&#34;Hello&#34;, 45, true];
+var myArray = ["Hello", 45, true];
 
 // 数组的元素可以用方括号下标来访问。
 // 数组的索引从0开始。
 myArray[1]; // = 45
 
 // 数组是可变的，并拥有变量 length。
-myArray.push(&#34;World&#34;);
+myArray.push("World");
 myArray.length; // = 4
 
 // 在指定下标添加/修改
-myArray[3] = &#34;Hello&#34;;
+myArray[3] = "Hello";
 
 // javascript中的对象相当于其他语言中的“字典”或“映射”：是键-值对的无序集合。
-var myObj = {key1: &#34;Hello&#34;, key2: &#34;World&#34;};
+var myObj = {key1: "Hello", key2: "World"};
 
 // 键是字符串，但如果键本身是合法的js标识符，则引号并非是必须的。
 // 值可以是任意类型。
-var myObj = {myKey: &#34;myValue&#34;, &#34;my other key&#34;: 4};
+var myObj = {myKey: "myValue", "my other key": 4};
 
 // 对象属性的访问可以通过下标
-myObj[&#34;my other key&#34;]; // = 4
+myObj["my other key"]; // = 4
 
 // ... 或者也可以用 . ，如果属性是合法的标识符
-myObj.myKey; // = &#34;myValue&#34;
+myObj.myKey; // = "myValue"
 
 // 对象是可变的；值也可以被更改或增加新的键
 myObj.myThirdKey = true;
@@ -378,32 +378,32 @@ for (var i = 0; i &lt; 5; i++){
 }
 
 // &amp;&amp; 是逻辑与, || 是逻辑或
-if (house.size == &#34;big&#34; &amp;&amp; house.colour == &#34;blue&#34;){
-    house.contains = &#34;bear&#34;;
+if (house.size == "big" &amp;&amp; house.colour == "blue"){
+    house.contains = "bear";
 }
-if (colour == &#34;red&#34; || colour == &#34;blue&#34;){
+if (colour == "red" || colour == "blue"){
     // colour是red或者blue时执行
 }
 
 // &amp;&amp; 和 || 是“短路”语句，它在设定初始化值时特别有用 
-var name = otherName || &#34;default&#34;;
+var name = otherName || "default";
 
 // `switch`语句使用`===`检查相等性。
-// 在每一个case结束时使用 &#39;break&#39;
+// 在每一个case结束时使用 'break'
 // 否则其后的case语句也将被执行。 
-grade = &#39;B&#39;;
+grade = 'B';
 switch (grade) {
-  case &#39;A&#39;:
-    console.log(&#34;Great job&#34;);
+  case 'A':
+    console.log("Great job");
     break;
-  case &#39;B&#39;:
-    console.log(&#34;OK job&#34;);
+  case 'B':
+    console.log("OK job");
     break;
-  case &#39;C&#39;:
-    console.log(&#34;You can do better&#34;);
+  case 'C':
+    console.log("You can do better");
     break;
   default:
-    console.log(&#34;Oy vey&#34;);
+    console.log("Oy vey");
     break;
 }
 
@@ -414,7 +414,7 @@ switch (grade) {
 function myFunction(thing){
     return thing.toUpperCase();
 }
-myFunction(&#34;foo&#34;); // = &#34;FOO&#34;
+myFunction("foo"); // = "FOO"
 
 // 注意被返回的值必须开始于`return`关键字的那一行，
 // 否则由于自动的分号补齐，你将返回`undefined`。
@@ -423,7 +423,7 @@ function myFunction()
 {
     return // &lt;- 分号自动插在这里
     {
-        thisIsAn: &#39;object literal&#39;
+        thisIsAn: 'object literal'
     }
 }
 myFunction(); // = undefined
@@ -451,7 +451,7 @@ i; // = 5 - 并非我们在其他语言中所期望得到的undefined
 // 这样可以避免一些临时变量扩散到全局作用域去。
 (function(){
     var temporary = 5;
-    // 我们可以访问修改全局对象（&#34;global object&#34;）来访问全局作用域，
+    // 我们可以访问修改全局对象（"global object"）来访问全局作用域，
     // 在web浏览器中是`window`这个对象。 
     // 在其他环境如Node.js中这个对象的名字可能会不同。
     window.permanent = 10;
@@ -463,7 +463,7 @@ permanent; // = 10
 // 如果一个函数在另一个函数中定义，那么这个内部函数就拥有外部函数的所有变量的访问权，
 // 即使在外部函数结束之后。
 function sayHelloInFiveSeconds(name){
-    var prompt = &#34;Hello, &#34; + name + &#34;!&#34;;
+    var prompt = "Hello, " + name + "!";
     // 内部函数默认是放在局部作用域的，
     // 就像是用`var`声明的。
     function inner(){
@@ -475,7 +475,7 @@ function sayHelloInFiveSeconds(name){
     // 然而，由于inner是由sayHelloInFiveSeconds“闭合包含”的，
     // 所以inner在其最终被调用时仍然能够访问`prompt`变量。
 }
-sayHelloInFiveSeconds(&#34;Adam&#34;); // 会在5秒后弹出 &#34;Hello, Adam!&#34;
+sayHelloInFiveSeconds("Adam"); // 会在5秒后弹出 "Hello, Adam!"
 
 ///////////////////////////////////
 // 5. 对象、构造函数与原型
@@ -483,19 +483,19 @@ sayHelloInFiveSeconds(&#34;Adam&#34;); // 会在5秒后弹出 &#34;Hello, Adam!&
 //  对象可以包含方法。
 var myObj = {
     myFunc: function(){
-        return &#34;Hello world!&#34;;
+        return "Hello world!";
     }
 };
-myObj.myFunc(); // = &#34;Hello world!&#34;
+myObj.myFunc(); // = "Hello world!"
 
 // 当对象中的函数被调用时，这个函数可以通过`this`关键字访问其依附的这个对象。
 myObj = {
-    myString: &#34;Hello world!&#34;,
+    myString: "Hello world!",
     myFunc: function(){
         return this.myString;
     }
 };
-myObj.myFunc(); // = &#34;Hello world!&#34;
+myObj.myFunc(); // = "Hello world!"
 
 // 但这个函数访问的其实是其运行时环境，而非定义时环境，即取决于函数是如何调用的。
 // 所以如果函数被调用时不在这个对象的上下文中，就不会运行成功了。
@@ -508,16 +508,16 @@ var myOtherFunc = function(){
     return this.myString.toUpperCase();
 }
 myObj.myOtherFunc = myOtherFunc;
-myObj.myOtherFunc(); // = &#34;HELLO WORLD!&#34;
+myObj.myOtherFunc(); // = "HELLO WORLD!"
 
 // 当我们通过`call`或者`apply`调用函数的时候，也可以为其指定一个执行上下文。
 var anotherFunc = function(s){
     return this.myString + s;
 }
-anotherFunc.call(myObj, &#34; And Hello Moon!&#34;); // = &#34;Hello World! And Hello Moon!&#34;
+anotherFunc.call(myObj, " And Hello Moon!"); // = "Hello World! And Hello Moon!"
 
 // `apply`函数几乎完全一样，只是要求一个array来传递参数列表。
-anotherFunc.apply(myObj, [&#34; And Hello Sun!&#34;]); // = &#34;Hello World! And Hello Sun!&#34;
+anotherFunc.apply(myObj, [" And Hello Sun!"]); // = "Hello World! And Hello Sun!"
 
 // 当一个函数接受一系列参数，而你想传入一个array时特别有用。
 Math.min(42, 6, 27); // = 6
@@ -526,7 +526,7 @@ Math.min.apply(Math, [42, 6, 27]); // = 6
 
 // 但是`call`和`apply`只是临时的。如果我们希望函数附着在对象上，可以使用`bind`。
 var boundFunc = anotherFunc.bind(myObj);
-boundFunc(&#34; And Hello Saturn!&#34;); // = &#34;Hello World! And Hello Saturn!&#34;
+boundFunc(" And Hello Saturn!"); // = "Hello World! And Hello Saturn!"
 
 // `bind` 也可以用来部分应用一个函数（柯里化）。
 var product = function(a, b){ return a * b; }
@@ -549,7 +549,7 @@ myNewObj.myNumber; // = 5
 // 这虽然对理解原型很有用，但是它并不是标准的一部分；
 // 我们后面会介绍使用原型的标准方式。
 var myObj = {
-    myString: &#34;Hello world!&#34;
+    myString: "Hello world!"
 };
 var myPrototype = {
     meaningOfLife: 42,
@@ -562,7 +562,7 @@ myObj.__proto__ = myPrototype;
 myObj.meaningOfLife; // = 42
 
 // 函数也可以工作。
-myObj.myFunc() // = &#34;hello world!&#34;
+myObj.myFunc() // = "hello world!"
 
 // 当然，如果你要访问的成员在原型当中也没有定义的话，解释器就会去找原型的原型，以此类推。
 myPrototype.__proto__ = {
@@ -603,8 +603,8 @@ var myNumberObj = new Number(12);
 myNumber == myNumberObj; // = true
 
 // 但是它们并非严格等价
-typeof myNumber; // = &#39;number&#39;
-typeof myNumberObj; // = &#39;object&#39;
+typeof myNumber; // = 'number'
+typeof myNumberObj; // = 'object'
 myNumber === myNumberObj; // = false
 if (0){
     // 这段代码不会执行，因为0代表假
@@ -615,7 +615,7 @@ if (0){
 String.prototype.firstCharacter = function(){
     return this.charAt(0);
 }
-&#34;abc&#34;.firstCharacter(); // = &#34;a&#34;
+"abc".firstCharacter(); // = "a"
 
 // 这个技巧经常用在“代码填充”中，来为老版本的javascript子集增加新版本js的特性，
 // 这样就可以在老的浏览器中使用新功能了。
@@ -631,5 +631,4 @@ if (Object.create === undefined){ // 如果存在则不覆盖
         return new Constructor();
     }
 }
-</code></pre>
-</body></html>
+</code></pre></blockquote>

@@ -1,4 +1,4 @@
-<html><head></head><body><p><strong>《悟空》</strong><br/>
+<blockquote></blockquote><p><strong>《悟空》</strong><br/>
 <strong>不见灵山两鬓冬，云海低悬雾九重。</strong><br/>
 <strong>锁住心猿拴意马，打破顽空始悟空。</strong><br/>
 <strong>三清道化元神固，一藏经传紧箍松。</strong><br/>
@@ -23,4 +23,3 @@
 我相信，<strong>越是民族的，越是世界的。</strong></p>
 <p>相信游科已经给各位天命人和自己交出了一份满意的答卷——《黑神话：悟空》并不完美，但它称得上是中国第一部3A，也对得起这4年的期待。</p>
 <p>只管往前走吧，走上取经路，比抵达灵山更重要。</p>
-</body></html>

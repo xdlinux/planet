@@ -1,43 +1,43 @@
-<html><head></head><body><h1 id="hexo搭建博客的过程中遇到的一些问题"><a href="http://wanglanhuajiaofen.fun/2024/02/20/hexo%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2bug%E5%B0%8F%E7%BB%93/#hexo%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2%E7%9A%84%E8%BF%87%E7%A8%8B%E4%B8%AD%E9%81%87%E5%88%B0%E7%9A%84%E4%B8%80%E4%BA%9B%E9%97%AE%E9%A2%98" class="headerlink" title="hexo搭建博客的过程中遇到的一些问题"></a>hexo搭建博客的过程中遇到的一些问题</h1><h2 id="node-js与npm相关"><a href="http://wanglanhuajiaofen.fun/2024/02/20/hexo%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2bug%E5%B0%8F%E7%BB%93/#node-js%E4%B8%8Enpm%E7%9B%B8%E5%85%B3" class="headerlink" title="node.js与npm相关"></a>node.js与npm相关</h2><ul>
-<li>下载<br/>从官网下载node.js后，基本只需要一路next即可，最重要的是选择add to path.</li>
-<li>使用源<ul>
-<li><p>截止到2024/2/19为止，网上很多教程中的淘宝源均已无法使用，下面的为最新且有效的淘宝镜像:<a href="https://registry.npmmirror.com/">https://registry.npmmirror.com</a></p>
-</li>
-<li><p>先下载好cnpm会让之后的工作事半功倍b（￣▽￣）d</p>
-</li>
-</ul>
-</li>
-</ul>
-<span id="more"></span>
-<p>下面贴上代码:</p>
-<pre><code class="hljs node.js">
-npm i -g cnpm --registry=https://registry.npmmirror.com</code></pre>
+<blockquote> &lt;h1 id=&#34;hexo搭建博客的过程中遇到的一些问题&#34;&gt;&lt;a href=&#34;#hexo搭建博客的过程中遇到的一些问题&#34; class=&#34;headerlink&#34; title=&#34;hexo搭建博客的过程中遇到的一些问题&#34;&gt;&lt;/a&gt;hexo搭建博客的过程中遇到的一些问题&lt;/h1&gt;&lt;h2 id=&#34;node-js与npm相关&#34;&gt;&lt;a href=&#34;#node-js与npm相关&#34; class=&#34;headerlink&#34; title=&#34;node.js与npm相关&#34;&gt;&lt;/a&gt;node.js与npm相关&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;下载&lt;br&gt;从官网下载node.js后，基本只需要一路next即可，最重要的是选择add to path.&lt;/li&gt;
+&lt;li&gt;使用源&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;截止到2024&amp;#x2F;2&amp;#x2F;19为止，网上很多教程中的淘宝源均已无法使用，下面的为最新且有效的淘宝镜像:&lt;a href=&#34;https://registry.npmmirror.com/&#34;&gt;https://registry.npmmirror.com&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;先下载好cnpm会让之后的工作事半功倍b（￣▽￣）d&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;span id=&#34;more&#34;&gt;&lt;/span&gt;
+&lt;p&gt;下面贴上代码:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;hljs node.js&#34;&gt;
+npm i -g cnpm --registry=https://registry.npmmirror.com&lt;/code&gt;&lt;/pre&gt;
 
-<ul>
-<li>目录权限问题：如果遇到npm下载报错说权限不够等问题，win + r 输入cmd之后不着急回车，此时ctrl+shift+回车即可以管理员身份打开cmd，即可解决问题。</li>
-</ul>
-<hr/>
-<h2 id="hexo相关"><a href="http://wanglanhuajiaofen.fun/2024/02/20/hexo%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2bug%E5%B0%8F%E7%BB%93/#hexo%E7%9B%B8%E5%85%B3" class="headerlink" title="hexo相关"></a>hexo相关</h2><ul>
-<li><p>如果成功的下载了cnpm，那么之后使用npm下载的东西都用cnpm来替代，就能解决大部分无法下载的问题(๑•̀ㅂ•́)و✧</p>
-</li>
-<li><p>创建一个专门处理blog的文件夹，之后所有操作都在这个文件夹的根目录进行即可。</p>
-</li>
-<li><p><em><strong>重点</strong></em>：hexo init报错: 此时只需要在根目录输入:</p>
-</li>
-</ul>
-<pre><code class="hljs cmake">
-cnpm <span class="hljs-keyword">install</span>
+&lt;ul&gt;
+&lt;li&gt;目录权限问题：如果遇到npm下载报错说权限不够等问题，win + r 输入cmd之后不着急回车，此时ctrl+shift+回车即可以管理员身份打开cmd，即可解决问题。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;hexo相关&#34;&gt;&lt;a href=&#34;#hexo相关&#34; class=&#34;headerlink&#34; title=&#34;hexo相关&#34;&gt;&lt;/a&gt;hexo相关&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;如果成功的下载了cnpm，那么之后使用npm下载的东西都用cnpm来替代，就能解决大部分无法下载的问题(๑•̀ㅂ•́)و✧&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;创建一个专门处理blog的文件夹，之后所有操作都在这个文件夹的根目录进行即可。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;em&gt;&lt;strong&gt;重点&lt;/strong&gt;&lt;/em&gt;：hexo init报错: 此时只需要在根目录输入:&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre&gt;&lt;code class=&#34;hljs cmake&#34;&gt;
+cnpm &lt;span class=&#34;hljs-keyword&#34;&gt;install&lt;/span&gt;
 hexo s
-</code></pre>
+&lt;/code&gt;&lt;/pre&gt;
 
-<p>即可解决。</p>
-<hr/>
-<h2 id="部署到github"><a href="http://wanglanhuajiaofen.fun/2024/02/20/hexo%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2bug%E5%B0%8F%E7%BB%93/#%E9%83%A8%E7%BD%B2%E5%88%B0github" class="headerlink" title="部署到github"></a>部署到github</h2><ul>
-<li>在根目录_config.yml文件中ropo后面输入github仓库页的ssh链接而非https链接。</li>
-<li>所有键值对后面都有 <strong>空格</strong></li>
-</ul>
-<hr/>
-<h2 id="主题"><a href="http://wanglanhuajiaofen.fun/2024/02/20/hexo%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2bug%E5%B0%8F%E7%BB%93/#%E4%B8%BB%E9%A2%98" class="headerlink" title="主题"></a>主题</h2><p>只需要在对应开源主题看文档即可按照自己意愿更改。</p>
-<hr/>
-<h1 id="总结"><a href="http://wanglanhuajiaofen.fun/2024/02/20/hexo%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2bug%E5%B0%8F%E7%BB%93/#%E6%80%BB%E7%BB%93" class="headerlink" title="总结"></a>总结</h1><p>这篇文章集结了全部(大概)我在用一下午时间hexo搭建博客中遇到的问题，网上的方法有对的也有错的，经历了许久的试错后，终于找到的正确方法都被我记录在上面啦O(∩_∩)O!!!</p>
- </body></html>
+&lt;p&gt;即可解决。&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;部署到github&#34;&gt;&lt;a href=&#34;#部署到github&#34; class=&#34;headerlink&#34; title=&#34;部署到github&#34;&gt;&lt;/a&gt;部署到github&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;在根目录_config.yml文件中ropo后面输入github仓库页的ssh链接而非https链接。&lt;/li&gt;
+&lt;li&gt;所有键值对后面都有 &lt;strong&gt;空格&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;主题&#34;&gt;&lt;a href=&#34;#主题&#34; class=&#34;headerlink&#34; title=&#34;主题&#34;&gt;&lt;/a&gt;主题&lt;/h2&gt;&lt;p&gt;只需要在对应开源主题看文档即可按照自己意愿更改。&lt;/p&gt;
+&lt;hr&gt;
+&lt;h1 id=&#34;总结&#34;&gt;&lt;a href=&#34;#总结&#34; class=&#34;headerlink&#34; title=&#34;总结&#34;&gt;&lt;/a&gt;总结&lt;/h1&gt;&lt;p&gt;这篇文章集结了全部(大概)我在用一下午时间hexo搭建博客中遇到的问题，网上的方法有对的也有错的，经历了许久的试错后，终于找到的正确方法都被我记录在上面啦O(∩_∩)O!!!&lt;/p&gt;
+ </blockquote>

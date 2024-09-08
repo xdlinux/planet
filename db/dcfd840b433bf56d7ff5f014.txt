@@ -1,17 +1,17 @@
-<html><head></head><body><h1 id="Selenium-报错ValueError解决"><a href="http://wanglanhuajiaofen.fun/2024/03/24/selenium/#Selenium-%E6%8A%A5%E9%94%99ValueError%E8%A7%A3%E5%86%B3" class="headerlink" title="Selenium 报错ValueError解决"></a>Selenium 报错ValueError解决</h1><ul>
-<li><p>错误<br/>  在python中使用selenium进行网页自动化/爬虫操作时，执行下面语句</p>
-  <pre><code class="hljs python"><span class="hljs-keyword">from</span> selenium <span class="hljs-keyword">import</span> webdriver
-driver = webdriver.Edge()</code></pre>
+<blockquote> &lt;h1 id=&#34;Selenium-报错ValueError解决&#34;&gt;&lt;a href=&#34;#Selenium-报错ValueError解决&#34; class=&#34;headerlink&#34; title=&#34;Selenium 报错ValueError解决&#34;&gt;&lt;/a&gt;Selenium 报错ValueError解决&lt;/h1&gt;&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;错误&lt;br&gt;  在python中使用selenium进行网页自动化&amp;#x2F;爬虫操作时，执行下面语句&lt;/p&gt;
+  &lt;pre&gt;&lt;code class=&#34;hljs python&#34;&gt;&lt;span class=&#34;hljs-keyword&#34;&gt;from&lt;/span&gt; selenium &lt;span class=&#34;hljs-keyword&#34;&gt;import&lt;/span&gt; webdriver
+driver = webdriver.Edge()&lt;/code&gt;&lt;/pre&gt;
 
-<p>  可能会报错：ValueError: Timeout value connect was ……, but it must be an int, float or None…..(/- -)/</p>
-</li>
-</ul>
-<span id="more"></span>
-<ul>
-<li><p>原因<br/>出错原因：selenium当前版本与urllib3版本不兼容╮（﹀_﹀）╭</p>
-</li>
-<li><p>解决方法<br/>只需要更新为最新版本的selenium与urllib3即可Σ( ° △ °|||)︴</p>
-<pre><code class="hljs python">pip install -U selenimu
-pip install -U urllib3</code></pre></li>
-</ul>
- </body></html>
+&lt;p&gt;  可能会报错：ValueError: Timeout value connect was ……, but it must be an int, float or None…..(&amp;#x2F;- -)&amp;#x2F;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;span id=&#34;more&#34;&gt;&lt;/span&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;原因&lt;br&gt;出错原因：selenium当前版本与urllib3版本不兼容╮（﹀_﹀）╭&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;解决方法&lt;br&gt;只需要更新为最新版本的selenium与urllib3即可Σ( ° △ °|||)︴&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;hljs python&#34;&gt;pip install -U selenimu
+pip install -U urllib3&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;/ul&gt;
+ </blockquote>

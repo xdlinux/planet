@@ -1,17 +1,17 @@
-<html><head></head><body><h2>Chapter 12 - 交互四大组件之：按钮</h2>
+<blockquote><h2>Chapter 12 - 交互四大组件之：按钮</h2>
 <h3>修改 <code>events/interactionCreate.js</code></h3>
 <p>对应的 commit：
 https://github.com/wtflmao/discord_bot_example/commit/eef8c0f3fb0ebed69c63eb776128acb28ceb8b3f
 https://gitee.com/wtflmao/discord_bot_example/commit/eef8c0f3fb0ebed69c63eb776128acb28ceb8b3f</p>
 <p>在文件的最后那块儿附近，找到最后一个 else，在这个 else 上面插入一种新情况，用于按钮：</p>
 <pre><code>else if (interaction.isButton()) {
-	console.log(&#34;a button!&#34;);
+	console.log("a button!");
 }
 </code></pre>
 <h3>新建一个操作行 ActionRow</h3>
 <p>上来先导入需要的 <code>ActionRowBuilder</code>，用于建立操作行 ActionRow。</p>
 <p>通过 <code>new ActionRowBuilder()</code> 新建。</p>
-<pre><code>const { ActionRowBuilder } = require(&#39;discord.js&#39;);
+<pre><code>const { ActionRowBuilder } = require('discord.js');
 
 let row = new ActionRowBuilder()
     .addComponents(
@@ -21,16 +21,16 @@ let row = new ActionRowBuilder()
 <h3>新建按钮 Button</h3>
 <p>上来先导入需要的 <code>ActionRowBuilder</code> 和 <code>ButtonBuilder</code>。前者用于建立操作行，后者用于建立一个按钮。按钮需要被包含到一行操作行上去。</p>
 <p>通过 <code>new ButtonBuilder()</code> 新建一个按钮。</p>
-<pre><code>const { ActionRowBuilder, ButtonBuilder } = require(&#39;discord.js&#39;);
+<pre><code>const { ActionRowBuilder, ButtonBuilder } = require('discord.js');
 
 let row = new ActionRowBuilder()
     .addComponents(
         new ButtonBuilder()
 	        // 设置按钮自定义 ID
-            .setCustomId(&#39;button1&#39;)
+            .setCustomId('button1')
 
 			// 设置按钮标签，就是按钮上的字
-            .setLabel(&#39;Click me!&#39;)
+            .setLabel('Click me!')
 
 			// 设置按钮样式，具体在下一小节有讲
             .setStyle(ButtonStyle.Primary)
@@ -39,11 +39,11 @@ let row = new ActionRowBuilder()
             .setDisabled(false)
 
 			// 设置一个 Emoji 前缀
-            .setEmoji(&#39;&#39;),
+            .setEmoji('😀'),
     );
 </code></pre>
 <p>这个按钮的样式如图：
-<img src="https://img2022.cnblogs.com/blog/2455224/202211/2455224-20221119140537206-293552005.png" alt="image"/></p>
+<img src="https://img2022.cnblogs.com/blog/2455224/202211/2455224-20221119140537206-293552005.png" alt="image" /></p>
 <h3>五种按钮的基本样式</h3>
 <p>按钮（Button）是组件（Component）的一种，通过 <code>components: []</code> 指定哪些按钮将发送出去。</p>
 <p>一条消息里最多加入五个按钮。准确来说，是最多五个组件（components），按钮是组件的一种。</p>
@@ -51,12 +51,12 @@ let row = new ActionRowBuilder()
 <p>对应的 commit：
 https://github.com/wtflmao/discord_bot_example/commit/21c5f65d81cedbce987a59dfe4c9db4251817d41#diff-81e417f8348606916071c665b42372b6e3a496eec5d6f934c129483d412b941b
 https://gitee.com/wtflmao/discord_bot_example/commit/21c5f65d81cedbce987a59dfe4c9db4251817d41#diff-81e417f8348606916071c665b42372b6e3a496eec5d6f934c129483d412b941b</p>
-<pre><code>const { ActionRowBuilder, ButtonBuilder, ButtonStyle, SlashCommandBuilder } = require(&#39;discord.js&#39;);
+<pre><code>const { ActionRowBuilder, ButtonBuilder, ButtonStyle, SlashCommandBuilder } = require('discord.js');
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName(&#39;stylishbutton&#39;)
-        .setDescription(&#39;Replies with a button, but stylish!&#39;),
+        .setName('stylishbutton')
+        .setDescription('Replies with a button, but stylish!'),
 
     async execute(interaction) {
 
@@ -88,20 +88,20 @@ module.exports = {
         const rowSecondary = new ActionRowBuilder()
             .addComponents(
                 new ButtonBuilder()
-                    .setCustomId(&#39;b2&#39;)
-                    .setLabel(&#34;Click me!&#34;)
+                    .setCustomId('b2')
+                    .setLabel("Click me!")
                     .setStyle(ButtonStyle.Secondary),
             );
 
         const rowSuccess = new ActionRowBuilder()
             .addComponents(
                 new ButtonBuilder()
-                    .setCustomId(&#39;b3&#39;)
-                    .setLabel(&#34;Click me!&#34;)
+                    .setCustomId('b3')
+                    .setLabel("Click me!")
                     .setStyle(ButtonStyle.Success),
                 new ButtonBuilder()
-                    .setCustomId(&#39;b3d&#39;)
-                    .setLabel(&#34;Click me!&#34;)
+                    .setCustomId('b3d')
+                    .setLabel("Click me!")
                     .setStyle(ButtonStyle.Success)
                     .setDisabled(true),
             );
@@ -112,17 +112,17 @@ module.exports = {
                     // 在同一条回复消息中，你需要确保所有 customId 是不重复的。
                     // 这里我们用来随机数生成函数来生成 ID，降低 ID 碰撞的概率。
                     .setCustomId(`b4_${Math.floor(Math.random() * 100000)}`)
-                    .setLabel(&#34;Click me!&#34;)
+                    .setLabel("Click me!")
                     .setStyle(ButtonStyle.Danger),
             );
 
         const rowLink = new ActionRowBuilder()
             .addComponents(
                 new ButtonBuilder()
-                    // you can&#39;t .setCustomId() to a Link button
-                    .setLabel(&#34;Click me!&#34;)
+                    // you can't .setCustomId() to a Link button
+                    .setLabel("Click me!")
                     .setStyle(ButtonStyle.Link)
-                    .setURL(&#34;https://support.discord.com/hc/en-us&#34;),
+                    .setURL("https://support.discord.com/hc/en-us"),
             );
 
         // 在一行里塞了四个按钮
@@ -133,7 +133,7 @@ module.exports = {
             .addComponents(
                 new ButtonBuilder()
                     .setCustomId(`owo`)
-                    .setLabel(&#34;owo&#34;)
+                    .setLabel("owo")
                     .setStyle(ButtonStyle.Primary)
                     .setDisabled(true),
             );
@@ -141,8 +141,8 @@ module.exports = {
         const rowSecondaryD = new ActionRowBuilder()
             .addComponents(
                 new ButtonBuilder()
-                    .setCustomId(&#39;b2d&#39;)
-                    .setLabel(&#34;Click me!&#34;)
+                    .setCustomId('b2d')
+                    .setLabel("Click me!")
                     .setStyle(ButtonStyle.Secondary)
                     .setDisabled(true),
             );
@@ -150,8 +150,8 @@ module.exports = {
         const rowDangerD = new ActionRowBuilder()
             .addComponents(
                 new ButtonBuilder()
-                    .setCustomId(&#39;b4d&#39;)
-                    .setLabel(&#34;Click me!&#34;)
+                    .setCustomId('b4d')
+                    .setLabel("Click me!")
                     .setStyle(ButtonStyle.Danger)
                     .setDisabled(true),
             );
@@ -160,33 +160,33 @@ module.exports = {
             .addComponents(
                 new ButtonBuilder()
                     // 你不能对一个链接按钮设置 customId 属性
-                    .setLabel(&#34;Click me!&#34;)
+                    .setLabel("Click me!")
                     .setStyle(ButtonStyle.Link)
-                    .setURL(&#34;https://support.discord.com/hc/en-us&#34;)
+                    .setURL("https://support.discord.com/hc/en-us")
                     .setDisabled(true),
             );
 
         // 这条消息里我们插了三行 ActionRow 进去。
-        await interaction.reply({ content: &#39;These are some Primary buttons:&#39;, components: [rowPrimary, rowPrimaryD, rowPrimary2D], ephemeral: false });
+        await interaction.reply({ content: 'These are some Primary buttons:', components: [rowPrimary, rowPrimaryD, rowPrimary2D], ephemeral: false });
 
         // 这条消息里我们插了两行 ActionRow 进去。
-        await interaction.followUp({ content: &#39;These are two Secondary buttons. They are NOT on the same row:&#39;, components: [rowSecondary, rowSecondaryD], ephemeral: false });
+        await interaction.followUp({ content: 'These are two Secondary buttons. They are NOT on the same row:', components: [rowSecondary, rowSecondaryD], ephemeral: false });
 
         // 这条消息里我们插了一行 ActionRow 进去。
-        await interaction.followUp({ content: &#39;These are two Success buttons. They are on the same row:&#39;, components: [rowSuccess], ephemeral: false });
+        await interaction.followUp({ content: 'These are two Success buttons. They are on the same row:', components: [rowSuccess], ephemeral: false });
 
         // 这条消息里我们插了两行 ActionRow 进去。
-        await interaction.followUp({ content: &#39;These are two Danger buttons. They are NOT on the same row:&#39;, components: [rowDanger, rowDangerD], ephemeral: false });
+        await interaction.followUp({ content: 'These are two Danger buttons. They are NOT on the same row:', components: [rowDanger, rowDangerD], ephemeral: false });
 
         // 这条消息里我们插了两行 ActionRow 进去。
-        await interaction.followUp({ content: &#39;These are two Link buttons. They are NOT on the same row:&#39;, components: [rowLink, rowLinkD], ephemeral: false });
+        await interaction.followUp({ content: 'These are two Link buttons. They are NOT on the same row:', components: [rowLink, rowLinkD], ephemeral: false });
     },
 };
 </code></pre>
 <p>使用按钮样式时，要注意第一行要导入 ButtonStyle。</p>
-<p>我们可以看到，一个回复消息，其实有（至少）四个域：<code>content</code>、<code>components</code> 、 <code>embeds</code> 和 <code>ephemeral</code>。其中，<code>content</code> 是必选的，其余是可选的。当只有 <code>content</code> 时，&#34;content&#34; 标签可以省略，如：<code>await interaction.reply(&#34;1+1=2&#34;);</code>。</p>
+<p>我们可以看到，一个回复消息，其实有（至少）四个域：<code>content</code>、<code>components</code> 、 <code>embeds</code> 和 <code>ephemeral</code>。其中，<code>content</code> 是必选的，其余是可选的。当只有 <code>content</code> 时，"content" 标签可以省略，如：<code>await interaction.reply("1+1=2");</code>。</p>
 <p>效果图：
-<img src="https://img2022.cnblogs.com/blog/2455224/202211/2455224-20221119143142765-1071464031.png" alt="image"/></p>
+<img src="https://img2022.cnblogs.com/blog/2455224/202211/2455224-20221119143142765-1071464031.png" alt="image" /></p>
 <p>只有链接按钮可以有一个 url。链接按钮不能有 customId，并且在单击时不发送交互事件。</p>
 <p>通过 <code>.setDisabled(true)</code> 为一个按钮设置不可点击的属性，这样用户就不能点击这个按钮了。但是你不能向一个已经建成的（即<code>new ActionRowBuilder()</code>过的）按钮变量设置新的属性，你必须重新 new 一个按钮出来。</p>
 <h3>带有前缀 Emoji 的按钮</h3>
@@ -194,51 +194,51 @@ module.exports = {
 <p>对应的 commit：
 https://github.com/wtflmao/discord_bot_example/commit/21c5f65d81cedbce987a59dfe4c9db4251817d41#diff-b33acfdadb6c12912fe644066f8ef7e2852f86016539498309b0e2c08b3f5933
 https://gitee.com/wtflmao/discord_bot_example/commit/21c5f65d81cedbce987a59dfe4c9db4251817d41#diff-b33acfdadb6c12912fe644066f8ef7e2852f86016539498309b0e2c08b3f5933</p>
-<pre><code>const { ActionRowBuilder, ButtonBuilder, ButtonStyle, SlashCommandBuilder } = require(&#39;discord.js&#39;);
+<pre><code>const { ActionRowBuilder, ButtonBuilder, ButtonStyle, SlashCommandBuilder } = require('discord.js');
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName(&#39;emojibutton&#39;)
-        .setDescription(&#39;Replies with a button, bu stylish!&#39;),
+        .setName('emojibutton')
+        .setDescription('Replies with a button, bu stylish!'),
 
     async execute(interaction) {
 
         const row = new ActionRowBuilder()
             .addComponents(
                 new ButtonBuilder()
-                    .setCustomId(&#39;b1&#39;)
-                    .setLabel(&#39;Click me!&#39;)
+                    .setCustomId('b1')
+                    .setLabel('Click me!')
                     .setStyle(ButtonStyle.Primary)
-                    .setEmoji(&#39;&#39;),
+                    .setEmoji('😀'),
                 new ButtonBuilder()
-                    .setCustomId(&#39;b2&#39;)
-                    .setLabel(&#34;Click me!&#34;)
+                    .setCustomId('b2')
+                    .setLabel("Click me!")
                     .setStyle(ButtonStyle.Secondary)
-                    .setEmoji(&#39;&#39;),
+                    .setEmoji('😁'),
                 new ButtonBuilder()
-                    .setCustomId(&#39;b3&#39;)
-                    .setLabel(&#34;Click me!&#34;)
+                    .setCustomId('b3')
+                    .setLabel("Click me!")
                     .setStyle(ButtonStyle.Success)
-                    .setEmoji(&#39;&#39;),
+                    .setEmoji('🤣'),
                 new ButtonBuilder()
                     .setCustomId(`b4`)
-                    .setLabel(&#34;Click me!&#34;)
+                    .setLabel("Click me!")
                     .setStyle(ButtonStyle.Danger)
-                    .setEmoji(&#39;&#39;),
+                    .setEmoji('😇'),
                 new ButtonBuilder()
                     // you cant .setCustomId() to a Link button
-                    .setLabel(&#34;Click me!&#34;)
+                    .setLabel("Click me!")
                     .setStyle(ButtonStyle.Link)
-                    .setURL(&#34;https://support.discord.com/hc/en-us&#34;)
-                    .setEmoji(&#39;&#39;),
+                    .setURL("https://support.discord.com/hc/en-us")
+                    .setEmoji('🤪'),
             );
 
         // 一条消息里最多五行 ActionRow，每一行 ActionRow 里最多插入五个包括按钮在内的组件
-        await interaction.reply({ content: &#39;There are some buttons:&#39;, components: [row], ephemeral: false });},
+        await interaction.reply({ content: 'There are some buttons:', components: [row], ephemeral: false });},
 };
 </code></pre>
 <p>效果图：
-<img src="https://img2022.cnblogs.com/blog/2455224/202211/2455224-20221119140812249-1843561049.png" alt="image"/></p>
+<img src="https://img2022.cnblogs.com/blog/2455224/202211/2455224-20221119140812249-1843561049.png" alt="image" /></p>
 <p>注意，这里 <code>.setEmoji()</code> 只能设置一个 emoji，且只会出现在按钮 Label 的前面。</p>
 <p>还有，一条消息里最多五行 ActionRow，每一行 ActionRow 里最多插入五个按钮，准确来说，是最多五个组件（components），按钮是组件的一种。如需五个以上的按钮，可以尝试回复多次，比如 <code>.followUp()</code>。</p>
 <h3>带有嵌套元素和按钮的回复</h3>
@@ -250,24 +250,24 @@ module.exports = {
 <p>对应的 commit：
 https://github.com/wtflmao/discord_bot_example/commit/21c5f65d81cedbce987a59dfe4c9db4251817d41#diff-f0a9d6890a4e8d5de14146749628d46fc9d5126a38f635f266993e4d35c4dcfa
 https://gitee.com/wtflmao/discord_bot_example/commit/21c5f65d81cedbce987a59dfe4c9db4251817d41#diff-f0a9d6890a4e8d5de14146749628d46fc9d5126a38f635f266993e4d35c4dcfa</p>
-<pre><code>const { ActionRowBuilder, ButtonBuilder, ButtonStyle, EmbedBuilder, SlashCommandBuilder } = require(&#39;discord.js&#39;);
+<pre><code>const { ActionRowBuilder, ButtonBuilder, ButtonStyle, EmbedBuilder, SlashCommandBuilder } = require('discord.js');
 
 let updatedBtnMsg = new Map();
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName(&#39;embeddedbutton&#39;)
-        .setDescription(&#39;Replies with a button, but embedded!&#39;),
+        .setName('embeddedbutton')
+        .setDescription('Replies with a button, but embedded!'),
 
     async execute(interaction) {
-        updatedBtnMsg.set(&#34;0&#34;, false);
+        updatedBtnMsg.set("0", false);
 
         const row = new ActionRowBuilder()
             .addComponents(
                 new ButtonBuilder()
                     // 随机化 Id 以求好运
                     .setCustomId(`b3_${Math.floor(Math.random() * 100000)}`)
-                    .setLabel(&#34;Got it! Dismiss.&#34;)
+                    .setLabel("Got it! Dismiss.")
                     .setStyle(ButtonStyle.Success),
             );
 
@@ -275,18 +275,18 @@ module.exports = {
             .addComponents(
                 new ButtonBuilder()
                     .setCustomId(`b3d`)
-                    .setLabel(&#34;Got it! Dismiss.&#34;)
+                    .setLabel("Got it! Dismiss.")
                     .setStyle(ButtonStyle.Success)
                     .setDisabled(true),
             );
 
         const hc = new EmbedBuilder()
             .setColor(0x0099FF)
-            .setTitle(&#34;&gt;&gt;&gt;Discord Help Center&lt;&lt;&lt;&#34;)
-            .setURL(&#39;https://support.discord.com/hc/en-us&#39;)
-            .setDescription(&#34;Need help? We&#39;ve got your back.&#34;);
+            .setTitle("&gt;&gt;&gt;Discord Help Center&lt;&lt;&lt;")
+            .setURL('https://support.discord.com/hc/en-us')
+            .setDescription("Need help? We've got your back.");
 
-        await interaction.reply({ content: &#39;R U seeking for assistance using Discord?&#39;, components: [row], embeds: [hc], ephemeral: true });
+        await interaction.reply({ content: 'R U seeking for assistance using Discord?', components: [row], embeds: [hc], ephemeral: true });
 
         const filter = i =&gt; {
             // 这里我们用到了下面会将的“收集器”，准确来说是“基本消息组件收集器”
@@ -295,14 +295,14 @@ module.exports = {
             if (updatedBtnMsg.has(i.message.id)) {
                 return false;
             } else { // 运行到这条 else 分支，意味着该消息未被曾收集过。
-                if (i.customId.startsWith(&#39;b3&#39;)) {
+                if (i.customId.startsWith('b3')) {
                     // 我们不需要验证按钮消息的发起者和按按钮的人是否是同一个人，
 	                // 因为这俩人肯定是同一个人，因为按钮消息已被设置为 ephemeral，
 	                // 甚至不会有外人能看到这条消息，更别说按这个按钮了
                     updatedBtnMsg.set(i.message.id, true);
                     return true;
                 } else {
-                    // 这条分支意味着不满足我们的要求 i.customId.startsWith(&#39;b3&#39;) === true
+                    // 这条分支意味着不满足我们的要求 i.customId.startsWith('b3') === true
                     // 即按下的按钮的 Id 不是 b3 打头的。我们不要。
                     return false;
                 }
@@ -319,13 +319,13 @@ module.exports = {
 						    // 如果要设置不活动后停止收集器多长时间（以毫秒为单位），使用 idle
         });
 
-        collector.on(&#39;collect&#39;, async i =&gt; {
+        collector.on('collect', async i =&gt; {
             // 明确地令 component 数组为空数组，可以在 .update() 时删除该消息的任何组件。
             // 明确地令 embeds 数组为空数组，可以在 .update() 时删除该消息的任何嵌套元素。
             await i.update({ content: `Nice.`, components: [rowD], embeds: []});
         });
 
-        collector.on(&#39;end&#39;, collected =&gt; {
+        collector.on('end', collected =&gt; {
             console.log(`Collected ${collected.size} items`);
 
             // 为了确保数组下标访问[0]不越界，我们这里要求数组不为空
@@ -338,9 +338,9 @@ module.exports = {
 };
 </code></pre>
 <p>效果图：
-<img src="https://img2022.cnblogs.com/blog/2455224/202211/2455224-20221119141119800-67771465.png" alt="image"/>
+<img src="https://img2022.cnblogs.com/blog/2455224/202211/2455224-20221119141119800-67771465.png" alt="image" />
 按下按钮后：
-<img src="https://img2022.cnblogs.com/blog/2455224/202211/2455224-20221119141123741-159560186.png" alt="image"/></p>
+<img src="https://img2022.cnblogs.com/blog/2455224/202211/2455224-20221119141123741-159560186.png" alt="image" /></p>
 <h3>其他对按钮的操作</h3>
 <ul>
 <li><code>reply()</code></li>
@@ -356,44 +356,44 @@ module.exports = {
 <p>对应的 commit：
 https://github.com/wtflmao/discord_bot_example/commit/21c5f65d81cedbce987a59dfe4c9db4251817d41#diff-16f8992fc6c047410730afb876fa5a8a9c8ed7b312c9f991f52bdb9ca8f85b8f
 https://gitee.com/wtflmao/discord_bot_example/commit/21c5f65d81cedbce987a59dfe4c9db4251817d41#diff-16f8992fc6c047410730afb876fa5a8a9c8ed7b312c9f991f52bdb9ca8f85b8f</p>
-<pre><code>const { ActionRowBuilder, ButtonBuilder, ButtonStyle, SlashCommandBuilder } = require(&#39;discord.js&#39;);
-const wait = require(&#39;node:timers/promises&#39;).setTimeout;
+<pre><code>const { ActionRowBuilder, ButtonBuilder, ButtonStyle, SlashCommandBuilder } = require('discord.js');
+const wait = require('node:timers/promises').setTimeout;
 
 let updatedBtnMsg = new Map();
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName(&#39;ddbutton&#39;)
-        .setDescription(&#39;Replies with a button, but deferred, also self-delete!&#39;),
+        .setName('ddbutton')
+        .setDescription('Replies with a button, but deferred, also self-delete!'),
 
     async execute(interaction) {
-        updatedBtnMsg.set(&#34;0&#34;, false);
+        updatedBtnMsg.set("0", false);
 
         const row = new ActionRowBuilder()
             .addComponents(
                 new ButtonBuilder()
-                    // Randomize the button&#39;s customId for good luck, like &#34;b1_90372&#34; or &#34;b1_1827&#34;.
+                    // Randomize the button's customId for good luck, like "b1_90372" or "b1_1827".
                     .setCustomId(`b1_${Math.floor(Math.random() * 100000)}`)
-                    .setLabel(&#34;Update weather data&#34;)
+                    .setLabel("Update weather data")
                     .setStyle(ButtonStyle.Primary),
             );
 
-        await interaction.reply({ content: &#39;This is a button:&#39;, components: [row], embeds: [], ephemeral: false });
+        await interaction.reply({ content: 'This is a button:', components: [row], embeds: [], ephemeral: false });
 
         const filter = i =&gt; {
             // If the target message has been collected and edited by the other collector instance,
-            // then return false, telling the current collector that &#34;do not collect this msg, or else, DIE!!&#34;, LOL.
+            // then return false, telling the current collector that "do not collect this msg, or else, DIE!!", LOL.
             if (updatedBtnMsg.has(i.message.id)) {
                 return false;
             } else {
-                // Here, this msg hasn&#39;t been collected yet.
-                if (i.customId.startsWith(&#39;b1&#39;) &amp;&amp; (i.user.id === interaction.user.id)) {
-                    // Here, it fulfills our requirements: a.is a DANGEROUS button(customId starts with &#34;b4_&#34;), and b. the &#34;button msg&#34;&#39;s author is the person that presses the button
+                // Here, this msg hasn't been collected yet.
+                if (i.customId.startsWith('b1') &amp;&amp; (i.user.id === interaction.user.id)) {
+                    // Here, it fulfills our requirements: a.is a DANGEROUS button(customId starts with "b4_"), and b. the "button msg"'s author is the person that presses the button
                     // Put this &lt;i.message.id, true&gt; record into the Map, so that we can no longer collect it
                     // (like when many active collectors all see the same button interaction fulfills its requirements, then they all wanna edit the same msg, but to only find the interaction has already been acknowledged and the bot be halted.)
                     updatedBtnMsg.set(i.message.id, true);
                 } else {
-                    // Here, it doesn&#39;t meet all the requirements we need, so do not collect it.
+                    // Here, it doesn't meet all the requirements we need, so do not collect it.
                     return false;
                 }
             }
@@ -406,7 +406,7 @@ module.exports = {
             time: 18000, // 18 secs
         });
 
-        collector.on(&#39;collect&#39;, async i =&gt; {
+        collector.on('collect', async i =&gt; {
             // use .deferUpdate() to simulate an API response process from a weather channel.
             await i.deferUpdate();
             await i.editReply({ content: `Updating...`, components:[] });
@@ -414,10 +414,10 @@ module.exports = {
             await i.editReply({ content: `Las Vegas, NV\nAs of ${Math.floor(Math.random() * 11) + 1}:${Math.floor(Math.random() * 59)} am PST\n44°F\nFair\nDay ${Math.floor(Math.random() * 10) + 66}°F • Night ${39 - Math.floor(Math.random() * 10)}°F`, embeds: [], components: [row] });
         });
 
-        collector.on(&#39;end&#39;, collected =&gt; {
+        collector.on('end', collected =&gt; {
             console.log(`Collected ${collected.size} items`);
 
-            // To make sure there&#39;s at least one item in the array,
+            // To make sure there's at least one item in the array,
             // to prevent accessing the first element of an empty array, which leads to out-of-bounds memory access
             if (collected.size &gt; 0) {
                 // To delete the whole reply, do .deleteReply() for the last collected item, not all the items.
@@ -430,10 +430,10 @@ module.exports = {
 };
 </code></pre>
 <p>效果图：
-刚发出斜杠命令交互后：<img src="https://img2022.cnblogs.com/blog/2455224/202211/2455224-20221119141436425-1654461385.png" alt="image"/>
+刚发出斜杠命令交互后：<img src="https://img2022.cnblogs.com/blog/2455224/202211/2455224-20221119141436425-1654461385.png" alt="image" />
 点击 Update weather button 后：
-<img src="https://img2022.cnblogs.com/blog/2455224/202211/2455224-20221119141504850-2016161105.png" alt="image"/>
-结果：<img src="https://img2022.cnblogs.com/blog/2455224/202211/2455224-20221119141525899-129872057.png" alt="image"/></p>
+<img src="https://img2022.cnblogs.com/blog/2455224/202211/2455224-20221119141504850-2016161105.png" alt="image" />
+结果：<img src="https://img2022.cnblogs.com/blog/2455224/202211/2455224-20221119141525899-129872057.png" alt="image" /></p>
 <h3>消息组件收集器：处理按钮被按下后的交互操作</h3>
 <p>我们需要建立一个 Discord.js 为我们提供的一种“收集器”（Collector）来监听一种交互：按钮被按下这种交互。</p>
 <p>其实消息组件收集器可以收集任何消息组件，但是这里我们只在乎按钮的交互。</p>
@@ -444,25 +444,25 @@ module.exports = {
 <p>对应的 commit：
 https://github.com/wtflmao/discord_bot_example/commit/21c5f65d81cedbce987a59dfe4c9db4251817d41#diff-da8b6abce1aa8943cff70045dec60a8d70461e8f6cb0e5c9327e5235f5ead4c5
 https://gitee.com/wtflmao/discord_bot_example/commit/21c5f65d81cedbce987a59dfe4c9db4251817d41#diff-da8b6abce1aa8943cff70045dec60a8d70461e8f6cb0e5c9327e5235f5ead4c5</p>
-<pre><code>const { ActionRowBuilder, ButtonBuilder, ButtonStyle, EmbedBuilder, SlashCommandBuilder } = require(&#39;discord.js&#39;);
-const wait = require(&#39;node:timers/promises&#39;).setTimeout;
+<pre><code>const { ActionRowBuilder, ButtonBuilder, ButtonStyle, EmbedBuilder, SlashCommandBuilder } = require('discord.js');
+const wait = require('node:timers/promises').setTimeout;
 
 let updatedBtnMsg = new Map();
 
 module.exports = {
 	data: new SlashCommandBuilder()
-       .setName(&#39;button&#39;)
-       .setDescription(&#39;Replies with a button!&#39;),
+       .setName('button')
+       .setDescription('Replies with a button!'),
 
 	async execute(interaction) {
-		updatedBtnMsg.set(&#34;0&#34;, false);
+		updatedBtnMsg.set("0", false);
 
 		const rowDanger = new ActionRowBuilder()
 			.addComponents(
 				new ButtonBuilder()
-					// Randomize the button&#39;s customId for good luck, like &#34;b4_90372&#34; or &#34;b4_1827&#34;.
+					// Randomize the button's customId for good luck, like "b4_90372" or "b4_1827".
 					.setCustomId(`b4_${Math.floor(Math.random() * 100000)}`)
-					.setLabel(&#34;Click me!&#34;)
+					.setLabel("Click me!")
 					.setStyle(ButtonStyle.Danger),
 			);
 
@@ -470,9 +470,9 @@ module.exports = {
 			.addComponents(
 				new ButtonBuilder()
 					// Because the button is disabled, no one can actually click that.
-					// So there&#39;s no avail to randomize its customId.
-					.setCustomId(&#39;b4d&#39;)
-					.setLabel(&#34;YOU CLICKED ME!&#34;)
+					// So there's no avail to randomize its customId.
+					.setCustomId('b4d')
+					.setLabel("YOU CLICKED ME!")
 					.setStyle(ButtonStyle.Danger)
 					.setDisabled(true),
 			);
@@ -481,36 +481,36 @@ module.exports = {
 			.addComponents(
 				new ButtonBuilder()
 					// Because the button is disabled, no one can actually click that.
-					// So there&#39;s no avail to randomize its customId.
-					.setCustomId(&#39;b2d&#39;)
-					.setLabel(&#34;It&#39;s fine.&#34;)
+					// So there's no avail to randomize its customId.
+					.setCustomId('b2d')
+					.setLabel("It's fine.")
 					.setStyle(ButtonStyle.Secondary)
 					.setDisabled(true),
 			);
 
 		const embed = new EmbedBuilder()
 			.setColor(0x0099FF)
-			.setTitle(&#34;hhzm&#39;s blog&#34;)
-			.setURL(&#39;https://www.cnblogs.com/hhzm/&#39;)
-			.setDescription(&#34;hhzm&#39;s cnblog site&#34;);
+			.setTitle("hhzm's blog")
+			.setURL('https://www.cnblogs.com/hhzm/')
+			.setDescription("hhzm's cnblog site");
 
-		await interaction.reply({ content: &#39;This is a Danger button:&#39;, components: [rowDanger], embeds: [embed], ephemeral: false });
+		await interaction.reply({ content: 'This is a Danger button:', components: [rowDanger], embeds: [embed], ephemeral: false });
 
 		const filter = i =&gt; {
 			// If the target message has been collected and edited by the other collector instance,
-			// then return false, telling the current collector that &#34;do not collect this msg, or else, DIE!!&#34;, LOL.
+			// then return false, telling the current collector that "do not collect this msg, or else, DIE!!", LOL.
 			if (updatedBtnMsg.has(i.message.id)) {
 				return false;
 			} else {
-				// Here, this msg hasn&#39;t been collected yet.
-				if (i.customId.startsWith(&#39;b4&#39;) &amp;&amp; (i.user.id === interaction.user.id)) {
-					// Here, it fulfills our requirements: a.is a DANGEROUS button(customId starts with &#34;b4_&#34;), and b. the &#34;button msg&#34;&#39;s author is the person that presses the button
+				// Here, this msg hasn't been collected yet.
+				if (i.customId.startsWith('b4') &amp;&amp; (i.user.id === interaction.user.id)) {
+					// Here, it fulfills our requirements: a.is a DANGEROUS button(customId starts with "b4_"), and b. the "button msg"'s author is the person that presses the button
 					// Put this &lt;i.message.id, true&gt; record into the Map, so that we can no longer collect it
 					// (like when many active collectors all see the same button interaction fulfills its requirements, then they all wanna edit the same msg, but to only find the interaction has already been acknowledged and the bot be halted.)
 					updatedBtnMsg.set(i.message.id, true);
 					return true;
 				} else {
-					// Here, it doesn&#39;t meet all the requirements we need, so do not collect it.
+					// Here, it doesn't meet all the requirements we need, so do not collect it.
 					return false;
 				}
 			}
@@ -525,7 +525,7 @@ module.exports = {
 			time: 15 * 1000, // 15.000 secs
 		});
 
-		collector.on(&#39;collect&#39;, async i =&gt; {
+		collector.on('collect', async i =&gt; {
 			await i.update({ content: `A DANGEROUS button was clicked! ${i.customId}`, embeds: [], components: [rowDangerD] });
 			await wait(6969);
 
@@ -535,10 +535,10 @@ module.exports = {
 			await i.editReply({ content: `Danger mitigated.`, components: [rowSecD], embeds: [] });
 		});
 
-		collector.on(&#39;end&#39;, collected =&gt; {
+		collector.on('end', collected =&gt; {
 			console.log(`Collected ${collected.size} items`);
 
-			// To make sure there&#39;s at least one item in the array,
+			// To make sure there's at least one item in the array,
 			// to prevent accessing the first element of an empty array, which leads to out-of-bounds memory access
 			if (collected.size &gt; 0) {
 				console.log((Array.from(collected.values()))[0].customId);
@@ -549,11 +549,11 @@ module.exports = {
 };
 </code></pre>
 <p>效果图：
-<img src="https://img2022.cnblogs.com/blog/2455224/202211/2455224-20221119141809776-952418961.png" alt="image"/>
+<img src="https://img2022.cnblogs.com/blog/2455224/202211/2455224-20221119141809776-952418961.png" alt="image" />
 然后
-<img src="https://img2022.cnblogs.com/blog/2455224/202211/2455224-20221119144938255-2082627602.png" alt="image"/>
+<img src="https://img2022.cnblogs.com/blog/2455224/202211/2455224-20221119144938255-2082627602.png" alt="image" />
 然后
-<img src="https://img2022.cnblogs.com/blog/2455224/202211/2455224-20221119141819927-1945822726.png" alt="image"/></p>
+<img src="https://img2022.cnblogs.com/blog/2455224/202211/2455224-20221119141819927-1945822726.png" alt="image" /></p>
 <p>需要注明的是，我们这里的收集器“监听”的是频道（Channel）里的组件事件。消息组件收集器还有另一种监听对象：消息（Message）。</p>
 <p>监听某个 Channel：</p>
 <pre><code>const collector = interaction.channel.createMessageComponentCollector();
@@ -564,5 +564,4 @@ module.exports = {
 const collector = message.createMessageComponentCollector();
 </code></pre>
 <p>此时，只要监听某条特定消息的收集器停止了工作，那么在本例中，没有其他的收集器可以在收集到该按钮的组件事件了，哪怕满足 filter 的条件了也不行。本例使用的是对象是频道的收集器。</p>
-<p>你可以自由选择是使用对象是频道的消息组件收集器，还是使用对象是消息的消息组件收集器，来简化你的任务。</p>
-</body></html>
+<p>你可以自由选择是使用对象是频道的消息组件收集器，还是使用对象是消息的消息组件收集器，来简化你的任务。</p></blockquote>

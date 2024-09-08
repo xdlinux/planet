@@ -1,4 +1,4 @@
-<html><head></head><body><p>下面是在 Astro 中编写 Markdown 内容时，可以使用的一些基本 Markdown 语法示例。</p>
+<blockquote><p>下面是在 Astro 中编写 Markdown 内容时，可以使用的一些基本 Markdown 语法示例。</p>
 <h2>标题</h2>
 <p>你应该避免在 Markdown 正文中重复创建文章标题，因为文章标题会根据 <code>frontmatter</code> 中 <code>title</code> 自动生成。</p>
 <blockquote>
@@ -13,15 +13,15 @@
 <h2>段落</h2>
 <p>Xerum, quo qui aut unt expliquam qui dolut labo. Aque venitatiusda cum, voluptionse latur sitiae dolessi aut parist aut dollo enim qui voluptate ma dolestendit peritin re plis aut quas inctum laceat est volestemque commosa as cus endigna tectur, offic to cor sequas etum rerum idem sintibus eiur? Quianimin porecus evelectur, cum que nis nust voloribus ratem aut omnimi, sitatur? Quiatem. Nam, omnis sum am facea corem alique molestrunt et eos evelece arcillit ut aut eos eos nus, sin conecerem erum fuga. Ri oditatquam, ad quibus unda veliamenimin cusam et facea ipsamus es exerum sitate dolores editium rerore eost, temped molorro ratiae volorro te reribus dolorer sperchicium faceata tiustia prat.</p>
 <p>使用行尾使用两个空格进行段落内的换行</p>
-<p>All work and no play makes Jack a dull boy.<br/>
+<p>All work and no play makes Jack a dull boy.<br />
 All work and no play makes Jack a dull boy.</p>
 <h2>图片</h2>
 <p>小尺寸的图片</p>
-<p><img src="https://picsum.photos/seed/picsum/250/400" alt="图片描述"/></p>
+<p><img src="https://picsum.photos/seed/picsum/250/400" alt="图片描述" /></p>
 <p>大尺寸的图片</p>
-<p><img src="https://picsum.photos/seed/picsum/1200/900" alt="图片描述"/></p>
+<p><img src="https://picsum.photos/seed/picsum/1200/900" alt="图片描述" /></p>
 <p>带标题的图片</p>
-<p><img src="https://picsum.photos/seed/picsum/400/300" alt="图片描述" title="图片标题"/></p>
+<p><img src="https://picsum.photos/seed/picsum/400/300" alt="图片描述" title="图片标题" /></p>
 <h2>强调</h2>
 <p>这是<strong>重要内容</strong>，这是<em>次要内容</em></p>
 <h2>删除线</h2>
@@ -29,7 +29,7 @@ All work and no play makes Jack a dull boy.</p>
 <h2>引用</h2>
 <p>The blockquote element represents content that is quoted from another source, optionally with a citation which must be within a <code>footer</code> or <code>cite</code> element, and optionally with in-line changes such as annotations and abbreviations.</p>
 <blockquote>
-<p>Tiam, ad mint andaepu dandae nostion secatur sequo quae.<br/>
+<p>Tiam, ad mint andaepu dandae nostion secatur sequo quae.<br />
 <strong>Note</strong> that you can use <em>Markdown syntax</em> within a blockquote.</p>
 </blockquote>
 <p>嵌套的引用</p>
@@ -41,14 +41,14 @@ All work and no play makes Jack a dull boy.</p>
 </blockquote>
 <p>带脚标的引用</p>
 <blockquote>
-<p>Don&#39;t communicate by sharing memory, share memory by communicating.&lt;br&gt;
+<p>Don't communicate by sharing memory, share memory by communicating.&lt;br&gt;
 — &lt;cite&gt;Rob Pike[^1]&lt;/cite&gt;</p>
 </blockquote>
-<p>[^1]: The above quote is excerpted from Rob Pike&#39;s <a href="https://www.youtube.com/watch?v=PAAkCSZUG1c">talk</a> during Gopherfest, November 18, 2015.</p>
+<p>[^1]: The above quote is excerpted from Rob Pike's <a href="https://www.youtube.com/watch?v=PAAkCSZUG1c">talk</a> during Gopherfest, November 18, 2015.</p>
 <h2>分割线</h2>
-<hr/>
+<hr />
 <h2>链接</h2>
-<p>这是内部链接 <a href="https://hhzm.win/posts/guide">Gyoza 使用指南</a></p>
+<p>这是内部链接 <a href="/posts/guide">Gyoza 使用指南</a></p>
 <p>这是外部连接 <a href="https://zh-hans.react.dev/">React <strong>中文</strong>文档</a></p>
 <p>自动渲染成连接 <a href="https://github.com">https://github.com</a></p>
 <p>邮箱地址 <a href="mailto:mail@example.com">mail@example.com</a></p>
@@ -124,9 +124,9 @@ All work and no play makes Jack a dull boy.</p>
 <h3>Syntax</h3>
 <p>we can use 3 backticks ``` in new line and write snippet and close with 3 backticks on new line and to highlight language specific syntac, write one word of language name after first 3 backticks, for eg. html, javascript, css, markdown, typescript, txt, bash</p>
 <pre><code>&lt;!doctype html&gt;
-&lt;html lang=&#34;en&#34;&gt;
+&lt;html lang="en"&gt;
   &lt;head&gt;
-    &lt;meta charset=&#34;utf-8&#34; /&gt;
+    &lt;meta charset="utf-8" /&gt;
     &lt;title&gt;Example HTML5 Document&lt;/title&gt;
   &lt;/head&gt;
   &lt;body&gt;
@@ -134,7 +134,7 @@ All work and no play makes Jack a dull boy.</p>
   &lt;/body&gt;
 &lt;/html&gt;
 </code></pre>
-<pre><code>const var text = &#34;hello world&#34;
+<pre><code>const var text = "hello world"
 </code></pre>
 <h2>KaTeX 公式</h2>
 <p>使用 <code>$</code> 符号包裹公式生成行内公式，例如：$E = mc^2$。</p>
@@ -198,7 +198,7 @@ $$</p>
 </ul>
 <h2>Other Elements — abbr, sub, sup, kbd, mark</h2>
 <h3>Syntax</h3>
-<pre><code>&lt;abbr title=&#34;Graphics Interchange Format&#34;&gt;GIF&lt;/abbr&gt; is a bitmap image format.
+<pre><code>&lt;abbr title="Graphics Interchange Format"&gt;GIF&lt;/abbr&gt; is a bitmap image format.
 
 H&lt;sub&gt;2&lt;/sub&gt;O
 
@@ -209,7 +209,7 @@ Press &lt;kbd&gt;&lt;kbd&gt;CTRL&lt;/kbd&gt;+&lt;kbd&gt;ALT&lt;/kbd&gt;+&lt;kbd&
 Most &lt;mark&gt;salamanders&lt;/mark&gt; are nocturnal, and hunt for insects, worms, and other small creatures.
 </code></pre>
 <h4>Output</h4>
-<p>&lt;abbr title=&#34;Graphics Interchange Format&#34;&gt;GIF&lt;/abbr&gt; is a bitmap image format.</p>
+<p>&lt;abbr title="Graphics Interchange Format"&gt;GIF&lt;/abbr&gt; is a bitmap image format.</p>
 <p>H&lt;sub&gt;2&lt;/sub&gt;O</p>
 <p>X&lt;sup&gt;n&lt;/sup&gt; + Y&lt;sup&gt;n&lt;/sup&gt; = Z&lt;sup&gt;n&lt;/sup&gt;</p>
 <p>Press &lt;kbd&gt;&lt;kbd&gt;CTRL&lt;/kbd&gt;+&lt;kbd&gt;ALT&lt;/kbd&gt;+&lt;kbd&gt;Delete&lt;/kbd&gt;&lt;/kbd&gt; to end the session.</p>
@@ -217,5 +217,4 @@ Most &lt;mark&gt;salamanders&lt;/mark&gt; are nocturnal, and hunt for insects, w
 <h2>Spoiler</h2>
 <pre><code>||hide content||
 </code></pre>
-<p>正常情况下，该内容会隐藏 ||hide content||，鼠标悬浮时才会显示。</p>
-</body></html>
+<p>正常情况下，该内容会隐藏 ||hide content||，鼠标悬浮时才会显示。</p></blockquote>

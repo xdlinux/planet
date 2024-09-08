@@ -1,9 +1,9 @@
-<html><head></head><body><h1 id="实现-IJobParallelForAppend">实现 IJobParallelForAppend<a class="headerlink" href="https://note.stalomeow.com/blog/posts/unity-job-parallel-for-append/#%E5%AE%9E%E7%8E%B0-IJobParallelForAppend" title="Permanent link">¶</a></h1>
+<blockquote><h1 id="实现-IJobParallelForAppend">实现 IJobParallelForAppend<a class="headerlink" href="#实现-IJobParallelForAppend" title="Permanent link">&para;</a></h1>
 <!-- more -->
 
 <p>Unity 的 <a href="https://docs.unity3d.com/Packages/com.unity.collections@2.4/manual/index.html">Collections package</a> 里有个 <a href="https://docs.unity3d.com/Packages/com.unity.collections@2.4/api/Unity.Jobs.IJobParallelForFilter.html"><code>IJobParallelForFilter</code></a>。我翻了相关的源码，发现虽然它名字带个 Parallel，但根本不是并行的。它的全部逻辑都是在一个线程里做的。后来，Unity 就把它名字里的 Parallel 去掉了，改成 <a href="https://docs.unity3d.com/Packages/com.unity.collections@2.4/api/Unity.Jobs.IJobFilter.html"><code>IJobFilter</code></a>。理由是</p>
 <blockquote>
-<p><code>IJobParallelForFilter</code> renamed to <code>IJobFilter</code> to better reflect functionality. <sup id="fnref:1"><a class="footnote-ref" href="https://note.stalomeow.com/blog/posts/unity-job-parallel-for-append/#fn:1">1</a></sup></p>
+<p><code>IJobParallelForFilter</code> renamed to <code>IJobFilter</code> to better reflect functionality. <sup id="fnref:1"><a class="footnote-ref" href="#fn:1">1</a></sup></p>
 </blockquote>
 <p>我有并行的需求，自己实现了一个超级加强版。</p>
 <div class="highlight"><pre><span></span><code><span class="na">[JobProducerType(typeof(IJobParallelForAppendExtensions.ParallelForAppendProducer&lt;,&gt;))]</span>
@@ -18,7 +18,7 @@
 <li><code>buf</code> 是一个临时缓冲区。</li>
 </ul>
 <p>如果 <code>Execute</code> 返回 <code>true</code>，<code>buf</code> 的值会被 Append 到结果里。</p>
-<h2 id="样例">样例<a class="headerlink" href="https://note.stalomeow.com/blog/posts/unity-job-parallel-for-append/#%E6%A0%B7%E4%BE%8B" title="Permanent link">¶</a></h2>
+<h2 id="样例">样例<a class="headerlink" href="#样例" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code><span class="na">[BurstCompile]</span>
 <span class="k">public</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">TestJob</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">IJobParallelForAppend</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span>
 <span class="p">{</span>
@@ -50,7 +50,7 @@
 <span class="p">}</span>
 </code></pre></div>
 <p>输出是 0，4，8，12，16，20，但顺序不固定。</p>
-<h2 id="核心代码">核心代码<a class="headerlink" href="https://note.stalomeow.com/blog/posts/unity-job-parallel-for-append/#%E6%A0%B8%E5%BF%83%E4%BB%A3%E7%A0%81" title="Permanent link">¶</a></h2>
+<h2 id="核心代码">核心代码<a class="headerlink" href="#核心代码" title="Permanent link">&para;</a></h2>
 <p><code>ParallelForAppendProducer&lt;TJob, TValue&gt;.Execute</code> 是核心的方法。在 Schedule 前分配好 <code>NativeList&lt;TValue&gt;</code> 的空间，每次有数据要 Append 时，用 <code>Interlocked.Increment</code> 增加 List 的元素数量，把值存进去就好。</p>
 <div class="highlight"><pre><span></span><code><span class="k">public</span><span class="w"> </span><span class="k">static</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">IJobParallelForAppendExtensions</span>
 <span class="p">{</span>
@@ -112,7 +112,7 @@
 <span class="w">                </span><span class="n">Array</span><span class="p">.</span><span class="n">Copy</span><span class="p">(</span><span class="n">genericArgs</span><span class="p">,</span><span class="w"> </span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="n">typeArgs</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="n">genericArgs</span><span class="p">.</span><span class="n">Length</span><span class="p">);</span>
 
 <span class="w">                </span><span class="n">Type</span><span class="w"> </span><span class="n">producerType</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">typeof</span><span class="p">(</span><span class="n">ParallelForAppendProducer</span><span class="o">&lt;</span><span class="p">,</span><span class="o">&gt;</span><span class="p">).</span><span class="n">MakeGenericType</span><span class="p">(</span><span class="n">typeArgs</span><span class="p">);</span>
-<span class="w">                </span><span class="n">producerType</span><span class="p">.</span><span class="n">GetMethod</span><span class="p">(</span><span class="s">&#34;Initialize&#34;</span><span class="p">).</span><span class="n">Invoke</span><span class="p">(</span><span class="k">null</span><span class="p">,</span><span class="w"> </span><span class="k">null</span><span class="p">);</span>
+<span class="w">                </span><span class="n">producerType</span><span class="p">.</span><span class="n">GetMethod</span><span class="p">(</span><span class="s">&quot;Initialize&quot;</span><span class="p">).</span><span class="n">Invoke</span><span class="p">(</span><span class="k">null</span><span class="p">,</span><span class="w"> </span><span class="k">null</span><span class="p">);</span>
 <span class="w">                </span><span class="k">break</span><span class="p">;</span>
 <span class="w">            </span><span class="p">}</span>
 <span class="w">        </span><span class="p">}</span>
@@ -195,9 +195,9 @@
 <span class="w">    </span><span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div>
-<h2 id="避坑指南">避坑指南<a class="headerlink" href="https://note.stalomeow.com/blog/posts/unity-job-parallel-for-append/#%E9%81%BF%E5%9D%91%E6%8C%87%E5%8D%97" title="Permanent link">¶</a></h2>
+<h2 id="避坑指南">避坑指南<a class="headerlink" href="#避坑指南" title="Permanent link">&para;</a></h2>
 <p>写泛型 Job 接口有不少坑。</p>
-<h3 id="JobProducer-类型参数顺序">JobProducer 类型参数顺序<a class="headerlink" href="https://note.stalomeow.com/blog/posts/unity-job-parallel-for-append/#JobProducer-%E7%B1%BB%E5%9E%8B%E5%8F%82%E6%95%B0%E9%A1%BA%E5%BA%8F" title="Permanent link">¶</a></h3>
+<h3 id="JobProducer-类型参数顺序">JobProducer 类型参数顺序<a class="headerlink" href="#JobProducer-类型参数顺序" title="Permanent link">&para;</a></h3>
 <p>泛型 Job 接口，对应的 JobProducer 的类型参数顺序必须是</p>
 <ol>
 <li><code>TJob</code>：具体的 Job 类型。</li>
@@ -205,10 +205,10 @@
 </ol>
 <p>否则不兼容 Burst Compiler。这个在 Burst 源码 <code>Runtime/Editor/BurstReflection.cs</code> 里的 <code>ScanJobType</code> 方法里写死了。</p>
 <p>比如 <code>IJobParallelForAppend&lt;TValue&gt;</code> 对应 <code>ParallelForAppendProducer&lt;TJob, TValue&gt;</code>。</p>
-<h3 id="EarlyJobInit-类型参数数量">EarlyJobInit 类型参数数量<a class="headerlink" href="https://note.stalomeow.com/blog/posts/unity-job-parallel-for-append/#EarlyJobInit-%E7%B1%BB%E5%9E%8B%E5%8F%82%E6%95%B0%E6%95%B0%E9%87%8F" title="Permanent link">¶</a></h3>
+<h3 id="EarlyJobInit-类型参数数量">EarlyJobInit 类型参数数量<a class="headerlink" href="#EarlyJobInit-类型参数数量" title="Permanent link">&para;</a></h3>
 <p>这个太坑了。</p>
 <blockquote>
-<p>When the Collections package is included in the project, Unity generates code to call EarlyJobInit at startup. This allows Burst compiled code to schedule jobs because the reflection part of initialization, which is not compatible with burst compiler constraints, has already happened in EarlyJobInit. <sup id="fnref:2"><a class="footnote-ref" href="https://note.stalomeow.com/blog/posts/unity-job-parallel-for-append/#fn:2">2</a></sup></p>
+<p>When the Collections package is included in the project, Unity generates code to call EarlyJobInit at startup. This allows Burst compiled code to schedule jobs because the reflection part of initialization, which is not compatible with burst compiler constraints, has already happened in EarlyJobInit. <sup id="fnref:2"><a class="footnote-ref" href="#fn:2">2</a></sup></p>
 </blockquote>
 <p>生成的代码：</p>
 <div class="highlight"><pre><span></span><code><span class="na">[Unity.Jobs.DOTSCompilerGenerated]</span>
@@ -235,13 +235,13 @@
 </code></pre></div>
 <p>它调用 <code>EarlyJobInit</code> 时只给了一个 <code>TJob</code> 类型参数。如果我们声明的是 <code>EarlyJobInit&lt;TJob, TValue&gt;</code> 就会报错。这个在 Collections 源码 <code>Unity.Collections.CodeGen/JobReflectionDataPostProcessor.cs</code> 的 <code>GenerateCalls</code> 方法里写死了。。。</p>
 <div class="footnote">
-<hr/>
+<hr />
 <ol>
 <li id="fn:1">
-<p><a href="https://docs.unity3d.com/Packages/com.unity.collections@2.4/changelog/CHANGELOG.html#changed-10">https://docs.unity3d.com/Packages/com.unity.collections@2.4/changelog/CHANGELOG.html#changed-10</a> <a class="footnote-backref" href="https://note.stalomeow.com/blog/posts/unity-job-parallel-for-append/#fnref:1" title="Jump back to footnote 1 in the text">↩</a></p>
+<p><a href="https://docs.unity3d.com/Packages/com.unity.collections@2.4/changelog/CHANGELOG.html#changed-10">https://docs.unity3d.com/Packages/com.unity.collections@2.4/changelog/CHANGELOG.html#changed-10</a>&#160;<a class="footnote-backref" href="#fnref:1" title="Jump back to footnote 1 in the text">&#8617;</a></p>
 </li>
 <li id="fn:2">
-<p><a href="https://docs.unity3d.com/Packages/com.unity.collections@2.4/api/Unity.Jobs.IJobFilterExtensions.html">https://docs.unity3d.com/Packages/com.unity.collections@2.4/api/Unity.Jobs.IJobFilterExtensions.html</a> <a class="footnote-backref" href="https://note.stalomeow.com/blog/posts/unity-job-parallel-for-append/#fnref:2" title="Jump back to footnote 2 in the text">↩</a></p>
+<p><a href="https://docs.unity3d.com/Packages/com.unity.collections@2.4/api/Unity.Jobs.IJobFilterExtensions.html">https://docs.unity3d.com/Packages/com.unity.collections@2.4/api/Unity.Jobs.IJobFilterExtensions.html</a>&#160;<a class="footnote-backref" href="#fnref:2" title="Jump back to footnote 2 in the text">&#8617;</a></p>
 </li>
 </ol>
-</div></body></html>
+</div></blockquote>

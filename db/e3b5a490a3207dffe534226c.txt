@@ -1,11 +1,11 @@
-<html><head></head><body><h2>Chapter 10 - 事件处理 Event handling</h2>
+<blockquote><h2>Chapter 10 - 事件处理 Event handling</h2>
 <p>这一章只是根据新的 discord.js v14.8.0，对已有文件进行小修小补。</p>
 <blockquote>
 <p>如果你是跟着本教程前几章来的，不要跳过本章！</p>
 </blockquote>
 <p>根据官方的说法，Node.js 使用事件驱动的架构，使得在特定事件发生时执行特定代码成为可能。discord.js 库就充分利用了这一点。</p>
 <h4>修改后的 <code>events/interactionCreate.js</code></h4>
-<pre><code>const { Events } = require(&#39;discord.js&#39;);
+<pre><code>const { Events } = require('discord.js');
 
 module.exports = {
 	name: Events.InteractionCreate,
@@ -15,7 +15,7 @@ module.exports = {
 };
 </code></pre>
 <h4>修改后的 <code>events/ready.js</code></h4>
-<pre><code>const { Events } = require(&#39;discord.js&#39;);
+<pre><code>const { Events } = require('discord.js');
 
 module.exports = {  
    name: Events.ClientReady,  
@@ -37,28 +37,28 @@ module.exports = {
 <p>自动完成举例：<code>commands/autocomplete.js</code>
 https://github.com/wtflmao/discord_bot_example/commit/625dcad5fc03f28a0faf14bf66e35400c4ad767b
 https://gitee.com/wtflmao/discord_bot_example/commit/625dcad5fc03f28a0faf14bf66e35400c4ad767b</p>
-<pre><code>const { SlashCommandBuilder } = require(&#39;discord.js&#39;);
+<pre><code>const { SlashCommandBuilder } = require('discord.js');
 
 module.exports = {
 	data: new SlashCommandBuilder()
-		.setName(&#39;autocomplete&#39;)
-		.setDescription(&#39;Autocomplete test.&#39;)
+		.setName('autocomplete')
+		.setDescription('Autocomplete test.')
 		.addStringOption(option =&gt;
-			option.setName(&#34;category&#34;)
-				.setDescription(&#34;The category you&#39;d like to dive in&#34;)
+			option.setName("category")
+				.setDescription("The category you'd like to dive in")
 				.setAutocomplete(true)),
 	async autocomplete(interaction) {
 		
 		const focusedValue = interaction.options.getFocused();
-		const choices = [&#39;beer&#39;, &#39;coffee&#39;, &#39;milk&#39;, &#39;apple&#39;, &#39;banana&#39;, &#39;tea&#39;, &#39;zebra&#39;];
+		const choices = ['beer', 'coffee', 'milk', 'apple', 'banana', 'tea', 'zebra'];
 		const filtered = choices.filter(choice =&gt; choice.includes(focusedValue));
 		await interaction.respond(
-			filtered.map(choice =&gt;({ name: choice, value: &#39;v_&#39; + choice })),
-		).then(() =&gt; console.log(&#39;Successfully responded to the autocomplete interaction&#39;))
+			filtered.map(choice =&gt;({ name: choice, value: 'v_' + choice })),
+		).then(() =&gt; console.log('Successfully responded to the autocomplete interaction'))
  		.catch(console.error);
 	},
 	async execute(interaction) {
-		const category = interaction.options.getString(&#34;category&#34;);
+		const category = interaction.options.getString("category");
 		await interaction.reply(`You acquired some ${category}.`);
 	},
 };
@@ -66,70 +66,70 @@ module.exports = {
 <p>解析：通过 <code>.setAutoComplete(true)</code> 来开启一个 Option 的自动完成。</p>
 <p>在 <code>autocomplete()</code> 函数里：</p>
 <p>通过 <code>interaction.options.getFocused()</code> 获取用户在该域内实时键入的值。</p>
-<p>我们用 choices 数组维护了一些用户可能会输入的字符串，通过 <code>choices.filter(choice =&gt; choice.includes(focusedValue)</code> （实时键入的字符串是否是 choices 数组某个元素的字串与否）来判断是否要将该元素加入到针对目前实时键入的值的自动完成响应里去。比如，用户输入 &#34;ee&#34;，能匹配 &#34;beer&#34; 和 &#34;coffee&#34;。</p>
+<p>我们用 choices 数组维护了一些用户可能会输入的字符串，通过 <code>choices.filter(choice =&gt; choice.includes(focusedValue)</code> （实时键入的字符串是否是 choices 数组某个元素的字串与否）来判断是否要将该元素加入到针对目前实时键入的值的自动完成响应里去。比如，用户输入 "ee"，能匹配 "beer" 和 "coffee"。</p>
 <p><code>interaction.respond()</code> 用于向用户响应自动完成列表。</p>
 <p>程序执行到现在，用户应还未回车执行命令。</p>
 <p>在 <code>execute()</code> 函数里：</p>
 <p>这里是我们最常见的斜杠命令的函数主题了，执行到这里意味着用户已经敲击了回车，执行了斜杠命令。</p>
-<p>这里是实时输入&#34;ee&#34;时，根据我们 filter 设定的规则，自动完成匹配到的：
-<img src="https://img2022.cnblogs.com/blog/2455224/202211/2455224-20221117172041533-543123094.png" alt="image"/></p>
+<p>这里是实时输入"ee"时，根据我们 filter 设定的规则，自动完成匹配到的：
+<img src="https://img2022.cnblogs.com/blog/2455224/202211/2455224-20221117172041533-543123094.png" alt="image" /></p>
 <p>当我们执行 <code>/autocomplete category: news</code>时：
-<img src="https://img2022.cnblogs.com/blog/2455224/202211/2455224-20221117172055915-1546936651.png" alt="image"/></p>
+<img src="https://img2022.cnblogs.com/blog/2455224/202211/2455224-20221117172055915-1546936651.png" alt="image" /></p>
 <p>用户的最终输入可以与自动完成的无关，就像没有自动完成的普通 Option 那样对待：
 执行 <code>/autocomplete category: news</code>
-<img src="https://img2022.cnblogs.com/blog/2455224/202211/2455224-20221117172117377-303406663.png" alt="image"/></p>
+<img src="https://img2022.cnblogs.com/blog/2455224/202211/2455224-20221117172117377-303406663.png" alt="image" /></p>
 <p>我们没有对 category 域设置必填，等价于 .setRequired(false)。因此不理会这个域执行命令也是可以的：
 执行 <code>/autocomplete</code>
-<img src="https://img2022.cnblogs.com/blog/2455224/202211/2455224-20221117172123011-1830908788.png" alt="image"/></p>
+<img src="https://img2022.cnblogs.com/blog/2455224/202211/2455224-20221117172123011-1830908788.png" alt="image" /></p>
 <h3>多个 Option 的 Autocomplete</h3>
 <p>上代码：<code>commands/autocomplete2.js</code>
 https://github.com/wtflmao/discord_bot_example/commit/625dcad5fc03f28a0faf14bf66e35400c4ad767b
 https://gitee.com/wtflmao/discord_bot_example/commit/625dcad5fc03f28a0faf14bf66e35400c4ad767b</p>
-<pre><code>const { SlashCommandBuilder } = require(&#39;discord.js&#39;);
+<pre><code>const { SlashCommandBuilder } = require('discord.js');
 
 module.exports = {
 	data: new SlashCommandBuilder()
-		.setName(&#39;autocomplete2&#39;)
-		.setDescription(&#39;Multi-Autocomplete test.&#39;)
+		.setName('autocomplete2')
+		.setDescription('Multi-Autocomplete test.')
 		.addStringOption(option =&gt;
-			option.setName(&#34;category&#34;)
-				.setDescription(&#34;The category you&#39;d like to dive in&#34;)
+			option.setName("category")
+				.setDescription("The category you'd like to dive in")
 				.setAutocomplete(true)
 				.setRequired(true))
 		.addNumberOption(option =&gt;
-			option.setName(&#34;amount&#34;)
-				.setDescription(&#34;How many you want&#34;)
+			option.setName("amount")
+				.setDescription("How many you want")
 				.setAutocomplete(true)
 				.setRequired(true)),
 	async autocomplete(interaction) {
 		
 		const focusedOption = interaction.options.getFocused(true);
 
-		if(focusedOption.name === &#34;category&#34;) {
+		if(focusedOption.name === "category") {
 
-			const choices = [&#39;beer&#39;, &#39;coffee&#39;, &#39;milk&#39;, &#39;apple&#39;, &#39;banana&#39;, &#39;tea&#39;, &#39;zebra&#39;];
+			const choices = ['beer', 'coffee', 'milk', 'apple', 'banana', 'tea', 'zebra'];
 			const filtered = choices.filter(choice =&gt; choice.includes(focusedOption.value));
 			await interaction.respond(
 				filtered.map(choice =&gt;({ name: choice, value: choice })),
-			).then(() =&gt; console.log(&#39;Successfully responded to the autocomplete interaction&#39;))
+			).then(() =&gt; console.log('Successfully responded to the autocomplete interaction'))
 	 		.catch(console.error);
 
 		}
 
-		if(focusedOption.name === &#34;amount&#34;) {
+		if(focusedOption.name === "amount") {
 
 			const choices = [12, 24, 48, 81, 9];
 			const filtered = choices.filter(choice =&gt; `${choice}`.includes(`${focusedOption.value}`));
 			await interaction.respond(
 				filtered.map(choice =&gt;({ name: `${choice}`, value: choice })),
-			).then(() =&gt; console.log(&#39;Successfully responded to the autocomplete interaction&#39;))
+			).then(() =&gt; console.log('Successfully responded to the autocomplete interaction'))
 	 		.catch(console.error);
  		
 		}
 	},
 	async execute(interaction) {
-		const category = interaction.options.getString(&#34;category&#34;);
-		const amount = interaction.options.getNumber(&#34;amount&#34;);
+		const category = interaction.options.getString("category");
+		const amount = interaction.options.getNumber("amount");
 		// P.S. .getUser(), .getMember(), .getRole(), .getChannel(), .getMentionable() and .getAttachment() methods are not available to autocomplete interactions.
 		// but .getBoolean(), .getInteger() are available
 		await interaction.reply(`You acquired ${amount} of ${category}.`);
@@ -137,17 +137,17 @@ module.exports = {
 };
 </code></pre>
 <p>我们设置了两个 Option，一个叫 category，类型是字符串型；另一个叫 amount，类型是 Number 型。</p>
-<p>针对字符串和 Number 的值处理是不同的，这也使得我们用 <code>if(focusedOption.name === &#34;category&#34;)</code> <code>if(focusedOption.name === &#34;amount&#34;)</code> 来分别处理他们。</p>
+<p>针对字符串和 Number 的值处理是不同的，这也使得我们用 <code>if(focusedOption.name === "category")</code> <code>if(focusedOption.name === "amount")</code> 来分别处理他们。</p>
 <p>注意，对 <code>autocomplete()</code> 的调用是实时关于用户键入的。这意味着，用户（以一个不太快的速度）每敲一个字符，Discord 客户端都会向机器人后台请求一遍新的 Autocomplete 结果列表。</p>
 <p>执行 <code>/autocomplete2 category: tea amount: 24</code>：
-<img src="https://img2022.cnblogs.com/blog/2455224/202211/2455224-20221117174254952-147312660.png" alt="image"/></p>
+<img src="https://img2022.cnblogs.com/blog/2455224/202211/2455224-20221117174254952-147312660.png" alt="image" /></p>
 <p>执行 <code>/autocomplete2 category: zombie amount: 7</code>：
-<img src="https://img2022.cnblogs.com/blog/2455224/202211/2455224-20221117174259390-53278945.png" alt="image"/></p>
+<img src="https://img2022.cnblogs.com/blog/2455224/202211/2455224-20221117174259390-53278945.png" alt="image" /></p>
 <p>允许设置 Autocomplete 的只有 string、integer、boolean 和 number 四类 Option。</p>
-<pre><code>const string = interaction.options.getString(&#39;input&#39;);
-const integer = interaction.options.getInteger(&#39;int&#39;);
-const boolean = interaction.options.getBoolean(&#39;choice&#39;);
-const number = interaction.options.getNumber(&#39;num&#39;);
+<pre><code>const string = interaction.options.getString('input');
+const integer = interaction.options.getInteger('int');
+const boolean = interaction.options.getBoolean('choice');
+const number = interaction.options.getNumber('num');
 </code></pre>
 <p>像 .getUser(), .getMember(), .getRole(), .getChannel(), .getMentionable() and .getAttachment()，都不能设置自动完成。</p>
 <h4>其他注意的地方</h4>
@@ -156,5 +156,4 @@ const number = interaction.options.getNumber(&#39;num&#39;);
 <li>你不能推迟对自动完成交互的响应。 如果你正在处理异步建议，例如等待来自 API 的数据，请考虑保留本地缓存。</li>
 <li>用户选择一个值并发送命令后，将作为常规接收 <code>ChatInputCommandInteraction</code> 与 Option 的值。</li>
 <li>你一次最多只能回复 25 项，但如果超过这个数，则可能意味着你应该修改过滤器以进一步缩小选择范围。</li>
-</ul>
-</body></html>
+</ul></blockquote>

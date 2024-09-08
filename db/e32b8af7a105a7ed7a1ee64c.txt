@@ -1,4 +1,4 @@
-<html><head></head><body><p>本文 Discord.js 版本 v14.7.1</p>
+<blockquote><p>本文 Discord.js 版本 v14.7.1</p>
 <h2>Chapter 15 - 交互四大组件之：上下文菜单 Context Menu</h2>
 <p>上下文菜单（Context Menu），又称为 App Command。使用它，不需要用户显式的输入斜杠 / ，但是后台逻辑方面，和斜杠命令的函数方法基本一致。</p>
 <p>上下文菜单交互（ContextMenuInteraction），分为 “用户上下文菜单交互”（UserContextMenuInteraction）和 “消息上下文菜单交互”（MessageContextMenuInteraction）。二者的使用方式不一样。</p>
@@ -31,9 +31,9 @@
 </ul>
 <pre><code>	else if (interaction.isContextMenuCommand()) {
 		if (interaction.isUserContextMenuCommand()) {
-			console.log(&#34;an APP command(user)!&#34;);
+			console.log("an APP command(user)!");
 		} else if (interaction.isMessageContextMenuCommand()) {
-			console.log(&#34;an APP command(message)!&#34;);
+			console.log("an APP command(message)!");
 		} else {
 			// not an APP command
 		}
@@ -42,12 +42,12 @@
 	}
 </code></pre>
 <h3>新建一个 ContextMenu</h3>
-<pre><code>const { ContextMenuCommandBuilder, ApplicationCommandType } = require(&#39;discord.js&#39;);
+<pre><code>const { ContextMenuCommandBuilder, ApplicationCommandType } = require('discord.js');
 
 module.exports = {
     data: new ContextMenuCommandBuilder()
 	    // 设置外显名称
-        .setName(&#39;Boom&#39;)
+        .setName('Boom')
         // 设置上下文菜单的类型
         // ContextMenuCommandsBuilder.setType 有两种有效枚举值：
         // ApplicationCommandType.Message 和 ApplicationCommandType.User
@@ -56,19 +56,19 @@ module.exports = {
 </code></pre>
 <h3>举例：一个重复消息内容的 MessageContextMenu</h3>
 <p><code>commands/contextMenus/contextBoom.js</code>：</p>
-<pre><code>const { ContextMenuCommandBuilder, ApplicationCommandType } = require(&#39;discord.js&#39;);
+<pre><code>const { ContextMenuCommandBuilder, ApplicationCommandType } = require('discord.js');
 
 module.exports = {
     data: new ContextMenuCommandBuilder()
 	    // 设置外显名称
-        .setName(&#39;Boom&#39;)
+        .setName('Boom')
         // 设置上下文菜单的类型
         // ContextMenuCommandsBuilder.setType 有两种有效枚举值：
         // ApplicationCommandType.Message 和 ApplicationCommandType.User
         .setType(ApplicationCommandType.Message),
     async execute(interaction) {
         // 这里 interaction 的类型是 ContextMenuInteraction，同时，也是 UserContextMenuInteraction
-        // UserContextMenuInteraction 有一个属性叫 &#34;.targetId&#34;, 它是此交互目标的 Discord snowflake id，这里（Message菜单）的话，指的是 Message 的 id
+        // UserContextMenuInteraction 有一个属性叫 ".targetId", 它是此交互目标的 Discord snowflake id，这里（Message菜单）的话，指的是 Message 的 id
         // 我们用 interaction.channel.messages.fetch(interaction.targetId)) 来凭借消息 id 来获取消息本体
         // 然后通过抓取来的消息本体，获取消息的内容（content），存到 targetMsgContent
         const targetMsgContent = (await interaction.channel.messages.fetch(interaction.targetId)).content;
@@ -76,19 +76,19 @@ module.exports = {
     },
 };
 </code></pre>
-<p>对消息 &#34;owowowowowowo amogus&#34; 使用 Boom：
-<img src="https://img2022.cnblogs.com/blog/2455224/202211/2455224-20221124234847937-1692039601.png" alt="image"/></p>
-<p><img src="https://img2022.cnblogs.com/blog/2455224/202211/2455224-20221124235121946-87066396.png" alt="image"/></p>
+<p>对消息 "owowowowowowo amogus" 使用 Boom：
+<img src="https://img2022.cnblogs.com/blog/2455224/202211/2455224-20221124234847937-1692039601.png" alt="image" /></p>
+<p><img src="https://img2022.cnblogs.com/blog/2455224/202211/2455224-20221124235121946-87066396.png" alt="image" /></p>
 <h3>举例：一个显示指定用户注册时间的 UserContextMenu</h3>
 <p><code>commands/contextMenus/conetxtUserInfo.js</code>：</p>
-<pre><code>const { ContextMenuCommandBuilder, ApplicationCommandType } = require(&#39;discord.js&#39;);
+<pre><code>const { ContextMenuCommandBuilder, ApplicationCommandType } = require('discord.js');
 // DISCORD_EPOCH 是个常数, 指的是 2015 年的第一毫秒，是以毫秒为单位的 UNIX 时间戳
 const DISCORD_EPOCH = 1420070400000;
 
 module.exports = {
     data: new ContextMenuCommandBuilder()
 	    // 设置外显名称
-        .setName(&#39;User Information&#39;)
+        .setName('User Information')
         // 设置上下文菜单的类型
         // ContextMenuCommandsBuilder.setType 有两种有效枚举值：
         // ApplicationCommandType.Message 和 ApplicationCommandType.User
@@ -108,16 +108,16 @@ module.exports = {
 };
 </code></pre>
 <p>我们对机器人自己使用 UserInfo 效果图：
-<img src="https://img2022.cnblogs.com/blog/2455224/202211/2455224-20221124235149626-1654633347.png" alt="image"/></p>
-<p><img src="https://img2022.cnblogs.com/blog/2455224/202211/2455224-20221124234718832-1759398084.png" alt="image"/></p>
+<img src="https://img2022.cnblogs.com/blog/2455224/202211/2455224-20221124235149626-1654633347.png" alt="image" /></p>
+<p><img src="https://img2022.cnblogs.com/blog/2455224/202211/2455224-20221124234718832-1759398084.png" alt="image" /></p>
 <h3>例子：把 Modal 和 ContextMenu 柔到一起：反馈功能</h3>
 <p>下面的代码就是上面两段程序的糅合，注释解释的很清晰，故看代码注释就行。</p>
 <p><code>commands/contextMenus/contextFeedback.js</code>：</p>
-<pre><code>const { ContextMenuCommandBuilder, ApplicationCommandType, ModalBuilder, TextInputBuilder, TextInputStyle, ActionRowBuilder } = require(&#39;discord.js&#39;);
+<pre><code>const { ContextMenuCommandBuilder, ApplicationCommandType, ModalBuilder, TextInputBuilder, TextInputStyle, ActionRowBuilder } = require('discord.js');
 
 module.exports = {
     data: new ContextMenuCommandBuilder()
-        .setName(&#39;Bot Feedback&#39;)
+        .setName('Bot Feedback')
         // There are two available options for the .type of ContextMenuCommandsBuilder
         // ApplicationCommandType.Message and ApplicationCommandType.User
         .setType(ApplicationCommandType.User),
@@ -128,16 +128,16 @@ module.exports = {
 
         // Create a new Modal
         const modal = new ModalBuilder()
-            .setCustomId(&#39;feedbackModal&#39;)
+            .setCustomId('feedbackModal')
             // username#discriminator be like: Elon#0001
             .setTitle(`Bot Feedback for ${botInstance.username}#${botInstance.discriminator}`);
 
         // Add components to modal...
         // Create the text input components
         const starsInput = new TextInputBuilder()
-            .setCustomId(&#39;starsInput&#39;)
+            .setCustomId('starsInput')
             // The label is the prompt the user sees for this input
-            .setLabel(&#34;Please rate us from 1 star to 5 stars!&#34;)
+            .setLabel("Please rate us from 1 star to 5 stars!")
             // Short means only a single line of text
             // TextInputStyle only have two members: .Short and .Paragraph
             .setStyle(TextInputStyle.Short)
@@ -147,8 +147,8 @@ module.exports = {
             .setMaxLength(1);
 
         const feedbackInput = new TextInputBuilder()
-            .setCustomId(&#39;feedbackInput&#39;)
-            .setLabel(&#34;What&#39;s your feedback?&#34;)
+            .setCustomId('feedbackInput')
+            .setLabel("What's your feedback?")
             // Paragraph means multiple lines of text.
             .setStyle(TextInputStyle.Paragraph)
             // Set required
@@ -172,9 +172,9 @@ module.exports = {
         const submitted = await interaction.awaitModalSubmit({
             // Timeout after a minute of not receiving any valid Modals
             time: 600 * 1000,
-            // Make sure we only accept Modals from the User who sent the original Interaction we&#39;re responding to
+            // Make sure we only accept Modals from the User who sent the original Interaction we're responding to
             filter: i =&gt; {
-                if (i.user.id === interaction.user.id &amp;&amp; i.customId === &#39;feedbackModal&#39;) {
+                if (i.user.id === interaction.user.id &amp;&amp; i.customId === 'feedbackModal') {
                     return true;
                 }},
         }).catch(error =&gt; {
@@ -188,14 +188,14 @@ module.exports = {
         // You can use the ModalSubmitInteraction.fields helper property to get the value of an input field from its Custom ID.
         if (submitted) {
             // Get the data entered by the user
-            const stars = submitted.fields.getTextInputValue(&#39;starsInput&#39;);
-            const feedback = submitted.fields.getTextInputValue(&#39;feedbackInput&#39;);
+            const stars = submitted.fields.getTextInputValue('starsInput');
+            const feedback = submitted.fields.getTextInputValue('feedbackInput');
             // We use console.log() to display the feedbacks
             console.log(`FeedBack {@${interaction.user.id}, ${stars}, ${feedback}}`);
             // Acknowledge the user that the feedback submitted successfully
             await submitted.reply({
-                content: `We&#39;ve  got your feedback. Thanks for your time and honesty.`,
-                // We don&#39;t want other people see somebody sent a feedback, so set ephemeral field to true
+                content: `We've  got your feedback. Thanks for your time and honesty.`,
+                // We don't want other people see somebody sent a feedback, so set ephemeral field to true
                 ephemeral: true
             })
         }
@@ -203,7 +203,6 @@ module.exports = {
 };
 </code></pre>
 <p>图：
-<img src="https://img2022.cnblogs.com/blog/2455224/202211/2455224-20221124235149626-1654633347.png" alt="image"/></p>
-<p><img src="https://img2022.cnblogs.com/blog/2455224/202211/2455224-20221124235246130-908300400.png" alt="image"/></p>
-<p><img src="https://img2022.cnblogs.com/blog/2455224/202211/2455224-20221124235256218-1399752437.png" alt="image"/></p>
-</body></html>
+<img src="https://img2022.cnblogs.com/blog/2455224/202211/2455224-20221124235149626-1654633347.png" alt="image" /></p>
+<p><img src="https://img2022.cnblogs.com/blog/2455224/202211/2455224-20221124235246130-908300400.png" alt="image" /></p>
+<p><img src="https://img2022.cnblogs.com/blog/2455224/202211/2455224-20221124235256218-1399752437.png" alt="image" /></p></blockquote>

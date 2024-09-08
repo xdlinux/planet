@@ -1,21 +1,21 @@
-<html><head></head><body><h2>Chapter 9 - 斜杠命令的参数：Options 和 Choices</h2>
+<blockquote><h2>Chapter 9 - 斜杠命令的参数：Options 和 Choices</h2>
 <h3>注册斜杠命令是前提</h3>
 <p>Discord 为开发人员提供了创建客户端集成斜杠命令的选项。 在本节中，我们将介绍如何使用 discord.js 注册这些命令！任何斜杠命令在可以被使用前，都需要先向 Discord 服务器注册。命令在没做出改动的情况下，不需要每次启动机器人之前注册一遍命令。</p>
 <h3>选项 Options</h3>
 <p>应用程序命令可以有选项。你可以将这些选项视为函数的参数并指定它们，如下所示：</p>
 <p>比如 <code>commands/echo.js</code>：</p>
-<pre><code>const { SlashCommandBuilder } = require(&#39;discord.js&#39;);
+<pre><code>const { SlashCommandBuilder } = require('discord.js');
 
 module.exports = {
 	data: new SlashCommandBuilder()
-		.setName(&#39;echo&#39;)
-		.setDescription(&#39;Replies with your input!&#39;)
+		.setName('echo')
+		.setDescription('Replies with your input!')
 		.addStringOption(option =&gt;
-			option.setName(&#39;input&#39;)
-				.setDescription(&#39;The input to echo back&#39;)
+			option.setName('input')
+				.setDescription('The input to echo back')
 				.setRequired(true)),
 	async execute(interaction) {
-		const input = interaction.options.getString(&#34;input&#34;);
+		const input = interaction.options.getString("input");
 		await interaction.reply(input);
 	},
 };
@@ -24,8 +24,8 @@ module.exports = {
 <p>除此之外，我们为这个命令添加了 option 用于接受命令参数，就像 c 语言函数接收参数那样。</p>
 <p>这里只有一个 option，类型是字符串类型，只接收字符串（由 <code>.addStringOption</code> 看出）。我们为这个 option 设置了名称 <code>input</code>，设置了说明 <code>The input to echo back</code>，并设置其为必填（由 <code>.setRequired(true)</code> 指定）。</p>
 <p>命令效果图：
-<img src="https://img2022.cnblogs.com/blog/2455224/202207/2455224-20220712100547224-825130046.png" alt="image"/>
-<img src="https://img2022.cnblogs.com/blog/2455224/202207/2455224-20220712100330532-1982660812.png" alt="image"/></p>
+<img src="https://img2022.cnblogs.com/blog/2455224/202207/2455224-20220712100547224-825130046.png" alt="image" />
+<img src="https://img2022.cnblogs.com/blog/2455224/202207/2455224-20220712100330532-1982660812.png" alt="image" /></p>
 <p>除了字符串选项外，discord.js 提供了很多 Option 类型：</p>
 <table>
 <thead>
@@ -103,30 +103,30 @@ module.exports = {
 <p>如果一个 Option 被 Choice “绑定”了，那么 Option 的输入值，有效值只能是 Choices。</p>
 <p>我们通过 <code>.addChoice()</code> 方法来构造 Choice。</p>
 <p>给个例子：<code>commands/subOption.js</code>：</p>
-<pre><code>const { SlashCommandBuilder } = require(&#39;discord.js&#39;);
+<pre><code>const { SlashCommandBuilder } = require('discord.js');
 
 module.exports = {
 	data: new SlashCommandBuilder()
-		.setName(&#39;giftest&#39;)
-		.setDescription(&#39;MultiOption test.&#39;)
+		.setName('giftest')
+		.setDescription('MultiOption test.')
 		.addStringOption(option =&gt;
-			option.setName(&#34;category&#34;)
-				.setDescription(&#34;The choices category&#34;)
+			option.setName("category")
+				.setDescription("The choices category")
 				.setRequired(true)
 				.addChoices(
-					{ name: &#39;Funny&#39;, value: &#39;gif_funny&#39;},
-					{ name: &#39;Meme&#39;, value: &#39;gif_meme&#39;},
-					{ name: &#39;Movie&#39;, value: &#39;gif_movie&#39;}))
+					{ name: 'Funny', value: 'gif_funny'},
+					{ name: 'Meme', value: 'gif_meme'},
+					{ name: 'Movie', value: 'gif_movie'}))
 		.addIntegerOption(option =&gt;
-			option.setName(&#34;amount&#34;)
-				.setDescription(&#34;The amount of gifs you want&#34;)
+			option.setName("amount")
+				.setDescription("The amount of gifs you want")
 				.setRequired(true)
 				.setMinValue(1)
 				.setMaxValue(5)),
 	async execute(interaction) {
-		const category = interaction.options.getString(&#34;category&#34;);
+		const category = interaction.options.getString("category");
 		await interaction.reply(category);
-		for (var i=2; i &lt;= interaction.options.getInteger(&#34;amount&#34;); i++) {
+		for (var i=2; i &lt;= interaction.options.getInteger("amount"); i++) {
 			await interaction.followUp(category);
 		}
 	},
@@ -135,26 +135,26 @@ module.exports = {
 <p>分析一下这个例子之前，我们先看效果图。</p>
 <p>错误用法之一：amount 的给定值小于允许的最小值(1)，或大于了允许的最大值(5)
 <code>/giftest category:Funny amount:7</code>
-<img src="https://img2022.cnblogs.com/blog/2455224/202207/2455224-20220712125309697-519004000.png" alt="image"/></p>
+<img src="https://img2022.cnblogs.com/blog/2455224/202207/2455224-20220712125309697-519004000.png" alt="image" /></p>
 <p>错误用法之二：amount 类型为整数，却输入了浮点数
 <code>/giftest category:Movie amount:4.9</code>
-<img src="https://img2022.cnblogs.com/blog/2455224/202207/2455224-20220712130257095-983666074.png" alt="image"/></p>
+<img src="https://img2022.cnblogs.com/blog/2455224/202207/2455224-20220712130257095-983666074.png" alt="image" /></p>
 <p>错误用法之三：未填所有必填项
 <code>/giftest category: amount:1</code>
-<img src="https://img2022.cnblogs.com/blog/2455224/202207/2455224-20220712130812688-1865799060.png" alt="image"/></p>
+<img src="https://img2022.cnblogs.com/blog/2455224/202207/2455224-20220712130812688-1865799060.png" alt="image" /></p>
 <p>错误用法之四：category 字段 作为 Option 类型，用户填入了非有效选择
 <code>/giftest category:ddd amount:2</code>
-<img src="https://img2022.cnblogs.com/blog/2455224/202207/2455224-20220712125311439-904337394.png" alt="image"/></p>
+<img src="https://img2022.cnblogs.com/blog/2455224/202207/2455224-20220712125311439-904337394.png" alt="image" /></p>
 <p>正确用法：<code>/giftest category:Funny amount:3</code>
-<img src="https://img2022.cnblogs.com/blog/2455224/202207/2455224-20220712125441257-1308943218.png" alt="image"/>
+<img src="https://img2022.cnblogs.com/blog/2455224/202207/2455224-20220712125441257-1308943218.png" alt="image" />
 好，我们来解释代码。</p>
 <p>这是一个同时使用了 Options 和 Choices 的代码例子。</p>
 <p>这段节选代码，它指示了斜杠命令的命令名：<code>giftest</code>，和命令描述：<code>MultiOption test.</code>。</p>
 <pre><code>...
 
 data: new SlashCommandBuilder()
-		.setName(&#39;giftest&#39;)
-		.setDescription(&#39;MultiOption test.&#39;)
+		.setName('giftest')
+		.setDescription('MultiOption test.')
 
 ...
 </code></pre>
@@ -165,13 +165,13 @@ data: new SlashCommandBuilder()
 <pre><code>...
 
 		.addStringOption(option =&gt;
-			option.setName(&#34;category&#34;)
-				.setDescription(&#34;The choices category&#34;)
+			option.setName("category")
+				.setDescription("The choices category")
 				.setRequired(true)
 				.addChoices(
-					{ name: &#39;Funny&#39;, value: &#39;gif_funny&#39;},
-					{ name: &#39;Meme&#39;, value: &#39;gif_meme&#39;},
-					{ name: &#39;Movie&#39;, value: &#39;gif_movie&#39;}))
+					{ name: 'Funny', value: 'gif_funny'},
+					{ name: 'Meme', value: 'gif_meme'},
+					{ name: 'Movie', value: 'gif_movie'}))
 					
 ...
 </code></pre>
@@ -180,8 +180,8 @@ data: new SlashCommandBuilder()
 <pre><code>...
 
 		.addIntegerOption(option =&gt;
-			option.setName(&#34;amount&#34;)
-				.setDescription(&#34;The amount of gifs you want&#34;)
+			option.setName("amount")
+				.setDescription("The amount of gifs you want")
 				.setRequired(true)
 				.setMinValue(1)
 				.setMaxValue(5)),
@@ -189,14 +189,14 @@ data: new SlashCommandBuilder()
 ...
 </code></pre>
 <p>下面的 execute() 函数，功能是回复 amount 遍 category 字段对应的键值对的值（gif_funny、git_meme 或 gif_movie）。</p>
-<p>我们通过方法 <code>interaction.options.getString(&#34;category&#34;)</code> 来获取 category 的值，即选定 choice 的键值对的值（value）。</p>
-<p>我们通过方法 <code>interaction.options.getInteger(&#34;amount&#34;)</code> 来获取 amount 的值，这是个用户输入的整数。</p>
+<p>我们通过方法 <code>interaction.options.getString("category")</code> 来获取 category 的值，即选定 choice 的键值对的值（value）。</p>
+<p>我们通过方法 <code>interaction.options.getInteger("amount")</code> 来获取 amount 的值，这是个用户输入的整数。</p>
 <pre><code>...
 
 	async execute(interaction) {
-		const category = interaction.options.getString(&#34;category&#34;);
+		const category = interaction.options.getString("category");
 		await interaction.reply(category);
-		for (var i=2; i &lt;= interaction.options.getInteger(&#34;amount&#34;); i++) {
+		for (var i=2; i &lt;= interaction.options.getInteger("amount"); i++) {
 			await interaction.followUp(category);
 		}
 	},
@@ -204,8 +204,8 @@ data: new SlashCommandBuilder()
 ...
 </code></pre>
 <p>我们发现，discord.js 提供的方法丰富多样，对于 bot 开发来说，是够用的。</p>
-<p>我们在上面的 <code>commands/subOption.js</code> 中看到，我们通过 <code>.setName(&#34;giftest&#34;)</code> 设置了 name 字段的值，通过 <code>.setDescription(&#34;MultiOption test.&#34;)</code> 设置了 description 字段的值，通过 <code>.setMinValue(1)</code> 设置了 minValue 的值。这些都是利用 discord.js 定义好的方法来设置属性的值，它们有个共同特点，就是都是 “set” 开头的方法名称，我们叫它们 set 方法。</p>
-<p>类似地，我们通过 <code>.getString(&#34;category&#34;)</code>、<code>.getInteger(&#34;amount&#34;)</code> 来获取相应字段的值，它们有个共同特点，就是都是 “get” 开头的方法名称，我们叫它们 get 方法。</p>
+<p>我们在上面的 <code>commands/subOption.js</code> 中看到，我们通过 <code>.setName("giftest")</code> 设置了 name 字段的值，通过 <code>.setDescription("MultiOption test.")</code> 设置了 description 字段的值，通过 <code>.setMinValue(1)</code> 设置了 minValue 的值。这些都是利用 discord.js 定义好的方法来设置属性的值，它们有个共同特点，就是都是 “set” 开头的方法名称，我们叫它们 set 方法。</p>
+<p>类似地，我们通过 <code>.getString("category")</code>、<code>.getInteger("amount")</code> 来获取相应字段的值，它们有个共同特点，就是都是 “get” 开头的方法名称，我们叫它们 get 方法。</p>
 <p>set和get一般一起出现，如果只定义了一个会有特殊意义：</p>
 <ul>
 <li>
@@ -501,47 +501,47 @@ data: new SlashCommandBuilder()
 </tbody>
 </table>
 <p>介绍了这么多个类，用代码举个例子 <code>commands/multiOption.js</code>：</p>
-<pre><code>const { SlashCommandBuilder } = require(&#39;discord.js&#39;);
+<pre><code>const { SlashCommandBuilder } = require('discord.js');
 
 module.exports = {
 	data: new SlashCommandBuilder()
-	.setName(&#39;multioption&#39;)
-	.setDescription(&#39;Multiple options.&#39;)
-	.addStringOption(option =&gt; option.setName(&#39;input&#39;).setDescription(&#39;Enter a string&#39;))
-	.addIntegerOption(option =&gt; option.setName(&#39;int&#39;).setDescription(&#39;Enter an integer&#39;))
-	.addBooleanOption(option =&gt; option.setName(&#39;choice&#39;).setDescription(&#39;Select a boolean&#39;))
-	.addUserOption(option =&gt; option.setName(&#39;target&#39;).setDescription(&#39;Select a user&#39;))
-	.addChannelOption(option =&gt; option.setName(&#39;destination&#39;).setDescription(&#39;Select a channel&#39;))
-	.addRoleOption(option =&gt; option.setName(&#39;muted&#39;).setDescription(&#39;Select a role&#39;))
-	.addMentionableOption(option =&gt; option.setName(&#39;mentionable&#39;).setDescription(&#39;Mention something&#39;))
-	.addNumberOption(option =&gt; option.setName(&#39;num&#39;).setDescription(&#39;Enter a number&#39;))
-	.addAttachmentOption(option =&gt; option.setName(&#39;attachment&#39;).setDescription(&#39;Attach something&#39;)),
+	.setName('multioption')
+	.setDescription('Multiple options.')
+	.addStringOption(option =&gt; option.setName('input').setDescription('Enter a string'))
+	.addIntegerOption(option =&gt; option.setName('int').setDescription('Enter an integer'))
+	.addBooleanOption(option =&gt; option.setName('choice').setDescription('Select a boolean'))
+	.addUserOption(option =&gt; option.setName('target').setDescription('Select a user'))
+	.addChannelOption(option =&gt; option.setName('destination').setDescription('Select a channel'))
+	.addRoleOption(option =&gt; option.setName('muted').setDescription('Select a role'))
+	.addMentionableOption(option =&gt; option.setName('mentionable').setDescription('Mention something'))
+	.addNumberOption(option =&gt; option.setName('num').setDescription('Enter a number'))
+	.addAttachmentOption(option =&gt; option.setName('attachment').setDescription('Attach something')),
 
 	async execute(interaction) {
-		const string = interaction.options.getString(&#39;input&#39;);
-		const integer = interaction.options.getInteger(&#39;int&#39;);
-		const boolean = interaction.options.getBoolean(&#39;choice&#39;);
-		const user = interaction.options.getUser(&#39;target&#39;);
-		const member = interaction.options.getMember(&#39;target&#39;);
-		const channel = interaction.options.getChannel(&#39;destination&#39;);
-		const role = interaction.options.getRole(&#39;muted&#39;);
-		const mentionable = interaction.options.getMentionable(&#39;mentionable&#39;);
-		const number = interaction.options.getNumber(&#39;num&#39;);
-		const attachment = interaction.options.getAttachment(&#39;attachment&#39;);
+		const string = interaction.options.getString('input');
+		const integer = interaction.options.getInteger('int');
+		const boolean = interaction.options.getBoolean('choice');
+		const user = interaction.options.getUser('target');
+		const member = interaction.options.getMember('target');
+		const channel = interaction.options.getChannel('destination');
+		const role = interaction.options.getRole('muted');
+		const mentionable = interaction.options.getMentionable('mentionable');
+		const number = interaction.options.getNumber('num');
+		const attachment = interaction.options.getAttachment('attachment');
 
 		await console.log(string, integer, boolean, user, member, channel, role, mentionable, number, attachment)
-		await interaction.reply(&#34;done&#34;);
+		await interaction.reply("done");
 	},
 };
 
 </code></pre>
 <p>我们输入如下图所示，注意有些项没填，所以输出将是 null：
-<img src="https://img2022.cnblogs.com/blog/2455224/202207/2455224-20220712150435869-1215124464.png" alt="image"/></p>
+<img src="https://img2022.cnblogs.com/blog/2455224/202207/2455224-20220712150435869-1215124464.png" alt="image" /></p>
 <p>控制台输出：</p>
 <pre><code>222 null false null null null Role {
   guild: &lt;ref *1&gt; Guild {
-    id: &#39;xxxxxxxxxxxxxx0988&#39;,
-    name: &#39;---隐私打码---&#39;,
+    id: 'xxxxxxxxxxxxxx0988',
+    name: '---隐私打码---',
     icon: null,
     features: [],
     commands: GuildApplicationCommandManager {
@@ -562,9 +562,9 @@ module.exports = {
     splash: null,
     banner: null,
     description: null,
-    verificationLevel: &#39;NONE&#39;,
+    verificationLevel: 'NONE',
     vanityURLCode: null,
-    nsfwLevel: &#39;DEFAULT&#39;,
+    nsfwLevel: 'DEFAULT',
     premiumSubscriptionCount: 0,
     discoverySplash: null,
     memberCount: 3,
@@ -573,12 +573,12 @@ module.exports = {
     applicationId: null,
     afkTimeout: 300,
     afkChannelId: null,
-    systemChannelId: &#39;xxxxxxxxxxxxxx2250&#39;,
-    premiumTier: &#39;NONE&#39;,
-    explicitContentFilter: &#39;DISABLED&#39;,
-    mfaLevel: &#39;NONE&#39;,
+    systemChannelId: 'xxxxxxxxxxxxxx2250',
+    premiumTier: 'NONE',
+    explicitContentFilter: 'DISABLED',
+    mfaLevel: 'NONE',
     joinedTimestamp: xxxxxxxxxx691,
-    defaultMessageNotifications: &#39;ALL_MESSAGES&#39;,
+    defaultMessageNotifications: 'ALL_MESSAGES',
     systemChannelFlags: SystemChannelFlags { bitfield: 0 },
     maximumMembers: 500000,
     maximumPresences: null,
@@ -587,42 +587,41 @@ module.exports = {
     vanityURLUses: null,
     rulesChannelId: null,
     publicUpdatesChannelId: null,
-    preferredLocale: &#39;en-US&#39;,
-    ownerId: &#39;xxxxxxxxxxxxxx4590&#39;,
+    preferredLocale: 'en-US',
+    ownerId: 'xxxxxxxxxxxxxx4590',
     emojis: GuildEmojiManager { guild: [Circular *1] },
     stickers: GuildStickerManager { guild: [Circular *1] }
   },
   icon: null,
   unicodeEmoji: null,
-  id: &#39;xxxxxxxxxxxxxx2137&#39;,
-  name: &#39;BlogTest&#39;,
+  id: 'xxxxxxxxxxxxxx2137',
+  name: 'BlogTest',
   color: 0,
   hoist: false,
   rawPosition: 1,
   permissions: Permissions { bitfield: 8n },
   managed: true,
   mentionable: false,
-  tags: { botId: &#39;xxxxxxxxxxxxxx4939&#39; }
+  tags: { botId: 'xxxxxxxxxxxxxx4939' }
 } null 7.5 MessageAttachment {
-  attachment: &#39;https://cdn.discordapp.com/ephemeral-attachments/xxxxxxxxxxxxxx0592/xxxxxxxxxxxxxx9424/1_BPSx-c--z6r7tY29L19ukQ.png&#39;,
-  name: &#39;1_BPSx-c--z6r7tY29L19ukQ.png&#39;,
-  id: &#39;xxxxxxxxxxxxxx9424&#39;,
+  attachment: 'https://cdn.discordapp.com/ephemeral-attachments/xxxxxxxxxxxxxx0592/xxxxxxxxxxxxxx9424/1_BPSx-c--z6r7tY29L19ukQ.png',
+  name: '1_BPSx-c--z6r7tY29L19ukQ.png',
+  id: 'xxxxxxxxxxxxxx9424',
   size: 50120,
-  url: &#39;https://cdn.discordapp.com/ephemeral-attachments/xxxxxxxxxxxxxx0592/xxxxxxxxxxxxxx9424/1_BPSx-c--z6r7tY29L19ukQ.png&#39;,
-  proxyURL: &#39;https://media.discordapp.net/ephemeral-attachments/xxxxxxxxxxxxxx0592/xxxxxxxxxxxxxx9424/1_BPSx-c--z6r7tY29L19ukQ.png&#39;,
+  url: 'https://cdn.discordapp.com/ephemeral-attachments/xxxxxxxxxxxxxx0592/xxxxxxxxxxxxxx9424/1_BPSx-c--z6r7tY29L19ukQ.png',
+  proxyURL: 'https://media.discordapp.net/ephemeral-attachments/xxxxxxxxxxxxxx0592/xxxxxxxxxxxxxx9424/1_BPSx-c--z6r7tY29L19ukQ.png',
   height: 768,
   width: 1366,
-  contentType: &#39;image/png&#39;,
+  contentType: 'image/png',
   description: null,
   ephemeral: true
 }
 </code></pre>
 <p>还是 <code>commands/multiOption.js</code>：</p>
 <p>我们输入：
-<img src="https://img2022.cnblogs.com/blog/2455224/202207/2455224-20220712151051919-1157319136.png" alt="image"/></p>
+<img src="https://img2022.cnblogs.com/blog/2455224/202207/2455224-20220712151051919-1157319136.png" alt="image" /></p>
 <p>控制台输出：</p>
 <pre><code>a1b2c3d4 null true null null null null null 9 null
 </code></pre>
 <h3>结语</h3>
-<p>Options 和 Choices 作为斜杠命令参数很强大。</p>
-</body></html>
+<p>Options 和 Choices 作为斜杠命令参数很强大。</p></blockquote>

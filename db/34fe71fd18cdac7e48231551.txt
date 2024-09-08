@@ -1,9 +1,9 @@
-<html><head></head><body><h1 id="深度重建世界坐标">深度重建世界坐标<a class="headerlink" href="https://note.stalomeow.com/blog/posts/depth-reconstruct-world-position/#%E6%B7%B1%E5%BA%A6%E9%87%8D%E5%BB%BA%E4%B8%96%E7%95%8C%E5%9D%90%E6%A0%87" title="Permanent link">¶</a></h1>
+<blockquote><h1 id="深度重建世界坐标">深度重建世界坐标<a class="headerlink" href="#深度重建世界坐标" title="Permanent link">&para;</a></h1>
 <!-- more -->
 
 <p>在后处理 Shader 还有一些屏幕空间效果中，常需要使用深度还原世界坐标。</p>
-<h2 id="逆矩阵法">逆矩阵法<a class="headerlink" href="https://note.stalomeow.com/blog/posts/depth-reconstruct-world-position/#%E9%80%86%E7%9F%A9%E9%98%B5%E6%B3%95" title="Permanent link">¶</a></h2>
-<h3 id="推导">推导<a class="headerlink" href="https://note.stalomeow.com/blog/posts/depth-reconstruct-world-position/#%E6%8E%A8%E5%AF%BC" title="Permanent link">¶</a></h3>
+<h2 id="逆矩阵法">逆矩阵法<a class="headerlink" href="#逆矩阵法" title="Permanent link">&para;</a></h2>
+<h3 id="推导">推导<a class="headerlink" href="#推导" title="Permanent link">&para;</a></h3>
 <p>根据 uv 和 depth 可以还原出 <code>positionNDC.xyz</code>。由</p>
 <div class="highlight"><pre><span></span><code><span class="n">positionCS</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">mul</span><span class="p">(</span><span class="n">MatrixVP</span><span class="p">,</span><span class="w"> </span><span class="n">positionWS</span><span class="p">);</span>
 <span class="n">positionNDC</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">positionCS</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">positionCS</span><span class="p">.</span><span class="n">w</span><span class="p">;</span><span class="w"> </span><span class="c1">// positionNDC.w 一定为 1</span>
@@ -24,7 +24,7 @@
 <div class="highlight"><pre><span></span><code><span class="n">positionWS</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">mul</span><span class="p">(</span><span class="n">MatrixInvVP</span><span class="p">,</span><span class="w"> </span><span class="n">positionNDC</span><span class="p">);</span>
 <span class="n">positionWS</span><span class="w"> </span><span class="o">/=</span><span class="w"> </span><span class="n">positionWS</span><span class="p">.</span><span class="n">w</span><span class="p">;</span>
 </code></pre></div>
-<h3 id="URP-实现">URP 实现<a class="headerlink" href="https://note.stalomeow.com/blog/posts/depth-reconstruct-world-position/#URP-%E5%AE%9E%E7%8E%B0" title="Permanent link">¶</a></h3>
+<h3 id="URP-实现">URP 实现<a class="headerlink" href="#URP-实现" title="Permanent link">&para;</a></h3>
 <p>在 <code>Packages/com.unity.render-pipelines.universal/ShaderLibrary/Common.hlsl</code> 里有相关的实现。</p>
 <blockquote>
 <p>注意此处 URP 的 <code>positionNDC.xy</code> 是屏幕 <code>uv</code>，范围是 <code>[0, 1]</code>，与前面推导时用的 <code>positionNDC</code> 的定义不同。</p>
@@ -53,8 +53,8 @@
 <span class="p">}</span>
 </code></pre></div>
 <p>使用方法</p>
-<div class="highlight"><pre><span></span><code><span class="cp">#include &#34;Packages/com.unity.render-pipelines.core/ShaderLibrary/Common.hlsl&#34;</span>
-<span class="cp">#include &#34;Packages/com.unity.render-pipelines.universal/ShaderLibrary/DeclareDepthTexture.hlsl&#34;</span>
+<div class="highlight"><pre><span></span><code><span class="cp">#include &quot;Packages/com.unity.render-pipelines.core/ShaderLibrary/Common.hlsl&quot;</span>
+<span class="cp">#include &quot;Packages/com.unity.render-pipelines.universal/ShaderLibrary/DeclareDepthTexture.hlsl&quot;</span>
 
 <span class="c1">// ...</span>
 
@@ -66,10 +66,10 @@
 
 <span class="kt">float3</span><span class="w"> </span><span class="n">positionWS</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ComputeWorldSpacePosition</span><span class="p">(</span><span class="n">input</span><span class="p">.</span><span class="n">texcoord</span><span class="p">.</span><span class="n">xy</span><span class="p">,</span><span class="w"> </span><span class="n">deviceDepth</span><span class="p">,</span><span class="w"> </span><span class="n">unity_MatrixInvVP</span><span class="p">);</span>
 </code></pre></div>
-<h2 id="相似三角形法">相似三角形法<a class="headerlink" href="https://note.stalomeow.com/blog/posts/depth-reconstruct-world-position/#%E7%9B%B8%E4%BC%BC%E4%B8%89%E8%A7%92%E5%BD%A2%E6%B3%95" title="Permanent link">¶</a></h2>
+<h2 id="相似三角形法">相似三角形法<a class="headerlink" href="#相似三角形法" title="Permanent link">&para;</a></h2>
 <p>这个方法来自 SIGGRAPH 2011 中的 Secrets of CryENGINE 3  Graphics Technology。</p>
-<h3 id="推导_1">推导<a class="headerlink" href="https://note.stalomeow.com/blog/posts/depth-reconstruct-world-position/#%E6%8E%A8%E5%AF%BC_1" title="Permanent link">¶</a></h3>
-<p><img alt="原理图（原图来自 Secrets of CryENGINE 3  Graphics Technology 的 ppt）" src="https://note.stalomeow.com/obsidian-vault/attachments/Pasted%20image%2020240711142202.png"/></p>
+<h3 id="推导_1">推导<a class="headerlink" href="#推导_1" title="Permanent link">&para;</a></h3>
+<p><img alt="原理图（原图来自 Secrets of CryENGINE 3  Graphics Technology 的 ppt）" src="../../../obsidian-vault/attachments/Pasted%20image%2020240711142202.png" /></p>
 <p>假设要重建点 C 的世界坐标。由</p>
 <div class="arithmatex">\[
 \triangle \text{ABC} \sim \triangle \text{ADE}
@@ -87,9 +87,9 @@
 \overrightarrow{\text{AC}}_\text{ws} = \left | \text{AB} \right | \overrightarrow{\text{AE}}_\text{ws}
 \]</div>
 <p>再加上点 A（相机）的世界坐标就能算出点 C 的世界坐标。</p>
-<h3 id="URP-实现_1">URP 实现<a class="headerlink" href="https://note.stalomeow.com/blog/posts/depth-reconstruct-world-position/#URP-%E5%AE%9E%E7%8E%B0_1" title="Permanent link">¶</a></h3>
-<div class="highlight"><pre><span></span><code><span class="cp">#include &#34;Packages/com.unity.render-pipelines.core/ShaderLibrary/Common.hlsl&#34;</span>
-<span class="cp">#include &#34;Packages/com.unity.render-pipelines.universal/ShaderLibrary/DeclareDepthTexture.hlsl&#34;</span>
+<h3 id="URP-实现_1">URP 实现<a class="headerlink" href="#URP-实现_1" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="cp">#include &quot;Packages/com.unity.render-pipelines.core/ShaderLibrary/Common.hlsl&quot;</span>
+<span class="cp">#include &quot;Packages/com.unity.render-pipelines.universal/ShaderLibrary/DeclareDepthTexture.hlsl&quot;</span>
 </code></pre></div>
 <p>先在 Vertex Shader 里计算 <span class="arithmatex">\(\overrightarrow{\text{AE}}_\text{ws}\)</span></p>
 <div class="highlight"><pre><span></span><code><span class="c1">// 在 Blit Shader 中 texcoord 需要使用 API 计算出来，参考 Packages/com.unity.render-pipelines.core/Runtime/Utilities/Blit.hlsl</span>
@@ -101,8 +101,8 @@
 <span class="kt">float3</span><span class="w"> </span><span class="n">positionWS</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">depth</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">input</span><span class="p">.</span><span class="n">viewRayWS</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">GetCameraPositionWS</span><span class="p">();</span>
 </code></pre></div>
 <p>这个方法的矩阵运算在 Vertex Shader 里进行，计算量小一点，但是 URP 的 Blit Vertex Shader 改起来相对麻烦一点。第一种方法只需要改 Fragment Shader 就行了，更好写。</p>
-<h2 id="参考资料">参考资料<a class="headerlink" href="https://note.stalomeow.com/blog/posts/depth-reconstruct-world-position/#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99" title="Permanent link">¶</a></h2>
+<h2 id="参考资料">参考资料<a class="headerlink" href="#参考资料" title="Permanent link">&para;</a></h2>
 <ul>
 <li><a href="https://blog.csdn.net/yinfourever/article/details/120935179">Unity URP中根据深度重建世界坐标_computeworldspaceposition-CSDN博客</a></li>
 <li><a href="https://docs.unity3d.com/Packages/com.unity.render-pipelines.universal@14.0/manual/writing-shaders-urp-reconstruct-world-position.html">Reconstruct the world space positions of pixels from the depth texture | Universal RP | 14.0.11 (unity3d.com)</a></li>
-</ul></body></html>
+</ul></blockquote>

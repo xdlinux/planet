@@ -1,4 +1,4 @@
-<html><head></head><body><h1><a id="content-目录" href="https://blog.lsy223622.com/archives/56/#content-%E7%9B%AE%E5%BD%95" class="heading-permalink" aria-hidden="true" title="Permalink"></a>目录</h1>
+<blockquote></blockquote><h1><a id="content-目录" href="https://blog.lsy223622.com/archives/56/#content-%E7%9B%AE%E5%BD%95" class="heading-permalink" aria-hidden="true" title="Permalink"></a>目录</h1>
 <ul class="table-of-contents">
 <li>
 <a href="https://blog.lsy223622.com/archives/56/#content-%E7%9B%AE%E5%BD%95">目录</a>
@@ -426,7 +426,7 @@ pyinstaller --onefile --add-data &#34;N_m3u8DL-RE.exe;.&#34; --add-data &#34;ffm
     return 0;
 }
 </code></pre>
-<p>没用的代码你也看？</p>
+<p>没用的代码你也看？😠</p>
   </details>
 </li>
 <li>
@@ -1023,8 +1023,7 @@ def create_directory(directory):
 <li>最新的版本是 <code>v1.0.0-beta</code>，感觉基本上功能完善了，没啥需要改的了。</li>
 <li>以后要是想到什么新功能再加吧，不过现在这个版本已经够用了。</li>
 <li>大家要是有什么问题或者建议可以发 Issue 或者直接 QQ 找我。</li>
-<li>我第一次在 GitHub 上有一个这么多 Star 的项目，开心捏。</li>
+<li>我第一次在 GitHub 上有一个这么多 Star 的项目，开心捏。😋</li>
 <li>编了这么多话可真是辛苦我了呢，那就写到这里吧~</li>
 </ul>
 
-</body></html>

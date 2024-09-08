@@ -1,4 +1,4 @@
-<html><head></head><body><p>上次更新是一个月前，倒不是多忙（虽然确实有忙的时候）。只是身不由己，世事难料，无心码字。</p>
+<blockquote></blockquote><p>上次更新是一个月前，倒不是多忙（虽然确实有忙的时候）。只是身不由己，世事难料，无心码字。</p>
 <h2>路千里，朔风吹客衣</h2>
 <p>考完期末不久就赶到同济医院照顾我妈，一如小学五年级她赶来照顾我一样。<br/>
 <img src="https://guzhengsvt.top/usr/uploads/2024/08/3979775032.jpg" alt="IMG_0162.JPG" loading="lazy"/><br/>
@@ -58,4 +58,3 @@ F 题做个磁悬浮玩具，底座不让用磁铁，最后还是靠功率堆上
 惟有此曲能忘人间景。<br/>
 <img src="https://guzhengsvt.top/usr/uploads/2024/08/3364523607.png" alt="fuguang.png" loading="lazy"/></p>
 <p>晚安</p>
-</body></html>

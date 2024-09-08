@@ -1,4 +1,5 @@
-<html><head></head><body><img src="https://canxin121.github.io/p/sparkgpt/cover.png" alt="Featured image of post SparkGPT"/><h2 id="项目地址---spark-gpthttpsgithubcomcanxin121spark-gpt">项目地址 -&gt; <a class="link" href="https://github.com/canxin121/Spark-GPT" target="_blank" rel="noopener">Spark-GPT</a></h2>
+<blockquote><img src="https://canxin121.github.io/p/sparkgpt/cover.png" alt="Featured image of post SparkGPT" /><h2 id="项目地址---spark-gpthttpsgithubcomcanxin121spark-gpt">项目地址 -&gt; <a class="link" href="https://github.com/canxin121/Spark-GPT" target="_blank" rel="noopener"
+>Spark-GPT</a></h2>
 <h2 id="feature">Feature</h2>
 <ul>
 <li>使用Nonebot框架跨适配器实现,多聊天平台同步实现</li>
@@ -135,22 +136,23 @@
 <h4 id="会话-chat-">会话( chat )</h4>
 <p>在本插件中,<code>会话</code>指的是 一个独立的由指定<code>模型</code>驱动的聊天上下文</p>
 <p>会话的分类如下:</p>
-<pre class="mermaid">graph TD
-Chat[&#34;会话&#34;]
-PrivateChat[&#34;私有会话&#34;]
-PublicChat[&#34;公有会话&#34;]
-QPrivateChat[&#34;QQ的一个和好友的聊天窗口,\n你们的对话时私有的,\n别的用户没办法加入到你们的对话中来.\n为了保证上下文的连贯性,\n同一个会话必须一问一答.&#34;]
-QPublicChat[&#34;QQ的一个群聊窗口, \n所有用户都可以使用.\n但用户是提问者,\n只有一个 语言模型 是回答者,\n为了保证上下文的连贯性,\n语言模型只能 一个一个顺序 回答问题,\n 不能同时回答你们&#34;]
-Chat --&gt; PrivateChat --&gt; |&#34;类似于&#34;|QPrivateChat
-Chat --&gt; PublicChat --&gt; |&#34;类似于&#34;|QPublicChat
+<pre class="mermaid">
+graph TD
+Chat["会话"]
+PrivateChat["私有会话"]
+PublicChat["公有会话"]
+QPrivateChat["QQ的一个和好友的聊天窗口,\n你们的对话时私有的,\n别的用户没办法加入到你们的对话中来.\n为了保证上下文的连贯性,\n同一个会话必须一问一答."]
+QPublicChat["QQ的一个群聊窗口, \n所有用户都可以使用.\n但用户是提问者,\n只有一个 语言模型 是回答者,\n为了保证上下文的连贯性,\n语言模型只能 一个一个顺序 回答问题,\n 不能同时回答你们"]
+Chat --> PrivateChat --> |"类似于"|QPrivateChat
+Chat --> PublicChat --> |"类似于"|QPublicChat
 </pre>
 <!-- 模型开始 -->
 <h4 id="模型-model-">模型( model )</h4>
 <p>在本插件中,<code>模型</code>指的是驱动<code>会话</code>的实际的回复人
 <code>模型</code>需要在web ui中配置相关内容才可以启用</p>
 <h4 id="预设-prompt-">预设( prompt )</h4>
-<p>在本插件中,<code>预设</code>指每次新对话开始前,优先加载的<strong>人格</strong><br/>
-原理:<br/>
+<p>在本插件中,<code>预设</code>指每次新对话开始前,优先加载的<strong>人格</strong><br>
+原理:<br>
 基本是在<code>会话</code>开始前,自动先向会话中发送预设文本,也有特殊的来源会使用其他方法</p>
 <p>注意:</p>
 <ul>
@@ -170,88 +172,100 @@ Chat --&gt; PublicChat --&gt; |&#34;类似于&#34;|QPublicChat
 <!-- 指令结束 -->
 <!-- 基本使用逻辑开始 -->
 <h3 id="基本使用逻辑说明">基本使用逻辑说明</h3>
-<pre class="mermaid">graph TD
-CU[&#34;用户&#34;]
-ML[&#34;获取模型列表&#34;]
-PL[&#34;获取预设列表&#34;]
-CmdL[&#34;获取指令列表&#34;]
-CL[&#34;获取可用会话 (公有 | 私有)&#34;]
-CAprivate[&#34;创建新的会话 (私有 | 公有 {仅管理员} ) &#34;]
-CC[&#34;使用会话&#34;]
-CPC[&#34;回复来继续会话&#34;]
-CU --&gt; CL
-CU --&gt; ML
-CU --&gt; CmdL
-CU --&gt; PL
-ML --&gt; CAprivate
-CmdL --&gt; CAprivate
-PL --&gt; CAprivate
-CL --&gt; CC
-CAprivate --&gt; CC
-CC --&gt; CPC
+<pre class="mermaid">
+graph TD
+CU["用户"]
+ML["获取模型列表"]
+PL["获取预设列表"]
+CmdL["获取指令列表"]
+CL["获取可用会话 (公有 | 私有)"]
+CAprivate["创建新的会话 (私有 | 公有 {仅管理员} ) "]
+CC["使用会话"]
+CPC["回复来继续会话"]
+CU --> CL
+CU --> ML
+CU --> CmdL
+CU --> PL
+ML --> CAprivate
+CmdL --> CAprivate
+PL --> CAprivate
+CL --> CC
+CAprivate --> CC
+CC --> CPC
 </pre>
 <!-- 基本使用逻辑结束 -->
 <h3 id="部署教程">部署教程</h3>
 <h4 id="部署nonebot">部署Nonebot</h4>
 <p><strong>这里直接看Well404的教程吧,点击即可跳转到b站系列教程</strong>
-</p><div class="video-wrapper">
-<iframe src="https://player.bilibili.com/player.html?as_wide=1&amp;high_quality=1&amp;page=1&amp;aid=608028309&amp;autoplay=0" scrolling="no" frameborder="no" framespacing="0" allowfullscreen="true">
+<div class="video-wrapper">
+<iframe src="https://player.bilibili.com/player.html?as_wide=1&amp;high_quality=1&amp;page=1&aid=608028309&autoplay=0"
+scrolling="no" frameborder="no" framespacing="0" allowfullscreen="true">
 </iframe>
-</div><p></p>
+</div></p>
 <h4 id="部署各适配器">部署各适配器</h4>
 <p>在这里我直接贴出个适配器的官方使用文档或者合适的教程了</p>
 <h5 id="qqobv11">QQ(OBV11)</h5>
 <p>首先是qsign的部署,这个目前是 必须的</p>
 <div class="video-wrapper">
-<iframe src="https://player.bilibili.com/player.html?as_wide=1&amp;high_quality=1&amp;page=1&amp;bvid=BV11W4y1o7u5&amp;autoplay=0" scrolling="no" frameborder="no" framespacing="0" allowfullscreen="true">
+<iframe src="https://player.bilibili.com/player.html?as_wide=1&amp;high_quality=1&amp;page=1&bvid=BV11W4y1o7u5&autoplay=0"
+scrolling="no" frameborder="no" framespacing="0" allowfullscreen="true">
 </iframe>
 </div>
-<p>然后需要使用 gocq 的dev 版本,这里给出 gocq dev的action地址,可以自行在这里寻找合适的构建版本,<br/>
-而连接到nb的方法在上面的 nonebot部署教程中已经又过了,这里不在放出地址<br/>
-<a class="link" href="https://github.com/Mrs4s/go-cqhttp/actions/workflows/ci.yml" target="_blank" rel="noopener">gocq-dev Action CL</a></p>
+<p>然后需要使用 gocq 的dev 版本,这里给出 gocq dev的action地址,可以自行在这里寻找合适的构建版本,<br>
+而连接到nb的方法在上面的 nonebot部署教程中已经又过了,这里不在放出地址<br>
+<a class="link" href="https://github.com/Mrs4s/go-cqhttp/actions/workflows/ci.yml" target="_blank" rel="noopener"
+>gocq-dev Action CL</a></p>
 <h5 id="qqguid-qq频道">QQGuid (QQ频道)</h5>
-<p><a class="link" href="https://github.com/nonebot/adapter-qqguild" target="_blank" rel="noopener">QQ频道适配器 gh链接</a></p>
+<p><a class="link" href="https://github.com/nonebot/adapter-qqguild" target="_blank" rel="noopener"
+>QQ频道适配器 gh链接</a></p>
 <h5 id="kook开黑啦">KOOK(开黑啦)</h5>
-<p><a class="link" href="https://github.com/Tian-que/nonebot-adapter-kaiheila" target="_blank" rel="noopener">KOOK(开黑啦)适配器 gh链接</a></p>
+<p><a class="link" href="https://github.com/Tian-que/nonebot-adapter-kaiheila" target="_blank" rel="noopener"
+>KOOK(开黑啦)适配器 gh链接</a></p>
 <h5 id="飞书">飞书</h5>
-<p><a class="link" href="https://feishu.adapters.nonebot.dev/docs/guide/installation" target="_blank" rel="noopener">飞书(Lark)适配器 gh链接</a></p>
+<p><a class="link" href="https://feishu.adapters.nonebot.dev/docs/guide/installation" target="_blank" rel="noopener"
+>飞书(Lark)适配器 gh链接</a></p>
 <h5 id="telegram">Telegram</h5>
-<p><a class="link" href="https://github.com/nonebot/adapter-telegram" target="_blank" rel="noopener">Telegram适配器 gh链接</a></p>
+<p><a class="link" href="https://github.com/nonebot/adapter-telegram" target="_blank" rel="noopener"
+>Telegram适配器 gh链接</a></p>
 <h5 id="discord">Discord</h5>
-<p><a class="link" href="https://github.com/nonebot/adapter-discord" target="_blank" rel="noopener">Discord适配器 gh链接</a></p>
+<p><a class="link" href="https://github.com/nonebot/adapter-discord" target="_blank" rel="noopener"
+>Discord适配器 gh链接</a></p>
 <h4 id="部署spark-gpt">部署Spark GPT</h4>
 <h5 id="安装插件">安装插件</h5>
 <div class="highlight"><div class="chroma">
-<table class="lntable"><tbody><tr><td class="lntd">
+<table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">nb plugin install spark_gpt
-</span></span></code></pre></td></tr></tbody></table>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h5 id="配置相关信息">配置相关信息</h5>
 <ol>
-<li>SparkGPT 依赖 <a class="link" href="https://github.com/canxin121/nonebot_plugin_web_config" target="_blank" rel="noopener">nonebot_plugin_web_config</a> 进行实时配置热更新,所以需要配置的相关信息(端口,账号密码),可以点击进入查看相关的env配置.</li>
-<li>SparkGPT 的GPT来源需要手动配置相应的 auth 信息才可以使用,具体获取方式都均在web ui(默认<a class="link" href="http://127.0.0.1:8666" target="_blank" rel="noopener">http://127.0.0.1:8666</a>)中已经标出,并可以实时热更新.</li>
+<li>SparkGPT 依赖 <a class="link" href="https://github.com/canxin121/nonebot_plugin_web_config" target="_blank" rel="noopener"
+>nonebot_plugin_web_config</a> 进行实时配置热更新,所以需要配置的相关信息(端口,账号密码),可以点击进入查看相关的env配置.</li>
+<li>SparkGPT 的GPT来源需要手动配置相应的 auth 信息才可以使用,具体获取方式都均在web ui(默认<a class="link" href="http://127.0.0.1:8666" target="_blank" rel="noopener"
+>http://127.0.0.1:8666</a>)中已经标出,并可以实时热更新.</li>
 </ol>
 <h3 id="使用教程">使用教程</h3>
-<p>使用教程图片版可以使用 shelp 命令获取.<br/>
-本插件 均采用<a class="link" href="https://github.com/nonebot/plugin-alconna" target="_blank" rel="noopener">Alc</a>命令形式 进行使用.<br/>
+<p>使用教程图片版可以使用 shelp 命令获取.<br>
+本插件 均采用<a class="link" href="https://github.com/nonebot/plugin-alconna" target="_blank" rel="noopener"
+>Alc</a>命令形式 进行使用.<br>
 在下面的文本中,用<code>{}</code>来标志 需要替换的变量, 用<code>()</code>框起来的为 选填的变量</p>
 <h4 id="会话">会话</h4>
 <h5 id="使用公有会话询问">使用公有会话询问</h5>
-<p>格式: <code>public_command{chat_name} {question} ( {photo} )</code><br/>
+<p>格式: <code>public_command{chat_name} {question} ( {photo} )</code><br>
 参数:</p>
 <p>必填:</p>
 <ol>
 <li><code>chat_name</code>: 会话昵称</li>
 <li><code>question</code>: 问题</li>
 </ol>
-<p>选填:<br/>
+<p>选填:<br>
 3. <code>photo</code>: 需要识别的图片内容,只有model为bing时才可以使用,需要跟随文本信息一同发送
 4.</p>
 <h5 id="使用私有会话询问">使用私有会话询问</h5>
-<p>格式: <code>private_command{chat_name} {question} ( {photo} )</code><br/>
+<p>格式: <code>private_command{chat_name} {question} ( {photo} )</code><br>
 参数:</p>
 <p>必填:</p>
 <ol>
@@ -263,18 +277,18 @@ CC --&gt; CPC
 <li><code>photo</code>: 需要识别的图片内容,只有model为bing时才可以使用,需要跟随文本信息一同发送</li>
 </ol>
 <h5 id="创建新的会话">创建新的会话</h5>
-<p>格式: <code>chat add -n {chat_name} -m {model} ( -p {prompt} -c {command} -auto_pic {bool} -num_limit {int} -pic {bool} -url {bool} -stream {bool} -public )</code><br/>
+<p>格式: <code>chat add -n {chat_name} -m {model} ( -p {prompt} -c {command} -auto_pic {bool} -num_limit {int} -pic {bool} -url {bool} -stream {bool} -public )</code><br>
 参数:</p>
 <p>必填:</p>
 <ol>
 <li><code>chat_name</code>: 会话名称</li>
 <li><code>model</code>: 使用的模型名称或者索引数字
 选填:</li>
-<li><code>prompt</code>:<br/>
-使用本地预设,须在预设名称前加’.‘号<br/>
+<li><code>prompt</code>:<br>
+使用本地预设,须在预设名称前加&rsquo;.&lsquo;号<br>
 使用自定义预设,直接输入内容</li>
-<li><code>command</code>:<br/>
-使用本地指令,须在指令名称前加’.‘号<br/>
+<li><code>command</code>:<br>
+使用本地指令,须在指令名称前加&rsquo;.&lsquo;号<br>
 使用自定义指令,直接输入内容</li>
 <li><code>auto_pic</code>: 是否当字数过多时自动转图片</li>
 <li><code>num_limit</code>: 自动转图片的字数上限</li>
@@ -284,7 +298,7 @@ CC --&gt; CPC
 <li><code>public</code>: 是否是创建共有会话</li>
 </ol>
 <h5 id="修改新的会话">修改新的会话</h5>
-<p>格式: <code>chat edit -on {old_name} \n( -nn {new_name} -m {model} -p {prompt} -c {command} -auto_pic {bool} -num_limit {int} -pic {bool} -url {bool} -stream {bool} -public )</code><br/>
+<p>格式: <code>chat edit -on {old_name} \n( -nn {new_name} -m {model} -p {prompt} -c {command} -auto_pic {bool} -num_limit {int} -pic {bool} -url {bool} -stream {bool} -public )</code><br>
 参数:</p>
 <p>必填:</p>
 <ol>
@@ -292,11 +306,11 @@ CC --&gt; CPC
 选填:</li>
 <li><code>new_name</code>: 原来的会话名称</li>
 <li><code>model</code>: 使用的模型名称或者索引数字</li>
-<li><code>prompt</code>:<br/>
-使用本地预设,须在预设名称前加’.‘号<br/>
+<li><code>prompt</code>:<br>
+使用本地预设,须在预设名称前加&rsquo;.&lsquo;号<br>
 使用自定义预设,直接输入内容</li>
-<li><code>command</code>:<br/>
-使用本地指令,须在指令名称前加’.‘号<br/>
+<li><code>command</code>:<br>
+使用本地指令,须在指令名称前加&rsquo;.&lsquo;号<br>
 使用自定义指令,直接输入内容</li>
 <li><code>auto_pic</code>: 是否当字数过多时自动转图片</li>
 <li><code>num_limit</code>: 自动转图片的字数上限</li>
@@ -323,7 +337,7 @@ CC --&gt; CPC
 <h4 id="预设">预设</h4>
 <h5 id="添加一个新的预设">添加一个新的预设</h5>
 <p>格式: <code>prompt add -n {name} -c {content}</code></p>
-<p>参数:<br/>
+<p>参数:<br>
 必填:</p>
 <ol>
 <li>name: 预设名称</li>
@@ -331,21 +345,21 @@ CC --&gt; CPC
 </ol>
 <h5 id="删除一个预设">删除一个预设</h5>
 <p>格式: <code>prompt del -n {name}</code></p>
-<p>参数:<br/>
+<p>参数:<br>
 必填:</p>
 <ol>
 <li>name: 预设名称</li>
 </ol>
 <h5 id="查看预设列表">查看预设列表</h5>
 <p>格式: <code>prompt list ( -p {num} )</code></p>
-<p>参数:<br/>
+<p>参数:<br>
 选填:</p>
 <ol>
 <li>num: 页数</li>
 </ol>
 <h5 id="查看特定预设具体内容">查看特定预设具体内容</h5>
 <p>格式: <code>prompt show -n {name}</code></p>
-<p>参数:<br/>
+<p>参数:<br>
 必填:</p>
 <ol>
 <li>name: 预设名称</li>
@@ -353,7 +367,7 @@ CC --&gt; CPC
 <h4 id="指令">指令</h4>
 <h5 id="添加一个新的指令">添加一个新的指令</h5>
 <p>格式: <code>command add -n {name} -c {content}</code></p>
-<p>参数:<br/>
+<p>参数:<br>
 必填:</p>
 <ol>
 <li>name: 指令名称</li>
@@ -361,22 +375,22 @@ CC --&gt; CPC
 </ol>
 <h5 id="删除一个指令">删除一个指令</h5>
 <p>格式: <code>command del -n {name}</code></p>
-<p>参数:<br/>
+<p>参数:<br>
 必填:</p>
 <ol>
 <li>name: 指令名称</li>
 </ol>
 <h5 id="查看指令列表">查看指令列表</h5>
 <p>格式: <code>command list ( -p {num} )</code></p>
-<p>参数:<br/>
+<p>参数:<br>
 选填:</p>
 <ol>
 <li>num: 页数</li>
 </ol>
 <h5 id="查看特定指令具体内容">查看特定指令具体内容</h5>
 <p>格式: <code>command show -n {name}</code></p>
-<p>参数:<br/>
+<p>参数:<br>
 必填:</p>
 <ol>
 <li>name: 指令名称</li>
-</ol></body></html>
+</ol></blockquote>

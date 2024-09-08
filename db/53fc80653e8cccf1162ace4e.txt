@@ -1,4 +1,5 @@
-<html><head></head><body><h2 id="项目地址---spark-gpthttpsgithubcomcanxin121spark-gpt">项目地址 -&gt; <a class="link" href="https://github.com/canxin121/Spark-GPT" target="_blank" rel="noopener">Spark-GPT</a></h2>
+<blockquote><h2 id="项目地址---spark-gpthttpsgithubcomcanxin121spark-gpt">项目地址 -&gt; <a class="link" href="https://github.com/canxin121/Spark-GPT" target="_blank" rel="noopener"
+>Spark-GPT</a></h2>
 <h2 id="nonebot框架">Nonebot框架</h2>
 <p>由于SparkGPT由Python开发, 在Python中运行, 而Python目前最佳的bot框架为Nonebot框架,所以 目前2.0.0版本深度绑定Nonebot框架进行开发.</p>
 <p>预计将在下个大版本 将SparkGPT独立实现协议, 再实现不同语言框架的协议对接</p>
@@ -6,7 +7,7 @@
 <h3 id="webui">webui</h3>
 <p>实现了<code>Nonebot_plugin_web_config</code>来是实现webui管理配置信息, 借助pydantic的<code>BaseModel</code>来实现序列化反序列化并持久储存和方便的存取.</p>
 <p><code>Nonebot_plugin_web_config</code>提供了一个父类给其他插件,直接继承并填写相关注释和属性即可实现持久储存和web编辑, 并且提供了从<code>Nonebot_plugin_web_config</code>实时获取配置的方法,而无需重新反序列化.</p>
-<p>ToDo:<br/>
+<p>ToDo:<br>
 预计将会实现pydantic -&gt; json schema的转换用于通信, 并重写前端页面</p>
 <h2 id="数据储存">数据储存</h2>
 <h3 id="用户会话数据储存">用户会话数据储存</h3>
@@ -32,7 +33,10 @@
 <ol>
 <li>实现<code>BaseChatBot</code>父类, 实现使用 异步生成器 实现 流式发送(每次发送消息的两段左右,如果平台支持编辑消息,那么直接加到原来的消息后面,否则发送新的消息) 和 一次性发送(可以自适应长度文转图转链接, 也可以强制设定使用文字或图片回复), 这里其实就是消息发送的步骤.</li>
 <li>所有的<code>ChatBot</code>子类只需添加特有的属性(用于储存会话信息)和<code>BaseChatBot</code>父类要求的属性, 以及一个异步生成器方法(逆向或使用官方api)和一个刷新会话方法, 即可实现一个新的api的接入</li>
-<li>涉及的实现的逆向工程的链接&#34; <a class="link" href="https://github.com/canxin121/Async-Bing-Client" target="_blank" rel="noopener">Async-Bing-Client</a> “, &#34; <a class="link" href="https://github.com/canxin121/Async-Poe-Client" target="_blank" rel="noopener">Async-Poe-Client</a> “, &#34; <a class="link" href="https://github.com/canxin121/Async-Claude-Client" target="_blank" rel="noopener">Async-Claude-Client</a> &#34;</li>
+<li>涉及的实现的逆向工程的链接&quot; <a class="link" href="https://github.com/canxin121/Async-Bing-Client" target="_blank" rel="noopener"
+>Async-Bing-Client</a> &ldquo;, &quot; <a class="link" href="https://github.com/canxin121/Async-Poe-Client" target="_blank" rel="noopener"
+>Async-Poe-Client</a> &ldquo;, &quot; <a class="link" href="https://github.com/canxin121/Async-Claude-Client" target="_blank" rel="noopener"
+>Async-Claude-Client</a> &quot;</li>
 </ol>
 <h4 id="普通回复">普通回复</h4>
 <h5 id="菜单和帮助">菜单和帮助</h5>
@@ -51,4 +55,4 @@
 <li>依赖<code>Nonebot_plugin_saa</code>进行跨适配器(跨聊天平台)的发送消息,可以实现图文发送</li>
 <li>依赖<code>Nonebot_plugin_htmlrender</code>进行文转图, 实质上就是使用playwright使用我的自制模板进行前端渲染并截图</li>
 <li>使用 <code>dpaste.org</code> 的 逆向api 进行文转网络剪切板链接, 方便用户拿去回答和信息</li>
-</ol></body></html>
+</ol></blockquote>

@@ -1,1 +1,86 @@
-<html><head></head><body><p>然而Kalman滤波器不是滤波器（</p></body></html>
+<blockquote>然而Kalman滤波器不是滤波器（</blockquote>
+<p>Kalman滤波器是阿波罗登月时候研制的一种滤波算法，准确来说并不叫滤波器，而是一种最优估计器。特别适用于传感器降噪，不需要额外的电路。</p>
+
+
+
+<figure class="wp-block-image size-large"><img decoding="async" loading="lazy" width="983" height="582" src="https://raay.xyz/wp-content/uploads/2023/07/3d6d3f0048bc76d365bca0c3a971cbe9.png" alt="" class="wp-image-219" srcset="https://raay.xyz/wp-content/uploads/2023/07/3d6d3f0048bc76d365bca0c3a971cbe9.png 983w, https://raay.xyz/wp-content/uploads/2023/07/3d6d3f0048bc76d365bca0c3a971cbe9-300x178.png 300w, https://raay.xyz/wp-content/uploads/2023/07/3d6d3f0048bc76d365bca0c3a971cbe9-768x455.png 768w" sizes="(max-width: 983px) 100vw, 983px" /><figcaption class="wp-element-caption">滤波效果（采样每100ms）</figcaption></figure>
+
+
+
+<p>绿色线为原始数据，紫色线为滤波后数据。甚至能一定程度上缓解饱和失真的现象。</p>
+
+
+
+<p>在Arduino上引入</p>
+
+
+
+<div class="wp-block-argon-github github-info-card card shadow-sm github-info-card-full" data-author="denyssene" data-project="SimpleKalmanFilter"><div class="github-info-card-header"><a href="https://github.com/" target="_blank" title="Github" rel="noopener"><span><i class="fa fa-github"></i> GitHub</span></a></div><div class="github-info-card-body"><div class="github-info-card-name-a"><a href="https://github.com/denyssene/SimpleKalmanFilter" target="_blank" rel="noopener"><span class="github-info-card-name">denyssene/SimpleKalmanFilter</span></a></div><div class="github-info-card-description"></div></div><div class="github-info-card-bottom"><span class="github-info-card-meta github-info-card-meta-stars"><i class="fa fa-star"></i> <span class="github-info-card-stars"></span></span><span class="github-info-card-meta github-info-card-meta-forks"><i class="fa fa-code-fork"></i> <span class="github-info-card-forks"></span></span></div></div>
+
+
+
+<p>示例：</p>
+
+
+
+<pre class="wp-block-code"><code>#include &amp;lt;SimpleKalmanFilter.h&amp;gt;
+
+/*
+ This sample code demonstrates how to use the SimpleKalmanFilter object. 
+ Use a potentiometer in Analog input A0 as a source for the reference real value.
+ Some random noise will be generated over this value and used as a measured value.
+ The estimated value obtained from SimpleKalmanFilter should match the real
+ reference value.
+
+ SimpleKalmanFilter(e_mea, e_est, q);
+ e_mea: Measurement Uncertainty 
+ e_est: Estimation Uncertainty 
+ q: Process Noise
+ */
+SimpleKalmanFilter simpleKalmanFilter(2, 2, 0.01);
+
+// Serial output refresh time
+const long SERIAL_REFRESH_TIME = 100;
+long refresh_time;
+
+void setup() {
+  Serial.begin(115200);
+}
+
+void loop() {
+
+  // read a reference value from A0 and map it from 0 to 100
+  float real_value = analogRead(A0)/1024.0 * 100.0;
+  
+  // add a noise to the reference value and use as the measured value
+  float measured_value = real_value + random(-100,100)/100.0;
+
+  // calculate the estimated value with Kalman Filter
+  float estimated_value = simpleKalmanFilter.updateEstimate(measured_value);
+
+  // send to Serial output every 100ms
+  // use the Serial Ploter for a good visualization
+  if (millis() &amp;gt; refresh_time) {
+    Serial.print(real_value,4);
+    Serial.print(",");
+    Serial.print(measured_value,4);
+    Serial.print(",");
+    Serial.print(estimated_value,4);
+    Serial.println();
+    
+    refresh_time = millis() + SERIAL_REFRESH_TIME;
+  }
+
+}</code></pre>
+
+
+
+<p>关于此算法：</p>
+
+
+
+<p><a href="https://zhuanlan.zhihu.com/p/64539108">https://zhuanlan.zhihu.com/p/64539108</a></p>
+
+
+
+<p></p>

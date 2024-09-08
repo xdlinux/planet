@@ -1,4 +1,4 @@
-<html><head></head><body><h2>Chapter 4 - 对 Chapter 2 代码的解释</h2>
+<blockquote><h2>Chapter 4 - 对 Chapter 2 代码的解释</h2>
 <p>我们在系列文章（1） 中，完成了简单的机器人的建立与交互。</p>
 <p>下面，我们开始针对 discord.js V14.0.3 的特性和方法，通过 Discord 机器人的编写实践，来掌握 discord.js 的使用。</p>
 <h3>首先，从 目录结构 开始看起。</h3>
@@ -31,7 +31,7 @@
 module.exports = {  
 
     // 指明 name
-    name: &#34;interactionCreate&#34;,
+    name: "interactionCreate",
 
 	// module 暴露了名为 execute 的函数，接受一个 discord.js interaction 对象
     execute(interaction) {  
@@ -46,7 +46,7 @@ module.exports = {
 module.exports = {  
 
     // 指明 name
-    name: &#34;ready&#34;,  
+    name: "ready",  
     
     // 指明该 module 在程序全程只能调用一次
     once: true,  
@@ -65,24 +65,24 @@ module.exports = {
 <h3>下面来看 <code>cmdPaths.js</code></h3>
 <p>文件的 data 域内只有一个数组，用于存储我们需要注册斜杠命令的 js 源代码的文件夹位置。</p>
 <pre><code>module.exports = {  
-    data: [&#34;./commands&#34;],  
+    data: ["./commands"],  
 };
 </code></pre>
 <p>如果你需要添加更多文件夹的话，可以修改成类似这样子：</p>
 <pre><code>module.exports = {  
-    data: [&#34;./commands&#34;, &#34;./commands/utils&#34;, &#34;./commands/moderations&#34;],  
+    data: ["./commands", "./commands/utils", "./commands/moderations"],  
 };
 </code></pre>
 <p>这些文件夹必须存在，否则会报错。</p>
 <h3>下面来看 <code>index.js</code></h3>
 <p>咱们分开来看</p>
-<pre><code>const fs = require(&#39;fs&#39;);  
-const { Client, Collection, GatewayIntentBits } = require(&#39;discord.js&#39;);  
-const { token } = require(&#39;./config.json&#39;);  
-const { InteractionType } = require(&#34;discord-api-types/v10&#34;);  
+<pre><code>const fs = require('fs');  
+const { Client, Collection, GatewayIntentBits } = require('discord.js');  
+const { token } = require('./config.json');  
+const { InteractionType } = require("discord-api-types/v10");  
   
 const client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.MessageContent] });  
-const eventFiles = fs.readdirSync(&#39;./events&#39;).filter(file =&gt; file.endsWith(&#39;.js&#39;));  
+const eventFiles = fs.readdirSync('./events').filter(file =&gt; file.endsWith('.js'));  
 
 for (const file of eventFiles) {
     const event = require(`./events/${file}`);
@@ -107,12 +107,12 @@ for (const file of eventFiles) {
 <pre><code>...
 
 client.commands = new Collection();  
-const cmdPaths = require(&#34;./cmdPaths.js&#34;).data;  
+const cmdPaths = require("./cmdPaths.js").data;  
 const commandFiles = [];  
 for (let i = 0; i &lt; cmdPaths.length; i++) {  
-    commandFiles[i] = fs.readdirSync(cmdPaths[i]).filter(file =&gt; file.endsWith(&#34;.js&#34;)); // fs.readdirSync() 的结果是个数组，所以 commandFiles是个二维数组  
+    commandFiles[i] = fs.readdirSync(cmdPaths[i]).filter(file =&gt; file.endsWith(".js")); // fs.readdirSync() 的结果是个数组，所以 commandFiles是个二维数组  
     for (let j = 0; j &lt; commandFiles[i].length; j++) {  
-        commandFiles[i][j] = cmdPaths[i] + &#34;/&#34; + commandFiles[i][j];  
+        commandFiles[i][j] = cmdPaths[i] + "/" + commandFiles[i][j];  
     }  
 }  
   
@@ -121,7 +121,7 @@ for (const fileArray of commandFiles) {
         const command = require(`./${file}`);  
         client.commands.set(command.data.name, command);  
   
-        // if any ‘aka&#39; name exists  
+        // if any ‘aka' name exists  
         if (command.akaNames != null &amp;&amp; command.akaNames !== []) {  
             for (let i = 0; i &lt; command.akaNames.length; i++) {  
                 client.commands.set(command.akaNames[i], command);  
@@ -138,8 +138,8 @@ for (const fileArray of commandFiles) {
 <p>akaNames 是用来给同一个斜杠命令起不同命令名用的，就像磁盘上的同一文件可以用于多个文件名那样。</p>
 <pre><code>...
 
-client.once(&#39;ready&#39;, () =&gt; {});  
-client.on(&#39;interactionCreate&#39;, async interaction =&gt; {  
+client.once('ready', () =&gt; {});  
+client.on('interactionCreate', async interaction =&gt; {  
     if (interaction.type !== InteractionType.ApplicationCommand) return;  
   
     const command = client.commands.get(interaction.commandName);  
@@ -151,7 +151,7 @@ client.on(&#39;interactionCreate&#39;, async interaction =&gt; {
     } catch (error) {  
         console.error(error);  
         await interaction.reply({  
-            content: &#39;There was an error while executing this command!&#39;,  
+            content: 'There was an error while executing this command!',  
             ephemeral: true  
         });  
     }  
@@ -169,25 +169,25 @@ client.on(&#39;interactionCreate&#39;, async interaction =&gt; {
 <p>这行代码就是使用你机器人的令牌登录 Discord。</p>
 <h3>下面来看 <code>deploy_commands.js</code></h3>
 <p>一样，分部分来看。</p>
-<pre><code>const fs = require(&#34;fs&#34;);  
-const { REST } = require(&#39;@discordjs/rest&#39;);  
-const { Routes } = require(&#39;discord.js&#39;);  
-const { clientId, guildId, token } = require(&#39;./config.json&#39;);
+<pre><code>const fs = require("fs");  
+const { REST } = require('@discordjs/rest');  
+const { Routes } = require('discord.js');  
+const { clientId, guildId, token } = require('./config.json');
 
 ...
 </code></pre>
-<p>Discord 允许开发人员注册斜杠命令，这为用户提供了与你的应用程序直接交互的&#34;一等&#34;方式。 在能够回复命令之前，你必须先注册它。</p>
+<p>Discord 允许开发人员注册斜杠命令，这为用户提供了与你的应用程序直接交互的"一等"方式。 在能够回复命令之前，你必须先注册它。</p>
 <p>斜杠命令分为服务器命令（guild commands）、全局命令（global commands）、选项（options）、选项类型（option types）、选择（choices）和子命令（subcommands）。我们刚开始不需要了解这么多。</p>
 <p>其实上面这四行代码就是导包和导配置。</p>
 <pre><code>...
 
 const commands = [];   
-const cmdPaths = require(&#34;./cmdPaths.js&#34;).data;  
+const cmdPaths = require("./cmdPaths.js").data;  
 const commandFiles = [];  
 for (let i = 0; i &lt; cmdPaths.length; i++) {  
-	commandFiles[i] = fs.readdirSync(cmdPaths[i]).filter(file =&gt; file.endsWith(&#34;.js&#34;)); // fs.readdirSync() 的结果是个数组，所以 commandFiles是个二维数组  
+	commandFiles[i] = fs.readdirSync(cmdPaths[i]).filter(file =&gt; file.endsWith(".js")); // fs.readdirSync() 的结果是个数组，所以 commandFiles是个二维数组  
 	for (let j = 0; j &lt; commandFiles[i].length; j++) {  
-		commandFiles[i][j] = cmdPaths[i] + &#34;/&#34; + commandFiles[i][j];  
+		commandFiles[i][j] = cmdPaths[i] + "/" + commandFiles[i][j];  
 	}  
 }
 
@@ -198,7 +198,7 @@ for (const fileArray of commandFiles) {
 		let command = require(`./${file}`);  
 		commands.push(command.data.toJSON());  
   
-		// if any ‘aka&#39; name exists  
+		// if any ‘aka' name exists  
 		if (command.akaNames != null &amp;&amp; command.akaNames !== []) {  
 			for (let i = 0; i &lt; command.akaNames.length; i++) {  
 				let akaData = command.data;  
@@ -214,10 +214,10 @@ for (const fileArray of commandFiles) {
 <p>上面这就是读取所有 <code>cmdPaths.js</code> 里记录的文件夹下的 js 文件。</p>
 <pre><code>...
 
-const rest = new REST({ version: &#39;10&#39; }).setToken(token);  
+const rest = new REST({ version: '10' }).setToken(token);  
   
 rest.put(Routes.applicationGuildCommands(clientId, guildId), { body: commands })  
-   .then(() =&gt; console.log(&#39;Successfully registered application commands.&#39;))  
+   .then(() =&gt; console.log('Successfully registered application commands.'))  
    .catch(console.error);
 
 ...
@@ -227,14 +227,14 @@ rest.put(Routes.applicationGuildCommands(clientId, guildId), { body: commands })
 <h3>下面来看 <code>commands/ping.js</code></h3>
 <p>我们的第一个斜杠命令就来自 <code>ping.js</code>。</p>
 <p>事实上，决定命令名的不是 js 文件名，而是由各文件 <code>.setName()</code> 方法决定。，因此事实上，这些文件名可以随便起。</p>
-<pre><code>const { SlashCommandBuilder } = require(&#39;discord.js&#39;);  
+<pre><code>const { SlashCommandBuilder } = require('discord.js');  
   
 module.exports = {  
 	data: new SlashCommandBuilder()  
-		.setName(&#39;ping&#39;)  
-		.setDescription(&#39;Replies with Pong!&#39;),  
+		.setName('ping')  
+		.setDescription('Replies with Pong!'),  
 	async execute(interaction) {  
-		await interaction.reply(&#34;Pong!&#34;);  
+		await interaction.reply("Pong!");  
 	},  
 };
 </code></pre>
@@ -245,5 +245,4 @@ module.exports = {
 <p>通过 async 修饰的 <code>execute()</code> 来执行命令该执行的。这里我们就回复了 <code>Pong!</code>，注意加上 await 关键字。</p>
 <p>后面我们还会学到什么是 ephemeral response、如何执行多条回复、如何修改回复、如何删除回复、如何延长回复时间、如何让回复更花哨等。</p>
 <h3>结语</h3>
-<p>这样，我们就完成了对 Chapter 2 的代码的解释。</p>
-</body></html>
+<p>这样，我们就完成了对 Chapter 2 的代码的解释。</p></blockquote>

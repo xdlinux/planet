@@ -1,4 +1,4 @@
-<html><head></head><body><h2>前言</h2>
+<blockquote><h2>前言</h2>
 <p>利用 discord.js 建立一个 Discord 机器人。</p>
 <p>我也是第一次上手，利用博客来记录我的学习过程，定期整理后再发到公众号。</p>
 <p>在简单对比了 discord.js (JavaScript)，discordgo (Go)，discord.py (Python)，Discord4J (Java)，JDA (Java) 和 D++ (C++) 等项目后，我选择了 <a href="https://discord.js.org/#/">discord.js</a>。</p>
@@ -37,25 +37,25 @@
 <p>打开链接 https://discord.com/developers/applications ，登录你的 Discord 账号，选择 <code>New Application</code> 来创建新应用程序。</p>
 <p>在 <code>NAME</code> 一栏填写你的应用名称，这个名称将会是机器人的外显账号名称，后期可修改。</p>
 <p>按下 <code>Create</code> 以完成创建。</p>
-<p><img src="https://img2022.cnblogs.com/blog/2455224/202210/2455224-20221005223049452-1249073988.png" alt="image"/></p>
-<p>点开新创建的应用，点击左侧菜单栏的 <code>General Information</code>，记下 <code>APPLICATION ID</code>，这就是通常所说的机器人的 &#34;client_id&#34;，这个 ID 是公开可查的，不是秘密。</p>
+<p><img src="https://img2022.cnblogs.com/blog/2455224/202210/2455224-20221005223049452-1249073988.png" alt="image" /></p>
+<p>点开新创建的应用，点击左侧菜单栏的 <code>General Information</code>，记下 <code>APPLICATION ID</code>，这就是通常所说的机器人的 "client_id"，这个 ID 是公开可查的，不是秘密。</p>
 <p>点击左侧菜单栏的 <code>Bot</code>，点击 <code>Add Bot</code> ，再点击弹出对话框的 <code>Yes, do it!</code>  创建机器人。注意此操作是不可逆的，也就是说机器人一旦创建，就不可被销毁删除。哪怕销毁应用程序，机器人账号仍会在 Discord 的世界里存在，只是变成无人能管理的孤儿账号了。</p>
 <p>关于机器人账号和普通用户账号的区别，这里 (https://discord.com/developers/docs/topics/oauth2#bots) 有介绍。</p>
 <p>完成机器人账号创建后，在本页面的 <code>Build-A-Bot</code> 栏目中，你可以给机器人账号更换用户名和头像。</p>
 <p>点击按钮 <code>Reset Token</code> 并点击 <code>Yes, do it!</code> 来首次获取我们的机器人账号 Token。</p>
-<p><img src="https://img2022.cnblogs.com/blog/2455224/202207/2455224-20220711125633911-1411679088.png" alt="image"/></p>
+<p><img src="https://img2022.cnblogs.com/blog/2455224/202207/2455224-20220711125633911-1411679088.png" alt="image" /></p>
 <p><strong>注意：Token (令牌)万万不可给别人看到，这是十分机密的一串文字，任何人有了它，就拥有了完全掌控机器人行为的能力了，比如机器人恶意封禁和私聊服务器里的人、发送 @everyone 等恶劣行为都可能会发生。请妥善保管好这个密钥，</strong></p>
 <p><strong>注意：Discord 出于安全目的，令牌在创建时只能查看一次。 如果您忘记或无法访问您的令牌，请重新生成一个新令牌，旧令牌将自动失效。</strong></p>
 <p>接着，在 <code>Bot</code> 页面的 <code>Privileged Gateway Intents</code> 栏目中，勾选 <code>Presence Intent</code>、<code>Server Members Intent</code> 和 <code>Message Content Intent</code>。</p>
 <p>然后点击下端弹出的绿色保存设置 (Save Changes) 按钮，来保存设置。</p>
-<p><img src="https://img2022.cnblogs.com/blog/2455224/202210/2455224-20221005223236956-513821563.png" alt="image"/></p>
+<p><img src="https://img2022.cnblogs.com/blog/2455224/202210/2455224-20221005223236956-513821563.png" alt="image" /></p>
 <p>点击左侧菜单栏的  <code>OAuth2</code> - <code>URL Generator</code> 。</p>
-<p><img src="https://img2022.cnblogs.com/blog/2455224/202210/2455224-20221005223317282-341711629.png" alt="image"/></p>
+<p><img src="https://img2022.cnblogs.com/blog/2455224/202210/2455224-20221005223317282-341711629.png" alt="image" /></p>
 <p>在 <code>SCOPES</code> 里勾选 <code>bot</code> 和 <code>applications.commands</code> ，为了方便，在 <code>BOT PERMISSIONS</code> 里直接勾选第一条 <code>Administrator</code> （注意咱们只是为了玩哈，才直接赋予管理员权限的）。</p>
-<p><img src="https://img2022.cnblogs.com/blog/2455224/202210/2455224-20221005223338452-1398283213.png" alt="image"/></p>
+<p><img src="https://img2022.cnblogs.com/blog/2455224/202210/2455224-20221005223338452-1398283213.png" alt="image" /></p>
 <p>复制最下方生成的 URL，粘贴到新浏览器窗口打开，选择服务器并添加。如果你没有看到任何可选选项，那么你需要去 Discord 先自己创建一个服务器，然后回来刷新一下。事实上，其他服务器如果给你管理服务器的权限的话，这个服务器将出现在可选选项中。</p>
-<p><img src="https://img2022.cnblogs.com/blog/2455224/202210/2455224-20221005223358375-25536375.png" alt="image"/></p>
-<p><img src="https://img2022.cnblogs.com/blog/2455224/202210/2455224-20221005223409625-2120951239.png" alt="image"/></p>
+<p><img src="https://img2022.cnblogs.com/blog/2455224/202210/2455224-20221005223358375-25536375.png" alt="image" /></p>
+<p><img src="https://img2022.cnblogs.com/blog/2455224/202210/2455224-20221005223409625-2120951239.png" alt="image" /></p>
 <p>到此，我们完成了搭建开发环境、创建机器人账号和邀请机器人进入服务器等操作。</p>
 <h2>Chapter 2 - 工程文件夹的初始化</h2>
 <h3>创建工程文件夹</h3>
@@ -85,20 +85,20 @@
 <h3>打开 Discord 开发者模式</h3>
 <p>为了方便地获取服务器 id、身份组 id 、消息 id 和用户 id，我们必须这么做。</p>
 <p>网页版在Discord <code>设置</code> - <code>高级设置</code> 里，勾选 <code>开发者模式</code>。</p>
-<p>手机版在 <code>DiscordAPP</code> - <code>&#34;我&#34;的头像</code> - <code>APP设置栏</code> - <code>外观</code> - <code>高级设置栏</code> - <code>开发者模式</code>。</p>
+<p>手机版在 <code>DiscordAPP</code> - <code>"我"的头像</code> - <code>APP设置栏</code> - <code>外观</code> - <code>高级设置栏</code> - <code>开发者模式</code>。</p>
 <h3>创建配置文件 config.json</h3>
 <p>在工程根文件夹下创建文件 <code>config.json</code>，写入：</p>
 <pre><code>{  
-   &#34;token&#34;: &#34;bot-token-goes-here&#34;,  
-   &#34;clientId&#34;: &#34;bot-clientid-goes here&#34;,  
-   &#34;guildId&#34;: &#34;serverid-goes-here&#34;  
+   "token": "bot-token-goes-here",  
+   "clientId": "bot-clientid-goes here",  
+   "guildId": "serverid-goes-here"  
 }
 </code></pre>
 <p>比如（这三条都是我瞎编的，不是真的）</p>
 <pre><code>{  
-   &#34;token&#34;: &#34;OBEzNDMyTEN0OTkzOTk1ODA4.Bhz0k7.97sjsWOGtmx-LBIlFvrkk6A9lkk9YGMX9OYbf&#34;,  
-   &#34;clientId&#34;: &#34;240832114973084058&#34;,  
-   &#34;guildId&#34;: &#34;1978274108637234708&#34;  
+   "token": "OBEzNDMyTEN0OTkzOTk1ODA4.Bhz0k7.97sjsWOGtmx-LBIlFvrkk6A9lkk9YGMX9OYbf",  
+   "clientId": "240832114973084058",  
+   "guildId": "1978274108637234708"  
 }
 </code></pre>
 <p>需要说明的是，<code>token</code> 字段就是那个极为重要不能外泄的机器人密钥，把你的粘贴过来。</p>
@@ -115,16 +115,16 @@ config.json
 <p>第三行有就有吧。</p>
 <h3>无脑实现一个机器人</h3>
 <p>在 <code>工程根文件夹</code> 创建文件 <code>deploy_commands.js</code>，写入：</p>
-<pre><code>const fs = require(&#34;fs&#34;);  const { REST } = require(&#39;@discordjs/rest&#39;);  const { Routes } = require(&#39;discord.js&#39;);  
-const { clientId, guildId, token } = require(&#39;./config.json&#39;);  
+<pre><code>const fs = require("fs");  const { REST } = require('@discordjs/rest');  const { Routes } = require('discord.js');  
+const { clientId, guildId, token } = require('./config.json');  
   
-const commands = [];  //const commandFiles = fs.readdirSync(&#34;./commands&#34;).filter(file =&gt; file.endsWith(&#34;.js&#34;));  
-const cmdPaths = require(&#34;./cmdPaths.js&#34;).data;  
+const commands = [];  //const commandFiles = fs.readdirSync("./commands").filter(file =&gt; file.endsWith(".js"));  
+const cmdPaths = require("./cmdPaths.js").data;  
 const commandFiles = [];  
 for (let i = 0; i &lt; cmdPaths.length; i++) {  
-   commandFiles[i] = fs.readdirSync(cmdPaths[i]).filter(file =&gt; file.endsWith(&#34;.js&#34;)); // fs.readdirSync() 的结果是个数组，所以 commandFiles是个二维数组  
+   commandFiles[i] = fs.readdirSync(cmdPaths[i]).filter(file =&gt; file.endsWith(".js")); // fs.readdirSync() 的结果是个数组，所以 commandFiles是个二维数组  
    for (let j = 0; j &lt; commandFiles[i].length; j++) {  
-      commandFiles[i][j] = cmdPaths[i] + &#34;/&#34; + commandFiles[i][j];  
+      commandFiles[i][j] = cmdPaths[i] + "/" + commandFiles[i][j];  
    }  
 }  
   
@@ -135,7 +135,7 @@ for (const fileArray of commandFiles) {
       let command = require(`./${file}`);  
       commands.push(command.data.toJSON());  
   
-      // if any ‘aka&#39; name exists  
+      // if any ‘aka' name exists  
       if (command.akaNames != null &amp;&amp; command.akaNames !== []) {  
          for (let i = 0; i &lt; command.akaNames.length; i++) {  
             let akaData = command.data;  
@@ -146,19 +146,19 @@ for (const fileArray of commandFiles) {
    }  
 }    
     
-const rest = new REST({ version: &#39;10&#39; }).setToken(token);  
+const rest = new REST({ version: '10' }).setToken(token);  
   rest.put(Routes.applicationGuildCommands(clientId, guildId), { body: commands })    
-   .then(() =&gt; console.log(&#39;Successfully registered application commands.&#39;))    
+   .then(() =&gt; console.log('Successfully registered application commands.'))    
    .catch(console.error);
 </code></pre>
 <p>在 <code>工程根文件夹</code> 下创建文件 <code>cmdPaths.js</code>，写入：</p>
 <pre><code>module.exports = {  
-    data: [&#34;./commands&#34;],  
+    data: ["./commands"],  
 };
 </code></pre>
 <p>在 <code>工程根文件夹</code> 下创建文件夹 <code>events</code>，在这个文件夹里创建文件 <code>ready.js</code>，写入：</p>
 <pre><code>module.exports = {  
-   name: &#34;ready&#34;,  
+   name: "ready",  
    once: true,  
    execute(client) {  
       console.log(`Ready! Logged in as ${client.user.tag}`);  
@@ -167,20 +167,20 @@ const rest = new REST({ version: &#39;10&#39; }).setToken(token);
 </code></pre>
 <p>在 <code>工程根文件夹/event</code> 文件夹里，创建文件 <code>interactionCreate.js</code>，写入：</p>
 <pre><code>module.exports = {  
-   name: &#34;interactionCreate&#34;,  
+   name: "interactionCreate",  
    execute(interaction) {  
       console.log(`${interaction.user.tag} in #${interaction.channel.name} triggered an interaction.`);  
    },  
 };
 </code></pre>
 <p>在 <code>工程根文件夹</code> 创建文件 <code>index.js</code> ，写入：</p>
-<pre><code>const fs = require(&#39;fs&#39;);  
-const { Client, Collection, GatewayIntentBits } = require(&#39;discord.js&#39;);  
-const { token } = require(&#39;./config.json&#39;);  
-const { InteractionType } = require(&#34;discord-api-types/v10&#34;);  
+<pre><code>const fs = require('fs');  
+const { Client, Collection, GatewayIntentBits } = require('discord.js');  
+const { token } = require('./config.json');  
+const { InteractionType } = require("discord-api-types/v10");  
   
 const client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.MessageContent] });  
-  const eventFiles = fs.readdirSync(&#39;./events&#39;).filter(file =&gt; file.endsWith(&#39;.js&#39;));    
+  const eventFiles = fs.readdirSync('./events').filter(file =&gt; file.endsWith('.js'));    
     
 for (const file of eventFiles) {  
     const event = require(`./events/${file}`);  
@@ -192,12 +192,12 @@ for (const file of eventFiles) {
 }  
   
 client.commands = new Collection();  
-const cmdPaths = require(&#34;./cmdPaths.js&#34;).data;  
+const cmdPaths = require("./cmdPaths.js").data;  
 const commandFiles = [];  
 for (let i = 0; i &lt; cmdPaths.length; i++) {  
-    commandFiles[i] = fs.readdirSync(cmdPaths[i]).filter(file =&gt; file.endsWith(&#34;.js&#34;)); // fs.readdirSync() 的结果是个数组，所以 commandFiles是个二维数组  
+    commandFiles[i] = fs.readdirSync(cmdPaths[i]).filter(file =&gt; file.endsWith(".js")); // fs.readdirSync() 的结果是个数组，所以 commandFiles是个二维数组  
     for (let j = 0; j &lt; commandFiles[i].length; j++) {  
-        commandFiles[i][j] = cmdPaths[i] + &#34;/&#34; + commandFiles[i][j];  
+        commandFiles[i][j] = cmdPaths[i] + "/" + commandFiles[i][j];  
     }  
 }  
   
@@ -206,7 +206,7 @@ for (const fileArray of commandFiles) {
         const command = require(`./${file}`);  
         client.commands.set(command.data.name, command);  
   
-        // if any ‘aka&#39; name exists  
+        // if any ‘aka' name exists  
         if (command.akaNames != null &amp;&amp; command.akaNames !== []) {  
             for (let i = 0; i &lt; command.akaNames.length; i++) {  
                 client.commands.set(command.akaNames[i], command);  
@@ -215,8 +215,8 @@ for (const fileArray of commandFiles) {
     }  
 }  
   
-client.once(&#39;ready&#39;, () =&gt; {});  
-client.on(&#39;interactionCreate&#39;, async interaction =&gt; {  
+client.once('ready', () =&gt; {});  
+client.on('interactionCreate', async interaction =&gt; {  
     if (interaction.type !== InteractionType.ApplicationCommand) return;  
   
     const command = client.commands.get(interaction.commandName);  
@@ -228,7 +228,7 @@ client.on(&#39;interactionCreate&#39;, async interaction =&gt; {
     } catch (error) {  
         console.error(error);  
         await interaction.reply({  
-            content: &#39;There was an error while executing this command!&#39;,  
+            content: 'There was an error while executing this command!',  
             ephemeral: true  
         });  
     }  
@@ -237,14 +237,14 @@ client.on(&#39;interactionCreate&#39;, async interaction =&gt; {
 client.login(token);
 </code></pre>
 <p>在 <code>工程根文件夹</code> 下创建文件夹 <code>commands</code>，在这个文件夹里创建文件 <code>ping.js</code>，写入：</p>
-<pre><code>const { SlashCommandBuilder } = require(&#39;discord.js&#39;);  
+<pre><code>const { SlashCommandBuilder } = require('discord.js');  
   
 module.exports = {  
    data: new SlashCommandBuilder()  
-       .setName(&#39;ping&#39;)  
-       .setDescription(&#39;Replies with Pong!&#39;),  
+       .setName('ping')  
+       .setDescription('Replies with Pong!'),  
    async execute(interaction) {  
-      await interaction.reply(&#34;Pong!&#34;);  
+      await interaction.reply("Pong!");  
    },  
 };
 </code></pre>
@@ -275,14 +275,13 @@ module.exports = {
 <pre><code>node index.js
 </code></pre>
 <p>运行机器人。成功消息类似于 <code>Ready! Logged in as abcde#0001</code>。</p>
-<p>如果出现 “ 无法将“node”项识别为 cmdlet、函数、脚本文件或可运行程序的名称。请检查名称的拼写，如果包括路径，请确保路径正确，然后再试一次。” 或者 “ &#39;node&#39; 不是内部或外部命令，也不是可运行的程序或批处理文件。”亦或者“ -bash: node: command not found ”，请检查你的 PATH 是否有包含 node.exe 所在文件夹，这通常是 <code>C:\Program Files\nodejs\node.exe</code>。验证方法是 <code>node -v</code> 输出版本号。</p>
+<p>如果出现 “ 无法将“node”项识别为 cmdlet、函数、脚本文件或可运行程序的名称。请检查名称的拼写，如果包括路径，请确保路径正确，然后再试一次。” 或者 “ 'node' 不是内部或外部命令，也不是可运行的程序或批处理文件。”亦或者“ -bash: node: command not found ”，请检查你的 PATH 是否有包含 node.exe 所在文件夹，这通常是 <code>C:\Program Files\nodejs\node.exe</code>。验证方法是 <code>node -v</code> 输出版本号。</p>
 <p>如果抛出其他失败，请检查你的网络是否能连接到 Discord、你的上述步骤有没有漏做或者顺序错误的。</p>
 <h3>与机器人交互</h3>
 <p>cd 到工程根文件夹。</p>
 <p>确保你已经通过 <code>node deploy_commands.js</code> 注册了斜杠命令，并已通过 <code>node index.js</code> （或者 <code>node .</code>） 使机器人程序保持运行状态。验证方法是：能在 Discord 服务器成员列表看到你的机器人是在线状态而非离线状态。</p>
 <p>打开 Discord，在机器人所在的服务器的任何文字频道，输入 <code>/ping</code>，回车选定斜杠命令，再次回车发送命令，机器人应该会发送消息 <code>Pong!</code> ，而且在机器人后端程序，会输出类似于 <code>xxxxx#xxxx in #bot triggered an interaction.</code></p>
-<p><img src="https://img2022.cnblogs.com/blog/2455224/202207/2455224-20220711125819594-935091856.png" alt="image"/></p>
-<p><img src="https://img2022.cnblogs.com/blog/2455224/202207/2455224-20220711125834191-696325284.png" alt="image"/></p>
+<p><img src="https://img2022.cnblogs.com/blog/2455224/202207/2455224-20220711125819594-935091856.png" alt="image" /></p>
+<p><img src="https://img2022.cnblogs.com/blog/2455224/202207/2455224-20220711125834191-696325284.png" alt="image" /></p>
 <p>这样，一个非常简单的机器人就完成了。</p>
-<p>后续我们将学习更多的东西，先写到这吧。记得关注从而收取最新消息。</p>
-</body></html>
+<p>后续我们将学习更多的东西，先写到这吧。记得关注从而收取最新消息。</p></blockquote>

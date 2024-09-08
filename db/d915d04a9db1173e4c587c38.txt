@@ -1,4 +1,4 @@
-<html><head></head><body><h1>数字信号处理基本概念</h1>
+<blockquote></blockquote><h1>数字信号处理基本概念</h1>
 <h2>信号分类</h2>
 <ol>
 <li>连续信号：即模拟信号，时域连续信号。</li>
@@ -199,4 +199,3 @@ $$<br/>
 \sum^{\infty}_{m=-\infty}|h(n)|&lt;\infty<br/>
 $$</p>
 <h3>线性常系数差分方程</h3>
-</body></html>

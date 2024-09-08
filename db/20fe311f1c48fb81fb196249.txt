@@ -1,9 +1,9 @@
-<html><head></head><body><h1 id="在-UI-上实现目标追踪">在 UI 上实现目标追踪<a class="headerlink" href="https://note.stalomeow.com/blog/posts/unity-target-tracking-ui/#%E5%9C%A8-UI-%E4%B8%8A%E5%AE%9E%E7%8E%B0%E7%9B%AE%E6%A0%87%E8%BF%BD%E8%B8%AA" title="Permanent link">¶</a></h1>
+<blockquote><h1 id="在-UI-上实现目标追踪">在 UI 上实现目标追踪<a class="headerlink" href="#在-UI-上实现目标追踪" title="Permanent link">&para;</a></h1>
 <!-- more -->
 
 <p>实现目标任务追踪功能。在 UI 上的椭圆区域内，显示目标的方向和距离。</p>
-<p><img alt="演示" src="https://note.stalomeow.com/obsidian-vault/attachments/track_indicator_demo.png"/></p>
-<h2 id="配置椭圆">配置椭圆<a class="headerlink" href="https://note.stalomeow.com/blog/posts/unity-target-tracking-ui/#%E9%85%8D%E7%BD%AE%E6%A4%AD%E5%9C%86" title="Permanent link">¶</a></h2>
+<p><img alt="演示" src="../../../obsidian-vault/attachments/track_indicator_demo.png" /></p>
+<h2 id="配置椭圆">配置椭圆<a class="headerlink" href="#配置椭圆" title="Permanent link">&para;</a></h2>
 <p>公开两个字段，用于配置椭圆两个轴的长度。取值范围设置为 <span class="arithmatex">\([0,1]\)</span>，方便配置。另外，规定水平的是长轴，竖直的是短轴。</p>
 <div class="highlight"><pre><span></span><code><span class="na">[Range(0, 1)]</span><span class="w"> </span><span class="k">public</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">HorizontalSize</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0.8f</span><span class="p">;</span>
 <span class="na">[Range(0, 1)]</span><span class="w"> </span><span class="k">public</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">VerticalSize</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0.8f</span><span class="p">;</span>
@@ -16,9 +16,9 @@
 <span class="w">    </span><span class="n">b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rect</span><span class="p">.</span><span class="n">height</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="m">0.5f</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">VerticalSize</span><span class="p">;</span>
 <span class="p">}</span>
 </code></pre></div>
-<h2 id="编辑器辅助线">编辑器辅助线<a class="headerlink" href="https://note.stalomeow.com/blog/posts/unity-target-tracking-ui/#%E7%BC%96%E8%BE%91%E5%99%A8%E8%BE%85%E5%8A%A9%E7%BA%BF" title="Permanent link">¶</a></h2>
+<h2 id="编辑器辅助线">编辑器辅助线<a class="headerlink" href="#编辑器辅助线" title="Permanent link">&para;</a></h2>
 <p>在编辑器中绘制辅助线，帮助我们直观地看到椭圆范围。</p>
-<p><img alt="辅助线" src="https://note.stalomeow.com/obsidian-vault/attachments/track_indicator_gizmo.png"/></p>
+<p><img alt="辅助线" src="../../../obsidian-vault/attachments/track_indicator_gizmo.png" /></p>
 <p>Unity 没有提供绘制椭圆的方法。只能在椭圆上多采一些离散的点，然后用 <a href="https://docs.unity3d.com/ScriptReference/Gizmos.DrawLineStrip.html"><code>Gizmos.DrawLineStrip(points, true)</code></a> 绘制，第二个参数为 <code>true</code> 表示绘制为首尾闭合的多边形。</p>
 <div class="highlight"><pre><span></span><code><span class="k">private</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">OnDrawGizmosSelected</span><span class="p">()</span>
 <span class="p">{</span>
@@ -35,7 +35,7 @@
 <span class="w">    </span><span class="p">}</span>
 
 <span class="cp">#if UNITY_EDITOR</span>
-<span class="w">    </span><span class="n">UnityEditor</span><span class="p">.</span><span class="n">Handles</span><span class="p">.</span><span class="n">Label</span><span class="p">(</span><span class="n">points</span><span class="p">[</span><span class="m">270</span><span class="p">],</span><span class="w"> </span><span class="s">&#34;跟踪图标的运动范围&#34;</span><span class="p">);</span>
+<span class="w">    </span><span class="n">UnityEditor</span><span class="p">.</span><span class="n">Handles</span><span class="p">.</span><span class="n">Label</span><span class="p">(</span><span class="n">points</span><span class="p">[</span><span class="m">270</span><span class="p">],</span><span class="w"> </span><span class="s">&quot;跟踪图标的运动范围&quot;</span><span class="p">);</span>
 <span class="cp">#endif</span>
 
 <span class="w">    </span><span class="kt">var</span><span class="w"> </span><span class="n">color</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Gizmos</span><span class="p">.</span><span class="n">color</span><span class="p">;</span>
@@ -44,7 +44,7 @@
 <span class="w">    </span><span class="n">Gizmos</span><span class="p">.</span><span class="n">color</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">color</span><span class="p">;</span>
 <span class="p">}</span>
 </code></pre></div>
-<h2 id="计算目标点在-UI-上的位置">计算目标点在 UI 上的位置<a class="headerlink" href="https://note.stalomeow.com/blog/posts/unity-target-tracking-ui/#%E8%AE%A1%E7%AE%97%E7%9B%AE%E6%A0%87%E7%82%B9%E5%9C%A8-UI-%E4%B8%8A%E7%9A%84%E4%BD%8D%E7%BD%AE" title="Permanent link">¶</a></h2>
+<h2 id="计算目标点在-UI-上的位置">计算目标点在 UI 上的位置<a class="headerlink" href="#计算目标点在-UI-上的位置" title="Permanent link">&para;</a></h2>
 <p>先计算目标点的屏幕坐标，再转换成 Panel 的本地坐标即可。考虑两种特殊情况：</p>
 <ol>
 <li>
@@ -97,4 +97,4 @@
 <span class="p">}</span>
 </code></pre></div>
 <p><a href="https://docs.unity3d.com/ScriptReference/Matrix4x4.MultiplyPoint.html"><code>MultiplyPoint</code></a> 相比 <a href="https://docs.unity3d.com/ScriptReference/Matrix4x4.MultiplyPoint3x4.html"><code>MultiplyPoint3x4</code></a> 多了透视除法，所以乘出来直接是 NDC 坐标。具体可以看 <code>MultiplyPoint</code> 的源码。</p>
-<p>把结果赋值给 Panel 里一个图标的 <code>localPosition</code> 即可。箭头方向、距离之类的功能比较简单，不写了。</p></body></html>
+<p>把结果赋值给 Panel 里一个图标的 <code>localPosition</code> 即可。箭头方向、距离之类的功能比较简单，不写了。</p></blockquote>

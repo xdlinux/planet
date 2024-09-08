@@ -1,4 +1,4 @@
-<html><head></head><body><img src="https://legacy.superbart.top/picture/xdyou/homepage.jpg" alt="Featured image of post Traintime PDA v1.1.0 版本发行概要"/><p>Traintime PDA v0.4.6 和 v1.0.0 差别只有桌面小部件；而 v1.1.0 和 v1.0.0 除了日程表的差别，就是为了新学期必将出现的流汗黄豆瞬间而做了一部分修改。</p>
+<blockquote><img src="https://legacy.superbart.top/picture/xdyou/homepage.jpg" alt="Featured image of post Traintime PDA v1.1.0 版本发行概要" /><p>Traintime PDA v0.4.6 和 v1.0.0 差别只有桌面小部件；而 v1.1.0 和 v1.0.0 除了日程表的差别，就是为了新学期必将出现的流汗黄豆瞬间而做了一部分修改。</p>
 <p>现这个程序终于搞完了，我可以搞点别的事情了。</p>
 <p>本发行概要，将对本程序开发以来，遇到的所有技术要点，进行总结。所以，很多东西我将照抄我之前版本的发行概要。同时，我也将之前发行概要的小前言放在下面，可能为了语序，有些修改。</p>
 <h2 id="自发布后的版本更新概要">自发布后的版本更新概要</h2>
@@ -18,7 +18,8 @@
 </ul>
 <h2 id="贡献者名单一览">贡献者名单一览</h2>
 <p>现在基本写完了，正好是致谢贡献者的时候了。
-以下名单包括任何在代码库留下痕迹的人，以及给过我设计稿的人。更加详细的请看代码仓库的<a class="link" href="https://github.com/BenderBlog/traintime_pda/blob/main/lib/page/setting/about_page/about_page.dart" target="_blank" rel="noopener">这个文件</a>。</p>
+以下名单包括任何在代码库留下痕迹的人，以及给过我设计稿的人。更加详细的请看代码仓库的<a class="link" href="https://github.com/BenderBlog/traintime_pda/blob/main/lib/page/setting/about_page/about_page.dart"  target="_blank" rel="noopener"
+    >这个文件</a>。</p>
 <table>
 <thead>
 <tr>
@@ -29,51 +30,64 @@
 <tbody>
 <tr>
 <td>最佳&amp;最久故障反馈者</td>
-<td><a class="link" href="https://github.com/BellssGit" target="_blank" rel="noopener">BellssGit</a></td>
+<td><a class="link" href="https://github.com/BellssGit"  target="_blank" rel="noopener"
+    >BellssGit</a></td>
 </tr>
 <tr>
 <td>主页，登录页，配色，iOS 小部件等</td>
-<td><a class="link" href="https://github.com/BrackRat" target="_blank" rel="noopener">BrackRat</a></td>
+<td><a class="link" href="https://github.com/BrackRat"  target="_blank" rel="noopener"
+    >BrackRat</a></td>
 </tr>
 <tr>
 <td>滑块验证码位移量修复</td>
-<td><a class="link" href="https://github.com/chitao1234" target="_blank" rel="noopener">chitao1234</a></td>
+<td><a class="link" href="https://github.com/chitao1234"  target="_blank" rel="noopener"
+    >chitao1234</a></td>
 </tr>
 <tr>
 <td>辅助修复滑块问题</td>
-<td><a class="link" href="https://github.com/Dimole" target="_blank" rel="noopener">Dimole</a></td>
+<td><a class="link" href="https://github.com/Dimole"  target="_blank" rel="noopener"
+    >Dimole</a></td>
 </tr>
 <tr>
 <td>体育页面设计</td>
-<td><a class="link" href="https://space.bilibili.com/49892391/" target="_blank" rel="noopener">EliteWars</a></td>
+<td><a class="link" href="https://space.bilibili.com/49892391/"  target="_blank" rel="noopener"
+    >EliteWars</a></td>
 </tr>
 <tr>
 <td>XDYou 图标设计</td>
-<td><a class="link" href="https://node.kg.qq.com/personal?uid=669e9a84212d348f" target="_blank" rel="noopener">木生睡不着</a></td>
+<td><a class="link" href="https://node.kg.qq.com/personal?uid=669e9a84212d348f"  target="_blank" rel="noopener"
+    >木生睡不着</a></td>
 </tr>
 <tr>
-<td>卡片设计稿 <a class="link" href="https://github.com/BenderBlog/traintime_pda/blob/main/lib/page/public_widget/re_x_card.dart" target="_blank" rel="noopener">Re_X_Card.dart</a></td>
-<td><a class="link" href="https://github.com/Reverier-Xu" target="_blank" rel="noopener">Reverier-Xu</a></td>
+<td>卡片设计稿 <a class="link" href="https://github.com/BenderBlog/traintime_pda/blob/main/lib/page/public_widget/re_x_card.dart"  target="_blank" rel="noopener"
+    >Re_X_Card.dart</a></td>
+<td><a class="link" href="https://github.com/Reverier-Xu"  target="_blank" rel="noopener"
+    >Reverier-Xu</a></td>
 </tr>
 <tr>
 <td>XDYou 开屏图，支持 iOS 开发</td>
-<td><a class="link" href="https://ray.al" target="_blank" rel="noopener">Ray</a></td>
+<td><a class="link" href="https://ray.al"  target="_blank" rel="noopener"
+    >Ray</a></td>
 </tr>
 <tr>
 <td>首页时间轴卡片，异步加载</td>
-<td><a class="link" href="https://github.com/stalomeow" target="_blank" rel="noopener">stalomeow</a></td>
+<td><a class="link" href="https://github.com/stalomeow"  target="_blank" rel="noopener"
+    >stalomeow</a></td>
 </tr>
 <tr>
 <td>XDU Planet &amp; 设置页面</td>
-<td><a class="link" href="https://mxts.jiujiuer.xyz" target="_blank" rel="noopener">xeonds</a></td>
+<td><a class="link" href="https://mxts.jiujiuer.xyz"  target="_blank" rel="noopener"
+    >xeonds</a></td>
 </tr>
 <tr>
 <td>Android 小部件，原生和 Flutter 端拼接代码</td>
-<td><a class="link" href="https://github.com/Xiue233" target="_blank" rel="noopener">Xiue233</a></td>
+<td><a class="link" href="https://github.com/Xiue233"  target="_blank" rel="noopener"
+    >Xiue233</a></td>
 </tr>
 <tr>
 <td>丁香电费修复</td>
-<td><a class="link" href="https://github.com/ZCWzy" target="_blank" rel="noopener">ZCWzy</a></td>
+<td><a class="link" href="https://github.com/ZCWzy"  target="_blank" rel="noopener"
+    >ZCWzy</a></td>
 </tr>
 </tbody>
 </table>
@@ -112,7 +126,7 @@
 <td>0.4.5</td>
 <td>Temple of the King / Catch the Rainbow</td>
 <td>Rainbow</td>
-<td>Ritchie Blackmore’s Rainbow - 1975 - Oyster</td>
+<td>Ritchie Blackmore&rsquo;s Rainbow - 1975 - Oyster</td>
 </tr>
 <tr>
 <td>0.4.6</td>
@@ -122,7 +136,7 @@
 </tr>
 <tr>
 <td>1.0.0</td>
-<td>Ripples…</td>
+<td>Ripples&hellip;</td>
 <td>Genesis</td>
 <td>A Trick of the Tail - 1975 - Charisma</td>
 </tr>
@@ -130,7 +144,8 @@
 </table>
 <h2 id="新的日程表简介">新的日程表简介</h2>
 <p>(来自 v0.1.0 发行概要，原先内容作废)</p>
-<p>日程表集合了原先的课表，同时我加上了考试信息和物理实验信息。为了更加方便显示，只能引入午休和晚饭时间，并将一天结束时间定在21:25。另外，很久之前糊上去的数组也没了，改成了类似<a class="link" href="https://pub.dev/packages/calendar_view" target="_blank" rel="noopener">flutter_calendar_view</a>这样，按照连续时间来创建日程卡片。如果这个功能可以彻底和 PDA 解耦合，并将其用于其他的项目，这也许将是能够击败任何闭源课表的无敌存在(bushi)</p>
+<p>日程表集合了原先的课表，同时我加上了考试信息和物理实验信息。为了更加方便显示，只能引入午休和晚饭时间，并将一天结束时间定在21:25。另外，很久之前糊上去的数组也没了，改成了类似<a class="link" href="https://pub.dev/packages/calendar_view"  target="_blank" rel="noopener"
+    >flutter_calendar_view</a>这样，按照连续时间来创建日程卡片。如果这个功能可以彻底和 PDA 解耦合，并将其用于其他的项目，这也许将是能够击败任何闭源课表的无敌存在(bushi)</p>
 <p>这个实际上是我最开始写 PDA 的动机，很简单，一个页面显示所有跟我们学业相关的所有信息，不香吗？之前那个程序早期版本是彻底割裂的，后来也是仅仅在主页上搞了仨按钮，一个课表、一个考试、一个物理实验。其中后俩还是在明天/接下来有状况的状况下才有，总觉得有种割裂的美。</p>
 <h3 id="课程信息数据模型介绍">课程信息数据模型介绍</h3>
 <p>此处只介绍课程表相关的信息，文件在<code>lib/model/xidian_ids/classtable.dart</code>。关于考试信息，请看<code>lib/model/xidian_ids/exam.dart</code>；关于物理实验信息，请看<code>lib/model/xidian_ids/experiment.dart</code>。</p>
@@ -324,13 +339,16 @@
 <p>生成该文件内容的代码在称为<code>iCalendar</code>的 getter 里面，以下是一些不正经介绍。</p>
 <p>Initally I want to output classtable schedule to the system calendar, but it isn’t good. So far, it outputs the class schedule one by one, from the first class of the first week to the last class of the last week. I have to let users agree serveral times to import all class schedules, so ummm…</p>
 <p>So I use iCalendar, a standard to transfer schedules. It can transfer the name of your schedule, the time range (start time and end time), and lots of additional infos, including email, alert, personnel etc.</p>
-<p>For the class schedules, aka classtable, we only care about the place, time, and the name. According to the <a class="link" href="https://blog.woooo.tech/posts/about_linux_desktop/" target="_blank" rel="noopener"><strong>CYBER GOD OF OUR SCHOOL</strong></a>, we do not need a “iCalender parser library”, just treat it as a plain text file with mime-type <code>text/calendar</code>.</p>
-<p>I will introduce a very simple iCalendar file here, and of course, it isn’t cover all about iCalendar.</p>
+<p>For the class schedules, aka classtable, we only care about the place, time, and the name. According to the <a class="link" href="https://blog.woooo.tech/posts/about_linux_desktop/"  target="_blank" rel="noopener"
+    ><strong>CYBER GOD OF OUR SCHOOL</strong></a>, we do not need a &ldquo;iCalender parser library&rdquo;, just treat it as a plain text file with mime-type <code>text/calendar</code>.</p>
+<p>I will introduce a very simple iCalendar file here, and of course, it isn&rsquo;t cover all about iCalendar.</p>
 <p>The whole iCalendar file is covered by <code>BEGIN:VCALENDAR</code> and <code>END:VCALENDAR</code>. While every schedule is covered by <code>BEGIN:VEVENT</code> and <code>END:VEVENT</code>. For each schedule, we can input the following attributes:</p>
 <ul>
 <li><code>SUMMARY</code>: A quickview of the schedule. In our case, the class’s name and place.</li>
 <li><code>DESCRIPTION</code>: Detail description of the schedule. We can put teacher info in here.</li>
-<li><code>DTSTART</code> and <code>DTEND</code>: The start time and the end time of the schedule. Notice we need to follow the time pattern <code>yyyyMMddTHHmmss</code>, a description is at <a class="link" href="https://icalendar.org/iCalendar-RFC-5545/3-3-5-date-time.html" target="_blank" rel="noopener">here</a> and <a class="link" href="https://pub.dev/documentation/intl/latest/intl/DateFormat-class.html" target="_blank" rel="noopener">here</a>.</li>
+<li><code>DTSTART</code> and <code>DTEND</code>: The start time and the end time of the schedule. Notice we need to follow the time pattern <code>yyyyMMddTHHmmss</code>, a description is at <a class="link" href="https://icalendar.org/iCalendar-RFC-5545/3-3-5-date-time.html"  target="_blank" rel="noopener"
+    >here</a> and <a class="link" href="https://pub.dev/documentation/intl/latest/intl/DateFormat-class.html"  target="_blank" rel="noopener"
+    >here</a>.</li>
 </ul>
 <p>Finally, a refrence of my code about output the iCalendar string.</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-dart" data-lang="dart"><span class="line"><span class="cl"><span class="kt">String</span> <span class="kd">get</span> <span class="n">iCalenderStr</span> <span class="p">{</span>
@@ -358,8 +376,10 @@
 </span></span><span class="line"><span class="cl">  <span class="p">}</span>
 </span></span><span class="line"><span class="cl">  <span class="k">return</span> <span class="s2">&#34;</span><span class="si">${</span><span class="n">toReturn</span><span class="si">}</span><span class="s2">END:VCALENDAR&#34;</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></div><p>分享方式，在移动端使用了<a class="link" href="https://pub.dev/packages/share_plus" target="_blank" rel="noopener"><code>share_plus</code></a>, 这个库很简单。我要记一笔关于临时文件的东西。这个东西分享文件，是先在软件的临时目录中保存，然后分享，临时文件的清理就交给了系统。我是自己写了一套保存到临时文件，分享后立刻删除的机制。顺便，一定要设定<code>mime-type</code>为<code>text/calendar</code>，要不然存的就是纯文本文件。</p>
-<p>在桌面端，则使用<a class="link" href="https://pub.dev/packages/file_picker" target="_blank" rel="noopener">file_picker</a>库，通过里面<code>saveFile</code>函数获取到要存储的位置，然后进行保存。</p>
+</span></span></code></pre></div><p>分享方式，在移动端使用了<a class="link" href="https://pub.dev/packages/share_plus"  target="_blank" rel="noopener"
+    ><code>share_plus</code></a>, 这个库很简单。我要记一笔关于临时文件的东西。这个东西分享文件，是先在软件的临时目录中保存，然后分享，临时文件的清理就交给了系统。我是自己写了一套保存到临时文件，分享后立刻删除的机制。顺便，一定要设定<code>mime-type</code>为<code>text/calendar</code>，要不然存的就是纯文本文件。</p>
+<p>在桌面端，则使用<a class="link" href="https://pub.dev/packages/file_picker"  target="_blank" rel="noopener"
+    >file_picker</a>库，通过里面<code>saveFile</code>函数获取到要存储的位置，然后进行保存。</p>
 <h3 id="显示未安排课程和课程调整信息">显示未安排课程和课程调整信息</h3>
 <p>这两个页面分别读取状态里面的未安排课程信息和课程调整信息，然后展示，没了()</p>
 <h3 id="添加课程页面">添加课程页面</h3>
@@ -391,13 +411,21 @@
 </span></span></code></pre></div><p>顺便说一句 LayoutBuilder， 是用来给部件加约束的组件，具体看官方指南吧。</p>
 <h3 id="我的-bothsideview">我的 BothSideView</h3>
 <p>先给大家看看这玩意到底是个啥东西：</p>
-<p></p><figure>
-	<a href="https://legacy.superbart.top/picture/xdyou/both.side.sheet.gif">
-		<img src="https://legacy.superbart.top/picture/xdyou/both.side.sheet.gif" loading="lazy"/>
+<p><figure 
+	>
+	<a href="https://legacy.superbart.top/picture/xdyou/both.side.sheet.gif" >
+		<img src="https://legacy.superbart.top/picture/xdyou/both.side.sheet.gif"
+			
+			
+			
+			loading="lazy"
+			>
 	</a>
 	
-</figure><p></p>
-<p>如你所见，在竖屏的时候，他是从底往上呼出的，跟 <a class="link" href="https://m3.material.io/components/bottom-sheets/guidelines" target="_blank" rel="noopener">BottomSheet</a> 一样；在横屏的时候，他是从右向左呼出的，和 <a class="link" href="https://m3.material.io/components/side-sheets/overview" target="_blank" rel="noopener">SideSheet</a> 一样。</p>
+</figure></p>
+<p>如你所见，在竖屏的时候，他是从底往上呼出的，跟 <a class="link" href="https://m3.material.io/components/bottom-sheets/guidelines"  target="_blank" rel="noopener"
+    >BottomSheet</a> 一样；在横屏的时候，他是从右向左呼出的，和 <a class="link" href="https://m3.material.io/components/side-sheets/overview"  target="_blank" rel="noopener"
+    >SideSheet</a> 一样。</p>
 <p>Flutter 的 Material 框架本身没有实现 SideSheet ，而对于横屏来说，BottomSheet 是十分浪费屏幕，而且不太好看，从左面呼出是更合适的。得亏有很多的大佬，自行实现了 SideSheet 插件，我可以直接拿来使用他们的概念，但我想把这两个结合在一起。</p>
 <p>而为啥要将这两个东西合在一起呢？这就涉及到实际使用中，我们是如何呼出 BottomSheet 了。</p>
 <p>呼出 BottomSheet 和呼出 Dialog 一样，是使用了一个函数，在这里，叫 <code>showBottomSheet</code>。这玩意有个问题，他本质上是往路由栈里面压入一个 BottomSheet 页面栈，也就是说，无论横屏幕还是竖屏幕，他永远是 BottomSheet，而不会变化一点。我一开始用了 SideSheet，结果发现横屏开了 SideSheet，竖屏过来了还是 SideSheet，他们之间不会互相转化。</p>
@@ -407,18 +435,25 @@
 <p>本组件代码在<code>/lib/page/public_widget/both_side_sheet.dart</code>，可能我考虑发个包。</p>
 <h3 id="pageview-组件使用">PageView 组件使用</h3>
 <p>还是跟组件状态玩命。</p>
-<p>原先，我的首页是抄的 <a class="link" href="https://flutter.github.io/samples/material_3.html" target="_blank" rel="noopener">Flutter 的 M3 实例</a>。这样我就可以在横屏幕时候使用左侧的 <a class="link" href="https://m3.material.io/components/navigation-rail/overview" target="_blank" rel="noopener">NavigationRail</a>，竖屏幕的时候使用底部的 <a class="link" href="https://m3.material.io/components/navigation-bar/overview" target="_blank" rel="noopener">NavigationBar</a>。</p>
+<p>原先，我的首页是抄的 <a class="link" href="https://flutter.github.io/samples/material_3.html"  target="_blank" rel="noopener"
+    >Flutter 的 M3 实例</a>。这样我就可以在横屏幕时候使用左侧的 <a class="link" href="https://m3.material.io/components/navigation-rail/overview"  target="_blank" rel="noopener"
+    >NavigationRail</a>，竖屏幕的时候使用底部的 <a class="link" href="https://m3.material.io/components/navigation-bar/overview"  target="_blank" rel="noopener"
+    >NavigationBar</a>。</p>
 <p>那么，问题在哪？我原先写的组件，将横屏渲染和竖屏渲染函数给分开写了。结果就导致前几天我迁移首页四个卡片到 PageView 的时候，出现了横屏和竖屏切换时候，页面永远会刷新到第一页。一开始我看了好久的 StatefulWidget 的状态周期，我也没明白。最后我发现，我这是两个组件，每次刷新的时候都会重新绘制这两个组件。解决方法就是，将这两个组件合二为一，在一个组件里面渲染，使用 <code>Visibility</code> 组件按需隐藏。</p>
 <h2 id="webview-cookie-相关">Webview Cookie 相关</h2>
 <p>(来自 v0.2.0 发行概要)</p>
-<p>想在 Flutter 使用 Webview ，你可以使用两个插件：<a class="link" href="https://pub.dev/packages/webview_flutter" target="_blank" rel="noopener">webview_flutter</a> 和 <a class="link" href="https://pub.dev/packages/flutter_inappwebview" target="_blank" rel="noopener">flutter_inappwebview</a>。前者是官方开发，功能基础；后者是第三方开发，功能强大。我为了保证简洁，使用的是前者。</p>
-<p>关于插件，网上很多资料都是很老的，我参考了这位的文章：<a class="link" href="https://juejin.cn/post/7196698315835260984" target="_blank" rel="noopener">在 Flutter 中使用 webview_flutter 4.0</a>，其中最有用的是第三篇，讲怎么用 Cookie 的。我的程序是这样写的：</p>
+<p>想在 Flutter 使用 Webview ，你可以使用两个插件：<a class="link" href="https://pub.dev/packages/webview_flutter"  target="_blank" rel="noopener"
+    >webview_flutter</a> 和 <a class="link" href="https://pub.dev/packages/flutter_inappwebview"  target="_blank" rel="noopener"
+    >flutter_inappwebview</a>。前者是官方开发，功能基础；后者是第三方开发，功能强大。我为了保证简洁，使用的是前者。</p>
+<p>关于插件，网上很多资料都是很老的，我参考了这位的文章：<a class="link" href="https://juejin.cn/post/7196698315835260984"  target="_blank" rel="noopener"
+    >在 Flutter 中使用 webview_flutter 4.0</a>，其中最有用的是第三篇，讲怎么用 Cookie 的。我的程序是这样写的：</p>
 <ol>
 <li>WebView 页面中，接受要前往的网站和获取 Cookie 的网站。</li>
 <li>在 initState 状态下，初始化 Webview 的 CookieManager 和 Controller。WebView 的控制器可以控制加载，页面前进和回去。</li>
 <li>在 didChangedDepencies 状态下，根据获取 Cookie 的网站，从 Dio 的 CookieJar 中获取 Cookie。然后控制器请求对应网站。</li>
 </ol>
-<p>具体代码在<a class="link" href="https://github.com/BenderBlog/traintime_pda/blob/main/lib/page/homepage/toolbox/webview.dart" target="_blank" rel="noopener">这里</a>。</p>
+<p>具体代码在<a class="link" href="https://github.com/BenderBlog/traintime_pda/blob/main/lib/page/homepage/toolbox/webview.dart"  target="_blank" rel="noopener"
+    >这里</a>。</p>
 <p>最后，这个玩意貌似在 iOS 平台下有 bug，Cookie 死活加不进去，我已经彻底摆烂了:P</p>
 <h2 id="上架-f-droid-平台">上架 F-Droid 平台</h2>
 <p>(来自 v0.2.0 发行概要)</p>
@@ -427,15 +462,19 @@
 <li>开源的东西多，就是好</li>
 <li>目前我程序在安卓平台唯一可以“自动更新”的方式</li>
 </ul>
-<p>Flutter 程序上架，除了官方的，可以参考这位的<a class="link" href="https://friesi23.github.io/flutter/android/fdroid/appstore/2023/06/08/submitting-your-flutter-app-to-fdroid.html" target="_blank" rel="noopener">上传指南</a>。我想补充两点————可重复构建，分开架构构建：</p>
+<p>Flutter 程序上架，除了官方的，可以参考这位的<a class="link" href="https://friesi23.github.io/flutter/android/fdroid/appstore/2023/06/08/submitting-your-flutter-app-to-fdroid.html"  target="_blank" rel="noopener"
+    >上传指南</a>。我想补充两点————可重复构建，分开架构构建：</p>
 <p>F-Droid 的可重复构建，对我而言，最主要的就是使分发都带上我的签名。这就需要保证构建元数据需要你签名的 sha256 摘要，和一个可供对照的构建（在我这里就是我在 Github Action 上面的构建）。</p>
 <p>分开架构构建，就是按照手机架构（arm64，arm32，x86）来构建分发包。这个东西，貌似每个架构的版本构建号还不一样。当时写构建元数据的时候，写到弃疗。他们 F-Droid 的审核人好好，帮我写了T_T</p>
-<p>我的上架过程可以看看<a class="link" href="https://gitlab.com/fdroid/fdroiddata/-/merge_requests/13537" target="_blank" rel="noopener">这个链接</a>，合并请求后四天，真正上架。你们可以从这里<a class="link" href="https://f-droid.org/zh_Hans/packages/io.github.benderblog.traintime_pda/" target="_blank" rel="noopener">点进链接下载</a>。</p>
+<p>我的上架过程可以看看<a class="link" href="https://gitlab.com/fdroid/fdroiddata/-/merge_requests/13537"  target="_blank" rel="noopener"
+    >这个链接</a>，合并请求后四天，真正上架。你们可以从这里<a class="link" href="https://f-droid.org/zh_Hans/packages/io.github.benderblog.traintime_pda/"  target="_blank" rel="noopener"
+    >点进链接下载</a>。</p>
 <p>另外说为啥来这里上架，我这软件确实是自由软件。还有，国内上架需要这个那个的，感觉好麻烦，而且已经有电表了，再上架一个感觉也吸引不了多少。</p>
 <p>(现在更好了，备案号我是有，但我是个人名义，很多平台不认2333)</p>
 <h2 id="双创需求大厅相关">双创需求大厅相关</h2>
 <p>(来自 v0.2.0 发行概要)</p>
-<p>这个东西，主要是使用了 Dart 3 的最新语言功能：Records。详情<a class="link" href="https://juejin.cn/post/7233067863500849209" target="_blank" rel="noopener">看这个文章</a>.</p>
+<p>这个东西，主要是使用了 Dart 3 的最新语言功能：Records。详情<a class="link" href="https://juejin.cn/post/7233067863500849209"  target="_blank" rel="noopener"
+    >看这个文章</a>.</p>
 <p>我没记错，go 好像能一次性返回两个值。一开始我感觉很神奇，然后相似的东西就降临到 Flutter 了。说回来，如果没有这个东西，我会考虑 Pair / List，大不了写个 class 。</p>
 <p>双创需求大厅本质上跟找工作网站差不多，都得有个 Popup 来选择职位状况。这个东西的服务器筛选工作，是需要两个东西：一个 String 传大致分类，一个字符串数组传输 tags。我选择这俩东西的部件是写在外面的，需要返回数据的话，我直接写 <code>(String, List&lt;String&gt;)</code> 就可以了。读取的这些数据的话，可以通过 <code>$1</code> 或 <code>$2</code> 来读取。</p>
 <p>不过这玩意现在只有五个数据，以后会不会变多呢？也许我能通过这个，说一波我程序和xxx合作？</p>
@@ -451,8 +490,10 @@
 <h3 id="乱码处理">乱码处理</h3>
 <p>乱码实际上很常见，常知道的锟斤拷梗就跟这个相关。毕竟汉字跟英文一样，在电脑底层都是需要用二进制编码来表示的。简体中文汉字有两个主要编码：</p>
 <ol>
-<li>国标码：一个用于编码汉字和一些日韩字符的国家标准，主要有 GB2312，GBK，GB18030 三个标准，呈现继承与发展（向下兼容）的特性。请查看<a class="link" href="https://zhuanlan.zhihu.com/p/453675608" target="_blank" rel="noopener">这个链接</a>来搞清国标码(GBK)相关。Windows 默认就是这个编码。国标码是定长编码，基本使用两个字节(16 位二进制位)来表示一个汉字。</li>
-<li>UTF 编码：国际上有个统一码联盟，他们负责给全世界所有的字符编码，称为 Unicode。很早他们就支持了中日韩三个语言字符的编码（由于文字特性，中日韩字符在他们的体系中，在一个分区）。Unicode 只是规定了字符对应的二进制表示，但实际使用，位数过长而且浪费很多，所以实际使用只能继续缩短，使用更短的变长编码，称为 UTF。UTF 分成很多版本，一般代表了最短编码位数是多少。Linux / Mac + 互联网数据一般都是用这个编码。详情可以查看<a class="link" href="https://zhuanlan.zhihu.com/p/427488961" target="_blank" rel="noopener">这个链接</a>。</li>
+<li>国标码：一个用于编码汉字和一些日韩字符的国家标准，主要有 GB2312，GBK，GB18030 三个标准，呈现继承与发展（向下兼容）的特性。请查看<a class="link" href="https://zhuanlan.zhihu.com/p/453675608"  target="_blank" rel="noopener"
+    >这个链接</a>来搞清国标码(GBK)相关。Windows 默认就是这个编码。国标码是定长编码，基本使用两个字节(16 位二进制位)来表示一个汉字。</li>
+<li>UTF 编码：国际上有个统一码联盟，他们负责给全世界所有的字符编码，称为 Unicode。很早他们就支持了中日韩三个语言字符的编码（由于文字特性，中日韩字符在他们的体系中，在一个分区）。Unicode 只是规定了字符对应的二进制表示，但实际使用，位数过长而且浪费很多，所以实际使用只能继续缩短，使用更短的变长编码，称为 UTF。UTF 分成很多版本，一般代表了最短编码位数是多少。Linux / Mac + 互联网数据一般都是用这个编码。详情可以查看<a class="link" href="https://zhuanlan.zhihu.com/p/427488961"  target="_blank" rel="noopener"
+    >这个链接</a>。</li>
 </ol>
 <p>说到变长编码知识，计算机组成会讲汇编命令是如何编码的，那里会讲的。</p>
 <p>很明显，如果用 UTF 编码解析国标码，绝对会解析出不正常的数据。大巧不巧，Dart 语言的 String 本质上是一个 UTF-16 编码的序列。于是问题就产生了。</p>
@@ -464,7 +505,8 @@
 <li>流行方案：使用 UTF 和 GBK 的码表一一对应，方便转换。这个方式对平台很灵活，缺点需要让我程序增大 500k 左右，而且这种方式在执行时候也会有些慢。</li>
 <li>调用系统的解码接口来解码信息，我使用的是这个方案。但是缺点也很明显，如果没有对目标系统适配，解码就很难办。</li>
 </ol>
-<p>最终我使用的是这个库：<a class="link" href="https://pub.dev/packages/charset_converter" target="_blank" rel="noopener">charset_converter</a>。它目前能 Windows，Android，iOS 三个系统的转码，而且使用很方便。他支持很多编码，但我主要用国标码。</p>
+<p>最终我使用的是这个库：<a class="link" href="https://pub.dev/packages/charset_converter"  target="_blank" rel="noopener"
+    >charset_converter</a>。它目前能 Windows，Android，iOS 三个系统的转码，而且使用很方便。他支持很多编码，但我主要用国标码。</p>
 <h3 id="关于-dio-的转换器">关于 Dio 的转换器</h3>
 <p>Dio 的网络请求使用的是过滤器流水线模式：</p>
 <blockquote>
@@ -475,11 +517,13 @@
 <p>转换器 Transformer 是一个二进制码和 HTTP 请求响应结构互相转化的桥梁。默认的 Transformer 是解码后用来对 body 进行判断的。由于我上面提到，不能用 UTF 先编码再解码，所以我定制了一个 Transformer，称为 <code>ExperimentDioTransformer</code>。在一些基本对 Body 的二进制解析后，直接用 GBK 解码库来返回数据。学校物理实验服务器都是返回的网页，所以这么写没啥问题。</p>
 <p>(现在新版本的拦截器可以用异步办法了，但我不想改了)</p>
 <h3 id="关于-cookie-有中文字符">关于 Cookie 有中文字符</h3>
-<p>可以看看<a class="link" href="https://github.com/cfug/dio/issues/1959" target="_blank" rel="noopener">我在 Dio 开发仓库提出的问题</a>。</p>
+<p>可以看看<a class="link" href="https://github.com/cfug/dio/issues/1959"  target="_blank" rel="noopener"
+    >我在 Dio 开发仓库提出的问题</a>。</p>
 <p>Cookie 的官方规范，是仅允许一部分 ASCII 码作为合法字符的，Dart 核心库的 Cookie 实现严格遵照这个规范。但是令我哭笑不得的是，咱学校物理实验服务器传回的 Cookie 包含中文字符，就是这个用户的名字。加上 GBK 导致的编码，最后的结果自然就是报错，扔出“错误编码异常”。</p>
-<p>人官方严格按照标准，无可厚非。我为了这个玩意折腾了很长时间，直到最后，有个人告诉我，那个 Cookie 给服务器传任何值都可以，我无语了……</p>
+<p>人官方严格按照标准，无可厚非。我为了这个玩意折腾了很长时间，直到最后，有个人告诉我，那个 Cookie 给服务器传任何值都可以，我无语了&hellip;&hellip;</p>
 <h3 id="关于-iconv-转码的两三事">关于 Iconv 转码的两三事</h3>
-<p>这是搞 Windows 和 Linux 构建的副产品，针对<code>charset_converter</code>搞的新扩展。Pull-Request 链接<a class="link" href="https://github.com/pr0gramista/charset_converter/pull/38" target="_blank" rel="noopener">在此</a>。</p>
+<p>这是搞 Windows 和 Linux 构建的副产品，针对<code>charset_converter</code>搞的新扩展。Pull-Request 链接<a class="link" href="https://github.com/pr0gramista/charset_converter/pull/38"  target="_blank" rel="noopener"
+    >在此</a>。</p>
 <p>接下来说明<code>IConv</code>库，Unix 下面用来转码的库。实现很多，这里我使用的是 GTK 里面自带的 Iconv 库，因为 Flutter for Linux 使用的是 GTK，这样做能减少依赖。顺便，给 Flutter 写 Linux 原生代码有个注意点，好歹要对<code>GLib</code>这玩意有点了解。我之前速通过<code>Vala</code>，所以不算过于陌生。</p>
 <p>我主要利用了这些函数：</p>
 <h4 id="生成实例函数">生成实例函数</h4>
@@ -512,7 +556,8 @@
 </span></span></code></pre></div><p>传入要关闭的转换器<code>converter</code>，-1 失败，0 成功。</p>
 <h2 id="应用内信息的分发机制">应用内信息的分发机制</h2>
 <p>(来自 v0.4.0 发行概要)</p>
-<p>借鉴了<a class="link" href="https://github.com/xeonds/xdu-planet" target="_blank" rel="noopener">这个项目</a>。接下来，根据我的“服务器”和借鉴项目的 Github Action 配置文件，我给大家做一个大致的部署过程讲解。</p>
+<p>借鉴了<a class="link" href="https://github.com/xeonds/xdu-planet"  target="_blank" rel="noopener"
+    >这个项目</a>。接下来，根据我的“服务器”和借鉴项目的 Github Action 配置文件，我给大家做一个大致的部署过程讲解。</p>
 <h3 id="借鉴项目的-action">借鉴项目的 Action</h3>
 <p>Go 版本的 XDU Planet，本质上就是 RSS 处理转 json，然后用 gin 开服务器端口。这个项目使用 Github Action 来每小时更新，然后更新成一个 json 文件，最后搞到 Github Page。</p>
 <p>这个项目有三个分支：主代码，配置文件，部署分支。发布流程大致如下：</p>
@@ -523,7 +568,9 @@
 <li>上传生成的网页和 json 到部署分支，然后在部署分支的基础上部署 Github Action。</li>
 </ol>
 <h3 id="我的通知服务器">我的“通知服务器”</h3>
-<p>可以看看<a class="link" href="https://github.com/BenderBlog/traintime_pda_backend" target="_blank" rel="noopener">这个链接</a>。核心技术就是用 <a class="link" href="https://github.com/johnkerl/miller" target="_blank" rel="noopener">Miller</a> 来将 csv 转换成 json，然后用 Github Action 推到 Page 服务。同样的，这个项目有两个分支：</p>
+<p>可以看看<a class="link" href="https://github.com/BenderBlog/traintime_pda_backend"  target="_blank" rel="noopener"
+    >这个链接</a>。核心技术就是用 <a class="link" href="https://github.com/johnkerl/miller"  target="_blank" rel="noopener"
+    >Miller</a> 来将 csv 转换成 json，然后用 Github Action 推到 Page 服务。同样的，这个项目有两个分支：</p>
 <ol>
 <li>main 分支：存储 csv 文件和 Github Action 配置文件。</li>
 <li>depoly 分支：存储需要通过 Github Page 发布的 json 文件。</li>
@@ -537,12 +584,18 @@
 <h2 id="关于一点点-ios-开屏娘的事情">关于一点点 iOS 开屏娘的事情</h2>
 <p>(来自 v0.4.0 发行概要)</p>
 <p>这个玩意主要用到了 XCode 的界面设计工具。长这样：</p>
-<p></p><figure>
-	<a href="https://legacy.superbart.top/picture/xdyou/XDYou_XCode_LaunchImage.png">
-		<img src="https://legacy.superbart.top/picture/xdyou/XDYou_XCode_LaunchImage.png" loading="lazy"/>
+<p><figure 
+	>
+	<a href="https://legacy.superbart.top/picture/xdyou/XDYou_XCode_LaunchImage.png" >
+		<img src="https://legacy.superbart.top/picture/xdyou/XDYou_XCode_LaunchImage.png"
+			
+			
+			
+			loading="lazy"
+			>
 	</a>
 	
-</figure><p></p>
+</figure></p>
 <p>Apple Store 上架需要程序有个开屏图，我于是找个人画个漫画。画家顺便画个手绘板的图标，风格对应了。</p>
 <p>这个玩意我当时搞了接近一个下午才搞成，大部分时间在摸索这玩意到底咋用，小部分时间在看各个手机屏幕大小情况下的排版状况。最终我摸索出这样的排版：</p>
 <ol>
@@ -607,7 +660,10 @@
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span></code></pre></div><p>结束介绍，这破滑块验证码我还以为有啥高级的，结果就这？修这玩意最累的就是写这个滑块页，然后把我干感冒了。</p>
 <p>顺便学校搞个文字验证码怕是比这个强吧，这个玩意随便一个 opencv 搞个亮度边缘检测估计就能破，都没必要让用户滑。文字验证码好歹还得文字识别，要真搞爬虫的话，也比这个难吧。不过 PDA 不打算实现自动化滑块验证码，因为这样总觉得有点黑产的感觉，或者说，“破坏计算机信息系统罪”？</p>
-<p>顺便附上咱学校的滑块验证码用的<a class="link" href="https://gitee.com/LongbowEnterprise/SliderCaptcha" target="_blank" rel="noopener">前端库源代码地址</a>，这基本没改啊:-\ 我对这个玩意真是无语了，修这玩意把我干感冒更是让我想骂街。所以我拉出了 Black Sabbath 的 Sabotage 专辑两首歌，<a class="link" href="https://music.163.com/#/song?id=16837102" target="_blank" rel="noopener">Symptom Of The Universe</a> 和  <a class="link" href="https://music.163.com/#/song?id=16837105" target="_blank" rel="noopener">Supertzar</a> 分别当作本版本 iOS 和 Android 的发行代号。</p>
+<p>顺便附上咱学校的滑块验证码用的<a class="link" href="https://gitee.com/LongbowEnterprise/SliderCaptcha"  target="_blank" rel="noopener"
+    >前端库源代码地址</a>，这基本没改啊:-\ 我对这个玩意真是无语了，修这玩意把我干感冒更是让我想骂街。所以我拉出了 Black Sabbath 的 Sabotage 专辑两首歌，<a class="link" href="https://music.163.com/#/song?id=16837102"  target="_blank" rel="noopener"
+    >Symptom Of The Universe</a> 和  <a class="link" href="https://music.163.com/#/song?id=16837105"  target="_blank" rel="noopener"
+    >Supertzar</a> 分别当作本版本 iOS 和 Android 的发行代号。</p>
 <p>这两首歌的背景实际上也是种不满。Black Sabbath 乐队当时被乐队经理告上法庭，他们疲于为了法律问题奔命，根本没心情写歌。于是他们搞出来他们这一辈子最重的专辑。</p>
 <h2 id="教务移动端抓包记录">教务移动端抓包记录</h2>
 <p>一开始，为了提高 PDA 程序的稳定性，我决定在某些功能方面弃用 ehall ，这玩意半夜经常挂掉。所以，我打算使用我在学校小程序里面看到的教务新前端，兴许这玩意能稳定点，而且确实，在编程方面能简单些。但是后来我发现，这玩意挂掉的概率更高，所以我又改了回去，目前只有空闲教室使用了这个。</p>
@@ -616,10 +672,12 @@
 <p>在统一认证服务认证用户后，需要有个跳转地址，这个地址根据我的抓包，应该是这个：</p>
 <pre tabindex="0"><code>https://xxcapp.xidian.edu.cn/a_xidian/api/cas-login/indexredirect=https%3A%2F%2Fxxcapp.xidian.edu.cn%2Fuc%2Fapi%2Foauth%2Findex%3Fappid%3D200190304164516885%26redirect%3Dhttps%253A%252F%252Fehall.xidian.edu.cn%252Fjwmobile%252Fauth%252Findex%26state%3DSTATE%26qrcode%3D1&amp;from=wap
 </code></pre><p>他很长，很显然用到了其他的二级鉴权服务，但是我们不需要关心，在最开始跟着他 302 的 Location 跳转就好了。为啥是“在最开始”，因为跳转的 Location 里面有很重要的鉴权标志。</p>
-<p>接下来的内容涉及到 Authorization 头，建议各位先看个<a class="link" href="https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Headers/Authorization" target="_blank" rel="noopener">这玩意的介绍</a>。我的程序中，有个双创招队伍展示的功能，那个的后端也是用的这玩意鉴权，而且显然比这玩意好写。</p>
+<p>接下来的内容涉及到 Authorization 头，建议各位先看个<a class="link" href="https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Headers/Authorization"  target="_blank" rel="noopener"
+    >这玩意的介绍</a>。我的程序中，有个双创招队伍展示的功能，那个的后端也是用的这玩意鉴权，而且显然比这玩意好写。</p>
 <p>我上面提到了很多的 302 跳转，其中最重要的跳转是在 xxcapp 之后 get 的第一个 ehall ，那里面的 Location 充满了 token，那个 token 就是我们之后要用到的 Authorization token。</p>
 <p>之后用功能的时候，需要在 Header 里面使用 Authorization，传过去这个 token 就行。</p>
-<p>在使用一个服务的时候，根据抓包看出的规律，我们需要给 <a class="link" href="https://ehall.xidian.edu.cn/jwmobile/biz/home/updateServiceUsage" target="_blank" rel="noopener">https://ehall.xidian.edu.cn/jwmobile/biz/home/updateServiceUsage</a> POST 一个 json 编码的数据，形式是 {“key”: 你要搞的服务}。</p>
+<p>在使用一个服务的时候，根据抓包看出的规律，我们需要给 <a class="link" href="https://ehall.xidian.edu.cn/jwmobile/biz/home/updateServiceUsage"  target="_blank" rel="noopener"
+    >https://ehall.xidian.edu.cn/jwmobile/biz/home/updateServiceUsage</a> POST 一个 json 编码的数据，形式是 {&ldquo;key&rdquo;: 你要搞的服务}。</p>
 <p>其中你要搞的服务有这些：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-json" data-lang="json"><span class="line"><span class="cl"><span class="p">{</span>
 </span></span><span class="line"><span class="cl">	<span class="nt">&#34;data&#34;</span><span class="p">:</span> <span class="p">[</span>
@@ -895,8 +953,10 @@
 <p>首先，安卓小部件我是求别人写的，苹果部件是我写的。(Swift UI 是真的好写)</p>
 <h3 id="苹果的-groupid-机制">苹果的 groupid 机制</h3>
 <p>关于数据读取，安卓的好办，直接读就行了。但是苹果的就难办了。</p>
-<p>简单来说，苹果的小部件是独立于主程序的，而苹果的沙盒机制导致了程序之间的数据是无法共享的。各位从 App Store 上面下载的程序，本质上是一个套件，里面包含了主程序和小部件程序。虽然小部件程序不能直接读主程序的数据，但是苹果大发慈悲地提供了一种名字叫<code>groupid</code>的机制，来使一个套件下面的数据能够共享。对于这个东西的介绍，可以阅读<a class="link" href="https://www.jianshu.com/p/a2d9ef58bad5" target="_blank" rel="noopener">这个文章</a>。</p>
-<p>我们需要共享的数据，主要是课表数据。所以我们需要把课表数据从主程序的区域复制一份到公共区域，而这里又涉及到调用原生端代码的问题，因为那些存储到公共区域的代码都是原生代码。这里我们需要提到<a class="link" href="https://pub.dev/packages/pigeon" target="_blank" rel="noopener">Flutter 的 Pigeon 插件</a>，通过这个插件，我们可以比较简单地访问到原生代码。具体使用这里不会说明，我主要介绍我在原生开放了啥接口。</p>
+<p>简单来说，苹果的小部件是独立于主程序的，而苹果的沙盒机制导致了程序之间的数据是无法共享的。各位从 App Store 上面下载的程序，本质上是一个套件，里面包含了主程序和小部件程序。虽然小部件程序不能直接读主程序的数据，但是苹果大发慈悲地提供了一种名字叫<code>groupid</code>的机制，来使一个套件下面的数据能够共享。对于这个东西的介绍，可以阅读<a class="link" href="https://www.jianshu.com/p/a2d9ef58bad5"  target="_blank" rel="noopener"
+    >这个文章</a>。</p>
+<p>我们需要共享的数据，主要是课表数据。所以我们需要把课表数据从主程序的区域复制一份到公共区域，而这里又涉及到调用原生端代码的问题，因为那些存储到公共区域的代码都是原生代码。这里我们需要提到<a class="link" href="https://pub.dev/packages/pigeon"  target="_blank" rel="noopener"
+    >Flutter 的 Pigeon 插件</a>，通过这个插件，我们可以比较简单地访问到原生代码。具体使用这里不会说明，我主要介绍我在原生开放了啥接口。</p>
 <p>这个接口需要获取一个<code>appid</code>组名称，一个文件名<code>fileName</code>，文件里面的内容<code>data</code>（必须为纯文本）。同时需要实现一个函数<code>saveToGroupId</code>来实现保存到公共空间的功能。接下来展示的就是我给插件编写的模板接口文件，插件会根据这个文件生成用于访问该函数的类。顺便一提，这个文件不能放进<code>/lib</code>里面。</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-dart" data-lang="dart"><span class="line"><span class="cl"><span class="c1">// Copyright 2024 BenderBlog Rodriguez and contributors.
 </span></span></span><span class="line"><span class="cl"><span class="c1">// SPDX-License-Identifier: MPL-2.0
@@ -964,7 +1024,8 @@
 </span></span><span class="line"><span class="cl">    <span class="bp">print</span><span class="p">(</span><span class="s">&#34;Write complete!&#34;</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">    <span class="n">completion</span><span class="p">(.</span><span class="n">success</span><span class="p">(</span><span class="kc">true</span><span class="p">))</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></div><p>这样，在主程序数据更新的时候，通过执行这个函数，我们可以将更新后的数据同步到代码公共区域，然后，使用<a class="link" href="https://pub.dev/packages/home_widget" target="_blank" rel="noopener">home_widget</a>插件，来让小部件强制刷新。</p>
+</span></span></code></pre></div><p>这样，在主程序数据更新的时候，通过执行这个函数，我们可以将更新后的数据同步到代码公共区域，然后，使用<a class="link" href="https://pub.dev/packages/home_widget"  target="_blank" rel="noopener"
+    >home_widget</a>插件，来让小部件强制刷新。</p>
 <h3 id="数据处理">数据处理</h3>
 <p>这里处理方式双端大差不差：</p>
 <ol>
@@ -975,8 +1036,10 @@
 <p>此外，苹果部件在渲染前还包含一步，也就是创造小部件时间轴，根据时间删除过去的日程。这个功能安卓没实现，因为安卓后台刷新更加玄学。或者这么说，所有平台的后台刷新都是玄学级别，不如苹果小部件的时间轴可以控制。</p>
 <h3 id="小部件刷新">小部件刷新</h3>
 <p>安卓的是靠一个内置的时钟，每十八分钟更新。不过这玩意玄学能不能更新，只能看天。</p>
-<p>苹果是按照时间轴机制刷新的，每天半夜根据文件内容，生成当天的时间轴，包括今天和明天的内容。关于时间轴请查看<a class="link" href="https://developer.apple.com/documentation/widgetkit/keeping-a-widget-up-to-date" target="_blank" rel="noopener">苹果的官方介绍</a>。我的处理方法是，先获取数据，整理后根据各个日程的下课时间来决定时间轴上面的坐标，对应坐标是当时还在进行的课程和尚未开始的课程，最后进行刷新。</p>
-<p>在此之前，我打算使用一个后台刷新插件，名字叫 <a class="link" href="https://pub.dev/packages/background_fetch" target="_blank" rel="noopener">background_fetch</a>，通过这个东西打算在后台让程序运行，进而在主程序主页的日程组件更新日程的时候，顺带更新小部件的数据。但是后台刷新在任何平台都是玄学，加上开学后有个叫跑步的玩意彻底让体育小插件没有存在的意义，顺便带走了后台刷新的意义，于是就这样了()</p>
+<p>苹果是按照时间轴机制刷新的，每天半夜根据文件内容，生成当天的时间轴，包括今天和明天的内容。关于时间轴请查看<a class="link" href="https://developer.apple.com/documentation/widgetkit/keeping-a-widget-up-to-date"  target="_blank" rel="noopener"
+    >苹果的官方介绍</a>。我的处理方法是，先获取数据，整理后根据各个日程的下课时间来决定时间轴上面的坐标，对应坐标是当时还在进行的课程和尚未开始的课程，最后进行刷新。</p>
+<p>在此之前，我打算使用一个后台刷新插件，名字叫 <a class="link" href="https://pub.dev/packages/background_fetch"  target="_blank" rel="noopener"
+    >background_fetch</a>，通过这个东西打算在后台让程序运行，进而在主程序主页的日程组件更新日程的时候，顺带更新小部件的数据。但是后台刷新在任何平台都是玄学，加上开学后有个叫跑步的玩意彻底让体育小插件没有存在的意义，顺便带走了后台刷新的意义，于是就这样了()</p>
 <h2 id="程序主页日程处理">程序主页日程处理</h2>
 <p>把课程信息，考试信息和物理实验信息统合到一个日程表（在竞争品那边叫课表）是我最开始写 PDA 时候的愿望。在 v1.1.0 版本中，通过对其他日历程序的东西，终于实现了。</p>
 <h3 id="统一的日程格式">统一的日程格式</h3>
@@ -1026,7 +1089,8 @@
 </table>
 <h3 id="桌面数据刷新进程">桌面数据刷新进程</h3>
 <p>这里的代码涉及“后台登陆刷新功能”，是 PR 来的功能。</p>
-<p>在用户刷新主页信息的时候，或者从别处回到本程序主页的时候，日程数据就会刷新。这里简单涉及到了<code>AppLifecycleListener</code>，侦测生命周期的东西，详情可以看<a class="link" href="https://zhuanlan.zhihu.com/p/651402152" target="_blank" rel="noopener">这个链接</a>。在本程序中，我们需要侦测<code>resumed</code>状态，也就是前台运行状态。我们通过重写<code>didChangeAppLifecycleState</code>来侦测。</p>
+<p>在用户刷新主页信息的时候，或者从别处回到本程序主页的时候，日程数据就会刷新。这里简单涉及到了<code>AppLifecycleListener</code>，侦测生命周期的东西，详情可以看<a class="link" href="https://zhuanlan.zhihu.com/p/651402152"  target="_blank" rel="noopener"
+    >这个链接</a>。在本程序中，我们需要侦测<code>resumed</code>状态，也就是前台运行状态。我们通过重写<code>didChangeAppLifecycleState</code>来侦测。</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-dart" data-lang="dart"><span class="line"><span class="cl"><span class="err">@</span><span class="n">override</span>
 </span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="n">didChangeAppLifecycleState</span><span class="p">(</span><span class="n">AppLifecycleState</span> <span class="n">state</span><span class="p">)</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">	<span class="k">super</span><span class="p">.</span><span class="n">didChangeAppLifecycleState</span><span class="p">(</span><span class="n">state</span><span class="p">);</span>
@@ -1050,7 +1114,8 @@
 <blockquote>
 <p>个人开发的开源软件或半开源软件 &gt; 集体开发的开源软件 &gt; 个人开发的闭源软件 &gt; 集体开发的半开源软件 &gt; 集体开发的闭源软件</p>
 </blockquote>
-<p>其中，半开源软件请参考 <a class="link" href="https://f-droid.org/zh_Hans/docs/Anti-Features/" target="_blank" rel="noopener">FDroid 的负面特征定义</a>。显然我的软件属于半开源软件，我这个软件实质上模拟了你在浏览器中，对学校后端的访问。</p>
+<p>其中，半开源软件请参考 <a class="link" href="https://f-droid.org/zh_Hans/docs/Anti-Features/"  target="_blank" rel="noopener"
+    >FDroid 的负面特征定义</a>。显然我的软件属于半开源软件，我这个软件实质上模拟了你在浏览器中，对学校后端的访问。</p>
 <p>实际上软件的开源与否，并不重要，重要的是软件本身能不能很好用，而按照我的经验，软件的好用也可以这么排序，尤其是手机端应用()</p>
 <p>所以，我虽然经常说开源很重要，但这个实际上是因为我认为个人开发者的产品更好而导致的。而开源软件放前面，是因为代码开放让人用着更舒服，可能我长期用 Linux 留下来的某种遗留症状。而且我某种意义上，真的不喜欢封闭的东西，虽然我发现大家都喜欢。</p>
 <p>而为啥我要将这个软件按照 MPL 授权，是因为我的软件有很多可以复用的东西，比如上面我大幅度提到的课程表和那个 BothSide 。这些复用的东西我将来是打算做成程序内的 package，如果按照 GPL ，不利于传播。而我目前程序状态，如果使用 MIT 之类的，那可能会有很多的魔改版，然后闭源了。MPL 是按照文件强制开源的，就目前状态所言，假如你只是用了我的课程表代码文件，那么，你只需要开源课程表代码文件+你对这个代码的修改，就好了。</p>
@@ -1071,5 +1136,4 @@
 <p>(此处狗头保命，顺便说明我不是男娘，为啥最近男娘这么流行)</p>
 <h3 id="移除体育打卡功能">移除体育打卡功能</h3>
 <p>我还是那句话，强迫人的东西，就算是好事，也是能给败坏了。但是我也不建议花钱刷，因为这种技术的玩意花钱我觉得真不合适，就跟刷机包要花钱买一样。不过我进一步想，技术开放的前提是很多人都能有能力，有时间来实践，而且至少有一点感恩心啥的。很显然不是所有人都这样，感恩心不用说，全是反例子。要不然当初为啥搞 LSPosed 那几大位心累如此呢？而前两个：有能力有时间，更重要的是有时间。就现在课程压力大+竞争压力大，我估计能有时间折腾的，不是满绩点和各种比赛都能玩的开，就是光搞兴趣爱好而把学业荒废的？</p>
-<p>无论如何，现在这个功能被体育课程信息窗口查看。也许将来可以日程表信息可以包括这个？我暂时没想好。</p>
-</body></html>
+<p>无论如何，现在这个功能被体育课程信息窗口查看。也许将来可以日程表信息可以包括这个？我暂时没想好。</p></blockquote>

@@ -1,23 +1,23 @@
-<html><head></head><body><h2 id="Attention"><a href="http://wanglanhuajiaofen.fun/2024/04/29/QAuxiliary/#Attention" class="headerlink" title="Attention"></a>Attention</h2><p>QAuxiliary安装是我第一次从头到尾都是自己一步一步摸索出来的（○｀ 3′○）<br/>因此可能会有一些地方存在问题，可联系我进行更改(u‿ฺu✿ฺ)</p>
-<h3 id="需要提前下载的软件"><a href="http://wanglanhuajiaofen.fun/2024/04/29/QAuxiliary/#%E9%9C%80%E8%A6%81%E6%8F%90%E5%89%8D%E4%B8%8B%E8%BD%BD%E7%9A%84%E8%BD%AF%E4%BB%B6" class="headerlink" title="需要提前下载的软件"></a>需要提前下载的软件</h3><ul>
-<li>LSPatch:用于将QAuxiliary模块插入的QQ的APK中。</li>
-<li>QAuxiliary:To make OICQ great again(๑•̀ㅂ•́)و✧!!!是一个基于QNotified的开源的Xposed框架。</li>
-<li>Shizuku(或许也用不到这个，雾):可以在未root情况下使一些app使用root权限。<span id="more"></span></li>
-</ul>
-<h3 id="软件下载链接"><a href="http://wanglanhuajiaofen.fun/2024/04/29/QAuxiliary/#%E8%BD%AF%E4%BB%B6%E4%B8%8B%E8%BD%BD%E9%93%BE%E6%8E%A5" class="headerlink" title="软件下载链接"></a>软件下载链接</h3><ul>
-<li><a href="https://github.com/LSPosed/LSPatch/releases">LSPatch</a></li>
-<li><a href="https://github.com/cinit/QAuxiliary/releases">QAuxiliary</a></li>
-<li><a href="https://github.com/RikkaApps/Shizuku/releases">Shizuku</a></li>
-</ul>
-<h3 id="安装步骤"><a href="http://wanglanhuajiaofen.fun/2024/04/29/QAuxiliary/#%E5%AE%89%E8%A3%85%E6%AD%A5%E9%AA%A4" class="headerlink" title="安装步骤"></a>安装步骤</h3><ul>
-<li>安装好上述三个软件ヽ(✿ﾟ▽ﾟ)ノ</li>
-<li>将当前QQ卸载，重新下载一个QQ的APK，并存放在一个指定目录，不用安装。</li>
-<li>打开Shizuku，按照软件提示来启动Shizuku服务。</li>
-<li>启动后给LSPatch软件开放权限。</li>
-<li>打开LSPatch，在下面这个页面点击＋号<img src="https://s2.loli.net/2024/04/29/sHk3aXmh1Wqp6Se.jpg" alt="LSPatch step 1"/></li>
-<li>第一次操作需要先随便选择一个目录来存放被注入模块的APK的路径<img src="https://s2.loli.net/2024/04/29/lWJw7VHMnDLyCox.jpg" alt="LSPatch step 2"/></li>
-<li>选择好后再选择刚刚下载的QQ APK，然后等待注入成功即可φ(≧ω≦*)♪</li>
-<li>注入成功后在QQ侧滑栏设置页面即可看到QAuxiliary选项，至此大功告成(๑•̀ㅂ•́)و✧</li>
-</ul>
-<h2 id="结语"><a href="http://wanglanhuajiaofen.fun/2024/04/29/QAuxiliary/#%E7%BB%93%E8%AF%AD" class="headerlink" title="结语"></a>结语</h2><p>我好喜欢开源w(ﾟДﾟ)w，虽然还只是一个刚刚接触的小趴菜Σ( ° △ °|||)︴<br/>伟大，无需多言Ψ(￣∀￣)Ψ！</p>
- </body></html>
+<blockquote> &lt;h2 id=&#34;Attention&#34;&gt;&lt;a href=&#34;#Attention&#34; class=&#34;headerlink&#34; title=&#34;Attention&#34;&gt;&lt;/a&gt;Attention&lt;/h2&gt;&lt;p&gt;QAuxiliary安装是我第一次从头到尾都是自己一步一步摸索出来的（○｀ 3′○）&lt;br&gt;因此可能会有一些地方存在问题，可联系我进行更改(u‿ฺu✿ฺ)&lt;/p&gt;
+&lt;h3 id=&#34;需要提前下载的软件&#34;&gt;&lt;a href=&#34;#需要提前下载的软件&#34; class=&#34;headerlink&#34; title=&#34;需要提前下载的软件&#34;&gt;&lt;/a&gt;需要提前下载的软件&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;LSPatch:用于将QAuxiliary模块插入的QQ的APK中。&lt;/li&gt;
+&lt;li&gt;QAuxiliary:To make OICQ great again(๑•̀ㅂ•́)و✧!!!是一个基于QNotified的开源的Xposed框架。&lt;/li&gt;
+&lt;li&gt;Shizuku(或许也用不到这个，雾):可以在未root情况下使一些app使用root权限。&lt;span id=&#34;more&#34;&gt;&lt;/span&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;软件下载链接&#34;&gt;&lt;a href=&#34;#软件下载链接&#34; class=&#34;headerlink&#34; title=&#34;软件下载链接&#34;&gt;&lt;/a&gt;软件下载链接&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/LSPosed/LSPatch/releases&#34;&gt;LSPatch&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/cinit/QAuxiliary/releases&#34;&gt;QAuxiliary&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/RikkaApps/Shizuku/releases&#34;&gt;Shizuku&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;安装步骤&#34;&gt;&lt;a href=&#34;#安装步骤&#34; class=&#34;headerlink&#34; title=&#34;安装步骤&#34;&gt;&lt;/a&gt;安装步骤&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;安装好上述三个软件ヽ(✿ﾟ▽ﾟ)ノ&lt;/li&gt;
+&lt;li&gt;将当前QQ卸载，重新下载一个QQ的APK，并存放在一个指定目录，不用安装。&lt;/li&gt;
+&lt;li&gt;打开Shizuku，按照软件提示来启动Shizuku服务。&lt;/li&gt;
+&lt;li&gt;启动后给LSPatch软件开放权限。&lt;/li&gt;
+&lt;li&gt;打开LSPatch，在下面这个页面点击＋号&lt;img src=&#34;https://s2.loli.net/2024/04/29/sHk3aXmh1Wqp6Se.jpg&#34; alt=&#34;LSPatch step 1&#34;&gt;&lt;/li&gt;
+&lt;li&gt;第一次操作需要先随便选择一个目录来存放被注入模块的APK的路径&lt;img src=&#34;https://s2.loli.net/2024/04/29/lWJw7VHMnDLyCox.jpg&#34; alt=&#34;LSPatch step 2&#34;&gt;&lt;/li&gt;
+&lt;li&gt;选择好后再选择刚刚下载的QQ APK，然后等待注入成功即可φ(≧ω≦*)♪&lt;/li&gt;
+&lt;li&gt;注入成功后在QQ侧滑栏设置页面即可看到QAuxiliary选项，至此大功告成(๑•̀ㅂ•́)و✧&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;结语&#34;&gt;&lt;a href=&#34;#结语&#34; class=&#34;headerlink&#34; title=&#34;结语&#34;&gt;&lt;/a&gt;结语&lt;/h2&gt;&lt;p&gt;我好喜欢开源w(ﾟДﾟ)w，虽然还只是一个刚刚接触的小趴菜Σ( ° △ °|||)︴&lt;br&gt;伟大，无需多言Ψ(￣∀￣)Ψ！&lt;/p&gt;
+ </blockquote>

@@ -1,20 +1,20 @@
-<html><head></head><body><h1>Chapter 18 - 命令冷却时间</h1>
+<blockquote><h1>Chapter 18 - 命令冷却时间</h1>
 <p>本文撰写时，项目已升级至 discord.js@v14.9.0。</p>
 <p>很多时候，我们不希望频道被单一用户用洪水般的命令消息所淹没，又或者出于对服务器性能的考虑，我们不得不为命令加上一个冷却时间（Cooldown）作为使用限制。下面我们来看看如何在我们已有的代码上进行改造，以获得命令冷却的效果。</p>
 <h3>创建 <code>commands/longCooldownPing.js</code></h3>
 <p>为了与原有代码兼容，我们将设计成这样：<code>module.exports</code> 中，没有 <code>cooldown</code> 值的旧代码，将使用我们后续设置的默认冷却时间。而有该值的新代码，直接使用该值作为冷却时间。</p>
 <p>我们创建一个拥有 15 秒 冷却时间的命令 <code>/coolping</code>。同一个用户在第一次成功使用命令后的 15 秒内将不被再次允许使用这项命令，除非 15 秒后，冷却时间结束。</p>
 <p><code>commands/longCooldownPing.js</code>：</p>
-<pre><code>const { SlashCommandBuilder } = require(&#39;discord.js&#39;);
+<pre><code>const { SlashCommandBuilder } = require('discord.js');
 
 module.exports = {
     // 这里设置一个冷却时长，单位为秒
     cooldown: 15,
     data: new SlashCommandBuilder()
-        .setName(&#39;coolping&#39;)
-        .setDescription(&#39;Replies with Pong, but with a 15 secs cooldown!&#39;),
+        .setName('coolping')
+        .setDescription('Replies with Pong, but with a 15 secs cooldown!'),
     async execute(interaction) {
-        await interaction.reply(&#34;Pong!&#34;);
+        await interaction.reply("Pong!");
         // 每次都提示这个用户，他的下一次该命令将在 15 秒后可用
         await interaction.followUp({
             content: `Next /coolping will be available in 15 seconds`,
@@ -28,7 +28,7 @@ module.exports = {
 <p>我们要在执行命令前判断是否过了冷却时间，而不是之后。所以相关的判断逻辑应该在咱们 <code>if (interaction.isChatInputCommand())</code> 之前。</p>
 <p>但是我们知道，一个交互（Interaction），它不一定就是个命令，它也可能是条普通消息，我们不希望在非命令上整这么个冷却时间。所以，先来个 <code>if (interaction.isCommand()) { ... }</code>，我们所有冷却时间逻辑都写在这里面。</p>
 <p><code>events/interactionCreate.js</code> 开头节选：</p>
-<pre><code>const { Events } = require(&#39;discord.js&#39;);
+<pre><code>const { Events } = require('discord.js');
 
 module.exports = {
 	name: Events.InteractionCreate,
@@ -47,7 +47,7 @@ module.exports = {
 <p>是这么考虑的：对于第一次执行某命令的用户，我们将现在时间 <code>now</code> 加上该命令的冷却时间 <code>cooldown</code>，计算得到过期时间 <code>expirationTime</code>， 即 <code>expirationTime = now + cooldown</code>。</p>
 <p>接着，将用户 ID 与过期时间结合起来成为一个条目储存到与命令名相关的数据结构里，以便在这个人下一次执行相同命令时，判断确定是否过了冷却时间。为此，需要创建一个 叫 <code>cooldowns</code> 的 Collection，并导包 。（注意区分 <code>cooldown</code> 和 <code>cooldowns</code>）</p>
 <p><code>events/interactionCreate.js</code> 开头节选：</p>
-<pre><code>const { Events, Collection } = require(&#39;discord.js&#39;);
+<pre><code>const { Events, Collection } = require('discord.js');
 let cooldowns = new Collection();
 module.exports = {
 	name: Events.InteractionCreate,
@@ -76,7 +76,7 @@ if (interaction.isCommand()) {
 
 const now = Date.now(); // get current time
 const timestamps = await cooldowns.get(command.data.name);
-const defaultCooldownDuration = 0; // we set a DEFAULT value for those legacy command that didn&#39;t set a cooldown
+const defaultCooldownDuration = 0; // we set a DEFAULT value for those legacy command that didn't set a cooldown
 const cooldownAmount = (command.cooldown ?? defaultCooldownDuration) * 1000;
 
 ...
@@ -112,7 +112,7 @@ await setTimeout(() =&gt; timestamps.delete(interaction.user.id), cooldownAmount
 ...
 </code></pre>
 <p>这样我们就完成了修改。下面是修改后 <code>events/interactionCreate.js</code> 的内容开头节选：</p>
-<pre><code>const { Events, Collection } = require(&#39;discord.js&#39;);
+<pre><code>const { Events, Collection } = require('discord.js');
 let cooldowns = new Collection();
 module.exports = {
 	name: Events.InteractionCreate,
@@ -127,7 +127,7 @@ module.exports = {
 
 			const now = Date.now(); // get current time
 			const timestamps = await cooldowns.get(command.data.name);
-			const defaultCooldownDuration = 0; // we set a DEFAULT value for those legacy command that didn&#39;t set a cooldown
+			const defaultCooldownDuration = 0; // we set a DEFAULT value for those legacy command that didn't set a cooldown
 			const cooldownAmount = (command.cooldown ?? defaultCooldownDuration) * 1000;
 
 			if (timestamps.has(interaction.user.id)) {
@@ -160,9 +160,8 @@ Github：https://github.com/wtflmao/discord_bot_example/commit/4ecb8c2cb29240776
 Gitee：https://gitee.com/wtflmao/discord_bot_example/commit/4ecb8c2cb29240776f1cb6660ea7b810dc2ff963</p>
 <p>效果图：
 近期第一次 <code>/coolping</code>：
-<img src="https://img2023.cnblogs.com/blog/2455224/202304/2455224-20230409160747347-379304443.png" alt="image"/></p>
+<img src="https://img2023.cnblogs.com/blog/2455224/202304/2455224-20230409160747347-379304443.png" alt="image" /></p>
 <p>4 秒后（未过冷却时间），第二次执行 <code>/coolping</code>：
-<img src="https://img2023.cnblogs.com/blog/2455224/202304/2455224-20230409160751181-1126526170.png" alt="image"/></p>
+<img src="https://img2023.cnblogs.com/blog/2455224/202304/2455224-20230409160751181-1126526170.png" alt="image" /></p>
 <h3>小结</h3>
-<p>我学习了为命令设置冷却时间。</p>
-</body></html>
+<p>我学习了为命令设置冷却时间。</p></blockquote>

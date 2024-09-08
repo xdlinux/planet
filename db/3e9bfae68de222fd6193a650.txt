@@ -1,7 +1,7 @@
-<html><head></head><body><h2 id="cpp中的重定向printf">CPP中的重定向printf</h2>
+<blockquote><h2 id="cpp中的重定向printf">CPP中的重定向printf</h2>
 <p>cpp不允许重定义 =&gt; 不按照cpp规则编译即可</p>
 <div class="highlight"><div class="chroma">
-<table class="lntable"><tbody><tr><td class="lntd">
+<table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
@@ -20,11 +20,11 @@
 </span></span><span class="line"><span class="cl"> <span class="k">return</span> <span class="n">ch</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl"> <span class="p">}</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></td></tr></tbody></table>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h2 id="led控制亮度--led-类">LED控制亮度 =&gt; LED 类</h2>
 <div class="highlight"><div class="chroma">
-<table class="lntable"><tbody><tr><td class="lntd">
+<table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
@@ -313,12 +313,12 @@
 </span></span><span class="line"><span class="cl"> <span class="p">}</span>
 </span></span><span class="line"><span class="cl"> <span class="p">}</span>
 </span></span><span class="line"><span class="cl"><span class="p">};</span>
-</span></span></code></pre></td></tr></tbody></table>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h2 id="led类--led-array-类">LED类 =&gt; LED Array 类</h2>
 <p>简单的将上面的LED用array来 遍历 控制。</p>
 <div class="highlight"><div class="chroma">
-<table class="lntable"><tbody><tr><td class="lntd">
+<table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
@@ -469,13 +469,13 @@
 </span></span><span class="line"><span class="cl"> <span class="p">}</span>
 </span></span><span class="line"><span class="cl"> <span class="p">}</span>
 </span></span><span class="line"><span class="cl"><span class="p">};</span>
-</span></span></code></pre></td></tr></tbody></table>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h2 id="延时执行类-delay">延时执行类 Delay</h2>
 <p>为了实现 流水 效果， 需要延时(每隔几次运行一次)来执行</p>
 <p>hpp</p>
 <div class="highlight"><div class="chroma">
-<table class="lntable"><tbody><tr><td class="lntd">
+<table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
@@ -504,11 +504,11 @@
 </span></span><span class="line"><span class="cl"> <span class="kt">int</span> <span class="n">__delay_times__</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl"> <span class="kt">int</span> <span class="n">__crt_times__</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl"><span class="p">};</span>
-</span></span></code></pre></td></tr></tbody></table>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>cpp</p>
 <div class="highlight"><div class="chroma">
-<table class="lntable"><tbody><tr><td class="lntd">
+<table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
@@ -571,12 +571,12 @@
 </span></span><span class="line"><span class="cl"> <span class="k">return</span> <span class="nb">false</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl"> <span class="p">}</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></td></tr></tbody></table>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>##　串口屏控制(状态控制和直接控制)
 这里的状态一是Crt_Main_Task, 也就写了个流水，二是每个灯独立的状态控制，用到的也就一个 呼吸。</p>
 <div class="highlight"><div class="chroma">
-<table class="lntable"><tbody><tr><td class="lntd">
+<table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
@@ -703,11 +703,11 @@
 </span></span><span class="line"><span class="cl"> <span class="n">__HAL_UART_CLEAR_FLAG</span><span class="p">(</span><span class="o">&amp;</span><span class="n">huart1</span><span class="p">,</span> <span class="n">UART_FLAG_RXNE</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl"> <span class="p">}</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></td></tr></tbody></table>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>上面的sortVectorByValue，这直接 Ai 写吧，先排个序然后再判断相邻的是不是相等就行了。</p>
 <div class="highlight"><div class="chroma">
-<table class="lntable"><tbody><tr><td class="lntd">
+<table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
@@ -808,11 +808,11 @@
 </span></span><span class="line"><span class="cl"> <span class="p">}</span>
 </span></span><span class="line"><span class="cl"> <span class="n">count</span><span class="o">++</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></td></tr></tbody></table>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h2 id="定时执行执行状态对应的任务">定时执行(执行状态对应的任务)</h2>
 <div class="highlight"><div class="chroma">
-<table class="lntable"><tbody><tr><td class="lntd">
+<table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
@@ -893,6 +893,6 @@
 </span></span><span class="line"><span class="cl"> <span class="n">ledarray</span><span class="p">.</span><span class="n">printCompares</span><span class="p">();</span>
 </span></span><span class="line"><span class="cl"> <span class="p">}</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></td></tr></tbody></table>
+</span></span></code></pre></td></tr></table>
 </div>
-</div></body></html>
+</div></blockquote>

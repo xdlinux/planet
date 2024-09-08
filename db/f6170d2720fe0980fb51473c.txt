@@ -1,17 +1,17 @@
-<html><head></head><body><h2>Chapter 6 - 交互：对斜杠命令回复的那些事儿（2）</h2>
+<blockquote><h2>Chapter 6 - 交互：对斜杠命令回复的那些事儿（2）</h2>
 <p>本章是 Chapter 5 的续集。</p>
 <h3>抓取响应 Fetching responses</h3>
 <p>除了对斜杠命令进行回复外，我们还可以抓取这个回复，比如用于给这个回复添加表情回复（reactions）。</p>
 <p>靠这个：<code>CommandInteraction#fetchReply()</code>。</p>
 <p>来个例子，<code>commands/pingFetch.js</code>：</p>
-<pre><code>const { SlashCommandBuilder } = require(&#39;discord.js&#39;);
+<pre><code>const { SlashCommandBuilder } = require('discord.js');
 
 module.exports = {
 	data: new SlashCommandBuilder()
-		.setName(&#39;ping7&#39;)
-		.setDescription(&#39;Replies with Pong, and fetch!&#39;),
+		.setName('ping7')
+		.setDescription('Replies with Pong, and fetch!'),
 	async execute(interaction) {
-	    await interaction.reply(&#34;Pong!&#34;);
+	    await interaction.reply("Pong!");
 		const message = await interaction.fetchReply();
 		console.log(message); // 控制台输出抓取的消息对象本身
 	},
@@ -19,20 +19,20 @@ module.exports = {
 </code></pre>
 <p>控制台输出：</p>
 <pre><code>&lt;ref *1&gt; Message {
-  channelId: &#39;---隐私打码---&#39;,
-  guildId: &#39;---隐私打码---&#39;,
-  id: &#39;---隐私打码---&#39;,
+  channelId: '---隐私打码---',
+  guildId: '---隐私打码---',
+  id: '---隐私打码---',
   createdTimestamp: xxxxxxxxxx021,
-  type: &#39;APPLICATION_COMMAND&#39;,
+  type: 'APPLICATION_COMMAND',
   system: false,
-  content: &#39;Pong!&#39;,
+  content: 'Pong!',
   author: ClientUser {
-    id: &#39;---隐私打码---&#39;,
+    id: '---隐私打码---',
     bot: true,
     system: false,
     flags: UserFlags { bitfield: 0 },
-    username: &#39;BlogTest&#39;,
-    discriminator: &#39;---隐私打码---&#39;,
+    username: 'BlogTest',
+    discriminator: '---隐私打码---',
     avatar: null,
     banner: undefined,
     accentColor: undefined,
@@ -57,24 +57,24 @@ module.exports = {
     crosspostedChannels: Collection(0) [Map] {},
     repliedUser: null
   },
-  webhookId: &#39;---隐私打码---&#39;,
+  webhookId: '---隐私打码---',
   groupActivityApplication: null,
-  applicationId: &#39;---隐私打码---&#39;,
+  applicationId: '---隐私打码---',
   activity: null,
   flags: MessageFlags { bitfield: 0 },
   reference: null,
   interaction: {
-    id: &#39;---隐私打码---&#39;,
-    type: &#39;APPLICATION_COMMAND&#39;,
-    commandName: &#39;ping7&#39;,
+    id: '---隐私打码---',
+    type: 'APPLICATION_COMMAND',
+    commandName: 'ping7',
     user: User {
-      id: &#39;---隐私打码---&#39;,
+      id: '---隐私打码---',
       bot: false,
       system: false,
       flags: [UserFlags],
-      username: &#39;---隐私打码---&#39;,
-      discriminator: &#39;---隐私打码---&#39;,
-      avatar: &#39;---隐私打码---&#39;,
+      username: '---隐私打码---',
+      discriminator: '---隐私打码---',
+      avatar: '---隐私打码---',
       banner: undefined,
       accentColor: undefined
     }
@@ -86,15 +86,15 @@ module.exports = {
 <p>靠这个 <code>CommandInteraction#deleteReply()</code> 。</p>
 <p>注意：你不能删除一个“短暂回复”（Ephemeral response）。</p>
 <p>比如：<code>commands/pingDelete.js</code>：</p>
-<pre><code>const { SlashCommandBuilder } = require(&#39;discord.js&#39;);
-const wait = require(&#39;node:timers/promises&#39;).setTimeout;
+<pre><code>const { SlashCommandBuilder } = require('discord.js');
+const wait = require('node:timers/promises').setTimeout;
 
 module.exports = {
 	data: new SlashCommandBuilder()
-		.setName(&#39;ping&#39;)
-		.setDescription(&#39;Replies with Pong!&#39;),
+		.setName('ping')
+		.setDescription('Replies with Pong!'),
 	async execute(interaction) {
-		await interaction.reply(&#34;Pong!&#34;);
+		await interaction.reply("Pong!");
 		await wait(1000);
 	    await interaction.deleteReply();
 	},
@@ -111,7 +111,7 @@ module.exports = {
 
 // 利用 .applicationCommands 注册全局命令
 rest.put(Routes.applicationCommands(clientId),{ body: commands },)
-    .then(() =&gt; console.log(&#39;Successfully registered application commands.&#39;))  
+    .then(() =&gt; console.log('Successfully registered application commands.'))  
     .catch(console.error);
     
 ...
@@ -458,5 +458,4 @@ rest.put(Routes.applicationCommands(clientId),{ body: commands },)
 </tr>
 </tbody>
 </table>
-<p>很多我们都用不上，当然很多能节约我们的敲代码的时间。要学会在不断地尝试中学习，学会在错误中吸取经验。</p>
-</body></html>
+<p>很多我们都用不上，当然很多能节约我们的敲代码的时间。要学会在不断地尝试中学习，学会在错误中吸取经验。</p></blockquote>

@@ -1,4 +1,4 @@
-<html><head></head><body><img src="https://canxin121.github.io/p/%E5%B1%8F%E5%B9%95-%E6%8E%A7%E5%88%B6-%E7%94%B5%E6%9C%BApid/images/cover.png" alt="Featured image of post 屏幕 控制 电机(pid)"/><h1 id="保命事项">保命事项</h1>
+<blockquote><img src="https://canxin121.github.io/p/%E5%B1%8F%E5%B9%95-%E6%8E%A7%E5%88%B6-%E7%94%B5%E6%9C%BApid/images/cover.png" alt="Featured image of post 屏幕 控制 电机(pid)" /><h1 id="保命事项">保命事项</h1>
 <ol>
 <li>VCC等电压和GND接地千万不要接反! 否则板子升天, money打水漂.</li>
 </ol>
@@ -30,7 +30,7 @@
 <p>这里简单介绍下不同串口的接线意义:</p>
 <h4 id="驱动板和stm">驱动板和Stm</h4>
 <ol>
-<li>驱动板的 E2A和E2B (这里的2代表用的第二个电机,也就是B电机,“A”,“B&#34;代表编码器的A相和B相) 接 Stm 的 两个Pin设定同一个TIM并且将该TIM设定为Combined Mode下的Encoder Mode用来解码从电机获取的实际转速(这里实际是 固定时间的位移 正比于速度, 可以当成转速来用)</li>
+<li>驱动板的 E2A和E2B (这里的2代表用的第二个电机,也就是B电机,&ldquo;A&rdquo;,&ldquo;B&quot;代表编码器的A相和B相) 接 Stm 的 两个Pin设定同一个TIM并且将该TIM设定为Combined Mode下的Encoder Mode用来解码从电机获取的实际转速(这里实际是 固定时间的位移 正比于速度, 可以当成转速来用)</li>
 <li>驱动板的 ADC 接口 (这里是用来读取电压) 接 Stm 的 Pin 设定为 ADC_IN.(呃呃,这里最后其实没把电压显示出来,所以没用上)</li>
 <li>驱动板的 PWMB (这里的B就是代表B电机了) 接 Stm 的 Pin 设定为 TIM 并将对应 TIM 的 对应 CH 设定为PWM GENERATION CHx, 用来输出PWM信号</li>
 <li>驱动版的 BIN1,2 接 Stm 的 Pin 设定为 GPIO OUTput, 用来设定电机旋转的模式</li>
@@ -49,60 +49,223 @@
 <p>这里的创建工程略过, 小白可以自己看看MX的教学视频</p>
 <h4 id="串口设定pin-out">串口设定(Pin OUT)</h4>
 <h5 id="这里的串口要对应好自己的实际接线">这里的串口要对应好自己的实际接线.</h5>
-<p><img src="https://canxin121.github.io/p/%E5%B1%8F%E5%B9%95-%E6%8E%A7%E5%88%B6-%E7%94%B5%E6%9C%BApid/images/pin_out.png" width="1112" height="989" srcset="https://canxin121.github.io/p/%E5%B1%8F%E5%B9%95-%E6%8E%A7%E5%88%B6-%E7%94%B5%E6%9C%BApid/images/pin_out_hu06611d6c8d4fc68f059f2a7211a156e7_199638_480x0_resize_box_3.png 480w, https://canxin121.github.io/p/%E5%B1%8F%E5%B9%95-%E6%8E%A7%E5%88%B6-%E7%94%B5%E6%9C%BApid/images/pin_out_hu06611d6c8d4fc68f059f2a7211a156e7_199638_1024x0_resize_box_3.png 1024w" loading="lazy" class="gallery-image" data-flex-grow="112" data-flex-basis="269px"/></p>
+<p><img src="https://canxin121.github.io/p/%E5%B1%8F%E5%B9%95-%E6%8E%A7%E5%88%B6-%E7%94%B5%E6%9C%BApid/images/pin_out.png"
+width="1112"
+height="989"
+srcset="https://canxin121.github.io/p/%E5%B1%8F%E5%B9%95-%E6%8E%A7%E5%88%B6-%E7%94%B5%E6%9C%BApid/images/pin_out_hu06611d6c8d4fc68f059f2a7211a156e7_199638_480x0_resize_box_3.png 480w, https://canxin121.github.io/p/%E5%B1%8F%E5%B9%95-%E6%8E%A7%E5%88%B6-%E7%94%B5%E6%9C%BApid/images/pin_out_hu06611d6c8d4fc68f059f2a7211a156e7_199638_1024x0_resize_box_3.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="112"
+data-flex-basis="269px"
+></p>
 <h4 id="串口相应功能设定">串口相应功能设定</h4>
 <p>这些功能要对应好你实际的串口设定</p>
 <h5 id="tim">TIM</h5>
-<p><img src="https://canxin121.github.io/p/%E5%B1%8F%E5%B9%95-%E6%8E%A7%E5%88%B6-%E7%94%B5%E6%9C%BApid/images/rcc.png" width="1417" height="635" srcset="https://canxin121.github.io/p/%E5%B1%8F%E5%B9%95-%E6%8E%A7%E5%88%B6-%E7%94%B5%E6%9C%BApid/images/rcc_hu749d9b4ca982880304e14ae1d218a3b9_148125_480x0_resize_box_3.png 480w, https://canxin121.github.io/p/%E5%B1%8F%E5%B9%95-%E6%8E%A7%E5%88%B6-%E7%94%B5%E6%9C%BApid/images/rcc_hu749d9b4ca982880304e14ae1d218a3b9_148125_1024x0_resize_box_3.png 1024w" loading="lazy" alt="然后RCC设置给时钟HSE选择CCR源" class="gallery-image" data-flex-grow="223" data-flex-basis="535px"/>
-<img src="https://canxin121.github.io/p/%E5%B1%8F%E5%B9%95-%E6%8E%A7%E5%88%B6-%E7%94%B5%E6%9C%BApid/images/encoder.png" width="964" height="591" srcset="https://canxin121.github.io/p/%E5%B1%8F%E5%B9%95-%E6%8E%A7%E5%88%B6-%E7%94%B5%E6%9C%BApid/images/encoder_hu0cb4eaea236f392224f4bb2d886ce4cd_111946_480x0_resize_box_3.png 480w, https://canxin121.github.io/p/%E5%B1%8F%E5%B9%95-%E6%8E%A7%E5%88%B6-%E7%94%B5%E6%9C%BApid/images/encoder_hu0cb4eaea236f392224f4bb2d886ce4cd_111946_1024x0_resize_box_3.png 1024w" loading="lazy" alt="Encoder (E2A,E2B)" class="gallery-image" data-flex-grow="163" data-flex-basis="391px"/><img src="https://canxin121.github.io/p/%E5%B1%8F%E5%B9%95-%E6%8E%A7%E5%88%B6-%E7%94%B5%E6%9C%BApid/images/pwm.png" width="914" height="577" srcset="https://canxin121.github.io/p/%E5%B1%8F%E5%B9%95-%E6%8E%A7%E5%88%B6-%E7%94%B5%E6%9C%BApid/images/pwm_hu536268e8857b5e7c97e540165974e99a_104347_480x0_resize_box_3.png 480w, https://canxin121.github.io/p/%E5%B1%8F%E5%B9%95-%E6%8E%A7%E5%88%B6-%E7%94%B5%E6%9C%BApid/images/pwm_hu536268e8857b5e7c97e540165974e99a_104347_1024x0_resize_box_3.png 1024w" loading="lazy" alt="Pwm (PwmB)" class="gallery-image" data-flex-grow="158" data-flex-basis="380px"/><img src="https://canxin121.github.io/p/%E5%B1%8F%E5%B9%95-%E6%8E%A7%E5%88%B6-%E7%94%B5%E6%9C%BApid/images/time_control.png" width="941" height="875" srcset="https://canxin121.github.io/p/%E5%B1%8F%E5%B9%95-%E6%8E%A7%E5%88%B6-%E7%94%B5%E6%9C%BApid/images/time_control_hu4db4ca04e1c690adffb3211d5d5e5ab9_165813_480x0_resize_box_3.png 480w, https://canxin121.github.io/p/%E5%B1%8F%E5%B9%95-%E6%8E%A7%E5%88%B6-%E7%94%B5%E6%9C%BApid/images/time_control_hu4db4ca04e1c690adffb3211d5d5e5ab9_165813_1024x0_resize_box_3.png 1024w" loading="lazy" alt="TIM " class="gallery-image" data-flex-grow="107" data-flex-basis="258px"/><img src="https://canxin121.github.io/p/%E5%B1%8F%E5%B9%95-%E6%8E%A7%E5%88%B6-%E7%94%B5%E6%9C%BApid/images/time_control1.png" width="934" height="709" srcset="https://canxin121.github.io/p/%E5%B1%8F%E5%B9%95-%E6%8E%A7%E5%88%B6-%E7%94%B5%E6%9C%BApid/images/time_control1_hud30bc67d88e4606d86734df99e013dba_183490_480x0_resize_box_3.png 480w, https://canxin121.github.io/p/%E5%B1%8F%E5%B9%95-%E6%8E%A7%E5%88%B6-%E7%94%B5%E6%9C%BApid/images/time_control1_hud30bc67d88e4606d86734df99e013dba_183490_1024x0_resize_box_3.png 1024w" loading="lazy" alt="续上图配置的周期(用于控制读Encoder并设定Pwm的间隔,这里调成了0.1秒多一次)" class="gallery-image" data-flex-grow="131" data-flex-basis="316px"/></p>
+<p><img src="https://canxin121.github.io/p/%E5%B1%8F%E5%B9%95-%E6%8E%A7%E5%88%B6-%E7%94%B5%E6%9C%BApid/images/rcc.png"
+width="1417"
+height="635"
+srcset="https://canxin121.github.io/p/%E5%B1%8F%E5%B9%95-%E6%8E%A7%E5%88%B6-%E7%94%B5%E6%9C%BApid/images/rcc_hu749d9b4ca982880304e14ae1d218a3b9_148125_480x0_resize_box_3.png 480w, https://canxin121.github.io/p/%E5%B1%8F%E5%B9%95-%E6%8E%A7%E5%88%B6-%E7%94%B5%E6%9C%BApid/images/rcc_hu749d9b4ca982880304e14ae1d218a3b9_148125_1024x0_resize_box_3.png 1024w"
+loading="lazy"
+alt="然后RCC设置给时钟HSE选择CCR源"
+class="gallery-image"
+data-flex-grow="223"
+data-flex-basis="535px"
+>
+<img src="https://canxin121.github.io/p/%E5%B1%8F%E5%B9%95-%E6%8E%A7%E5%88%B6-%E7%94%B5%E6%9C%BApid/images/encoder.png"
+width="964"
+height="591"
+srcset="https://canxin121.github.io/p/%E5%B1%8F%E5%B9%95-%E6%8E%A7%E5%88%B6-%E7%94%B5%E6%9C%BApid/images/encoder_hu0cb4eaea236f392224f4bb2d886ce4cd_111946_480x0_resize_box_3.png 480w, https://canxin121.github.io/p/%E5%B1%8F%E5%B9%95-%E6%8E%A7%E5%88%B6-%E7%94%B5%E6%9C%BApid/images/encoder_hu0cb4eaea236f392224f4bb2d886ce4cd_111946_1024x0_resize_box_3.png 1024w"
+loading="lazy"
+alt="Encoder (E2A,E2B)"
+class="gallery-image"
+data-flex-grow="163"
+data-flex-basis="391px"
+><img src="https://canxin121.github.io/p/%E5%B1%8F%E5%B9%95-%E6%8E%A7%E5%88%B6-%E7%94%B5%E6%9C%BApid/images/pwm.png"
+width="914"
+height="577"
+srcset="https://canxin121.github.io/p/%E5%B1%8F%E5%B9%95-%E6%8E%A7%E5%88%B6-%E7%94%B5%E6%9C%BApid/images/pwm_hu536268e8857b5e7c97e540165974e99a_104347_480x0_resize_box_3.png 480w, https://canxin121.github.io/p/%E5%B1%8F%E5%B9%95-%E6%8E%A7%E5%88%B6-%E7%94%B5%E6%9C%BApid/images/pwm_hu536268e8857b5e7c97e540165974e99a_104347_1024x0_resize_box_3.png 1024w"
+loading="lazy"
+alt="Pwm (PwmB)"
+class="gallery-image"
+data-flex-grow="158"
+data-flex-basis="380px"
+><img src="https://canxin121.github.io/p/%E5%B1%8F%E5%B9%95-%E6%8E%A7%E5%88%B6-%E7%94%B5%E6%9C%BApid/images/time_control.png"
+width="941"
+height="875"
+srcset="https://canxin121.github.io/p/%E5%B1%8F%E5%B9%95-%E6%8E%A7%E5%88%B6-%E7%94%B5%E6%9C%BApid/images/time_control_hu4db4ca04e1c690adffb3211d5d5e5ab9_165813_480x0_resize_box_3.png 480w, https://canxin121.github.io/p/%E5%B1%8F%E5%B9%95-%E6%8E%A7%E5%88%B6-%E7%94%B5%E6%9C%BApid/images/time_control_hu4db4ca04e1c690adffb3211d5d5e5ab9_165813_1024x0_resize_box_3.png 1024w"
+loading="lazy"
+alt="TIM "
+class="gallery-image"
+data-flex-grow="107"
+data-flex-basis="258px"
+><img src="https://canxin121.github.io/p/%E5%B1%8F%E5%B9%95-%E6%8E%A7%E5%88%B6-%E7%94%B5%E6%9C%BApid/images/time_control1.png"
+width="934"
+height="709"
+srcset="https://canxin121.github.io/p/%E5%B1%8F%E5%B9%95-%E6%8E%A7%E5%88%B6-%E7%94%B5%E6%9C%BApid/images/time_control1_hud30bc67d88e4606d86734df99e013dba_183490_480x0_resize_box_3.png 480w, https://canxin121.github.io/p/%E5%B1%8F%E5%B9%95-%E6%8E%A7%E5%88%B6-%E7%94%B5%E6%9C%BApid/images/time_control1_hud30bc67d88e4606d86734df99e013dba_183490_1024x0_resize_box_3.png 1024w"
+loading="lazy"
+alt="续上图配置的周期(用于控制读Encoder并设定Pwm的间隔,这里调成了0.1秒多一次)"
+class="gallery-image"
+data-flex-grow="131"
+data-flex-basis="316px"
+></p>
 <h5 id="adc">ADC</h5>
-<p><img src="https://canxin121.github.io/p/%E5%B1%8F%E5%B9%95-%E6%8E%A7%E5%88%B6-%E7%94%B5%E6%9C%BApid/images/adc.png" width="910" height="435" srcset="https://canxin121.github.io/p/%E5%B1%8F%E5%B9%95-%E6%8E%A7%E5%88%B6-%E7%94%B5%E6%9C%BApid/images/adc_hu76805e7ed3647cf5d90adcec01194c89_44184_480x0_resize_box_3.png 480w, https://canxin121.github.io/p/%E5%B1%8F%E5%B9%95-%E6%8E%A7%E5%88%B6-%E7%94%B5%E6%9C%BApid/images/adc_hu76805e7ed3647cf5d90adcec01194c89_44184_1024x0_resize_box_3.png 1024w" loading="lazy" alt="这里的ADC设置了Single-ended模式" class="gallery-image" data-flex-grow="209" data-flex-basis="502px"/></p>
+<p><img src="https://canxin121.github.io/p/%E5%B1%8F%E5%B9%95-%E6%8E%A7%E5%88%B6-%E7%94%B5%E6%9C%BApid/images/adc.png"
+width="910"
+height="435"
+srcset="https://canxin121.github.io/p/%E5%B1%8F%E5%B9%95-%E6%8E%A7%E5%88%B6-%E7%94%B5%E6%9C%BApid/images/adc_hu76805e7ed3647cf5d90adcec01194c89_44184_480x0_resize_box_3.png 480w, https://canxin121.github.io/p/%E5%B1%8F%E5%B9%95-%E6%8E%A7%E5%88%B6-%E7%94%B5%E6%9C%BApid/images/adc_hu76805e7ed3647cf5d90adcec01194c89_44184_1024x0_resize_box_3.png 1024w"
+loading="lazy"
+alt="这里的ADC设置了Single-ended模式"
+class="gallery-image"
+data-flex-grow="209"
+data-flex-basis="502px"
+></p>
 <h5 id="gpio">GPIO</h5>
-<p><img src="https://canxin121.github.io/p/%E5%B1%8F%E5%B9%95-%E6%8E%A7%E5%88%B6-%E7%94%B5%E6%9C%BApid/images/gpio.png" width="931" height="1081" srcset="https://canxin121.github.io/p/%E5%B1%8F%E5%B9%95-%E6%8E%A7%E5%88%B6-%E7%94%B5%E6%9C%BApid/images/gpio_hu4620c1d6af36e037585fadb09c11ee09_156730_480x0_resize_box_3.png 480w, https://canxin121.github.io/p/%E5%B1%8F%E5%B9%95-%E6%8E%A7%E5%88%B6-%E7%94%B5%E6%9C%BApid/images/gpio_hu4620c1d6af36e037585fadb09c11ee09_156730_1024x0_resize_box_3.png 1024w" loading="lazy" alt="这里的GPIO的Bin1和Bin2可以打个标签区分一下, 同时两个都Pull Down(对应的状态是 电机停止)" class="gallery-image" data-flex-grow="86" data-flex-basis="206px"/></p>
+<p><img src="https://canxin121.github.io/p/%E5%B1%8F%E5%B9%95-%E6%8E%A7%E5%88%B6-%E7%94%B5%E6%9C%BApid/images/gpio.png"
+width="931"
+height="1081"
+srcset="https://canxin121.github.io/p/%E5%B1%8F%E5%B9%95-%E6%8E%A7%E5%88%B6-%E7%94%B5%E6%9C%BApid/images/gpio_hu4620c1d6af36e037585fadb09c11ee09_156730_480x0_resize_box_3.png 480w, https://canxin121.github.io/p/%E5%B1%8F%E5%B9%95-%E6%8E%A7%E5%88%B6-%E7%94%B5%E6%9C%BApid/images/gpio_hu4620c1d6af36e037585fadb09c11ee09_156730_1024x0_resize_box_3.png 1024w"
+loading="lazy"
+alt="这里的GPIO的Bin1和Bin2可以打个标签区分一下, 同时两个都Pull Down(对应的状态是 电机停止)"
+class="gallery-image"
+data-flex-grow="86"
+data-flex-basis="206px"
+></p>
 <h5 id="usart">USART</h5>
-<p><img src="https://canxin121.github.io/p/%E5%B1%8F%E5%B9%95-%E6%8E%A7%E5%88%B6-%E7%94%B5%E6%9C%BApid/images/screen_usart.png" width="938" height="785" srcset="https://canxin121.github.io/p/%E5%B1%8F%E5%B9%95-%E6%8E%A7%E5%88%B6-%E7%94%B5%E6%9C%BApid/images/screen_usart_hu3a00685f918a87810710b7d4b581c1cc_143248_480x0_resize_box_3.png 480w, https://canxin121.github.io/p/%E5%B1%8F%E5%B9%95-%E6%8E%A7%E5%88%B6-%E7%94%B5%E6%9C%BApid/images/screen_usart_hu3a00685f918a87810710b7d4b581c1cc_143248_1024x0_resize_box_3.png 1024w" loading="lazy" alt="触控屏接到的USART还要打开NVIC全局中断" class="gallery-image" data-flex-grow="119" data-flex-basis="286px"/>
-![发送调试信息到Pwlink2lite的Usart把Mode打开成Async就好]<img src="https://canxin121.github.io/p/%E5%B1%8F%E5%B9%95-%E6%8E%A7%E5%88%B6-%E7%94%B5%E6%9C%BApid/images/printf_usart.png" width="937" height="445" srcset="https://canxin121.github.io/p/%E5%B1%8F%E5%B9%95-%E6%8E%A7%E5%88%B6-%E7%94%B5%E6%9C%BApid/images/printf_usart_hufbbd1ce6f6e9d2cf426b2d4c66957dc5_52572_480x0_resize_box_3.png 480w, https://canxin121.github.io/p/%E5%B1%8F%E5%B9%95-%E6%8E%A7%E5%88%B6-%E7%94%B5%E6%9C%BApid/images/printf_usart_hufbbd1ce6f6e9d2cf426b2d4c66957dc5_52572_1024x0_resize_box_3.png 1024w" loading="lazy" alt="Alt text" class="gallery-image" data-flex-grow="210" data-flex-basis="505px"/></p>
+<p><img src="https://canxin121.github.io/p/%E5%B1%8F%E5%B9%95-%E6%8E%A7%E5%88%B6-%E7%94%B5%E6%9C%BApid/images/screen_usart.png"
+width="938"
+height="785"
+srcset="https://canxin121.github.io/p/%E5%B1%8F%E5%B9%95-%E6%8E%A7%E5%88%B6-%E7%94%B5%E6%9C%BApid/images/screen_usart_hu3a00685f918a87810710b7d4b581c1cc_143248_480x0_resize_box_3.png 480w, https://canxin121.github.io/p/%E5%B1%8F%E5%B9%95-%E6%8E%A7%E5%88%B6-%E7%94%B5%E6%9C%BApid/images/screen_usart_hu3a00685f918a87810710b7d4b581c1cc_143248_1024x0_resize_box_3.png 1024w"
+loading="lazy"
+alt="触控屏接到的USART还要打开NVIC全局中断"
+class="gallery-image"
+data-flex-grow="119"
+data-flex-basis="286px"
+>
+![发送调试信息到Pwlink2lite的Usart把Mode打开成Async就好]<img src="https://canxin121.github.io/p/%E5%B1%8F%E5%B9%95-%E6%8E%A7%E5%88%B6-%E7%94%B5%E6%9C%BApid/images/printf_usart.png"
+width="937"
+height="445"
+srcset="https://canxin121.github.io/p/%E5%B1%8F%E5%B9%95-%E6%8E%A7%E5%88%B6-%E7%94%B5%E6%9C%BApid/images/printf_usart_hufbbd1ce6f6e9d2cf426b2d4c66957dc5_52572_480x0_resize_box_3.png 480w, https://canxin121.github.io/p/%E5%B1%8F%E5%B9%95-%E6%8E%A7%E5%88%B6-%E7%94%B5%E6%9C%BApid/images/printf_usart_hufbbd1ce6f6e9d2cf426b2d4c66957dc5_52572_1024x0_resize_box_3.png 1024w"
+loading="lazy"
+alt="Alt text"
+class="gallery-image"
+data-flex-grow="210"
+data-flex-basis="505px"
+></p>
 <h5 id="project-manager">Project Manager</h5>
 <p>然后配置一下生成代码的设置, 让它生成单独的c/h文件, 并且生成MDK(Keil)的源代码, 这样后面的VSC + EIDE可以直接以MDK项目格式导入进去,嘎嘎方便.
-<img src="https://canxin121.github.io/p/%E5%B1%8F%E5%B9%95-%E6%8E%A7%E5%88%B6-%E7%94%B5%E6%9C%BApid/images/hc.png" width="2557" height="1260" srcset="https://canxin121.github.io/p/%E5%B1%8F%E5%B9%95-%E6%8E%A7%E5%88%B6-%E7%94%B5%E6%9C%BApid/images/hc_hub7ae0b88da0fd6eb5b9d150d279a9c1c_307450_480x0_resize_box_3.png 480w, https://canxin121.github.io/p/%E5%B1%8F%E5%B9%95-%E6%8E%A7%E5%88%B6-%E7%94%B5%E6%9C%BApid/images/hc_hub7ae0b88da0fd6eb5b9d150d279a9c1c_307450_1024x0_resize_box_3.png 1024w" loading="lazy" alt="生成单独c/h文件" class="gallery-image" data-flex-grow="202" data-flex-basis="487px"/>
-<img src="https://canxin121.github.io/p/%E5%B1%8F%E5%B9%95-%E6%8E%A7%E5%88%B6-%E7%94%B5%E6%9C%BApid/images/mdk.png" width="2560" height="1263" srcset="https://canxin121.github.io/p/%E5%B1%8F%E5%B9%95-%E6%8E%A7%E5%88%B6-%E7%94%B5%E6%9C%BApid/images/mdk_huf2c82dab1e6b106f83a5e1f661bb4c21_350215_480x0_resize_box_3.png 480w, https://canxin121.github.io/p/%E5%B1%8F%E5%B9%95-%E6%8E%A7%E5%88%B6-%E7%94%B5%E6%9C%BApid/images/mdk_huf2c82dab1e6b106f83a5e1f661bb4c21_350215_1024x0_resize_box_3.png 1024w" loading="lazy" alt="生成MDK项目" class="gallery-image" data-flex-grow="202" data-flex-basis="486px"/></p>
+<img src="https://canxin121.github.io/p/%E5%B1%8F%E5%B9%95-%E6%8E%A7%E5%88%B6-%E7%94%B5%E6%9C%BApid/images/hc.png"
+width="2557"
+height="1260"
+srcset="https://canxin121.github.io/p/%E5%B1%8F%E5%B9%95-%E6%8E%A7%E5%88%B6-%E7%94%B5%E6%9C%BApid/images/hc_hub7ae0b88da0fd6eb5b9d150d279a9c1c_307450_480x0_resize_box_3.png 480w, https://canxin121.github.io/p/%E5%B1%8F%E5%B9%95-%E6%8E%A7%E5%88%B6-%E7%94%B5%E6%9C%BApid/images/hc_hub7ae0b88da0fd6eb5b9d150d279a9c1c_307450_1024x0_resize_box_3.png 1024w"
+loading="lazy"
+alt="生成单独c/h文件"
+class="gallery-image"
+data-flex-grow="202"
+data-flex-basis="487px"
+>
+<img src="https://canxin121.github.io/p/%E5%B1%8F%E5%B9%95-%E6%8E%A7%E5%88%B6-%E7%94%B5%E6%9C%BApid/images/mdk.png"
+width="2560"
+height="1263"
+srcset="https://canxin121.github.io/p/%E5%B1%8F%E5%B9%95-%E6%8E%A7%E5%88%B6-%E7%94%B5%E6%9C%BApid/images/mdk_huf2c82dab1e6b106f83a5e1f661bb4c21_350215_480x0_resize_box_3.png 480w, https://canxin121.github.io/p/%E5%B1%8F%E5%B9%95-%E6%8E%A7%E5%88%B6-%E7%94%B5%E6%9C%BApid/images/mdk_huf2c82dab1e6b106f83a5e1f661bb4c21_350215_1024x0_resize_box_3.png 1024w"
+loading="lazy"
+alt="生成MDK项目"
+class="gallery-image"
+data-flex-grow="202"
+data-flex-basis="486px"
+></p>
 <h3 id="usart-hmi-写刷-触控屏程序">USART HMI 写/刷 触控屏程序</h3>
-<p>小白可以先看看这个系列教程了解一下这个 陶晶驰的图形化设计软件的使用方法<br/>
-</p><div class="video-wrapper">
-<iframe src="https://player.bilibili.com/player.html?as_wide=1&amp;high_quality=1&amp;page=1&amp;bvid=BV16T4y127YE&amp;autoplay=0" scrolling="no" frameborder="no" framespacing="0" allowfullscreen="true">
+<p>小白可以先看看这个系列教程了解一下这个 陶晶驰的图形化设计软件的使用方法<br>
+<div class="video-wrapper">
+<iframe src="https://player.bilibili.com/player.html?as_wide=1&amp;high_quality=1&amp;page=1&bvid=BV16T4y127YE&autoplay=0"
+scrolling="no" frameborder="no" framespacing="0" allowfullscreen="true">
 </iframe>
 </div>
-点击上面可以跳转到完整的系列视频⬆️⬆️⬆️<p></p>
+点击上面可以跳转到完整的系列视频⬆️⬆️⬆️</p>
 <p>下面是正文⬇️⬇️⬇️</p>
 <p>我设计的简陋的界面
-<img src="https://canxin121.github.io/p/%E5%B1%8F%E5%B9%95-%E6%8E%A7%E5%88%B6-%E7%94%B5%E6%9C%BApid/images/home.png" width="2072" height="795" srcset="https://canxin121.github.io/p/%E5%B1%8F%E5%B9%95-%E6%8E%A7%E5%88%B6-%E7%94%B5%E6%9C%BApid/images/home_hu4d582b6e9de5983c6fdf2c2f2b1c7da8_247571_480x0_resize_box_3.png 480w, https://canxin121.github.io/p/%E5%B1%8F%E5%B9%95-%E6%8E%A7%E5%88%B6-%E7%94%B5%E6%9C%BApid/images/home_hu4d582b6e9de5983c6fdf2c2f2b1c7da8_247571_1024x0_resize_box_3.png 1024w" loading="lazy" alt="HOME" class="gallery-image" data-flex-grow="260" data-flex-basis="625px"/><img src="https://canxin121.github.io/p/%E5%B1%8F%E5%B9%95-%E6%8E%A7%E5%88%B6-%E7%94%B5%E6%9C%BApid/images/about.png" width="1978" height="783" srcset="https://canxin121.github.io/p/%E5%B1%8F%E5%B9%95-%E6%8E%A7%E5%88%B6-%E7%94%B5%E6%9C%BApid/images/about_huac7dfe68c132b969493914a8117ee917_356200_480x0_resize_box_3.png 480w, https://canxin121.github.io/p/%E5%B1%8F%E5%B9%95-%E6%8E%A7%E5%88%B6-%E7%94%B5%E6%9C%BApid/images/about_huac7dfe68c132b969493914a8117ee917_356200_1024x0_resize_box_3.png 1024w" loading="lazy" alt="ABOUT" class="gallery-image" data-flex-grow="252" data-flex-basis="606px"/><img src="https://canxin121.github.io/p/%E5%B1%8F%E5%B9%95-%E6%8E%A7%E5%88%B6-%E7%94%B5%E6%9C%BApid/images/func.png" width="1873" height="749" srcset="https://canxin121.github.io/p/%E5%B1%8F%E5%B9%95-%E6%8E%A7%E5%88%B6-%E7%94%B5%E6%9C%BApid/images/func_hu87881c4c4d9fd19bd5b5842f06b5fc53_263046_480x0_resize_box_3.png 480w, https://canxin121.github.io/p/%E5%B1%8F%E5%B9%95-%E6%8E%A7%E5%88%B6-%E7%94%B5%E6%9C%BApid/images/func_hu87881c4c4d9fd19bd5b5842f06b5fc53_263046_1024x0_resize_box_3.png 1024w" loading="lazy" alt="FUNC" class="gallery-image" data-flex-grow="250" data-flex-basis="600px"/></p>
+<img src="https://canxin121.github.io/p/%E5%B1%8F%E5%B9%95-%E6%8E%A7%E5%88%B6-%E7%94%B5%E6%9C%BApid/images/home.png"
+width="2072"
+height="795"
+srcset="https://canxin121.github.io/p/%E5%B1%8F%E5%B9%95-%E6%8E%A7%E5%88%B6-%E7%94%B5%E6%9C%BApid/images/home_hu4d582b6e9de5983c6fdf2c2f2b1c7da8_247571_480x0_resize_box_3.png 480w, https://canxin121.github.io/p/%E5%B1%8F%E5%B9%95-%E6%8E%A7%E5%88%B6-%E7%94%B5%E6%9C%BApid/images/home_hu4d582b6e9de5983c6fdf2c2f2b1c7da8_247571_1024x0_resize_box_3.png 1024w"
+loading="lazy"
+alt="HOME"
+class="gallery-image"
+data-flex-grow="260"
+data-flex-basis="625px"
+><img src="https://canxin121.github.io/p/%E5%B1%8F%E5%B9%95-%E6%8E%A7%E5%88%B6-%E7%94%B5%E6%9C%BApid/images/about.png"
+width="1978"
+height="783"
+srcset="https://canxin121.github.io/p/%E5%B1%8F%E5%B9%95-%E6%8E%A7%E5%88%B6-%E7%94%B5%E6%9C%BApid/images/about_huac7dfe68c132b969493914a8117ee917_356200_480x0_resize_box_3.png 480w, https://canxin121.github.io/p/%E5%B1%8F%E5%B9%95-%E6%8E%A7%E5%88%B6-%E7%94%B5%E6%9C%BApid/images/about_huac7dfe68c132b969493914a8117ee917_356200_1024x0_resize_box_3.png 1024w"
+loading="lazy"
+alt="ABOUT"
+class="gallery-image"
+data-flex-grow="252"
+data-flex-basis="606px"
+><img src="https://canxin121.github.io/p/%E5%B1%8F%E5%B9%95-%E6%8E%A7%E5%88%B6-%E7%94%B5%E6%9C%BApid/images/func.png"
+width="1873"
+height="749"
+srcset="https://canxin121.github.io/p/%E5%B1%8F%E5%B9%95-%E6%8E%A7%E5%88%B6-%E7%94%B5%E6%9C%BApid/images/func_hu87881c4c4d9fd19bd5b5842f06b5fc53_263046_480x0_resize_box_3.png 480w, https://canxin121.github.io/p/%E5%B1%8F%E5%B9%95-%E6%8E%A7%E5%88%B6-%E7%94%B5%E6%9C%BApid/images/func_hu87881c4c4d9fd19bd5b5842f06b5fc53_263046_1024x0_resize_box_3.png 1024w"
+loading="lazy"
+alt="FUNC"
+class="gallery-image"
+data-flex-grow="250"
+data-flex-basis="600px"
+></p>
 <p>这里面唯一有用的就是func界面了(其他纯属引流嗷,建议别学我嗷
-<img src="https://canxin121.github.io/p/%E5%B1%8F%E5%B9%95-%E6%8E%A7%E5%88%B6-%E7%94%B5%E6%9C%BApid/images/func_deatil.png" width="687" height="522" srcset="https://canxin121.github.io/p/%E5%B1%8F%E5%B9%95-%E6%8E%A7%E5%88%B6-%E7%94%B5%E6%9C%BApid/images/func_deatil_hu57adf9d35597e7a450a8e7d262e59fc3_255222_480x0_resize_box_3.png 480w, https://canxin121.github.io/p/%E5%B1%8F%E5%B9%95-%E6%8E%A7%E5%88%B6-%E7%94%B5%E6%9C%BApid/images/func_deatil_hu57adf9d35597e7a450a8e7d262e59fc3_255222_1024x0_resize_box_3.png 1024w" loading="lazy" alt="Func" class="gallery-image" data-flex-grow="131" data-flex-basis="315px"/></p>
+<img src="https://canxin121.github.io/p/%E5%B1%8F%E5%B9%95-%E6%8E%A7%E5%88%B6-%E7%94%B5%E6%9C%BApid/images/func_deatil.png"
+width="687"
+height="522"
+srcset="https://canxin121.github.io/p/%E5%B1%8F%E5%B9%95-%E6%8E%A7%E5%88%B6-%E7%94%B5%E6%9C%BApid/images/func_deatil_hu57adf9d35597e7a450a8e7d262e59fc3_255222_480x0_resize_box_3.png 480w, https://canxin121.github.io/p/%E5%B1%8F%E5%B9%95-%E6%8E%A7%E5%88%B6-%E7%94%B5%E6%9C%BApid/images/func_deatil_hu57adf9d35597e7a450a8e7d262e59fc3_255222_1024x0_resize_box_3.png 1024w"
+loading="lazy"
+alt="Func"
+class="gallery-image"
+data-flex-grow="131"
+data-flex-basis="315px"
+></p>
 <ol>
 <li>首先需要两个数字框(绑定数字键盘), 一个用来设定目标速度,一个用来设定目标圈数,并且设定了初始值</li>
 <li>然后加个复选框来 选择 正转 or 反转</li>
 <li>然后加两个按钮, 一个start 一个 stop, 本质都是用uart发一些数据</li>
 </ol>
-<p>这里两个按钮需要自己定义一个简单的通信协议, 我这里是这样极其简陋乱写的<br/>
-<img src="https://canxin121.github.io/p/%E5%B1%8F%E5%B9%95-%E6%8E%A7%E5%88%B6-%E7%94%B5%E6%9C%BApid/images/start.png" width="193" height="280" srcset="https://canxin121.github.io/p/%E5%B1%8F%E5%B9%95-%E6%8E%A7%E5%88%B6-%E7%94%B5%E6%9C%BApid/images/start_hub1ea8b066bc44846cdeb9988ecd989c4_20676_480x0_resize_box_3.png 480w, https://canxin121.github.io/p/%E5%B1%8F%E5%B9%95-%E6%8E%A7%E5%88%B6-%E7%94%B5%E6%9C%BApid/images/start_hub1ea8b066bc44846cdeb9988ecd989c4_20676_1024x0_resize_box_3.png 1024w" loading="lazy" alt="Start" class="gallery-image" data-flex-grow="68" data-flex-basis="165px"/><img src="https://canxin121.github.io/p/%E5%B1%8F%E5%B9%95-%E6%8E%A7%E5%88%B6-%E7%94%B5%E6%9C%BApid/images/stop.png" width="344" height="294" srcset="https://canxin121.github.io/p/%E5%B1%8F%E5%B9%95-%E6%8E%A7%E5%88%B6-%E7%94%B5%E6%9C%BApid/images/stop_hu2a72a1dc7b1766df73c052fd9822e9e0_24339_480x0_resize_box_3.png 480w, https://canxin121.github.io/p/%E5%B1%8F%E5%B9%95-%E6%8E%A7%E5%88%B6-%E7%94%B5%E6%9C%BApid/images/stop_hu2a72a1dc7b1766df73c052fd9822e9e0_24339_1024x0_resize_box_3.png 1024w" loading="lazy" alt="Stop" class="gallery-image" data-flex-grow="117" data-flex-basis="280px"/><br/>
+<p>这里两个按钮需要自己定义一个简单的通信协议, 我这里是这样极其简陋乱写的<br>
+<img src="https://canxin121.github.io/p/%E5%B1%8F%E5%B9%95-%E6%8E%A7%E5%88%B6-%E7%94%B5%E6%9C%BApid/images/start.png"
+width="193"
+height="280"
+srcset="https://canxin121.github.io/p/%E5%B1%8F%E5%B9%95-%E6%8E%A7%E5%88%B6-%E7%94%B5%E6%9C%BApid/images/start_hub1ea8b066bc44846cdeb9988ecd989c4_20676_480x0_resize_box_3.png 480w, https://canxin121.github.io/p/%E5%B1%8F%E5%B9%95-%E6%8E%A7%E5%88%B6-%E7%94%B5%E6%9C%BApid/images/start_hub1ea8b066bc44846cdeb9988ecd989c4_20676_1024x0_resize_box_3.png 1024w"
+loading="lazy"
+alt="Start"
+class="gallery-image"
+data-flex-grow="68"
+data-flex-basis="165px"
+><img src="https://canxin121.github.io/p/%E5%B1%8F%E5%B9%95-%E6%8E%A7%E5%88%B6-%E7%94%B5%E6%9C%BApid/images/stop.png"
+width="344"
+height="294"
+srcset="https://canxin121.github.io/p/%E5%B1%8F%E5%B9%95-%E6%8E%A7%E5%88%B6-%E7%94%B5%E6%9C%BApid/images/stop_hu2a72a1dc7b1766df73c052fd9822e9e0_24339_480x0_resize_box_3.png 480w, https://canxin121.github.io/p/%E5%B1%8F%E5%B9%95-%E6%8E%A7%E5%88%B6-%E7%94%B5%E6%9C%BApid/images/stop_hu2a72a1dc7b1766df73c052fd9822e9e0_24339_1024x0_resize_box_3.png 1024w"
+loading="lazy"
+alt="Stop"
+class="gallery-image"
+data-flex-grow="117"
+data-flex-basis="280px"
+><br>
 也就是 [-1,速度的整数,-2,圈数的整数,-3,复选框(正/反转)的整数]</p>
 <p>搞定程序设计我们调试试一下效果,没有问题就可以把 屏幕用下载器接到电脑(自己简单对接可以)</p>
 <h3 id="vscode--eide">Vscode + EIDE</h3>
 <h4 id="环境配置">环境配置</h4>
 <p>小白直接看这个教程吧
-</p><div class="video-wrapper">
-<iframe src="https://player.bilibili.com/player.html?as_wide=1&amp;high_quality=1&amp;page=1&amp;bvid=BV1nr4y1R7Jb&amp;autoplay=0" scrolling="no" frameborder="no" framespacing="0" allowfullscreen="true">
+<div class="video-wrapper">
+<iframe src="https://player.bilibili.com/player.html?as_wide=1&amp;high_quality=1&amp;page=1&bvid=BV1nr4y1R7Jb&autoplay=0"
+scrolling="no" frameborder="no" framespacing="0" allowfullscreen="true">
 </iframe>
-</div><p></p>
+</div></p>
 <h4 id="控制代码">控制代码</h4>
-<p>EIDE 导入项目后 开始写代码<br/>
+<p>EIDE 导入项目后 开始写代码<br>
 这里由于程序简单, 我直接全写在main.c了</p>
-<p><em>这里注意一定要在 BEGIN 和 END 中间来写自己的代码, 否则CubeMX再次生成代码时, 会把你非用户代码区的代码删掉了.</em><br/>
+<p><em>这里注意一定要在 BEGIN 和 END 中间来写自己的代码, 否则CubeMX再次生成代码时, 会把你非用户代码区的代码删掉了.</em><br>
 <em>下面的代码中也只有 BEGIN 和 END 中间的代码是开发者自己写的,其他全部由CubeMX自动生成</em></p>
 <h5 id="include">include</h5>
 <p>这里只用到了一个pid(这个代码分享在最后吧), 一个stdio(使用printf)</p>
 <div class="highlight"><div class="chroma">
-<table class="lntable"><tbody><tr><td class="lntd">
+<table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
@@ -113,12 +276,12 @@
 </span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&#34;pid.h&#34;</span><span class="cp">
 </span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&#34;stdio.h&#34;</span><span class="cp">
 </span></span></span><span class="line"><span class="cl"><span class="cp"></span><span class="cm">/* USER CODE END Includes */</span>
-</span></span></code></pre></td></tr></tbody></table>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h5 id="用uart重定向printf到调试器">用uart重定向printf到调试器</h5>
 <p>这个记住就好啦, 网上抄来的方法, 确实不错的方案</p>
 <div class="highlight"><div class="chroma">
-<table class="lntable"><tbody><tr><td class="lntd">
+<table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
@@ -137,7 +300,7 @@
 </span></span><span class="line"><span class="cl"> <span class="c1">// 返回发送的字符，这通常不会有实际的影响，但是它需要返回发送的字符。
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span> <span class="k">return</span> <span class="n">ch</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></td></tr></tbody></table>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h5 id="main函数">main函数</h5>
 <ol>
@@ -145,7 +308,7 @@
 <li>把屏幕控制的USART打开来接受信息, 并且设置每接受六次产生一次中断(因为上面的串口屏是设定的发送6个整数)</li>
 </ol>
 <div class="highlight"><div class="chroma">
-<table class="lntable"><tbody><tr><td class="lntd">
+<table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
@@ -288,13 +451,13 @@
 </span></span><span class="line"><span class="cl"> <span class="p">}</span>
 </span></span><span class="line"><span class="cl"> <span class="cm">/* USER CODE END 3 */</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></td></tr></tbody></table>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h5 id="屏幕串口的uart中断">屏幕串口的UART中断</h5>
-<p>我们通过重定义中断回调函数来实现对HAL的中断回调的使用<br/>
+<p>我们通过重定义中断回调函数来实现对HAL的中断回调的使用<br>
 下面的代码 通过 屏幕串口USART中断来实现 不同状态下 激活/关闭 计时器和电机</p>
 <div class="highlight"><div class="chroma">
-<table class="lntable"><tbody><tr><td class="lntd">
+<table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
@@ -565,7 +728,7 @@
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span> <span class="nf">__HAL_UART_CLEAR_FLAG</span><span class="p">(</span><span class="o">&amp;</span><span class="n">huart1</span><span class="p">,</span> <span class="n">UART_FLAG_RXNE</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl"> <span class="p">}</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></td></tr></tbody></table>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h5 id="固定时间间隔的-中断控制">固定时间间隔的 中断控制</h5>
 <p>之所以要新开一个 tim, 固定时间的读取encoder并设定pwm, 是为了</p>
@@ -574,7 +737,7 @@
 <li>防止过快的设置pwm, 别把电机玩坏了(</li>
 </ol>
 <div class="highlight"><div class="chroma">
-<table class="lntable"><tbody><tr><td class="lntd">
+<table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
@@ -681,14 +844,14 @@
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span> <span class="nf">Set_Pwm</span><span class="p">(</span><span class="n">Set_Velocity</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl"> <span class="p">}</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></td></tr></tbody></table>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h2 id="相关代码分享">相关代码分享</h2>
 <h3 id="pid">pid</h3>
 <p>由某物院实验室佬手写</p>
 <p>pid.h</p>
 <div class="highlight"><div class="chroma">
-<table class="lntable"><tbody><tr><td class="lntd">
+<table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
@@ -733,11 +896,11 @@
 </span></span><span class="line"><span class="cl"><span class="kt">float</span> <span class="nf">PID</span><span class="p">(</span><span class="k">struct</span> <span class="n">PID_struct</span> <span class="o">*</span><span class="n">pid_struct</span><span class="p">,</span> <span class="kt">float</span> <span class="n">tar</span><span class="p">,</span> <span class="kt">float</span> <span class="n">cur</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="cp">#endif
-</span></span></span></code></pre></td></tr></tbody></table>
+</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>pid.c</p>
 <div class="highlight"><div class="chroma">
-<table class="lntable"><tbody><tr><td class="lntd">
+<table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
@@ -962,11 +1125,11 @@
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span>
 </span></span><span class="line"><span class="cl"> <span class="k">return</span> <span class="n">pid</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></td></tr></tbody></table>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="完整的mainc程序">完整的main.c程序</h3>
 <div class="highlight"><div class="chroma">
-<table class="lntable"><tbody><tr><td class="lntd">
+<table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
@@ -1877,6 +2040,6 @@
 </span></span><span class="line"><span class="cl"> <span class="cm">/* USER CODE END 6 */</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span><span class="line"><span class="cl"><span class="cp">#endif </span><span class="cm">/* USE_FULL_ASSERT */</span><span class="cp">
-</span></span></span></code></pre></td></tr></tbody></table>
+</span></span></span></code></pre></td></tr></table>
 </div>
-</div></body></html>
+</div></blockquote>

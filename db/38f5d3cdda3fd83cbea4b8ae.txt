@@ -1,49 +1,80 @@
-<html><head></head><body><img src="https://legacy.superbart.top/picture/XDYou_SAD/general_structure.png" alt="Featured image of post Traintime PDA 架构设计 "/><p>XDYou 就算 Traintime PDA 别称了。</p>
+<blockquote><img src="https://legacy.superbart.top/picture/XDYou_SAD/general_structure.png" alt="Featured image of post Traintime PDA 架构设计 " /><p>XDYou 就算 Traintime PDA 别称了。</p>
 <h2 id="整体架构设计">整体架构设计</h2>
 <p>由于本程序是一个信息查询工具，其基本是围绕数据运转的，所以我打算使用仓库架构。这个图作为一个大致的示例。</p>
-<p></p><figure>
-	<a href="https://legacy.superbart.top/picture/XDYou_SAD/repo.png">
-		<img src="https://legacy.superbart.top/picture/XDYou_SAD/repo.png" loading="lazy"/>
+<p><figure 
+	>
+	<a href="https://legacy.superbart.top/picture/XDYou_SAD/repo.png" >
+		<img src="https://legacy.superbart.top/picture/XDYou_SAD/repo.png"
+			
+			
+			
+			loading="lazy"
+			>
 	</a>
 	
-</figure><p></p>
+</figure></p>
 <p>但光靠一个“仓库”是无法维护本程序如此多类型的信息的，你现实中的仓库还得找个管理呢。因此我借鉴了构件系统的想法，把仓库里面的东西分成以下几个“部件”。</p>
-<p></p><figure>
-	<a href="https://legacy.superbart.top/picture/XDYou_SAD/components.png">
-		<img src="https://legacy.superbart.top/picture/XDYou_SAD/components.png" loading="lazy"/>
+<p><figure 
+	>
+	<a href="https://legacy.superbart.top/picture/XDYou_SAD/components.png" >
+		<img src="https://legacy.superbart.top/picture/XDYou_SAD/components.png"
+			
+			
+			
+			loading="lazy"
+			>
 	</a>
 	
-</figure><p></p>
+</figure></p>
 <p>仓库结构解决了我们如何管理我们复杂的数据，但是我们的程序是一个 GUI 程序。也就是说，这个程序有两个部分，一个是数据，一个是显示数据的东西。数据相当于仓库，而 GUI 是用来向仓库请求数据，并显示数据的部分。仓库返回数据的时候，肯定需要一些处理，这个东西就是控制器，是我们程序仓库的一大组成 部分，我将会在下面讲述。
-这个架构有个名称，叫做 MVC 架构，在此引入我在<a class="link" href="https://legacy.superbart.top/writing/Flutter%20Introduction.html" target="_blank" rel="noopener">Flutter 介绍</a>里面提到的东西：</p>
+这个架构有个名称，叫做 MVC 架构，在此引入我在<a class="link" href="https://legacy.superbart.top/writing/Flutter%20Introduction.html"  target="_blank" rel="noopener"
+    >Flutter 介绍</a>里面提到的东西：</p>
 <blockquote>
 <p>我先给大家介绍 MVC 架构，Model 模型，是说程序的功能。控制器是和视图View进行交流，View视图就是显示了。View 通过 Controller 获取 Model 中的东西。
 以下这段展示的是我程序对应的模型各组成的部分。</p>
 </blockquote>
-<p></p><figure>
-	<a href="https://legacy.superbart.top/picture/XDYou_SAD/simple_structure.png">
-		<img src="https://legacy.superbart.top/picture/XDYou_SAD/simple_structure.png" loading="lazy"/>
+<p><figure 
+	>
+	<a href="https://legacy.superbart.top/picture/XDYou_SAD/simple_structure.png" >
+		<img src="https://legacy.superbart.top/picture/XDYou_SAD/simple_structure.png"
+			
+			
+			
+			loading="lazy"
+			>
 	</a>
 	
-</figure><p></p>
+</figure></p>
 <p>这个架构也可以看作是一种流水线结构，其中控制器相当于一种过滤器。接下来我会专门开一章简介一下。
 同时，我们可以看出我们程序的层级结构，数据大致是从中心往外围传递的。</p>
-<p></p><figure>
-	<a href="https://legacy.superbart.top/picture/XDYou_SAD/level.png">
-		<img src="https://legacy.superbart.top/picture/XDYou_SAD/level.png" loading="lazy"/>
+<p><figure 
+	>
+	<a href="https://legacy.superbart.top/picture/XDYou_SAD/level.png" >
+		<img src="https://legacy.superbart.top/picture/XDYou_SAD/level.png"
+			
+			
+			
+			loading="lazy"
+			>
 	</a>
 	
-</figure><p></p>
+</figure></p>
 <h2 id="控制器">控制器</h2>
 <p>我上文提到，控制器负责中转 GUI（也就是视图）的请求，处理后端传回来的数据。这个有两种实现方式，分别是观察式和控制器类式。</p>
 <h3 id="观察式">观察式</h3>
 <p>第一个是观察式，适用于数据单向流动，数据加工相对简单的情况。这种情况下，这个部件的数据流动遵循标准的数据流架构。这个过程中，由于数据的单向移动和最终 UI 的被动更新，我们可以认为是 UI <strong>观察</strong>数据改变。在这种情况下，数据更新依赖于其他部件的更新请求是不是顾及到了这个部件，比如说主页的全局刷新。
-</p><figure>
-	<a href="https://legacy.superbart.top/picture/XDYou_SAD/observe.png">
-		<img src="https://legacy.superbart.top/picture/XDYou_SAD/observe.png" loading="lazy"/>
+<figure 
+	>
+	<a href="https://legacy.superbart.top/picture/XDYou_SAD/observe.png" >
+		<img src="https://legacy.superbart.top/picture/XDYou_SAD/observe.png"
+			
+			
+			
+			loading="lazy"
+			>
 	</a>
 	
-</figure><p></p>
+</figure></p>
 <h3 id="控制器类式">控制器类式</h3>
 <p>第二个是控制器类式，不仅适用于数据加工十分复杂的情况，而且适用于需要视图发出更新请求的情况。在这个情况下，数据的流动不是单纯的单向，而是双向的。而且由于涉及到很多信息，还有很多部件都依赖于一个信息源，这个控制器使用一个类的方式实现比较合适。
 在我的程序中，课表信息是用这个实现的，因为课表信息相当综合，而且很多视图依赖于课表信息。
@@ -69,19 +100,25 @@
 <li>查询成绩中，自行选择科目计算均分，这个均分状态是由成绩查询窗口维护的。查询窗口维护一个成绩数组，自己检测选中的科目，然后计算显示。</li>
 <li>查询打卡成绩中，我们需要维护一个布尔变量，他用来决定显示的是所有记录还是成功记录。显然，这需要依赖于已经返回的数据。大家可以类比为 js 里面对数组进行 filter 操作。</li>
 </ul>
-<p>上面两章想了解更多，可以看<a class="link" href="https://legacy.superbart.top/writing/Flutter%20Introduction.html" target="_blank" rel="noopener">Flutter 介绍</a>文章中 Flutter 内部的状态管理章节。</p>
+<p>上面两章想了解更多，可以看<a class="link" href="https://legacy.superbart.top/writing/Flutter%20Introduction.html"  target="_blank" rel="noopener"
+    >Flutter 介绍</a>文章中 Flutter 内部的状态管理章节。</p>
 <h2 id="总结">总结</h2>
 <p>最后，我们根据分类，看出以下按照部件和数据流动看出来的布局。其中，横线表示这两个在程序中是紧密相关的，箭头代表了数据流动的方向。紫色的是控制器，蓝绿色的是最终的窗口。
-</p><figure>
-	<a href="https://legacy.superbart.top/picture/XDYou_SAD/general_structure.png">
-		<img src="https://legacy.superbart.top/picture/XDYou_SAD/general_structure.png" loading="lazy"/>
+<figure 
+	>
+	<a href="https://legacy.superbart.top/picture/XDYou_SAD/general_structure.png" >
+		<img src="https://legacy.superbart.top/picture/XDYou_SAD/general_structure.png"
+			
+			
+			
+			loading="lazy"
+			>
 	</a>
 	
 </figure>
-我们程序的架构是这样的：<p></p>
+我们程序的架构是这样的：</p>
 <ul>
 <li>程序是围绕数据运转的，所以总体上遵循仓库架构，其中仓库分成若干组件。</li>
 <li>各个组件有一条数据流的线性传递方式，控制器作为数据源，也就是仓库，和最终显示组件之间的过滤器和中转站。</li>
 <li>大致可以看作数据-控制器-界面的三层结构。</li>
-</ul>
-</body></html>
+</ul></blockquote>

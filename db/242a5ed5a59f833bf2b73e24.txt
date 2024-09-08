@@ -1,4 +1,4 @@
-<html><head></head><body><h1><a id="content-目录" href="https://blog.lsy223622.com/archives/41/#content-%E7%9B%AE%E5%BD%95" class="heading-permalink" aria-hidden="true" title="Permalink"></a>目录</h1>
+<blockquote></blockquote><h1><a id="content-目录" href="https://blog.lsy223622.com/archives/41/#content-%E7%9B%AE%E5%BD%95" class="heading-permalink" aria-hidden="true" title="Permalink"></a>目录</h1>
 <ul class="table-of-contents">
 <li>
 <a href="https://blog.lsy223622.com/archives/41/#content-%E7%9B%AE%E5%BD%95">目录</a>
@@ -142,7 +142,7 @@
 <li>比较有印象的是它的那个双椒鸡乌冬面，味道和口感都真的有点惊艳，可以说是融合得特别成功的一个菜。</li>
 <li>吃得很饱（我胃口真蛮大的），结账一看，两个人才一百三十块，性价比很不错，远远超过我对西安的西餐厅的预期。</li>
 <li>这家店排队的人超级多，之前和舍友晚上七点这样去，门口等满了人，问了说是九点都排不上，到时候厨师都要下班了，于是那次放弃。</li>
-<li>所以就是说最好工作日中午去，或者晚上早点去，周末节假日的话自己看着办吧。</li>
+<li>所以就是说最好工作日中午去，或者晚上早点去，周末节假日的话自己看着办吧😎。</li>
 </ul>
 </li>
 </ul>
@@ -152,4 +152,3 @@
 <li>2024-05-20 第一次发布</li>
 </ul>
 
-</body></html>

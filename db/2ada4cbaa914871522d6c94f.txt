@@ -1,79 +1,127 @@
-<html><head></head><body><img src="https://legacy.superbart.top/picture/xdyou/homepage.jpg" alt="Featured image of post Traintime PDA v0.1.0 发行简记"/><p>终于，经过一年多的断断续续的编写，Traintime PDA v0.1.0 发布了。虽然功能还算较少，但可以算是稳定版了。
+<blockquote><img src="https://legacy.superbart.top/picture/xdyou/homepage.jpg" alt="Featured image of post Traintime PDA v0.1.0 发行简记" /><p>终于，经过一年多的断断续续的编写，Traintime PDA v0.1.0 发布了。虽然功能还算较少，但可以算是稳定版了。
 Traintime PDA 是西电同志们的又一个个人信息查看应用，很明显，是电表的模仿产品。</p>
 <p>v0.1.0 可以算是这个软件第一个稳定版本，我自然需要花上一小段篇幅来跟大家介绍这个软件。</p>
 <p>说是发行简记，实际上我要写很多的技术相关细节。</p>
 <h2 id="功能介绍">功能介绍</h2>
 <ol>
 <li>根据Timetable重写的 Flutter 课程表，这个课程表我尽力模仿这个插件，解决课程冲突，还能添加一张背景图片，能挂着你喜欢的 idol 之类()
-<figure>
-	<a href="https://legacy.superbart.top/picture/xdyou/classtable.jpg">
-		<img src="https://legacy.superbart.top/picture/xdyou/classtable.jpg" loading="lazy" alt="课程表页面"/>
+<figure 
+	>
+	<a href="https://legacy.superbart.top/picture/xdyou/classtable.jpg" >
+		<img src="https://legacy.superbart.top/picture/xdyou/classtable.jpg"
+			
+			
+			
+			loading="lazy"
+			alt="课程表页面">
 	</a>
 	
 	<figcaption>课程表页面</figcaption>
 	
 </figure></li>
 <li>体育查询，打卡记录和体测成绩。
-<figure>
-	<a href="https://legacy.superbart.top/picture/xdyou/sport.jpg">
-		<img src="https://legacy.superbart.top/picture/xdyou/sport.jpg" loading="lazy" alt="体育查询页面"/>
+<figure 
+	>
+	<a href="https://legacy.superbart.top/picture/xdyou/sport.jpg" >
+		<img src="https://legacy.superbart.top/picture/xdyou/sport.jpg"
+			
+			
+			
+			loading="lazy"
+			alt="体育查询页面">
 	</a>
 	
 	<figcaption>体育查询页面</figcaption>
 	
 </figure></li>
 <li>成绩查询，包括可以自行选择科目计算均分。计算均分功能看来同学们十分喜欢使用，但我是大摆子(逃)
-<figure>
-	<a href="https://legacy.superbart.top/picture/xdyou/score.jpg">
-		<img src="https://legacy.superbart.top/picture/xdyou/score.jpg" loading="lazy" alt="成绩计算"/>
+<figure 
+	>
+	<a href="https://legacy.superbart.top/picture/xdyou/score.jpg" >
+		<img src="https://legacy.superbart.top/picture/xdyou/score.jpg"
+			
+			
+			
+			loading="lazy"
+			alt="成绩计算">
 	</a>
 	
 	<figcaption>成绩计算</figcaption>
 	
 </figure></li>
 <li>自行选择学期的考试安排查询，自行选择学期功能是疫情的后遗症。
-<figure>
-	<a href="https://legacy.superbart.top/picture/xdyou/exam.jpg">
-		<img src="https://legacy.superbart.top/picture/xdyou/exam.jpg" loading="lazy" alt="考试查询"/>
+<figure 
+	>
+	<a href="https://legacy.superbart.top/picture/xdyou/exam.jpg" >
+		<img src="https://legacy.superbart.top/picture/xdyou/exam.jpg"
+			
+			
+			
+			loading="lazy"
+			alt="考试查询">
 	</a>
 	
 	<figcaption>考试查询</figcaption>
 	
 </figure></li>
 <li>电量查询和欠费查询，这个功能只是在首页上的卡片。</li>
-<li>校园卡流水查询和(如果有的话)校园卡余额查询。 <br/>
+<li>校园卡流水查询和(如果有的话)校园卡余额查询。 <br>
 (显示余额功能我考虑到手机支付十分广泛，首页就不显示了)
-<figure>
-	<a href="https://legacy.superbart.top/picture/xdyou/school.card.record.jpg">
-		<img src="https://legacy.superbart.top/picture/xdyou/school.card.record.jpg" loading="lazy" alt="流水查询"/>
+<figure 
+	>
+	<a href="https://legacy.superbart.top/picture/xdyou/school.card.record.jpg" >
+		<img src="https://legacy.superbart.top/picture/xdyou/school.card.record.jpg"
+			
+			
+			
+			loading="lazy"
+			alt="流水查询">
 	</a>
 	
 	<figcaption>流水查询</figcaption>
 	
 </figure></li>
-<li>图书馆信息查询，个人借书状况和学校书库状况。 <br/>
+<li>图书馆信息查询，个人借书状况和学校书库状况。 <br>
 (扫码借书，扫码转借功能担心风险，尚未支持)
-<figure>
-	<a href="https://legacy.superbart.top/picture/xdyou/library.png">
-		<img src="https://legacy.superbart.top/picture/xdyou/library.png" loading="lazy" alt="图书馆信息"/>
+<figure 
+	>
+	<a href="https://legacy.superbart.top/picture/xdyou/library.png" >
+		<img src="https://legacy.superbart.top/picture/xdyou/library.png"
+			
+			
+			
+			loading="lazy"
+			alt="图书馆信息">
 	</a>
 	
 	<figcaption>图书馆信息</figcaption>
 	
 </figure></li>
 <li>西电目录，曾经在疫情封校期间运行的学校综合楼目录 + 食堂目录。
-<figure>
-	<a href="https://legacy.superbart.top/picture/xdyou/xddir.jpg">
-		<img src="https://legacy.superbart.top/picture/xdyou/xddir.jpg" loading="lazy" alt="西电目录"/>
+<figure 
+	>
+	<a href="https://legacy.superbart.top/picture/xdyou/xddir.jpg" >
+		<img src="https://legacy.superbart.top/picture/xdyou/xddir.jpg"
+			
+			
+			
+			loading="lazy"
+			alt="西电目录">
 	</a>
 	
 	<figcaption>西电目录</figcaption>
 	
 </figure></li>
 <li>XDU Planet：查看同学的博客，富含先辈的恩情（学习资料），另该功能代行转发学校教务处通知。
-<figure>
-	<a href="https://legacy.superbart.top/picture/xdyou/xduplanet.jpg">
-		<img src="https://legacy.superbart.top/picture/xdyou/xduplanet.jpg" loading="lazy" alt="XDU Planet"/>
+<figure 
+	>
+	<a href="https://legacy.superbart.top/picture/xdyou/xduplanet.jpg" >
+		<img src="https://legacy.superbart.top/picture/xdyou/xduplanet.jpg"
+			
+			
+			
+			loading="lazy"
+			alt="XDU Planet">
 	</a>
 	
 	<figcaption>XDU Planet</figcaption>
@@ -84,7 +132,8 @@ Traintime PDA 是西电同志们的又一个个人信息查看应用，很明显
 <p>我的程序打不过电表，这是肯定的。但我可以说出几点我的软件优势。</p>
 <ul>
 <li>我的程序使用 Flutter 开发，天生能适应 iOS 和 Android 两个移动端，使用范围肯定更广。我已经为 iOS 和 Android 都编译了目标端，在双端的运行效率都很流畅。</li>
-<li>我的程序代码完全开源，而且结构清晰明了。我给我的程序编写了<a class="link" href="https://legacy.superbart.top/writing/XDYou%20SAD.html" target="_blank" rel="noopener">架构图介绍</a>。这么做，可以保证别人可以阅读我的代码，然后修改代码，诞生他们学校的学生信息查看应用。而且我确信，这个是最能在开发者方面，保障用户隐私的最好方式。</li>
+<li>我的程序代码完全开源，而且结构清晰明了。我给我的程序编写了<a class="link" href="https://legacy.superbart.top/writing/XDYou%20SAD.html"  target="_blank" rel="noopener"
+    >架构图介绍</a>。这么做，可以保证别人可以阅读我的代码，然后修改代码，诞生他们学校的学生信息查看应用。而且我确信，这个是最能在开发者方面，保障用户隐私的最好方式。</li>
 <li>我的程序一定程度上适配了横屏，平板使用体验应该更好。看看上面图书馆的图片就能看出来了。</li>
 <li>我的程序很不正经。首先，开发者很不正经，而且保守的不得了；其次，程序里充满了彩蛋，甚至，我的字很好看(不是)。</li>
 </ul>
@@ -206,8 +255,8 @@ Traintime PDA 是西电同志们的又一个个人信息查看应用，很明显
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">late</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">List</span><span class="o">&lt;</span><span class="n">List</span><span class="o">&lt;</span><span class="n">List</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&gt;&gt;&gt;</span> <span class="n">pretendLayout</span><span class="p">;</span>
 </span></span></code></pre></div><p>合成方法是：</p>
 <ol>
-<li>生成数组：周次 * 一周七天 * 一天十节课 * 一节课有几门安排。我们计算一下： <br/>
-假设一个学期二十周，没有课程重叠，这就是 20 x 7 x 10 x 1 = 1400 个单元。 <br/>
+<li>生成数组：周次 * 一周七天 * 一天十节课 * 一节课有几门安排。我们计算一下： <br>
+假设一个学期二十周，没有课程重叠，这就是 20 x 7 x 10 x 1 = 1400 个单元。 <br>
 数据量确实很小，总体上耗时也是很均衡。所以理论上这是个 O(n4) 复杂度算法，实际上可以认为这是个 O(1) 复杂度算法，这个在接下来渲染时候更加体现。</li>
 <li>遍历每一周的每一天，进行插入课程操作。方法是对时间安排进行遍历，如果在这一天有安排，先将其安排到一个 <code>thisDay</code> 数组，然后对冲突处理后，插入到课程单元种</li>
 <li>关于课程冲突，也就是一个单元内有两个安排，以课程长度长的优先。在步骤中，先对 <code>thisDay</code> 数组进行排序，然后进行插入。</li>
@@ -391,13 +440,21 @@ Traintime PDA 是西电同志们的又一个个人信息查看应用，很明显
 </span></span></code></pre></div><p>顺便说一句 LayoutBuilder， 是用来给部件加约束的组件，具体看官方指南吧。</p>
 <h4 id="我的-bothsideview">我的 BothSideView</h4>
 <p>先给大家看看这玩意到底是个啥东西：</p>
-<p></p><figure>
-	<a href="https://legacy.superbart.top/picture/xdyou/both.side.sheet.gif">
-		<img src="https://legacy.superbart.top/picture/xdyou/both.side.sheet.gif" loading="lazy"/>
+<p><figure 
+	>
+	<a href="https://legacy.superbart.top/picture/xdyou/both.side.sheet.gif" >
+		<img src="https://legacy.superbart.top/picture/xdyou/both.side.sheet.gif"
+			
+			
+			
+			loading="lazy"
+			>
 	</a>
 	
-</figure><p></p>
-<p>如你所见，在竖屏的时候，他是从底往上呼出的，跟 <a class="link" href="https://m3.material.io/components/bottom-sheets/guidelines" target="_blank" rel="noopener">BottomSheet</a> 一样；在横屏的时候，他是从右向左呼出的，和 <a class="link" href="https://m3.material.io/components/side-sheets/overview" target="_blank" rel="noopener">SideSheet</a> 一样。</p>
+</figure></p>
+<p>如你所见，在竖屏的时候，他是从底往上呼出的，跟 <a class="link" href="https://m3.material.io/components/bottom-sheets/guidelines"  target="_blank" rel="noopener"
+    >BottomSheet</a> 一样；在横屏的时候，他是从右向左呼出的，和 <a class="link" href="https://m3.material.io/components/side-sheets/overview"  target="_blank" rel="noopener"
+    >SideSheet</a> 一样。</p>
 <p>Flutter 的 Material 框架本身没有实现 SideSheet ，而对于横屏来说，BottomSheet 是十分浪费屏幕，而且不太好看，从左面呼出是更合适的。得亏有很多的大佬，自行实现了 SideSheet 插件，我可以直接拿来使用他们的概念，但我想把这两个结合在一起。</p>
 <p>而为啥要将这两个东西合在一起呢？这就涉及到实际使用中，我们是如何呼出 BottomSheet 了。</p>
 <p>呼出 BottomSheet 和呼出 Dialog 一样，是使用了一个函数，在这里，叫 <code>showBottomSheet</code>。这玩意有个问题，他本质上是往路由栈里面压入一个 BottomSheet 页面栈，也就是说，无论横屏幕还是竖屏幕，他永远是 BottomSheet，而不会变化一点。我一开始用了 SideSheet，结果发现横屏开了 SideSheet，竖屏过来了还是 SideSheet，他们之间不会互相转化。</p>
@@ -576,15 +633,18 @@ Traintime PDA 是西电同志们的又一个个人信息查看应用，很明显
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span></code></pre></div><h4 id="pageview-组件使用">PageView 组件使用</h4>
 <p>还是跟组件状态玩命。</p>
-<p>原先，我的首页是抄的 <a class="link" href="https://flutter.github.io/samples/material_3.html" target="_blank" rel="noopener">Flutter 的 M3 实例</a>。这样我就可以在横屏幕时候使用左侧的 <a class="link" href="https://m3.material.io/components/navigation-rail/overview" target="_blank" rel="noopener">NavigationRail</a>，竖屏幕的时候使用底部的 <a class="link" href="https://m3.material.io/components/navigation-bar/overview" target="_blank" rel="noopener">NavigationBar</a>。</p>
+<p>原先，我的首页是抄的 <a class="link" href="https://flutter.github.io/samples/material_3.html"  target="_blank" rel="noopener"
+    >Flutter 的 M3 实例</a>。这样我就可以在横屏幕时候使用左侧的 <a class="link" href="https://m3.material.io/components/navigation-rail/overview"  target="_blank" rel="noopener"
+    >NavigationRail</a>，竖屏幕的时候使用底部的 <a class="link" href="https://m3.material.io/components/navigation-bar/overview"  target="_blank" rel="noopener"
+    >NavigationBar</a>。</p>
 <p>那么，问题在哪？我原先写的组件，将横屏渲染和竖屏渲染函数给分开写了。结果就导致前几天我迁移首页四个卡片到 PageView 的时候，出现了横屏和竖屏切换时候，页面永远会刷新到第一页。一开始我看了好久的 StatefulWidget 的状态周期，我也没明白。最后我发现，我这是两个组件，每次刷新的时候都会重新绘制这两个组件。解决方法就是，将这两个组件合二为一，在一个组件里面渲染，使用 <code>Visibility</code> 组件按需隐藏。</p>
 <h2 id="关于开源的想法">关于开源的想法</h2>
 <p>我对软件，按照开源和开发者，这么看：</p>
 <blockquote>
 <p>个人开发的开源软件或半开源软件 &gt; 集体开发的开源软件 &gt; 个人开发的闭源软件 &gt; 集体开发的半开源软件 &gt; 集体开发的闭源软件</p>
 </blockquote>
-<p>其中，半开源软件请参考 <a class="link" href="https://f-droid.org/zh_Hans/docs/Anti-Features/" target="_blank" rel="noopener">FDroid 的负面特征定义</a>。显然我的软件属于半开源软件，我这个软件实质上模拟了你在浏览器中，对学校后端的访问。</p>
+<p>其中，半开源软件请参考 <a class="link" href="https://f-droid.org/zh_Hans/docs/Anti-Features/"  target="_blank" rel="noopener"
+    >FDroid 的负面特征定义</a>。显然我的软件属于半开源软件，我这个软件实质上模拟了你在浏览器中，对学校后端的访问。</p>
 <p>实际上软件的开源与否，并不重要，重要的是软件本身能不能很好用，而按照我的经验，软件的好用也可以这么排序，尤其是手机端应用()</p>
 <p>所以，我虽然经常说开源很重要，但这个实际上是因为我认为个人开发者的产品更好而导致的。而开源软件放前面，是因为代码开放让人用着更舒服，可能我长期用 Linux 留下来的某种遗留症状。而且我某种意义上，真的不喜欢封闭的东西，虽然我发现大家都喜欢。</p>
-<p>而为啥我要将这个软件按照 MPL 授权，是因为我的软件有很多可以复用的东西，比如上面我大幅度提到的课程表和那个 BothSide 。这些复用的东西我将来是打算做成程序内的 package，如果按照 GPL ，不利于传播。而我目前程序状态，如果使用 MIT 之类的，那可能会有很多的魔改版，然后闭源了。MPL 是按照文件强制开源的，就目前状态所言，假如你只是用了我的课程表代码文件，那么，你只需要开源课程表代码文件+你对这个代码的修改，就好了。</p>
-</body></html>
+<p>而为啥我要将这个软件按照 MPL 授权，是因为我的软件有很多可以复用的东西，比如上面我大幅度提到的课程表和那个 BothSide 。这些复用的东西我将来是打算做成程序内的 package，如果按照 GPL ，不利于传播。而我目前程序状态，如果使用 MIT 之类的，那可能会有很多的魔改版，然后闭源了。MPL 是按照文件强制开源的，就目前状态所言，假如你只是用了我的课程表代码文件，那么，你只需要开源课程表代码文件+你对这个代码的修改，就好了。</p></blockquote>

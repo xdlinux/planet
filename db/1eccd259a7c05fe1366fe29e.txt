@@ -1,4 +1,4 @@
-<html><head></head><body><h2>事件运算转逻辑运算</h2>
+<blockquote></blockquote><h2>事件运算转逻辑运算</h2>
 <ul>
 <li>$A \cup B=A+B$ </li>
 <li>$A \cap B=A \cdot B$ </li>
@@ -417,4 +417,3 @@ $\frac{(n-1)S^2}{\sigma^2}\sim \chi^2(n-1)$ ，为$\chi^2$ 检验</li>
 $W=(0,\chi^2_{1-\frac{\alpha}{1}}(n-1)) \cup (\chi^2_{\frac{\alpha}{2}}(n-1),\infty)$ </li>
 <li>若根据 $S$ 计算所得枢轴量在 $W$ 内，假设 $H_0$ 不成立。</li>
 </ol>
-</body></html>

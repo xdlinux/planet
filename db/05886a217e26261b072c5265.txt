@@ -1,6 +1,7 @@
-<html><head></head><body><img src="https://s2.loli.net/2022/08/01/2UrIqVcRG3YiECJ.jpg" alt="Featured image of post archinstall 初体验 (省流文字版)"/><p>再编辑版注：鉴于该软件在我回顾的时候，已经有所改变，故这里不放出所有贴图。各位想了解的话，看<a class="link" href="https://wiki.archlinux.org/title/Archinstall" target="_blank" rel="noopener">这个链接</a>。</p>
+<blockquote><img src="https://s2.loli.net/2022/08/01/2UrIqVcRG3YiECJ.jpg" alt="Featured image of post archinstall 初体验 (省流文字版)" /><p>再编辑版注：鉴于该软件在我回顾的时候，已经有所改变，故这里不放出所有贴图。各位想了解的话，看<a class="link" href="https://wiki.archlinux.org/title/Archinstall"  target="_blank" rel="noopener"
+    >这个链接</a>。</p>
 <h2 id="前言">前言</h2>
-<p>继2012年Arch Linux弃用了安装器之后，在今年的4月1日，官方发布了全新的安装器，不过仍在实验阶段。今天我来体验一下。视频版在此，不建议不开倍速观看：<br/>
+<p>继2012年Arch Linux弃用了安装器之后，在今年的4月1日，官方发布了全新的安装器，不过仍在实验阶段。今天我来体验一下。视频版在此，不建议不开倍速观看：<br>
 
 
 
@@ -10,31 +11,42 @@
     
 
 
-</p><div class="video-wrapper">
-    <iframe src="https://player.bilibili.com/player.html?as_wide=1&amp;high_quality=1&amp;page=1&amp;bvid=BV1GA41157XK" scrolling="no" frameborder="no" framespacing="0" allowfullscreen="true">
+<div class="video-wrapper">
+    <iframe src="https://player.bilibili.com/player.html?as_wide=1&amp;high_quality=1&amp;page=1&bvid=BV1GA41157XK"
+            scrolling="no"
+            frameborder="no"
+            framespacing="0"
+            allowfullscreen="true"
+    >
     </iframe>
 </div>
-<p></p>
+</p>
 <h2 id="步骤">步骤</h2>
-<p>首先，搞到一个2021-04-01及之后版本的Arch Linux安装镜像，启动后在命令行下输入&#34;archinstall&#34;命令即可运行该安装程序。<br/>
-首先出现的是键盘布局选择界面，这里在20(UK)和21(US)之间选择，UK布局较US多了一些法文字母，这样就可以打出café, coup d’etat这样的在英语中使用的法文词汇了。<br/>
-之后我们可以选择从哪里的服务器下载软件包，较传统的安装方式，这个可以说是方便了不少。原来的安装方式是执行个测速工具，或是直接修改mirrorlist。<br/>
-然后可以选择安装进的硬盘，还能选择是否覆盖安装等，不过没有分区工具选项，只能使用一个默认的分区方案，分区为/boot和根目录（该工具仅支持UEFI）:-\<br/>
-选择硬盘后，选择分区文件系统，除了ext4外我一无所知。这里有一个给磁盘加密的选项，挺好的。Houge_Langley@Bilibili 做了几期视频介绍，链接附下。<br/>
-分区配置完毕后，这里设置电脑名称，超级用户密码，添加用户。这里有两个亮点：提示不设置超级用户密码的话，会禁用超级管理员用户（虽然Linux都这样，但在这里提示也是件好事）；还有赋予新用户超级管理权限（比visudo好用多了）。<br/>
-安装工具新提供了安装桌面环境，显卡驱动等选项，目前没有xfce,mate,lxde等:-| 至于为啥没有gnome-wayland，gnome默认为wayland。<br/>
-对了，archinstall是一个框架，任何会用python的人都可以用它写自己的安装脚本。<br/>
-我们还可以添加其他的安装包，这里我安装了两个Virtualbox客户机的模块。<br/>
-然后程序给出了一个总结，总觉得应该写成一个让人好明白的东西，而不是这个类似bash的配置文件。注意没有引导程序选择，因为只能选择systemd-boot，侧面体现其仍在开发。<br/>
-</p><figure>
-	<a href="https://s2.loli.net/2022/08/01/h9Mpb6UzmPQ1nrF.png">
-		<img src="https://s2.loli.net/2022/08/01/h9Mpb6UzmPQ1nrF.png" loading="lazy" alt="最后总结页面"/>
+<p>首先，搞到一个2021-04-01及之后版本的Arch Linux安装镜像，启动后在命令行下输入&quot;archinstall&quot;命令即可运行该安装程序。<br>
+首先出现的是键盘布局选择界面，这里在20(UK)和21(US)之间选择，UK布局较US多了一些法文字母，这样就可以打出café, coup d&rsquo;etat这样的在英语中使用的法文词汇了。<br>
+之后我们可以选择从哪里的服务器下载软件包，较传统的安装方式，这个可以说是方便了不少。原来的安装方式是执行个测速工具，或是直接修改mirrorlist。<br>
+然后可以选择安装进的硬盘，还能选择是否覆盖安装等，不过没有分区工具选项，只能使用一个默认的分区方案，分区为/boot和根目录（该工具仅支持UEFI）:-\<br>
+选择硬盘后，选择分区文件系统，除了ext4外我一无所知。这里有一个给磁盘加密的选项，挺好的。Houge_Langley@Bilibili 做了几期视频介绍，链接附下。<br>
+分区配置完毕后，这里设置电脑名称，超级用户密码，添加用户。这里有两个亮点：提示不设置超级用户密码的话，会禁用超级管理员用户（虽然Linux都这样，但在这里提示也是件好事）；还有赋予新用户超级管理权限（比visudo好用多了）。<br>
+安装工具新提供了安装桌面环境，显卡驱动等选项，目前没有xfce,mate,lxde等:-| 至于为啥没有gnome-wayland，gnome默认为wayland。<br>
+对了，archinstall是一个框架，任何会用python的人都可以用它写自己的安装脚本。<br>
+我们还可以添加其他的安装包，这里我安装了两个Virtualbox客户机的模块。<br>
+然后程序给出了一个总结，总觉得应该写成一个让人好明白的东西，而不是这个类似bash的配置文件。注意没有引导程序选择，因为只能选择systemd-boot，侧面体现其仍在开发。<br>
+<figure 
+	>
+	<a href="https://s2.loli.net/2022/08/01/h9Mpb6UzmPQ1nrF.png" >
+		<img src="https://s2.loli.net/2022/08/01/h9Mpb6UzmPQ1nrF.png"
+			
+			
+			
+			loading="lazy"
+			alt="最后总结页面">
 	</a>
 	
 	<figcaption>最后总结页面</figcaption>
 	
 </figure>
-最后重启后，根据我选择的GNOME环境，程序安装并配置好了，不过VBOX增强工具没有激活，需要在上述安装完成后arch-chroot一下。<p></p>
+最后重启后，根据我选择的GNOME环境，程序安装并配置好了，不过VBOX增强工具没有激活，需要在上述安装完成后arch-chroot一下。</p>
 <h2 id="小结">小结</h2>
 <p>这个工具目前处于一个鸡肋的状态。</p>
 <ul>
@@ -47,7 +59,9 @@
 </ul>
 <p>当然，官方也在积极改进这个软件，希望将来能够更加好用吧。也希望成熟的那一天，纯输命令的安装方式还能存在。</p>
 <h2 id="推荐链接">推荐链接</h2>
-<p><a class="link" href="https://www.bilibili.com/video/BV1BZ4y1G7ie" target="_blank" rel="noopener">Houge_Langley 采访 felixonmars</a><br/>
-<a class="link" href="https://www.bilibili.com/video/BV1s5411N7qN" target="_blank" rel="noopener">Houge_Langley 在 ZFS 上面装 Arch Linux</a><br/>
-<a class="link" href="https://www.bilibili.com/video/BV1X7411K7fo" target="_blank" rel="noopener">老莱给大家介绍Linux的十大优越之处！</a></p>
-</body></html>
+<p><a class="link" href="https://www.bilibili.com/video/BV1BZ4y1G7ie"  target="_blank" rel="noopener"
+    >Houge_Langley 采访 felixonmars</a><br>
+<a class="link" href="https://www.bilibili.com/video/BV1s5411N7qN"  target="_blank" rel="noopener"
+    >Houge_Langley 在 ZFS 上面装 Arch Linux</a><br>
+<a class="link" href="https://www.bilibili.com/video/BV1X7411K7fo"  target="_blank" rel="noopener"
+    >老莱给大家介绍Linux的十大优越之处！</a></p></blockquote>

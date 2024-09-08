@@ -1,8 +1,8 @@
-<html><head></head><body><h1 id="用-RenderDoc-持续截帧-Unity-Editor-Game-View">用 RenderDoc 持续截帧 Unity Editor Game View<a class="headerlink" href="https://note.stalomeow.com/blog/posts/unity-editor-renderdoc-tool/#%E7%94%A8-RenderDoc-%E6%8C%81%E7%BB%AD%E6%88%AA%E5%B8%A7-Unity-Editor-Game-View" title="Permanent link">¶</a></h1>
+<blockquote><h1 id="用-RenderDoc-持续截帧-Unity-Editor-Game-View">用 RenderDoc 持续截帧 Unity Editor Game View<a class="headerlink" href="#用-RenderDoc-持续截帧-Unity-Editor-Game-View" title="Permanent link">&para;</a></h1>
 <!-- more -->
 
 <p>某些渲染 bug 只会持续很短的时间，手动抓帧根本抓不到。Unity 在 <code>UnityEditorInternal</code> 命名空间下，提供了 <a href="https://github.com/Unity-Technologies/UnityCsReference/blob/d2eb9c0352229c0268d47ca0efa69e14b5d180f8/Editor/Mono/RenderDoc/RenderDoc.bindings.cs#L32"><code>RenderDoc.BeginCaptureRenderDoc</code></a> 和 <a href="https://github.com/Unity-Technologies/UnityCsReference/blob/d2eb9c0352229c0268d47ca0efa69e14b5d180f8/Editor/Mono/RenderDoc/RenderDoc.bindings.cs#L34C28-L34C47"><code>RenderDoc.EndCaptureRenderDoc</code></a> 方法。可以用它们对 Game View 持续截帧。</p>
-<h2 id="代码">代码<a class="headerlink" href="https://note.stalomeow.com/blog/posts/unity-editor-renderdoc-tool/#%E4%BB%A3%E7%A0%81" title="Permanent link">¶</a></h2>
+<h2 id="代码">代码<a class="headerlink" href="#代码" title="Permanent link">&para;</a></h2>
 <p>随便给的快捷键：</p>
 <ul>
 <li>Alt+Shift+B 开始截帧</li>
@@ -18,24 +18,24 @@
 
 <span class="k">public</span><span class="w"> </span><span class="k">static</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">RenderDocUtils</span>
 <span class="p">{</span>
-<span class="w">    </span><span class="na">[Shortcut(&#34;RenderDocUtils/BeginCaptureGameView&#34;, KeyCode.B, ShortcutModifiers.Alt | ShortcutModifiers.Shift)]</span>
+<span class="w">    </span><span class="na">[Shortcut(&quot;RenderDocUtils/BeginCaptureGameView&quot;, KeyCode.B, ShortcutModifiers.Alt | ShortcutModifiers.Shift)]</span>
 <span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">static</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">BeginCaptureGameView</span><span class="p">()</span>
 <span class="w">    </span><span class="p">{</span>
 <span class="w">        </span><span class="n">RenderDoc</span><span class="p">.</span><span class="n">BeginCaptureRenderDoc</span><span class="p">(</span><span class="n">GetActiveGameView</span><span class="p">());</span>
-<span class="w">        </span><span class="n">Debug</span><span class="p">.</span><span class="n">Log</span><span class="p">(</span><span class="s">&#34;RenderDoc capture started&#34;</span><span class="p">);</span>
+<span class="w">        </span><span class="n">Debug</span><span class="p">.</span><span class="n">Log</span><span class="p">(</span><span class="s">&quot;RenderDoc capture started&quot;</span><span class="p">);</span>
 <span class="w">    </span><span class="p">}</span>
 
-<span class="w">    </span><span class="na">[Shortcut(&#34;RenderDocUtils/EndCaptureGameView&#34;, KeyCode.E, ShortcutModifiers.Alt | ShortcutModifiers.Shift)]</span>
+<span class="w">    </span><span class="na">[Shortcut(&quot;RenderDocUtils/EndCaptureGameView&quot;, KeyCode.E, ShortcutModifiers.Alt | ShortcutModifiers.Shift)]</span>
 <span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">static</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">EndCaptureGameView</span><span class="p">()</span>
 <span class="w">    </span><span class="p">{</span>
 <span class="w">        </span><span class="n">RenderDoc</span><span class="p">.</span><span class="n">EndCaptureRenderDoc</span><span class="p">(</span><span class="n">GetActiveGameView</span><span class="p">());</span>
-<span class="w">        </span><span class="n">Debug</span><span class="p">.</span><span class="n">Log</span><span class="p">(</span><span class="s">&#34;RenderDoc capture ended&#34;</span><span class="p">);</span>
+<span class="w">        </span><span class="n">Debug</span><span class="p">.</span><span class="n">Log</span><span class="p">(</span><span class="s">&quot;RenderDoc capture ended&quot;</span><span class="p">);</span>
 <span class="w">    </span><span class="p">}</span>
 
 <span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="k">static</span><span class="w"> </span><span class="n">EditorWindow</span><span class="w"> </span><span class="nf">GetActiveGameView</span><span class="p">()</span>
 <span class="w">    </span><span class="p">{</span>
-<span class="w">        </span><span class="n">Type</span><span class="w"> </span><span class="n">type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">typeof</span><span class="p">(</span><span class="n">SceneView</span><span class="p">).</span><span class="n">Assembly</span><span class="p">.</span><span class="n">GetType</span><span class="p">(</span><span class="s">&#34;UnityEditor.GameView&#34;</span><span class="p">);</span>
+<span class="w">        </span><span class="n">Type</span><span class="w"> </span><span class="n">type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">typeof</span><span class="p">(</span><span class="n">SceneView</span><span class="p">).</span><span class="n">Assembly</span><span class="p">.</span><span class="n">GetType</span><span class="p">(</span><span class="s">&quot;UnityEditor.GameView&quot;</span><span class="p">);</span>
 <span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">EditorWindow</span><span class="p">.</span><span class="n">GetWindow</span><span class="p">(</span><span class="n">type</span><span class="p">);</span>
 <span class="w">    </span><span class="p">}</span>
 <span class="p">}</span>
-</code></pre></div></body></html>
+</code></pre></div></blockquote>
