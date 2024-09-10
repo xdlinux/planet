@@ -1,4 +1,7 @@
-事件运算转逻辑运算$A \cup B=A+B$ $A \cap B=A \cdot B$ $A-B=A \bar{B}$$A$ 事件发生 $B$ 事件不发生，由韦恩图易证。可以将 $-B$ 理解...<hr /><h2>事件运算转逻辑运算</h2>
+前言快到概率论补考了，又看了一遍，订正不少错误。常学常新（还是说根本没学明白呢）事件运算转逻辑运算$A \cup B=A+B$ $A \cap B=A \cdot B$ $A-B=A \bar{...<hr /><h2>前言</h2>
+<p>快到概率论补考了，又看了一遍，订正不少错误。<br/>
+常学常新（<del>还是说根本没学明白呢</del>）</p>
+<h2>事件运算转逻辑运算</h2>
 <ul>
 <li>$A \cup B=A+B$ </li>
 <li>$A \cap B=A \cdot B$ </li>
@@ -56,7 +59,7 @@ $$</p>
 <blockquote>
 <p>$n$ 次独立实验，每次实验只有 $A,\bar{A}$ 两种结果。</p>
 </blockquote>
-<p>$B(n,p)$<br/>
+<p>$X \sim B(n,p)$<br/>
 $$<br/>
 P_n(k)=C_n^kp^k(1-p)^{n-k}<br/>
 $$<br/>
@@ -67,7 +70,7 @@ $$<br/>
 ==Warning==：事件概率为 0 不代表一定不发生。<br/>
 Eg：随机选中圆内某点，选中任意点概率为 0，但都可能发生。</p>
 <h2>均匀分布</h2>
-<p>$U(a,b)$<br/>
+<p>$x \sim U(a,b)$<br/>
 近似为几何分布中的线性分布，各点处概率密度：<br/>
 $$<br/>
 f(x)=<br/>
@@ -87,7 +90,7 @@ F(x)=<br/>
 \end{cases}<br/>
 $$</p>
 <h2>指数分布</h2>
-<p>$E(\lambda)$ </p>
+<p>$x \sim E(\lambda)$ </p>
 <h3>概率密度</h3>
 <p>$$<br/>
 f(x)=<br/>
@@ -104,8 +107,13 @@ F(x)=<br/>
 0,x&lt;0\\<br/>
 \end{cases}<br/>
 $$</p>
+<h2>泊松分布</h2>
+<p>$X \sim \pi(\lambda)$<br/>
+$$<br/>
+P(X=k)=\frac{e^{-\lambda}\lambda^k}{k!}<br/>
+$$</p>
 <h2>正态分布</h2>
-<p>$N(\mu,\sigma^2)$ </p>
+<p>$x \sim N(\mu,\sigma^2)$ </p>
 <h3>概率密度</h3>
 <p>$$<br/>
 f(x)=\frac{1}{\sqrt{2 \pi \sigma}}e^{-\frac{(x-\mu)^2}{2\sigma^2}},x \in R,\sigma&gt;0<br/>
@@ -274,7 +282,7 @@ $$</p>
 <p>$$<br/>
 EX=\lambda,DX=\lambda<br/>
 $$</p>
-<h4>$N(\mu,\sigma)$ 正态分布</h4>
+<h4>$N(\mu,\sigma^2)$ 正态分布</h4>
 <p>$$<br/>
 EX=\mu,DX=\sigma^2<br/>
 $$</p>
