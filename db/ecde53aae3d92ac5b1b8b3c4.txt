@@ -1,0 +1,44 @@
+最近算是真正入门了 Swift 这门语言。初识 Swift现代 iOS App 的开发，首选用 Swift 进行开发。Swift 是一门很年轻的编程语言，用于构建用户界面的 SwiftUI 更是...<hr />
+<p>最近算是真正入门了 Swift 这门语言。</p><h2 id="toc_273">初识 Swift</h2><p>现代 iOS App 的开发，首选用 Swift 进行开发。</p><p>Swift 是一门很年轻的编程语言，用于构建用户界面的 SwiftUI 更是等到 2019 年才发布，所以说生态还在慢慢发展，很多轮子也需要自己造，中文文档也相当缺失。所以在开发过程中，需要借助于 Google 的英文搜索来查找和解决问题，使用国内搜索引擎可能真的什么也搜索不到。</p><p>不过好在想要入门这门语言，还是有很多中文资料的。这里推荐 <a href="https://swiftgg.gitbook.io/swift/">SwiftGG</a> 作为入门。</p><p>Swift 语法上的问题在此处就不赘述了。它是一门设计比较完备的现代编程语言，所以相对脚本语言会更难以入门。但与此同时，这样的门槛也提高了程序的安全性，很多错误可以在编写代码时，通过静态代码检查获得提示。</p><p>作为 C++ 选手，Swift 很多语法特性对我来说还是很新颖的。比如结构体的计算属性。</p><h2 id="toc_274">初见 SwiftUI</h2><p>打开 Xcode，新建一个应用程序项目，映入眼帘的便是右侧预览窗口中的「Hello World」。可以试试右边的检查器，看看文本的变化。点击右上角的「+」能够添加新组件。在开发过程中，Xcode 的实时预览确实相当强大。不过作为 VSCode 的老用户，快捷键上手还需要一段时间，「Editor」菜单中有许多编辑功能，可以看看它们的快捷键，比如我第一个学到的是 control+shift 进行多光标选择操作。</p><p>我还是推荐读者去看看<a href="https://developer.apple.com/tutorials/swiftui">苹果官方的教程</a>，跟着一步步来大概就能明白这种 UI 构建的大致思路。不过 SwiftUI 作为新的 UI 框架还是太年轻了，有一些特性还是需要和老的 UIKit 结合，这里教程也有提到。</p><p>作为设计之初就考虑到响应式的界面框架，SwiftUI 生成跨 iPhone、iPad、Mac 平台的 UI 还算方便，但也需要根据各个平台进行微调。</p><p>SwiftUI 采用声明式，这也与现代用户界面框架 Flutter 一致。作为曾经的 React 选手，我对这种界面构造方式还算比较有亲切感，但上手时又发现了各种各样的问题。</p><h3 id="toc_275">在 body 属性中选择性显示</h3><p>SwiftUI 显示的内容都需要写在 body 这个计算属性内部。</p><p>写 React 时，根据某个条件渲染组件，我通常为了方便直接用三目表达式返回不同的组件，也比较方便。但是在 SwiftUI 这种强类型语言环境下的条件渲染却成了一个麻烦事，因为不同的组件并非同一个类型，显然同一个函数/计算属性并能返回不同的类型，这时就需要借助 <code>AnyView</code> 来渲染了，它能将 UI 组件转换为同一个类型，即 <code>AnyView</code>。</p><p>在下面的例子中，如果 <code>condition</code> 属性为真，则 <code>SampleView</code> 渲染为 <code>ComponentA</code>，反之渲染为 <code>ComponentB</code>。</p><pre><code class="lang-swift">struct SampleView: View {
+    var condition: Bool
+    
+    var body: some View {
+        if condition {
+            AnyView(ComponentA())
+        } else {
+            AnyView(ComponentB())
+        }
+    }
+}</code></pre><h3 id="toc_276">ForEach 的使用</h3><p>当你渲染多个组件时，<code>ForEach</code> 是必不可少的。但是有时又会出现很多奇怪的报错。</p><p>看到 ForEach，理所当然就是迭代遍历一个数组。但是当你往括号里填入数组时，会提示你数组内的元素必须要是「Identifiable」的。一个类型是 Identifiable 的，意味着它一定有 id 这个属性。</p><p>比如像下面一样定义一个 <code>Landmark</code> （地标）结构体，想要用优雅的方式用列表显示许多地标的行组件（<code>LandmarkRow</code>），这个 <code>Landmark</code> 结构体就需要有 id 这个属性。</p><pre><code class="lang-swift">struct Landmark: Identifiable {
+    var id: Int      // 需要 id 属性
+    var name: String
+}
+
+struct LandmarkList: View {
+    var landmarks: [Landmark]
+
+    var body: some View {
+        List {
+            ForEach(landmarks) { landmark in
+                LandmarkRow(landmark: landmark)
+            }
+        }
+    }
+}</code></pre><p>不过这里有一个变通办法，就是数组下标访问，<code>ForEach</code> 的参数里面，参数的 <code>id: \.self</code>  记得写上，不然会出现警告「Non-constant range: argument must be an integer literal」（也不知道为什么一定要指定 id）。这样 <code>Landmark</code> 结构体就不需要 id 属性了。但是这样看起来没那么优雅了，但我感觉在实际开发中，没有 id 的数据可能更常见，所以这种写法可能会更多些。</p><pre><code class="lang-swift">struct Landmark: {
+    var name: String
+}
+
+struct LandmarkList: View {
+    var landmarks: [Landmark]
+
+    var body: some View {
+        List {
+            ForEach(0 ..&lt; landmarks.count, id: \.self) { index in
+                LandmarkRow(landmark: landmarks[index])
+            }
+        }
+    }
+}</code></pre><p><code>ForEach</code> 还有一个奇怪地方，括号里面写闭区间是报错的。不过作为初学者，我也理解不了里面的原因，就这么记着吧。总之呢，写 <code>ForEach</code> 加上 id 参数总归是没错的。</p><pre><code class="lang-swift">ForEach(0 ... 10)             // 报错
+ForEach(0 ..&lt; 11)             // 无错误
+ForEach(0 ... 10, id: \.self) // 无错误
+ForEach(0 ..&lt; 11, id: \.self) // 无错误</code></pre>
