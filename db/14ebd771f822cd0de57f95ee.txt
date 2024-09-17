@@ -1,13 +1,12 @@
- &lt;h1 id=&#34;Ubuntu20-04有线网络消失问题解决方法&#34;&gt;&lt;a href=&#34;#Ubuntu20-04有线网络消失问题解决方法&#34; class=&#34;headerlink&#34; title=&#34;Ubuntu20.04有线网络消失问题解决方法&#34;&gt;&lt;/a&gt;Ubuntu20.04有线网络消失问题解决方法&lt;/h1&gt;&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;现象&lt;br&gt;右上角有线网络图标消失，设置中也看不到了(・-・*)&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;原因&lt;br&gt;我个人出现的原因是上次非正常强制关机了，下次开机就看不到有线网络图标了(＠_＠;)&lt;/p&gt;
-&lt;span id=&#34;more&#34;&gt;&lt;/span&gt;&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;解决方法&lt;br&gt;打开终端&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&#34;hljs linux&#34;&gt;sudo nmcli networking off
-sudo nmcli networking on&lt;/code&gt;&lt;/pre&gt;
+<hr /><h1 id="Ubuntu20-04有线网络消失问题解决方法"><a href="#Ubuntu20-04有线网络消失问题解决方法" class="headerlink" title="Ubuntu20.04有线网络消失问题解决方法"></a>Ubuntu20.04有线网络消失问题解决方法</h1><ul>
+<li><p>现象<br>右上角有线网络图标消失，设置中也看不到了(・-・*)</p>
+</li>
+<li><p>原因<br>我个人出现的原因是上次非正常强制关机了，下次开机就看不到有线网络图标了(＠_＠;)</p>
+<span id="more"></span></li>
+<li><p>解决方法<br>打开终端</p>
+<pre><code class="hljs linux">sudo nmcli networking off
+sudo nmcli networking on</code></pre>
 
-&lt;p&gt;便可以看到有线网络图标重新出现啦╰(&lt;em&gt;°▽°&lt;/em&gt;)╯&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
- <hr />
+<p>便可以看到有线网络图标重新出现啦╰(<em>°▽°</em>)╯</p>
+</li>
+</ul>

@@ -1,53 +1,52 @@
- &lt;h1 id=&#34;起始&#34;&gt;&lt;a href=&#34;#起始&#34; class=&#34;headerlink&#34; title=&#34;起始&#34;&gt;&lt;/a&gt;起始&lt;/h1&gt;&lt;p&gt;最近开始学docker了，感觉docker很厉害o(￣▽￣)ｄ可以很方便的部署各种环境。然鹅果不其然，配环境是一大问题┌(。Д。)┐&lt;br&gt;这里就简单整理下Ubuntu23.10 安装与配置docker的过程叭✧(≖ ◡ ≖)&lt;/p&gt;
-&lt;h2 id=&#34;参考文档&#34;&gt;&lt;a href=&#34;#参考文档&#34; class=&#34;headerlink&#34; title=&#34;参考文档&#34;&gt;&lt;/a&gt;参考文档&lt;/h2&gt;&lt;p&gt;&lt;a href=&#34;https://docs.docker.com/engine/install/ubuntu/#install-using-the-repository&#34;&gt;docker官网&lt;/a&gt;&lt;br&gt;&lt;a href=&#34;https://docker-practice.github.io/zh-cn/install/ubuntu.html&#34;&gt;Docker — 从入门到实践&lt;/a&gt;&lt;/p&gt;
-&lt;span id=&#34;more&#34;&gt;&lt;/span&gt;
+<hr /><h1 id="起始"><a href="#起始" class="headerlink" title="起始"></a>起始</h1><p>最近开始学docker了，感觉docker很厉害o(￣▽￣)ｄ可以很方便的部署各种环境。然鹅果不其然，配环境是一大问题┌(。Д。)┐<br>这里就简单整理下Ubuntu23.10 安装与配置docker的过程叭✧(≖ ◡ ≖)</p>
+<h2 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h2><p><a href="https://docs.docker.com/engine/install/ubuntu/#install-using-the-repository">docker官网</a><br><a href="https://docker-practice.github.io/zh-cn/install/ubuntu.html">Docker — 从入门到实践</a></p>
+<span id="more"></span>
 
-&lt;h2 id=&#34;系统要求&#34;&gt;&lt;a href=&#34;#系统要求&#34; class=&#34;headerlink&#34; title=&#34;系统要求&#34;&gt;&lt;/a&gt;系统要求&lt;/h2&gt;&lt;p&gt;docker要求较新的ubuntu版本，建议选择20.04之后的LTS Ubuntu。&lt;br&gt;我用的是Ubuntu23.10LTS。&lt;/p&gt;
-&lt;h2 id=&#34;卸载旧版本&#34;&gt;&lt;a href=&#34;#卸载旧版本&#34; class=&#34;headerlink&#34; title=&#34;卸载旧版本&#34;&gt;&lt;/a&gt;卸载旧版本&lt;/h2&gt;&lt;p&gt;无论是否存在旧版本都可以执行以下命令，以防万一。&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&#34;hljs bash&#34;&gt;sudo apt-get remove docker \
+<h2 id="系统要求"><a href="#系统要求" class="headerlink" title="系统要求"></a>系统要求</h2><p>docker要求较新的ubuntu版本，建议选择20.04之后的LTS Ubuntu。<br>我用的是Ubuntu23.10LTS。</p>
+<h2 id="卸载旧版本"><a href="#卸载旧版本" class="headerlink" title="卸载旧版本"></a>卸载旧版本</h2><p>无论是否存在旧版本都可以执行以下命令，以防万一。</p>
+<pre><code class="hljs bash">sudo apt-get remove docker \
            docker-engine \
-           docker.io&lt;/code&gt;&lt;/pre&gt;
-&lt;h2 id=&#34;前置步骤&#34;&gt;&lt;a href=&#34;#前置步骤&#34; class=&#34;headerlink&#34; title=&#34;前置步骤&#34;&gt;&lt;/a&gt;前置步骤&lt;/h2&gt;&lt;pre&gt;&lt;code class=&#34;hljs bash&#34;&gt;sudo apt-get update  &lt;span class=&#34;hljs-comment&#34;&gt;# 更新可用软件包信息&lt;/span&gt;
-sudo apt-get install ca-certificates curl &lt;span class=&#34;hljs-comment&#34;&gt;# 安装ca证书和curl&lt;/span&gt;
+           docker.io</code></pre>
+<h2 id="前置步骤"><a href="#前置步骤" class="headerlink" title="前置步骤"></a>前置步骤</h2><pre><code class="hljs bash">sudo apt-get update  <span class="hljs-comment"># 更新可用软件包信息</span>
+sudo apt-get install ca-certificates curl <span class="hljs-comment"># 安装ca证书和curl</span>
 sudo install -m 0755 -d /etc/apt/keyrings
-curl -fsSL https://mirrors.aliyun.com/docker-ce/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker-archive-keyring.gpg &lt;span class=&#34;hljs-comment&#34;&gt;# 添加软件源gpg密钥&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+curl -fsSL https://mirrors.aliyun.com/docker-ce/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker-archive-keyring.gpg <span class="hljs-comment"># 添加软件源gpg密钥</span></code></pre>
 
-&lt;h2 id=&#34;ubuntu换国内源&#34;&gt;&lt;a href=&#34;#ubuntu换国内源&#34; class=&#34;headerlink&#34; title=&#34;ubuntu换国内源&#34;&gt;&lt;/a&gt;ubuntu换国内源&lt;/h2&gt;&lt;p&gt;参考&lt;a href=&#34;https://mirrors.tuna.tsinghua.edu.cn/help/ubuntu/&#34;&gt;清华大学开源软件镜像站&lt;/a&gt;自行换源&lt;/p&gt;
-&lt;h2 id=&#34;使用apt安装docker&#34;&gt;&lt;a href=&#34;#使用apt安装docker&#34; class=&#34;headerlink&#34; title=&#34;使用apt安装docker&#34;&gt;&lt;/a&gt;使用apt安装docker&lt;/h2&gt;&lt;pre&gt;&lt;code class=&#34;hljs bash&#34;&gt;  &lt;span class=&#34;hljs-comment&#34;&gt;# 添加docker源&lt;/span&gt;
-  &lt;span class=&#34;hljs-built_in&#34;&gt;echo&lt;/span&gt; \
-&lt;span class=&#34;hljs-string&#34;&gt;&amp;quot;deb [arch=&lt;span class=&#34;hljs-subst&#34;&gt;$(dpkg --print-architecture signed-by=/etc/apt/keyrings/docker-archive-keyring.gpg] https://mirrors.aliyun.com/docker-ce/linux/ubuntu \&lt;/span&gt;&lt;/span&gt;
-&lt;span class=&#34;hljs-subst&#34;&gt;&lt;span class=&#34;hljs-string&#34;&gt;$(lsb_release -cs)&lt;/span&gt; stable&amp;quot;&lt;/span&gt; | sudo &lt;span class=&#34;hljs-built_in&#34;&gt;tee&lt;/span&gt; /etc/apt/sources.list.d/docker.list &amp;gt; /dev/null&lt;/code&gt;&lt;/pre&gt;
+<h2 id="ubuntu换国内源"><a href="#ubuntu换国内源" class="headerlink" title="ubuntu换国内源"></a>ubuntu换国内源</h2><p>参考<a href="https://mirrors.tuna.tsinghua.edu.cn/help/ubuntu/">清华大学开源软件镜像站</a>自行换源</p>
+<h2 id="使用apt安装docker"><a href="#使用apt安装docker" class="headerlink" title="使用apt安装docker"></a>使用apt安装docker</h2><pre><code class="hljs bash">  <span class="hljs-comment"># 添加docker源</span>
+  <span class="hljs-built_in">echo</span> \
+<span class="hljs-string">&quot;deb [arch=<span class="hljs-subst">$(dpkg --print-architecture signed-by=/etc/apt/keyrings/docker-archive-keyring.gpg] https://mirrors.aliyun.com/docker-ce/linux/ubuntu \</span></span>
+<span class="hljs-subst"><span class="hljs-string">$(lsb_release -cs)</span> stable&quot;</span> | sudo <span class="hljs-built_in">tee</span> /etc/apt/sources.list.d/docker.list &gt; /dev/null</code></pre>
 
-&lt;pre&gt;&lt;code class=&#34;hljs bash&#34;&gt;sudo apt-get update  &lt;span class=&#34;hljs-comment&#34;&gt;# 更新&lt;/span&gt;
-sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin  &lt;span class=&#34;hljs-comment&#34;&gt;# 安装docker&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+<pre><code class="hljs bash">sudo apt-get update  <span class="hljs-comment"># 更新</span>
+sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin  <span class="hljs-comment"># 安装docker</span></code></pre>
 
-&lt;h2 id=&#34;启动docker&#34;&gt;&lt;a href=&#34;#启动docker&#34; class=&#34;headerlink&#34; title=&#34;启动docker&#34;&gt;&lt;/a&gt;启动docker&lt;/h2&gt;&lt;pre&gt;&lt;code class=&#34;hljs bash&#34;&gt;systemctl &lt;span class=&#34;hljs-built_in&#34;&gt;enable&lt;/span&gt; docker  &lt;span class=&#34;hljs-comment&#34;&gt;# 开机启动&lt;/span&gt;
-systemctl start docker  &lt;span class=&#34;hljs-comment&#34;&gt;# 启动docker&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+<h2 id="启动docker"><a href="#启动docker" class="headerlink" title="启动docker"></a>启动docker</h2><pre><code class="hljs bash">systemctl <span class="hljs-built_in">enable</span> docker  <span class="hljs-comment"># 开机启动</span>
+systemctl start docker  <span class="hljs-comment"># 启动docker</span></code></pre>
 
-&lt;h2 id=&#34;赋予用户权限&#34;&gt;&lt;a href=&#34;#赋予用户权限&#34; class=&#34;headerlink&#34; title=&#34;赋予用户权限&#34;&gt;&lt;/a&gt;赋予用户权限&lt;/h2&gt;&lt;pre&gt;&lt;code class=&#34;hljs bash&#34;&gt;sudo &lt;span class=&#34;hljs-built_in&#34;&gt;chown&lt;/span&gt; (yourname) /var/run/docker.sock&lt;/code&gt;&lt;/pre&gt;
+<h2 id="赋予用户权限"><a href="#赋予用户权限" class="headerlink" title="赋予用户权限"></a>赋予用户权限</h2><pre><code class="hljs bash">sudo <span class="hljs-built_in">chown</span> (yourname) /var/run/docker.sock</code></pre>
 
-&lt;h2 id=&#34;配置镜像加速&#34;&gt;&lt;a href=&#34;#配置镜像加速&#34; class=&#34;headerlink&#34; title=&#34;配置镜像加速&#34;&gt;&lt;/a&gt;配置镜像加速&lt;/h2&gt;&lt;p&gt;登录&lt;a href=&#34;https://cr.console.aliyun.com/cn-hangzhou/instances/mirrors&#34;&gt;阿里云镜像加速&lt;/a&gt;根据文档进行设置镜像加速。&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&#34;hljs bash&#34;&gt;sudo &lt;span class=&#34;hljs-built_in&#34;&gt;mkdir&lt;/span&gt; -p /etc/docker
-sudo &lt;span class=&#34;hljs-built_in&#34;&gt;tee&lt;/span&gt; /etc/docker/daemon.json &amp;lt;&amp;lt;-&lt;span class=&#34;hljs-string&#34;&gt;&amp;#x27;EOF&amp;#x27;&lt;/span&gt;
-&amp;#123;
-  &lt;span class=&#34;hljs-string&#34;&gt;&amp;quot;registry-mirrors&amp;quot;&lt;/span&gt;: [&lt;span class=&#34;hljs-string&#34;&gt;&amp;quot;https://qt4gy4oh.mirror.aliyuncs.com&amp;quot;&lt;/span&gt;]
-&amp;#125;
+<h2 id="配置镜像加速"><a href="#配置镜像加速" class="headerlink" title="配置镜像加速"></a>配置镜像加速</h2><p>登录<a href="https://cr.console.aliyun.com/cn-hangzhou/instances/mirrors">阿里云镜像加速</a>根据文档进行设置镜像加速。</p>
+<pre><code class="hljs bash">sudo <span class="hljs-built_in">mkdir</span> -p /etc/docker
+sudo <span class="hljs-built_in">tee</span> /etc/docker/daemon.json &lt;&lt;-<span class="hljs-string">&#x27;EOF&#x27;</span>
+&#123;
+  <span class="hljs-string">&quot;registry-mirrors&quot;</span>: [<span class="hljs-string">&quot;https://qt4gy4oh.mirror.aliyuncs.com&quot;</span>]
+&#125;
 EOF
 sudo systemctl daemon-reload
-sudo systemctl restart docker&lt;/code&gt;&lt;/pre&gt;
+sudo systemctl restart docker</code></pre>
 
-&lt;h2 id=&#34;测试docker是否安装成功&#34;&gt;&lt;a href=&#34;#测试docker是否安装成功&#34; class=&#34;headerlink&#34; title=&#34;测试docker是否安装成功&#34;&gt;&lt;/a&gt;测试docker是否安装成功&lt;/h2&gt;&lt;pre&gt;&lt;code class=&#34;hljs bash&#34;&gt;docker run --&lt;span class=&#34;hljs-built_in&#34;&gt;rm&lt;/span&gt; hello-world&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;如果拉取失败，参考&lt;a href=&#34;https://blog.csdn.net/macwinwin/article/details/113967667&#34;&gt;blog&lt;/a&gt;可以选择执行以下步骤：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;修改DNS&lt;pre&gt;&lt;code class=&#34;hljs vim&#34;&gt;&lt;span class=&#34;hljs-keyword&#34;&gt;vim&lt;/span&gt; /etc/resolv.&lt;span class=&#34;hljs-keyword&#34;&gt;conf&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
-nameserver改为8.8.8.8&lt;/li&gt;
-&lt;li&gt;重新修改镜像仓库地址&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;若执行了上述步骤，再次执行&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&#34;hljs bash&#34;&gt;sudo systemctl daemon-reload
+<h2 id="测试docker是否安装成功"><a href="#测试docker是否安装成功" class="headerlink" title="测试docker是否安装成功"></a>测试docker是否安装成功</h2><pre><code class="hljs bash">docker run --<span class="hljs-built_in">rm</span> hello-world</code></pre>
+<p>如果拉取失败，参考<a href="https://blog.csdn.net/macwinwin/article/details/113967667">blog</a>可以选择执行以下步骤：</p>
+<ul>
+<li>修改DNS<pre><code class="hljs vim"><span class="hljs-keyword">vim</span> /etc/resolv.<span class="hljs-keyword">conf</span></code></pre>
+nameserver改为8.8.8.8</li>
+<li>重新修改镜像仓库地址</li>
+</ul>
+<p>若执行了上述步骤，再次执行</p>
+<pre><code class="hljs bash">sudo systemctl daemon-reload
 sudo systemctl restart docker
-docker run --&lt;span class=&#34;hljs-built_in&#34;&gt;rm&lt;/span&gt; hello-world&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;这次应该就可以完美拉取了ヽ(✿ﾟ▽ﾟ)ノ&lt;/p&gt;
-&lt;h1 id=&#34;总结&#34;&gt;&lt;a href=&#34;#总结&#34; class=&#34;headerlink&#34; title=&#34;总结&#34;&gt;&lt;/a&gt;总结&lt;/h1&gt;&lt;p&gt;真是一场酣畅淋漓的docker安装啊Σ(っ °Д °;)っ&lt;/p&gt;
-&lt;p&gt;由于桌面版比较简单，这里就不再赘述了(＠_＠;)&lt;/p&gt;
- <hr />
+docker run --<span class="hljs-built_in">rm</span> hello-world</code></pre>
+<p>这次应该就可以完美拉取了ヽ(✿ﾟ▽ﾟ)ノ</p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>真是一场酣畅淋漓的docker安装啊Σ(っ °Д °;)っ</p>
+<p>由于桌面版比较简单，这里就不再赘述了(＠_＠;)</p>
