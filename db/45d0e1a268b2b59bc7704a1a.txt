@@ -67,6 +67,23 @@
 <span class="p">}</span>
 </code></pre></div>
 <p>在最后，调用 <code>MaskOverlayBits</code> 把 RenderDoc 左上角黑色的 Overlay 信息隐藏掉；调用 <code>SetCaptureKeys</code> 把默认的快捷键取消掉。</p>
+<h2 id="D3D12-调试层">D3D12 调试层<a class="headerlink" href="#D3D12-调试层" title="Permanent link">&para;</a></h2>
+<p>在做 D3D12 开发时，我们通常会开启 D3D12 的调试层，但 RenderDoc 默认情况下禁用了 API Validation 和 Debug Output，使得 D3D12 的调试层失去作用。</p>
+<p>在加载 RenderDoc 后，调用下面的方法可以解决。<sup id="fnref:1"><a class="footnote-ref" href="#fn:1">1</a></sup></p>
+<div class="highlight"><pre><span></span><code><span class="n">m_Api</span><span class="o">-&gt;</span><span class="n">SetCaptureOptionU32</span><span class="p">(</span><span class="n">eRENDERDOC_Option_APIValidation</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">);</span>
+<span class="n">m_Api</span><span class="o">-&gt;</span><span class="n">SetCaptureOptionU32</span><span class="p">(</span><span class="n">eRENDERDOC_Option_DebugOutputMute</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span>
+</code></pre></div>
+<p>另外，RenderDoc 会使 <code>ID3D12InfoQueue1</code> 失去作用，因为它只提供了一个 dummy 的实现。<sup id="fnref:2"><a class="footnote-ref" href="#fn:2">2</a></sup></p>
+<div class="highlight"><pre><span></span><code><span class="c1">// give every impression of working but do nothing.</span>
+<span class="c1">// Just allow the user to call functions so that they don&#39;t</span>
+<span class="c1">// have to check for E_NOINTERFACE when they expect an infoqueue to be there</span>
+<span class="k">struct</span><span class="w"> </span><span class="nc">DummyID3D12InfoQueue</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="k">public</span><span class="w"> </span><span class="n">ID3D12InfoQueue1</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="c1">// ...</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>RenderDoc 会使 D3D12 的调试层变得不完整，它本身又有一些额外的开销，所以不建议每次启动应用时都加载 RenderDoc。</p>
+<p>可以像 Unity 一样，提供一个加载按钮，但是加载 RenderDoc 后需要重新创建图形设备，整个过程是比较麻烦的。也可以提供一个命令行参数 <code>-load-renderdoc</code>，仅在有该参数的情况下加载 RenderDoc，修改 VisualStudio 调试器的启动参数就行。</p>
 <h2 id="截帧">截帧<a class="headerlink" href="#截帧" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code><span class="kt">void</span><span class="w"> </span><span class="nf">RenderDoc::CaptureSingleFrame</span><span class="p">()</span><span class="w"> </span><span class="k">const</span>
 <span class="p">{</span>
@@ -157,4 +174,15 @@
 
 <span class="w">    </span><span class="n">ImGui</span><span class="o">::</span><span class="n">EndMainMenuBar</span><span class="p">();</span>
 <span class="p">}</span>
-</code></pre></div><hr />
+</code></pre></div>
+<div class="footnote">
+<hr />
+<ol>
+<li id="fn:1">
+<p><a href="https://github.com/baldurk/renderdoc/issues/418">d3d debug runtime doesn't work with RenderDoc? · Issue #418 · baldurk/renderdoc (github.com)</a>&#160;<a class="footnote-backref" href="#fnref:1" title="Jump back to footnote 1 in the text">&#8617;</a></p>
+</li>
+<li id="fn:2">
+<p><a href="https://github.com/baldurk/renderdoc/blob/v1.x/renderdoc/driver/d3d12/d3d12_device.h">renderdoc/renderdoc/driver/d3d12/d3d12_device.h at v1.x · baldurk/renderdoc (github.com)</a>&#160;<a class="footnote-backref" href="#fnref:2" title="Jump back to footnote 2 in the text">&#8617;</a></p>
+</li>
+</ol>
+</div><hr />
