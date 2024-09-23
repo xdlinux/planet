@@ -89,7 +89,7 @@ h(x,y)=\displaystyle\sum\limits_{i=-r}^{r} h_1(x+i,y) G(i)
 \]</div>
 <p>这样采样数就变成了 <span class="arithmatex">\(O(mnr)\)</span>，需要 2 个 pass。</p>
 <h3 id="快速计算卷积核">快速计算卷积核<a class="headerlink" href="#快速计算卷积核" title="Permanent link">&para;</a></h3>
-<p>根据 <a href="../../../aabci-cecj-cecbf/#De-Moivre-Laplace-CLT">De Moivre-Laplace CLT</a>：若 <span class="arithmatex">\(X \sim B(n,p)\)</span>，当 <span class="arithmatex">\(n\)</span> 充分大时，可以近似认为 <span class="arithmatex">\(X \sim N(np, np(1-p))\)</span>。我们需要的是一个对称的卷积核，所以取 <span class="arithmatex">\(p=\dfrac{1}{2}\)</span>。这个其实就是一些文章中提到用杨辉三角近似的原理。</p>
+<p>根据 <a href="../../../ecbf-abci-cecj/#De-Moivre-Laplace-CLT">De Moivre-Laplace CLT</a>：若 <span class="arithmatex">\(X \sim B(n,p)\)</span>，当 <span class="arithmatex">\(n\)</span> 充分大时，可以近似认为 <span class="arithmatex">\(X \sim N(np, np(1-p))\)</span>。我们需要的是一个对称的卷积核，所以取 <span class="arithmatex">\(p=\dfrac{1}{2}\)</span>。这个其实就是一些文章中提到用杨辉三角近似的原理。</p>
 <p><img alt="杨辉三角" src="../../../obsidian-vault/attachments/pascal-triangle.png" /></p>
 <p>对于第 <span class="arithmatex">\(n\)</span> 行的一组数，它们除以 <span class="arithmatex">\(2^n\)</span> 后近似服从 <span class="arithmatex">\(N(\dfrac{n}{2},\dfrac{n}{4})\)</span>。</p>
 <p>观察上面的图，每行最前面两个和最后面两个数都比较小，在计算时作用不大，可以去掉它们。<sup id="fnref:1"><a class="footnote-ref" href="#fn:1">1</a></sup> 如果要一个长度为 <span class="arithmatex">\(n\)</span> 的卷积核，则选择第 <span class="arithmatex">\(n+3\)</span> 行的中间 <span class="arithmatex">\(n\)</span> 个数存进数组，有</p>
