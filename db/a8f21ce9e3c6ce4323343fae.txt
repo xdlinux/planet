@@ -49,7 +49,7 @@
 <span class="kt">half4</span><span class="w"> </span><span class="n">color</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">tex2D</span><span class="p">(</span><span class="n">_MainTex</span><span class="p">,</span><span class="w"> </span><span class="n">uv</span><span class="p">);</span>
 </code></pre></div>
 <p>Using sampler2D, sampler3D, samplerCUBE HLSL keywords declares both texture and sampler.</p>
-<p>Most of the time this is what you want, and is <mark>the only supported option on older graphics APIs (OpenGL ES)</mark>. </p>
+<p>Most of the time this is what you want, and is <mark>the only supported option on older graphics APIs (OpenGL ES)</mark>.</p>
 <p>...</p>
 <p><strong>Separate textures and samplers</strong></p>
 <p>...</p>

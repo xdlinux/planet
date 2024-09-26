@@ -25,7 +25,7 @@
 <p>之后再初始化就可以了。</p>
 </li>
 <li>
-<p>官方目前提供了一个支持代理的版本，但是 nightly 版，还不是正式版。 </p>
+<p>官方目前提供了一个支持代理的版本，但是 nightly 版，还不是正式版。</p>
 <div class="highlight"><pre><span></span><code>npx<span class="w"> </span>nuxi-nightly@latest<span class="w"> </span>init<span class="w"> </span>&lt;project-name&gt;
 </code></pre></div>
 </li>

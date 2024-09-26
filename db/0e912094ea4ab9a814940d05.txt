@@ -57,7 +57,7 @@
 <span class="k">return</span><span class="w"> </span><span class="n">EncodeHDR</span><span class="p">(</span><span class="mf">0.25</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">(</span><span class="n">c1</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">c2</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">c3</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">c4</span><span class="p">));</span>
 </code></pre></div>
 <h2 id="高斯模糊">高斯模糊<a class="headerlink" href="#高斯模糊" title="Permanent link">&para;</a></h2>
-<p>设 <span class="arithmatex">\(G(x,y)\)</span> 是二维<a href="../../../ecde-afda-cebi/">正态分布</a>的概率密度函数，<span class="arithmatex">\(f(x,y)\)</span> 是坐标为 <span class="arithmatex">\((x,y)\)</span> 处像素的值，<span class="arithmatex">\(h(x,y)\)</span> 是该处模糊后的值。做一个半径为 <span class="arithmatex">\(r\)</span> 的高斯模糊，即</p>
+<p>设 <span class="arithmatex">\(G(x,y)\)</span> 是二维 <a href="../../../ecde-afda-cebi/">正态分布</a> 的概率密度函数，<span class="arithmatex">\(f(x,y)\)</span> 是坐标为 <span class="arithmatex">\((x,y)\)</span> 处像素的值，<span class="arithmatex">\(h(x,y)\)</span> 是该处模糊后的值。做一个半径为 <span class="arithmatex">\(r\)</span> 的高斯模糊，即</p>
 <div class="arithmatex">\[
 h(x,y)=\displaystyle\sum\limits_{i=-r}^{r}\displaystyle\sum\limits_{j=-r}^{r}f(x+i,y+j)G(i,j)
 \]</div>
@@ -137,7 +137,7 @@ G[-1]=\dfrac{n+3}{2^{n+3}-2(4+n)}
 <p>横向模糊类似。</p>
 <p>要把多级 mip 都纵向横向模糊一遍。</p>
 <h3 id="卷积核长度选择">卷积核长度选择<a class="headerlink" href="#卷积核长度选择" title="Permanent link">&para;</a></h3>
-<p>根据<a href="../../../ecde-afda-cebi/#3-sigma-规则">正态分布 &gt; 3 sigma 规则</a>，大致推测出高斯模糊的模糊范围和 <span class="arithmatex">\(\sigma\)</span> 正相关。因为长度为 <span class="arithmatex">\(n\)</span> 的卷积核取的是杨辉三角的第 <span class="arithmatex">\(n+3\)</span> 行，所以</p>
+<p>根据 <a href="../../../ecde-afda-cebi/#3-sigma-规则">正态分布 &gt; 3 sigma 规则</a>，大致推测出高斯模糊的模糊范围和 <span class="arithmatex">\(\sigma\)</span> 正相关。因为长度为 <span class="arithmatex">\(n\)</span> 的卷积核取的是杨辉三角的第 <span class="arithmatex">\(n+3\)</span> 行，所以</p>
 <div class="arithmatex">\[
 \sigma \approx \dfrac{\sqrt{n+3}}{2}
 \]</div>

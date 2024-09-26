@@ -24,7 +24,7 @@
 </blockquote>
 <p>牌堆里有 3 种花色，最多同时持有 4 张牌，4 个花色相同则进暗杠。可以忽略牌的具体花色，把牌型抽象成 AABC、AABB、AAAB、AAAA 四种，AAAA 表示进入暗杠。</p>
 <blockquote>
-<p>青雀的摸牌是一个将琼玉牌从牌堆中取出并记录其内容，然后再将刚刚摸到的牌归还牌堆的过程，而非从牌堆中摸取琼玉牌并保留于手中的过程。根据青雀的摸牌规则（留多去少）我们又可以推导出：AAAA、AAAB、AABB、AABC是一个层级系统，后者可以向前者晋升，前者却不可向后者跌落。<sup id="fnref:2"><a class="footnote-ref" href="#fn:2">2</a></sup></p>
+<p>青雀的摸牌是一个将琼玉牌从牌堆中取出并记录其内容，然后再将刚刚摸到的牌归还牌堆的过程，而非从牌堆中摸取琼玉牌并保留于手中的过程。根据青雀的摸牌规则（留多去少）我们又可以推导出：AAAA、AAAB、AABB、AABC 是一个层级系统，后者可以向前者晋升，前者却不可向后者跌落。<sup id="fnref:2"><a class="footnote-ref" href="#fn:2">2</a></sup></p>
 </blockquote>
 <p>假设青雀牌堆里，各花色的牌都有无穷多张。战技抽牌流程：先抽 2 张，再去掉手里 6 张中花色数量最少的 2 张。</p>
 <h2 id="马尔可夫链">马尔可夫链<a class="headerlink" href="#马尔可夫链" title="Permanent link">&para;</a></h2>
@@ -94,10 +94,10 @@ A = \begin{bmatrix}
 \]</div>
 <p>记</p>
 <ul>
-<li><span class="arithmatex">\(a_n\)</span> 为第 <span class="arithmatex">\(n\)</span> 次抽牌后，牌型为 AABC 的概率 </li>
-<li><span class="arithmatex">\(b_n\)</span> 为第 <span class="arithmatex">\(n\)</span> 次抽牌后，牌型为 AABB 的概率 </li>
-<li><span class="arithmatex">\(c_n\)</span> 为第 <span class="arithmatex">\(n\)</span> 次抽牌后，牌型为 AAAB 的概率 </li>
-<li><span class="arithmatex">\(d_n\)</span> 为第 <span class="arithmatex">\(n\)</span> 次抽牌后，牌型为 AAAA 的概率 </li>
+<li><span class="arithmatex">\(a_n\)</span> 为第 <span class="arithmatex">\(n\)</span> 次抽牌后，牌型为 AABC 的概率</li>
+<li><span class="arithmatex">\(b_n\)</span> 为第 <span class="arithmatex">\(n\)</span> 次抽牌后，牌型为 AABB 的概率</li>
+<li><span class="arithmatex">\(c_n\)</span> 为第 <span class="arithmatex">\(n\)</span> 次抽牌后，牌型为 AAAB 的概率</li>
+<li><span class="arithmatex">\(d_n\)</span> 为第 <span class="arithmatex">\(n\)</span> 次抽牌后，牌型为 AAAA 的概率</li>
 </ul>
 <p>可以得到公式</p>
 <div class="arithmatex">\[
@@ -177,7 +177,7 @@ c_0\\
 d_0
 \end{bmatrix}
 \]</div>
-<p><span class="arithmatex">\(P\)</span> 的<a href="../../../ecaa-acdj-cecf/">伴随矩阵</a></p>
+<p><span class="arithmatex">\(P\)</span> 的 <a href="../../../ecaa-acdj-cecf/">伴随矩阵</a></p>
 <div class="arithmatex">\[
 P^*=\begin{bmatrix}
 1 &amp; 0 &amp; 0 &amp; 0\\
@@ -214,7 +214,7 @@ c_0\\
 d_0
 \end{bmatrix}
 \]</div>
-<p>上式中 <span class="arithmatex">\(n \ge 1\)</span>。抽牌数的<a href="../../../eccb-afei-ceba/">数学期望</a></p>
+<p>上式中 <span class="arithmatex">\(n \ge 1\)</span>。抽牌数的 <a href="../../../eccb-afei-ceba/">数学期望</a></p>
 <div class="arithmatex">\[
 EX=(d_1-d_0) + \sum_{n=2}^{\infty} n(d_n-d_{n-1})
 \]</div>

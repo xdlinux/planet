@@ -1,7 +1,7 @@
 <h1 id="对逐物体阴影的一些改进">对逐物体阴影的一些改进<a class="headerlink" href="#对逐物体阴影的一些改进" title="Permanent link">&para;</a></h1>
 <!-- more -->
 
-<p>之前在<a href="../toon-main-light-character-shadow/">仿星铁渲染：主光源角色阴影</a>里提到了逐物体阴影的写法，这次要对之前的写法做一点改进。</p>
+<p>之前在 <a href="../toon-main-light-character-shadow/">仿星铁渲染：主光源角色阴影</a> 里提到了逐物体阴影的写法，这次要对之前的写法做一点改进。</p>
 <h2 id="改正-View-Matrix-的计算">改正 View Matrix 的计算<a class="headerlink" href="#改正-View-Matrix-的计算" title="Permanent link">&para;</a></h2>
 <p>约定</p>
 <ul>
