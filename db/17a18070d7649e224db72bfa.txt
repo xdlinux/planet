@@ -1,0 +1,12 @@
+<h3 id="关于我">关于我</h3>
+<p>平凡的学生，目前刚刚研一。刚刚大四毕业的学生，本科毕业于西安电子科技大学，硕士即将就读于西安交通大学。</p>
+<p>对「视觉表现」相关的技术感兴趣，本科阶段一直在关注图形渲染的相关技术，尤其是复杂材质的表面建模。最近也在尝试使用<a href="https://typst.app/">Typst</a>进行文章排版。</p>
+<p>希望可以完成一些比较酷的工作，创造价值，成为一个supportable的人。</p>
+<h3 id="关于本站">关于本站</h3>
+<p>我会在这里分享一些自己看过的论文、学到的东西，同时也会分享自己的生活。</p>
+<p>博客基于Hugo进行构建，在<a href="https://github.com/g-hanwen/hugo-theme-nostyleplease">nostyleplease</a>的基础上进行修改。</p>
+<hr>
+<h3 id="联系我">联系我</h3>
+<p><strong>Email</strong>:  <a href="mailto:indevn@outlook.com">indevn@outlook.com</a></p>
+<p><strong>Github</strong>: <a href="https://github.com/indevn">@indevn</a></p>
+<p><strong>QQ</strong>: 2022920028</p><hr />

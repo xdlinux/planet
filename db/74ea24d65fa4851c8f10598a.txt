@@ -1,0 +1,25 @@
+<!-- raw HTML omitted -->
+<p>lightweight framework for games and data visualization <em>with modern graphic</em>.</p>
+<h3 id="关于illusion">关于illusion</h3>
+<p>基于现代图形API的轻量级图形算法实验框架。基于跨平台设计，支持模型与场景的导入和渲染，包含对多达二十余种模型文件类型的支持。</p>
+<h3 id="目前支持的特性">目前支持的特性</h3>
+<ul>
+<li>支持多种图形API，包括DirectX12、Vulkan、Metal等。</li>
+<li>支持多种模型格式，包括常见的obj、gltf、fbx等。</li>
+<li>多种材质模型支持，包括前沿的Marschner真实感毛发渲染材质。</li>
+<li>coming soon&hellip;</li>
+</ul>
+<!-- raw HTML omitted -->
+<h3 id="技术细节">技术细节</h3>
+<ul>
+<li>内存池设计，基于核心类的资源管理</li>
+<li>coming soon&hellip;</li>
+</ul>
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<hr>
+<h3 id="联系我">联系我</h3>
+<p><strong>Email</strong>:  <a href="mailto:indevn@outlook.com">indevn@outlook.com</a></p>
+<p><strong>Github</strong>: <a href="https://github.com/indevn">@indevn</a></p>
+<p><strong>QQ</strong>: 2022920028</p><hr />
