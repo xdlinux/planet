@@ -56,14 +56,6 @@
 <p>现在锯齿没了，但远处的网格看上去非常密，很丑。</p>
 <p><img alt="远处的网格基本变成了色块" src="../../../obsidian-vault/attachments/Pasted%20image%2020241014150052.png" /></p>
 <p>可以像网上的文章一样，计算 <code>LinearEyeDepth</code> 或者 <code>Linear01Depth</code> 然后将远处的 <code>alpha</code> 变小。也可以直接用 <span class="arithmatex">\(\mathrm{d} x\)</span> 来调整 <code>alpha</code>。根据前面的公式，线越密的地方 <span class="arithmatex">\(\mathrm{d} x\)</span> 越大，反之亦然。</p>
-<h2 id="高亮坐标轴">高亮坐标轴<a class="headerlink" href="#高亮坐标轴" title="Permanent link">&para;</a></h2>
-<p>以 Z 轴为例，如果像素对应的 <code>positionWS.x</code> 与 Z 轴的距离小于一个阈值，那么这个像素位置就被认为是 Z 轴。可以将 <span class="arithmatex">\(\mathrm{d} x\)</span> 作为阈值，离得越远，阈值就越大。</p>
-<p><img alt="阈值" src="../../../obsidian-vault/attachments/Pasted%20image%2020241014155845.png" /></p>
-<div class="highlight"><pre><span></span><code><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">positionWS</span><span class="p">.</span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">diff</span><span class="p">.</span><span class="n">x</span><span class="p">)</span>
-<span class="p">{</span>
-<span class="w">    </span><span class="n">color</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">_ZAxisColor</span><span class="p">;</span>
-<span class="p">}</span>
-</code></pre></div>
 <h2 id="分层">分层<a class="headerlink" href="#分层" title="Permanent link">&para;</a></h2>
 <p>根据相机离 XOZ 平面的距离，选择不同的格子大小绘制网格线。如果两条线之间的距离是 <code>gridWidth</code>，则</p>
 <div class="highlight"><pre><span></span><code><span class="kt">float2</span><span class="w"> </span><span class="n">scaledPos</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">positionWS</span><span class="p">.</span><span class="n">xz</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">gridWidth</span><span class="p">;</span>
@@ -102,6 +94,7 @@
 <span class="w">        </span><span class="cp">#pragma vs vert</span>
 <span class="w">        </span><span class="cp">#pragma ps frag</span>
 
+<span class="w">        </span><span class="cp">#include &quot;Common.hlsl&quot;</span>
 <span class="w">        </span><span class="cp">#include &quot;Lighting.hlsl&quot;</span>
 
 <span class="w">        </span><span class="k">cbuffer</span><span class="w"> </span><span class="n">cbMaterial</span>
@@ -137,16 +130,8 @@
 <span class="w">        </span><span class="n">Varyings</span><span class="w"> </span><span class="n">vert</span><span class="p">(</span><span class="kt">uint</span><span class="w"> </span><span class="n">vertexID</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="nd">SV_VertexID</span><span class="p">)</span>
 <span class="w">        </span><span class="p">{</span>
 <span class="w">            </span><span class="n">Varyings</span><span class="w"> </span><span class="n">output</span><span class="p">;</span>
-
-<span class="w">            </span><span class="c1">// https://github.com/Unity-Technologies/Graphics/blob/master/Packages/com.unity.render-pipelines.core/ShaderLibrary/Common.hlsl#L1576</span>
-<span class="w">            </span><span class="c1">// note: the triangle vertex position coordinates are x2 so the returned UV coordinates are in range -1, 1 on the screen.</span>
-<span class="w">            </span><span class="c1">// 我们使用顺时针，和 unity 不太一样</span>
-<span class="w">            </span><span class="kt">float2</span><span class="w"> </span><span class="n">uv</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kt">float2</span><span class="p">(</span><span class="n">vertexID</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="p">((</span><span class="n">vertexID</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="mi">2</span><span class="p">));</span>
-<span class="w">            </span><span class="n">output</span><span class="p">.</span><span class="n">positionCS</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kt">float4</span><span class="p">(</span><span class="n">uv</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mf">2.0</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mf">1.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="p">);</span><span class="w"> </span><span class="c1">// 放在近平面处</span>
-
-<span class="w">            </span><span class="c1">// 我们 uv starts at top</span>
-<span class="w">            </span><span class="n">output</span><span class="p">.</span><span class="n">uv</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kt">float2</span><span class="p">(</span><span class="n">vertexID</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="p">((</span><span class="n">vertexID</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="mi">2</span><span class="p">));</span>
-
+<span class="w">            </span><span class="n">output</span><span class="p">.</span><span class="n">positionCS</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">GetFullScreenTriangleVertexPositionCS</span><span class="p">(</span><span class="n">vertexID</span><span class="p">);</span>
+<span class="w">            </span><span class="n">output</span><span class="p">.</span><span class="n">uv</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">GetFullScreenTriangleTexCoord</span><span class="p">(</span><span class="n">vertexID</span><span class="p">);</span>
 <span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="n">output</span><span class="p">;</span>
 <span class="w">        </span><span class="p">}</span>
 
@@ -186,11 +171,11 @@
 
 <span class="w">            </span><span class="kt">float4</span><span class="w"> </span><span class="n">color</span><span class="p">;</span>
 
-<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">scaledPos</span><span class="p">.</span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">diff</span><span class="p">.</span><span class="n">x</span><span class="p">)</span>
+<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">scaledPos</span><span class="p">.</span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">halfLineWidth</span><span class="p">.</span><span class="n">x</span><span class="p">)</span>
 <span class="w">            </span><span class="p">{</span>
 <span class="w">                </span><span class="n">color</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">_ZAxisColor</span><span class="p">;</span>
 <span class="w">            </span><span class="p">}</span>
-<span class="w">            </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">scaledPos</span><span class="p">.</span><span class="n">y</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">diff</span><span class="p">.</span><span class="n">y</span><span class="p">)</span>
+<span class="w">            </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">scaledPos</span><span class="p">.</span><span class="n">y</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">halfLineWidth</span><span class="p">.</span><span class="n">y</span><span class="p">)</span>
 <span class="w">            </span><span class="p">{</span>
 <span class="w">                </span><span class="n">color</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">_XAxisColor</span><span class="p">;</span>
 <span class="w">            </span><span class="p">}</span>
