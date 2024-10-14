@@ -1,0 +1,243 @@
+<h1 id="Scene-View-无限网格">Scene View 无限网格<a class="headerlink" href="#Scene-View-无限网格" title="Permanent link">&para;</a></h1>
+<!-- more -->
+
+<p>大部分 DCC 都有无限网格，帮助我们确定物体所处的空间位置。我也给自己的引擎加上了这个功能。</p>
+<p><img alt="红色是 X 轴，蓝色是 Z 轴" src="../../../obsidian-vault/attachments/Pasted%20image%2020241014094522.png" /></p>
+<p><img alt="根据距离自动分层" src="../../../obsidian-vault/attachments/Pasted%20image%2020241014094627.png" /></p>
+<h2 id="思路">思路<a class="headerlink" href="#思路" title="Permanent link">&para;</a></h2>
+<p>因为网格是无限大的，所以我第一反应就是屏幕空间重建世界坐标绘制。我看了下 Unity 的实现，应该是 CPU 上把网格算好，然后生成 Line List Mesh，再给 Shader 画上去。</p>
+<p><img alt="Unity 的实现" src="../../../obsidian-vault/attachments/Pasted%20image%2020241014100816.png" /></p>
+<p>Unity 的实现感觉有点麻烦，我还是用屏幕空间了。</p>
+<h2 id="重建世界坐标">重建世界坐标<a class="headerlink" href="#重建世界坐标" title="Permanent link">&para;</a></h2>
+<p>之前我写过 <a href="../depth-reconstruct-world-position/">深度重建世界坐标</a> 的方法，但这次深度是未知的，不能直接用。我看网上的文章都是近平面算一个点，远平面算一个点，计算连线和 XOZ 平面的交点。</p>
+<p>其实深度可以直接算出来。因为 XOZ 平面上的点 <code>positionWS.y == 0</code>，带入 <a href="../depth-reconstruct-world-position/">深度重建世界坐标</a> 逆矩阵法的推导中，由公式</p>
+<div class="highlight"><pre><span></span><code><span class="n">positionWS</span><span class="p">.</span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">dot</span><span class="p">(</span><span class="n">MatrixInvVP</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="w"> </span><span class="n">positionCS</span><span class="p">.</span><span class="n">w</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">positionNDC</span><span class="p">);</span>
+</code></pre></div>
+<p>得到深度</p>
+<div class="highlight"><pre><span></span><code><span class="n">positionNDC</span><span class="p">.</span><span class="n">z</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">dot</span><span class="p">(</span><span class="n">MatrixInvVP</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="n">xyw</span><span class="p">,</span><span class="w"> </span><span class="n">positionNDC</span><span class="p">.</span><span class="n">xyw</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="p">(</span><span class="o">-</span><span class="n">MatrixInvVP</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="n">z</span><span class="p">);</span>
+</code></pre></div>
+<p>深度要用 <code>SV_Depth</code> 输出，保证之后能正确地进行深度测试。然后直接套公式就有世界坐标了。</p>
+<h2 id="生成网格">生成网格<a class="headerlink" href="#生成网格" title="Permanent link">&para;</a></h2>
+<p>生成网格需要对 <code>xz</code> 坐标应用周期函数，常用 <code>frac</code>。<code>frac</code> 有很多种定义 <sup id="fnref:1"><a class="footnote-ref" href="#fn:1">1</a></sup>，hlsl 文档中说得也不太清楚：</p>
+<blockquote>
+<p>Returns the fractional (or decimal) part of x; which is greater than or equal to 0 and less than 1. <sup id="fnref:2"><a class="footnote-ref" href="#fn:2">2</a></sup></p>
+</blockquote>
+<p>我测试了下发现</p>
+<div class="arithmatex">\[
+\text{frac}(x) = x - \lfloor x \rfloor
+\]</div>
+<p><img alt="图像" src="../../../obsidian-vault/attachments/Pasted%20image%2020241014132645.png" /></p>
+<p>通常用一对花括号表示这种计算 <code>frac</code> 的方法</p>
+<div class="arithmatex">\[
+\{x\} := x - \lfloor x \rfloor
+\]</div>
+<p>稍微变化一下就能生成三角波</p>
+<div class="arithmatex">\[
+\left | \text{frac}(x) - 0.5 \right |
+\]</div>
+<p><img alt="图像" src="../../../obsidian-vault/attachments/Pasted%20image%2020241014143013.png" /></p>
+<p>大于阈值的部分就是网格线。</p>
+<h2 id="反锯齿">反锯齿<a class="headerlink" href="#反锯齿" title="Permanent link">&para;</a></h2>
+<p>直接用 <code>step</code> 绘制的网格线锯齿很严重，尤其是斜着看远处的时候。</p>
+<p><img alt="锯齿" src="../../../obsidian-vault/attachments/Pasted%20image%2020241014134120.png" /></p>
+<p>简单建个模分析一下：假设一个人在 <span class="arithmatex">\(A\)</span> 点，与地面夹角为 <span class="arithmatex">\(\alpha\)</span> 观察 <span class="arithmatex">\(B\)</span> 点处的网格。</p>
+<p><img alt="简化模型" src="../../../obsidian-vault/attachments/Pasted%20image%2020241014141906.png" /></p>
+<p>可以算出</p>
+<div class="arithmatex">\[
+\mathrm{d}x=\frac{\left | \text{AB} \right | \sin \mathrm{d} \theta}{\sin \left (\alpha - \mathrm{d} \theta \right )}
+\]</div>
+<p>当 <span class="arithmatex">\(\mathrm{d} \theta\)</span> 不变时，距离 <span class="arithmatex">\(\left | \text{AB} \right |\)</span> 越大，夹角 <span class="arithmatex">\(\alpha\)</span> 越小，<span class="arithmatex">\(\mathrm{d} x\)</span> 越大。<span class="arithmatex">\(\mathrm{d} x\)</span> 就是屏幕上相邻两个像素对应的 <code>positionWS</code> 的距离，也是在三角波上相邻两个采样点的间隔。</p>
+<p><img alt="dx 的意义" src="../../../obsidian-vault/attachments/Pasted%20image%2020241014144145.png" /></p>
+<p>采样间隔越大，就越不准，越可能漏掉网格线，导致锯齿。所以应该根据 <span class="arithmatex">\(\mathrm{d} x\)</span> 动态调整阈值，<span class="arithmatex">\(\mathrm{d} x\)</span> 越大，阈值就越小（网格线越粗）。对相邻像素的 <code>positionWS</code> 做 <a href="../../../eccd-afbe-cebg/">差分</a> 就能估计出 <span class="arithmatex">\(\mathrm{d} x\)</span>，因为要同时考虑屏幕的 X 方向和 Y 方向，所以使用 <code>fwidth</code> 函数，即 <code>abs(ddx(x)) + abs(ddy(x))</code>。</p>
+<div class="highlight"><pre><span></span><code><span class="kt">float2</span><span class="w"> </span><span class="n">diff</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">fwidth</span><span class="p">(</span><span class="n">positionWS</span><span class="p">.</span><span class="n">xz</span><span class="p">);</span>
+</code></pre></div>
+<p>另外，把 <code>step</code> 换成 <code>smoothstep</code> 羽化网格线的边缘，可以进一步减少锯齿。</p>
+<h2 id="淡化远处的网格">淡化远处的网格<a class="headerlink" href="#淡化远处的网格" title="Permanent link">&para;</a></h2>
+<p>现在锯齿没了，但远处的网格看上去非常密，很丑。</p>
+<p><img alt="远处的网格基本变成了色块" src="../../../obsidian-vault/attachments/Pasted%20image%2020241014150052.png" /></p>
+<p>可以像网上的文章一样，计算 <code>LinearEyeDepth</code> 或者 <code>Linear01Depth</code> 然后将远处的 <code>alpha</code> 变小。也可以直接用 <span class="arithmatex">\(\mathrm{d} x\)</span> 来调整 <code>alpha</code>。根据前面的公式，线越密的地方 <span class="arithmatex">\(\mathrm{d} x\)</span> 越大，反之亦然。</p>
+<h2 id="高亮坐标轴">高亮坐标轴<a class="headerlink" href="#高亮坐标轴" title="Permanent link">&para;</a></h2>
+<p>以 Z 轴为例，如果像素对应的 <code>positionWS.x</code> 与 Z 轴的距离小于一个阈值，那么这个像素位置就被认为是 Z 轴。可以将 <span class="arithmatex">\(\mathrm{d} x\)</span> 作为阈值，离得越远，阈值就越大。</p>
+<p><img alt="阈值" src="../../../obsidian-vault/attachments/Pasted%20image%2020241014155845.png" /></p>
+<div class="highlight"><pre><span></span><code><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">positionWS</span><span class="p">.</span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">diff</span><span class="p">.</span><span class="n">x</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">color</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">_ZAxisColor</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+<h2 id="分层">分层<a class="headerlink" href="#分层" title="Permanent link">&para;</a></h2>
+<p>根据相机离 XOZ 平面的距离，选择不同的格子大小绘制网格线。如果两条线之间的距离是 <code>gridWidth</code>，则</p>
+<div class="highlight"><pre><span></span><code><span class="kt">float2</span><span class="w"> </span><span class="n">scaledPos</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">positionWS</span><span class="p">.</span><span class="n">xz</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">gridWidth</span><span class="p">;</span>
+<span class="kt">float2</span><span class="w"> </span><span class="n">diff</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">fwidth</span><span class="p">(</span><span class="n">scaledPos</span><span class="p">);</span>
+<span class="kt">float2</span><span class="w"> </span><span class="n">gridEdge</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">abs</span><span class="p">(</span><span class="nb">frac</span><span class="p">(</span><span class="n">scaledPos</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mf">0.5</span><span class="p">);</span>
+</code></pre></div>
+<p>将两个不同 <code>gridWidth</code> 对应的网格线算出来后，线性插值一下就有过渡效果了。<code>gridWidth</code> 建议指数级增大，这样才有大格子套小格子的感觉。</p>
+<h2 id="实现">实现<a class="headerlink" href="#实现" title="Permanent link">&para;</a></h2>
+<ul>
+<li>代码是用我自制的 DX12 ShaderLab 编写的，和 Unity 的稍有不同。</li>
+<li>因为是屏幕空间效果，所以需要做全屏 Blit。Vertex Shader 参考了 <a href="../unity-srp-fullscreen-blit/">Unity SRP 全屏 Blit 原理</a> 。</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="n">Shader</span><span class="w"> </span><span class="s">&quot;SceneViewGrid&quot;</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">Properties</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">_XAxisColor</span><span class="p">(</span><span class="s">&quot;X Axis Color&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">Color</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mo">0</span><span class="p">,</span><span class="w"> </span><span class="mo">0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.5</span><span class="p">)</span>
+<span class="w">        </span><span class="n">_ZAxisColor</span><span class="p">(</span><span class="s">&quot;Z Axis Color&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">Color</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="mo">0</span><span class="p">,</span><span class="w"> </span><span class="mo">0</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mf">0.5</span><span class="p">)</span>
+<span class="w">        </span><span class="n">_LineColor</span><span class="p">(</span><span class="s">&quot;Line Color&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">Color</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span><span class="w"> </span><span class="mf">0.5</span><span class="p">,</span><span class="w"> </span><span class="mf">0.5</span><span class="p">,</span><span class="w"> </span><span class="mf">0.5</span><span class="p">)</span>
+<span class="w">        </span><span class="p">[</span><span class="n">Range</span><span class="p">(</span><span class="mo">0</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">)]</span><span class="w"> </span><span class="n">_Antialiasing</span><span class="p">(</span><span class="s">&quot;Anti-aliasing&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">Float</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.5</span>
+<span class="w">        </span><span class="p">[</span><span class="n">Range</span><span class="p">(</span><span class="mo">0</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">)]</span><span class="w"> </span><span class="n">_FadeOut</span><span class="p">(</span><span class="s">&quot;Fade Out&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">Float</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.8</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="n">Pass</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">Name</span><span class="w"> </span><span class="s">&quot;WorldGrid&quot;</span>
+
+<span class="w">        </span><span class="n">Cull</span><span class="w"> </span><span class="n">Off</span>
+<span class="w">        </span><span class="n">ZTest</span><span class="w"> </span><span class="n">Less</span>
+<span class="w">        </span><span class="n">ZWrite</span><span class="w"> </span><span class="n">Off</span>
+
+<span class="w">        </span><span class="n">Blend</span><span class="w"> </span><span class="mo">0</span><span class="w"> </span><span class="n">SrcAlpha</span><span class="w"> </span><span class="n">OneMinusSrcAlpha</span><span class="p">,</span><span class="w"> </span><span class="n">Zero</span><span class="w"> </span><span class="n">One</span>
+
+<span class="w">        </span><span class="n">HLSLPROGRAM</span>
+<span class="w">        </span><span class="cp">#pragma target 6.0</span>
+<span class="w">        </span><span class="cp">#pragma vs vert</span>
+<span class="w">        </span><span class="cp">#pragma ps frag</span>
+
+<span class="w">        </span><span class="cp">#include &quot;Lighting.hlsl&quot;</span>
+
+<span class="w">        </span><span class="k">cbuffer</span><span class="w"> </span><span class="n">cbMaterial</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="kt">float4</span><span class="w"> </span><span class="n">_XAxisColor</span><span class="p">;</span>
+<span class="w">            </span><span class="kt">float4</span><span class="w"> </span><span class="n">_ZAxisColor</span><span class="p">;</span>
+<span class="w">            </span><span class="kt">float4</span><span class="w"> </span><span class="n">_LineColor</span><span class="p">;</span>
+<span class="w">            </span><span class="kt">float</span><span class="w"> </span><span class="n">_Antialiasing</span><span class="p">;</span>
+<span class="w">            </span><span class="kt">float</span><span class="w"> </span><span class="n">_FadeOut</span><span class="p">;</span>
+<span class="w">        </span><span class="p">};</span>
+
+<span class="w">        </span><span class="k">cbuffer</span><span class="w"> </span><span class="n">cbPass</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="kt">float4x4</span><span class="w"> </span><span class="n">_MatrixView</span><span class="p">;</span>
+<span class="w">            </span><span class="kt">float4x4</span><span class="w"> </span><span class="n">_MatrixProjection</span><span class="p">;</span>
+<span class="w">            </span><span class="kt">float4x4</span><span class="w"> </span><span class="n">_MatrixViewProjection</span><span class="p">;</span>
+<span class="w">            </span><span class="kt">float4x4</span><span class="w"> </span><span class="n">_MatrixInvView</span><span class="p">;</span>
+<span class="w">            </span><span class="kt">float4x4</span><span class="w"> </span><span class="n">_MatrixInvProjection</span><span class="p">;</span>
+<span class="w">            </span><span class="kt">float4x4</span><span class="w"> </span><span class="n">_MatrixInvViewProjection</span><span class="p">;</span>
+<span class="w">            </span><span class="kt">float4</span><span class="w"> </span><span class="n">_Time</span><span class="p">;</span>
+<span class="w">            </span><span class="kt">float4</span><span class="w"> </span><span class="n">_CameraPositionWS</span><span class="p">;</span>
+
+<span class="w">            </span><span class="n">LightData</span><span class="w"> </span><span class="n">_LightData</span><span class="p">[</span><span class="n">MAX_LIGHT_COUNT</span><span class="p">];</span>
+<span class="w">            </span><span class="kt">int</span><span class="w"> </span><span class="n">_LightCount</span><span class="p">;</span>
+<span class="w">        </span><span class="p">};</span>
+
+<span class="w">        </span><span class="k">struct</span><span class="w"> </span><span class="n">Varyings</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="kt">float4</span><span class="w"> </span><span class="n">positionCS</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="nd">SV_Position</span><span class="p">;</span>
+<span class="w">            </span><span class="kt">float2</span><span class="w"> </span><span class="n">uv</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">TEXCOORD0</span><span class="p">;</span>
+<span class="w">        </span><span class="p">};</span>
+
+<span class="w">        </span><span class="n">Varyings</span><span class="w"> </span><span class="n">vert</span><span class="p">(</span><span class="kt">uint</span><span class="w"> </span><span class="n">vertexID</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="nd">SV_VertexID</span><span class="p">)</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="n">Varyings</span><span class="w"> </span><span class="n">output</span><span class="p">;</span>
+
+<span class="w">            </span><span class="c1">// https://github.com/Unity-Technologies/Graphics/blob/master/Packages/com.unity.render-pipelines.core/ShaderLibrary/Common.hlsl#L1576</span>
+<span class="w">            </span><span class="c1">// note: the triangle vertex position coordinates are x2 so the returned UV coordinates are in range -1, 1 on the screen.</span>
+<span class="w">            </span><span class="c1">// 我们使用顺时针，和 unity 不太一样</span>
+<span class="w">            </span><span class="kt">float2</span><span class="w"> </span><span class="n">uv</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kt">float2</span><span class="p">(</span><span class="n">vertexID</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="p">((</span><span class="n">vertexID</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="mi">2</span><span class="p">));</span>
+<span class="w">            </span><span class="n">output</span><span class="p">.</span><span class="n">positionCS</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kt">float4</span><span class="p">(</span><span class="n">uv</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mf">2.0</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mf">1.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="p">);</span><span class="w"> </span><span class="c1">// 放在近平面处</span>
+
+<span class="w">            </span><span class="c1">// 我们 uv starts at top</span>
+<span class="w">            </span><span class="n">output</span><span class="p">.</span><span class="n">uv</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kt">float2</span><span class="p">(</span><span class="n">vertexID</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="p">((</span><span class="n">vertexID</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="mi">2</span><span class="p">));</span>
+
+<span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="n">output</span><span class="p">;</span>
+<span class="w">        </span><span class="p">}</span>
+
+<span class="w">        </span><span class="kt">float3</span><span class="w"> </span><span class="n">GetDepthAndWorldPosition</span><span class="p">(</span><span class="kt">float2</span><span class="w"> </span><span class="n">uv</span><span class="p">,</span><span class="w"> </span><span class="k">out</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">depth</span><span class="p">)</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="kt">float4</span><span class="w"> </span><span class="n">ndc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kt">float4</span><span class="p">(</span><span class="n">uv</span><span class="p">.</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">uv</span><span class="p">.</span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="mo">0</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">);</span>
+<span class="w">            </span><span class="n">ndc</span><span class="p">.</span><span class="n">xy</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ndc</span><span class="p">.</span><span class="n">xy</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+
+<span class="w">            </span><span class="kt">float4x4</span><span class="w"> </span><span class="n">ivp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">_MatrixInvViewProjection</span><span class="p">;</span>
+<span class="w">            </span><span class="n">ndc</span><span class="p">.</span><span class="n">z</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">dot</span><span class="p">(</span><span class="n">ivp</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="n">xyw</span><span class="p">,</span><span class="w"> </span><span class="n">ndc</span><span class="p">.</span><span class="n">xyw</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="p">(</span><span class="o">-</span><span class="n">ivp</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="n">z</span><span class="p">);</span>
+
+<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">ndc</span><span class="p">.</span><span class="n">z</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mf">0.0</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="n">ndc</span><span class="p">.</span><span class="n">z</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mf">1.0</span><span class="p">)</span>
+<span class="w">            </span><span class="p">{</span>
+<span class="w">                </span><span class="k">discard</span><span class="p">;</span>
+<span class="w">            </span><span class="p">}</span>
+
+<span class="w">            </span><span class="n">depth</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ndc</span><span class="p">.</span><span class="n">z</span><span class="p">;</span>
+
+<span class="w">            </span><span class="kt">float4</span><span class="w"> </span><span class="n">positionWS</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">mul</span><span class="p">(</span><span class="n">ivp</span><span class="p">,</span><span class="w"> </span><span class="n">ndc</span><span class="p">);</span>
+<span class="w">            </span><span class="n">positionWS</span><span class="w"> </span><span class="o">/=</span><span class="w"> </span><span class="n">positionWS</span><span class="p">.</span><span class="n">w</span><span class="p">;</span>
+<span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="n">positionWS</span><span class="p">.</span><span class="n">xyz</span><span class="p">;</span>
+<span class="w">        </span><span class="p">}</span>
+
+<span class="w">        </span><span class="kt">float4</span><span class="w"> </span><span class="n">GetGridColor</span><span class="p">(</span><span class="kt">float3</span><span class="w"> </span><span class="n">positionWS</span><span class="p">,</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">level</span><span class="p">)</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="kt">float</span><span class="w"> </span><span class="n">gridWidth</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">pow</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="w"> </span><span class="n">level</span><span class="p">);</span>
+<span class="w">            </span><span class="kt">float2</span><span class="w"> </span><span class="n">scaledPos</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">positionWS</span><span class="p">.</span><span class="n">xz</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">gridWidth</span><span class="p">;</span>
+<span class="w">            </span><span class="kt">float2</span><span class="w"> </span><span class="n">diff</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">fwidth</span><span class="p">(</span><span class="n">scaledPos</span><span class="p">);</span><span class="w"> </span><span class="c1">// 值越大，离得越远</span>
+<span class="w">            </span><span class="kt">float2</span><span class="w"> </span><span class="n">gridEdge</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">abs</span><span class="p">(</span><span class="nb">frac</span><span class="p">(</span><span class="n">scaledPos</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mf">0.5</span><span class="p">);</span>
+
+<span class="w">            </span><span class="kt">float2</span><span class="w"> </span><span class="n">halfLineWidth</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="mf">1.0</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">_Antialiasing</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">diff</span><span class="p">;</span><span class="w"> </span><span class="c1">// 离得越远越粗</span>
+<span class="w">            </span><span class="kt">float2</span><span class="w"> </span><span class="n">threshold</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.5</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">halfLineWidth</span><span class="p">;</span>
+<span class="w">            </span><span class="kt">float2</span><span class="w"> </span><span class="n">intensity</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">smoothstep</span><span class="p">(</span><span class="n">threshold</span><span class="p">,</span><span class="w"> </span><span class="mf">0.5</span><span class="p">,</span><span class="w"> </span><span class="n">gridEdge</span><span class="p">);</span><span class="w"> </span><span class="c1">// 羽化边缘，减少锯齿</span>
+
+<span class="w">            </span><span class="kt">float</span><span class="w"> </span><span class="n">alpha</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">max</span><span class="p">(</span><span class="n">intensity</span><span class="p">.</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">intensity</span><span class="p">.</span><span class="n">y</span><span class="p">);</span>
+<span class="w">            </span><span class="n">alpha</span><span class="w"> </span><span class="o">*=</span><span class="w"> </span><span class="nb">pow</span><span class="p">(</span><span class="nb">saturate</span><span class="p">(</span><span class="mi">1</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="nb">max</span><span class="p">(</span><span class="n">diff</span><span class="p">.</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">diff</span><span class="p">.</span><span class="n">y</span><span class="p">)),</span><span class="w"> </span><span class="n">_FadeOut</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">10</span><span class="p">);</span><span class="w"> </span><span class="c1">// 离得越远越淡</span>
+
+<span class="w">            </span><span class="kt">float4</span><span class="w"> </span><span class="n">color</span><span class="p">;</span>
+
+<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">scaledPos</span><span class="p">.</span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">diff</span><span class="p">.</span><span class="n">x</span><span class="p">)</span>
+<span class="w">            </span><span class="p">{</span>
+<span class="w">                </span><span class="n">color</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">_ZAxisColor</span><span class="p">;</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">            </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">scaledPos</span><span class="p">.</span><span class="n">y</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">diff</span><span class="p">.</span><span class="n">y</span><span class="p">)</span>
+<span class="w">            </span><span class="p">{</span>
+<span class="w">                </span><span class="n">color</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">_XAxisColor</span><span class="p">;</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">            </span><span class="k">else</span>
+<span class="w">            </span><span class="p">{</span>
+<span class="w">                </span><span class="n">color</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">_LineColor</span><span class="p">;</span>
+<span class="w">            </span><span class="p">}</span>
+
+<span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="kt">float4</span><span class="p">(</span><span class="n">color</span><span class="p">.</span><span class="n">rgb</span><span class="p">,</span><span class="w"> </span><span class="n">color</span><span class="p">.</span><span class="n">a</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">alpha</span><span class="p">);</span>
+<span class="w">        </span><span class="p">}</span>
+
+<span class="w">        </span><span class="kt">float4</span><span class="w"> </span><span class="n">frag</span><span class="p">(</span><span class="n">Varyings</span><span class="w"> </span><span class="n">input</span><span class="p">,</span><span class="w"> </span><span class="k">out</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">depth</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="nd">SV_Depth</span><span class="p">)</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="nd">SV_Target</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="kt">float3</span><span class="w"> </span><span class="n">positionWS</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">GetDepthAndWorldPosition</span><span class="p">(</span><span class="n">input</span><span class="p">.</span><span class="n">uv</span><span class="p">,</span><span class="w"> </span><span class="n">depth</span><span class="p">);</span>
+
+<span class="w">            </span><span class="c1">// 划分等级</span>
+<span class="w">            </span><span class="c1">// level:      0       1        2         3         ...</span>
+<span class="w">            </span><span class="c1">// cameraY: 0 --- 100 --- 1000 --- 10000 --- 100000 --- ...</span>
+<span class="w">            </span><span class="kt">float</span><span class="w"> </span><span class="n">cameraY</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">abs</span><span class="p">(</span><span class="n">_CameraPositionWS</span><span class="p">.</span><span class="n">y</span><span class="p">);</span>
+<span class="w">            </span><span class="kt">float</span><span class="w"> </span><span class="n">level</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">max</span><span class="p">(</span><span class="mo">0</span><span class="p">,</span><span class="w"> </span><span class="nb">floor</span><span class="p">(</span><span class="nb">log10</span><span class="p">(</span><span class="n">cameraY</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">));</span>
+<span class="w">            </span><span class="kt">float</span><span class="w"> </span><span class="n">pow10Level</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">pow</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="w"> </span><span class="n">level</span><span class="p">);</span>
+<span class="w">            </span><span class="kt">float</span><span class="w"> </span><span class="n">nextHeight</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pow10Level</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">100</span><span class="p">;</span>
+<span class="w">            </span><span class="kt">float</span><span class="w"> </span><span class="n">prevHeight</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">level</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mo">0</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="mo">0</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="p">(</span><span class="n">pow10Level</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">10</span><span class="p">);</span>
+<span class="w">            </span><span class="kt">float</span><span class="w"> </span><span class="n">progress</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">cameraY</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">prevHeight</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="p">(</span><span class="n">nextHeight</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">prevHeight</span><span class="p">);</span>
+
+<span class="w">            </span><span class="kt">float4</span><span class="w"> </span><span class="n">c1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">GetGridColor</span><span class="p">(</span><span class="n">positionWS</span><span class="p">,</span><span class="w"> </span><span class="n">level</span><span class="p">);</span>
+<span class="w">            </span><span class="kt">float4</span><span class="w"> </span><span class="n">c2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">GetGridColor</span><span class="p">(</span><span class="n">positionWS</span><span class="p">,</span><span class="w"> </span><span class="n">level</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">);</span>
+<span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="nb">lerp</span><span class="p">(</span><span class="n">c1</span><span class="p">,</span><span class="w"> </span><span class="n">c2</span><span class="p">,</span><span class="w"> </span><span class="n">progress</span><span class="p">);</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">        </span><span class="n">ENDHLSL</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<h2 id="参考">参考<a class="headerlink" href="#参考" title="Permanent link">&para;</a></h2>
+<ul>
+<li><a href="https://asliceofrendering.com/scene%20helper/2020/01/05/InfiniteGrid/">How to make an infinite grid. | A Slice of Rendering</a></li>
+<li><a href="https://zhuanlan.zhihu.com/p/647256794">【UnityShader】无限网格（Infinite Grid ）（14） - 知乎 (zhihu.com)</a></li>
+<li><a href="https://zhuanlan.zhihu.com/p/647926704">如何绘制一个无限大的网格 - 知乎 (zhihu.com)</a></li>
+</ul>
+<div class="footnote">
+<hr />
+<ol>
+<li id="fn:1">
+<p><a href="https://en.wikipedia.org/wiki/Fractional_part">Fractional part - Wikipedia</a>&#160;<a class="footnote-backref" href="#fnref:1" title="Jump back to footnote 1 in the text">&#8617;</a></p>
+</li>
+<li id="fn:2">
+<p><a href="https://learn.microsoft.com/en-us/windows/win32/direct3dhlsl/dx-graphics-hlsl-frac">frac - Win32 apps | Microsoft Learn</a>&#160;<a class="footnote-backref" href="#fnref:2" title="Jump back to footnote 2 in the text">&#8617;</a></p>
+</li>
+</ol>
+</div><hr />
