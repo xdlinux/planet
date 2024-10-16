@@ -1,0 +1,205 @@
+<p>买了一个低性能服务器，记录一下装上PVE后配置OpenWRT虚拟机当高性能网关的故事。包括在没有LVM时对OpenWRT进行扩容的多种方法。</p>
+<p><a href="https://nancunchild.cn/2024/10/16/toss_openwrt_in_pve_install/">折腾OpenWRT in PVE那些事——安装与扩容</a>最先出现在<a href="https://nancunchild.cn">NanCunChild的个人随想</a>。</p>
+<hr /><h2>缘由——瞎买</h2>
+<p>最近在淘宝淘了一个IBM的老机架式服务器，型号是SystemX 3250 M5。虽然是古董产品，但是只要530RMB，感觉非常Nice。换了一个E3-1270V3和一个128G的樊想SSD（已经开始感觉亏了）之后正式开启网络专用PVE环境。是的，这台小机器之后就作为专用于网络处理的网关。</p>
+<h2>配置一览</h2>
+<ul>
+<li>
+<p>原来的配置：</p>
+<blockquote>
+<p>E3-1220V3<br />
+单根8G杂牌内存<br />
+60G 杂牌SSD</p>
+</blockquote>
+</li>
+<li>
+<p>更换后：</p>
+<blockquote>
+<p>E3-1270V3<br />
+内存没换<br />
+128G樊想SSD</p>
+</blockquote>
+</li>
+</ul>
+<h2>虚拟机计划</h2>
+<p>装个PvE有什么难的，直接Rufus起手然后一路下一步，我是跟着B站UP主“在下莫老师”的PvE安装教程学的。不过由于不想用被别人修改过的OpenWRT镜像（赛博洁癖），因此也是走上了注定的折腾之路。<br />
+计划为主要网关就是OpenWRT，不玩什么旁路由之类，直接使用OpenClash进行分流。主要是因为ikuai网关在这里莫名出现了不识别网络接口的问题，因此直接OpenWRT上来简化网络结构。（你是OP还是ikun？）</p>
+<h2>准备</h2>
+<ul>
+<li>一个能用的PVE8</li>
+<li>OpenWRT虚拟机镜像</li>
+<li>img2kvm</li>
+<li>其它小型Linux镜像（本文使用antiX）<br />
+<h2>开始折腾</h2>
+<h3>虚拟机安装（保姆级别，因为正好有人说不会）</h3>
+<p>我选择的OpenWRT镜像源是官方镜像 <a href="中的openwrt-23.05.0-x86-generic-generic-ext4-combined-efi.img">https://openwrt.org</a> ，这一点和UP主“在下莫老师”的修改镜像有所不同，如果能用他推荐的镜像，应该是可以直接得到8GB空间的根目录的（单纯不喜欢别人调好的东西，有赛博洁癖）。<br />
+在PvE的Web端 local(节点名称) 下找到ISO镜像，将下载好的镜像上传。<br />
+随后点击右上角蓝色大按钮的“新建虚拟机”，弹出如下框框（启动保姆式教学）<br />
+这里虚拟机名称只能是英文，而且后续会在左侧虚拟机处显示出来。下一步。<br />
+<img decoding="async" src="https://nancunchild.cn/wp-content/uploads/2024/10/屏幕截图-2024-07-24-211828-300x225.png" alt="" /></p>
+</li>
+</ul>
+<p>选择操作系统，由于PvE无法直接读取img镜像，因此我们先不选择介质，让系统暂时处于真空。下一步。</p>
+<p>这里选择系统相关配置，建议是SeaBIOS比较稳，OpenWRT虚拟机没必要上UEFI。即便选择UEFI需要在后续选择，因为我们暂时还没有EFI分区。SCSI控制器有这几种：</p>
+<blockquote>
+<p>VirtIO SCSI：半虚拟化，正常用这个就好。<br />
+VirtIO SCSI Single：VirtIO SCSI的单队列版本，兼容性好。虽然有文章提出有时候测速会比SCSI有微弱优势，但是还是普遍认为性能和SCSI差不多。<br />
+VMWare PVSCSI：专为VMware虚拟化平台（如ESXi）设计的高性能SCSI控制器。（用PvE了还想着ESXi算不算一种NTR？）<br />
+LSA 53C895A：模拟的一种硬件SCSI控制器，古董。<br />
+LSA 53C810： 模拟SCSI控制器，古董二号。<br />
+MegaRAID SAS 8708EM2： RAID控制器，如果要RAID可以尝试这种介于软硬RAID之间的东西，会吃PVE一点性能。<br />
+这些本质上是软件模拟的磁盘控制器，类似于普通电脑上的存储相关驱动。</p>
+</blockquote>
+<p>只要不是硬件和系统特别奇怪导致无法兼容，或者是有高性能极致追求的话，都建议保持默认。<br />
+<img decoding="async" src="https://nancunchild.cn/wp-content/uploads/2024/10/屏幕截图-2024-07-24-211751-300x228.png" alt="" /></p>
+<p>这一步选择磁盘，由于我们准备原盘基础上扩容，所以这个大小等参数都无关紧要，到时候不会使用这个硬盘。可以保持默认。<br />
+<img decoding="async" src="https://nancunchild.cn/wp-content/uploads/2024/10/Pasted-image-20240818011245-300x224.png" alt="" /></p>
+<p>接下来指定CPU信息，单槽单核其实可以用了，不过如果之后要装很多服务，可以适当调高，最后的核心数就是插槽数 *核心数。至于类别，我直接保持默认似乎没有问题，如果担心CPU兼容问题可以在“类别”中使用host模式。</p>
+<p>指定内存，都是酌情考虑，不过不装额外服务，只作为普通网关连接3个左右设备的话，都是在100MiB以下。会根据网关下的设备数有不同的占用，这一点靠经验把握就行，这里分1024MiB是绝对够用的。</p>
+<p>网络就保持默认，OP需要管理的网口会在我们成功运行后添加进来。</p>
+<p>最后确认一下，没啥问题就直接开始了。<br />
+<img decoding="async" src="https://nancunchild.cn/wp-content/uploads/2024/10/Pasted-image-20240818011828-300x224.png" alt="" /></p>
+<p>好的，没有问题的话左侧服务器视图会多出一个虚拟机，此时不要启动它，因为它现在根本没有系统，需要给它一个系统盘（由于PVE只支持QCOW2而恼火的我）。我们需要进入PVE终端，ssh连接和物理接触均可，在root环境下输入以下指令：</p>
+<pre><code class="language-bash">./img2kvm ./path/to/your/op.img 101 vm-101-disk-1</code></pre>
+<blockquote>
+<p>此处的/path/&#8230;请替换为实际OP镜像路径，101和101-vm-disk请替换为虚拟机编号。<br />
+如果你找不到上传的镜像位置，建议先使用scp把镜像传送到好找的目录，然后再运行上述指令。</p>
+</blockquote>
+<p>运行完毕时会有如下的输出：</p>
+<pre><code class="language-bash">root@nancunchild:~# ./img2kvm openwrt-23.05.0-x86-generic-generic-ext4-combined-efi.img 104 vm-104-disk-1
+Converting file system to qcow2 format ...
+... Done.
+Importing disk to the VM 104 ...
+importing disk &#039;vm-104-disk-1.qcow2&#039; to VM 104 ...
+  Rounding up size to full physical extent 124.00 MiB
+  WARNING: You have not turned on protection against thin pools running out of space.
+  WARNING: Set activation/thin_pool_autoextend_threshold below 100 to trigger automatic extension of thin pools before they get full.
+  Logical volume &quot;vm-104-disk-1&quot; created.
+  WARNING: Sum of all thin volume sizes (76.48 GiB) exceeds the size of thin pool pve/data and the amount of free space in volume group (14.75 GiB).
+transferred 0.0 B of 120.3 MiB (0.00%)
+transferred 11.6 MiB of 120.3 MiB (9.61%)
+transferred 23.1 MiB of 120.3 MiB (19.22%)
+transferred 34.7 MiB of 120.3 MiB (28.83%)
+transferred 37.9 MiB of 120.3 MiB (31.53%)
+transferred 49.5 MiB of 120.3 MiB (41.14%)
+transferred 61.0 MiB of 120.3 MiB (50.75%)
+transferred 72.6 MiB of 120.3 MiB (60.36%)
+transferred 84.2 MiB of 120.3 MiB (69.97%)
+transferred 95.7 MiB of 120.3 MiB (79.58%)
+transferred 107.3 MiB of 120.3 MiB (89.19%)
+transferred 118.8 MiB of 120.3 MiB (98.80%)
+transferred 120.3 MiB of 120.3 MiB (100.00%)
+transferred 120.3 MiB of 120.3 MiB (100.00%)
+Successfully imported disk as &#039;unused0:local-lvm:vm-104-disk-1&#039;
+... Done.
+Disk image for VM 104 imported, add it to VM from unused disk in hardware settings.</code></pre>
+<p>此时需要进入对应虚拟机的“硬件”，找到底下新的“未使用的磁盘”，双击它进行添加。</p>
+<p>随后再进入“选项”-“引导顺序”，将刚刚对应的硬盘勾选上，并拖拽到最上层作为首选启动项。</p>
+<p>好的，完成这些后，请直接启动。</p>
+<h3>基础配置</h3>
+<p>进入后，应该能看到大量字符滚动，随后卡住的界面。此时按一下回车，命令行就会出现。首先我们需要修改网络配置，让OP认识到正确的网络拓扑。</p>
+<pre><code class="language-bash">vi /etc/config/network
+// 一开始，文字处理器中应该只有vi能用，不过按下i进入编辑模式后，一切都是熟悉的vim了。</code></pre>
+<p>看到的内容应该如下所示：<br />
+<img decoding="async" src="https://nancunchild.cn/wp-content/uploads/2024/10/Pasted-image-20240818014504-300x187.png" alt="" /></p>
+<p>修改字段ipaddr的IP为实际内网中OP的IP。修改netmask为实际的子网掩码。如果作为网关，就可以直接使用了。按Esc-输入:wq离开。随后使用reboot进行重启，应用该配置。</p>
+<p>好的，现在在电脑浏览器上输入刚刚的OP的IP，就可以看见OP的管理页面了。应该是如下的界面。会警告你root密码没有设置，什么人都可以黑你内网，所以你可以去设置root密码。<br />
+<img decoding="async" src="https://nancunchild.cn/wp-content/uploads/2024/10/Pasted-image-20240818014930-300x179.png" alt="" /></p>
+<p>设置完成后就可以直接使用命令行进行连接了。<br />
+随后我们在Web端的&quot;Network&quot;-&quot;Interfaces&quot;里面找到网络端口，然后添加，保证机器可以上网。基础配置就完成了。</p>
+<h3>开始扩容</h3>
+<p>你应该会发现，整个能装软件的空间也就124MiB左右，装几个就满了。因为官方为了最大兼容，防止小容量装不下，因此提供的img的根目录空间就这么大。因此需要进行扩容。<br />
+<img decoding="async" src="https://nancunchild.cn/wp-content/uploads/2024/10/Pasted-image-20240818104647-300x88.png" alt="" /></p>
+<p>但是根分区扩容不能直接进行，如同理发师不能给自己理发，一个操作系统也不能一边拆自己老家一边保持正常运行。需要别的系统来完成这一点。<br />
+当时我想着扩容的思路有几个：</p>
+<ul>
+<li>直接修改img包，然后再重新转为kvm可识别格式。</li>
+<li>安装完成后，进入另一个系统，把这个盘进行扩容。<br />
+img的拆装也是一个不小的活，要注意打包的各种小规矩等等。</li>
+</ul>
+<p>我选择了进另一个系统进行扩容，将这个小盘在PVE设置中进行最大容量扩容。如下图所示，进入对应虚拟机的“硬件”-“磁盘操作”-“调整大小”，计算好需要添加的量，注意，它不能减小，只能增加。纯纯标题党，应该叫“增加大小”才对。</p>
+<p>好的，现在虽然最大容量增加了，但是分区并没有增加大小。就像庭院变大了，但是你还是住在原来的小屋子里面不出来。接下来的增大分区才是重点。<br />
+我们选择了把这个磁盘扔给另一个系统去处理的方法，既可以使用CDROM内装系统，也可以把这个磁盘脱离后扔给另一个虚拟机来调整（注意，脱离后链接到别的VM会改变磁盘的UUID，注意谨慎操作）。此处我们选择让这个OP变成一个双系统，另一个系统装进硬盘操作。</p>
+<h4>CDROM装LinuxPE</h4>
+<ul>
+<li>优点：
+<ul>
+<li>方便快捷，CDROM可以一键创建后直接使用，业界一般用这个作为PE</li>
+</ul>
+</li>
+<li>缺点：
+<ul>
+<li>每次重启会还原，也就是说安装的必要维修工具会在重启后消失，这个不利于后续维修工作。</li>
+</ul>
+</li>
+</ul>
+<h4>扔给另一个虚拟机</h4>
+<ul>
+<li>优点
+<ul>
+<li>另一个虚拟机很方便就能调整，找磁盘等等也不麻烦</li>
+</ul>
+</li>
+<li>缺点
+<ul>
+<li>脱离磁盘并重新安装上后，分区的uuid会改变，此时需要修改启动项中的uuid，对技术要求有点高。</li>
+</ul>
+</li>
+</ul>
+<h4>使用双系统</h4>
+<ul>
+<li>
+<p>优点</p>
+<ul>
+<li>不用修改磁盘uuid和启动项</li>
+<li>为以后维修做好基础，之后就很方便</li>
+</ul>
+</li>
+<li>
+<p>缺点</p>
+<ul>
+<li>安装时候有点麻烦，需要装两个系统</li>
+</ul>
+</li>
+</ul>
+<p>我们选择一个喜欢而又不大的镜像，高水平人士可以考虑CoreLinux，我比较有自知之明，所以选择antiX系统。CoreLinux的特点就是很小，很适合作为救援系统，但是大部分工具没有，需要自己安装。</p>
+<blockquote>
+<p><a href="http://tinycorelinux.net/">TinyCoreLinux官网</a><br />
+<a href="http://tinycorelinux.net/15.x/x86_64/tcz/util-linux.tcz">对应UtilLinux工具tcz下载包</a><br />
+<a href="http://tinycorelinux.net/15.x/x86_64/tcz/coreutils.tcz">对应基础工具tcz下载包</a></p>
+<p><a href="https://antixlinux.com/">antiX官网</a><br />
+<a href="https://antixlinux.com/download/">antiX相关镜像下载</a></p>
+</blockquote>
+<p>接下来直接开始，我们先给对应虚拟机添加一块硬盘，然后指定一个镜像添加为CDROM，准备开始装救援系统。最后修改引导顺序，保证是刚刚添加的CDROM位于系统磁盘的前面即可。</p>
+<p>启动，能看到如下页面。你可以尝试按F2选择语言，但是有部分没有汉化。为了稳定，我们选择<em>Use Legacy Kernel</em> 随后选择 <em>Normal Boot</em><br />
+<img decoding="async" src="https://nancunchild.cn/wp-content/uploads/2024/10/Pasted-image-20240818111226-300x226.png" alt="" /></p>
+<p>接下来设置用户等就不多介绍了。完成安装程序后想办法让虚拟机停下来，随后在选项中调整虚拟机引导顺序，把刚刚安装好的硬盘放在第一位，保存后启动系统。<br />
+进入了antiX系统，执行lsblk指令看到目前磁盘状况。如下的sda盘就是我们需要扩容的盘，sdb为antiX的系统盘。需要扩容的分区为sda2分区，这里需要注意，sda128一般是恢复分区，sda1为引导分区。所以主分区应该是sda2，这一点可以从装软件的容量上看出来。<br />
+此时也可以使用 <em>lsblk</em> 通过磁盘的UUID分辨不同的磁盘：</p>
+<pre><code class="language-bash">sudo lskid /dev/sdx</code></pre>
+<p>接下来就是使用fdisk或者其它工具来重建分区：</p>
+<pre><code class="language-bash">fdisk
+p
+d
+2  # 需要扩容的分区，选择它进行删除
+n
+2  # 需要扩容的分区，重新创建它
+33200  # 起始扇区，这个不能错，也最好不要按照默认来，要通过第一步 p 的输出来决定
+17029119  # 结束扇区，可以默认，也可以直接最大值（分区后没有新分区）
+w</code></pre>
+<p><img decoding="async" src="https://nancunchild.cn/wp-content/uploads/2024/10/Pasted-image-20240818122209-300x205.png" alt="" /></p>
+<p>分区修改完成，最好通过查错工具检查并修复错误，此处使用e2fsck：</p>
+<pre><code class="language-bash">e2fsck -f /dev/sdx
+yes</code></pre>
+<p>再使用lsblk看看分区是否扩容成功，扩容成功时，能看到对应分区的大小已经扩张到了期望的大小。</p>
+<p>关掉虚拟机，在PVE选项中调整启动顺序，启动OpenWRT，进入软件界面时发现扩容已经完成：<br />
+<img decoding="async" src="https://nancunchild.cn/wp-content/uploads/2024/10/Pasted-image-20240818130834-300x75.png" alt="" /></p>
+<p>接下来就开开心心装软件吧！</p>
+<p>参考资料：</p>
+<blockquote>
+<p><a href="https://chatgpt.com/share/c674b9a2-7642-4643-a90c-7d095268bc6a">https://chatgpt.com/share/c674b9a2-7642-4643-a90c-7d095268bc6a</a> （和GPT的蜜汁问答）<br />
+<a href="https://www.bilibili.com/video/BV1bc411v7A3">https://www.bilibili.com/video/BV1bc411v7A3</a> （在下莫老师的安装指导）<br />
+<a href="https://openwrt.org/zh/docs/start">https://openwrt.org/zh/docs/start</a> （OpenWRT官方Wiki）</p>
+</blockquote>
+<p>。</p>
+<p><a href="https://nancunchild.cn/2024/10/16/toss_openwrt_in_pve_install/">折腾OpenWRT in PVE那些事——安装与扩容</a>最先出现在<a href="https://nancunchild.cn">NanCunChild的个人随想</a>。</p>
