@@ -62,7 +62,7 @@
 <p>好的，没有问题的话左侧服务器视图会多出一个虚拟机，此时不要启动它，因为它现在根本没有系统，需要给它一个系统盘（由于PVE只支持QCOW2而恼火的我）。我们需要进入PVE终端，ssh连接和物理接触均可，在root环境下输入以下指令：</p>
 <pre><code class="language-bash">./img2kvm ./path/to/your/op.img 101 vm-101-disk-1</code></pre>
 <blockquote>
-<p>此处的/path/&#8230; 请替换为实际OP镜像路径，101和101-vm-disk请替换为虚拟机编号。<br />
+<p>此处的 <em>/path/&#8230;</em> 请替换为实际OP镜像路径，101和101-vm-disk请替换为虚拟机编号。<br />
 如果你找不到上传的镜像位置，建议先使用scp把镜像传送到好找的目录，然后再运行上述指令。</p>
 </blockquote>
 <p>运行完毕时会有如下的输出：</p>
@@ -102,7 +102,7 @@ Disk image for VM 104 imported, add it to VM from unused disk in hardware settin
 // 一开始，文字处理器中应该只有vi能用，不过按下i进入编辑模式后，发现一切都是熟悉的vim。</code></pre>
 <p>看到的内容应该如下所示：<br />
 <img decoding="async" src="https://nancunchild.cn/wp-content/uploads/2024/10/Pasted-image-20240818014504-300x187.png" alt="" /></p>
-<p>修改字段ipaddr的IP为实际内网中OP的IP。修改netmask为实际的子网掩码。如果作为网关，就可以直接使用了。按 Esc ，输入:wq离开。随后使用reboot进行重启，应用该配置。</p>
+<p>修改字段 <em>ipaddr</em> 的IP为实际内网中OP的IP。修改 <em>netmask</em> 为实际的子网掩码。如果作为网关，就可以直接使用了。按 Esc ，输入:wq离开。随后使用reboot进行重启，应用该配置。</p>
 <p>好的，现在在电脑浏览器上输入刚刚的OP的IP，就可以看见OP的管理页面了。应该是如下的界面。会警告你root密码没有设置，什么人都可以黑你内网，所以你需要及时去设置root密码。<br />
 <img decoding="async" src="https://nancunchild.cn/wp-content/uploads/2024/10/Pasted-image-20240818014930-300x179.png" alt="" /></p>
 <p>设置完成后就可以直接使用命令行进行连接了。<br />
@@ -117,7 +117,7 @@ Disk image for VM 104 imported, add it to VM from unused disk in hardware settin
 <li>安装完成后，进入另一个系统，把这个盘进行扩容。<br />
 img的拆装也是一个不小的活，要注意打包的各种小规矩等等。</li>
 </ul>
-<p>我选择了进另一个系统进行扩容，将这个小盘在PVE设置中进行最大容量扩容。如下图所示，进入对应虚拟机的“硬件”-“磁盘操作”-“调整大小”，计算好需要添加的量，注意，它不能减小，只能增加。纯纯标题党，应该叫“增加大小”才对。</p>
+<p>我选择了进另一个系统进行扩容，将这个小盘在PVE设置中进行最大容量扩容。如下图所示，进入对应虚拟机的 <strong>硬件-磁盘操作-调整大小</strong> ，计算好需要添加的量，注意，它不能减小，只能增加。纯纯标题党，应该叫“增加大小”才对。</p>
 <p>好的，现在虽然最大容量增加了，但是分区并没有增加大小。就像庭院变大了，但是你还是住在原来的小屋子里面不出来。接下来的增大分区才是重点。<br />
 我们选择了把这个磁盘扔给另一个系统去处理的方法，既可以使用CDROM内装系统，也可以把这个磁盘脱离后扔给另一个虚拟机来调整（注意，脱离后链接到别的VM会改变磁盘的UUID，注意谨慎操作）。此处我们选择让这个OP变成一个双系统，另一个系统装进硬盘操作。</p>
 <h4>CDROM装LinuxPE</h4>
