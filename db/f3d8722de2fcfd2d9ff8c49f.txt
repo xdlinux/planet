@@ -32,7 +32,7 @@
 <li>其它小型Linux镜像（本文使用antiX）<br />
 <h2>开始折腾</h2>
 <h3>虚拟机安装（保姆级别，因为正好有人说不会）</h3>
-<p>我选择的OpenWRT镜像源是官方镜像 <a href="中的openwrt-23.05.0-x86-generic-generic-ext4-combined-efi.img">https://openwrt.org</a> ，这一点和UP主“在下莫老师”的修改镜像有所不同，如果能用他推荐的镜像，应该是可以直接得到8GB空间的根目录的（单纯不喜欢别人调好的东西，有赛博洁癖）。<br />
+<p>我选择的OpenWRT镜像源是官方镜像 <a href="中的openwrt-23.05.0-x86-generic-generic-ext4-combined-efi.img">https://openwrt.org</a> ，这一点和别的教程的修改镜像有所不同，如果能用他推荐的镜像，应该是可以直接得到8GB空间的根目录的。<br />
 在PvE的Web端 local(节点名称) 下找到ISO镜像，将下载好的镜像上传。<br />
 随后点击右上角蓝色大按钮的“新建虚拟机”，弹出如下框框（启动保姆式教学）<br />
 这里虚拟机名称只能是英文，而且后续会在左侧虚拟机处显示出来。下一步。<br />
@@ -40,20 +40,20 @@
 </li>
 </ul>
 <p>选择操作系统，由于PvE无法直接读取img镜像，因此我们先不选择介质，让系统暂时处于真空。下一步。</p>
-<p>这里选择系统相关配置，建议是SeaBIOS比较稳，OpenWRT虚拟机没必要上UEFI。即便选择UEFI需要在后续选择，因为我们暂时还没有EFI分区。SCSI控制器有这几种：</p>
+<p>这里选择系统相关配置，建议是SeaBIOS比较稳，OpenWRT虚拟机没必要上UEFI。即便选择UEFI需要在后续选择，因为我们暂时还没有EFI分区。</p>
+<p>在选择添加硬盘时，可以选择适当大小，比如8G。在选择硬盘控制器时，有如下几种SCSI控制器可供选择：</p>
 <blockquote>
-<p>VirtIO SCSI：半虚拟化，正常用这个就好。<br />
-VirtIO SCSI Single：VirtIO SCSI的单队列版本，兼容性好。虽然有文章提出有时候测速会比SCSI有微弱优势，但是还是普遍认为性能和SCSI差不多。<br />
-VMWare PVSCSI：专为VMware虚拟化平台（如ESXi）设计的高性能SCSI控制器。（用PvE了还想着ESXi算不算一种NTR？）<br />
-LSA 53C895A：模拟的一种硬件SCSI控制器，古董。<br />
-LSA 53C810： 模拟SCSI控制器，古董二号。<br />
-MegaRAID SAS 8708EM2： RAID控制器，如果要RAID可以尝试这种介于软硬RAID之间的东西，会吃PVE一点性能。<br />
+<p><strong>VirtIO SCSI</strong>：半虚拟化，正常用这个就好。<br />
+<strong>VirtIO SCSI Single</strong>：VirtIO SCSI的单队列版本，兼容性好。虽然有文章提出有时候测速会比SCSI有微弱优势，但是还是普遍认为性能和SCSI差不多。<br />
+<strong>VMWare PVSCSI</strong>：专为VMware虚拟化平台（如ESXi）设计的高性能SCSI控制器。（用PvE了还想着ESXi算不算一种NTR？）<br />
+<strong>LSA 53C895A</strong>：模拟的一种硬件SCSI控制器，古董。<br />
+<strong>LSA 53C810</strong>： 模拟SCSI控制器，古董二号。<br />
+<strong>MegaRAID SAS 8708EM2</strong>： RAID控制器，如果要RAID可以尝试这种介于软硬RAID之间的东西，会吃PVE一点性能。<br />
 这些本质上是软件模拟的磁盘控制器，类似于普通电脑上的存储相关驱动。</p>
 </blockquote>
-<p>只要不是硬件和系统特别奇怪导致无法兼容，或者是有高性能极致追求的话，都建议保持默认。<br />
+<p>只要不是硬件和系统特别奇怪导致无法兼容，或者是有高性能极致追求的话，都建议保持默认。在选择操作系统类型时，PVE会尽力选择最适合的硬盘控制器类型。<br />
 <img decoding="async" src="https://nancunchild.cn/wp-content/uploads/2024/10/屏幕截图-2024-07-24-211751-300x228.png" alt="" /></p>
-<p>这一步选择磁盘，由于我们准备原盘基础上扩容，所以这个大小等参数都无关紧要，到时候不会使用这个硬盘。可以保持默认。<br />
-<img decoding="async" src="https://nancunchild.cn/wp-content/uploads/2024/10/Pasted-image-20240818011245-300x224.png" alt="" /></p>
+<p><img decoding="async" src="https://nancunchild.cn/wp-content/uploads/2024/10/Pasted-image-20240818011245-300x224.png" alt="" /></p>
 <p>接下来指定CPU信息，单槽单核其实可以用了，不过如果之后要装很多服务，可以适当调高，最后的核心数就是插槽数 *核心数。至于类别，我直接保持默认似乎没有问题，如果担心CPU兼容问题可以在“类别”中使用host模式。</p>
 <p>指定内存，都是酌情考虑，不过不装额外服务，只作为普通网关连接3个左右设备的话，都是在100MiB以下。会根据网关下的设备数有不同的占用，这一点靠经验把握就行，这里分1024MiB是绝对够用的。</p>
 <p>网络就保持默认，OP需要管理的网口会在我们成功运行后添加进来。</p>
@@ -62,7 +62,7 @@ MegaRAID SAS 8708EM2： RAID控制器，如果要RAID可以尝试这种介于软
 <p>好的，没有问题的话左侧服务器视图会多出一个虚拟机，此时不要启动它，因为它现在根本没有系统，需要给它一个系统盘（由于PVE只支持QCOW2而恼火的我）。我们需要进入PVE终端，ssh连接和物理接触均可，在root环境下输入以下指令：</p>
 <pre><code class="language-bash">./img2kvm ./path/to/your/op.img 101 vm-101-disk-1</code></pre>
 <blockquote>
-<p>此处的/path/&#8230;请替换为实际OP镜像路径，101和101-vm-disk请替换为虚拟机编号。<br />
+<p>此处的/path/&#8230; 请替换为实际OP镜像路径，101和101-vm-disk请替换为虚拟机编号。<br />
 如果你找不到上传的镜像位置，建议先使用scp把镜像传送到好找的目录，然后再运行上述指令。</p>
 </blockquote>
 <p>运行完毕时会有如下的输出：</p>
@@ -93,20 +93,20 @@ transferred 120.3 MiB of 120.3 MiB (100.00%)
 Successfully imported disk as &#039;unused0:local-lvm:vm-104-disk-1&#039;
 ... Done.
 Disk image for VM 104 imported, add it to VM from unused disk in hardware settings.</code></pre>
-<p>此时需要进入对应虚拟机的“硬件”，找到底下新的“未使用的磁盘”，双击它进行添加。</p>
-<p>随后再进入“选项”-“引导顺序”，将刚刚对应的硬盘勾选上，并拖拽到最上层作为首选启动项。</p>
+<p>此时需要进入对应虚拟机的 <strong>硬件</strong>，找到底下新的“未使用的磁盘”，双击它进行添加。</p>
+<p>随后再进入 <strong>选项-引导顺序</strong>，将刚刚对应的硬盘勾选上，并拖拽到最上层作为首选启动项。</p>
 <p>好的，完成这些后，请直接启动。</p>
 <h3>基础配置</h3>
 <p>进入后，应该能看到大量字符滚动，随后卡住的界面。此时按一下回车，命令行就会出现。首先我们需要修改网络配置，让OP认识到正确的网络拓扑。</p>
 <pre><code class="language-bash">vi /etc/config/network
-// 一开始，文字处理器中应该只有vi能用，不过按下i进入编辑模式后，一切都是熟悉的vim了。</code></pre>
+// 一开始，文字处理器中应该只有vi能用，不过按下i进入编辑模式后，发现一切都是熟悉的vim。</code></pre>
 <p>看到的内容应该如下所示：<br />
 <img decoding="async" src="https://nancunchild.cn/wp-content/uploads/2024/10/Pasted-image-20240818014504-300x187.png" alt="" /></p>
-<p>修改字段ipaddr的IP为实际内网中OP的IP。修改netmask为实际的子网掩码。如果作为网关，就可以直接使用了。按Esc-输入:wq离开。随后使用reboot进行重启，应用该配置。</p>
-<p>好的，现在在电脑浏览器上输入刚刚的OP的IP，就可以看见OP的管理页面了。应该是如下的界面。会警告你root密码没有设置，什么人都可以黑你内网，所以你可以去设置root密码。<br />
+<p>修改字段ipaddr的IP为实际内网中OP的IP。修改netmask为实际的子网掩码。如果作为网关，就可以直接使用了。按 Esc ，输入:wq离开。随后使用reboot进行重启，应用该配置。</p>
+<p>好的，现在在电脑浏览器上输入刚刚的OP的IP，就可以看见OP的管理页面了。应该是如下的界面。会警告你root密码没有设置，什么人都可以黑你内网，所以你需要及时去设置root密码。<br />
 <img decoding="async" src="https://nancunchild.cn/wp-content/uploads/2024/10/Pasted-image-20240818014930-300x179.png" alt="" /></p>
 <p>设置完成后就可以直接使用命令行进行连接了。<br />
-随后我们在Web端的&quot;Network&quot;-&quot;Interfaces&quot;里面找到网络端口，然后添加，保证机器可以上网。基础配置就完成了。</p>
+随后我们在Web端的 <strong>Network-Interfaces</strong> 里面找到网络端口，然后添加，保证机器可以上网。基础配置就完成了。</p>
 <h3>开始扩容</h3>
 <p>你应该会发现，整个能装软件的空间也就124MiB左右，装几个就满了。因为官方为了最大兼容，防止小容量装不下，因此提供的img的根目录空间就这么大。因此需要进行扩容。<br />
 <img decoding="async" src="https://nancunchild.cn/wp-content/uploads/2024/10/Pasted-image-20240818104647-300x88.png" alt="" /></p>
@@ -162,7 +162,7 @@ img的拆装也是一个不小的活，要注意打包的各种小规矩等等�
 </ul>
 </li>
 </ul>
-<p>我们选择一个喜欢而又不大的镜像，高水平人士可以考虑CoreLinux，我比较有自知之明，所以选择antiX系统。CoreLinux的特点就是很小，很适合作为救援系统，但是大部分工具没有，需要自己安装。</p>
+<p>我们选择一个喜欢而又不大的镜像，高水平人士可以考虑CoreLinux，这个可能时能找到的最小Linux了。我比较有自知之明，所以选择稍大一点，功能更多的antiX系统。CoreLinux的特点就是很小，很适合作为救援系统，但是大部分工具没有，需要自己安装。</p>
 <blockquote>
 <p><a href="http://tinycorelinux.net/">TinyCoreLinux官网</a><br />
 <a href="http://tinycorelinux.net/15.x/x86_64/tcz/util-linux.tcz">对应UtilLinux工具tcz下载包</a><br />
