@@ -1,0 +1,153 @@
+<p>相比较nginx，uhttpd的性能和功能都太弱了，如果有足够的空间或者直接是x86的虚拟OP，更建议使用nginx来代理连接实现更多功能。本篇简单介绍使用nginx进行代理连接，并成功配置多个SSL证书以实现SNI的过程。</p>
+<p><a href="https://nancunchild.cn/2024/10/19/toss_openwrt_in_pve_nginxconf/">折腾OpenWRT那些事——nginx反向代理</a>最先出现在<a href="https://nancunchild.cn">NanCunChild的个人随想</a>。</p>
+<hr /><h2>起源</h2>
+<p>我只是想让DDNS访问和内网访问时都能使用正确的证书，但是uhttpd似乎不支持对模糊的接口指定专用的证书。因此我就想到了反向代理之神 <em>nginx</em> 。对于方式，不能使用直接的网站服务模式，因为其中包含很多 uci 控制命令，nginx 无法识别。因此工作方式为 uhttpd 运行处理 uci ，nginx 接受外部流量并进行转发。</p>
+<h2>思路</h2>
+<p>准备让uhttpd监听在一个偏僻的端口，同时为了防止好事者乱访问，仅允许本地访问，让nginx的流量转发即可。</p>
+<h2>开整</h2>
+<p>也不多说别的了，这个肯定得做：</p>
+<pre><code class="language-bash">opkg update
+opkg install nginx</code></pre>
+<p>我们先让 <em>uhttpd</em> 监听在一个仅可本地访问的不常用端口上，而且关掉它本身的 HTTPS 跳转。可以按照如下指示编辑 uhttpd 文件。</p>
+<ul>
+<li><em>/etc/config/uhttpd</em> 内容</li>
+</ul>
+<pre><code class="language-conf">        config uhttpd &#039;main&#039;
+        list listen_http &#039;127.0.0.1:11480&#039;  # 这是uhttpd监听的端口，最好保持本地访问
+        option redirect_https &#039;0&#039;  # 废物uhttpd不配处理SSL，让nginx代劳
+        option home &#039;/www&#039;
+        option rfc1918_filter &#039;1&#039;
+        option max_requests &#039;50&#039;
+        option max_connections &#039;100&#039;
+        option cert &#039;/etc/uhttpd.crt&#039;
+        option key &#039;/etc/uhttpd.key&#039;
+        option cgi_prefix &#039;/cgi-bin&#039;
+        list lua_prefix &#039;/cgi-bin/luci=/usr/lib/lua/luci/sgi/uhttpd.lua&#039;
+        option script_timeout &#039;3600&#039;
+        option network_timeout &#039;30&#039;
+        option http_keepalive &#039;20&#039;
+        option tcp_keepalive &#039;1&#039;
+        option ubus_prefix &#039;/ubus&#039;
+        list ucode_prefix &#039;/cgi-bin/luci=/usr/share/ucode/luci/uhttpd.uc&#039;
+
+config cert &#039;defaults&#039;
+        option days &#039;730&#039;
+        option key_type &#039;ec&#039;
+        option bits &#039;2048&#039;
+        option ec_curve &#039;P-256&#039;
+        option country &#039;ZZ&#039;
+        option state &#039;Somewhere&#039;
+        option location &#039;Unknown&#039;
+        option commonname &#039;OpenWrt&#039;
+</code></pre>
+<p>好的，接下来就可以配置 nginx 了，这是nginx.conf。可以参考如下内容：</p>
+<ul>
+<li>/etc/nginx/nginx.conf</li>
+</ul>
+<pre><code class="language-conf">
+user  nobody nogroup;  #  这里注意一下，OP中不是nobody:nobody形式，而是nobody:nogroup形式，使用特定不可登录用户更安全。
+worker_processes  1;
+
+events {
+    worker_connections  1024;
+}
+
+http {
+    include       mime.types;
+    default_type  application/octet-stream;
+    sendfile        on;
+    keepalive_timeout  65;
+
+    server {
+        listen 80;
+        server_name your.domain 192.168.114.1;  #  这里设置你的其它登录别名
+        return 301 https://your.domain$request_uri;  #  这里带URI转发，防止别人第一次必回首页而红温
+    }
+
+    server {
+        listen 443 ssl http2;
+        server_name op.ncc.local;
+
+        ssl_certificate /etc/nginx/ssl/path;
+        ssl_certificate_key /etc/nginx/ssl/path;
+
+        location / {
+            proxy_pass http://127.0.0.1:11480;  # 这里放uhttp的配置监听端口
+            proxy_set_header Host $host;
+            proxy_set_header X-Real-IP $remote_addr;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_set_header X-Forwarded-Proto $scheme;
+
+        }
+    }
+}
+</code></pre>
+<p>我则是配置了 SNI 来实现不同域名给不同证书：</p>
+<pre><code class="language-conf">
+user  nobody nogroup;
+worker_processes  1;
+
+events {
+    worker_connections  1024;
+}
+
+http {
+    include       mime.types;
+    default_type  application/octet-stream;
+
+    sendfile        on;
+    keepalive_timeout  65;
+
+    server {
+        listen 80;
+        server_name op.ncc.local 192.168.114.1;
+        return 301 https://op.ncc.local$request_uri;
+    }
+
+    server {
+        listen 443 ssl http2;
+        server_name op.ncc.local;
+
+        ssl_certificate /etc/nginx/ssl-crts/op.ncc.local/op.crt;
+        ssl_certificate_key /etc/nginx/ssl-crts/op.ncc.local/op.key;
+
+        location / {
+            proxy_pass http://127.0.0.1:11480;
+            proxy_set_header Host $host;
+            proxy_set_header X-Real-IP $remote_addr;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_set_header X-Forwarded-Proto $scheme;
+
+        }
+    }
+
+    server {
+        listen 80;
+        server_name nancunchild.zapto.org;
+        return 301 https://nancunchild.zapto.org$request_uri;
+    }
+
+    server {
+        listen 443 ssl http2;
+        server_name nancunchild.zapto.org;
+
+        ssl_certificate /etc/nginx/ssl-crts/nancunchild.zapto.org/op.crt;
+        ssl_certificate_key /etc/nginx/ssl-crts/nancunchild.zapto.org/op.key;
+
+        location / {
+            proxy_pass http://127.0.0.1:11480;
+            proxy_set_header Host $host;
+            proxy_set_header X-Real-IP $remote_addr;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_set_header X-Forwarded-Proto $scheme;
+        }
+    }
+}
+</code></pre>
+<h2>题外话</h2>
+<p>感觉这个真的不难，也就是nginx不会用，看来这个东西确实有一点学习曲线。对了，关于校内DDNS 需要带SSL证书，好像不好找到免费的，毕竟那个bot只给公网IP玩。所以我找到的是no-ip的动态域名提供商，每年得给他几美刀充值最便宜的套餐来换动态域名SSL证书。<br />
+而且注意，不知道什么原因，直接在OP里面下载的DDNS插件似乎没有针对no-ip的脚本，但是你可以在opkg里找到可以单独安装的no-ip脚本，安装后就多出no-ip的选择项。</p>
+<h2>参考</h2>
+<p><a href="https://blog.csdn.net/zzhongcy/article/details/137455030">nginx多https证书配置精简（CSDN）</a><br />
+<a href="https://my.noip.com">no-ip官网（别导航到俄罗斯的那个noip了）</a></p>
+<p><a href="https://nancunchild.cn/2024/10/19/toss_openwrt_in_pve_nginxconf/">折腾OpenWRT那些事——nginx反向代理</a>最先出现在<a href="https://nancunchild.cn">NanCunChild的个人随想</a>。</p>
