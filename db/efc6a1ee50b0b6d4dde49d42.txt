@@ -1,0 +1,227 @@
+<h1 id="DX12-色彩空间">DX12 色彩空间<a class="headerlink" href="#DX12-色彩空间" title="Permanent link">&para;</a></h1>
+<!-- more -->
+
+<p>Unity 中有 Linear 和 Gamma 两种 Color Space，为了计算更准确，现在都用 Linear。自己写引擎时，需要一些特殊处理才能在 Linear Space 里渲染。</p>
+<h2 id="Gamma">Gamma<a class="headerlink" href="#Gamma" title="Permanent link">&para;</a></h2>
+<p>Gamma 是一个非线性变换，一般定义为</p>
+<div class="arithmatex">\[
+V_{\text{out}} = A V_{\text{in}}^\gamma
+\]</div>
+<p>通常情况下，<span class="arithmatex">\(A=1\)</span> 且输入和输出都在 <span class="arithmatex">\([0,1]\)</span> 范围</p>
+<ul>
+<li><span class="arithmatex">\(0 &lt; \gamma &lt; 1\)</span> 时，称为 Gamma 压缩、Gamma 校正。</li>
+<li><span class="arithmatex">\(\gamma &gt; 1\)</span> 时，称为 Gamma 展开、去 Gamma 校正。</li>
+</ul>
+<h3 id="显示器">显示器<a class="headerlink" href="#显示器" title="Permanent link">&para;</a></h3>
+<p>早期的阴极射线管显示器（CRT Display）输出亮度 <span class="arithmatex">\(I\)</span> 与输入电压 <span class="arithmatex">\(u\)</span> 的关系为</p>
+<div class="arithmatex">\[
+I=u^{\gamma}
+\]</div>
+<p>其中 <span class="arithmatex">\(\gamma &gt; 1\)</span>。所以，要对输入信号做一次 Gamma 校正</p>
+<div class="arithmatex">\[
+u_{\text{o}} = u_{\text{i}}^{1/\gamma}
+\]</div>
+<p>才能将输入正确地显示出来。</p>
+<h3 id="图像编码">图像编码<a class="headerlink" href="#图像编码" title="Permanent link">&para;</a></h3>
+<p>人眼感知到的亮度 <span class="arithmatex">\(I_1\)</span> 和物理世界的亮度 <span class="arithmatex">\(I_2\)</span> 大致也有一个指数关系</p>
+<div class="arithmatex">\[
+I_1 = I_2^{\gamma}
+\]</div>
+<p>其中 <span class="arithmatex">\(\gamma &gt; 1\)</span>。这个公式和 CRT 显示器的很像，但这只是个巧合。从公式可以看出，当 <span class="arithmatex">\(I_2\)</span> 较小时，<span class="arithmatex">\(I_1\)</span> 变化得较慢。换句话说，人眼能感知到更多暗色的变化，所以在编码图像时，应该给暗色更高的精度。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">编码</th>
+<th style="text-align: left;">原理</th>
+<th>是否需要 Gamma</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">UNORM</td>
+<td style="text-align: left;">用 n 位无符号整数表示小数 0.0 - 1.0，整数 <span class="arithmatex">\(x\)</span> 表示小数 <span class="arithmatex">\(x/(2^n-1)\)</span></td>
+<td>在将 0.0 - 1.0 的颜色值编码为整数前，应该先进行 Gamma 校正，把暗色的范围变大，使得编码后有更多整数表示暗色，更多地保留暗色的变化</td>
+</tr>
+<tr>
+<td style="text-align: left;">FLOAT</td>
+<td style="text-align: left;">IEEE-754 或类似表示方法</td>
+<td>没必要，可能还会起反作用 <sup id="fnref:1"><a class="footnote-ref" href="#fn:1">1</a></sup></td>
+</tr>
+</tbody>
+</table>
+<h2 id="CIE-XYZ">CIE XYZ<a class="headerlink" href="#CIE-XYZ" title="Permanent link">&para;</a></h2>
+<p>这就是所谓的 Linear Color Space。颜色的三维坐标（X、Y、Z）与物理光能量之间是线性关系。如果将光源的能量按比例放大或缩小，那么 CIE XYZ 的坐标也会以同样的比例变化。</p>
+<h2 id="sRGB">sRGB<a class="headerlink" href="#sRGB" title="Permanent link">&para;</a></h2>
+<p>sRGB 是惠普和微软开发的一种标准 RGB 色彩空间，被广泛使用。</p>
+<h3 id="公式">公式<a class="headerlink" href="#公式" title="Permanent link">&para;</a></h3>
+<div class="arithmatex">\[
+C_{\text{linear}} = \begin{cases}
+\dfrac{C_\text{srgb}}{12.92}&amp;, C_\text{srgb} \le 0.04045\\
+\left (\dfrac{C_\text{srgb} + 0.055}{1.055} \right)^{2.4}&amp;, C_\text{srgb} &gt; 0.04045
+\end{cases}
+\]</div>
+<div class="arithmatex">\[
+C_\text{srgb}=\begin{cases}
+12.92 C_\text{linear}&amp;, C_\text{linear} \le 0.0031308\\
+1.055 \left( C_\text{linear}^{1/2.4} \right) - 0.055&amp;, C_\text{linear} &gt; 0.0031308
+\end{cases}
+\]</div>
+<p>指数函数 <span class="arithmatex">\(x^{1/2.4}\)</span> 在靠近 <span class="arithmatex">\(0\)</span> 的地方斜率趋于无穷，会放大一些微弱的噪声，所以靠近 <span class="arithmatex">\(0\)</span> 的地方使用线性函数代替。</p>
+<h3 id="近似">近似<a class="headerlink" href="#近似" title="Permanent link">&para;</a></h3>
+<p>完整的分段函数比较复杂，通常用 2.2 的 Gamma 近似</p>
+<div class="arithmatex">\[
+C_\text{linear} = C_\text{srgb}^{2.2}
+\]</div>
+<div class="arithmatex">\[
+C_\text{srgb} = C_\text{linear}^{1/2.2}
+\]</div>
+<p>在不特别说明的情况下，大家说的 Gamma 指的都是 sRGB 这个 2.2。sRGB 到 Linear 就是「去 Gamma 校正」，Linear 到 sRGB 就是「Gamma 校正」。</p>
+<h2 id="DXGI_FORMAT">DXGI_FORMAT<a class="headerlink" href="#DXGI_FORMAT" title="Permanent link">&para;</a></h2>
+<p>DXGI_FORMAT 中带有 <code>_SRGB</code> 后缀的格式表示其保存的是 sRGB 颜色。在 Shader 中采样这些格式的纹理时，会自动将 sRGB 颜色转为 Linear 颜色。在 Shader 中向这些格式的 RTV 渲染时，会默认 <code>SV_Target</code> 输出的是 Linear 颜色，然后自动转换为 sRGB 颜色再保存。转换颜色时，使用的是准确的分段公式，而不是 Gamma 2.2 的近似公式。</p>
+<p>只有整数格式（UNORM）才有 <code>_SRGB</code> 后缀。没有 <code>_SRGB</code> 后缀的格式也能保存 sRGB 颜色，只是 Linear 和 sRGB 的转换需要自己进行。</p>
+<h2 id="Swap-Chain">Swap Chain<a class="headerlink" href="#Swap-Chain" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Back Buffer 格式</th>
+<th>色彩空间</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>整数 <code>DXGI_FORMAT_*_UNORM</code>（不能带有 <code>_SRGB</code> 后缀）</td>
+<td>必须写入 sRGB 颜色</td>
+<td>可以创建 <code>DXGI_FORMAT_*_SRGB</code> 类型的 RTV，这样就能自动将 <code>SV_Target</code> 输出的 Linear 颜色转为 sRGB 了</td>
+</tr>
+<tr>
+<td>浮点数</td>
+<td>必须写入 Linear 颜色</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>表格中创建 RTV 的方法是只适用于 Back Buffer 的特例，其他资源必须创建为 <code>DXGI_FORMAT_*_TYPELESS</code> 才能实现。<sup id="fnref:2"><a class="footnote-ref" href="#fn:2">2</a></sup></p>
+<h2 id="RenderDoc">RenderDoc<a class="headerlink" href="#RenderDoc" title="Permanent link">&para;</a></h2>
+<p>RenderDoc 的 Texture Viewer 上有个 Gamma 按钮。如果当前查看的纹理内容是 sRGB 的，就选中它，如果内容是 Linear 的，就关闭它。<sup id="fnref:3"><a class="footnote-ref" href="#fn:3">3</a></sup></p>
+<h2 id="渲染差异">渲染差异<a class="headerlink" href="#渲染差异" title="Permanent link">&para;</a></h2>
+<p>从数学和物理的角度来看，Gamma (sRGB) Color Space 渲染是不准确的，差异主要体现在光照和透明混合上。<sup id="fnref:4"><a class="footnote-ref" href="#fn:4">4</a></sup> 另外，Linear Space 的渲染看上去会亮一点。</p>
+<h2 id="实现-Linear-Color-Space-渲染">实现 Linear Color Space 渲染<a class="headerlink" href="#实现-Linear-Color-Space-渲染" title="Permanent link">&para;</a></h2>
+<h3 id="RTV">RTV<a class="headerlink" href="#RTV" title="Permanent link">&para;</a></h3>
+<p>建议所有中间的临时 RTV 都不带 <code>_SRGB</code> 后缀，最后的 Back Buffer RTV 使用 <code>DXGI_FORMAT_*_SRGB</code>。这样中间所有内容都在 Linear 空间，只在 Present 前进行一次 Gamma 校正。</p>
+<h3 id="Texture">Texture<a class="headerlink" href="#Texture" title="Permanent link">&para;</a></h3>
+<p>像 Unity 一样提供一个 <code>sRGB</code> 选项，然后使用 DirectXTex 提供的 <code>CREATETEX_FLAGS</code> 进行 sRGB 配置。</p>
+<div class="highlight"><pre><span></span><code><span class="c1">// https://github.com/microsoft/DirectXTex/wiki/CreateTexture</span>
+<span class="c1">// The CREATETEX_SRGB flag provides an option for working around gamma issues with content</span>
+<span class="c1">// that is in the sRGB or similar color space but is not encoded explicitly as an SRGB format.</span>
+<span class="c1">// This will force the resource format be one of the of DXGI_FORMAT_*_SRGB formats if it exist.</span>
+<span class="c1">// Note that no pixel data conversion takes place.</span>
+<span class="c1">// The CREATETEX_IGNORE_SRGB flag does the opposite;</span>
+<span class="c1">// it will force the resource format to not have the _*_SRGB version.</span>
+<span class="n">CREATETEX_FLAGS</span><span class="w"> </span><span class="n">createFlags</span><span class="p">;</span>
+
+<span class="k">if</span><span class="w"> </span><span class="k">constexpr</span><span class="w"> </span><span class="p">(</span><span class="n">GfxSettings</span><span class="o">::</span><span class="n">GetColorSpace</span><span class="p">()</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">GfxColorSpace</span><span class="o">::</span><span class="n">Linear</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">createFlags</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">m_IsSRGB</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="n">CREATETEX_FORCE_SRGB</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">CREATETEX_IGNORE_SRGB</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="k">else</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="c1">// shader 中采样时不进行任何转换</span>
+<span class="w">    </span><span class="n">createFlags</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">CREATETEX_IGNORE_SRGB</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="n">GFX_HR</span><span class="p">(</span><span class="n">CreateTextureEx</span><span class="p">(</span><span class="n">device</span><span class="p">,</span><span class="w"> </span><span class="n">m_MetaData</span><span class="p">,</span><span class="w"> </span><span class="n">D3D12_RESOURCE_FLAG_NONE</span><span class="p">,</span><span class="w"> </span><span class="n">createFlags</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">m_Resource</span><span class="p">));</span>
+</code></pre></div>
+<h3 id="Color">Color<a class="headerlink" href="#Color" title="Permanent link">&para;</a></h3>
+<p>我们平时说的颜色值、Editor 里配置的颜色都是 sRGB 空间的。从外部向 Shader 传入颜色时（例如 Material Constant Buffer），需要将颜色从 sRGB 空间转到 Linear 空间。</p>
+<h3 id="ImGui">ImGui<a class="headerlink" href="#ImGui" title="Permanent link">&para;</a></h3>
+<p>ImGui 目前所有操作都是在 sRGB 空间进行的，不支持 Linear Color Space。<sup id="fnref:5"><a class="footnote-ref" href="#fn:5">5</a></sup> 考虑到透明混合的问题，不能直接把 ImGui 传入 Shader 的颜色转到 Linear 空间，否则在不同 Color Space 下 ImGui 看上去不一致，尤其是它的 Color Picker。</p>
+<p>注意到 ImGui 只有一张 Texture，在不使用 <a href="https://github.com/ocornut/imgui/blob/master/docs/FONTS.md#using-colorful-glyphsemojis">Colorful Glyphs/Emojis</a> 时，这张 Texture 的 RGB 全是 1，这意味着把它当成 Linear 颜色变换到 sRGB 或者反过来结果都一样。我引擎的 Texture 在被 Shader 采样后得到的都是 Linear 颜色，所以不妨把 ImGui 的 Texture 当成 Linear Texture。</p>
+<p>修改 ImGui 的 Pixel Shader，把 Texture 的采样结果变换到 sRGB 空间，使得 ImGui 依旧在 sRGB 空间渲染。</p>
+<div class="highlight"><pre><span></span><code><span class="k">struct</span><span class="w"> </span><span class="n">PS_INPUT</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="kt">float4</span><span class="w"> </span><span class="n">pos</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">SV_POSITION</span><span class="p">;</span>
+<span class="w">  </span><span class="kt">float4</span><span class="w"> </span><span class="n">col</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">COLOR0</span><span class="p">;</span>
+<span class="w">  </span><span class="kt">float2</span><span class="w"> </span><span class="n">uv</span><span class="w">  </span><span class="o">:</span><span class="w"> </span><span class="n">TEXCOORD0</span><span class="p">;</span>
+<span class="p">};</span>
+<span class="kt">SamplerState</span><span class="w"> </span><span class="n">sampler0</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="k">register</span><span class="p">(</span><span class="n">s0</span><span class="p">);</span>
+<span class="kt">Texture2D</span><span class="w"> </span><span class="n">texture0</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="k">register</span><span class="p">(</span><span class="n">t0</span><span class="p">);</span>
+
+<span class="kt">float</span><span class="w"> </span><span class="n">LinearToSRGB1</span><span class="p">(</span><span class="kt">float</span><span class="w"> </span><span class="n">x</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mf">0.0031308</span><span class="p">)</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="p">(</span><span class="mf">12.92</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="p">(</span><span class="mf">1.055</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nb">pow</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mf">2.4</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mf">0.055</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="kt">float3</span><span class="w"> </span><span class="n">LinearToSRGB3</span><span class="p">(</span><span class="kt">float3</span><span class="w"> </span><span class="n">x</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="kt">float3</span><span class="p">(</span><span class="n">LinearToSRGB1</span><span class="p">(</span><span class="n">x</span><span class="p">.</span><span class="n">r</span><span class="p">),</span><span class="w"> </span><span class="n">LinearToSRGB1</span><span class="p">(</span><span class="n">x</span><span class="p">.</span><span class="n">g</span><span class="p">),</span><span class="w"> </span><span class="n">LinearToSRGB1</span><span class="p">(</span><span class="n">x</span><span class="p">.</span><span class="n">b</span><span class="p">));</span>
+<span class="p">}</span>
+<span class="kt">float4</span><span class="w"> </span><span class="n">main</span><span class="p">(</span><span class="n">PS_INPUT</span><span class="w"> </span><span class="n">input</span><span class="p">)</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="nd">SV_Target</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="kt">float4</span><span class="w"> </span><span class="n">tex_col</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">texture0</span><span class="p">.</span><span class="n">Sample</span><span class="p">(</span><span class="n">sampler0</span><span class="p">,</span><span class="w"> </span><span class="n">input</span><span class="p">.</span><span class="n">uv</span><span class="p">);</span>
+<span class="w">  </span><span class="kt">float4</span><span class="w"> </span><span class="n">out_col</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">input</span><span class="p">.</span><span class="n">col</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="kt">float4</span><span class="p">(</span><span class="n">LinearToSRGB3</span><span class="p">(</span><span class="n">tex_col</span><span class="p">.</span><span class="n">rgb</span><span class="p">),</span><span class="w"> </span><span class="n">tex_col</span><span class="p">.</span><span class="n">a</span><span class="p">);</span>
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="n">out_col</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>等 ImGui 渲染完成后，将 sRGB 颜色转到 Linear 空间，同时 Blit 到 Back Buffer（sRGB RTV）。</p>
+<div class="highlight"><pre><span></span><code><span class="kt">void</span><span class="w"> </span><span class="nf">GameEditor::DrawImGuiRenderGraph</span><span class="p">(</span><span class="n">GfxDevice</span><span class="o">*</span><span class="w"> </span><span class="n">device</span><span class="p">,</span><span class="w"> </span><span class="kt">int32_t</span><span class="w"> </span><span class="n">renderTargetId</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">auto</span><span class="w"> </span><span class="n">builder</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">m_ImGuiRenderGraph</span><span class="o">-&gt;</span><span class="n">AddPass</span><span class="p">(</span><span class="s">&quot;DrawImGui&quot;</span><span class="p">);</span>
+
+<span class="w">    </span><span class="n">GfxRenderTextureDesc</span><span class="w"> </span><span class="n">desc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">device</span><span class="o">-&gt;</span><span class="n">GetBackBuffer</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">GetDesc</span><span class="p">();</span>
+<span class="w">    </span><span class="n">desc</span><span class="p">.</span><span class="n">Format</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">m_ImGuiRtvFormat</span><span class="p">;</span>
+
+<span class="w">    </span><span class="n">builder</span><span class="p">.</span><span class="n">CreateTransientTexture</span><span class="p">(</span><span class="n">renderTargetId</span><span class="p">,</span><span class="w"> </span><span class="n">desc</span><span class="p">);</span>
+<span class="w">    </span><span class="n">builder</span><span class="p">.</span><span class="n">SetRenderTargets</span><span class="p">(</span><span class="n">renderTargetId</span><span class="p">);</span>
+<span class="w">    </span><span class="n">builder</span><span class="p">.</span><span class="n">ClearRenderTargets</span><span class="p">(</span><span class="n">ClearFlags</span><span class="o">::</span><span class="n">Color</span><span class="p">);</span>
+
+<span class="w">    </span><span class="n">builder</span><span class="p">.</span><span class="n">SetRenderFunc</span><span class="p">([</span><span class="o">=</span><span class="p">](</span><span class="n">RenderGraphContext</span><span class="o">&amp;</span><span class="w"> </span><span class="n">context</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">ImGui</span><span class="o">::</span><span class="n">Render</span><span class="p">();</span>
+<span class="w">        </span><span class="n">ImGui_ImplDX12_RenderDrawData</span><span class="p">(</span><span class="n">ImGui</span><span class="o">::</span><span class="n">GetDrawData</span><span class="p">(),</span><span class="w"> </span><span class="n">context</span><span class="p">.</span><span class="n">GetD3D12GraphicsCommandList</span><span class="p">());</span>
+<span class="w">    </span><span class="p">});</span>
+<span class="p">}</span>
+
+<span class="kt">void</span><span class="w"> </span><span class="nf">GameEditor::BlitImGuiToBackBuffer</span><span class="p">(</span><span class="n">GfxDevice</span><span class="o">*</span><span class="w"> </span><span class="n">device</span><span class="p">,</span><span class="w"> </span><span class="kt">int32_t</span><span class="w"> </span><span class="n">srcTextureId</span><span class="p">,</span><span class="w"> </span><span class="kt">int32_t</span><span class="w"> </span><span class="n">backBufferId</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">auto</span><span class="w"> </span><span class="n">builder</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">m_ImGuiRenderGraph</span><span class="o">-&gt;</span><span class="n">AddPass</span><span class="p">(</span><span class="s">&quot;BlitImGuiToBackBuffer&quot;</span><span class="p">);</span>
+
+<span class="w">    </span><span class="n">builder</span><span class="p">.</span><span class="n">ImportTexture</span><span class="p">(</span><span class="n">backBufferId</span><span class="p">,</span><span class="w"> </span><span class="n">device</span><span class="o">-&gt;</span><span class="n">GetBackBuffer</span><span class="p">());</span>
+<span class="w">    </span><span class="n">builder</span><span class="p">.</span><span class="n">SetRenderTargets</span><span class="p">(</span><span class="n">backBufferId</span><span class="p">);</span>
+
+<span class="w">    </span><span class="n">TextureHandle</span><span class="w"> </span><span class="n">srcTexture</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">builder</span><span class="p">.</span><span class="n">ReadTexture</span><span class="p">(</span><span class="n">srcTextureId</span><span class="p">,</span><span class="w"> </span><span class="n">ReadFlags</span><span class="o">::</span><span class="n">PixelShader</span><span class="p">);</span>
+
+<span class="w">    </span><span class="n">builder</span><span class="p">.</span><span class="n">SetRenderFunc</span><span class="p">([</span><span class="o">=</span><span class="p">](</span><span class="n">RenderGraphContext</span><span class="o">&amp;</span><span class="w"> </span><span class="n">context</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">m_BlitImGuiMaterial</span><span class="o">-&gt;</span><span class="n">SetTexture</span><span class="p">(</span><span class="s">&quot;_SrcTex&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">srcTexture</span><span class="p">.</span><span class="n">Get</span><span class="p">());</span>
+<span class="w">        </span><span class="n">context</span><span class="p">.</span><span class="n">DrawMesh</span><span class="p">(</span><span class="n">GetFullScreenTriangleMesh</span><span class="p">(),</span><span class="w"> </span><span class="n">m_BlitImGuiMaterial</span><span class="p">.</span><span class="n">get</span><span class="p">());</span>
+<span class="w">    </span><span class="p">});</span>
+<span class="p">}</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="kt">float4</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">_SrcTex</span><span class="p">.</span><span class="n">Sample</span><span class="p">(</span><span class="n">sampler_SrcTex</span><span class="p">,</span><span class="w"> </span><span class="n">input</span><span class="p">.</span><span class="n">uv</span><span class="p">);</span>
+
+<span class="cp">#ifdef MARCH_COLORSPACE_GAMMA</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">c</span><span class="p">;</span>
+<span class="cp">#else</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">SRGBToLinear</span><span class="p">(</span><span class="n">c</span><span class="p">);</span>
+<span class="cp">#endif</span>
+</code></pre></div>
+<div class="footnote">
+<hr />
+<ol>
+<li id="fn:1">
+<p><a href="https://en.wikipedia.org/wiki/Gamma_correction">Gamma correction - Wikipedia</a>&#160;<a class="footnote-backref" href="#fnref:1" title="Jump back to footnote 1 in the text">&#8617;</a></p>
+</li>
+<li id="fn:2">
+<p><a href="https://learn.microsoft.com/en-us/windows/win32/direct3ddxgi/converting-data-color-space#color-accuracy">Converting data for the color space - Win32 apps | Microsoft Learn</a>&#160;<a class="footnote-backref" href="#fnref:2" title="Jump back to footnote 2 in the text">&#8617;</a></p>
+</li>
+<li id="fn:3">
+<p><a href="https://renderdoc.org/tips/12">Tip #12 - Linear/Gamma display of textures (renderdoc.org)</a>&#160;<a class="footnote-backref" href="#fnref:3" title="Jump back to footnote 3 in the text">&#8617;</a></p>
+</li>
+<li id="fn:4">
+<p><a href="https://docs.unity3d.com/2022.3/Documentation/Manual/LinearRendering-LinearOrGammaWorkflow.html">Unity - Manual: Linear or gamma workflow (unity3d.com)</a>&#160;<a class="footnote-backref" href="#fnref:4" title="Jump back to footnote 4 in the text">&#8617;</a></p>
+</li>
+<li id="fn:5">
+<p><a href="https://github.com/ocornut/imgui/issues/578">sRGB and linear color spaces · Issue #578 · ocornut/imgui (github.com)</a>&#160;<a class="footnote-backref" href="#fnref:5" title="Jump back to footnote 5 in the text">&#8617;</a></p>
+</li>
+</ol>
+</div><hr />
