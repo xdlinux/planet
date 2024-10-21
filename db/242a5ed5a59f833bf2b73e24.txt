@@ -12,6 +12,15 @@
 <li>
 <a href="https://blog.lsy223622.com/archives/41/#content-%E5%A5%BD%E5%90%83%E5%A4%9A%E5%90%83">好吃多吃</a>
 </li>
+<li>
+<a href="https://blog.lsy223622.com/archives/41/#content-%E8%AF%84%E4%BB%B7">评价：</a>
+</li>
+<li>
+<a href="https://blog.lsy223622.com/archives/41/#content-%E5%8F%AF%E4%BB%A5%E5%90%83%E4%B8%80%E6%AC%A1">可以吃一次</a>
+</li>
+<li>
+<a href="https://blog.lsy223622.com/archives/41/#content-%E5%88%AB%E5%90%83">别吃</a>
+</li>
 </ul>
 </li>
 <li>
@@ -34,7 +43,7 @@
 </ul>
 <h2><a id="content-好吃多吃" href="https://blog.lsy223622.com/archives/41/#content-%E5%A5%BD%E5%90%83%E5%A4%9A%E5%90%83" class="heading-permalink" aria-hidden="true" title="Permalink"></a>好吃多吃</h2>
 <details>
-<summary>济州家韩式自助烤肉（性价比高的自助烤肉选这家）</summary>
+<summary>济州家韩式自助烤肉（性价比高的纯烤肉自助）</summary>
 <ul>
 <li>大众点评链接：<a rel="noopener noreferrer" href="https://m.dianping.com/shop/G8OTE7Fl4jhtOkjg">【济州家韩式自助烤肉(丈八三路店)】</a>
 </li>
@@ -53,7 +62,7 @@
 </ul>
 </details>
 <details>
-<summary>谷町·烤肉自助（档次高一些的自助烤肉选这家）</summary>
+<summary>谷町·烤肉自助（档次高一些的纯烤肉自助）</summary>
 <ul>
 <li>大众点评链接：<a rel="noopener noreferrer" href="https://m.dianping.com/shop/E8vFPX9RqX055C08">【谷町·烤肉自助(朱雀门店)】</a>
 </li>
@@ -94,11 +103,11 @@
 </ul>
 </details>
 <details>
-<summary>佛伦萨·古典火炉披萨（感觉比必某客好吃）</summary>
+<summary>佛伦萨·古典火炉披萨（很有特色的披萨店）</summary>
 <ul>
 <li>大众点评链接：<a rel="noopener noreferrer" href="https://m.dianping.com/shop/l15wYqJN9Qcad2ye">【佛伦萨·古典火炉披萨(高新店)】</a>
 </li>
-<li>价格：人均几十到一百左右</li>
+<li>价格：人均七八十到一百左右</li>
 <li>评价：
 <ul>
 <li>在西安也是连锁店，这家离学校相对来说近一点，只去过这家。</li>
@@ -110,11 +119,11 @@
 </ul>
 </details>
 <details>
-<summary>acquolina·阿果里呐意大利比萨店（披萨性价比很高）</summary>
+<summary>acquolina·阿果里呐意大利比萨店（比较正宗的高性价比披萨店）</summary>
 <ul>
 <li>大众点评链接：<a rel="noopener noreferrer" href="https://m.dianping.com/shop/iU4E8I0xf9UKA611">【acquolina·阿果里呐意大利比萨店(紫薇尚层店)】</a>
 </li>
-<li>价格：人均几十</li>
+<li>价格：人均五六十</li>
 <li>评价：
 <ul>
 <li>意大利人开的一家小店，老板看起来确实是外国人，中文会但是会得不多。</li>
@@ -129,26 +138,215 @@
 </ul>
 </details>
 <details>
-<summary>魏客Channel We Coffee（好吃不贵的西餐厅~）</summary>
+<summary>魏客Channel We Coffee（好吃不贵的西餐厅）</summary>
 <ul>
 <li>大众点评链接：<a rel="noopener noreferrer" href="https://m.dianping.com/shop/k5Ph1sUiuz2bI0QL">【魏客Channel We Coffee】</a>
 </li>
-<li>价格：人均几十</li>
+<li>价格：人均七八十</li>
 <li>评价：
 <ul>
 <li>好像西安就一家，但应该也是魏家的一个牌子。</li>
 <li>店在绿地缤纷荟/益田假日里的附近，地铁丈八一路站出来就是。</li>
-<li>和朋友一起去吃过一次，首先是感觉点的几样东西都蛮好吃的。</li>
-<li>比较有印象的是它的那个双椒鸡乌冬面，味道和口感都真的有点惊艳，可以说是融合得特别成功的一个菜。</li>
-<li>吃得很饱（我胃口真蛮大的），结账一看，两个人才一百三十块，性价比很不错，远远超过我对西安的西餐厅的预期。</li>
+<li>吃了好几次，感觉点的每样东西都蛮好吃的。</li>
+<li>第一次吃的时候比较有印象的是它的双椒鸡乌冬面，味道和口感都真的有点惊艳，可以说是融合得很好的一个菜。</li>
+<li>汉堡、烤肉、沙拉类的也都是撅撅子，特别好吃。</li>
+<li>吃得很饱（我胃口真蛮大的），两个人人均一般都是几十，唯一一次上百吃撑了还打包了一半回来。性价比很不错，远远超过我对西安的西餐厅的预期。</li>
 <li>这家店排队的人超级多，之前和舍友晚上七点这样去，门口等满了人，问了说是九点都排不上，到时候厨师都要下班了，于是那次放弃。</li>
 <li>所以就是说最好工作日中午去，或者晚上早点去，周末节假日的话自己看着办吧😎。</li>
 </ul>
 </li>
 </ul>
 </details>
+<details>
+<summary>魏斯理汉堡（非常好吃而且性价比高的美式汉堡）</summary>
+<ul>
+<li>大众点评链接：<a rel="noopener noreferrer" href="https://m.dianping.com/shop/H3N6wJIxtaHnuhDC">魏斯理汉堡</a>
+</li>
+<li>价格：人均四五十</li>
+<li>评价：
+<ul>
+<li>也是魏家的牌子，西安有好几家，算是连锁洋快餐店定位。</li>
+<li>我去过几次红星美凯龙这家，一般人满，可能稍微等一会儿。</li>
+<li>和魏客相比价格更低，品种较少，集中在汉堡、披萨，沙拉等品类。</li>
+<li>汉堡是必点的，肉饼鲜嫩多汁，配料丰富，面包蓬松油亮，非常厚实的一个。可以让服务员切成两半两个人分享，不然食量一般的人吃一整个就饱了，尝不了别的东西了。</li>
+<li>汉堡套餐都会配一些薯角，可以说是我吃过最好吃的薯角之一。有一次去吃的时候，旁边的一个人说他是魏斯理这款薯角的进口商，来视察市场情况，它是从美国进口的。真假不论，反正这个薯角的口感确实非常好，汉堡配的不够吃可以再单点。</li>
+<li>点之前别把它的分量当作肯麦那种小汉堡，两个人先点两三份不够再加，真的很容易饱。</li>
+</ul>
+</li>
+</ul>
+</details>
+<details>
+<summary>越美小馆・PHO 越美（适合炎热夏天的清爽越南菜）</summary>
+<ul>
+<li>大众点评链接：<a rel="noopener noreferrer" href="https://m.dianping.com/shop/k1Y56M6JegaFmeDl">越美小馆・PHO 越美 (迈科中心店)</a>
+</li>
+<li>价格：人均六七十</li>
+<li>评价：
+<ul>
+<li>西安有好几家，丈八一路站附近就有。</li>
+<li>不算是很热门的店，所以一般不用担心人很多。</li>
+<li>价格还行，分量不算大。</li>
+<li>酸甜的东南亚口味，非常适合没什么胃口的炎热天气。</li>
+<li>菜品种类不多，两三个人基本上就能一次品尝到它的所有口味，但个人觉得是隔段时间去一次不大会腻的类型。</li>
+</ul>
+</li>
+</ul>
+</details>
+<details>
+<summary>迷你椰・泰式大排档（高性价比泰国菜）</summary>
+<ul>
+<li>大众点评链接：<a rel="noopener noreferrer" href="https://m.dianping.com/shop/G4jzuJo1Y878XH8v">迷你椰・泰式大排档 (MOMOPARK 店)</a>
+</li>
+<li>价格：人均六七十</li>
+<li>评价：
+<ul>
+<li>原来在长安万科吃的，现在再搜只剩 momopark 店了。</li>
+<li>不算是很热门的店，所以一般不用担心人很多。</li>
+<li>价格比别的泰国菜店便宜蛮多的，几十块买不了吃亏上当。大家大多是差不多的预制水平，什么水平就该卖什么价格，不像某些店东西一般价格倒是很高档。</li>
+<li>菜分量不算大，但毕竟价格也不算高，东西给得还算实在，多点几份就吃饱了。</li>
+<li>口味我觉得是没啥问题的，正不正宗不知道，好吃就行。</li>
+</ul>
+</li>
+</ul>
+</details>
+<details>
+<summary>罗福记（适合聚餐的高性价比川菜店）</summary>
+<ul>
+<li>大众点评链接：<a rel="noopener noreferrer" href="https://m.dianping.com/shop/k6IOkuL5pFB3Qdgm">罗福记 (师大店)</a>
+</li>
+<li>价格：人均五六十</li>
+<li>评价：
+<ul>
+<li>陕师大正门对面长安万科旁边，店蛮大的。</li>
+<li>生意不错，大小桌都有。吃过一次两个人的，也吃过一次二十个人的，都能吃得很好。。</li>
+<li>价格合理，菜量很大，所以相对来说适合多人吃。</li>
+<li>味道都挺好的，四川朋友吃了也说可以。</li>
+</ul>
+</li>
+</ul>
+</details>
+<details>
+<summary>一绪寿喜烧（我觉得比较好吃的牛肉寿喜烧自助）</summary>
+<ul>
+<li>大众点评链接：<a rel="noopener noreferrer" href="https://m.dianping.com/shop/l8dew57UHLyVSg3B">一绪に寿喜烧 (大融城店)</a>
+</li>
+<li>价格：人均不到两百</li>
+<li>评价：
+<ul>
+<li>位置在城北的行政中心站附近，对我这种南郊村民来说有点远，但至少可以全程地铁过去。</li>
+<li>这种寿喜烧自助价格都这么贵，肉质正经的至少也要一百五六十左右。大概是为了定位高端吧，不过肉的档次似乎确实比一般的烤肉自助高一些。</li>
+<li>肉的种类还算多，别的小吃类数量也可以。</li>
+<li>肉切得比较薄，我是喜欢薄一些的，口感比较嫩。</li>
+</ul>
+</li>
+</ul>
+</details>
+<details>
+<summary>温野菜涮涮锅（比较高档的牛肉寿喜烧自助）</summary>
+<ul>
+<li>大众点评链接：<a rel="noopener noreferrer" href="https://m.dianping.com/shop/FwVj1KQrfbpxjqak">温野菜涮涮锅 (西安大都荟店)</a>
+</li>
+<li>价格：人均两百上下</li>
+<li>评价：
+<ul>
+<li>西安有两家，我只去过这家离我更近的。</li>
+<li>比一绪更贵，中间档次的套餐两百不到一点，最高档的两百多。</li>
+<li>肉的档次看起来似乎比一绪更高一些，不是很记得吃起来能不能感觉出区别。</li>
+<li>它家肉切得比一绪厚，喜欢厚实口感的应该会更喜欢温野菜。</li>
+<li>小吃类品种相对一绪来说没那么多，但是口味还可以，看起来也还比较精致。肉的品种好像也略少一些。</li>
+<li>海鲜给得比较抠门，最高档两百多的套餐也只有一人一份限量的刺身拼盘。不吃刺身的话每份可以换成六只鲍鱼或者六只虾或者六个扇贝，这种东西都不怎么值钱的。</li>
+<li>店里环境看起来比一绪高级一些。</li>
+</ul>
+</li>
+</ul>
+</details>
+<details>
+<summary>悦得闲广式点心茶楼（好吃不算贵的广式点心）</summary>
+<ul>
+<li>大众点评链接：<a rel="noopener noreferrer" href="https://m.dianping.com/shop/G7Xz5WkIPbTO4fdA">悦得闲广式点心茶楼 (西安荟聚店)</a>
+</li>
+<li>价格：人均一百不到</li>
+<li>评价：
+<ul>
+<li>西安有两家，我吃的是更近但要打车去的荟聚店。还有一家大悦城店算是可以地铁过去。</li>
+<li>荟聚商场很新，人一直很多。悦得闲生意也蛮好的，去的时候大概率有人在排队。</li>
+<li>人均一百不到不知道会不会被老广嫌贵，不过我觉得在这个地方吃到比较正宗的广式点心，这个价格还是比较能接受的。</li>
+<li>各种东西都蛮好吃的，和我去广州时候吃的点都德差不多。</li>
+<li>茶位费非默认强制收，这点好评。在广州吃这种点心店基本上都是默认收茶位费，约等于必须要交。在外地还是入乡随俗比较好，而且不点茶服务员也会来倒水，不至于没东西喝。</li>
+</ul>
+</li>
+</ul>
+</details>
+<details>
+<summary>张伟铜锅羊肉（群友常去吃的涮肉）</summary>
+<ul>
+<li>大众点评链接：<a rel="noopener noreferrer" href="https://m.dianping.com/shop/l6AKWmtHfZlWBWJ4">张伟铜锅羊肉 (郭杜店)</a>
+</li>
+<li>价格：人均几十</li>
+<li>评价：
+<ul>
+<li>连锁店，西安有很多家，这家离学校最近。</li>
+<li>群友经常去吃，在同学间应该是比较知名的。</li>
+<li>店里吃法很简单，一桌一个锅，几种肉按斤卖，还有冰箱里几种配菜自取按盘子算钱。</li>
+<li>肉都是冻肉现切成肉卷，没啥科技含量，口感味道都很纯粹，非常好吃。</li>
+<li>肉价基本上都是五六十一斤，应该还是可以的。</li>
+</ul>
+</li>
+</ul>
+</details>
+<details>
+<summary>金龙咖喱（想吃咖喱饭选这家）</summary>
+<ul>
+<li>大众点评链接：<a rel="noopener noreferrer" href="https://m.dianping.com/shop/H6IWPQYNSxXGEwrk">金龙咖喱 (小寨店)</a>
+</li>
+<li>价格：人均四五十</li>
+<li>评价：
+<ul>
+<li>西安有两家，我去过的是小寨这家。</li>
+<li>比较热门的店，店面也比较小，饭点容易排队。</li>
+<li>店里主要就是卖咖喱饭，特色是咖喱比较浓郁。</li>
+<li>一份咖喱饭三四十似乎不算很便宜，但同样是咖喱饭，金龙比连锁的池奈好太多了，相比之下也算是价格合理。</li>
+</ul>
+</li>
+</ul>
+</details>
+<details>
+<summary></summary>
+<ul>
+<li>大众点评链接：<a rel="noopener noreferrer" href="https://m.dianping.com/shop/"></a>
+</li>
+<li>价格：</li>
+<li>
+<h2><a id="content-评价" href="https://blog.lsy223622.com/archives/41/#content-%E8%AF%84%E4%BB%B7" class="heading-permalink" aria-hidden="true" title="Permalink"></a>评价：</h2>
+</li>
+</ul>
+</details>
+<ul>
+<li>莎拉拉</li>
+<li>享遇</li>
+</ul>
+<h2><a id="content-可以吃一次" href="https://blog.lsy223622.com/archives/41/#content-%E5%8F%AF%E4%BB%A5%E5%90%83%E4%B8%80%E6%AC%A1" class="heading-permalink" aria-hidden="true" title="Permalink"></a>可以吃一次</h2>
+<ul>
+<li>比格披萨</li>
+<li>手岛</li>
+<li>仙隐小鹿</li>
+<li>丼坊</li>
+<li>皇城老灶</li>
+<li>nana</li>
+<li>西贝</li>
+<li>米村拌饭</li>
+<li>池奈</li>
+<li>买买提</li>
+</ul>
+<h2><a id="content-别吃" href="https://blog.lsy223622.com/archives/41/#content-%E5%88%AB%E5%90%83" class="heading-permalink" aria-hidden="true" title="Permalink"></a>别吃</h2>
+<ul>
+<li>上下九</li>
+<li>泰食獸</li>
+<li>冰煮羊</li>
+</ul>
 <h1><a id="content-更新记录" href="https://blog.lsy223622.com/archives/41/#content-%E6%9B%B4%E6%96%B0%E8%AE%B0%E5%BD%95" class="heading-permalink" aria-hidden="true" title="Permalink"></a>更新记录</h1>
 <ul>
 <li>2024-05-20 第一次发布</li>
+<li>2024-10-21 增加一堆</li>
 </ul>
 
