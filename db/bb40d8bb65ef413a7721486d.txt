@@ -3,4 +3,4 @@
 
 
 
-<figure class="wp-block-image size-large"><img decoding="async" width="800" height="800" src="https://raay.xyz/wp-content/uploads/2023/11/img_1534-1.jpg" class="wp-image-241" srcset="https://raay.xyz/wp-content/uploads/2023/11/img_1534-1.jpg 800w, https://raay.xyz/wp-content/uploads/2023/11/img_1534-1-300x300.jpg 300w, https://raay.xyz/wp-content/uploads/2023/11/img_1534-1-150x150.jpg 150w, https://raay.xyz/wp-content/uploads/2023/11/img_1534-1-768x768.jpg 768w" sizes="(max-width: 800px) 100vw, 800px" /></figure>
+<figure class="wp-block-image size-large"><img decoding="async" loading="lazy" width="800" height="800" src="https://raay.xyz/wp-content/uploads/2023/11/img_1534-1.jpg" class="wp-image-241" srcset="https://raay.xyz/wp-content/uploads/2023/11/img_1534-1.jpg 800w, https://raay.xyz/wp-content/uploads/2023/11/img_1534-1-300x300.jpg 300w, https://raay.xyz/wp-content/uploads/2023/11/img_1534-1-150x150.jpg 150w, https://raay.xyz/wp-content/uploads/2023/11/img_1534-1-768x768.jpg 768w" sizes="(max-width: 800px) 100vw, 800px" /></figure>
