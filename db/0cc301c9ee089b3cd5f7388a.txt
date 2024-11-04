@@ -1,7 +1,7 @@
 <h1 id="Scene-View-无限网格">Scene View 无限网格<a class="headerlink" href="#Scene-View-无限网格" title="Permanent link">&para;</a></h1>
+<p>大部分 DCC 都有无限网格，帮助我们确定物体所处的空间位置。我也给自己的引擎加上了这个功能。</p>
 <!-- more -->
 
-<p>大部分 DCC 都有无限网格，帮助我们确定物体所处的空间位置。我也给自己的引擎加上了这个功能。</p>
 <p><img alt="红色是 X 轴，蓝色是 Z 轴" src="../../../obsidian-vault/attachments/Pasted%20image%2020241014094522.png" /></p>
 <p><img alt="根据距离自动分层" src="../../../obsidian-vault/attachments/Pasted%20image%2020241014094627.png" /></p>
 <h2 id="思路">思路<a class="headerlink" href="#思路" title="Permanent link">&para;</a></h2>
@@ -9,8 +9,8 @@
 <p><img alt="Unity 的实现" src="../../../obsidian-vault/attachments/Pasted%20image%2020241014100816.png" /></p>
 <p>Unity 的实现感觉有点麻烦，我还是用屏幕空间了。</p>
 <h2 id="重建世界坐标">重建世界坐标<a class="headerlink" href="#重建世界坐标" title="Permanent link">&para;</a></h2>
-<p>之前我写过 <a href="../depth-reconstruct-world-position/">深度重建世界坐标</a> 的方法，但这次深度是未知的，不能直接用。我看网上的文章都是近平面算一个点，远平面算一个点，计算连线和 XOZ 平面的交点。</p>
-<p>其实深度可以直接算出来。因为 XOZ 平面上的点 <code>positionWS.y == 0</code>，带入 <a href="../depth-reconstruct-world-position/">深度重建世界坐标</a> 逆矩阵法的推导中，由公式</p>
+<p>之前我写过 <a href="../../../eaaf-becf-cbcb/">深度重建世界坐标</a> 的方法，但这次深度是未知的，不能直接用。我看网上的文章都是近平面算一个点，远平面算一个点，计算连线和 XOZ 平面的交点。</p>
+<p>其实深度可以直接算出来。因为 XOZ 平面上的点 <code>positionWS.y == 0</code>，带入 <a href="../../../eaaf-becf-cbcb/">深度重建世界坐标</a> 逆矩阵法的推导中，由公式</p>
 <div class="highlight"><pre><span></span><code><span class="n">positionWS</span><span class="p">.</span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">dot</span><span class="p">(</span><span class="n">MatrixInvVP</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="w"> </span><span class="n">positionCS</span><span class="p">.</span><span class="n">w</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">positionNDC</span><span class="p">);</span>
 </code></pre></div>
 <p>得到深度</p>
@@ -66,15 +66,15 @@
 <h2 id="实现">实现<a class="headerlink" href="#实现" title="Permanent link">&para;</a></h2>
 <ul>
 <li>代码是用我自制的 DX12 ShaderLab 编写的，和 Unity 的稍有不同。</li>
-<li>Vertex Shader 参考 <a href="../unity-srp-fullscreen-blit/">Unity SRP 全屏 Blit 原理</a> 。</li>
+<li>Vertex Shader 参考我之前写的 <a href="../../../eahf-beee-cbbh/">Blit</a> 。</li>
 </ul>
 <div class="highlight"><pre><span></span><code><span class="n">Shader</span><span class="w"> </span><span class="s">&quot;SceneViewGrid&quot;</span>
 <span class="p">{</span>
 <span class="w">    </span><span class="n">Properties</span>
 <span class="w">    </span><span class="p">{</span>
-<span class="w">        </span><span class="n">_XAxisColor</span><span class="p">(</span><span class="s">&quot;X Axis Color&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">Color</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mo">0</span><span class="p">,</span><span class="w"> </span><span class="mo">0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.5</span><span class="p">)</span>
-<span class="w">        </span><span class="n">_ZAxisColor</span><span class="p">(</span><span class="s">&quot;Z Axis Color&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">Color</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="mo">0</span><span class="p">,</span><span class="w"> </span><span class="mo">0</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mf">0.5</span><span class="p">)</span>
-<span class="w">        </span><span class="n">_LineColor</span><span class="p">(</span><span class="s">&quot;Line Color&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">Color</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span><span class="w"> </span><span class="mf">0.5</span><span class="p">,</span><span class="w"> </span><span class="mf">0.5</span><span class="p">,</span><span class="w"> </span><span class="mf">0.5</span><span class="p">)</span>
+<span class="w">        </span><span class="n">_XAxisColor</span><span class="p">(</span><span class="s">&quot;X Axis Color&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">Color</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.5</span><span class="p">)</span>
+<span class="w">        </span><span class="n">_ZAxisColor</span><span class="p">(</span><span class="s">&quot;Z Axis Color&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">Color</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.5</span><span class="p">,</span><span class="w"> </span><span class="mf">0.5</span><span class="p">)</span>
+<span class="w">        </span><span class="n">_LineColor</span><span class="p">(</span><span class="s">&quot;Line Color&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">Color</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="mf">0.3</span><span class="p">,</span><span class="w"> </span><span class="mf">0.3</span><span class="p">,</span><span class="w"> </span><span class="mf">0.3</span><span class="p">,</span><span class="w"> </span><span class="mf">0.4</span><span class="p">)</span>
 <span class="w">        </span><span class="p">[</span><span class="n">Range</span><span class="p">(</span><span class="mo">0</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">)]</span><span class="w"> </span><span class="n">_Antialiasing</span><span class="p">(</span><span class="s">&quot;Anti-aliasing&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">Float</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.5</span>
 <span class="w">        </span><span class="p">[</span><span class="n">Range</span><span class="p">(</span><span class="mo">0</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">)]</span><span class="w"> </span><span class="n">_FadeOut</span><span class="p">(</span><span class="s">&quot;Fade Out&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">Float</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.8</span>
 <span class="w">    </span><span class="p">}</span>
@@ -87,15 +87,14 @@
 <span class="w">        </span><span class="n">ZTest</span><span class="w"> </span><span class="n">Less</span>
 <span class="w">        </span><span class="n">ZWrite</span><span class="w"> </span><span class="n">Off</span>
 
-<span class="w">        </span><span class="n">Blend</span><span class="w"> </span><span class="mo">0</span><span class="w"> </span><span class="n">SrcAlpha</span><span class="w"> </span><span class="n">OneMinusSrcAlpha</span><span class="p">,</span><span class="w"> </span><span class="n">Zero</span><span class="w"> </span><span class="n">One</span>
+<span class="w">        </span><span class="n">Blend</span><span class="w"> </span><span class="n">SrcAlpha</span><span class="w"> </span><span class="n">OneMinusSrcAlpha</span><span class="p">,</span><span class="w"> </span><span class="n">Zero</span><span class="w"> </span><span class="n">One</span>
 
 <span class="w">        </span><span class="n">HLSLPROGRAM</span>
 <span class="w">        </span><span class="cp">#pragma target 6.0</span>
 <span class="w">        </span><span class="cp">#pragma vs vert</span>
 <span class="w">        </span><span class="cp">#pragma ps frag</span>
 
-<span class="w">        </span><span class="cp">#include &quot;Common.hlsl&quot;</span>
-<span class="w">        </span><span class="cp">#include &quot;Lighting.hlsl&quot;</span>
+<span class="w">        </span><span class="cp">#include &quot;Includes/Common.hlsl&quot;</span>
 
 <span class="w">        </span><span class="k">cbuffer</span><span class="w"> </span><span class="n">cbMaterial</span>
 <span class="w">        </span><span class="p">{</span>
@@ -104,21 +103,6 @@
 <span class="w">            </span><span class="kt">float4</span><span class="w"> </span><span class="n">_LineColor</span><span class="p">;</span>
 <span class="w">            </span><span class="kt">float</span><span class="w"> </span><span class="n">_Antialiasing</span><span class="p">;</span>
 <span class="w">            </span><span class="kt">float</span><span class="w"> </span><span class="n">_FadeOut</span><span class="p">;</span>
-<span class="w">        </span><span class="p">};</span>
-
-<span class="w">        </span><span class="k">cbuffer</span><span class="w"> </span><span class="n">cbPass</span>
-<span class="w">        </span><span class="p">{</span>
-<span class="w">            </span><span class="kt">float4x4</span><span class="w"> </span><span class="n">_MatrixView</span><span class="p">;</span>
-<span class="w">            </span><span class="kt">float4x4</span><span class="w"> </span><span class="n">_MatrixProjection</span><span class="p">;</span>
-<span class="w">            </span><span class="kt">float4x4</span><span class="w"> </span><span class="n">_MatrixViewProjection</span><span class="p">;</span>
-<span class="w">            </span><span class="kt">float4x4</span><span class="w"> </span><span class="n">_MatrixInvView</span><span class="p">;</span>
-<span class="w">            </span><span class="kt">float4x4</span><span class="w"> </span><span class="n">_MatrixInvProjection</span><span class="p">;</span>
-<span class="w">            </span><span class="kt">float4x4</span><span class="w"> </span><span class="n">_MatrixInvViewProjection</span><span class="p">;</span>
-<span class="w">            </span><span class="kt">float4</span><span class="w"> </span><span class="n">_Time</span><span class="p">;</span>
-<span class="w">            </span><span class="kt">float4</span><span class="w"> </span><span class="n">_CameraPositionWS</span><span class="p">;</span>
-
-<span class="w">            </span><span class="n">LightData</span><span class="w"> </span><span class="n">_LightData</span><span class="p">[</span><span class="n">MAX_LIGHT_COUNT</span><span class="p">];</span>
-<span class="w">            </span><span class="kt">int</span><span class="w"> </span><span class="n">_LightCount</span><span class="p">;</span>
 <span class="w">        </span><span class="p">};</span>
 
 <span class="w">        </span><span class="k">struct</span><span class="w"> </span><span class="n">Varyings</span>

@@ -1,21 +1,8 @@
 <h1 id="ImGui-适配高-DPI-显示器">ImGui 适配高 DPI 显示器<a class="headerlink" href="#ImGui-适配高-DPI-显示器" title="Permanent link">&para;</a></h1>
+<p>为了解决高 <a href="../../../eafd-bebe-cbba/">DPI</a> 显示器下 ImGui 字体模糊的问题，ImGui 提供了 <code>ImGui_ImplWin32_EnableDpiAwareness()</code>，但是我这里调用它以后显示有问题，所以我只能用 <code>SetProcessDpiAwarenessContext(DPI_AWARENESS_CONTEXT_PER_MONITOR_AWARE_V2)</code> 自己处理。</p>
 <!-- more -->
 
-<p>解决高 DPI 显示器下 ImGui 字体模糊的问题。</p>
-<h2 id="DPI">DPI<a class="headerlink" href="#DPI" title="Permanent link">&para;</a></h2>
-<p>DPI 全称 Dots per inch，即每英寸的点数，对于显示器来说就是每英寸的像素数量。</p>
-<h2 id="Display-Scale-Factor">Display Scale Factor<a class="headerlink" href="#Display-Scale-Factor" title="Permanent link">&para;</a></h2>
-<p>早期的显示器基本都是 96 DPI 的，所以那时候的应用程序 UI 都是以 96 DPI 为标准的。现在显示器的 DPI 普遍比 96 高，这意味着同样大小的显示器，像素数量变多了。早期的应用程序放到现在的显示器上，尽管占用的像素数量和以前一样，但是显示器的像素密度大了，所以看上去应用程序的界面变小了。</p>
-<p>为了解决上面的问题，Windows 引入了一个 Display Scale Factor，一般是显示器 DPI 除以基准值 96 的结果。</p>
-<p><img alt="显示缩放" src="../../../obsidian-vault/attachments/Pasted%20image%2020240722000504.png" /></p>
-<p>Windows 会骗应用程序说 DPI 还是 96，让它以 <code>WindowSize / DisplayScaleFactor</code> 的大小绘制界面，然后 Windows 再把界面放大 <code>DisplayScaleFactor</code> 倍。但是这样会导致界面变的不清晰。</p>
-<h2 id="DPI-感知">DPI 感知<a class="headerlink" href="#DPI-感知" title="Permanent link">&para;</a></h2>
-<p>就是自己处理 DPI，不让 Windows 缩放。在应用启动时，调用 API 设置 Per-Monitor (V2) DPI Awareness。<a href="https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-setprocessdpiawarenesscontext">SetProcessDpiAwarenessContext function (winuser.h) - Win32 apps | Microsoft Learn</a>。</p>
-<div class="highlight"><pre><span></span><code><span class="n">SetProcessDpiAwarenessContext</span><span class="p">(</span><span class="n">DPI_AWARENESS_CONTEXT_PER_MONITOR_AWARE_V2</span><span class="p">);</span>
-</code></pre></div>
-<blockquote>
-<p>ImGui 提供了 <code>ImGui_ImplWin32_EnableDpiAwareness()</code>，但是我这里调用它以后显示有问题。</p>
-</blockquote>
+<h2 id="字体缩放">字体缩放<a class="headerlink" href="#字体缩放" title="Permanent link">&para;</a></h2>
 <p>利用 ImGui 的 API 可以方便地拿到缩放值（Display Scale Factor）。</p>
 <div class="highlight"><pre><span></span><code><span class="kt">float</span><span class="w"> </span><span class="n">dpiScale</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ImGui_ImplWin32_GetDpiScaleForHwnd</span><span class="p">(</span><span class="n">m_WindowHandle</span><span class="p">);</span>
 </code></pre></div>
@@ -50,6 +37,4 @@
 <p>理论上，应该再加上</p>
 <div class="highlight"><pre><span></span><code><span class="n">ImGui</span><span class="o">::</span><span class="n">GetStyle</span><span class="p">().</span><span class="n">ScaleAllSizes</span><span class="p">(</span><span class="n">dpiScale</span><span class="p">);</span>
 </code></pre></div>
-<p>但实际上，Style 里不少参数都是整数，每次 Scale 之后都会进行取整，多次 Scale 就会积累很多误差，因此我个人不推荐。</p>
-<h2 id="参考">参考<a class="headerlink" href="#参考" title="Permanent link">&para;</a></h2>
-<p><a href="https://learn.microsoft.com/en-us/windows/win32/hidpi/high-dpi-desktop-application-development-on-windows">High DPI Desktop Application Development on Windows - Win32 apps | Microsoft Learn</a></p><hr />
+<p>但实际上，Style 里不少参数都是整数，每次 Scale 之后都会进行取整，多次 Scale 就会积累很多误差，因此我个人不推荐。</p><hr />

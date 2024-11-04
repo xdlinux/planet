@@ -1,7 +1,7 @@
 <h1 id="Wireshark-抓包-HTTP-实验">Wireshark 抓包 HTTP 实验<a class="headerlink" href="#Wireshark-抓包-HTTP-实验" title="Permanent link">&para;</a></h1>
+<p>大二下，计网作业。</p>
 <!-- more -->
 
-<p>大二下，计网作业。</p>
 <h2 id="解密-HTTPS">解密 HTTPS<a class="headerlink" href="#解密-HTTPS" title="Permanent link">&para;</a></h2>
 <p>现在网站基本都用 HTTPS，HTTPS 用了 TLS 做加密，需要解密后才能看到原始的 HTTP 报文。</p>
 <p>Chrome 和 Firefox 浏览器提供了记录 TLS 密钥的功能。添加环境变量 <code>SSLKEYLOGFILE</code>，值为一个文件路径。彻底重启浏览器（任务管理器里检查），TLS 密钥相关的信息就会被保存到这个文件中。</p>

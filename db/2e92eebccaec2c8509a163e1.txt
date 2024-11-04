@@ -1,7 +1,7 @@
 <h1 id="青雀进暗杠的抽牌数期望">青雀进暗杠的抽牌数期望<a class="headerlink" href="#青雀进暗杠的抽牌数期望" title="Permanent link">&para;</a></h1>
+<p>用 <a href="https://en.wikipedia.org/wiki/Markov_chain">马尔可夫链（Markov chain）</a> 暴力计算。顺便复习一下线代。</p>
 <!-- more -->
 
-<p>用 <a href="https://en.wikipedia.org/wiki/Markov_chain">马尔可夫链（Markov chain）</a> 暴力计算。顺便复习一下线代。</p>
 <p><img alt="让我摸个鱼吧~" src="../../../obsidian-vault/attachments/qingque.jpg" /></p>
 <h2 id="起因">起因<a class="headerlink" href="#起因" title="Permanent link">&para;</a></h2>
 <p>看到这两个视频以后，心血来潮算的。</p>

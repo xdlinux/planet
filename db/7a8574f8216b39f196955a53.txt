@@ -1,7 +1,7 @@
 <h1 id="LeetCode-题目描述转-Markdown">LeetCode 题目描述转 Markdown<a class="headerlink" href="#LeetCode-题目描述转-Markdown" title="Permanent link">&para;</a></h1>
+<p>油猴脚本。代码改自 <a href="https://github.com/tonngw/leetcode-helper">https://github.com/tonngw/leetcode-helper</a>，适配了最新的 UI，并且删掉了没用的功能，主打一个能用就行。</p>
 <!-- more -->
 
-<p>油猴脚本。代码改自 <a href="https://github.com/tonngw/leetcode-helper">https://github.com/tonngw/leetcode-helper</a>，适配了最新的 UI，并且删掉了没用的功能，主打一个能用就行。</p>
 <div class="highlight"><pre><span></span><code><span class="c1">// ==UserScript==</span>
 <span class="c1">// @name         leetcode-helper</span>
 <span class="c1">// @namespace    https://github.com/stalomeow</span>

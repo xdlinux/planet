@@ -1,7 +1,7 @@
 <h1 id="复刻星穹铁道-20-梦境迷钟">复刻星穹铁道 2.0 梦境迷钟<a class="headerlink" href="#复刻星穹铁道-20-梦境迷钟" title="Permanent link">&para;</a></h1>
+<p>简单复刻，重点在图的构建和寻路上。只做了一种视角，两个关卡。</p>
 <!-- more -->
 
-<p>简单复刻，重点在图的构建和寻路上。只做了一种视角，两个关卡。</p>
 <div class="responsive-video-container">
     <iframe src="https://player.bilibili.com/player.html?aid=1250735475&bvid=BV1kJ4m1W76K&cid=1440682002&p=2&autoplay=0" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"></iframe>
 </div>

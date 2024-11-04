@@ -1,8 +1,8 @@
 <h1 id="Windows-上用-CapsLock-切换中英文">Windows 上用 CapsLock 切换中英文<a class="headerlink" href="#Windows-上用-CapsLock-切换中英文" title="Permanent link">&para;</a></h1>
-<!-- more -->
-
 <p>微软输入法切换中英文的按键选择有 Ctrl、Shift、Ctrl+Space，但它们都是其他软件常用的修饰符/快捷键，肯定没法用。后来，我用一个纯英文键盘布局和一个纯中文键盘布局，靠 Win+Space 切换，但这个快捷键按着也挺麻烦。</p>
 <p>受 MacOS 的启发，我决定改用 CapsLock 切换中英文。恰好，我平时切换大小写用的都是 Shift。CapsLock 放在那么好的位置却不用，很可惜。</p>
+<!-- more -->
+
 <h2 id="按键映射">按键映射<a class="headerlink" href="#按键映射" title="Permanent link">&para;</a></h2>
 <p>使用 PowerToys 的键盘管理器映射 CapsLock 到 Win+Space。</p>
 <h2 id="同步指示灯">同步指示灯<a class="headerlink" href="#同步指示灯" title="Permanent link">&para;</a></h2>
@@ -27,5 +27,4 @@
 </code></pre></div>
 <p>KeyboardLayoutName 就是 <a href="https://learn.microsoft.com/en-us/windows-hardware/manufacture/desktop/windows-language-pack-default-values?view=windows-11#keyboard-identifiers">Keyboard identifier</a>，简体中文对应的是 <code>"00000804"</code>。</p>
 <h3 id="设置指示灯">设置指示灯<a class="headerlink" href="#设置指示灯" title="Permanent link">&para;</a></h3>
-<p>需要引入头文件 <a href="https://learn.microsoft.com/en-us/windows/win32/api/ntddkbd/">ntddkbd.h</a>。</p>
-<p>具体的思路参考 <a href="https://stackoverflow.com/questions/72679665/is-it-possible-to-control-capslock-light-without-actual-capslocking">windows - Is it possible to control capslock light without actual capslocking? - Stack Overflow</a>。</p><hr />
+<p>需要引入头文件 <a href="https://learn.microsoft.com/en-us/windows/win32/api/ntddkbd/">ntddkbd.h</a>。具体的思路参考 <a href="https://stackoverflow.com/questions/72679665/is-it-possible-to-control-capslock-light-without-actual-capslocking">windows - Is it possible to control capslock light without actual capslocking? - Stack Overflow</a>。</p><hr />

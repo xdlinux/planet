@@ -1,7 +1,7 @@
 <h1 id="集成-RenderDoc">集成 RenderDoc<a class="headerlink" href="#集成-RenderDoc" title="Permanent link">&para;</a></h1>
+<p>实现像 Unity 一样，直接从自己程序里调起 RenderDoc 截帧的功能。参考文档：<a href="https://renderdoc.org/docs/in_application_api.html">In-application API — RenderDoc documentation</a>。</p>
 <!-- more -->
 
-<p>实现像 Unity 一样，直接从自己程序里调起 RenderDoc 截帧的功能。参考文档：<a href="https://renderdoc.org/docs/in_application_api.html">In-application API — RenderDoc documentation</a>。</p>
 <h2 id="引入头文件">引入头文件<a class="headerlink" href="#引入头文件" title="Permanent link">&para;</a></h2>
 <p>在 RenderDoc 的安装目录里，有 <code>renderdoc_app.h</code>，复制进项目即可。然后，写一个类简单封装一下。</p>
 <div class="highlight"><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">RenderDoc</span><span class="w"> </span><span class="k">final</span>

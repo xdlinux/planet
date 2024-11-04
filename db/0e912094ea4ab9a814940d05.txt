@@ -1,7 +1,7 @@
 <h1 id="仿星铁渲染Bloom">仿星铁渲染：Bloom<a class="headerlink" href="#仿星铁渲染Bloom" title="Permanent link">&para;</a></h1>
+<p>卡通渲染里 Bloom 还是挺重要的，它能对画面起到润色作用，比简单地后期调高饱和度要好看很多。</p>
 <!-- more -->
 
-<p>卡通渲染里 Bloom 还是挺重要的，它能对画面起到润色作用，比简单地后期调高饱和度要好看很多。</p>
 <p><img alt="Bloom 效果图" src="../../../obsidian-vault/attachments/bloom-toon.png" /></p>
 <h2 id="大致流程图">大致流程图<a class="headerlink" href="#大致流程图" title="Permanent link">&para;</a></h2>
 <pre class="mermaid"><code>flowchart TD

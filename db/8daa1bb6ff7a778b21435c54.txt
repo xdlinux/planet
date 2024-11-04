@@ -1,8 +1,7 @@
 <h1 id="Nuxt-3-开发避坑">Nuxt 3 开发避坑<a class="headerlink" href="#Nuxt-3-开发避坑" title="Permanent link">&para;</a></h1>
+<p>开发个人主页时用了 Nuxt 3。虽然有些坑，但它还是很好用的。文档：<a href="https://nuxt.com/docs/getting-started/introduction">https://nuxt.com/docs/getting-started/introduction</a>。</p>
 <!-- more -->
 
-<p>开发个人主页时用了 Nuxt 3。虽然有些坑，但它还是很好用的。</p>
-<p>文档：<a href="https://nuxt.com/docs/getting-started/introduction">https://nuxt.com/docs/getting-started/introduction</a>。</p>
 <h2 id="解决初始化报错">解决初始化报错<a class="headerlink" href="#解决初始化报错" title="Permanent link">&para;</a></h2>
 <p>执行初始化命令后</p>
 <div class="highlight"><pre><span></span><code>npx<span class="w"> </span>nuxi@latest<span class="w"> </span>init<span class="w"> </span>&lt;project-name&gt;
