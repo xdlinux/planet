@@ -116,7 +116,7 @@ services:
     env_file:
       - .env
     ports:
-      - 2283:3001
+      - 2283:2283
     depends_on:
       - redis
       - database
@@ -210,12 +210,12 @@ volumes:
 </ul>
 <p>20-21 行：</p>
 <pre><code class="language-yml">ports:
-  - 2283:3001
+  - 2283:2283
 </code></pre>
 <ul>
 <li>这里是外部访问端口映射设置。</li>
 <li>冒号 <code>:</code> 左边的 <code>2283</code> 是外部访问端口，可以自己修改，之后用 <code>http://ip:2283</code> 访问 WebUI。</li>
-<li>冒号 <code>:</code> 右边的 <code>3001</code> 是容器内部端口，不能修改。</li>
+<li>冒号 <code>:</code> 右边的 <code>2283</code> 是容器内部端口，不能修改。</li>
 </ul>
 <p>27-36 行：</p>
 <pre><code class="language-yml">immich-machine-learning:
@@ -293,7 +293,7 @@ volumes:
 </li>
 </ul>
 <h2><a id="content-编写-env" href="https://blog.lsy223622.com/archives/65/#content-%E7%BC%96%E5%86%99-env" class="heading-permalink" aria-hidden="true" title="Permalink"></a>编写 .env</h2>
-<p>官方 <code>.env</code> 模板下载地址：<code>https://github.com/immich-app/immich/releases/latest/download/example.env</code></p>
+<p>官方 <code>.env</code> 模板下载地址：<code>https://github.com/immich-app/immich/releases/latest/download/example.env</code>，下载之后记得改文件名为 <code>.env</code>。</p>
 <p>以下是我的 .env：</p>
 <pre><code class="language-ini"># You can find documentation for all the supported env variables at https://immich.app/docs/install/environment-variables
 
