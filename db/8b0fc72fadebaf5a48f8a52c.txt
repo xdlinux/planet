@@ -2,7 +2,7 @@
 <p>卡通渲染里 Bloom 还是挺重要的，它能对画面起到润色作用，比简单地后期调高饱和度要好看很多。</p>
 <!-- more -->
 
-<p><img alt="Bloom 效果图" src="../../../obsidian-vault/attachments/bloom-toon.png" /></p>
+<p><img alt="Bloom 效果图" src="../../attachments/bloom-toon.png" /></p>
 <h2 id="大致流程图">大致流程图<a class="headerlink" href="#大致流程图" title="Permanent link">&para;</a></h2>
 <pre class="mermaid"><code>flowchart TD
     Original[原图] -- 预处理 --&gt; Mip0
@@ -57,7 +57,7 @@
 <span class="k">return</span><span class="w"> </span><span class="n">EncodeHDR</span><span class="p">(</span><span class="mf">0.25</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">(</span><span class="n">c1</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">c2</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">c3</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">c4</span><span class="p">));</span>
 </code></pre></div>
 <h2 id="高斯模糊">高斯模糊<a class="headerlink" href="#高斯模糊" title="Permanent link">&para;</a></h2>
-<p>设 <span class="arithmatex">\(G(x,y)\)</span> 是二维 <a href="../../../ecde-afda-cebi/">正态分布</a> 的概率密度函数，<span class="arithmatex">\(f(x,y)\)</span> 是坐标为 <span class="arithmatex">\((x,y)\)</span> 处像素的值，<span class="arithmatex">\(h(x,y)\)</span> 是该处模糊后的值。做一个半径为 <span class="arithmatex">\(r\)</span> 的高斯模糊，即</p>
+<p>设 <span class="arithmatex">\(G(x,y)\)</span> 是二维 <a href="../../n/ecde-afda-cebi/">正态分布</a> 的概率密度函数，<span class="arithmatex">\(f(x,y)\)</span> 是坐标为 <span class="arithmatex">\((x,y)\)</span> 处像素的值，<span class="arithmatex">\(h(x,y)\)</span> 是该处模糊后的值。做一个半径为 <span class="arithmatex">\(r\)</span> 的高斯模糊，即</p>
 <div class="arithmatex">\[
 h(x,y)=\displaystyle\sum\limits_{i=-r}^{r}\displaystyle\sum\limits_{j=-r}^{r}f(x+i,y+j)G(i,j)
 \]</div>
@@ -89,8 +89,8 @@ h(x,y)=\displaystyle\sum\limits_{i=-r}^{r} h_1(x+i,y) G(i)
 \]</div>
 <p>这样采样数就变成了 <span class="arithmatex">\(O(mnr)\)</span>，需要 2 个 pass。</p>
 <h3 id="快速计算卷积核">快速计算卷积核<a class="headerlink" href="#快速计算卷积核" title="Permanent link">&para;</a></h3>
-<p>根据 <a href="../../../ecbf-abci-cecj/#De-Moivre-Laplace-CLT">De Moivre-Laplace CLT</a>：若 <span class="arithmatex">\(X \sim B(n,p)\)</span>，当 <span class="arithmatex">\(n\)</span> 充分大时，可以近似认为 <span class="arithmatex">\(X \sim N(np, np(1-p))\)</span>。我们需要的是一个对称的卷积核，所以取 <span class="arithmatex">\(p=\dfrac{1}{2}\)</span>。这个其实就是一些文章中提到用杨辉三角近似的原理。</p>
-<p><img alt="杨辉三角" src="../../../obsidian-vault/attachments/pascal-triangle.png" /></p>
+<p>根据 <a href="../../n/ecbf-abci-cecj/#De-Moivre-Laplace-CLT">De Moivre-Laplace CLT</a>：若 <span class="arithmatex">\(X \sim B(n,p)\)</span>，当 <span class="arithmatex">\(n\)</span> 充分大时，可以近似认为 <span class="arithmatex">\(X \sim N(np, np(1-p))\)</span>。我们需要的是一个对称的卷积核，所以取 <span class="arithmatex">\(p=\dfrac{1}{2}\)</span>。这个其实就是一些文章中提到用杨辉三角近似的原理。</p>
+<p><img alt="杨辉三角" src="../../attachments/pascal-triangle.png" /></p>
 <p>对于第 <span class="arithmatex">\(n\)</span> 行的一组数，它们除以 <span class="arithmatex">\(2^n\)</span> 后近似服从 <span class="arithmatex">\(N(\dfrac{n}{2},\dfrac{n}{4})\)</span>。</p>
 <p>观察上面的图，每行最前面两个和最后面两个数都比较小，在计算时作用不大，可以去掉它们。<sup id="fnref:1"><a class="footnote-ref" href="#fn:1">1</a></sup> 如果要一个长度为 <span class="arithmatex">\(n\)</span> 的卷积核，则选择第 <span class="arithmatex">\(n+3\)</span> 行的中间 <span class="arithmatex">\(n\)</span> 个数存进数组，有</p>
 <div class="arithmatex">\[
@@ -137,7 +137,7 @@ G[-1]=\dfrac{n+3}{2^{n+3}-2(4+n)}
 <p>横向模糊类似。</p>
 <p>要把多级 mip 都纵向横向模糊一遍。</p>
 <h3 id="卷积核长度选择">卷积核长度选择<a class="headerlink" href="#卷积核长度选择" title="Permanent link">&para;</a></h3>
-<p>根据 <a href="../../../ecde-afda-cebi/#3-sigma-规则">正态分布 &gt; 3 sigma 规则</a>，大致推测出高斯模糊的模糊范围和 <span class="arithmatex">\(\sigma\)</span> 正相关。因为长度为 <span class="arithmatex">\(n\)</span> 的卷积核取的是杨辉三角的第 <span class="arithmatex">\(n+3\)</span> 行，所以</p>
+<p>根据 <a href="../../n/ecde-afda-cebi/#3-sigma-规则">正态分布 &gt; 3 sigma 规则</a>，大致推测出高斯模糊的模糊范围和 <span class="arithmatex">\(\sigma\)</span> 正相关。因为长度为 <span class="arithmatex">\(n\)</span> 的卷积核取的是杨辉三角的第 <span class="arithmatex">\(n+3\)</span> 行，所以</p>
 <div class="arithmatex">\[
 \sigma \approx \dfrac{\sqrt{n+3}}{2}
 \]</div>
@@ -149,7 +149,7 @@ G[-1]=\dfrac{n+3}{2^{n+3}-2(4+n)}
 <p>一般游戏都是 16:9、16:10 这样的分辨率。取个比例差不多的较小的分辨率，比如 310x174，基本上没太大问题。要是屏幕比例差得太多，降采样时就会出现明显拉伸，Bloom 结果就会出现 artifact。</p>
 <h3 id="图集优化">图集优化<a class="headerlink" href="#图集优化" title="Permanent link">&para;</a></h3>
 <p>因为要对多级 mip 做模糊，会出现很多 RT switch，对性能有影响。可以把纵向模糊的结果都绘制到一张图集上。用 <a href="https://docs.unity3d.com/ScriptReference/Rendering.CommandBuffer.SetViewport.html"><code>CommandBuffer.SetViewport</code></a> 来限制绘制的区域。</p>
-<p><img alt="图集" src="../../../obsidian-vault/attachments/bloom-atlas.png" /></p>
+<p><img alt="图集" src="../../attachments/bloom-atlas.png" /></p>
 <p>然后再做横向模糊，绘制到另一张图集上。</p>
 <h2 id="合并">合并<a class="headerlink" href="#合并" title="Permanent link">&para;</a></h2>
 <p>需要 C# 代码传入的值：</p>
@@ -167,7 +167,7 @@ G[-1]=\dfrac{n+3}{2^{n+3}-2(4+n)}
 <span class="p">}</span>
 <span class="k">return</span><span class="w"> </span><span class="n">EncodeHDR</span><span class="p">(</span><span class="n">color</span><span class="p">);</span>
 </code></pre></div>
-<p><img alt="叠加好的图，分辨率和图集里最大的那张一样" src="../../../obsidian-vault/attachments/bloom-final.png" /></p>
+<p><img alt="叠加好的图，分辨率和图集里最大的那张一样" src="../../attachments/bloom-final.png" /></p>
 <p>之后把它拿给 UberPost，加到屏幕上即可。</p>
 <h3 id="防漏光">防漏光<a class="headerlink" href="#防漏光" title="Permanent link">&para;</a></h3>
 <p>刚才叠加时是用 bilinear 采样的，在某张图边缘采样时可能采样到图集里的另一张图。解决方法是，在图和图之间加几个像素的 padding，一般 1 个像素就差不多了。</p>

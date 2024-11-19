@@ -134,7 +134,7 @@
 </code></pre></div>
 <h2 id="快捷键和-UI">快捷键和 UI<a class="headerlink" href="#快捷键和-UI" title="Permanent link">&para;</a></h2>
 <p>这部分用 ImGui 实现，使用快捷键 <code>Alt+C</code> 就能截帧。</p>
-<p><img alt="UI 效果" src="../../../obsidian-vault/attachments/Pasted%20image%2020240824233322.png" /></p>
+<p><img alt="UI 效果" src="../../attachments/Pasted%20image%2020240824233322.png" /></p>
 <div class="highlight"><pre><span></span><code><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">ImGui</span><span class="o">::</span><span class="n">BeginMainMenuBar</span><span class="p">())</span>
 <span class="p">{</span>
 <span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">ImGui</span><span class="o">::</span><span class="n">Shortcut</span><span class="p">(</span><span class="n">ImGuiMod_Alt</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">ImGuiKey_C</span><span class="p">,</span><span class="w"> </span><span class="n">ImGuiInputFlags_RouteAlways</span><span class="p">))</span>

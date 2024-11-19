@@ -41,7 +41,7 @@
 <blockquote>
 <p>这里只考虑主平行光源，也就是正交投影。</p>
 </blockquote>
-<p><img alt="剔除效果" src="../../../obsidian-vault/attachments/per-object-shadow-debugger.gif" /></p>
+<p><img alt="剔除效果" src="../../attachments/per-object-shadow-debugger.gif" /></p>
 <p>这个方法的优势：</p>
 <ol>
 <li>准确地剔除看不见的阴影。</li>
@@ -49,7 +49,7 @@
 </ol>
 <h3 id="思路">思路<a class="headerlink" href="#思路" title="Permanent link">&para;</a></h3>
 <p>把角色的包围盒用之前算的 View Matrix 变换到光源 View Space 后，看起来就像下面这样。</p>
-<p><img alt="光源 View Space 中的角色包围盒" src="../../../obsidian-vault/attachments/Pasted%20image%2020240923204753.png" /></p>
+<p><img alt="光源 View Space 中的角色包围盒" src="../../attachments/Pasted%20image%2020240923204753.png" /></p>
 <p>这个包围盒就是角色可投射阴影的区域，也是光源的视锥体。为了让阴影投射到更远的地方，需要把 <code>zFar</code> 拉远一点。但如果 <code>zFar</code> 距离 <code>zNear</code> 过远，会导致 ShadowMap 中深度都集中在 0 或者 1 附近，浪费精度，阴影质量也差。</p>
 <p>比较好的算法是，在光源的 View Space 中对主相机视锥体进行切割，得到处于上图中矩形范围内的部分（切割时不考虑 Z 轴），再调整 <code>zFar</code> 把切出来的那部分包起来。这样，光源视锥体恰好能包住主相机视锥体的有效部分。</p>
 <p>切割的结果还能用来判断阴影的可见性。如果切割后什么都没剩，或者 <code>zFar</code> 算出来跑到 <code>zNear</code> 后面，则说明阴影不可见。</p>
@@ -157,7 +157,7 @@
 <span class="p">}</span>
 </code></pre></div>
 <p>然后，给出一个索引列表，这个不唯一，也不用考虑顺时针或逆时针。我是用下面的方式拆分的。</p>
-<p><img alt="拆分成三角形" src="../../../obsidian-vault/attachments/Pasted%20image%2020240923211259.png" /></p>
+<p><img alt="拆分成三角形" src="../../attachments/Pasted%20image%2020240923211259.png" /></p>
 <div class="highlight"><pre><span></span><code><span class="k">public</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">FrustumTriangleCount</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">12</span><span class="p">;</span>
 
 <span class="k">public</span><span class="w"> </span><span class="k">static</span><span class="w"> </span><span class="k">readonly</span><span class="w"> </span><span class="kt">int</span><span class="p">[]</span><span class="w"> </span><span class="n">FrustumTriangleIndices</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="kt">int</span><span class="p">[</span><span class="n">FrustumTriangleCount</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="m">3</span><span class="p">]</span>
@@ -179,7 +179,7 @@
 <h3 id="裁剪主相机视锥体">裁剪主相机视锥体<a class="headerlink" href="#裁剪主相机视锥体" title="Permanent link">&para;</a></h3>
 <p>将刚才那 12 个三角形变换到光源 View Space 后，暂时不考虑 Z 轴，裁剪出阴影包围盒矩形区域中的部分。</p>
 <p>先考虑一个三角形被一条线裁剪的情况。</p>
-<p><img alt="一个点在内部" src="../../../obsidian-vault/attachments/Pasted%20image%2020240924000446.png" /></p>
+<p><img alt="一个点在内部" src="../../attachments/Pasted%20image%2020240924000446.png" /></p>
 <p>三个点都在内部，或者都不在内部的情况就不说了。只有一个点 <span class="arithmatex">\(A\)</span> 在内部时，如上图。根据相似三角形很容易算出 <span class="arithmatex">\(P\)</span> 和 <span class="arithmatex">\(Q\)</span> 点的坐标，进而将 <span class="arithmatex">\(\triangle ABC\)</span> 裁剪为 <span class="arithmatex">\(\triangle APQ\)</span>。两个点在内部的情况和上面类似，只是裁剪出来是一个四边形，要再拆成两个三角形。</p>
 <p>一个三角形被一个矩形裁剪，相当于依次被这个矩形的 4 条边裁剪。最坏情况下，每次三角形都是两个点在内部，然后三角形数量翻倍，最后变成 16（2 的 4 次方）个三角形。</p>
 <p>对 12 个三角形依次做上述裁剪，视锥体就被裁剪完成了。</p>

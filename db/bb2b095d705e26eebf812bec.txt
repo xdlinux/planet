@@ -2,7 +2,7 @@
 <p>用 <a href="https://en.wikipedia.org/wiki/Markov_chain">马尔可夫链（Markov chain）</a> 暴力计算。顺便复习一下线代。</p>
 <!-- more -->
 
-<p><img alt="让我摸个鱼吧~" src="../../../obsidian-vault/attachments/qingque.jpg" /></p>
+<p><img alt="让我摸个鱼吧~" src="../../attachments/qingque.jpg" /></p>
 <h2 id="起因">起因<a class="headerlink" href="#起因" title="Permanent link">&para;</a></h2>
 <p>看到这两个视频以后，心血来潮算的。</p>
 <div class="responsive-video-container">
@@ -177,7 +177,7 @@ c_0\\
 d_0
 \end{bmatrix}
 \]</div>
-<p><span class="arithmatex">\(P\)</span> 的 <a href="../../../ecaa-acdj-cecf/">伴随矩阵</a></p>
+<p><span class="arithmatex">\(P\)</span> 的 <a href="../../n/ecaa-acdj-cecf/">伴随矩阵</a></p>
 <div class="arithmatex">\[
 P^*=\begin{bmatrix}
 1 &amp; 0 &amp; 0 &amp; 0\\
@@ -214,7 +214,7 @@ c_0\\
 d_0
 \end{bmatrix}
 \]</div>
-<p>上式中 <span class="arithmatex">\(n \ge 1\)</span>。抽牌数的 <a href="../../../eccb-afei-ceba/">数学期望</a></p>
+<p>上式中 <span class="arithmatex">\(n \ge 1\)</span>。抽牌数的 <a href="../../n/eccb-afei-ceba/">数学期望</a></p>
 <div class="arithmatex">\[
 EX=(d_1-d_0) + \sum_{n=2}^{\infty} n(d_n-d_{n-1})
 \]</div>

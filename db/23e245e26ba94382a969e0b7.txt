@@ -68,7 +68,7 @@
 \]</div>
 <p>发现 <span class="arithmatex">\(x\)</span> 和 <span class="arithmatex">\(y\)</span> 只是被缩放了常数倍。从 NDC 到 viewport space 或者 screen space 都是对 <span class="arithmatex">\(x\)</span> 和 <span class="arithmatex">\(y\)</span> 分别进行两种相同的线性变换。所以，从 view space 到 viewport space 或者 screen space 就是对 <span class="arithmatex">\(x\)</span> 和 <span class="arithmatex">\(y\)</span> 做了一些线性变换，完全可以省略。可以这样理解：一张照片在家里看和在学校里看没有差别，放大 10 倍和原大小整体上也没差别。</p>
 <p>考虑到一个方块只有朝上的面才能行走，并且这个面从屏幕上看是一个平行四边形，不难构造出下面这个二维斜坐标系。任意选一个方块，将它朝上的那个面的中心作为原点。</p>
-<p><img alt="坐标系" src="../../../obsidian-vault/attachments/unity_hsr_dream_ticker_explain.png" /></p>
+<p><img alt="坐标系" src="../../attachments/unity_hsr_dream_ticker_explain.png" /></p>
 <p>若以平行四边形格子的中心点表示该格，则 <span class="arithmatex">\((x,y)\)</span> 右边一格为 <span class="arithmatex">\((x+1,y)\)</span>，前面一格为 <span class="arithmatex">\((x,y+1)\)</span>，且 <span class="arithmatex">\(x,y\)</span> 均为整数。只要能把原来的三维地图转化成这个平行四边形网格，剩下的就很简单了。</p>
 <h3 id="计算方块对应格子的坐标">计算方块对应格子的坐标<a class="headerlink" href="#计算方块对应格子的坐标" title="Permanent link">&para;</a></h3>
 <p>将一个方块朝上的那个面的中心点称为 <code>UpperCenter</code>。</p>
@@ -91,7 +91,7 @@
 \]</div>
 <h3 id="根据镜子做剔除">根据镜子做剔除<a class="headerlink" href="#根据镜子做剔除" title="Permanent link">&para;</a></h3>
 <p>镜子前的方块不用管，全部保留即可。镜子内的方块只有玩家能看到的部分才算入网格地图中，镜子后的方块同理。镜子会把方块裁成不同形状，如下图。</p>
-<p><img alt="镜子" src="../../../obsidian-vault/attachments/unity_hsr_dream_ticker_explain2.png" /></p>
+<p><img alt="镜子" src="../../attachments/unity_hsr_dream_ticker_explain2.png" /></p>
 <p>一个方块在当前视角下看是一个正六边形，根据对角线可以分成 6 个三角形。镜子只能横向移动，对移动后的坐标进行限制，可以保证这些三角形不被分割。</p>
 <p>镜子在斜坐标系里是一个平行四边形，四条边的直线方程很容易算。上图中，红线的斜率是 <span class="arithmatex">\(0\)</span>，黄线的斜率是 <span class="arithmatex">\(-1\)</span>。只要知道镜子某个角的坐标，还有长和宽，就能算出四条直线方程。</p>
 <p>如果一个三角形的重心在平行四边形内，这个三角形就是在镜子里，否则就在镜子外。</p>
@@ -101,7 +101,7 @@
 </ul>
 <h3 id="根据遮挡关系做剔除">根据遮挡关系做剔除<a class="headerlink" href="#根据遮挡关系做剔除" title="Permanent link">&para;</a></h3>
 <p>方块之间存在遮挡关系，比如下面红色的面就被挡住了，它就不能算入网格地图中。</p>
-<p><img alt="遮挡关系" src="../../../obsidian-vault/attachments/unity_hsr_dream_ticker_explain3.png" /></p>
+<p><img alt="遮挡关系" src="../../attachments/unity_hsr_dream_ticker_explain3.png" /></p>
 <p>这部分的剔除还是以之前提到的三角形为单位。</p>
 <p>这里其实有参考一点 Hi-Z 的思路。先把之前剔除下来的三角形的 view space z 都写入到一张 <code>zMap</code> 里，写入时只保留最大值。换句话说 <code>zMap</code> 存的是各点处离相机最近的三角形的 z 值。</p>
 <div class="highlight"><pre><span></span><code><span class="k">private</span><span class="w"> </span><span class="k">static</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">SetZMap</span><span class="p">(</span><span class="n">Dictionary</span><span class="o">&lt;</span><span class="n">Vector2Int</span><span class="p">,</span><span class="w"> </span><span class="kt">float</span><span class="o">&gt;</span><span class="w"> </span><span class="n">zMap</span><span class="p">,</span><span class="w"> </span><span class="n">Vector2Int</span><span class="w"> </span><span class="n">key</span><span class="p">,</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">z</span><span class="p">)</span>
@@ -118,9 +118,9 @@
 </code></pre></div>
 <p>三角形的 z 值不需要很准确，够用就行。我直接把 <code>UpperCenter</code> 变换到 view space 后的 z 值作为该方块（投影的正六边形）里所有三角形的 z。</p>
 <p>把每个格子拆分成下图中的 Lower Triangle 和 Upper Triangle。<code>zMap</code> 分成 <code>zMapLower</code> 和 <code>zMapUpper</code>，分别记录 Lower Triangle 和 Upper Triangle。</p>
-<p><img alt="上下三角的定义" src="../../../obsidian-vault/attachments/unity_hsr_dream_ticker_explain4.png" /></p>
+<p><img alt="上下三角的定义" src="../../attachments/unity_hsr_dream_ticker_explain4.png" /></p>
 <p>正六边形则分成下面的六个三角形。</p>
-<p><img alt="正六边形的分割" src="../../../obsidian-vault/attachments/unity_hsr_dream_ticker_explain5.png" /></p>
+<p><img alt="正六边形的分割" src="../../attachments/unity_hsr_dream_ticker_explain5.png" /></p>
 <p>遍历正六边形里的三角形，写入 z 值，然后再把被挡住的三角形删掉。</p>
 <div class="highlight"><pre><span></span><code><span class="k">private</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">CullBlocksByViewSpaceZ</span><span class="p">(</span><span class="n">Dictionary</span><span class="o">&lt;</span><span class="n">Vector2Int</span><span class="p">,</span><span class="w"> </span><span class="n">BlockGroup</span><span class="o">&gt;</span><span class="w"> </span><span class="n">bMap</span><span class="p">)</span>
 <span class="p">{</span>
@@ -204,7 +204,7 @@
 <h2 id="找到正确的路径提示">找到正确的路径提示<a class="headerlink" href="#找到正确的路径提示" title="Permanent link">&para;</a></h2>
 <p>小人行走前，会有个带拖尾的特效提前把路径展示出来。拖尾用 <code>TrailRenderer</code> 实现。</p>
 <p>这里有个坑。直接给 <code>TrailRenderer</code> 应用小人移动的逻辑的话，因为地图部分地方有高度差，从相机看过去拖尾会断掉。</p>
-<p><img alt="拖尾的 artifact" src="../../../obsidian-vault/attachments/unity_hsr_dream_ticker_explain6.png" /></p>
+<p><img alt="拖尾的 artifact" src="../../attachments/unity_hsr_dream_ticker_explain6.png" /></p>
 <p>把移动时的 y 固定即可解决这个问题。</p>
 <hr />
 <p>设某个方块的 <code>UpperCenter</code> 在 view space 为 <span class="arithmatex">\((x, y, z)^T\)</span>。给定一个 world space 里的 <span class="arithmatex">\(y'\)</span>，需要找到 <span class="arithmatex">\(x'\)</span> 和 <span class="arithmatex">\(z'\)</span> 使得 <span class="arithmatex">\((x', y', z')^T\)</span> 变换到 view space 后 x 和 y 分量分别等于 <span class="arithmatex">\(x\)</span> 和 <span class="arithmatex">\(y\)</span>。</p>

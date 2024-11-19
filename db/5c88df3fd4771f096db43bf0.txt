@@ -8,7 +8,7 @@
 <p>官网：<a href="https://rime.im/">RIME | 中州韻輸入法引擎</a></p>
 <!-- more -->
 
-<p><img alt="预览图" src="../../../obsidian-vault/attachments/Pasted%20image%2020240504004716.png" /></p>
+<p><img alt="预览图" src="../../attachments/Pasted%20image%2020240504004716.png" /></p>
 <p>写在 <code>weasel.custom.yaml</code> 里就能使用。</p>
 <div class="highlight"><pre><span></span><code><span class="nt">patch</span><span class="p">:</span>
 <span class="err">  </span><span class="s">&quot;style/color_scheme&quot;</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">custom_scheme</span>

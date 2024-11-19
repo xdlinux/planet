@@ -2,15 +2,15 @@
 <p>大部分 DCC 都有无限网格，帮助我们确定物体所处的空间位置。我也给自己的引擎加上了这个功能。</p>
 <!-- more -->
 
-<p><img alt="红色是 X 轴，蓝色是 Z 轴" src="../../../obsidian-vault/attachments/Pasted%20image%2020241014094522.png" /></p>
-<p><img alt="根据距离自动分层" src="../../../obsidian-vault/attachments/Pasted%20image%2020241014094627.png" /></p>
+<p><img alt="红色是 X 轴，蓝色是 Z 轴" src="../../attachments/Pasted%20image%2020241014094522.png" /></p>
+<p><img alt="根据距离自动分层" src="../../attachments/Pasted%20image%2020241014094627.png" /></p>
 <h2 id="思路">思路<a class="headerlink" href="#思路" title="Permanent link">&para;</a></h2>
 <p>因为网格是无限大的，所以我第一反应就是屏幕空间重建世界坐标绘制。我看了下 Unity 的实现，应该是 CPU 上把网格算好，然后生成 Line List Mesh，再给 Shader 画上去。</p>
-<p><img alt="Unity 的实现" src="../../../obsidian-vault/attachments/Pasted%20image%2020241014100816.png" /></p>
+<p><img alt="Unity 的实现" src="../../attachments/Pasted%20image%2020241014100816.png" /></p>
 <p>Unity 的实现感觉有点麻烦，我还是用屏幕空间了。</p>
 <h2 id="重建世界坐标">重建世界坐标<a class="headerlink" href="#重建世界坐标" title="Permanent link">&para;</a></h2>
-<p>之前我写过 <a href="../../../eaaf-becf-cbcb/">深度重建世界坐标</a> 的方法，但这次深度是未知的，不能直接用。我看网上的文章都是近平面算一个点，远平面算一个点，计算连线和 XOZ 平面的交点。</p>
-<p>其实深度可以直接算出来。因为 XOZ 平面上的点 <code>positionWS.y == 0</code>，带入 <a href="../../../eaaf-becf-cbcb/">深度重建世界坐标</a> 逆矩阵法的推导中，由公式</p>
+<p>之前我写过 <a href="../../n/eaaf-becf-cbcb/">深度重建世界坐标</a> 的方法，但这次深度是未知的，不能直接用。我看网上的文章都是近平面算一个点，远平面算一个点，计算连线和 XOZ 平面的交点。</p>
+<p>其实深度可以直接算出来。因为 XOZ 平面上的点 <code>positionWS.y == 0</code>，带入 <a href="../../n/eaaf-becf-cbcb/">深度重建世界坐标</a> 逆矩阵法的推导中，由公式</p>
 <div class="highlight"><pre><span></span><code><span class="n">positionWS</span><span class="p">.</span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">dot</span><span class="p">(</span><span class="n">MatrixInvVP</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="w"> </span><span class="n">positionCS</span><span class="p">.</span><span class="n">w</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">positionNDC</span><span class="p">);</span>
 </code></pre></div>
 <p>得到深度</p>
@@ -26,7 +26,7 @@
 <div class="arithmatex">\[
 \text{frac}(x) = x - \lfloor x \rfloor
 \]</div>
-<p><img alt="图像" src="../../../obsidian-vault/attachments/Pasted%20image%2020241014132645.png" /></p>
+<p><img alt="图像" src="../../attachments/Pasted%20image%2020241014132645.png" /></p>
 <p>通常用一对花括号表示这种计算 <code>frac</code> 的方法</p>
 <div class="arithmatex">\[
 \{x\} := x - \lfloor x \rfloor
@@ -35,26 +35,26 @@
 <div class="arithmatex">\[
 \left | \text{frac}(x) - 0.5 \right |
 \]</div>
-<p><img alt="图像" src="../../../obsidian-vault/attachments/Pasted%20image%2020241014143013.png" /></p>
+<p><img alt="图像" src="../../attachments/Pasted%20image%2020241014143013.png" /></p>
 <p>大于阈值的部分就是网格线。</p>
 <h2 id="反锯齿">反锯齿<a class="headerlink" href="#反锯齿" title="Permanent link">&para;</a></h2>
 <p>直接用 <code>step</code> 绘制的网格线锯齿很严重，尤其是斜着看远处的时候。</p>
-<p><img alt="锯齿" src="../../../obsidian-vault/attachments/Pasted%20image%2020241014134120.png" /></p>
+<p><img alt="锯齿" src="../../attachments/Pasted%20image%2020241014134120.png" /></p>
 <p>简单建个模分析一下：假设一个人在 <span class="arithmatex">\(A\)</span> 点，与地面夹角为 <span class="arithmatex">\(\alpha\)</span> 观察 <span class="arithmatex">\(B\)</span> 点处的网格。</p>
-<p><img alt="简化模型" src="../../../obsidian-vault/attachments/Pasted%20image%2020241014141906.png" /></p>
+<p><img alt="简化模型" src="../../attachments/Pasted%20image%2020241014141906.png" /></p>
 <p>可以算出</p>
 <div class="arithmatex">\[
 \mathrm{d}x=\frac{\left | \text{AB} \right | \sin \mathrm{d} \theta}{\sin \left (\alpha - \mathrm{d} \theta \right )}
 \]</div>
 <p>当 <span class="arithmatex">\(\mathrm{d} \theta\)</span> 不变时，距离 <span class="arithmatex">\(\left | \text{AB} \right |\)</span> 越大，夹角 <span class="arithmatex">\(\alpha\)</span> 越小，<span class="arithmatex">\(\mathrm{d} x\)</span> 越大。<span class="arithmatex">\(\mathrm{d} x\)</span> 就是屏幕上相邻两个像素对应的 <code>positionWS</code> 的距离，也是在三角波上相邻两个采样点的间隔。</p>
-<p><img alt="dx 的意义" src="../../../obsidian-vault/attachments/Pasted%20image%2020241014144145.png" /></p>
-<p>采样间隔越大，就越不准，越可能漏掉网格线，导致锯齿。所以应该根据 <span class="arithmatex">\(\mathrm{d} x\)</span> 动态调整阈值，<span class="arithmatex">\(\mathrm{d} x\)</span> 越大，阈值就越小（网格线越粗）。对相邻像素的 <code>positionWS</code> 做 <a href="../../../eccd-afbe-cebg/">差分</a> 就能估计出 <span class="arithmatex">\(\mathrm{d} x\)</span>，因为要同时考虑屏幕的 X 方向和 Y 方向，所以使用 <code>fwidth</code> 函数，即 <code>abs(ddx(x)) + abs(ddy(x))</code>。</p>
+<p><img alt="dx 的意义" src="../../attachments/Pasted%20image%2020241014144145.png" /></p>
+<p>采样间隔越大，就越不准，越可能漏掉网格线，导致锯齿。所以应该根据 <span class="arithmatex">\(\mathrm{d} x\)</span> 动态调整阈值，<span class="arithmatex">\(\mathrm{d} x\)</span> 越大，阈值就越小（网格线越粗）。对相邻像素的 <code>positionWS</code> 做 <a href="../../n/eccd-afbe-cebg/">差分</a> 就能估计出 <span class="arithmatex">\(\mathrm{d} x\)</span>，因为要同时考虑屏幕的 X 方向和 Y 方向，所以使用 <code>fwidth</code> 函数，即 <code>abs(ddx(x)) + abs(ddy(x))</code>。</p>
 <div class="highlight"><pre><span></span><code><span class="kt">float2</span><span class="w"> </span><span class="n">diff</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">fwidth</span><span class="p">(</span><span class="n">positionWS</span><span class="p">.</span><span class="n">xz</span><span class="p">);</span>
 </code></pre></div>
 <p>另外，把 <code>step</code> 换成 <code>smoothstep</code> 羽化网格线的边缘，可以进一步减少锯齿。</p>
 <h2 id="淡化远处的网格">淡化远处的网格<a class="headerlink" href="#淡化远处的网格" title="Permanent link">&para;</a></h2>
 <p>现在锯齿没了，但远处的网格看上去非常密，很丑。</p>
-<p><img alt="远处的网格基本变成了色块" src="../../../obsidian-vault/attachments/Pasted%20image%2020241014150052.png" /></p>
+<p><img alt="远处的网格基本变成了色块" src="../../attachments/Pasted%20image%2020241014150052.png" /></p>
 <p>可以像网上的文章一样，计算 <code>LinearEyeDepth</code> 或者 <code>Linear01Depth</code> 然后将远处的 <code>alpha</code> 变小。也可以直接用 <span class="arithmatex">\(\mathrm{d} x\)</span> 来调整 <code>alpha</code>。根据前面的公式，线越密的地方 <span class="arithmatex">\(\mathrm{d} x\)</span> 越大，反之亦然。</p>
 <h2 id="分层">分层<a class="headerlink" href="#分层" title="Permanent link">&para;</a></h2>
 <p>根据相机离 XOZ 平面的距离，选择不同的格子大小绘制网格线。如果两条线之间的距离是 <code>gridWidth</code>，则</p>
@@ -66,7 +66,7 @@
 <h2 id="实现">实现<a class="headerlink" href="#实现" title="Permanent link">&para;</a></h2>
 <ul>
 <li>代码是用我自制的 DX12 ShaderLab 编写的，和 Unity 的稍有不同。</li>
-<li>Vertex Shader 参考我之前写的 <a href="../../../eahf-beee-cbbh/">Blit</a> 。</li>
+<li>Vertex Shader 参考我之前写的 <a href="../../n/eahf-beee-cbbh/">Blit</a> 。</li>
 </ul>
 <div class="highlight"><pre><span></span><code><span class="n">Shader</span><span class="w"> </span><span class="s">&quot;SceneViewGrid&quot;</span>
 <span class="p">{</span>

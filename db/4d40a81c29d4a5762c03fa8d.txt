@@ -7,7 +7,7 @@
 <li>画出 <span class="arithmatex">\(\exp(j(\omega_0 t + \phi))\)</span> 的频谱，其中 <span class="arithmatex">\(\omega_0\)</span> 的数值分别为 <span class="arithmatex">\(1,3,6\)</span>；<span class="arithmatex">\(\phi\)</span> 的数值分别为 <span class="arithmatex">\(15^\circ, -30^\circ, 60^\circ\)</span>。</li>
 <li>将第二问中的 3 个复信号两两组合，写出获得的 3 个信号的表达式，分别画出其实部信号的频谱。</li>
 </ol>
-<p><a href="../../../obsidian-vault/attachments/files/SignalSpectrum.ipynb">打开 Jupyter Notebook 版</a>。</p>
+<p><a href="../../attachments/files/SignalSpectrum.ipynb">打开 Jupyter Notebook 版</a>。</p>
 <h2 id="前置准备">前置准备<a class="headerlink" href="#前置准备" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code><span class="c1"># 导入必要的库</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
@@ -88,7 +88,7 @@
     <span class="k">for</span> <span class="n">omega</span><span class="p">,</span> <span class="n">phi</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">omega_values</span><span class="p">,</span> <span class="n">phi_values</span><span class="p">)</span>
 <span class="p">])</span>
 </code></pre></div>
-<p><img alt="频谱 1" src="../../../obsidian-vault/attachments/Pasted%20image%2020240617170137.png" /></p>
+<p><img alt="频谱 1" src="../../attachments/Pasted%20image%2020240617170137.png" /></p>
 <h2 id="第二问">第二问<a class="headerlink" href="#第二问" title="Permanent link">&para;</a></h2>
 <div class="arithmatex">\[
 e^{j(\omega_0 t + \phi)} \longleftrightarrow 2\pi \delta(\omega-\omega_0) e^{j\phi}
@@ -102,7 +102,7 @@ e^{j(\omega_0 t + \phi)} \longleftrightarrow 2\pi \delta(\omega-\omega_0) e^{j\p
     <span class="k">for</span> <span class="n">omega</span><span class="p">,</span> <span class="n">phi</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">omega_values</span><span class="p">,</span> <span class="n">phi_values</span><span class="p">)</span>
 <span class="p">])</span>
 </code></pre></div>
-<p><img alt="频谱 2" src="../../../obsidian-vault/attachments/Pasted%20image%2020240617170240.png" /></p>
+<p><img alt="频谱 2" src="../../attachments/Pasted%20image%2020240617170240.png" /></p>
 <h2 id="第三问">第三问<a class="headerlink" href="#第三问" title="Permanent link">&para;</a></h2>
 <div class="arithmatex">\[
 \begin{align}
@@ -127,6 +127,6 @@ f_3(t) &amp;= e^{j(3t - 30^\circ)} + e^{j(6t + 60^\circ)}
         <span class="nb">zip</span><span class="p">(</span><span class="n">omega_values</span><span class="p">,</span> <span class="n">phi_values</span><span class="p">),</span> <span class="mi">2</span><span class="p">)</span>
 <span class="p">])</span>
 </code></pre></div>
-<p><img alt="频谱 3" src="../../../obsidian-vault/attachments/Pasted%20image%2020240617170316.png" /></p>
+<p><img alt="频谱 3" src="../../attachments/Pasted%20image%2020240617170316.png" /></p>
 <h2 id="结论">结论<a class="headerlink" href="#结论" title="Permanent link">&para;</a></h2>
 <p>实信号的幅值频谱是偶函数，相位频谱是奇函数。复信号的频谱没有这样的特点。</p><hr />

@@ -29,7 +29,7 @@
 </code></pre></div>
 </li>
 <li>
-<p>使用 <a href="../../../eadf-afaa-cfcg/">Clash 的 TUN 模式</a>，不用系统代理。</p>
+<p>使用 <a href="../../n/eadf-afaa-cfcg/">Clash 的 TUN 模式</a>，不用系统代理。</p>
 </li>
 </ol>
 <h2 id="Font-Awesome">Font Awesome<a class="headerlink" href="#Font-Awesome" title="Permanent link">&para;</a></h2>

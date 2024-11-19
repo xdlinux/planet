@@ -7,7 +7,7 @@
 <p>使用 PowerToys 的键盘管理器映射 CapsLock 到 Win+Space。</p>
 <h2 id="同步指示灯">同步指示灯<a class="headerlink" href="#同步指示灯" title="Permanent link">&para;</a></h2>
 <p>按键都重映射了，指示灯放着不用也怪可惜的。我笔记本键盘上 CapsLock 指示灯就在这个按键右上角，改成中英文指示灯刚好。灯亮时就是中文模式，灯暗时就是英文模式。</p>
-<p>代码开源在 GitHub 上：<a href="https://github.com/stalomeow/CapsLockLed-IME">stalomeow/CapsLockLed-IME</a>。特地用纯 C 写的，几乎没有什么开销。大体思路：依靠 <a href="../../../eabe-abdh-cfad/">Windows 全局钩子</a> 监听键盘布局变化（<code>HSHELL_LANGUAGE</code>）事件，然后根据当前布局设置指示灯状态。</p>
+<p>代码开源在 GitHub 上：<a href="https://github.com/stalomeow/CapsLockLed-IME">stalomeow/CapsLockLed-IME</a>。特地用纯 C 写的，几乎没有什么开销。大体思路：依靠 <a href="../../n/eabe-abdh-cfad/">Windows 全局钩子</a> 监听键盘布局变化（<code>HSHELL_LANGUAGE</code>）事件，然后根据当前布局设置指示灯状态。</p>
 <h3 id="检查是否为中文键盘布局">检查是否为中文键盘布局<a class="headerlink" href="#检查是否为中文键盘布局" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="n">BOOL</span><span class="w"> </span><span class="nf">IsChineseKeyboardLayout</span><span class="p">()</span>
 <span class="p">{</span>
