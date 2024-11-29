@@ -1,0 +1,63 @@
+<h1 id="四位数字验证码识别">四位数字验证码识别<a class="headerlink" href="#四位数字验证码识别" title="Permanent link">&para;</a></h1>
+<p>这是给 <a href="https://github.com/BenderBlog/traintime_pda">BenderBlog/traintime_pda</a> 做的功能，可以自动通过学校某些网站的验证码，给 app 用户更好的体验。这也是我第一次自己做数据集，训练模型，并且用在正经的地方（）。代码开源在 <a href="https://github.com/stalomeow/captcha-solver">stalomeow/captcha-solver</a>。</p>
+<!-- more -->
+
+<h2 id="技术选型">技术选型<a class="headerlink" href="#技术选型" title="Permanent link">&para;</a></h2>
+<p>因为是图像相关的任务，所以选择卷积神经网络。接着，我找了下 <code>tensorflow</code> 和 <code>pytorch</code> 的 <code>flutter</code> 插件，对比下来 <a href="https://pub.dev/packages/tflite_flutter">tflite_flutter</a> 比较好，它是 <code>tensorflow</code> 官方维护的，并且支持的平台也最多。</p>
+<h2 id="电费验证码">电费验证码<a class="headerlink" href="#电费验证码" title="Permanent link">&para;</a></h2>
+<p>电费验证码可以在 <a href="https://payment.xidian.edu.cn/authImage">https://payment.xidian.edu.cn/authImage</a> 获取，分辨率是 200x80。</p>
+<p><img alt="验证码" src="../../attachments/Pasted%20image%2020241129121626.png" /></p>
+<p>这个验证码比较人性化，相对好做。一开始，我将整个图片转为灰度扔给 CNN 识别，但效果不好，模型也很大。后来，我把验证码的四个数字拆开，CNN 每次只识别一个数字，这样效果很好。这个验证码只要水平 4 等分就能把数字拆开。</p>
+<p>模型很小，只有不到 130KB，不会显著增加 app 包体，也方便在各种设备上运行。</p>
+<div class="highlight"><pre><span></span><code><span class="n">keras</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">Sequential</span><span class="p">([</span>
+    <span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Conv2D</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="n">activation</span><span class="o">=</span><span class="s1">&#39;relu&#39;</span><span class="p">,</span> <span class="n">input_shape</span><span class="o">=</span><span class="n">input_shape</span><span class="p">),</span>
+    <span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">MaxPooling2D</span><span class="p">(</span><span class="n">pool_size</span><span class="o">=</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)),</span>
+
+    <span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Conv2D</span><span class="p">(</span><span class="mi">32</span><span class="p">,</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="n">activation</span><span class="o">=</span><span class="s1">&#39;relu&#39;</span><span class="p">),</span>
+    <span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">MaxPooling2D</span><span class="p">(</span><span class="n">pool_size</span><span class="o">=</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)),</span>
+
+    <span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Conv2D</span><span class="p">(</span><span class="mi">32</span><span class="p">,</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="n">activation</span><span class="o">=</span><span class="s1">&#39;relu&#39;</span><span class="p">),</span>
+    <span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">MaxPooling2D</span><span class="p">(</span><span class="n">pool_size</span><span class="o">=</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">)),</span>
+
+    <span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Flatten</span><span class="p">(),</span>
+    <span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Dense</span><span class="p">(</span><span class="mi">64</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s1">&#39;relu&#39;</span><span class="p">),</span> <span class="c1"># 适当减少神经元</span>
+    <span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Dropout</span><span class="p">(</span><span class="mf">0.3</span><span class="p">),</span>                 <span class="c1"># Dropout 防止过拟合</span>
+    <span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Dense</span><span class="p">(</span><span class="n">util</span><span class="o">.</span><span class="n">get_captcha_num_classes</span><span class="p">(</span><span class="nb">type</span><span class="p">),</span> <span class="n">activation</span><span class="o">=</span><span class="s1">&#39;softmax&#39;</span><span class="p">)</span>
+<span class="p">])</span>
+</code></pre></div>
+<p>用几百张图片训练了 1 分钟左右，模型很快就收敛了。</p>
+<p><img alt="训练结果" src="../../attachments/Pasted%20image%2020241129123221.png" /></p>
+<p>数据集是自制的，专门针对学校的验证码。工具是用 <code>tkinter</code> 写的，输入验证码后回车，就能自动切分数字并打上标签保存，然后自动获取下一个验证码并 focus 输入框。效率非常高，甚至有点上头。</p>
+<p><img alt="数据集制作工具" src="../../attachments/Pasted%20image%2020241129124207.png" /></p>
+<p>模型测试工具基本复用了上面的代码，可以测试模型在实际场景下的表现。下图输入框里的数字是模型预测的。</p>
+<p><img alt="模型测试工具" src="../../attachments/Pasted%20image%2020241129124840.png" /></p>
+<h2 id="自服务验证码">自服务验证码<a class="headerlink" href="#自服务验证码" title="Permanent link">&para;</a></h2>
+<p>自服务验证码可以在 <a href="https://zfw.xidian.edu.cn/site/captcha">https://zfw.xidian.edu.cn/site/captcha</a> 获取，分辨率是 90x34。</p>
+<p><img alt="验证码，但数字挤在一起" src="../../attachments/zfw-captcha-fuck.jpg" /></p>
+<p>这个验证码不好识别，数字挤在一起，尤其是数字 1，有时候我自己都会输错。这种情况只能换一张验证码。</p>
+<p><img alt="正常一点的验证码" src="../../attachments/zfw-captcha-original.jpg" /></p>
+<p>思路是将它转化为电费验证码的形式，然后尝试复用旧的模型。</p>
+<p><img alt="反色 + 二值化" src="../../attachments/zfw-captcha-binary.jpg" /></p>
+<p>反色再二值化能去掉大部分噪声，但数字很多地方断开了不方便识别。不过，通过这张图能算出数字的包围盒。如果包围盒宽度小于一个阈值，就认为数字都挤在一起，放弃预测。将灰度图中包围盒内的部分上采样为 200x80（电费验证码的分辨率）。上采样类似 bilinear，但不是对四个像素插值，而是取四个像素的最小值，相当于一边放大一边做 <a href="../../n/ecaa-bibf-cbci/#腐蚀-Erosion">形态学腐蚀</a>。</p>
+<p><img alt="处理结果" src="../../attachments/zfw-captcha-processed.jpg" /></p>
+<p>套用电费验证码模型的结果不理想，我又重新训练了一个模型。训练时发现过拟合问题比较严重，所以改用更大的 dropout rate，并加上 L2 正则化。</p>
+<div class="highlight"><pre><span></span><code><span class="n">keras</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">Sequential</span><span class="p">([</span>
+    <span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Conv2D</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="n">activation</span><span class="o">=</span><span class="s1">&#39;relu&#39;</span><span class="p">,</span> <span class="n">input_shape</span><span class="o">=</span><span class="n">input_shape</span><span class="p">),</span>
+    <span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">MaxPooling2D</span><span class="p">(</span><span class="n">pool_size</span><span class="o">=</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)),</span>
+
+    <span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Conv2D</span><span class="p">(</span><span class="mi">32</span><span class="p">,</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="n">activation</span><span class="o">=</span><span class="s1">&#39;relu&#39;</span><span class="p">),</span>
+    <span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">MaxPooling2D</span><span class="p">(</span><span class="n">pool_size</span><span class="o">=</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)),</span>
+
+    <span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Conv2D</span><span class="p">(</span><span class="mi">32</span><span class="p">,</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="n">activation</span><span class="o">=</span><span class="s1">&#39;relu&#39;</span><span class="p">),</span>
+    <span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">MaxPooling2D</span><span class="p">(</span><span class="n">pool_size</span><span class="o">=</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">)),</span>
+
+    <span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Flatten</span><span class="p">(),</span>
+    <span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Dense</span><span class="p">(</span><span class="mi">64</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s1">&#39;relu&#39;</span><span class="p">,</span> <span class="n">kernel_regularizer</span><span class="o">=</span><span class="n">keras</span><span class="o">.</span><span class="n">regularizers</span><span class="o">.</span><span class="n">l2</span><span class="p">(</span><span class="mf">0.06</span><span class="p">)),</span> <span class="c1"># L2 正则化防止过拟合</span>
+    <span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Dropout</span><span class="p">(</span><span class="mf">0.55</span><span class="p">),</span> <span class="c1"># Dropout 防止过拟合</span>
+    <span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Dense</span><span class="p">(</span><span class="n">util</span><span class="o">.</span><span class="n">get_captcha_num_classes</span><span class="p">(</span><span class="nb">type</span><span class="p">),</span> <span class="n">activation</span><span class="o">=</span><span class="s1">&#39;softmax&#39;</span><span class="p">)</span>
+<span class="p">])</span>
+</code></pre></div>
+<p>单个数字识别率大概是 97%，考虑到验证码各种奇奇怪怪的情况，以及切分数字的准确性，最后总识别率估计有 80% 就不错了。</p>
+<p><img alt="训练结果" src="../../attachments/Pasted%20image%2020241129133619.png" /></p>
+<h2 id="文章推荐">文章推荐<a class="headerlink" href="#文章推荐" title="Permanent link">&para;</a></h2>
+<p>推荐一篇类似的文章：<a href="https://blog.csdn.net/Ephemeroptera/article/details/89478727">基于CNN的四位数字验证码识别_四位验证码识别-CSDN博客</a>。</p><hr />
