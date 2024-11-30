@@ -1,0 +1,35 @@
+<p>在PVE虚拟化环境中的OpenWRT下使用mwan3进行PPPoE多拨，同时配置负载均衡，达到贷款叠加的目标。</p>
+<p><a href="https://nancunchild.cn/2024/10/16/toss_openwrt_in_pve_multiwan/">折腾OpenWRT那些事——多拨</a>最先出现在<a href="https://nancunchild.cn">NanCunChild的个人随想</a>。</p>
+<hr /><h2>起源</h2>
+<p>继上次买了垃圾装PVE，这个E3的垃圾自然只能跑轻量服务，于是只装单个OpenWRT网关系统作为整个内网的网关。但是外部联网环境恶劣：校园网只有百兆，上游DNS在加载娱乐相关内容时巨卡；校园网内网是PPPoE拨号得到的，因此是动态IP。ipv6也处于不能用的状态。</p>
+<h2>要素</h2>
+<ul>
+<li>OpenWRT x86 23.05 要求已经可以上网了</li>
+<li>luci一坨包：
+<ul>
+<li>luci-theme-argon_2.3.1_all.ipk (Argon主题包，仅仅是喜欢)</li>
+<li>luci-app-openclash_0.46.003-beta_all.ipk (OpenClash包，需要内核才能启动)</li>
+<li>luci-app-mwan3 (多拨插件必备)</li>
+</ul>
+</li>
+</ul>
+<h2>开始折腾</h2>
+<p>SSH连接或者物理接触，更新一下opkg：</p>
+<pre><code class="language-bash">opkg update</code></pre>
+<p>好的，此时可以将你的安装包上传或者直接opkg安装，但是由于mwan3安装后会接管系统连接，在未配置好时是无法进行联网的，所以推荐将需要下载的ipk都先下载好，同时做好PVE备份。</p>
+<p>我们进入网络-接口-设备，点击“设备”一栏，选择“添加设备配置”。<br />
+<img decoding="async" src="https://nancunchild.cn/wp-content/uploads/2024/10/Pasted-image-20241016160956-300x143.png" alt="" /></p>
+<p>弹出如下对话框：<br />
+<img decoding="async" src="https://nancunchild.cn/wp-content/uploads/2024/10/Pasted-image-20241016161229-300x162.png" alt="" /></p>
+<hr />
+<p>“设备类型”选择“MACVLAN”；“基础设备”选择联网的物理接口，此处为”eth1“；模式选择“桥接（允许 MAC VLAN 间直接通信）”；“设备名”可以自行选择，我都是选择的“eth x mac y ”这种形式；“MTU”保持“1500”；“MAC地址”需要自己写一个，可以使用随机生成的（记得查看网卡MAC规范）；其它可以保持不变（如果你不需要ipv6可以在这里关闭，在接口选项中是无法删除的）。</p>
+<p>点击添加后，再回到 <strong>网络-接口-接口</strong> 新建一个接口，设备指定为你所添加的设备名。“网络类型”选择“PPPoE”（因环境而异）。添加完毕后，就会出现编辑接口对话框（如果是PPPoE），需要输入你的IIS提供给你的账号和密码。同时在同菜单的“高级设置”中选择DNS权重和网关越点，DNS权重我都设置的0，网关越点根据mwan3的官方文档，不建议和其它接口设置为同一个值。我是给不同接口分配的6，7，8，9等。然后在同菜单的“防火墙”中将接口分配到wan中。</p>
+<hr />
+<p>重复以上方法，直到你添加了所有你需要加入mwan3多拨的接口。</p>
+<p>安装了mwan3的luci界面后，网络下级菜单会出现“MultiWAN Manager”的选项，进入后选择“接口”，在左下角添加栏中添加你想加入多拨的网络接口名称。</p>
+<p><img decoding="async" src="https://nancunchild.cn/wp-content/uploads/2024/10/Pasted-image-20241016162547-300x183.png" alt="" /><br />
+在“接口”处添加完成后，需要在“成员”选项中继续添加，<br />
+<strong>注意：此名称不能与接口里面的名称相同</strong> </p>
+<p>随后，在“策略”中删除所有策略，只保留 <em>balanced</em> 策略，将成员添加进去，点击保存。此时重启network，在主菜单的 <strong>状态-MultiWAN Manager</strong> 下即可查看接口使用情况。正常情况下，应该显示为绿色，包含正确的已上线时间。下方有可能显示 <em>No Tracking</em> ，但是不影响使用，部分网络环境采用了跟踪反而有可能造成频繁断联的问题。<br />
+<img decoding="async" src="https://nancunchild.cn/wp-content/uploads/2024/10/Pasted-image-20241016165327-300x130.png" alt="" /></p>
+<p><a href="https://nancunchild.cn/2024/10/16/toss_openwrt_in_pve_multiwan/">折腾OpenWRT那些事——多拨</a>最先出现在<a href="https://nancunchild.cn">NanCunChild的个人随想</a>。</p>
