@@ -518,7 +518,7 @@ scoop<span class="w"> </span>install<span class="w"> </span>stalo/antlr4
 <span class="p">{</span>
 <span class="w">    </span><span class="c1">// ...</span>
 
-<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">unordered_map</span><span class="o">&lt;</span><span class="kt">size_t</span><span class="p">,</span><span class="w"> </span><span class="n">Microsoft</span><span class="o">::</span><span class="n">WRL</span><span class="o">::</span><span class="n">ComPtr</span><span class="o">&lt;</span><span class="n">ID3D12RootSignature</span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">m_RootSignatures</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">unordered_map</span><span class="o">&lt;</span><span class="kt">size_t</span><span class="p">,</span><span class="w"> </span><span class="n">Microsoft</span><span class="o">::</span><span class="n">WRL</span><span class="o">::</span><span class="n">ComPtr</span><span class="o">&lt;</span><span class="n">ID3D12RootSignature</span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">m_RootSignatures</span><span class="p">;</span>
 <span class="p">};</span>
 </code></pre></div>
 </li>
@@ -887,7 +887,7 @@ Hash collisions are to be expected, and they indicate a duplicate object. We avo
 <p><a href="https://docs.unity3d.com/6000.0/Documentation/Manual/shader-keywords.html">Unity - Manual: Shader keyword fundamentals</a>&#160;<a class="footnote-backref" href="#fnref:1" title="Jump back to footnote 1 in the text">&#8617;</a></p>
 </li>
 <li id="fn:2">
-<p>https://github.com/microsoft/DirectX-Graphics-Samples/issues/82#issuecomment-173370923&#160;<a class="footnote-backref" href="#fnref:2" title="Jump back to footnote 2 in the text">&#8617;</a></p>
+<p><a href="https://github.com/microsoft/DirectX-Graphics-Samples/issues/82#issuecomment-173370923">Collision handling of PSO hash value · Issue #82 · microsoft/DirectX-Graphics-Samples</a>&#160;<a class="footnote-backref" href="#fnref:2" title="Jump back to footnote 2 in the text">&#8617;</a></p>
 </li>
 </ol>
 </div><hr />
