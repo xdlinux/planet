@@ -10,9 +10,9 @@
 
 <h2 id="安装">安装<a class="headerlink" href="#安装" title="Permanent link">&para;</a></h2>
 <p>使用 <a href="../../n/eccf-afeg-cech/">Scoop</a> 从 <a href="https://github.com/stalomeow/ScoopBucket">stalomeow/ScoopBucket</a> 安装。</p>
-<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>scoop<span class="w"> </span>install<span class="w"> </span>stalo/keyboard-remapper
+<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>scoop<span class="w"> </span>install<span class="w"> </span>stalo/kbdremap
 </code></pre></div>
-<p>开机会自动启动。</p>
+<p>开机会自动启动。如果进程意外终止，可以使用命令 <code>kbdremap</code> 重启。</p>
 <h2 id="按键映射">按键映射<a class="headerlink" href="#按键映射" title="Permanent link">&para;</a></h2>
 <p>使用 <a href="https://learn.microsoft.com/en-us/previous-versions/windows/desktop/legacy/ms644985(v=vs.85)">LowLevelKeyboardProc</a> 实现，代码可以借鉴 <a href="https://github.com/microsoft/PowerToys/tree/main/src/modules/keyboardmanager">PowerToys KeyboardManager</a>。</p>
 <h2 id="同步指示灯">同步指示灯<a class="headerlink" href="#同步指示灯" title="Permanent link">&para;</a></h2>
