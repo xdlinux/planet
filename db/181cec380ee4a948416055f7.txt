@@ -28,7 +28,7 @@
     class ShaderKeywordSpace
     class ShaderKeywordSet</code></pre>
 <h2 id="编译器">编译器<a class="headerlink" href="#编译器" title="Permanent link">&para;</a></h2>
-<p>引擎的上层逻辑使用 C#，所以语法分析用 <code>antlr4</code> 实现，其他的方案有 <code>yacc</code> 和 <code>lex</code>。<code>antlr4</code> 可以从我的 <a href="../../n/eccf-afeg-cech/">Scoop</a> 快速安装，然后直接用 <code>antlr4</code> 或 <code>antlr4-parse</code> 命令，前者是生成代码的工具，后者是解释器。</p>
+<p>引擎的上层逻辑使用 C#，所以语法分析用 <code>antlr4</code> 实现，其他的方案有 <code>yacc</code> 和 <code>lex</code>。<code>antlr4</code> 可以从我的 <a href="../../n/eccf-afeg-cech/">Scoop</a> Bucket 快速安装，然后直接用 <code>antlr4</code> 或 <code>antlr4-parse</code> 命令，前者是生成代码的工具，后者是解释器。</p>
 <div class="highlight"><pre><span></span><code>scoop<span class="w"> </span>install<span class="w"> </span>java/openjdk11
 scoop<span class="w"> </span>install<span class="w"> </span>stalo/antlr4
 </code></pre></div>

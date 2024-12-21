@@ -16,7 +16,7 @@
 <h2 id="按键映射">按键映射<a class="headerlink" href="#按键映射" title="Permanent link">&para;</a></h2>
 <p>使用 <a href="https://learn.microsoft.com/en-us/previous-versions/windows/desktop/legacy/ms644985(v=vs.85)">LowLevelKeyboardProc</a> 实现，代码可以借鉴 <a href="https://github.com/microsoft/PowerToys/tree/main/src/modules/keyboardmanager">PowerToys KeyboardManager</a>。</p>
 <h2 id="同步指示灯">同步指示灯<a class="headerlink" href="#同步指示灯" title="Permanent link">&para;</a></h2>
-<p>使用 <a href="../../n/eabe-abdh-cfad/">Windows 全局钩子</a> 监听键盘布局变化（<code>HSHELL_LANGUAGE</code>）事件，然后根据当前布局设置指示灯状态。</p>
+<p>使用 <a href="../../n/eabe-abdh-cfad/">全局钩子</a> 监听键盘布局变化（<code>HSHELL_LANGUAGE</code>）事件，然后根据当前布局设置指示灯状态。</p>
 <h3 id="检查是否为中文键盘布局">检查是否为中文键盘布局<a class="headerlink" href="#检查是否为中文键盘布局" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="k">static</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="nf">IsChineseKeyboardLayout</span><span class="p">()</span>
 <span class="p">{</span>

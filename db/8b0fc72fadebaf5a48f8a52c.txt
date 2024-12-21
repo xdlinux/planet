@@ -137,7 +137,7 @@ G[-1]=\dfrac{n+3}{2^{n+3}-2(4+n)}
 <p>横向模糊类似。</p>
 <p>要把多级 mip 都纵向横向模糊一遍。</p>
 <h3 id="卷积核长度选择">卷积核长度选择<a class="headerlink" href="#卷积核长度选择" title="Permanent link">&para;</a></h3>
-<p>根据 <a href="../../n/ecde-afda-cebi/#3-sigma-规则">正态分布 &gt; 3 sigma 规则</a>，大致推测出高斯模糊的模糊范围和 <span class="arithmatex">\(\sigma\)</span> 正相关。因为长度为 <span class="arithmatex">\(n\)</span> 的卷积核取的是杨辉三角的第 <span class="arithmatex">\(n+3\)</span> 行，所以</p>
+<p>根据 <a href="../../n/ecde-afda-cebi/#3-sigma-规则">正态分布 3 sigma 规则</a>，大致推测出高斯模糊的模糊范围和 <span class="arithmatex">\(\sigma\)</span> 正相关。因为长度为 <span class="arithmatex">\(n\)</span> 的卷积核取的是杨辉三角的第 <span class="arithmatex">\(n+3\)</span> 行，所以</p>
 <div class="arithmatex">\[
 \sigma \approx \dfrac{\sqrt{n+3}}{2}
 \]</div>

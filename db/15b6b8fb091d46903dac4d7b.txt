@@ -9,8 +9,7 @@
 <p><img alt="Unity 的实现" src="../../attachments/Pasted%20image%2020241014100816.png" /></p>
 <p>Unity 的实现感觉有点麻烦，我还是用屏幕空间了。</p>
 <h2 id="重建世界坐标">重建世界坐标<a class="headerlink" href="#重建世界坐标" title="Permanent link">&para;</a></h2>
-<p>之前我写过 <a href="../../n/eaaf-becf-cbcb/">深度重建世界坐标</a> 的方法，但这次深度是未知的，不能直接用。我看网上的文章都是近平面算一个点，远平面算一个点，计算连线和 XOZ 平面的交点。</p>
-<p>其实深度可以直接算出来。因为 XOZ 平面上的点 <code>positionWS.y == 0</code>，带入 <a href="../../n/eaaf-becf-cbcb/">深度重建世界坐标</a> 逆矩阵法的推导中，由公式</p>
+<p>之前我写过 <a href="../../n/eaaf-becf-cbcb/">深度重建世界坐标</a> 的方法，但这次深度是未知的，不能直接用。我看网上的文章都是近平面算一个点，远平面算一个点，计算连线和 XOZ 平面的交点。其实深度可以直接算出来。因为 XOZ 平面上的点 <code>positionWS.y == 0</code>，带入逆矩阵法的推导中，由公式</p>
 <div class="highlight"><pre><span></span><code><span class="n">positionWS</span><span class="p">.</span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">dot</span><span class="p">(</span><span class="n">MatrixInvVP</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="w"> </span><span class="n">positionCS</span><span class="p">.</span><span class="n">w</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">positionNDC</span><span class="p">);</span>
 </code></pre></div>
 <p>得到深度</p>
