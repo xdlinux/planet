@@ -1,0 +1,59 @@
+<p>本文简要描述了在nodejs中，res.send之前是否需要添加return，以及它们各自的作用。  出于安全和稳定考虑，都建议在res.send之前添加return来保证程序正确终止，否则容易导致语句意外执行。</p>
+<p><a href="https://nancunchild.cn/2024/12/29/nodejs%e4%b8%adreturn%e5%92%8cres-send%e7%9a%84%e5%b0%8f%e4%ba%8b/">nodejs中return和res.send的小事</a>最先出现在<a href="https://nancunchild.cn">NanCunChild的个人随想</a>。</p>
+<hr /><h2>前情提要</h2>
+<p>这几天在写一个nodejs的项目，为了减少工作量便用了不少不同的AI，包括<code>ClaudeSonnet3.5</code>和<code>Gemini Exp</code>。于是就发现代码风格割裂严重，其中就有这个<code>res.send</code>前是否加<code>return</code>这个区别。</p>
+<h2>叨叨</h2>
+<p>免得废话，先说结论：<strong>强烈建议在res.send前添加return</strong><br />
+虽然不添加时IDE也是安安静静没warning，但是还是有隐患</p>
+<h3>res.send作用</h3>
+<p><code>res</code>是给客户端的返回提示，可以使用<code>res.send(&#039;xxx&#039;)</code>和<code>res.json({...})</code>等方式将信息返回给客户端。但是这两者只起到了<strong>返回信息给客户端</strong>的作用，而<strong>不是终止了程序</strong>的继续运行。也就是说在这两者之后的代码会在给客户端进行返回后继续执行，如果此时当作程序终止使用，后续缺少条件判断的话容易造成语句误执行。</p>
+<h3>return作用</h3>
+<p><code>return</code>的作用就是终止当前函数，回到调用父函数。程序执行到此处时自然不会执行后续语句。各种语言都有这个，就不多说了。</p>
+<h3>举例</h3>
+<p>以下这段代码便是误执行（代码来自 <a href="https://dev.to/adamkatora/why-you-should-always-use-return-before-ressend-in-express-apis-and-applications-k9k">devto</a>）：</p>
+<pre><code class="language-javascript">const express = require(&#039;express&#039;)
+const app = express()
+app.use(express.json())
+const port = 3000
+
+const JSONdb = require(&#039;simple-json-db&#039;)
+const db = new JSONdb(&#039;database.json&#039;)
+
+app.post(&#039;/login&#039;, (req, res) =&gt; {
+  // Get the password from the POST request body
+  const inputPassword = req.body.password
+
+  // Check if user supplied password == the database stored password
+  if (inputPassword === db.get(&quot;admin&quot;)[&quot;password&quot;]) {
+    res.send(&quot;\nLogin Successful!\nWelcome, Admin.\n&quot;).status(200)
+  } else {
+    res.send(&quot;\nWrong password!\nAcess denied!\n&quot;).status(401)
+  }
+
+  // Bug tracker counter - Will reset if code gets down to here,
+  // but this should never run because we used res.send()... right?!?!
+  db.set(&quot;bugTracker&quot;, 0);
+})
+
+app.listen(port, () =&gt; {
+  console.log(`Bug-Free Software Corp. App listening on port 3000!`)
+  console.log(`It&#039;s been ${db.get(&quot;bugTracker&quot;)} days since we&#039;ve had a bug!`)
+})</code></pre>
+<p>这段代码在输入密码之后仍然会执行<code>db.set()</code>，因为<code>res.send</code>并没有结束语句。也就是说每次都要去动一下数据库（此处用了json代替数据库），在大量访问之下极度消耗性能。<br />
+这个例子还只是消耗性能，要是抱着不<code>return</code>也没关系的想法，后续的代码执行可能导致各种未定义的行为。导致整体崩溃或者未授权访问。</p>
+<p>这个代码修复当然简单，直接加return：</p>
+<pre><code class="language-javascript">if (inputPassword === db.get(&quot;admin&quot;)[&quot;password&quot;]) {
+    // Added `return` to stop further code execution
+    return res.send(&quot;\nLogin Successful!\nWelcome, Admin.\n&quot;).status(200)
+  } else {
+    // Added `return` to stop further code execution
+    return res.send(&quot;\nWrong password!\nAcess denied!\n&quot;).status(401)
+  }</code></pre>
+<h2>碎碎念</h2>
+<p>就当是留一个博客给自己长个忘记注意细节的教训吧。</p>
+<p>参考资料：</p>
+<blockquote>
+<p><a href="https://dev.to/adamkatora/why-you-should-always-use-return-before-ressend-in-express-apis-and-applications-k9k">https://dev.to/adamkatora/why-you-should-always-use-return-before-ressend-in-express-apis-and-applications-k9k</a> dev.to的标题党程序员<br />
+<a href="https://nodejs.org/api/http.html">https://nodejs.org/api/http.html</a> nodejs官方对HTTP操作的详解</p>
+</blockquote>
+<p><a href="https://nancunchild.cn/2024/12/29/nodejs%e4%b8%adreturn%e5%92%8cres-send%e7%9a%84%e5%b0%8f%e4%ba%8b/">nodejs中return和res.send的小事</a>最先出现在<a href="https://nancunchild.cn">NanCunChild的个人随想</a>。</p>
