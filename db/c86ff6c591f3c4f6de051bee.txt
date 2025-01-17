@@ -1,0 +1,50 @@
+前言本站是基于 Typecho 的动态博客系统，为什么还要写这篇文章呢？因为最近在教别人某个笨蛋建立静态博客的过程中，发现中文互联网上的教程或多或少都有些过时，于是便结合官方文档，萌生了写这篇文...<hr />
+<h2 id="toc_203">前言</h2><p>本站是基于 Typecho 的动态博客系统，为什么还要写这篇文章呢？</p><p>因为最近在教别人<del><a href="https://smilin9.com">某个笨蛋</a></del>建立静态博客的过程中，发现中文互联网上的教程或多或少都有些过时，于是便结合官方文档，萌生了写这篇文章的想法。</p><h2 id="toc_204">前期准备</h2><p>可参考<a href="https://hexo.io/zh-cn/docs/">官方文档</a>。</p><ul><li>安装 <a href="https://nodejs.org/">Node.js</a>。</li><li>安装 <a href="http://git-scm.com/">Git</a>。</li></ul><p>如果想利用 GitHub Pages 实现远程访问，需要拥有 GitHub 账号。下面就用 GitHub Pages 来举例啦。</p><p>其他的静态页面托管平台用起来也许会更容易吧，只要把生成的网页文件夹（public）放在可访问的目录即可。</p><h2 id="toc_205">安装 Hexo</h2><h3 id="toc_206">设置下载源</h3><p>设置成淘宝源可以显著提高 npm 下载速度（不过如果你有其他加速手段就不必设置了）。</p><pre><code class="lang-shell">npm config set registry https://registry.npm.taobao.org</code></pre><h3 id="toc_207">安装 Hexo</h3><pre><code class="lang-shell">npm install -g hexo-cli</code></pre><h2 id="toc_208">配置 Git</h2><p>如果想要把静态博客建在 GitHub Pages 上，必然离不开 Git 这个能够与远程仓库交互的工具。</p><p>为了使本地的 Git 软件能够连接到远程的 GitHub 服务器，需要先设置 ssh 密钥。</p><h3 id="toc_209">本地生成密钥</h3><h4 id="toc_210">生成密钥</h4><p>Windows 用户打开 Git Bash，执行下面的命令。「邮箱」就是注册 GitHub 时的那个邮箱。</p><pre><code class="lang-shell">ssh-keygen -t rsa -C &quot;邮箱&quot;</code></pre><p>执行之后连按 Enter。此时本地密钥文件将会出现在 <code>~/.ssh/</code> 目录下。（<code>～</code> 指的是用户目录，在 Windows 环境下，这个目录一般是 <code>C:\Users\你的用户名\</code>。</p><h4 id="toc_211">复制公钥</h4><p>可以用文本编辑器打开 <code>~/.ssh/id_rsa.pub</code>，查看复制里面的内容。</p><p>也可以执行下面的命令查看 id_rsa.pub 的内容。</p><pre><code>cat ~/.ssh/id_rsa.pub</code></pre><p>复制内容即可。</p><h3 id="toc_212">GitHub 端设置</h3><ul><li>进入 GitHub 的 <a href="https://github.com/settings/keys">SSH 密钥设置</a>。</li><li>点击「New SSH Key」。</li><li>「Title」随便填，是能够表示这台电脑的标识。</li><li>「Key」填写刚才复制的 id_rsa.pub 内容。</li></ul><h3 id="toc_213">Git 用户设置</h3><p>执行下面的命令，用户名和邮箱均为注册 GitHub 时填的那个。</p><pre><code class="lang-shell">git config --global user.name &quot;用户名&quot;
+git config --global user.email &quot;邮箱&quot;</code></pre><p>上面的步骤完成后就可以测试下和 GitHub 的连通性，执行下面的命令即可。</p><pre><code class="lang-shell">ssh -T git@github.com</code></pre><p>第一次测试会有如下的输出：</p><pre><code>The authenticity of host 'github.com (20.205.243.166)' can't be established.
+ED25519 key fingerprint is SHA256:****.
+This key is not known by any other names
+Are you sure you want to continue connecting (yes/no/[fingerprint])?</code></pre><p>此时输入 <code>yes</code>。</p><p>如果成功的话会看到如下的输出：</p><pre><code>Warning: Permanently added 'github.com' (ED25519) to the list of known hosts.
+Hi hawa130! You've successfully authenticated, but GitHub does not provide shell access.</code></pre><p>如果没成功的话，请重新生成密钥，再来一次吧。也有可能是公钥没复制好，重新复制一下，并添加到 GitHub。</p><p>完成以上步骤了的话，Git 就配置好了！</p><h2 id="toc_214">建立站点目录</h2><p>此部分可参考<a href="https://hexo.io/zh-cn/docs/setup">官方文档</a>。</p><p>这个 folder 就是站点目录了。</p><pre><code class="lang-shell">hexo init &lt;folder&gt;
+cd &lt;folder&gt;
+npm install</code></pre><p>并<a href="https://hexo.io/zh-cn/docs/configuration.html">配置 _config.yml</a>。</p><h2 id="toc_215">部署到 GitHub</h2><p>现在部署在 GitHub Pagse 的 Hexo 可以不需要进行 <code>hexo g</code> 来生成站点了。利用 GitHub Actions，我们可以白嫖 GitHub 的服务器资源来帮助我们自动化生成站点并部署。（这也是中文教程缺失的一点，大部分都是传统的本地生成）</p><p>参考的<a href="https://hexo.io/docs/github-pages.html">官方文档</a>。</p><h3 id="toc_216">建立 Git 仓库</h3><p>进入到站点目录。也就是 <code>hexo init</code> 生成的那个文件夹里。执行下面的命令：</p><pre><code class="lang-shell">git init
+git add . # 有个点
+git commit -m &quot;initial commit&quot; # 引号里面的是提交信息，可以随便写</code></pre><h3 id="toc_217">推送到 GitHub</h3><h4 id="toc_218">使用命令行</h4><p>在 GitHub 上新建一个空仓库（repo）。如果想要白嫖 GitHub 的 *.github.io 的域名来访问静态博客，那就把仓库起名为「用户名.github.io」。其他的就用默认设置就行了。（如果你财大气粗，有自己购买的域名，那就随意起仓库名吧）</p><p>此时还是在你的站点目录里面，执行下面的命令。GitHub 在空仓库的界面也会显示这些命令（选择 SSH，在第二个内容块）。</p><pre><code class="lang-shell">git remote add origin git@github.com:用户名/仓库名.git
+git branch -M main
+git push -u origin main</code></pre><p>执行完这些命令，没报错的话就是推送到 GitHub 上了，可以刷新 GitHub 看看。</p><h4 id="toc_219">使用 GitHub Desktop 客户端</h4><p><strong>File</strong> &gt; <strong>Add Local Repository...</strong>，添加刚才建立的 git 仓库，然后发布即可。</p><h3 id="toc_220">配置 GitHub Actions</h3><h4 id="toc_221">创建 Actions 配置</h4><p>在 <code>.github</code> 目录里面新建文件夹 <code>workflows</code>，再新建一个文件 <code>pages.yml</code>。</p><p>也就是 <code>.github/workflows/pages.yml</code>，里面写入以下内容。</p><pre><code class="lang-yaml">name: Pages
+
+on:
+  push:
+    branches:
+      - main  # default branch
+
+jobs:
+  pages:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js 16.x
+        uses: actions/setup-node@v2
+        with:
+          node-version: '16'
+      - name: Cache NPM dependencies
+        uses: actions/cache@v2
+        with:
+          path: node_modules
+          key: $<ruby> runner.OS }}-npm-cache
+          restore-keys<rp>(</rp><rt> |
+            ${{ runner.OS </rt><rp>)</rp></ruby>-npm-cache
+      - name: Install Dependencies
+        run: npm install
+      - name: Build
+        run: npm run build
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./public</code></pre><h4 id="toc_222">设置 Actions 权限</h4><p>找到 <strong>Settings</strong> &gt; <strong>Actions</strong> &gt; <strong>General</strong> 里的 <strong>Workflow permissions</strong>（在最下面），设置为 「<strong>Read and write permissions</strong>」。</p><h3 id="toc_223">将改动推送到 GitHub 上</h3><p>以后每次改完文件，都可以执行下面的命令来同步到 GitHub 上。</p><pre><code class="lang-shell">git add .github/workflows/pages.yml
+git commit -m &quot;修改 Actions 配置&quot;
+git pull
+git push</code></pre><p>如果你使用的是 GitHub Desktop 客户端，填写 Message，点击 Commit 然后再点击上面的 Push 就行。</p><h3 id="toc_224">设置 GitHub Pages</h3><p>回到 GitHub 的这个仓库。</p><p>找到 <strong>Settings</strong> &gt; <strong>Pages</strong> &gt; <strong>Source</strong>，改成「<strong>gh-pages</strong>」。如果选项里没有 gh-pages，那一定是前面的 Actions 配置出现了问题，可以去 Actions 这个标签里看看报错。</p><p>如果你有域名的话，底下的 CNAME 可以设置为自己的域名。（没有域名的话就不要乱动了）</p><h2 id="toc_225">访问网站</h2><p>浏览器访问「用户名.github.io」或者你的自定义域名，如果没问题的话，静态博客就呈现在你的屏幕上啦！</p><h2 id="toc_226">Hexo 使用</h2><h3 id="toc_227">基本命令</h3><p>更多命令可参考<a href="https://hexo.io/zh-cn/docs/commands">官方文档</a>。</p><h4 id="toc_228">新建文章</h4><pre><code class="lang-shell">hexo new [layout] &lt;title&gt;</code></pre><p>在默认的条件下，新建的文章会保存在 <code>source/_posts/</code> 目录下。</p><p>新建的文章可以直接推送到 GitHub，不需要执行 <code>hexo g</code> 和 <code>hexo d</code>。</p><h4 id="toc_229">生成页面</h4><pre><code class="lang-shell">hexo g</code></pre><h4 id="toc_230">预览站点</h4><pre><code class="lang-shell">hexo s</code></pre><h3 id="toc_231">把新文章推送到 GitHub</h3><p>如果你新建了一篇文章，需要推送到 GitHub 上。还是老样子。</p><pre><code class="lang-shell">git add .
+git commit -m &quot;新文章&quot;
+git pull
+git push</code></pre><p>如果你使用的是 GitHub Desktop 客户端，填写 Message，点击 Commit 然后再点击上面的 Push 就行。</p><h2 id="toc_232">Hexo 特殊技巧</h2><p>GitHub 上有众多 hexo 主题，搜索关键词「hexo theme」就能找到不少。</p>

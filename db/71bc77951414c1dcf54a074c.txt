@@ -1,0 +1,131 @@
+各种各样的 STL 容器，承担着各式各样的使命。上篇文章的容器只提到了栈（stack），它是一种十分简单的容器，并不算什么强大的容器，功能很少。上篇文章仅仅是入门时的小打小闹罢了。本篇文章将会想...<hr />
+<p>各种各样的 STL 容器，承担着各式各样的使命。</p><p>上篇文章的容器只提到了栈（<code>stack</code>），它是一种十分简单的容器，并不算什么强大的容器，功能很少。</p><p>上篇文章仅仅是入门时的小打小闹罢了。本篇文章将会想你介绍更多的、功能强大的 STL 容器，能够让你见识到 STL 的真正实力。</p><blockquote><p>本文适用人群：对面向对象编程语言有了解的人，有 C++ 基础更佳。<br>如果你还对此不了解，请移步上篇的<a href="/archives/751/">入门文章</a>。</p></blockquote><h2 id="toc_277">通用方法</h2><p>下面的通用方法，如无特殊说明，是所有 STL 容器均具有的，请务必记住哦（只有下面三个）。意味着所有的 STL 容器都能使用它们。</p><p>这里以 c 作为容器名举例。</p><pre><code class="lang-cpp">c.empty();   // -&gt; bool    容器是否为空
+c.size();    // -&gt; size_t （int 或其他数值类型） 容器大小（元素个数）
+c.clear();   // -&gt; void    清空容器</code></pre><p>如无特殊说明，STL 容器都是有迭代器的。如果你对这两个都不了解，请<a href="/archives/751/#toc_3">阅读上篇文章</a>。</p><pre><code class="lang-cpp">c.begin();   // -&gt; iterator          头迭代器
+// 如果想要取容器里第三个元素的位置，可以使用 c.begin() + 2
+// 容器的第一个元素相当于是 c.begin() + 0
+
+c.end();     // -&gt; iterator          尾迭代器
+c.rbegin();  // -&gt; reverse_iterator  反向头迭代器
+c.rend();    // -&gt; reverse_iterator  反向尾迭代器</code></pre><p>如无特殊说明，STL 容器都是能够使用 algorithm 提供的算法函数的。例如：</p><pre><code class="lang-cpp">sort(c.begin(), c.end());    // 将容器 c 内的元素从小到大排序
+reverse(c.begin(), c.end()); // 将容器 c 的内容左右翻转</code></pre><p>更多 algorithm 用法请参考 <a href="https://www.cplusplus.com/reference/algorithm/">cplusplus.com</a>。</p><h2 id="toc_278">基本容器</h2><p>这些容器都是自己手写也比较好实现的，利用 STL 可以偷懒。</p><h3 id="toc_279">队列与栈</h3><p>关于栈的介绍，请移步<a href="/archives/751/#toc_2">上文</a>。</p><h4 id="toc_280">队列（queue）</h4><p>队列是先进先出的，就像现实生活中的队伍一样，队首的人处理完成事情之后会离开（pop）并轮到下一个。</p><p><strong>需要的头文件</strong></p><pre><code class="lang-cpp">#include &lt;queue&gt;
+
+using namespace std;</code></pre><blockquote><p><strong>注意：</strong>所有 STL 容器都是在 std 命名空间内的，所以想要省事请加上 <code>using namespace std;</code>。为了简洁，后面的文章将省略这行，但是实际写代码不要忘记这行哦。</p></blockquote><p><strong>声明与定义</strong></p><pre><code class="lang-cpp">queue&lt;char&gt; q;  // 声明一个名字为 q，存储 char 的队列</code></pre><blockquote><p><strong>注意：</strong>以后的所有容器将默认为 <code>char</code> 类型，你可以根据实际情况进行改动，这里只是作为例子。</p></blockquote><p><strong>方法</strong></p><pre><code class="lang-cpp">q.front();    // -&gt; char 队首元素
+q.back();     // -&gt; char 队尾元素
+q.push('a');  // -&gt; void 向队尾添加元素：字符'a'
+q.pop();      // -&gt; void 弹出队首元素</code></pre><p>还有两个 C++11 新增方法，<code>emplace</code> 与 <code>swap</code>，可参考前篇文章对它们的简单介绍。</p><h4 id="toc_281">双端队列（deque）</h4><p>顾名思义，双端队列两头都可以进出，兼有栈和队列的特性。</p><p><strong>需要的头文件</strong></p><pre><code class="lang-cpp">#include &lt;deque&gt;</code></pre><p><strong>声明与定义</strong></p><pre><code class="lang-cpp">deque&lt;char&gt; q;  // 声明一个名字为 q，存储 char 的双端队列</code></pre><p><strong>方法</strong></p><pre><code class="lang-cpp">q.front();   // -&gt; char   队首元素
+q.back();    // -&gt; char   队尾元素
+// 以上部分和 queue 一样
+q.push_front('a'); // -&gt; void 在队首插入元素：字符'a'
+q.pop_front();     // -&gt; void 弹出队首元素
+q.push_back('a');  // -&gt; void 在队尾插入元素：字符'a'
+q.pop_back();      // -&gt; void 弹出队尾元素</code></pre><p>更多方法参见 <a href="https://www.cplusplus.com/reference/deque/deque/">cplusplus.com</a>。本文章只介绍常见的。</p><h3 id="toc_282">链表（list）</h3><p>经典数据结构——双向链表。可以 $O(1)$ 快速插入和和删除某个元素，$O(n)$ 遍历元素。</p><p><strong>需要的头文件</strong></p><pre><code class="lang-cpp">#include &lt;list&gt;</code></pre><p><strong>声明与定义</strong></p><pre><code class="lang-cpp">list&lt;char&gt; l;  // 声明一个名字为 l，存储 char 的链表</code></pre><p><strong>方法</strong></p><pre><code class="lang-cpp">l.front();           // -&gt; char   首位元素
+l.back();            // -&gt; char   末尾元素
+l.push_front('a');   // -&gt; void   在首位插入元素：字符'a'
+l.pop_front();       // -&gt; void   弹出首元素
+l.push_back('a');    // -&gt; void   在末尾插入元素：字符'a'
+l.pop_back();        // -&gt; void   弹出尾元素
+// 以上部分和 deque 一样
+
+l.insert(l.begin(), 'a');
+// -&gt; iterator 在指定位置（这里的例子是队首，其实是迭代器就行）插入字符'a'，返回插入后元素的迭代器
+l.insert(l.begin(), 3, 'a');  // 插入 3 个'a'（次）
+
+l.erase(l.begin());
+// -&gt; iterator 删除指定位置（这里的例子是队首，其实是迭代器就行）的元素，返回被删除元素下一个元素的迭代器
+l.erase(l.begin(), l.end()); // 删除指定区间的元素</code></pre><p>更多方法参见 <a href="https://www.cplusplus.com/reference/deque/deque/">cplusplus</a>。本文章只介绍常见的。</p><h3 id="toc_283">其他</h3><p>下面这些不常用，感兴趣的读者可自行搜索相关资料。</p><p><strong>数组（array）</strong></p><p>和普通定长数组一样，没什么特别之处，不怎么常用。</p><p><strong>单向链表（forward list）</strong></p><p>比起双向链表，唯一的优点也许只有内存占用小了吧。因为是单向，所以<strong>不提供反向迭代器</strong>。</p><h2 id="toc_284">有点意思的容器</h2><p>这里的容器都是看起来简单，却实际却又没那么简单的容器。</p><h3 id="toc_285">向量 / 动态数组（vector）</h3><p>动态数组，顾名思义，长度是动态的。可以像数组一样 $O(1)$ 下标访问，就像普通数组一样。</p><p><strong>需要的头文件</strong></p><pre><code class="lang-cpp">#include &lt;vector&gt;</code></pre><p><strong>声明与定义</strong></p><pre><code class="lang-cpp">vector&lt;char&gt; v;</code></pre><p><strong>构造器</strong></p><p>构造器是初始化一个容器时用的，它会在容器创建时自动执行。在声明时这样写即可使用构造器。</p><pre><code class="lang-cpp">// 定义时，将指定区间拷贝到 v 中
+vector&lt;char&gt; v(l.begin(), l.end());
+// 如果用的是数组，可以像下面这样构造 vector
+int a[] = {11, 4, 51, 4};
+vector&lt;int&gt; v(a, a + 4);
+// 也可以指定初始化数目和变量，如下，定义一个含有 4 个字符'a'的 vector
+vector&lt;char&gt; v(4, 'a')；</code></pre><p><strong>方法</strong></p><pre><code class="lang-cpp">v.front();           // -&gt; char   首位元素
+v.back();            // -&gt; char   末尾元素
+v.push_back('a');    // -&gt; void   在末尾插入元素：字符'a'
+v.pop_back();        // -&gt; void   弹出尾元素
+v.insert(v.begin(), 'a');     // -&gt; iterator 在指定位置插入字符'a'，返回插入后元素的迭代器
+v.insert(v.begin(), 3, 'a');  // 插入 3 个（次）'a'
+v.erase(v.begin());           // -&gt; iterator 删除指定位置的元素，返回被删除元素下一个元素的迭代器
+v.erase(v.begin(), v.end());  // 删除指定区间的元素
+// 以上部分和 list 一样
+v[1]    // -&gt; char 访问下标为 1 的元素
+v.at(1) // -&gt; char 同上</code></pre><h3 id="toc_286">字符串（string）</h3><p>功能强大的字符串类，字符串处理题好帮手。</p><p><strong>需要的头文件</strong></p><pre><code class="lang-cpp">#include &lt;string&gt;</code></pre><p><strong>声明与定义</strong></p><pre><code class="lang-cpp">string s;</code></pre><p><strong>构造器</strong></p><pre><code class="lang-cpp">string s(&quot;hanwan&quot;);  // 可以把 C 风格的字符数组作为构造器参数，让它变成 string
+string s(3, 'a');    // 当然也能填充字符，定义一个含有 3 个'a'字符串&quot;aaa&quot;。</code></pre><p><strong>输入输出方式</strong></p><p>使用 C++ 的输入输出流。</p><pre><code class="lang-cpp">// 输入
+cin &gt;&gt; s;          // 读入一个单词（遇到空格时结束输入）
+getline(cin, s);   // 读入整行（遇到换行符结束输入）
+// 输出
+cout &lt;&lt; s;         // 不换行
+cout &lt;&lt; s &lt;&lt; endl; // 换行</code></pre><p><strong>方法</strong></p><p>字符串提供的方法有太多了。这里分了几组。</p><p><strong>访问方法</strong></p><pre><code class="lang-cpp">s[1]; s.at(1);     // -&gt; char    访问下标为 1 的字符
+// 以上和 vector 一样
+s.length();        // -&gt; size_t  字符串长度（等价于 s.size()）</code></pre><p><strong>拼接方法</strong></p><pre><code class="lang-cpp">s += 'a';   s.push_back('a');  // -&gt; string&amp; 在 s 后面添加字符'a'
+s += &quot;abc&quot;; s.append(&quot;abc&quot;);   // -&gt; string&amp; 在 s 后面添加字符串&quot;abc&quot;
+s = s1 + s2                    // -&gt; string  拼接 s1 和 s2
+// 可以说 += 和 + 是 string 最强大的运算了，解决了各种情况的拼接问题
+s1 == s2;                      // -&gt; bool    直接比较两个字符串是否相同，这不比 strcmp 优雅？</code></pre><p>此外，<code>string</code> 也可以按照字典序进行大小比较，直接用 <code>&lt;</code> 或 <code>&gt;</code> 比较即可。</p><p>在使用 <code>sort</code> 排序 <code>string</code> 数组时，默认就是按照字典序从小到大排序了。</p><p><strong>增删</strong></p><pre><code class="lang-cpp">// 也有 vector 风格的 insert 和 erase
+s.insert(2, 'a');  // -&gt; string&amp;  在下标为 2 的位置插入字符'a'
+s.erase(1, 2);     // -&gt; string&amp;  从下标为 1 的位置开始，删除两个字符</code></pre><p><strong>转换</strong></p><pre><code class="lang-cpp">s.c_str();         // -&gt; char*  返回 C 风格字符串，可以在需要 C 风格字符串时使用</code></pre><p><strong>查找</strong></p><pre><code class="lang-cpp">s.find('a', 0);    // 可省略第二个参数，默认为 0
+// -&gt; size_t  在字符串中从第 0 位开始查找字符'a'，返回结果的下标。如果没找到就返回 string::npos
+s.find(&quot;abc&quot;, 0);  // -&gt; size_t  也能查找字符串，匹配上前几个字符就算找到了。返回第一个匹配字符的下标。
+s.rfind('a');      // 和 find 一样，不过是反向查找。
+
+s.find_first_of(&quot;abc&quot;, 0);  // 可省略第二个参数，默认为 0
+// -&gt; size_t  和 find 差不多，不过是只要字符串里有'a'或'b'或'c‘就算找到了。
+s.find_last_of(&quot;abc&quot;);      // -&gt; size_t  也可以反着找
+
+s.find_first_not_of(&quot;abc&quot;, 0);  // 可省略第二个参数，默认为 0
+// -&gt; size_t  和 find_first_of 反着来，字符串里没有'a'或'b'或'c‘就算找到了。
+s.find_last_not_of(&quot;abc&quot;);      // -&gt; size_t  也可以反着找</code></pre><p><strong>截取</strong></p><pre><code class="lang-cpp">s.substr(1, 3);    // -&gt; string 截取从下标 1 开始，长度为 3 的子字符串，返回截取的子字符串</code></pre><p><strong>C++11 的转换方法</strong></p><pre><code class="lang-cpp">stoi(&quot;2333&quot;, nullptr, 10);  // -&gt; int     将字符串转换为整数，第三个参数为进制数，十进制可省略
+to_string(2333);            // -&gt; string  将数值转换为字符串</code></pre><p>更多方法参见 <a href="https://www.cplusplus.com/reference/string/">cplusplus.com</a></p><h3 id="toc_287">其他</h3><p><strong>元组（tuple）</strong></p><p>和数组差不多，就是没有固定类型，里面的可以同时存储不同类型的数据。</p><pre><code class="lang-cpp">#include &lt;tuple&gt;
+using namespace std;
+auto t = make_tuple(&quot;xm&quot;, 1, 'a'); // 赋值
+int n = get&lt;1&gt;(t);                 // -&gt; 1 按下标访问</code></pre><h2 id="toc_288">看起来很高级的容器</h2><p>这里的容器具有一定的特殊功能，自己手写可不好写哦。</p><h3 id="toc_289">优先队列（priority queue）</h3><p>优先队列会自动在插入时将元素排好顺序，即堆（heap）这种数据结构。默认顶部为最大的值，即大根堆。</p><p><strong>需要的头文件</strong></p><pre><code class="lang-cpp">#include &lt;queue&gt;          // 没错，还是队列那个头文件</code></pre><p><strong>声明与构造</strong></p><blockquote><p>为方便起见，从这里开始声明和构造器就合一起了。</p></blockquote><pre><code class="lang-cpp">priority_queue&lt;int&gt; p;    // 声明一个名为 p，存储 int 的优先队列，默认为大根堆，顶部为最大值
+priority_queue&lt;int, vector&lt;int&gt;, greater&lt;int&gt; &gt; p;     // 小根堆的声明方法，顶部为最小值
+// 你也可以重载运算符 &lt;，让优先队列按自己需要顺序排序</code></pre><p><strong>方法</strong></p><p>只有通用的和下面的三个，不多。</p><pre><code class="lang-cpp">p.push(2);  // -&gt; void  将整数 2 插入到优先队列
+p.top();    // -&gt; int   返回顶部的值
+p.pop();    // -&gt; void  弹出顶部元素</code></pre><h3 id="toc_290">映射（map）</h3><p>了解过 Python 的同学应该都知道，Python 有字典（dict）这个类，可以通过一个键访问到对应的值。JavaScript 也有类似的类型：对象（object），其他语言或许有也哈希表（hash table）。</p><p>就拿 Python 举例来说，定义一个像这样表示三个人成绩的字典</p><pre><code class="lang-python">grades = {
+    'xiaoming': 89,
+    'lihua': 93,
+    'hanmeimei': 95
+}</code></pre><p>如果想要根据人名获得对应的成绩，那只需要</p><pre><code class="lang-python">xm_grade = grades['xiaoming'] # -&gt; 89</code></pre><p>只需要提供键（key）：<code>'xiaoming'</code>，就能得到它对应的值（value）：<code>89</code>。</p><p>STL 的 map 容器提供的便是这种功能。map 有两种：</p><ul><li><strong>map</strong>：底层实现是红黑树，是按照插入顺序严格有序的，因此访问也慢一些（$O(\log n)$）。</li><li><strong>unordered_map</strong>：（C++11 才有的）底层实现是哈希表，无需，访问也更快（$O(1)$）。</li></ul><p><strong>需要的头文件</strong></p><pre><code class="lang-cpp">// 按需任选其一
+#include &lt;map&gt;
+#include &lt;unordered_map&gt; // C++11</code></pre><p><strong>声明与定义</strong></p><pre><code class="lang-cpp">// 按需任选其一
+map&lt;string, int&gt; grades;       // 定义一个键为 string 型，值为 int 型的 map，名为 grades
+unordered_map&lt;string, int&gt; m;</code></pre><blockquote><p><strong>注意：</strong>由于这两种 map 基本用法都一样，所以下面都以 map 来举例。</p></blockquote><p><strong>遍历</strong></p><p>map 内部存储的元素类型是 pair。</p><p>像上面定义的例子，<code>grades</code> 里的元素是 <code>pair&lt;string, int&gt;</code>。</p><p>可以理解成，<code>grades</code> 里的元素的是这样的结构体：</p><pre><code class="lang-cpp">struct pair
+{
+    string first;
+    int second;
+}</code></pre><p>如何遍历 map 呢？就像下面这样：</p><pre><code class="lang-cpp">for (map&lt;string, int&gt;::iterator it = grades.begin(); it != grades.end(); it++) {
+    cout &lt;&lt; it-&gt;first &lt;&lt; &quot; =&gt; &quot; &lt;&lt; it-&gt;second &lt;&lt; endl;
+}</code></pre><p><strong>方法</strong></p><pre><code class="lang-cpp">// 还是上面那个例子，这次我们用 C++ 来写
+
+// 像这样可以添加映射
+grades[&quot;xiaoming&quot;] = 89;
+grades[&quot;lihua&quot;] = 93;
+grades[&quot;hanmeimei&quot;] = 95;
+// 也可以像这样构造映射，直接赋值
+grades = {
+    {&quot;xiaoming&quot;, 89},
+    {&quot;lihua&quot;, 93},
+    {&quot;hanmeimei&quot;: 95}
+};
+
+// 像这样可以访问键对应的值
+int xm_grade = grades[&quot;xiaoming&quot;]; // -&gt; 89
+
+// 支持经典的 insert 和 erase，也可以像下面这样用
+grades.insert(pair&lt;string, int&gt;(&quot;xiaomeng&quot;, 100));
+// -&gt; pair&lt;iterator, bool&gt; 相当于 grades[&quot;xiaomeng&quot;] = 100，但是它返回 pair
+// 其中，first 为插入元素（或已存在的相同键）的迭代器，second 为是否插入成功（如键已存在则插入不成功）
+grades.erase(&quot;xiaowang&quot;);  // -&gt; size_t  删除键为&quot;xiaowang&quot;的映射记录
+
+// 查找方法
+map&lt;string, int&gt;::iterator xm = grades.find(&quot;xiaoming&quot;); // 和下标访问不同的是，它返回的是一个迭代器
+xm-&gt;first;  // -&gt; &quot;xiaoming&quot; 键
+xm-&gt;second; // -&gt; 89         值</code></pre><h3 id="toc_291">集合（set）</h3><p>数学上的集合是不能出现重复值的，set 容器也是一样的。不过与数学上集合的无序性不同的是，set 容器内部是有序的（默认从小到大排序）。相对地还有个 unordered_set（C++11 才有的），它是无序的，因此速度也比有序的 set 更快。之前也写过<a href="/archives/339/">关于它的文章</a>。</p><p><strong>需要的头文件</strong></p><pre><code class="lang-cpp">// 按需任选其一
+#include &lt;set&gt;
+#include &lt;unordered_set&gt; // C++11</code></pre><p><strong>声明与定义</strong></p><pre><code class="lang-cpp">set&lt;int&gt; s;            // 定义一个名为 s，存储 int 的集合
+unordered_set&lt;int&gt; s1;</code></pre><p><strong>构造器</strong></p><blockquote><p>为方便起见，下面都以 set 为例。</p></blockquote><pre><code class="lang-cpp">int a[] = {19, 19, 8, 10};
+set&lt;int&gt; s(a, a + 4);      // 构造一个集合 {8, 10, 19}
+set&lt;int, greater&lt;int&gt; &gt; s; // 第二个参数可以自定义比较器，这个例子 s 内部从大到小排序</code></pre><p><strong>方法</strong></p><pre><code class="lang-cpp">s.insert(8);  // -&gt; pair&lt;iterator, bool&gt; 插入单个元素
+// 返回的 pair，first 为插入值（或已存在的相同值）的迭代器，second 为是否插入成功（如已存在则插入不成功）
+s.erase(19);  // -&gt; void                 删除指定元素</code></pre><h3 id="toc_292">其他</h3><p><strong>multiset</strong></p><p>允许有重复值的集合，跟优先队列很像，不知道有什么用呢。</p><p><strong>bitset</strong></p><p>说是集合，却没有集合的特性，就当它是个存储位（bit）的数组吧。每一个元素都是一位，支持位运算。</p><p>比起 <code>bool</code> 数组来说，这东西更省空间，要对位进行精确操作可以用它。之前写过<a href="/archives/520/">关于它的文章</a>。</p><h2 id="toc_293">太长不看版</h2><p>文章太长了一头雾水？STL 容器看起来很多，但其内核都是相通的。</p><p>现代编辑器都拥有完善的代码补全，所以你不用担心方法名能不能记住，你只需要知道这些方法是做什么的就可以了，以及，以上容器的拼写。</p><p>这里再列下它们的名字吧。</p><table><thead><tr><th>中英文名字</th><th>头文件</th><th>作用</th></tr></thead><tbody><tr><td>栈（stack）</td><td><code>stack</code></td><td>先进后出</td></tr><tr><td>队列（queue）</td><td><code>queue</code></td><td>先进先出</td></tr><tr><td>双端队列（deque）</td><td><code>deque</code></td><td>兼有栈和队列特性</td></tr><tr><td>链表（list）</td><td><code>list</code></td><td>双向链表</td></tr><tr><td>向量（vector）</td><td><code>vector</code></td><td>动态数组</td></tr><tr><td>字符串（string）</td><td><code>string</code></td><td>比 <code>char*</code> 更好用的字符串</td></tr><tr><td>优先队列（priority_queue）</td><td><code>queue</code></td><td>堆，内部有序</td></tr><tr><td>映射（map）</td><td><code>map</code></td><td>构造键到值的映射</td></tr><tr><td>集合（set）</td><td><code>set</code></td><td>不允许重复值，内部有序</td></tr></tbody></table><p>如果想看详细用法就点击目录吧。注意，要先看通用方法哦。<br> <strong>参考资料：</strong><a href="https://www.cplusplus.com/reference/stl/">cplusplus.com</a></p>

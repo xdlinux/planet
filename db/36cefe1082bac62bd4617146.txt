@@ -1,0 +1,70 @@
+充分利用 C++ 的 STL，可以让你做编程题事半功倍。前言STL（Standard Template Library，标准模板库） 对我这种经常用 C++ 的人来说是个很熟悉的东西了，毕竟它也...<hr />
+<p>充分利用 C++ 的 STL，可以让你做编程题事半功倍。</p><h2 id="toc_294">前言</h2><p>STL（Standard Template Library，标准模板库） 对我这种经常用 C++ 的人来说是个很熟悉的东西了，毕竟它也是陪伴我 OI 生涯的老熟人了。不过，对于刚接触编程还是在大一的 C 语言课的同学来说，C++ 是似乎个遥不可及的东西；至于 C++ 的库？那就是个更遥远的东西了。可能新人对学习 STL 有着畏惧的心理，但是别担心，这种工具只是为了程序员的方便而创造出来的，它只会便利你。</p><p>本文将以简单的方式带你入门 STL，领略 STL 的强大之处。要注意这只是一篇用于入门的文章，不是参考手册。如果你有一定的 STL 基础，想要了解更多容器的用法，请看<a href="/archives/763/">下篇</a>。</p><h2 id="toc_295">容器的引入</h2><blockquote><p>「栈」的引入。</p></blockquote><p>假如你正在做「括号匹配判断」这道题，需要用到「栈」这个数据结构。于是你手写了几个栈相关的函数，定义了几个变量来存储栈。就像下面这样。</p><pre><code class="lang-cpp">char stack[100];
+int pos = 0;
+
+void push(char x) { stack[++pos] = x; } // 入栈
+
+void pop() { pos--; }                   // 出栈
+
+char top() { return stack[pos]; }       // 栈顶</code></pre><p>看似这样也很简单？那如果这道题需要两个「栈」结构呢，你会怎么写？也许是直接复制一份现有的代码，或者是给函数增加参数，把指定的 <code>stack</code> 及其 <code>pos</code> 传入。然而这样一份代码就难以复用了。而且当你做到新的题目，又要用到「栈」这个数据结构，还要再复制一遍，并根据题目情况修改变量名以及新增一些函数，十分麻烦。</p><p>这时候，STL 的作用便体现出来了。STL 有许多的容器（Container），栈（<code>stack</code>）也是其中的一种。更多的容器我们后面再来解释。</p><p>如何使用 STL 中的栈呢？</p><pre><code class="lang-cpp">#include &lt;stack&gt;        // 引入「栈」头文件
+
+using namespace std;    // 使用 std 命名空间（STL 都在这个命名空间里）
+
+stack&lt;char&gt; st;         // 定义一个栈，存储字符（char）类型，名为 st</code></pre><p>这样你便定义了一个 STL 里的栈。那么如何调用它的功能呢？只需要在这个栈后面输入 <code>.</code>（与访问结构体里的变量一致），就能输入函数名调用它提供的方法（Method）了。并且，在有代码补全的编辑器（比如 VS Code）中，你在敲下 <code>.</code> 后，会有一个完整的方法列表显示出来。就像这样：<br><figure><img class="" alt="代码补全" data-src="https://upload.hawa130.com/2022/02/589811080.png#vwid=471&vhei=199" src="https://upload.hawa130.com/2022/02/589811080.png#vwid=471&vhei=199"><figcaption>代码补全</figcaption></figure></p><p>如果这时，你想要把 <code>x</code> 这个变量入栈，就像这样写：</p><pre><code class="lang-cpp">st.push(x);</code></pre><p>如果此时需要两个栈就简单了，直接定义一个新的栈即可。</p><pre><code class="lang-cpp">stack&lt;char&gt; st2;
+st2.push(y);</code></pre><p>这两个 <code>push</code> 相互独立，互不干扰（这也是面向对象编程的好处）。所以，你想要几个容器就定义几个。</p><h3 id="toc_296"><code>stack</code> 提供的方法列表</h3><table><thead><tr><th>方法</th><th>功能</th><th>返回</th></tr></thead><tbody><tr><td><code>empty()</code></td><td>判断栈是否为空</td><td><code>bool</code>（空为 <code>true</code>，不空为 <code>false</code>）</td></tr><tr><td><code>size()</code></td><td>返回栈的大小</td><td><code>size_type</code>（可以理解成 <code>int</code> 这种数值类型）</td></tr><tr><td><code>top()</code></td><td>返回栈顶元素</td><td><code>value_type</code>（就是当初定义时候，栈存储的值的类型）</td></tr><tr><td><code>push(value_type val)</code></td><td>将某个元素 <code>val</code> 入栈</td><td><code>void</code></td></tr><tr><td><code>pop()</code></td><td>弹出栈顶元素</td><td><code>void</code></td></tr></tbody></table><p>还有两个 C++11 标准提供的方法 <code>emplace</code> 和 <code>swap</code>。</p><p>前者可以传入一个数组，将这个数组的元素导入栈（等同于依次 <code>push</code>）；后者在许多其他 STL 容器中也能见到，用于交换两个容器中的内容，比如使用 <code>st1.swap(st2)</code> 就能把 <code>st1</code> 和 <code>st2</code> 里的内容相互交换。</p><p>与 <code>stack</code> 相似的容器还有 <code>queue</code>（队列）、<code>deque</code>（双端队列），在此不再赘述。</p><p>更多更全的容器可以看看下面的<a href="#toc_11">参考手册推荐</a>。</p><h2 id="toc_297">迭代器的使用</h2><p>看完第一部分的内容，你应该不免有疑惑：要是我想知道栈里面的内容该怎么办？这时就该迭代器出场了。</p><p>「迭代器」听起来是一个高大上的名词，但其实它只是解决一个实际问题的趁手工具。你可以把它理解为一种特殊的指针，当然，即使不会指针也能用。</p><p>比如我想要输出 <code>st</code> 这个栈里的所有元素，就像这样写：</p><pre><code class="lang-cpp">for (stack&lt;char&gt;::iterator it = st.begin(); it != st.end(); it++) {
+    cout &lt;&lt; *it &lt;&lt; endl; // C++ 的标准输出流语法
+    // 等同于
+    printf('%c\n', *it);
+}</code></pre><ol><li><code>stack&lt;char&gt;::iterator it</code> 定义了一个名为 <code>it</code> 的迭代器。注意双冒号前面，正好就是我们定义 <code>st</code> 时它的类型。</li><li><code>it = st.begin()</code> 给 <code>it</code> 赋了一个值，这个值是 <code>st</code> 这个容器的起始位置（头迭代器）。</li><li><code>st.end()</code> 表示 <code>st</code> 最后一个元素的位置的下一个位置（尾迭代器），因此要用 <code>it != st.end()</code> 作为循环条件，当 <code>it</code> 指到 <code>st.end()</code> 这个位置时，循环就该结束了。</li><li><code>it++</code> 在每一次循环后，<code>it</code> 会指向当前元素的下一个元素的位置。<code>++</code> 是它内部实现的方法，用于跳转到下一个元素的位置。它不等同于普通指针的 <code>+=1</code>，因为内存空间也许不是连续的。</li></ol><p>学过指针的同学应该知道，<code>*it</code> 是 <code>it</code> 指向元素的值。如果你不了解指针，记得输出时带上星号 <code>*</code> 就行。</p><p>如果我们入栈元素的依次是 <code>1 2 3 4</code>，那么上面这段代码的输出应该是：</p><pre><code>4
+3
+2
+1</code></pre><p>看到这里，你应该明白了如何去使用迭代器遍历容器内的元素。利用它不仅能输出容器里面的元素，还能对元素依次进行操作。要注意 <code>iterator</code> 这个单词的拼写哦。</p><p>不过如果你用的 C++11 或更高版本的标准，<code>stack&lt;char&gt;::iterator it = st.begin()</code> 可以偷懒写成 <code>auto it = st.begin()</code>，这是因为 C++11 标准增加了 <code>auto</code> 关键字，能够自动推断赋值的类型。不过很多学校的 OJ 还是老标准，很可能不支持这个新特性。</p><h3 id="toc_298">反向迭代器</h3><p>一般我们用正向迭代器，不过 STL 也提供了反向迭代器。</p><p>顾名思义，就是用来反向遍历一个容器的。</p><p>看下面的代码你应该就懂了。</p><pre><code class="lang-cpp">for (stack&lt;char&gt;::reverse_iterator it = st.rbegin(); it != st.rend(); it++) { // 做些什么 }</code></pre><h2 id="toc_299">利用算法（Algorithm）偷懒</h2><p><code>algorithm</code> 这个头文件提供了许多实用的函数。只需要这样引入即可使用。</p><pre><code class="lang-cpp">#include &lt;algorithm&gt;
+
+using namespace std;</code></pre><p>那么它有哪些奇妙的功能呢？它的功能实在是有点多，我们只挑几个常见的来看。</p><h3 id="toc_300"><code>sort</code> 排序的使用</h3><p>手写排序无疑是痛苦的体验了。还好 STL 内置了一个排序用的函数，而且是它的效率极高的。</p><h4 id="toc_301">基本用法</h4><p>比如你有一个数组 <code>a</code>，里面存了 50 个不同的、乱序的 <code>int</code> 值，下标区间是 1～50。</p><p>想要把这 50 个值<strong>从小到大</strong>排列，只需要这样：</p><pre><code class="lang-cpp">sort(a + 1, a + 51);
+// 等价于
+sort(&amp;a[1], &amp;a[51]);</code></pre><p>第一个参数是首元素的地址，第二个参数是末元素的<strong>下一个元素</strong>的地址（可以理解成左闭右开区间，是不是和 <code>end()</code> 设计很像）。</p><p>细心的你应该会发现，首末位置相减正好是要排序的序列长度，所以第二个参数还是很好想到的。所以，如果是 n 个元素排序（下标从 1～n）就应该写 <code>sort(a + 1, a + n + 1);</code> 了。</p><h4 id="toc_302">自定义比较器</h4><p>如果你想要把这 50 个元素从大到小排序呢？这时候就需要自定义比较器了。</p><p><code>sort()</code> 这个函数其实还可以传入第三个参数，这个参数便是自定义比较器。想要从大到小排序，只需要这样定义一个返回类型为 <code>bool</code> 的函数作为比较比较器。</p><pre><code class="lang-cpp">bool compare(int x, int y)
+{
+    return x &gt; y;
+}</code></pre><p>排序时需要这样写：</p><pre><code class="lang-cpp">sort(a + 1, a + 51, compare);</code></pre><p>这样运行过后，<code>a</code> 数组就是从大到小排序的了。</p><p>可以这么理解比较器函数：返回 <code>true</code>，第一个参数排前面，返回 <code>false</code>，第二个参数排前面。</p><p>如果你喜欢更简洁的写法，可以使用 C++11 标准新增的 Lambda 表达式（匿名函数）作为第三个参数，这样一行就写完了。</p><pre><code class="lang-cpp">sort(a + 1, a + 51, [](int x, int y) -&gt; bool { return x &gt; y; });</code></pre><p>比较器函数同样很适用于结构体排序。比如像这样定义一个结构体。</p><pre><code class="lang-cpp">struct Student
+{
+    char* name;
+    int chinese;    // 语文成绩
+    int math;       // 数学成绩
+    int english;    // 英语成绩
+}</code></pre><p>想要把 50 个学生按照语文成绩的顺序从高到低排序，语文成绩一样时按照数学成绩排序，最后按照英语。比较器应该像这样写：</p><pre><code class="lang-cpp">bool cmp(Student a, Student b)
+{
+    if (a.chinese &gt; b.chinese) {
+        return true;
+    } else if (a.chinese == b.chinese) {  // 语文成绩一样
+        if (a.math &gt; b.math) {            // 先比数学
+            return true;
+        } else if (a.math == b.math) {    // 数学成绩一样
+            return a.english &gt; b.english; // 最后比较英语
+        } else {
+            return false;
+        }
+    }
+    return false;
+}</code></pre><h4 id="toc_303">重载运算符的妙用</h4><p>重载 <code>&lt;</code> 小于运算也是一个优雅的让 sort 函数安自己预期工作的好办法。重载运算符也是 C++ 的特性，简单来说就是自己去给某个结构体/类定义运算。</p><p>比如上面的 <code>Student</code> 结构体，想要不通过 <code>sort()</code> 的第三个参数来按照上述规则排序，可以这样写：</p><pre><code class="lang-cpp">struct Student
+{
+    char* name;
+    int chinese;
+    int math;
+    int english;
+
+    bool operator &lt; (const Student&amp; other) const
+    {
+        if (chinese &gt; other.chinese) {
+            return true;
+        } else if (chinese == other.chinese) {
+            if (math &gt; other.math) {
+                return true;
+            } else if (math == other.math) {
+                return english &gt; other.english;
+            } else {
+                return false;
+            }
+        }
+        return false;
+    }
+}</code></pre><p>下面的主程序只需要这样写（假设有 50 个学生存到数组 <code>s</code>，下标 0～49）：</p><pre><code class="lang-cpp">sort(s, s + 50);</code></pre><p>这样执行过后，<code>s</code> 就按照规则排序了。</p><h3 id="toc_304">Algorithm 中的其他实用函数</h3><p>下面的 <code>begin</code> 和 <code>end</code> 都是指针（迭代器）变量，值为一个地址。</p><table><thead><tr><th>函数</th><th>功能</th></tr></thead><tbody><tr><td><code>swap(a, b)</code></td><td>顾名思义，交换变量 <code>a</code> 和 <code>b</code> 的值。</td></tr><tr><td><code>fill(begin, end, val)</code></td><td>将区间 <code>[begin, end)</code> 填充值 <code>val</code>，适合用来填充数组/容器。</td></tr><tr><td><code>reverse(begin, end)</code></td><td>将区间 <code>[begin, end)</code> 进行反转，比如把字符串反转一下，判断是不是回文串。</td></tr><tr><td><code>min(a, b)</code> / <code>max(a, b)</code></td><td>顾名思义，返回 <code>a</code> 和 <code>b</code> 中较小/较大的值。</td></tr><tr><td><code>min_element(begin, end)</code> / <code>max_element(begin, end)</code></td><td>返回区间 <code>[begin, end)</code> 中最小/最大值的地址。</td></tr><tr><td><code>lower_bound(begin, end, val)</code></td><td>返回<strong>有序</strong>区间 <code>[begin, end)</code>，首个值为 <code>val</code> 的地址。</td></tr><tr><td><code>upper_bound(begin, end, val)</code></td><td>返回<strong>有序</strong>区间 <code>[begin, end)</code>，最后一个值为 <code>val</code> 的地址的下一个元素的地址。</td></tr><tr><td><code>unique(begin, end)</code></td><td>对区间 <code>[begin, end)</code> 进行去重。</td></tr></tbody></table><h2 id="toc_305">参考手册</h2><p>STL 容器参考：<a href="https://www.cplusplus.com/reference/stl/">cplusplus.com</a><br>Algorithm 功能参考：<a href="https://www.cplusplus.com/reference/algorithm/">cplusplus.com</a><br>（虽然这个网站界面很古典，但是例子和解释相当全。对英语水平要求不高。）</p><p>C++ 头文件参考：<a href="https://zh.cppreference.com/w/cpp/header">cppreference</a><br>（和上面的网站有相似的内容，但支持中文）</p><p>下篇：<a href="/archives/763/">STL 容器指南</a>。这篇文章介绍了各种 STL 容器的用法，适合有基础的人食用。介绍了以下容器。</p><table><thead><tr><th>中英文名字</th><th>功能</th></tr></thead><tbody><tr><td>栈（stack）</td><td>先进后出</td></tr><tr><td>队列（queue）</td><td>先进先出</td></tr><tr><td>双端队列（deque）</td><td>兼有栈和队列特性</td></tr><tr><td>链表（list）</td><td>双向链表</td></tr><tr><td>向量（vector）</td><td>动态数组</td></tr><tr><td>字符串（string）</td><td>比 <code>char*</code> 更好用的字符串</td></tr><tr><td>优先队列（priority_queue）</td><td>堆，内部有序</td></tr><tr><td>映射（map）</td><td>构造键到值的映射</td></tr><tr><td>集合（set）</td><td>不允许重复值，内部有序</td></tr></tbody></table>
