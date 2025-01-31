@@ -1,5 +1,5 @@
 <p>买了一个低性能服务器，记录一下装上PVE后配置OpenWRT虚拟机当高性能网关的故事。包括在没有LVM时对OpenWRT进行扩容的多种方法。</p>
-<p><a href="https://nancunchild.cn/2024/10/16/toss_openwrt_in_pve_install/">折腾OpenWRT in PVE那些事——安装与扩容</a>最先出现在<a href="https://nancunchild.cn">NanCunChild的个人随想</a>。</p>
+<p><a href="https://gaming.nancunchild.cn/2024/10/16/toss_openwrt_in_pve_install/">折腾OpenWRT in PVE那些事——安装与扩容</a>最先出现在<a href="https://gaming.nancunchild.cn">NanCunChild的个人随想</a>。</p>
 <hr /><h2>缘由——瞎买</h2>
 <p>最近在淘宝淘了一个IBM的老机架式服务器，型号是SystemX 3250 M5。虽然是古董产品，但是只要530RMB，感觉非常Nice。换了一个E3-1270V3和一个128G的樊想SSD（已经开始感觉亏了）之后正式开启网络专用PVE环境。是的，这台小机器之后就作为专用于网络处理的网关。</p>
 <h2>配置一览</h2>
@@ -36,7 +36,7 @@
 在PvE的Web端 local(节点名称) 下找到ISO镜像，将下载好的镜像上传。<br />
 随后点击右上角蓝色大按钮的“新建虚拟机”，弹出如下框框（启动保姆式教学）<br />
 这里虚拟机名称只能是英文，而且后续会在左侧虚拟机处显示出来。下一步。<br />
-<img decoding="async" src="https://nancunchild.cn/wp-content/uploads/2024/10/屏幕截图-2024-07-24-211828-300x225.png" alt="" /></p>
+<img decoding="async" src="http://nancunchild.cn/wp-content/uploads/2024/10/屏幕截图-2024-07-24-211828-300x225.png" alt="" /></p>
 </li>
 </ul>
 <p>选择操作系统，由于PvE无法直接读取img镜像，因此我们先不选择介质，让系统暂时处于真空。下一步。</p>
@@ -52,13 +52,13 @@
 这些本质上是软件模拟的磁盘控制器，类似于普通电脑上的存储相关驱动。</p>
 </blockquote>
 <p>只要不是硬件和系统特别奇怪导致无法兼容，或者是有高性能极致追求的话，都建议保持默认。在选择操作系统类型时，PVE会尽力选择最适合的硬盘控制器类型。<br />
-<img decoding="async" src="https://nancunchild.cn/wp-content/uploads/2024/10/屏幕截图-2024-07-24-211751-300x228.png" alt="" /></p>
-<p><img decoding="async" src="https://nancunchild.cn/wp-content/uploads/2024/10/Pasted-image-20240818011245-300x224.png" alt="" /></p>
+<img decoding="async" src="http://nancunchild.cn/wp-content/uploads/2024/10/屏幕截图-2024-07-24-211751-300x228.png" alt="" /></p>
+<p><img decoding="async" src="http://nancunchild.cn/wp-content/uploads/2024/10/Pasted-image-20240818011245-300x224.png" alt="" /></p>
 <p>接下来指定CPU信息，单槽单核其实可以用了，不过如果之后要装很多服务，可以适当调高，最后的核心数就是插槽数 *核心数。至于类别，我直接保持默认似乎没有问题，如果担心CPU兼容问题可以在“类别”中使用host模式。</p>
 <p>指定内存，都是酌情考虑，不过不装额外服务，只作为普通网关连接3个左右设备的话，都是在100MiB以下。会根据网关下的设备数有不同的占用，这一点靠经验把握就行，这里分1024MiB是绝对够用的。</p>
 <p>网络就保持默认，OP需要管理的网口会在我们成功运行后添加进来。</p>
 <p>最后确认一下，没啥问题就直接开始了。<br />
-<img decoding="async" src="https://nancunchild.cn/wp-content/uploads/2024/10/Pasted-image-20240818011828-300x224.png" alt="" /></p>
+<img decoding="async" src="http://nancunchild.cn/wp-content/uploads/2024/10/Pasted-image-20240818011828-300x224.png" alt="" /></p>
 <p>好的，没有问题的话左侧服务器视图会多出一个虚拟机，此时不要启动它，因为它现在根本没有系统，需要给它一个系统盘（由于PVE只支持QCOW2而恼火的我）。我们需要进入PVE终端，ssh连接和物理接触均可，在root环境下输入以下指令：</p>
 <pre><code class="language-bash">./img2kvm ./path/to/your/op.img 101 vm-101-disk-1</code></pre>
 <blockquote>
@@ -101,15 +101,15 @@ Disk image for VM 104 imported, add it to VM from unused disk in hardware settin
 <pre><code class="language-bash">vi /etc/config/network
 // 一开始，文字处理器中应该只有vi能用，不过按下i进入编辑模式后，发现一切都是熟悉的vim。</code></pre>
 <p>看到的内容应该如下所示：<br />
-<img decoding="async" src="https://nancunchild.cn/wp-content/uploads/2024/10/Pasted-image-20240818014504-300x187.png" alt="" /></p>
+<img decoding="async" src="http://nancunchild.cn/wp-content/uploads/2024/10/Pasted-image-20240818014504-300x187.png" alt="" /></p>
 <p>修改字段 <em>ipaddr</em> 的IP为实际内网中OP的IP。修改 <em>netmask</em> 为实际的子网掩码。如果作为网关，就可以直接使用了。按 Esc ，输入:wq离开。随后使用reboot进行重启，应用该配置。</p>
 <p>好的，现在在电脑浏览器上输入刚刚的OP的IP，就可以看见OP的管理页面了。应该是如下的界面。会警告你root密码没有设置，什么人都可以黑你内网，所以你需要及时去设置root密码。<br />
-<img decoding="async" src="https://nancunchild.cn/wp-content/uploads/2024/10/Pasted-image-20240818014930-300x179.png" alt="" /></p>
+<img decoding="async" src="http://nancunchild.cn/wp-content/uploads/2024/10/Pasted-image-20240818014930-300x179.png" alt="" /></p>
 <p>设置完成后就可以直接使用命令行进行连接了。<br />
 随后我们在Web端的 <strong>Network-Interfaces</strong> 里面找到网络端口，然后添加，保证机器可以上网。基础配置就完成了。</p>
 <h3>开始扩容</h3>
 <p>你应该会发现，整个能装软件的空间也就124MiB左右，装几个就满了。因为官方为了最大兼容，防止小容量装不下，因此提供的img的根目录空间就这么大。因此需要进行扩容。<br />
-<img decoding="async" src="https://nancunchild.cn/wp-content/uploads/2024/10/Pasted-image-20240818104647-300x88.png" alt="" /></p>
+<img decoding="async" src="http://nancunchild.cn/wp-content/uploads/2024/10/Pasted-image-20240818104647-300x88.png" alt="" /></p>
 <p>但是根分区扩容不能直接进行，如同理发师不能给自己理发，一个操作系统也不能一边拆自己老家一边保持正常运行。需要别的系统来完成这一点。<br />
 当时我想着扩容的思路有几个：</p>
 <ul>
@@ -172,7 +172,7 @@ img的拆装也是一个不小的活，要注意打包的各种小规矩等等�
 </blockquote>
 <p>接下来直接开始，我们先给对应虚拟机添加一块硬盘，然后指定一个镜像添加为CDROM，准备开始装救援系统。最后修改引导顺序，保证是刚刚添加的CDROM位于系统磁盘的前面即可。</p>
 <p>启动，能看到如下页面。你可以尝试按F2选择语言，但是有部分没有汉化。为了稳定，我们选择<em>Use Legacy Kernel</em> 随后选择 <em>Normal Boot</em><br />
-<img decoding="async" src="https://nancunchild.cn/wp-content/uploads/2024/10/Pasted-image-20240818111226-300x226.png" alt="" /></p>
+<img decoding="async" src="http://nancunchild.cn/wp-content/uploads/2024/10/Pasted-image-20240818111226-300x226.png" alt="" /></p>
 <p>接下来设置用户等就不多介绍了。完成安装程序后想办法让虚拟机停下来，随后在选项中调整虚拟机引导顺序，把刚刚安装好的硬盘放在第一位，保存后启动系统。<br />
 进入了antiX系统，执行lsblk指令看到目前磁盘状况。如下的sda盘就是我们需要扩容的盘，sdb为antiX的系统盘。需要扩容的分区为sda2分区，这里需要注意，sda128一般是恢复分区，sda1为引导分区。所以主分区应该是sda2，这一点可以从装软件的容量上看出来。<br />
 此时也可以使用 <em>lsblk</em> 通过磁盘的UUID分辨不同的磁盘：</p>
@@ -187,13 +187,13 @@ n
 33200  # 起始扇区，这个不能错，也最好不要按照默认来，要通过第一步 p 的输出来决定
 17029119  # 结束扇区，可以默认，也可以直接最大值（分区后没有新分区）
 w</code></pre>
-<p><img decoding="async" src="https://nancunchild.cn/wp-content/uploads/2024/10/Pasted-image-20240818122209-300x205.png" alt="" /></p>
+<p><img decoding="async" src="http://nancunchild.cn/wp-content/uploads/2024/10/Pasted-image-20240818122209-300x205.png" alt="" /></p>
 <p>分区修改完成，最好通过查错工具检查并修复错误，此处使用e2fsck：</p>
 <pre><code class="language-bash">e2fsck -f /dev/sdx
 yes</code></pre>
 <p>再使用lsblk看看分区是否扩容成功，扩容成功时，能看到对应分区的大小已经扩张到了期望的大小。</p>
 <p>关掉虚拟机，在PVE选项中调整启动顺序，启动OpenWRT，进入软件界面时发现扩容已经完成：<br />
-<img decoding="async" src="https://nancunchild.cn/wp-content/uploads/2024/10/Pasted-image-20240818130834-300x75.png" alt="" /></p>
+<img decoding="async" src="http://nancunchild.cn/wp-content/uploads/2024/10/Pasted-image-20240818130834-300x75.png" alt="" /></p>
 <p>接下来就开开心心装软件吧！</p>
 <p>参考资料：</p>
 <blockquote>
@@ -202,4 +202,4 @@ yes</code></pre>
 <a href="https://openwrt.org/zh/docs/start">https://openwrt.org/zh/docs/start</a> （OpenWRT官方Wiki）</p>
 </blockquote>
 <p>。</p>
-<p><a href="https://nancunchild.cn/2024/10/16/toss_openwrt_in_pve_install/">折腾OpenWRT in PVE那些事——安装与扩容</a>最先出现在<a href="https://nancunchild.cn">NanCunChild的个人随想</a>。</p>
+<p><a href="https://gaming.nancunchild.cn/2024/10/16/toss_openwrt_in_pve_install/">折腾OpenWRT in PVE那些事——安装与扩容</a>最先出现在<a href="https://gaming.nancunchild.cn">NanCunChild的个人随想</a>。</p>
