@@ -1,5 +1,5 @@
 <p>在PVE虚拟化环境中的OpenWRT下使用mwan3进行PPPoE多拨，同时配置负载均衡，达到贷款叠加的目标。</p>
-<p><a href="https://gaming.nancunchild.cn/2024/10/16/toss_openwrt_in_pve_multiwan/">折腾OpenWRT那些事——多拨</a>最先出现在<a href="https://gaming.nancunchild.cn">NanCunChild的个人随想</a>。</p>
+<p><a href="https://blog.nancunchild.cn/2024/10/16/toss_openwrt_in_pve_multiwan/">折腾OpenWRT那些事——多拨</a>最先出现在<a href="https://blog.nancunchild.cn">NanCunChild的个人随想</a>。</p>
 <hr /><h2>起源</h2>
 <p>继上次买了垃圾装PVE，这个E3的垃圾自然只能跑轻量服务，于是只装单个OpenWRT网关系统作为整个内网的网关。但是外部联网环境恶劣：校园网只有百兆，上游DNS在加载娱乐相关内容时巨卡；校园网内网是PPPoE拨号得到的，因此是动态IP。ipv6也处于不能用的状态。</p>
 <h2>要素</h2>
@@ -32,4 +32,4 @@
 <strong>注意：此名称不能与接口里面的名称相同</strong> </p>
 <p>随后，在“策略”中删除所有策略，只保留 <em>balanced</em> 策略，将成员添加进去，点击保存。此时重启network，在主菜单的 <strong>状态-MultiWAN Manager</strong> 下即可查看接口使用情况。正常情况下，应该显示为绿色，包含正确的已上线时间。下方有可能显示 <em>No Tracking</em> ，但是不影响使用，部分网络环境采用了跟踪反而有可能造成频繁断联的问题。<br />
 <img decoding="async" src="http://nancunchild.cn/wp-content/uploads/2024/10/Pasted-image-20241016165327-300x130.png" alt="" /></p>
-<p><a href="https://gaming.nancunchild.cn/2024/10/16/toss_openwrt_in_pve_multiwan/">折腾OpenWRT那些事——多拨</a>最先出现在<a href="https://gaming.nancunchild.cn">NanCunChild的个人随想</a>。</p>
+<p><a href="https://blog.nancunchild.cn/2024/10/16/toss_openwrt_in_pve_multiwan/">折腾OpenWRT那些事——多拨</a>最先出现在<a href="https://blog.nancunchild.cn">NanCunChild的个人随想</a>。</p>

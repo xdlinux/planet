@@ -1,5 +1,5 @@
 <p>买了一个低性能服务器，记录一下装上PVE后配置OpenWRT虚拟机当高性能网关的故事。包括在没有LVM时对OpenWRT进行扩容的多种方法。</p>
-<p><a href="https://gaming.nancunchild.cn/2024/10/16/toss_openwrt_in_pve_install/">折腾OpenWRT in PVE那些事——安装与扩容</a>最先出现在<a href="https://gaming.nancunchild.cn">NanCunChild的个人随想</a>。</p>
+<p><a href="https://blog.nancunchild.cn/2024/10/16/toss_openwrt_in_pve_install/">折腾OpenWRT in PVE那些事——安装与扩容</a>最先出现在<a href="https://blog.nancunchild.cn">NanCunChild的个人随想</a>。</p>
 <hr /><h2>缘由——瞎买</h2>
 <p>最近在淘宝淘了一个IBM的老机架式服务器，型号是SystemX 3250 M5。虽然是古董产品，但是只要530RMB，感觉非常Nice。换了一个E3-1270V3和一个128G的樊想SSD（已经开始感觉亏了）之后正式开启网络专用PVE环境。是的，这台小机器之后就作为专用于网络处理的网关。</p>
 <h2>配置一览</h2>
@@ -202,4 +202,4 @@ yes</code></pre>
 <a href="https://openwrt.org/zh/docs/start">https://openwrt.org/zh/docs/start</a> （OpenWRT官方Wiki）</p>
 </blockquote>
 <p>。</p>
-<p><a href="https://gaming.nancunchild.cn/2024/10/16/toss_openwrt_in_pve_install/">折腾OpenWRT in PVE那些事——安装与扩容</a>最先出现在<a href="https://gaming.nancunchild.cn">NanCunChild的个人随想</a>。</p>
+<p><a href="https://blog.nancunchild.cn/2024/10/16/toss_openwrt_in_pve_install/">折腾OpenWRT in PVE那些事——安装与扩容</a>最先出现在<a href="https://blog.nancunchild.cn">NanCunChild的个人随想</a>。</p>

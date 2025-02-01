@@ -1,5 +1,5 @@
 <p>相比较nginx，uhttpd的性能和功能都太弱了，如果有足够的空间或者直接是x86的虚拟OP，更建议使用nginx来代理连接实现更多功能。本篇简单介绍使用nginx进行代理连接，并成功配置多个SSL证书以实现SNI的过程。</p>
-<p><a href="https://gaming.nancunchild.cn/2024/10/19/toss_openwrt_in_pve_nginxconf/">折腾OpenWRT那些事——nginx反向代理</a>最先出现在<a href="https://gaming.nancunchild.cn">NanCunChild的个人随想</a>。</p>
+<p><a href="https://blog.nancunchild.cn/2024/10/19/toss_openwrt_in_pve_nginxconf/">折腾OpenWRT那些事——nginx反向代理</a>最先出现在<a href="https://blog.nancunchild.cn">NanCunChild的个人随想</a>。</p>
 <hr /><h2>起源</h2>
 <p>我只是想让DDNS访问和内网访问时都能使用正确的证书，但是uhttpd似乎不支持对模糊的接口指定专用的证书。因此我就想到了反向代理之神 <em>nginx</em> 。对于方式，不能使用直接的网站服务模式，因为其中包含很多 uci 控制命令，nginx 无法识别。因此工作方式为 uhttpd 运行处理 uci ，nginx 接受外部流量并进行转发。</p>
 <h2>思路</h2>
@@ -150,4 +150,4 @@ http {
 <h2>参考</h2>
 <p><a href="https://blog.csdn.net/zzhongcy/article/details/137455030">nginx多https证书配置精简（CSDN）</a><br />
 <a href="https://my.noip.com">no-ip官网（别导航到俄罗斯的那个noip了）</a></p>
-<p><a href="https://gaming.nancunchild.cn/2024/10/19/toss_openwrt_in_pve_nginxconf/">折腾OpenWRT那些事——nginx反向代理</a>最先出现在<a href="https://gaming.nancunchild.cn">NanCunChild的个人随想</a>。</p>
+<p><a href="https://blog.nancunchild.cn/2024/10/19/toss_openwrt_in_pve_nginxconf/">折腾OpenWRT那些事——nginx反向代理</a>最先出现在<a href="https://blog.nancunchild.cn">NanCunChild的个人随想</a>。</p>

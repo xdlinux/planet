@@ -1,5 +1,5 @@
 <p>本文简要描述了在nodejs中，res.send之前是否需要添加return，以及它们各自的作用。  出于安全和稳定考虑，都建议在res.send之前添加return来保证程序正确终止，否则容易导致语句意外执行。</p>
-<p><a href="https://gaming.nancunchild.cn/2024/12/29/nodejs%e4%b8%adreturn%e5%92%8cres-send%e7%9a%84%e5%b0%8f%e4%ba%8b/">nodejs中return和res.send的小事</a>最先出现在<a href="https://gaming.nancunchild.cn">NanCunChild的个人随想</a>。</p>
+<p><a href="https://blog.nancunchild.cn/2024/12/29/nodejs%e4%b8%adreturn%e5%92%8cres-send%e7%9a%84%e5%b0%8f%e4%ba%8b/">nodejs中return和res.send的小事</a>最先出现在<a href="https://blog.nancunchild.cn">NanCunChild的个人随想</a>。</p>
 <hr /><h2>前情提要</h2>
 <p>这几天在写一个nodejs的项目，为了减少工作量便用了不少不同的AI，包括<code>ClaudeSonnet3.5</code>和<code>Gemini Exp</code>。于是就发现代码风格割裂严重，其中就有这个<code>res.send</code>前是否加<code>return</code>这个区别。</p>
 <h2>叨叨</h2>
@@ -56,4 +56,4 @@ app.listen(port, () =&gt; {
 <p><a href="https://dev.to/adamkatora/why-you-should-always-use-return-before-ressend-in-express-apis-and-applications-k9k">https://dev.to/adamkatora/why-you-should-always-use-return-before-ressend-in-express-apis-and-applications-k9k</a> dev.to的标题党程序员<br />
 <a href="https://nodejs.org/api/http.html">https://nodejs.org/api/http.html</a> nodejs官方对HTTP操作的详解</p>
 </blockquote>
-<p><a href="https://gaming.nancunchild.cn/2024/12/29/nodejs%e4%b8%adreturn%e5%92%8cres-send%e7%9a%84%e5%b0%8f%e4%ba%8b/">nodejs中return和res.send的小事</a>最先出现在<a href="https://gaming.nancunchild.cn">NanCunChild的个人随想</a>。</p>
+<p><a href="https://blog.nancunchild.cn/2024/12/29/nodejs%e4%b8%adreturn%e5%92%8cres-send%e7%9a%84%e5%b0%8f%e4%ba%8b/">nodejs中return和res.send的小事</a>最先出现在<a href="https://blog.nancunchild.cn">NanCunChild的个人随想</a>。</p>
