@@ -1,14 +1,5 @@
 <h1 id="基于-DX12-实现-ShaderLab">基于 DX12 实现 ShaderLab<a class="headerlink" href="#基于-DX12-实现-ShaderLab" title="Permanent link">&para;</a></h1>
 <p>ShaderLab 是对 <code>ID3D12RootSignature</code> 和 <code>ID3D12PipelineState</code> 的封装。每次写完 Shader 就会自动生成 <code>RootSignature</code> 和 <code>PipelineState</code>，不用再人工填写那一坨参数。</p>
-<p>另外，得益于引擎的资产管线，很轻松就实现了 Shader 热重载。</p>
-<div class="highlight"><pre><span></span><code><span class="k">protected</span><span class="w"> </span><span class="k">override</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">OnImportAssets</span><span class="p">(</span><span class="k">ref</span><span class="w"> </span><span class="n">AssetImportContext</span><span class="w"> </span><span class="n">context</span><span class="p">)</span>
-<span class="p">{</span>
-<span class="w">    </span><span class="c1">// ...</span>
-
-<span class="w">    </span><span class="n">Shader</span><span class="w"> </span><span class="n">shader</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">context</span><span class="p">.</span><span class="n">AddMainAsset</span><span class="o">&lt;</span><span class="n">Shader</span><span class="o">&gt;</span><span class="p">(</span><span class="n">normalIcon</span><span class="p">:</span><span class="w"> </span><span class="n">FontAwesome6Brands</span><span class="p">.</span><span class="n">StripeS</span><span class="p">);</span>
-<span class="w">    </span><span class="n">CompileShader</span><span class="p">(</span><span class="k">ref</span><span class="w"> </span><span class="n">context</span><span class="p">,</span><span class="w"> </span><span class="n">shader</span><span class="p">,</span><span class="w"> </span><span class="n">File</span><span class="p">.</span><span class="n">ReadAllText</span><span class="p">(</span><span class="n">Location</span><span class="p">.</span><span class="n">AssetFullPath</span><span class="p">,</span><span class="w"> </span><span class="n">Encoding</span><span class="p">.</span><span class="n">UTF8</span><span class="p">));</span>
-<span class="p">}</span>
-</code></pre></div>
 <!-- more -->
 
 <p>大体设计如下，成员就不写了。</p>
