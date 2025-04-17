@@ -1,0 +1,19 @@
+<h1 id="实验目的">
+<a class="header-anchor" href="#%e5%ae%9e%e9%aa%8c%e7%9b%ae%e7%9a%84"></a>
+<strong>实验目的：</strong>
+</h1><p>本实验旨在分析和测试KMP算法的实现，并研究其在字符串搜索中的应用。</p>
+<h1 id="实验内容">
+<a class="header-anchor" href="#%e5%ae%9e%e9%aa%8c%e5%86%85%e5%ae%b9"></a>
+<strong>实验内容：</strong>
+</h1><h2 id="a-问题分析">
+<a class="header-anchor" href="#a-%e9%97%ae%e9%a2%98%e5%88%86%e6%9e%90"></a>
+<strong>a 问题分析：</strong>
+</h2><ul>
+<li>如何构建最长前缀后缀匹配表（LPS数组）以提高搜索效率？</li>
+<li>如何在文本字符串中执行匹配，利用LPS数组来避免不必要的字符比较？</li>
+<li>如何设计算法以实现模式字符串的搜索？</li>
+</ul>
+<h2 id="b-算法设计">
+<a class="header-anchor" href="#b-%e7%ae%97%e6%b3%95%e8%ae%be%e8%ae%a1"></a>
+<strong>b 算法设计：</strong>
+</h2><p>KMP算法的设计包括以下关键步骤：</p><hr />

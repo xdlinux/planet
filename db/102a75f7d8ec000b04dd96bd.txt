@@ -1,0 +1,18 @@
+<h2 id="常量与变量">
+<a class="header-anchor" href="#%e5%b8%b8%e9%87%8f%e4%b8%8e%e5%8f%98%e9%87%8f"></a>
+常量与变量
+</h2><ul>
+<li>变量不需要声明类型</li>
+<li>python用$=$给变量赋值，用$==$比较两个值是否相等，相等返回True，不等返回False。</li>
+<li>变量使用前必须赋值（不同于C），变量只有赋值后才会被创建。
+<ul>
+<li>变量未定义异常</li>
+</ul>
+</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="o">&gt;&gt;&gt;</span> <span class="n">age</span>
+</span></span><span class="line"><span class="cl"><span class="n">Traceback</span> <span class="p">(</span><span class="n">most</span> <span class="n">recent</span> <span class="n">call</span> <span class="n">last</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="n">File</span> <span class="s2">&#34;&lt;stdin&gt;&#34;</span><span class="p">,</span> <span class="n">line</span> <span class="mi">1</span><span class="p">,</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="ne">NameError</span><span class="p">:</span> <span class="n">name</span> <span class="s1">&#39;age&#39;</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">defined</span>
+</span></span></code></pre></div><p>常量——不变的变量
+<strong>python没有任何机制保证变量不会改变对象，被改变时没有报错，没有C的const，所以使用时需要万分小心</strong></p><hr />

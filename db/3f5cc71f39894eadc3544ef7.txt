@@ -1,0 +1,33 @@
+<h2 id="函数传参">
+<a class="header-anchor" href="#%e5%87%bd%e6%95%b0%e4%bc%a0%e5%8f%82"></a>
+函数传参
+</h2><p>python中，函数传递参数本质上是一种赋值操作</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">func</span><span class="p">(</span><span class="n">arr</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">arr</span> <span class="o">=</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="n">arr</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">a</span><span class="o">=</span><span class="mi">2</span>
+</span></span><span class="line"><span class="cl"><span class="n">func</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+</span></span></code></pre></div><ol>
+<li>首先有两个变量arr和a，有两个对象1和2</li>
+<li>a绑定2，func(a)将a绑定的对象2贴上arr标签</li>
+<li>这时，对象1尚未创建，2贴上a标签和arr标签</li>
+<li>$arr=1$操作将2上arr标签撕下，创建对象1并贴上arr标签</li>
+<li>输出结果</li>
+</ol>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="mi">1</span>
+</span></span><span class="line"><span class="cl"><span class="mi">2</span>
+</span></span></code></pre></div><h2 id="输入输出">
+<a class="header-anchor" href="#%e8%be%93%e5%85%a5%e8%be%93%e5%87%ba"></a>
+输入输出
+</h2><h3 id="print函数">
+<a class="header-anchor" href="#print%e5%87%bd%e6%95%b0"></a>
+print()函数
+</h3><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="o">&gt;&gt;&gt;</span><span class="nb">print</span><span class="p">(</span><span class="s2">&#34;字符串&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">字符串</span>
+</span></span><span class="line"><span class="cl"><span class="o">&gt;&gt;&gt;</span><span class="nb">print</span><span class="p">(</span><span class="s2">&#34;str1&#34;</span><span class="p">,</span><span class="s2">&#34;str2&#34;</span><span class="p">,</span><span class="s2">&#34;str3&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">str1</span> <span class="n">str2</span> <span class="n">str3</span><span class="c1">#空格取代逗号</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="o">+</span><span class="n">b</span><span class="o">**</span><span class="n">c</span><span class="p">)</span><span class="c1">#会先计算数值再输出</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="o">/</span><span class="n">c</span><span class="p">))</span><span class="c1">#优先执行sum()函数</span>
+</span></span></code></pre></div><p><strong>==原型==</strong>
+</p><hr />

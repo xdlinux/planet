@@ -1,0 +1,6 @@
+<h1 id="20250413">
+<a class="header-anchor" href="#20250413"></a>
+2025.04.13
+</h1><p>捣鼓两天终于搭好了Hugo博客，主题是<a href="https://github.com/D-Sketon/hexo-theme-reimu">reimu</a>。</p>
+<p>对于原来的<a href="https://guzhengsvt.top/">Typecho博客</a>响应速度不满意，我计划再次迁移博客。（尽管Typecho已经很轻量了，垃圾的云服务器及带宽严重限制了访问和文章加载速度。）</p>
+<p>放弃动态后，能考虑静态无非Hexo、Hugo、Jekyll等。选择Hugo，无非是因为它的口号 <em><strong>The world’s fastest framework for building websites</strong></em> 。</p><hr />

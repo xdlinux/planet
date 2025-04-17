@@ -1,0 +1,7 @@
+<h1 id="kruskal算法生成最小生成树">
+<a class="header-anchor" href="#kruskal%e7%ae%97%e6%b3%95%e7%94%9f%e6%88%90%e6%9c%80%e5%b0%8f%e7%94%9f%e6%88%90%e6%a0%91"></a>
+Kruskal算法生成最小生成树
+</h1><h2 id="a-问题分析">
+<a class="header-anchor" href="#a-%e9%97%ae%e9%a2%98%e5%88%86%e6%9e%90"></a>
+a 问题分析
+</h2><p>我们需要使用 Kruskal 算法找到一个包含10个节点和20条边的图的最小生成树。Kruskal算法基于贪心思想，通过不断选择权重最小的边，并确保添加这条边不形成环路，来构建最小生成树。</p><hr />
