@@ -25,9 +25,9 @@
 </ul>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-yml" data-lang="yml"><span class="line"><span class="cl"><span class="l">```yml</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span>- <span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="c">#您的名字</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">url</span><span class="p">:</span><span class="w"> </span><span class="c">#您的网址</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">desc</span><span class="p">:</span><span class="w"> </span><span class="c">#简短描述</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="c">#一张图片</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"> </span><span class="nt">url</span><span class="p">:</span><span class="w"> </span><span class="c">#您的网址</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"> </span><span class="nt">desc</span><span class="p">:</span><span class="w"> </span><span class="c">#简短描述</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"> </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="c">#一张图片</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="l">```</span><span class="w">
 </span></span></span></code></pre></div><h2 id="小伙伴们">
 <a class="header-anchor" href="#%e5%b0%8f%e4%bc%99%e4%bc%b4%e4%bb%ac"></a>
@@ -36,357 +36,357 @@
 
 
 <div class="friend-wrap" data-aos="zoom-in">
-  
-    <div class="friend-item-wrap">
-      <a href="https://sutdown.github.io" rel="noopener external nofollow noreferrer" target="_blank"></a>
-      <div class="friend-icon-wrap">
-        <div class="friend-icon">
-          <img
-            data-src="https://github.com/Sutdown.png"
-            data-sizes="auto"
-            alt="江舟"
-            class="lazyload"
-          />
-        </div>
-      </div>
-      <div class="friend-info-wrap">
-        <div class="friend-name">
-          江舟
-        </div>
-        <div class="friend-desc">
-          计科の佬，官方认证夜猫子。
-        </div>
-      </div>
-    </div>
-  
-    <div class="friend-item-wrap">
-      <a href="https://mxts.jiujiuer.xyz/" rel="noopener external nofollow noreferrer" target="_blank"></a>
-      <div class="friend-icon-wrap">
-        <div class="friend-icon">
-          <img
-            data-src="https://mxts.jiujiuer.xyz/img/avatar.jpg"
-            data-sizes="auto"
-            alt="神社的储物间"
-            class="lazyload"
-          />
-        </div>
-      </div>
-      <div class="friend-info-wrap">
-        <div class="friend-name">
-          神社的储物间
-        </div>
-        <div class="friend-desc">
-          西电学长，东方の佬！
-        </div>
-      </div>
-    </div>
-  
-    <div class="friend-item-wrap">
-      <a href="https://www.lemonpig.cn/" rel="noopener external nofollow noreferrer" target="_blank"></a>
-      <div class="friend-icon-wrap">
-        <div class="friend-icon">
-          <img
-            data-src="http://guzhengsvt.top/usr/uploads/photo1/lemonpig_avatar.jpg"
-            data-sizes="auto"
-            alt="柠檬猪"
-            class="lazyload"
-          />
-        </div>
-      </div>
-      <div class="friend-info-wrap">
-        <div class="friend-name">
-          柠檬猪
-        </div>
-        <div class="friend-desc">
-          Ciallo～(∠・ω&lt; )⌒☆
-        </div>
-      </div>
-    </div>
-  
-    <div class="friend-item-wrap">
-      <a href="https://ray.al/" rel="noopener external nofollow noreferrer" target="_blank"></a>
-      <div class="friend-icon-wrap">
-        <div class="friend-icon">
-          <img
-            data-src="https://www.raay.xyz/wp-content/uploads/2021/10/20211026_235800.png"
-            data-sizes="auto"
-            alt="Ri的手账本"
-            class="lazyload"
-          />
-        </div>
-      </div>
-      <div class="friend-info-wrap">
-        <div class="friend-name">
-          Ri的手账本
-        </div>
-        <div class="friend-desc">
-          一个鸽子的手账本，没事瞎写随缘更新。
-        </div>
-      </div>
-    </div>
-  
-    <div class="friend-item-wrap">
-      <a href="https://www.superbart.top/" rel="noopener external nofollow noreferrer" target="_blank"></a>
-      <div class="friend-icon-wrap">
-        <div class="friend-icon">
-          <img
-            data-src="https://www.superbart.top/img/avatar_hu310545342c28118c5af321addc96aeb1_17637_300x0_resize_box_3.png"
-            data-sizes="auto"
-            alt="SuperBart/BenderBlog"
-            class="lazyload"
-          />
-        </div>
-      </div>
-      <div class="friend-info-wrap">
-        <div class="friend-name">
-          SuperBart/BenderBlog
-        </div>
-        <div class="friend-desc">
-          XDYou开发者，西电21级巨佬。
-        </div>
-      </div>
-    </div>
-  
-    <div class="friend-item-wrap">
-      <a href="https://simoxdcs.github.io" rel="noopener external nofollow noreferrer" target="_blank"></a>
-      <div class="friend-icon-wrap">
-        <div class="friend-icon">
-          <img
-            data-src="https://cdn.jsdelivr.net/gh/simoxdcs/cdn@1.2/img/1.png"
-            data-sizes="auto"
-            alt="Moming の zhan"
-            class="lazyload"
-          />
-        </div>
-      </div>
-      <div class="friend-info-wrap">
-        <div class="friend-name">
-          Moming の zhan
-        </div>
-        <div class="friend-desc">
-          欲买桂花同载酒，终不似，少年游。
-        </div>
-      </div>
-    </div>
-  
-    <div class="friend-item-wrap">
-      <a href="https://blog.frankli.site/" rel="noopener external nofollow noreferrer" target="_blank"></a>
-      <div class="friend-icon-wrap">
-        <div class="friend-icon">
-          <img
-            data-src="https://avatars.githubusercontent.com/u/20221896?v=4"
-            data-sizes="auto"
-            alt="Frank"
-            class="lazyload"
-          />
-        </div>
-      </div>
-      <div class="friend-info-wrap">
-        <div class="friend-name">
-          Frank
-        </div>
-        <div class="friend-desc">
-          XDSEC2020年负责人，CTF大佬
-        </div>
-      </div>
-    </div>
-  
-    <div class="friend-item-wrap">
-      <a href="https://mercer5.github.io/" rel="noopener external nofollow noreferrer" target="_blank"></a>
-      <div class="friend-icon-wrap">
-        <div class="friend-icon">
-          <img
-            data-src="https://mercer5.github.io/images/touxiang.jpg"
-            data-sizes="auto"
-            alt="mercer"
-            class="lazyload"
-          />
-        </div>
-      </div>
-      <div class="friend-info-wrap">
-        <div class="friend-name">
-          mercer
-        </div>
-        <div class="friend-desc">
-          西电学长，Hexo
-        </div>
-      </div>
-    </div>
-  
-    <div class="friend-item-wrap">
-      <a href="https://panqiincs.me/" rel="noopener external nofollow noreferrer" target="_blank"></a>
-      <div class="friend-icon-wrap">
-        <div class="friend-icon">
-          <img
-            data-src="https://panqiincs.me/images/avatar.jpg"
-            data-sizes="auto"
-            alt="辛未羊的网络日志"
-            class="lazyload"
-          />
-        </div>
-      </div>
-      <div class="friend-info-wrap">
-        <div class="friend-name">
-          辛未羊的网络日志
-        </div>
-        <div class="friend-desc">
-          记录生活和学习的清静之地
-        </div>
-      </div>
-    </div>
-  
-    <div class="friend-item-wrap">
-      <a href="https://www.illlights.com/" rel="noopener external nofollow noreferrer" target="_blank"></a>
-      <div class="friend-icon-wrap">
-        <div class="friend-icon">
-          <img
-            data-src="https://i.imgtg.com/2022/11/12/tndMN.png"
-            data-sizes="auto"
-            alt="喑光絮语"
-            class="lazyload"
-          />
-        </div>
-      </div>
-      <div class="friend-info-wrap">
-        <div class="friend-name">
-          喑光絮语
-        </div>
-        <div class="friend-desc">
-          西电微电子の佬illlights，galgame糕手，文武双全。
-        </div>
-      </div>
-    </div>
-  
-    <div class="friend-item-wrap">
-      <a href="https://blog.lsy223622.com/" rel="noopener external nofollow noreferrer" target="_blank"></a>
-      <div class="friend-icon-wrap">
-        <div class="friend-icon">
-          <img
-            data-src="https://cravatar.cn/avatar/7aba6993da55fc5023f11022e4b552c7?s=288"
-            data-sizes="auto"
-            alt="木生懒得写博客"
-            class="lazyload"
-          />
-        </div>
-      </div>
-      <div class="friend-info-wrap">
-        <div class="friend-name">
-          木生懒得写博客
-        </div>
-        <div class="friend-desc">
-          西电学长，Typecho
-        </div>
-      </div>
-    </div>
-  
-    <div class="friend-item-wrap">
-      <a href="https://litao2001.github.io/" rel="noopener external nofollow noreferrer" target="_blank"></a>
-      <div class="friend-icon-wrap">
-        <div class="friend-icon">
-          <img
-            data-src="http://guzhengsvt.test.upcdn.net/2024/10/3661974967.jpeg"
-            data-sizes="auto"
-            alt="Hobbit Lee&#39;s Hole"
-            class="lazyload"
-          />
-        </div>
-      </div>
-      <div class="friend-info-wrap">
-        <div class="friend-name">
-          Hobbit Lee&#39;s Hole
-        </div>
-        <div class="friend-desc">
-          钱班19级天文方向学长
-        </div>
-      </div>
-    </div>
-  
-    <div class="friend-item-wrap">
-      <a href="https://www.aurora.love/" rel="noopener external nofollow noreferrer" target="_blank"></a>
-      <div class="friend-icon-wrap">
-        <div class="friend-icon">
-          <img
-            data-src="https://s2.loli.net/2022/04/15/YfcRmK6stJrIBg5.jpg"
-            data-sizes="auto"
-            alt="Aurora"
-            class="lazyload"
-          />
-        </div>
-      </div>
-      <div class="friend-info-wrap">
-        <div class="friend-name">
-          Aurora
-        </div>
-        <div class="friend-desc">
-          摄影领域大神（~~又一个玩gal的~~）
-        </div>
-      </div>
-    </div>
-  
-    <div class="friend-item-wrap">
-      <a href="https://2heng.xin/" rel="noopener external nofollow noreferrer" target="_blank"></a>
-      <div class="friend-icon-wrap">
-        <div class="friend-icon">
-          <img
-            data-src="https://view.moezx.cc/images/2018/03/27/avatar.jpg"
-            data-sizes="auto"
-            alt="Mashiro"
-            class="lazyload"
-          />
-        </div>
-      </div>
-      <div class="friend-info-wrap">
-        <div class="friend-name">
-          Mashiro
-        </div>
-        <div class="friend-desc">
-          樱花庄的白猫
-        </div>
-      </div>
-    </div>
-  
-    <div class="friend-item-wrap">
-      <a href="https://www.uk01.cn/" rel="noopener external nofollow noreferrer" target="_blank"></a>
-      <div class="friend-icon-wrap">
-        <div class="friend-icon">
-          <img
-            data-src="https://www.uk01.cn/wp-content/uploads/2024/11/20241130143908977371.webp"
-            data-sizes="auto"
-            alt="星空博客"
-            class="lazyload"
-          />
-        </div>
-      </div>
-      <div class="friend-info-wrap">
-        <div class="friend-name">
-          星空博客
-        </div>
-        <div class="friend-desc">
-          专注网络技术发展打造共同学习平台，为各大网友排忧解难。主要分享wordpress代码教程，提供网站模板源码，交流前端技术。
-        </div>
-      </div>
-    </div>
-  
-    <div class="friend-item-wrap">
-      <a href="" rel="noopener external nofollow noreferrer" target="_blank"></a>
-      <div class="friend-icon-wrap">
-        <div class="friend-icon">
-          <img
-            data-src=""
-            data-sizes="auto"
-            alt="Maybe You?"
-            class="lazyload"
-          />
-        </div>
-      </div>
-      <div class="friend-info-wrap">
-        <div class="friend-name">
-          Maybe You?
-        </div>
-        <div class="friend-desc">
-          欢迎添加友链：）
-        </div>
-      </div>
-    </div>
-  
+ 
+ <div class="friend-item-wrap">
+ <a href="https://sutdown.github.io" rel="noopener external nofollow noreferrer" target="_blank"></a>
+ <div class="friend-icon-wrap">
+ <div class="friend-icon">
+ <img
+ data-src="https://github.com/Sutdown.png"
+ data-sizes="auto"
+ alt="江舟"
+ class="lazyload"
+ />
+ </div>
+ </div>
+ <div class="friend-info-wrap">
+ <div class="friend-name">
+ 江舟
+ </div>
+ <div class="friend-desc">
+ 计科の佬，官方认证夜猫子。
+ </div>
+ </div>
+ </div>
+ 
+ <div class="friend-item-wrap">
+ <a href="https://mxts.jiujiuer.xyz/" rel="noopener external nofollow noreferrer" target="_blank"></a>
+ <div class="friend-icon-wrap">
+ <div class="friend-icon">
+ <img
+ data-src="https://mxts.jiujiuer.xyz/img/avatar.jpg"
+ data-sizes="auto"
+ alt="神社的储物间"
+ class="lazyload"
+ />
+ </div>
+ </div>
+ <div class="friend-info-wrap">
+ <div class="friend-name">
+ 神社的储物间
+ </div>
+ <div class="friend-desc">
+ 西电学长，东方の佬！
+ </div>
+ </div>
+ </div>
+ 
+ <div class="friend-item-wrap">
+ <a href="https://www.lemonpig.cn/" rel="noopener external nofollow noreferrer" target="_blank"></a>
+ <div class="friend-icon-wrap">
+ <div class="friend-icon">
+ <img
+ data-src="http://guzhengsvt.top/usr/uploads/photo1/lemonpig_avatar.jpg"
+ data-sizes="auto"
+ alt="柠檬猪"
+ class="lazyload"
+ />
+ </div>
+ </div>
+ <div class="friend-info-wrap">
+ <div class="friend-name">
+ 柠檬猪
+ </div>
+ <div class="friend-desc">
+ Ciallo～(∠・ω&lt; )⌒☆
+ </div>
+ </div>
+ </div>
+ 
+ <div class="friend-item-wrap">
+ <a href="https://ray.al/" rel="noopener external nofollow noreferrer" target="_blank"></a>
+ <div class="friend-icon-wrap">
+ <div class="friend-icon">
+ <img
+ data-src="https://www.raay.xyz/wp-content/uploads/2021/10/20211026_235800.png"
+ data-sizes="auto"
+ alt="Ri的手账本"
+ class="lazyload"
+ />
+ </div>
+ </div>
+ <div class="friend-info-wrap">
+ <div class="friend-name">
+ Ri的手账本
+ </div>
+ <div class="friend-desc">
+ 一个鸽子的手账本，没事瞎写随缘更新。
+ </div>
+ </div>
+ </div>
+ 
+ <div class="friend-item-wrap">
+ <a href="https://www.superbart.top/" rel="noopener external nofollow noreferrer" target="_blank"></a>
+ <div class="friend-icon-wrap">
+ <div class="friend-icon">
+ <img
+ data-src="https://www.superbart.top/img/avatar_hu310545342c28118c5af321addc96aeb1_17637_300x0_resize_box_3.png"
+ data-sizes="auto"
+ alt="SuperBart/BenderBlog"
+ class="lazyload"
+ />
+ </div>
+ </div>
+ <div class="friend-info-wrap">
+ <div class="friend-name">
+ SuperBart/BenderBlog
+ </div>
+ <div class="friend-desc">
+ XDYou开发者，西电21级巨佬。
+ </div>
+ </div>
+ </div>
+ 
+ <div class="friend-item-wrap">
+ <a href="https://simoxdcs.github.io" rel="noopener external nofollow noreferrer" target="_blank"></a>
+ <div class="friend-icon-wrap">
+ <div class="friend-icon">
+ <img
+ data-src="https://cdn.jsdelivr.net/gh/simoxdcs/cdn@1.2/img/1.png"
+ data-sizes="auto"
+ alt="Moming の zhan"
+ class="lazyload"
+ />
+ </div>
+ </div>
+ <div class="friend-info-wrap">
+ <div class="friend-name">
+ Moming の zhan
+ </div>
+ <div class="friend-desc">
+ 欲买桂花同载酒，终不似，少年游。
+ </div>
+ </div>
+ </div>
+ 
+ <div class="friend-item-wrap">
+ <a href="https://blog.frankli.site/" rel="noopener external nofollow noreferrer" target="_blank"></a>
+ <div class="friend-icon-wrap">
+ <div class="friend-icon">
+ <img
+ data-src="https://avatars.githubusercontent.com/u/20221896?v=4"
+ data-sizes="auto"
+ alt="Frank"
+ class="lazyload"
+ />
+ </div>
+ </div>
+ <div class="friend-info-wrap">
+ <div class="friend-name">
+ Frank
+ </div>
+ <div class="friend-desc">
+ XDSEC2020年负责人，CTF大佬
+ </div>
+ </div>
+ </div>
+ 
+ <div class="friend-item-wrap">
+ <a href="https://mercer5.github.io/" rel="noopener external nofollow noreferrer" target="_blank"></a>
+ <div class="friend-icon-wrap">
+ <div class="friend-icon">
+ <img
+ data-src="https://mercer5.github.io/images/touxiang.jpg"
+ data-sizes="auto"
+ alt="mercer"
+ class="lazyload"
+ />
+ </div>
+ </div>
+ <div class="friend-info-wrap">
+ <div class="friend-name">
+ mercer
+ </div>
+ <div class="friend-desc">
+ 西电学长，Hexo
+ </div>
+ </div>
+ </div>
+ 
+ <div class="friend-item-wrap">
+ <a href="https://panqiincs.me/" rel="noopener external nofollow noreferrer" target="_blank"></a>
+ <div class="friend-icon-wrap">
+ <div class="friend-icon">
+ <img
+ data-src="https://panqiincs.me/images/avatar.jpg"
+ data-sizes="auto"
+ alt="辛未羊的网络日志"
+ class="lazyload"
+ />
+ </div>
+ </div>
+ <div class="friend-info-wrap">
+ <div class="friend-name">
+ 辛未羊的网络日志
+ </div>
+ <div class="friend-desc">
+ 记录生活和学习的清静之地
+ </div>
+ </div>
+ </div>
+ 
+ <div class="friend-item-wrap">
+ <a href="https://www.illlights.com/" rel="noopener external nofollow noreferrer" target="_blank"></a>
+ <div class="friend-icon-wrap">
+ <div class="friend-icon">
+ <img
+ data-src="https://i.imgtg.com/2022/11/12/tndMN.png"
+ data-sizes="auto"
+ alt="喑光絮语"
+ class="lazyload"
+ />
+ </div>
+ </div>
+ <div class="friend-info-wrap">
+ <div class="friend-name">
+ 喑光絮语
+ </div>
+ <div class="friend-desc">
+ 西电微电子の佬illlights，galgame糕手，文武双全。
+ </div>
+ </div>
+ </div>
+ 
+ <div class="friend-item-wrap">
+ <a href="https://blog.lsy223622.com/" rel="noopener external nofollow noreferrer" target="_blank"></a>
+ <div class="friend-icon-wrap">
+ <div class="friend-icon">
+ <img
+ data-src="https://cravatar.cn/avatar/7aba6993da55fc5023f11022e4b552c7?s=288"
+ data-sizes="auto"
+ alt="木生懒得写博客"
+ class="lazyload"
+ />
+ </div>
+ </div>
+ <div class="friend-info-wrap">
+ <div class="friend-name">
+ 木生懒得写博客
+ </div>
+ <div class="friend-desc">
+ 西电学长，Typecho
+ </div>
+ </div>
+ </div>
+ 
+ <div class="friend-item-wrap">
+ <a href="https://litao2001.github.io/" rel="noopener external nofollow noreferrer" target="_blank"></a>
+ <div class="friend-icon-wrap">
+ <div class="friend-icon">
+ <img
+ data-src="http://guzhengsvt.test.upcdn.net/2024/10/3661974967.jpeg"
+ data-sizes="auto"
+ alt="Hobbit Lee&#39;s Hole"
+ class="lazyload"
+ />
+ </div>
+ </div>
+ <div class="friend-info-wrap">
+ <div class="friend-name">
+ Hobbit Lee&#39;s Hole
+ </div>
+ <div class="friend-desc">
+ 钱班19级天文方向学长
+ </div>
+ </div>
+ </div>
+ 
+ <div class="friend-item-wrap">
+ <a href="https://www.aurora.love/" rel="noopener external nofollow noreferrer" target="_blank"></a>
+ <div class="friend-icon-wrap">
+ <div class="friend-icon">
+ <img
+ data-src="https://s2.loli.net/2022/04/15/YfcRmK6stJrIBg5.jpg"
+ data-sizes="auto"
+ alt="Aurora"
+ class="lazyload"
+ />
+ </div>
+ </div>
+ <div class="friend-info-wrap">
+ <div class="friend-name">
+ Aurora
+ </div>
+ <div class="friend-desc">
+ 摄影领域大神（~~又一个玩gal的~~）
+ </div>
+ </div>
+ </div>
+ 
+ <div class="friend-item-wrap">
+ <a href="https://2heng.xin/" rel="noopener external nofollow noreferrer" target="_blank"></a>
+ <div class="friend-icon-wrap">
+ <div class="friend-icon">
+ <img
+ data-src="https://view.moezx.cc/images/2018/03/27/avatar.jpg"
+ data-sizes="auto"
+ alt="Mashiro"
+ class="lazyload"
+ />
+ </div>
+ </div>
+ <div class="friend-info-wrap">
+ <div class="friend-name">
+ Mashiro
+ </div>
+ <div class="friend-desc">
+ 樱花庄的白猫
+ </div>
+ </div>
+ </div>
+ 
+ <div class="friend-item-wrap">
+ <a href="https://www.uk01.cn/" rel="noopener external nofollow noreferrer" target="_blank"></a>
+ <div class="friend-icon-wrap">
+ <div class="friend-icon">
+ <img
+ data-src="https://www.uk01.cn/wp-content/uploads/2024/11/20241130143908977371.webp"
+ data-sizes="auto"
+ alt="星空博客"
+ class="lazyload"
+ />
+ </div>
+ </div>
+ <div class="friend-info-wrap">
+ <div class="friend-name">
+ 星空博客
+ </div>
+ <div class="friend-desc">
+ 专注网络技术发展打造共同学习平台，为各大网友排忧解难。主要分享wordpress代码教程，提供网站模板源码，交流前端技术。
+ </div>
+ </div>
+ </div>
+ 
+ <div class="friend-item-wrap">
+ <a href="" rel="noopener external nofollow noreferrer" target="_blank"></a>
+ <div class="friend-icon-wrap">
+ <div class="friend-icon">
+ <img
+ data-src=""
+ data-sizes="auto"
+ alt="Maybe You?"
+ class="lazyload"
+ />
+ </div>
+ </div>
+ <div class="friend-info-wrap">
+ <div class="friend-name">
+ Maybe You?
+ </div>
+ <div class="friend-desc">
+ 欢迎添加友链：）
+ </div>
+ </div>
+ </div>
+ 
 </div><hr />

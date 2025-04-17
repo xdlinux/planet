@@ -3,8 +3,8 @@
 函数传参
 </h2><p>python中，函数传递参数本质上是一种赋值操作</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">func</span><span class="p">(</span><span class="n">arr</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">    <span class="n">arr</span> <span class="o">=</span> <span class="mi">1</span>
-</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="n">arr</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"> <span class="n">arr</span> <span class="o">=</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl"> <span class="nb">print</span><span class="p">(</span><span class="n">arr</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl"><span class="n">a</span><span class="o">=</span><span class="mi">2</span>
 </span></span><span class="line"><span class="cl"><span class="n">func</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
