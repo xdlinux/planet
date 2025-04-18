@@ -1,5 +1,0 @@
-<h1 id="real-number-foundation-book-report">
-<a class="header-anchor" href="#real-number-foundation-book-report"></a>
-Real Number Foundation Book Report
-</h1><p>借着这次数学分析大作业的机会写写实数建立。</p>
-<p>实数的建立是数学基础理论的一部分，涉及到许多数学分支，包括数学逻辑、集合论、代数结构等。数学家们通过对这些基本概念和性质的严密推导，构建了实数系统，为数学的发展提供了坚实的基础。这个过程在数学史上经历了漫长的发展，由许多数学家共同贡献。</p><hr />

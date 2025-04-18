@@ -1,7 +1,0 @@
-<h1 id="fibonacci序列">
-<a class="header-anchor" href="#fibonacci%e5%ba%8f%e5%88%97"></a>
-<strong>Fibonacci序列</strong>
-</h1><h2 id="问题分析">
-<a class="header-anchor" href="#%e9%97%ae%e9%a2%98%e5%88%86%e6%9e%90"></a>
-<strong>问题分析</strong>
-</h2><p>要正确实现程序的递归调用和返回，必须解决参数的传递和返回地址问题。具体地说，进行调用时，每递归一次都要给所有参变量重新分配储存空间，并要把前一次调用的实参和本次调用后的返回地址保留。</p><hr />

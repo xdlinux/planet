@@ -1,8 +1,0 @@
-<p><strong>elem是单词element（元素）的缩写</strong>，在程序定义中代表某一不确定的类型，也就是抽象的数据类型。</p>
-<h1 id="list">
-<a class="header-anchor" href="#list"></a>
-list
-</h1><h2 id="定义">
-<a class="header-anchor" href="#%e5%ae%9a%e4%b9%89"></a>
-定义
-</h2><p>由一系列元素按顺序进行排列而成的容器</p><hr />
