@@ -1,0 +1,164 @@
+<h1>Typecho评论导入Waline</h1><p>作者: 孤筝 (lvbowen040427@163.com)</p>
+          <p>前两天把博客文章从 Typecho 迁移到 Hugo，光是设置 Front Matter 参数和重新配置图片链接就费了很大功夫。<br>
+一个博客的价值，首先是文章，紧接着就是评论。评论证明博客在互联网和真实世界产生的影响，承载了人与人之间的交互关系。私心一点地说，五湖四海的评论是重要的回忆，是构成“我”的一部分。<br>
+所以，将原站评论 copy 到新站的对应文章下是很有必要的。</p>
+<h2 id="配置-waline">
+<a class="header-anchor" href="#%e9%85%8d%e7%bd%ae-waline"></a>
+配置 Waline
+</h2><p>相比于 Wordpress、Typecho 等动态博客，静态博客只能外挂评论系统，选择众多，各有优劣。在参考了<a href="https://cloud.tencent.com/developer/article/2196035">这篇文章</a>和查阅各个评论系统官网后，我最终选择<a href="https://waline.js.org">Waline</a>。<br>
+Waline 的<a href="https://waline.js.org/guide/get-started/">中文文档</a>内容翔实，设置<a href="https://leancloud.app">LeanCloud</a>数据库和<a href="https://vercel.com/">Vercel</a> 服务端后即可进入评论管理后台 <code>https://&lt;你的服务端域名&gt;/ui/</code> 。首次注册成为管理员，在这里可以管理评论和用户。</p>
+<h2 id="导出-typecho-评论">
+<a class="header-anchor" href="#%e5%af%bc%e5%87%ba-typecho-%e8%af%84%e8%ae%ba"></a>
+导出 Typecho 评论
+</h2><p>Typecho 太老了，用户少，不如 Hexo、Wordpress 等社区活跃，互联网上资料也很少。<br>
+笔者仅找到大佬<a href="https://imnerd.org">怡红院落</a>写的一个 Typecho 导出评论到 Valine 的插件 <a href="https://github.com/lizheming/typecho-export-valine">Export2Valine</a>（也是 Waline 文档中的）。<br>
+但上次更新是三年前，经测试已经失效，仅能导入第一条评论。查看导出的 jsonl 文件，显然评论数据都已经完全导出。</p>
+<p>先将该插件安装到 Typecho （注意更改插件文件夹名称为 &ldquo;Export2Valine&rdquo; ！）。</p>
+<p>参考<a href="https://www.imwxz.com/posts/74f52ab0.html">这一篇</a> Typecho 迁移到 Hexo 的文章，该插件年久失修，需要作一些更改。<br>
+找到插件文件夹下的 <code>Action.php</code> ，第 42 行开始改成如下代码（追踪父评论）：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nv">$arr</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">  <span class="s2">&#34;objectId&#34;</span> <span class="o">=&gt;</span> <span class="nv">$comment</span><span class="p">[</span><span class="s2">&#34;coid&#34;</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">  <span class="s2">&#34;QQAvatar&#34;</span> <span class="o">=&gt;</span> <span class="s2">&#34;&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="s2">&#34;comment&#34;</span> <span class="o">=&gt;</span> <span class="nv">$comment</span><span class="p">[</span><span class="s2">&#34;text&#34;</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">  <span class="s2">&#34;insertedAt&#34;</span> <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;__type&#34;</span> <span class="o">=&gt;</span> <span class="s2">&#34;Date&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;iso&#34;</span> <span class="o">=&gt;</span> <span class="nv">$time</span>
+</span></span><span class="line"><span class="cl">  <span class="p">),</span>
+</span></span><span class="line"><span class="cl">  <span class="s2">&#34;createdAt&#34;</span> <span class="o">=&gt;</span> <span class="nv">$time</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="s2">&#34;updatedAt&#34;</span> <span class="o">=&gt;</span> <span class="nv">$time</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="s2">&#34;ip&#34;</span> <span class="o">=&gt;</span> <span class="nv">$comment</span><span class="p">[</span><span class="s2">&#34;ip&#34;</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">  <span class="s2">&#34;link&#34;</span> <span class="o">=&gt;</span> <span class="nv">$comment</span><span class="p">[</span><span class="s2">&#34;url&#34;</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">  <span class="s2">&#34;mail&#34;</span> <span class="o">=&gt;</span> <span class="nv">$comment</span><span class="p">[</span><span class="s2">&#34;mail&#34;</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">  <span class="s2">&#34;nick&#34;</span> <span class="o">=&gt;</span> <span class="nv">$comment</span><span class="p">[</span><span class="s2">&#34;author&#34;</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">  <span class="s2">&#34;ua&#34;</span> <span class="o">=&gt;</span> <span class="nv">$comment</span><span class="p">[</span><span class="s2">&#34;agent&#34;</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">  <span class="s2">&#34;url&#34;</span> <span class="o">=&gt;</span> <span class="s2">&#34;/</span><span class="si">{</span><span class="nv">$slug</span><span class="si">}</span><span class="s2">.html&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">if</span><span class="p">(</span><span class="nv">$comment</span><span class="p">[</span><span class="s2">&#34;parent&#34;</span><span class="p">])</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="nv">$arr</span><span class="p">[</span><span class="s2">&#34;pid&#34;</span><span class="p">]</span> <span class="o">=</span> <span class="nv">$comment</span><span class="p">[</span><span class="s2">&#34;parent&#34;</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">  <span class="nv">$arr</span><span class="p">[</span><span class="s2">&#34;rid&#34;</span><span class="p">]</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">getRootId</span><span class="p">(</span><span class="nv">$comment</span><span class="p">[</span><span class="s2">&#34;coid&#34;</span><span class="p">]);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p>其他部分不用修改。<br>
+接着在 Typecho 后台-控制台-评论导出，打开下载的 jsonl 文件，删除开头的 <code>#filetype:JSON-streaming {&quot;type&quot;:&quot;Class&quot;,&quot;class&quot;:&quot;Comment&quot;}\n\n</code> 。<br>
+保存后关闭文件，将文件拓展名改为 <code>.json</code> 。</p>
+<h2 id="修正-json-格式">
+<a class="header-anchor" href="#%e4%bf%ae%e6%ad%a3-json-%e6%a0%bc%e5%bc%8f"></a>
+修正 json 格式
+</h2><p>导出文件 <code>jsonl</code> 内中文都用转义，只有一行，看起来一团乱麻。<br>
+为转化成便于阅读、编辑与导入的 <code>json</code> 格式，我们先利用编辑器的<strong>查找与替换</strong>功能，将 <code>}\n{</code> 替换为</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-json" data-lang="json"><span class="line"><span class="cl"><span class="err">},</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span></code></pre></div><p>Xcode 的替换，换行符可以点击左侧小放大镜标选择插入。</p>
+<p>此时每行一个评论对象。</p>
+<p>同样，将各个评论对象内的字段结构分开，将 <code>&quot;,&quot;</code> 替换为</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-json" data-lang="json"><span class="line"><span class="cl"><span class="s2">&#34;,
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &#34;</span>
+</span></span></code></pre></div><p>此时，我们可以看出每个评论对象内包含多个数据，形似</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-json" data-lang="json"><span class="line"><span class="cl"><span class="p">{</span><span class="nt">&#34;objectId&#34;</span><span class="p">:</span><span class="s2">&#34;3&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="nt">&#34;QQAvatar&#34;</span><span class="p">:</span><span class="s2">&#34;&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="nt">&#34;comment&#34;</span><span class="p">:</span><span class="s2">&#34;\u6d4b\u8bd5\u4e00\u4e0b&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="nt">&#34;insertedAt&#34;</span><span class="p">:{</span><span class="nt">&#34;__type&#34;</span><span class="p">:</span><span class="s2">&#34;Date&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="nt">&#34;iso&#34;</span><span class="p">:</span><span class="s2">&#34;2023-06-27T09:37:07.000Z&#34;</span><span class="p">},</span><span class="nt">&#34;createdAt&#34;</span><span class="p">:</span><span class="s2">&#34;2023-06-27T09:37:07.000Z&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="nt">&#34;updatedAt&#34;</span><span class="p">:</span><span class="s2">&#34;2023-06-27T09:37:07.000Z&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="nt">&#34;ip&#34;</span><span class="p">:</span><span class="s2">&#34;223.104.150.16&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="nt">&#34;link&#34;</span><span class="p">:</span><span class="err">**</span><span class="kc">null</span><span class="err">**</span><span class="p">,</span><span class="nt">&#34;mail&#34;</span><span class="p">:</span><span class="s2">&#34;2868301418@qq.com&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="nt">&#34;nick&#34;</span><span class="p">:</span><span class="s2">&#34;2868301418&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="nt">&#34;ua&#34;</span><span class="p">:</span><span class="s2">&#34;Mozilla\/5.0 (Linux; Android 13; V2171A Build\/TP1A.220624.014; wv) AppleWebKit\/537.36 (KHTML, like Gecko) Version\/4.0 Chrome\/109.0.5414.86 MQQBrowser\/6.2 TBS\/046605 Mobile Safari\/537.36 V1_AND_SQ_8.9.63_4190_HDBM_T QQ\/8.9.63.11380 NetType\/4G WebP\/0.3.0 Ap&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="nt">&#34;url&#34;</span><span class="p">:</span><span class="s2">&#34;\/\u4ea4\u53cb\u6807\u51c6-\u548c\u5e73\u5171\u5904\u4e94\u9879\u539f\u5219.html&#34;</span><span class="p">}</span><span class="err">,</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="p">{</span><span class="nt">&#34;objectId&#34;</span><span class="p">:</span><span class="s2">&#34;4&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="nt">&#34;QQAvatar&#34;</span><span class="p">:</span><span class="s2">&#34;&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="nt">&#34;comment&#34;</span><span class="p">:</span><span class="s2">&#34;\u600e\u4e48ip\u4e0d\u5bf9&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="nt">&#34;insertedAt&#34;</span><span class="p">:{</span><span class="nt">&#34;__type&#34;</span><span class="p">:</span><span class="s2">&#34;Date&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="nt">&#34;iso&#34;</span><span class="p">:</span><span class="s2">&#34;2023-06-27T09:38:15.000Z&#34;</span><span class="p">},</span><span class="nt">&#34;createdAt&#34;</span><span class="p">:</span><span class="s2">&#34;2023-06-27T09:38:15.000Z&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="nt">&#34;updatedAt&#34;</span><span class="p">:</span><span class="s2">&#34;2023-06-27T09:38:15.000Z&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="nt">&#34;ip&#34;</span><span class="p">:</span><span class="s2">&#34;223.104.150.16&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="nt">&#34;link&#34;</span><span class="p">:</span><span class="err">**</span><span class="kc">null</span><span class="err">**</span><span class="p">,</span><span class="nt">&#34;mail&#34;</span><span class="p">:</span><span class="s2">&#34;2868301418@qq.com&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="nt">&#34;nick&#34;</span><span class="p">:</span><span class="s2">&#34;2868301418&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="nt">&#34;ua&#34;</span><span class="p">:</span><span class="s2">&#34;Mozilla\/5.0 (Linux; Android 13; V2171A Build\/TP1A.220624.014; wv) AppleWebKit\/537.36 (KHTML, like Gecko) Version\/4.0 Chrome\/109.0.5414.86 MQQBrowser\/6.2 TBS\/046605 Mobile Safari\/537.36 V1_AND_SQ_8.9.63_4190_HDBM_T QQ\/8.9.63.11380 NetType\/4G WebP\/0.3.0 Ap&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="nt">&#34;url&#34;</span><span class="p">:</span><span class="s2">&#34;\/\u4ea4\u53cb\u6807\u51c6-\u548c\u5e73\u5171\u5904\u4e94\u9879\u539f\u5219.html&#34;</span><span class="p">}</span><span class="err">,</span>
+</span></span></code></pre></div><h3 id="公共字段说明">
+<a class="header-anchor" href="#%e5%85%ac%e5%85%b1%e5%ad%97%e6%ae%b5%e8%af%b4%e6%98%8e"></a>
+公共字段说明
+</h3><ol>
+<li><strong>objectId</strong>: 评论的唯一标识符（如 &ldquo;4&rdquo; 和 &ldquo;5&rdquo;）</li>
+<li><strong>QQAvatar</strong>: QQ头像链接（当前为空字符串）</li>
+<li><strong>comment</strong>: 评论内容（包含 Unicode 转义字符，如 <code>\u600e\u4e48</code> 表示&quot;怎么&quot;）</li>
+<li><strong>insertedAt/createdAt/updatedAt</strong>: 时间戳（ISO 8601 格式）</li>
+<li><strong>ip</strong>: 评论者的 IP 地址</li>
+<li><strong>link</strong>: 评论者提供的链接（可能为 null）</li>
+<li><strong>mail</strong>: 评论者的邮箱地址</li>
+<li><strong>nick</strong>: 评论者昵称</li>
+<li><strong>ua</strong>: 用户代理（显示浏览器/设备信息）</li>
+<li><strong>url</strong>: 被评论的页面路径</li>
+</ol>
+<h3 id="特殊字段">
+<a class="header-anchor" href="#%e7%89%b9%e6%ae%8a%e5%ad%97%e6%ae%b5"></a>
+特殊字段
+</h3><ol start="11">
+<li><strong>pid</strong>: 父评论 ID</li>
+<li><strong>rid</strong>: 根评论 ID</li>
+</ol>
+<p>如果 <code>&quot;link&quot;</code> 值为 <code>null</code> ，则 <code>&quot;link&quot;</code> 与 <code>&quot;mail&quot;</code> 间没有换行。json 对换行不敏感，所以可以不管。<br>
+此时在文件首尾用 <code>[ ]</code> 将内容包裹起来，保存文件。</p>
+<h2 id="修改评论属性">
+<a class="header-anchor" href="#%e4%bf%ae%e6%94%b9%e8%af%84%e8%ae%ba%e5%b1%9e%e6%80%a7"></a>
+修改评论属性
+</h2><p>此时可以直接导入 LeanCloud 了，但尚有内容可以修改。</p>
+<p><code>Export2Valine</code> 将评论关联文章的 url 设置为 <code>\/slug</code> ，比如 <code>&quot;url&quot;: &quot;\/Summary-of-the-First-Semester-of-Junior-Year.html&quot;</code> ，其中 <code>\/</code> 是转义 <code>/</code> 。</p>
+<p>想要把评论与新博客的文章联系起来，需要手动修改 url 为新博客的文章链接。</p>
+<p>以笔者该博客为例，Hugo 生成的网站根目录下有 <code>zh-cn,zh-tw,en,ja</code> 四个文件夹（开启了多语言），中文站的文章在 <code>/zh-cn/post/文章分类/</code> 下。<br>
+笔者在本地博客源文件就将文章按分类放入不同文件夹，比如 <code>/content/post/Thoughts/最近写的诗.md</code> 生成网页相对地址为 <code>zh-cn/post/thoughts/最近写的诗</code> 。</p>
+<p>如果你的新博客文章在根目录且名称未更改，那自然不用修改 url。<br>
+若都在 <code>/post/</code> 下，可以使用查找与替换将</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-json" data-lang="json"><span class="line"><span class="cl"><span class="s2">&#34;url&#34;</span><span class="err">:&#34;\/</span>
+</span></span></code></pre></div><p>替换为</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-json" data-lang="json"><span class="line"><span class="cl"><span class="s2">&#34;url&#34;</span><span class="err">:&#34;\/post\/</span>
+</span></span></code></pre></div><p>笔者是暂时替换为</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-json" data-lang="json"><span class="line"><span class="cl"><span class="s2">&#34;url&#34;</span><span class="err">:&#34;\/zh-cn\/post\/</span>
+</span></span></code></pre></div><p>同样，友链、说说之类的独立页面评论也应修改为新博客对应页面相对地址。
+比如友链页面</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-json" data-lang="json"><span class="line"><span class="cl"><span class="s2">&#34;url&#34;</span><span class="err">:&#34;\/links.html</span>
+</span></span></code></pre></div><p>替换为</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-json" data-lang="json"><span class="line"><span class="cl"><span class="s2">&#34;url&#34;</span><span class="err">:&#34;\/zh-cn\/friend\/</span>
+</span></span></code></pre></div><p>将 post 和独立页面中可以大规模应用<em>查找替换</em>的 url 先替换，否则导入后难以大批量替换。</p>
+<p>使用查找与替换时，尽量多包裹共同内容，找“最大公约数”，避免错误修改。<br>
+<em><strong>注意转义 <code>\/</code> !!!</strong></em></p>
+<h2 id="导入-leancloud">
+<a class="header-anchor" href="#%e5%af%bc%e5%85%a5-leancloud"></a>
+导入 LeanCloud
+</h2><p>在 LeanCloud 控制台-数据存储-导入导出，选择修改好的 json 文件，<code>Class</code> 填写 <code>Comment</code> ，导入。</p>
+<p><em><strong>注意</strong></em>，如果你之前在博客 Waline 发过测试评论，或曾尝试过导入 <code>Comment</code>，Waline 会先创建 <code>Comment</code> <code>Class</code> ，再导入就无法成功导入数据（LeanCloud 会提示成功，但没有新数据导入）。</p>
+<p>只能先在控制台-结构化数据，选择 <code>Comment</code> 并删除该 <code>Class</code>，再次尝试导入。LeanCloud 页面可能不会及时刷新结果，<code>Ctrl+F5</code> 刷新缓存就有了。</p>
+<p>导入成功后，再针对每个评论 url 进行单独设置。<br>
+比如笔者的 post 需要一个个归类到 <code>&quot;url&quot;:&quot;\/zh-cn\/post\/文章分类\/</code> 下，此时善用 LeanCloud <strong>批量操作</strong>和<strong>按条件过滤</strong>功能。</p>
+<h2 id="后记">
+<a class="header-anchor" href="#%e5%90%8e%e8%ae%b0"></a>
+后记
+</h2><p>评论的整理并没有耽误笔者太长时间，120 条评论大部分是笔者自己在说说页面的自言自语，所以 url 可以批量修正。仅有的十几条他人评论分布在寥寥三五个文章中，通过 <code>post</code> 筛选修改起来很快。不知道是好事还是坏事呢（笑）</p>
+<p>自言自语也好，他人的留言也好，每一条于笔者都有着非同寻常的意义，隔一段时间回看就会有新的感受。<br>
+如最开始所言，这是笔者的成长轨迹，是笔者存活于世的证明，是“我”的一部分。</p>
+<p>而你，我亲爱的读者，是你赋予我价值。</p>
+<p>有空的话请多多评论吧～笔者真的会开心很久的说（如果评论善意的话）。</p>
+        <hr><p>本文 2025-04-19 首发于 <a href='https://guzhengsvt.github.io/'>孤筝の温暖小家</a>，最后修改于 2025-04-19</p><p>All website licensed under CC BY 4.0</p><hr />
