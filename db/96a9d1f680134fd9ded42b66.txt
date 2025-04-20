@@ -161,4 +161,4 @@ Waline 的<a href="https://waline.js.org/guide/get-started/">中文文档</a>内
 如最开始所言，这是笔者的成长轨迹，是笔者存活于世的证明，是“我”的一部分。</p>
 <p>而你，我亲爱的读者，是你赋予我价值。</p>
 <p>有空的话请多多评论吧～笔者真的会开心很久的说（如果评论善意的话）。</p>
-        <hr><p>本文 2025-04-19 首发于 <a href='http://localhost:1313/'>孤筝の温暖小家</a>，最后修改于 2025-04-19</p><p>All website licensed under CC BY 4.0</p><hr />
+        <hr><p>本文 2025-04-19 首发于 <a href='https://guzhengsvt.cn/'>孤筝の温暖小家</a>，最后修改于 2025-04-19</p><p>All website licensed under CC BY 4.0</p><hr />
