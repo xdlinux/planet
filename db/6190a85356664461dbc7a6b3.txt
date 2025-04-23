@@ -1,4 +1,5 @@
-<h1>Hugo博客常用资料</h1><p>作者: 孤筝 (lvbowen040427@163.com)</p>
+<h1>Hugo博客常用资料</h1><p>作者：孤筝（lvbowen040427@163.com）</p>
+        
           <h1 id="hugo-常用命令">
 <a class="header-anchor" href="#hugo-%e5%b8%b8%e7%94%a8%e5%91%bd%e4%bb%a4"></a>
 Hugo 常用命令
@@ -398,4 +399,5 @@ reimu 主题 icon_font
   </tbody>
 </table>
 
-        <hr><p>本文 2025-04-15 首发于 <a href='https://guzhengsvt.cn/'>孤筝の温暖小家</a>，最后修改于 2025-04-15</p><p>All website licensed under CC BY 4.0</p><hr />
+        
+        <hr><p>本文 2025-04-15 首发于 <a href='https://guzhengsvt.cn/'>孤筝の温暖小家</a>，最后修改于 2025-04-15</p><p>本博客所有文章除特别声明外，均采用 BY-NC-SA 许可协议。转载请注明出处！</p><hr />

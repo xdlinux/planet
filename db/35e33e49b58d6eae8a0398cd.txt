@@ -1,4 +1,5 @@
-<h1>因为春天来过</h1><p>作者: 孤筝 (lvbowen040427@163.com)</p>
+<h1>因为春天来过</h1><p>作者：孤筝（lvbowen040427@163.com）</p>
+        
           <h3 id="谨以此诗献给我生命中那颗polaris">
 <a class="header-anchor" href="#%e8%b0%a8%e4%bb%a5%e6%ad%a4%e8%af%97%e7%8c%ae%e7%bb%99%e6%88%91%e7%94%9f%e5%91%bd%e4%b8%ad%e9%82%a3%e9%a2%97polaris"></a>
 ——谨以此诗，献给我生命中那颗Polaris
@@ -28,4 +29,5 @@
 “你不害怕花种撑不过冬天吗？”树和鸟儿这样问田野，此刻的田野又变得光秃秃空无一物。<br>
 “没关系，我已经见过春天了。”<br>
 因为春天来过。</strong></p>
-        <hr><p>本文 2024-11-13 首发于 <a href='https://guzhengsvt.cn/'>孤筝の温暖小家</a>，最后修改于 2024-11-13</p><p>All website licensed under CC BY 4.0</p><hr />
+        
+        <hr><p>本文 2024-11-13 首发于 <a href='https://guzhengsvt.cn/'>孤筝の温暖小家</a>，最后修改于 2024-11-13</p><p>本博客所有文章除特别声明外，均采用 BY-NC-SA 许可协议。转载请注明出处！</p><hr />

@@ -1,4 +1,5 @@
-<h1>大三上总结</h1><p>作者: 孤筝 (lvbowen040427@163.com)</p>
+<h1>大三上总结</h1><p>作者：孤筝（lvbowen040427@163.com）</p>
+        
           <h2 id="关于期末考试">
 <a class="header-anchor" href="#%e5%85%b3%e4%ba%8e%e6%9c%9f%e6%9c%ab%e8%80%83%e8%af%95"></a>
 关于期末考试
@@ -51,4 +52,5 @@
 祝新年快乐，岁岁平安。
 2025.1.24</p>
 
-        <hr><p>本文 2025-01-28 首发于 <a href='https://guzhengsvt.cn/'>孤筝の温暖小家</a>，最后修改于 2025-01-28</p><p>All website licensed under CC BY 4.0</p><hr />
+        
+        <hr><p>本文 2025-01-28 首发于 <a href='https://guzhengsvt.cn/'>孤筝の温暖小家</a>，最后修改于 2025-01-28</p><p>本博客所有文章除特别声明外，均采用 BY-NC-SA 许可协议。转载请注明出处！</p><hr />
