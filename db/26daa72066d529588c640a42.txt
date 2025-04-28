@@ -107,23 +107,21 @@ Eg：随机选中圆内某点，选中任意点概率为 0，但都可能发生�
 <a class="header-anchor" href="#%e5%9d%87%e5%8c%80%e5%88%86%e5%b8%83"></a>
 均匀分布
 </h2><p>$x \sim U(a,b)$
-近似为几何分布中的线性分布，各点处概率密度：
-</p>
+近似为几何分布中的线性分布，各点处概率密度：</p>
 $$
 f(x)=
 \begin{cases}
 0,x \le a\\
-\frac{1}{b-a},a < x \le b\\
-0,x>b\\
+\frac{1}{b-a},a \lt x \le b\\
+0,x \gt b\\
 \end{cases}
-$$<p>分布函数：
-</p>
+$$<p>分布函数：</p>
 $$
 F(x)=
 \begin{cases}
 0,x \le a\\
-\frac{x-a}{b-a},a<x \le b\\
-1,x>b\\
+\frac{x-a}{b-a},a \lt x \le b\\
+1,x \gt b\\
 \end{cases}
 $$<h2 id="指数分布">
 <a class="header-anchor" href="#%e6%8c%87%e6%95%b0%e5%88%86%e5%b8%83"></a>
@@ -135,7 +133,7 @@ $$<h2 id="指数分布">
 </h3>$$
 f(x)=
 \begin{cases}
-\lambda e^{-\lambda x},x>0\\
+\lambda e^{-\lambda x},x \gt 0\\
 0,x \le 0\\
 \end{cases}
 $$<h3 id="分布函数">
@@ -145,7 +143,7 @@ $$<h3 id="分布函数">
 F(x)=
 \begin{cases}
 1-e^{-\lambda x},x \ge 0\\
-0,x<0\\
+0,x \lt 0\\
 \end{cases}
 $$<h2 id="泊松分布">
 <a class="header-anchor" href="#%e6%b3%8a%e6%9d%be%e5%88%86%e5%b8%83"></a>
@@ -162,14 +160,14 @@ $$<h2 id="正态分布">
 <a class="header-anchor" href="#%e6%a6%82%e7%8e%87%e5%af%86%e5%ba%a6-1"></a>
 概率密度
 </h3>$$
-f(x)=\frac{1}{\sqrt{2 \pi} \sigma}e^{-\frac{(x-\mu)^2}{2\sigma^2}},x \in R,\sigma>0
+f(x)=\frac{1}{\sqrt{2 \pi} \sigma}e^{-\frac{(x-\mu)^2}{2\sigma^2}},x \in R,\sigma \gt 0
 $$<h3 id="分布函数-1">
 <a class="header-anchor" href="#%e5%88%86%e5%b8%83%e5%87%bd%e6%95%b0-1"></a>
 分布函数
 </h3>$$
 F(x)=\int^{x}_{-\infty}f(t)dt
 $$<p>
-显然，$F(\mu)=\frac{1}{2}$ ，即 $P(x \le \mu)=P(x>\mu)=\frac{1}{2}$ 。</p>
+显然，$F(\mu)=\frac{1}{2}$ ，即 $P(x \le \mu)=P(x \gt \mu)=\frac{1}{2}$ 。</p>
 <h3 id="标准正态分布">
 <a class="header-anchor" href="#%e6%a0%87%e5%87%86%e6%ad%a3%e6%80%81%e5%88%86%e5%b8%83"></a>
 标准正态分布
@@ -235,7 +233,7 @@ $$<h3 id="分布函数-2">
 <a class="header-anchor" href="#%e5%88%86%e5%b8%83%e5%87%bd%e6%95%b0-2"></a>
 分布函数
 </h3>$$
-F(x)=\sum_{x_i<x}p_i,x \in R
+F(x)=\sum_{x_i \lt x}p_i,x \in R
 $$<h2 id="一维连续型随机变量">
 <a class="header-anchor" href="#%e4%b8%80%e7%bb%b4%e8%bf%9e%e7%bb%ad%e5%9e%8b%e9%9a%8f%e6%9c%ba%e5%8f%98%e9%87%8f"></a>
 一维连续型随机变量
@@ -253,7 +251,7 @@ $$<h3 id="区间概率">
 <a class="header-anchor" href="#%e5%8c%ba%e9%97%b4%e6%a6%82%e7%8e%87"></a>
 区间概率
 </h3>$$
-P(a<x \le b)=\int_a^bf(x)dx=F(b)-F(a)
+P(a \lt x \le b)=\int_a^bf(x)dx=F(b)-F(a)
 $$<p>$\because$ $P(x=a)=0,a \in R$
 $\therefore$ 区间两边等号随意取</p>
 <h3 id="规范性">
@@ -331,9 +329,9 @@ $$<p>
 $$
 \begin{align}
 F_Z(z)
-&=P(Z<z)\\
-&=P(X-Y<z)\\
-&=P(X<Y+z)\\
+&=P(Z \lt z)\\
+&=P(X-Y \lt z)\\
+&=P(X \lt Y+z)\\
 &=\int^{y}_{-\infty}\int^{y+z}_{-\infty}f(x,y)dxdy\\
 \end{align}
 $$<p>
@@ -500,7 +498,7 @@ $$<p>
 <a class="header-anchor" href="#%e6%97%a0%e5%81%8f%e6%80%a7%e4%b8%8e%e6%9c%89%e6%95%88%e6%80%a7"></a>
 无偏性与有效性
 </h2><p>若 $E(\hat{\theta})=\theta$ ，则称 $\hat{\theta}$ 为 $\theta$ 的无偏估计。
-若 $\hat{\theta_1},\hat{\theta_2}$ 均为无偏估计，且 $D(\hat{\theta_1})<\hat{\theta_2}$ ，则称 $\hat{\theta_1}$ 比 $\hat{\theta_2}$ 更有效。</p>
+若 $\hat{\theta_1},\hat{\theta_2}$ 均为无偏估计，且 $D(\hat{\theta_1}) \lt \hat{\theta_2}$ ，则称 $\hat{\theta_1}$ 比 $\hat{\theta_2}$ 更有效。</p>
 <h2 id="区间估计">
 <a class="header-anchor" href="#%e5%8c%ba%e9%97%b4%e4%bc%b0%e8%ae%a1"></a>
 区间估计
@@ -588,18 +586,18 @@ $W=(0,\chi^2_{1-\frac{\alpha}{2}}(n-1)) \cup (\chi^2_{\frac{\alpha}{2}}(n-1),\in
 <a class="header-anchor" href="#%e5%b7%a6%e8%bf%9e%e7%bb%ad"></a>
 左连续
 </h4>$$
-F(x)=P(X<x)
+F(x)=P(X \lt x)
 $$<p>
 在此定义下
 </p>
 $$
-F(x)=F(x^-)=F(x-0)=P(X<x)
+F(x)=F(x^-)=F(x-0)=P(X \lt x)
 $$<p>
 </p>
 $$
-F(x^+)=F(x+0)=P(X<x)+P(X=x)
+F(x^+)=F(x+0)=P(X \lt x)+P(X=x)
 $$<p>
-当 $P(X=x)\ne 0$ 时，显然 $F(x^+)>F(x)=F(x^-)$ ，此时分布函数左连续而右不连续。</p>
+当 $P(X=x)\ne 0$ 时，显然 $F(x^+) \gt F(x)=F(x^-)$ ，此时分布函数左连续而右不连续。</p>
 <h4 id="右连续">
 <a class="header-anchor" href="#%e5%8f%b3%e8%bf%9e%e7%bb%ad"></a>
 右连续
@@ -615,7 +613,7 @@ $$<p>
 $$
 F(x^-)=F(x-0)=P(X \le x)-P(X=x)
 $$<p>
-当 $P(X=x)\ne 0$ 时，显然 $F(x^+)=F(x)>F(x^-)$ ，此时分布函数右连续而左不连续。</p>
+当 $P(X=x)\ne 0$ 时，显然 $F(x^+)=F(x) \gt F(x^-)$ ，此时分布函数右连续而左不连续。</p>
 <h4 id="抛硬币举例">
 <a class="header-anchor" href="#%e6%8a%9b%e7%a1%ac%e5%b8%81%e4%b8%be%e4%be%8b"></a>
 抛硬币举例
@@ -633,19 +631,19 @@ $$<p>
 </p>
 $$
 \begin{cases}
-P(x<0)=0\\
-P(0 \le x < 1)=0.5\\
+P(x \lt 0)=0\\
+P(0 \le x  \lt  1)=0.5\\
 P(x \ge 1)=1\\
 \end{cases}
 $$<p>
-当设分布函数为 $F(x)=P(X<x)$ 时，
+当设分布函数为 $F(x)=P(X \lt x)$ 时，
 </p>
 $$
 F(x)=
 \begin{cases}
 0, & x \le 0\\
-0.5, & 0 < x \le 1\\
-1, & x>1\\
+0.5, & 0  \lt  x \le 1\\
+1, & x \gt 1\\
 \end{cases}
 $$<p>
 $F(0^-)=F(0)=0$，$F(0^+)=0.5$，$x=0$ 是间断点，左连续而右不连续。</p>
