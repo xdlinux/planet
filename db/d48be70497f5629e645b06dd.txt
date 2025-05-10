@@ -1,0 +1,219 @@
+<h1>最优化理论与方法(更新中)</h1><p>作者：孤筝（lvbowen040427@163.com）</p>
+        
+          <h1 id="最优化问题">
+<a class="header-anchor" href="#%e6%9c%80%e4%bc%98%e5%8c%96%e9%97%ae%e9%a2%98"></a>
+最优化问题
+</h1><h2 id="数学模型">
+<a class="header-anchor" href="#%e6%95%b0%e5%ad%a6%e6%a8%a1%e5%9e%8b"></a>
+数学模型
+</h2>$$
+\min f(\vec{x}),\vec{x}\in \vec{R^{n}}
+$$$$
+\text{s.t.}{
+\begin{cases}
+c_i(x)=0,& i \in E = {1,2,\cdots,l}\\
+c_i(\vec{x})\ge 0,& i \in I = {l+1,\cdots,l+m}\\
+\end{cases}}
+$$<p>
+其中，</p>
+<ul>
+<li>$\vec{x}=(x_1,x_2,\cdots,x_n)^T$ 称为决策变量</li>
+<li>$f(\vec{x})$ 称为目标函数</li>
+<li>s.t.（subject to ，受限于），称为约束条件</li>
+</ul>
+<h2 id="分类">
+<a class="header-anchor" href="#%e5%88%86%e7%b1%bb"></a>
+分类
+</h2><ol>
+<li>时间
+<ol>
+<li>静态问题</li>
+<li>动态问题</li>
+</ol>
+</li>
+<li>约束条件
+<ol>
+<li>有约束问题</li>
+<li>无约束问题</li>
+</ol>
+</li>
+<li>目标函数与约束条件是否为线性函数
+<ol>
+<li>线性规划</li>
+<li>非线性规划</li>
+</ol>
+</li>
+<li>目标函数与约束条件是否为凸函数
+<ol>
+<li>凸优化问题</li>
+<li>非凸优化问题</li>
+</ol>
+</li>
+</ol>
+<h2 id="二次型矩阵">
+<a class="header-anchor" href="#%e4%ba%8c%e6%ac%a1%e5%9e%8b%e7%9f%a9%e9%98%b5"></a>
+二次型矩阵
+</h2><p>二次型：
+</p>
+$$
+\begin{align}
+f
+&=x_1^2-3x_3^2-4x_1x_2+x_2x_3\\
+&=(x_1,x_2,x_3)
+\begin{bmatrix}
+1 & -2 & 0\\
+-2 & 0 & \frac{1}{2}\\
+0 & \frac{1}{2} & -3\\
+\end{bmatrix}
+\begin{bmatrix}
+x_1\\
+x_2\\
+x_3\\
+\end{bmatrix}\\
+&= \vec{X^T} A \vec{X}\\
+\end{align}
+$$<p>二次型矩阵：
+</p>
+$$
+\begin{bmatrix}
+1 & -2 & 0\\
+-2 & 0 & \frac{1}{2}\\
+0 & \frac{1}{2} & -3\\
+\end{bmatrix}
+$$<h2 id="hessen-矩阵">
+<a class="header-anchor" href="#hessen-%e7%9f%a9%e9%98%b5"></a>
+Hessen 矩阵
+</h2><p>以二元二次函数为例：
+</p>
+$$
+\nabla^2 f(x_1,x_2)=
+\begin{bmatrix}
+\frac{\partial^2 f}{\partial x_1^2} & \frac{\partial^2 f}{\partial x_1 \partial x_2}\\
+\frac{\partial^2 f}{\partial x_2 \partial x_1} & \frac{\partial^2 f}{\partial x_2^2}\\
+\end{bmatrix}
+$$<h2 id="可行解">
+<a class="header-anchor" href="#%e5%8f%af%e8%a1%8c%e8%a7%a3"></a>
+可行解
+</h2><ul>
+<li>可行解：满足所有约束条件的解。</li>
+<li>可行集（容许集，可行域）：所有可行解构成的集合。</li>
+<li>优化问题：在可行集中找出使得目标函数取得最大值或最小值的点。</li>
+<li>驻点：$\nabla f(x_0)=0$ ，称 $x_0$ 为驻点。</li>
+<li>鞍点：$x_0$ 为驻点，但不为极值点时，称为鞍点。</li>
+</ul>
+<h2 id="凸集">
+<a class="header-anchor" href="#%e5%87%b8%e9%9b%86"></a>
+凸集
+</h2><h3 id="定义">
+<a class="header-anchor" href="#%e5%ae%9a%e4%b9%89"></a>
+定义
+</h3><p>在平面当中，一个图形内部的两个点连线仍然在图形内部，则该图形称为凸集。</p>
+<h3 id="性质">
+<a class="header-anchor" href="#%e6%80%a7%e8%b4%a8"></a>
+性质
+</h3><ol>
+<li>凸集的交集为凸集</li>
+<li>凸集的等比例缩放为凸集</li>
+<li>凸集的和集（非并集）是凸集
+<ul>
+<li>设 $D_1,D_2$ 是凸集，则 $D_1+D_2=\{z|z=x+y,x \in D_1,y \in D_2\}$ 是凸集。</li>
+</ul>
+</li>
+<li>凸集的线性组合是凸集。</li>
+</ol>
+<h3 id="常见凸集">
+<a class="header-anchor" href="#%e5%b8%b8%e8%a7%81%e5%87%b8%e9%9b%86"></a>
+常见凸集
+</h3><ol>
+<li>空集</li>
+<li>整个欧氏空间 $\vec{R^n}$</li>
+<li>超空间 $H=\{x \in \vec{R^n} | a_1x_1+a_2x_2+\cdots +a_nx_n=b\}$</li>
+<li>半空间 $H^+=\{x \in \vec{R^n} | a_1x_1+a_2x_2+\cdots +a_nx_n \ge b\}$</li>
+</ol>
+<h3 id="凸组合">
+<a class="header-anchor" href="#%e5%87%b8%e7%bb%84%e5%90%88"></a>
+凸组合
+</h3><p>设 $x_i \in \vec{R^n},i=1,2,\cdots ,k$ ，实数 $\lambda_i \ge 0,\sum^k_{i=1}\lambda_i=1$ ，则 $x=\sum^k_{i=1}\lambda_ix_i$ 称为 $x_1,x_2,\cdots , x_k$ 的凸组合。<br>
+凸集中任意有限个点的凸组合仍然在该凸集中。</p>
+<h3 id="极点">
+<a class="header-anchor" href="#%e6%9e%81%e7%82%b9"></a>
+极点
+</h3><p>设 $D$ 为凸集，$x \in D$ ，若 $D$ 中不存在两个相异的点 $y,z$ 及某一实数 $\alpha \in (0,1)$ 使得 $x=\alpha y+(1-\alpha)z$ ，则称 $x$ 为 $D$ 的极点。</p>
+<p>人话：以平面五边形为例，极点为其顶点；以半圆形为例，顶点为其直径两个顶点及半圆边。</p>
+<h2 id="凸函数">
+<a class="header-anchor" href="#%e5%87%b8%e5%87%bd%e6%95%b0"></a>
+凸函数
+</h2><h3 id="定义-1">
+<a class="header-anchor" href="#%e5%ae%9a%e4%b9%89-1"></a>
+定义
+</h3><p>定义在一个凸集上的函数 $f(x)$ ，如果对于凸集当中任意两个点 $x_1,x_2$ ，函数满足
+</p>
+$$
+f(\alpha x_1+(1-\alpha)x_2) \le \alpha f(x_1)+(1-\alpha)f(x_2)
+$$<p>
+则称该函数为凸函数。<br>
+当取小于号 $\lt$ 时，称为严格凸函数。</p>
+<h3 id="判断">
+<a class="header-anchor" href="#%e5%88%a4%e6%96%ad"></a>
+判断
+</h3><ol>
+<li>多元函数的 Hessen 矩阵为半正定矩阵——&gt;多元函数为凸函数。</li>
+<li>多元函数的 Hessen 矩阵为正定矩阵——&gt;多元函数为严格凸函数。</li>
+<li>多元线性（一次）函数是 $\vec{R^n}$ 上的凸函数。</li>
+</ol>
+<h2 id="凸优化问题">
+<a class="header-anchor" href="#%e5%87%b8%e4%bc%98%e5%8c%96%e9%97%ae%e9%a2%98"></a>
+凸优化问题
+</h2><h3 id="定义-2">
+<a class="header-anchor" href="#%e5%ae%9a%e4%b9%89-2"></a>
+定义
+</h3><p>目标函数和约束函数都是凸函数的优化问题。</p>
+<ul>
+<li>凸优化的可行集为凸集</li>
+<li>任何局部最优解是全剧最优解</li>
+<li>如果目标函数为严格凸函数，则局部最优解存在且唯一</li>
+</ul>
+<h1 id="线性规划">
+<a class="header-anchor" href="#%e7%ba%bf%e6%80%a7%e8%a7%84%e5%88%92"></a>
+线性规划
+</h1><h2 id="形式">
+<a class="header-anchor" href="#%e5%bd%a2%e5%bc%8f"></a>
+形式
+</h2><h3 id="非标准形式">
+<a class="header-anchor" href="#%e9%9d%9e%e6%a0%87%e5%87%86%e5%bd%a2%e5%bc%8f"></a>
+非标准形式
+</h3><ul>
+<li>目标函数：$\max z=\sum^{n}_{j=1}c_jx_j=CX$</li>
+<li>系数矩阵：
+$$
+A=
+\begin{bmatrix}
+a_{11} & \cdots & a_{1n}\\
+\vdots & \ddots & \vdots\\
+a_{m1} & \cdots & a_{mn}\\
+\end{bmatrix}
+=(P_1,P_2,\cdots,P_n)
+$$</li>
+<li>资源向量：
+$b=\begin{bmatrix} b_1\\ \vdots \\ b_m\\ \end{bmatrix}$</li>
+<li>决策变量向量：$X=(x_1,x_2,\cdots , x_n)^T$</li>
+<li>约束条件：
+$$
+\begin{cases}
+\sum^{n}_{j=1}a_{ij}x_j=b_i,&i=1,2,\cdots,m\\
+x_j \ge 0,& j=1,2,\cdots,n\\
+\end{cases}
+$$
+$$
+\begin{cases}
+AX=b\\
+X \ge \vec{0}
+\end{cases}
+$$</li>
+</ul>
+<h3 id="标准形式">
+<a class="header-anchor" href="#%e6%a0%87%e5%87%86%e5%bd%a2%e5%bc%8f"></a>
+标准形式
+</h3>
+        
+        <hr><p>本文 2025-05-10 首发于 <a href='https://guzhengsvt.cn/'>孤筝の温暖小家</a>，最后修改于 2025-05-10</p><p>本博客所有文章除特别声明外，均采用 BY-NC-SA 许可协议。转载请注明出处！</p><hr />
