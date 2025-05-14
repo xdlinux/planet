@@ -1,0 +1,76 @@
+<p>Kali Nethunter在实际运行时有时会引发权限问题，导致低权限用户无法访问某些资源。因此apt此时无法正常调用工具对源进行解析。所以本文探讨修改apt用户权限来实现root级别的更新来进行临时解决。</p>
+<p><a href="https://blog.nancunchild.cn/2025/05/14/kali_nethunter_chroot_apt_reolv_error_explanation/">Kali Nethunter Chroot 中 `apt` 解析错误的临时解决方案及其原理</a>最先出现在<a href="https://blog.nancunchild.cn">NanCunChild的个人随想</a>。</p>
+<hr /><h2>背景</h2>
+<p>最近在我的 Kali Nethunter 环境中折腾，启动 chroot (<code>chroot kali</code>) 后遇到了一个颇为诡异的问题：</p>
+<ul>
+<li>DNS 配置看起来一切正常，<code>/etc/resolv.conf</code> 文件内容无误。kali默认是使用的OpenDNS。</li>
+<li>使用 <code>ping google.com</code> 或 <code>dig google.com</code> 均能成功解析域名并获得响应。</li>
+<li>但是，一旦运行 <code>apt update</code> 或 <code>apt install &lt;package&gt;</code>，就会收到大量针对软件源的解析错误，例如 &quot;Temporary failure resolving &#8216;http.kali.org&#8217;&quot; 等。这种情况修改各种源都没有作用。</li>
+</ul>
+<p><img decoding="async" src="https://blog.nancunchild.cn/wp-content/uploads/2025/05/Screenshot_20250514-185753_NetHunter-Terminal-162x300.png" alt="更新失败，修改resolv也没用" /></p>
+<p>尝试了修改 <code>resolv.conf</code>、重启网络服务等常规操作，均无济于事。经过研究，发现这个问题似乎并不罕见，在一些 Nethunter 用户中时有发生。</p>
+<h2>意外的解决方案</h2>
+<p>在一番搜索后，我在LinuxDo的评论区找到了一个看似“神奇”的解决方案，它并不直接涉及网络配置，而是修改了 <code>/etc/passwd</code> 文件：</p>
+<ol>
+<li>使用编辑器（如 <code>nano</code> 或 <code>vim</code>）打开 chroot 环境内的 <code>/etc/passwd</code> 文件：
+<pre><code class="language-bash">nano /etc/passwd</code></pre>
+</li>
+<li>找到以 <code>_apt</code> 开头的那一行，它通常看起来像这样（UID 可能会不同）：
+<pre><code>_apt:x:42:65534::/nonexistent:/usr/sbin/nologin</code></pre>
+<p>或者在标准的 Debian/Ubuntu 上可能是：</p>
+<pre><code>_apt:x:100:65534::/nonexistent:/usr/sbin/nologin</code></pre>
+</li>
+<li>关键在于第二个冒号和第三个冒号之间的数字，这是 <code>_apt</code> 用户的 UID。在我的例子中，这个数字是 <code>42</code>。</li>
+<li><strong>将这个 UID 修改为 <code>0</code></strong>：
+<pre><code>_apt:x:0:65534::/nonexistent:/usr/sbin/nologin</code></pre>
+</li>
+<li>保存文件并退出。</li>
+</ol>
+<p>再次运行 <code>apt update</code>，问题竟然解决了！<code>apt</code> 能够成功连接软件源并更新列表。</p>
+<p><img decoding="async" src="https://blog.nancunchild.cn/wp-content/uploads/2025/05/Screenshot_20250514-190614_NetHunter-Terminal-161x300.png" alt="apt成功更新" /></p>
+<h2>原理剖析：为何修改 <code>_apt</code> UID 有效？</h2>
+<p>要理解这个方法为何有效，我们需要了解 <code>_apt</code> 用户和 Linux 的权限机制：</p>
+<ol>
+<li>
+<p><strong><code>_apt</code> 用户与权限分离 (Privilege Separation)</strong>：</p>
+<ul>
+<li>在 Debian 及其衍生发行版（如 Kali）中，<code>_apt</code> 是一个特殊的系统用户。</li>
+<li>它的存在是为了实现<strong>权限分离</strong>。当 <code>apt</code> 工具需要执行网络操作（如从软件源下载包列表或软件包）时，它会<strong>放弃 root 权限</strong>，转而使用这个低权限的 <code>_apt</code> 用户身份来执行这些操作。</li>
+<li><strong>安全考量</strong>：这样做的好处是，即便 <code>apt</code> 在连接到恶意软件源或处理有问题的网络数据时存在漏洞，攻击者也只能获得 <code>_apt</code> 用户的有限权限，而不是整个系统的 root 权限，从而大大降低了潜在的安全风险。虽然这个安全保护做得很边缘，毕竟apt源被投毒的概率很低，nologin配置进一步限制了它只能用于调起进程。但是Linux还是很细心地做了最安全模型。</li>
+</ul>
+</li>
+<li>
+<p><strong>Chroot 环境与网络访问限制</strong>：</p>
+<ul>
+<li><code>ping</code> 和 <code>dig</code> 通常是由当前登录的用户（在 chroot 中大概率是 root）直接执行的，它们能直接利用系统的网络配置进行 DNS 解析。</li>
+<li>然而，在某些特定的 chroot 环境中，尤其是像 Android 上的 Nethunter，系统可能对<strong>非 root 用户的网络访问</strong>（包括 DNS 解析）施加了额外的限制。Android 本身有一套复杂的网络管理和权限体系，而这个体系和Nethunter之间有时会引发冲突。</li>
+<li>当 <code>apt</code> 尝试降权到 <code>_apt</code> 用户（就可能因为某些限制而失败，导致无法解析域名。</li>
+</ul>
+</li>
+<li>
+<p><strong>UID <code>0</code> 的魔力</strong>：</p>
+<ul>
+<li>在 Linux 系统中，UID <code>0</code> 是为 <code>root</code> 用户保留的，拥有系统的最高权限。</li>
+<li>通过将 <code>/etc/passwd</code> 文件中 <code>_apt</code> 用户的 UID 修改为 <code>0</code>，我们实际上是告诉系统：“当 <code>apt</code> 说要用 <code>_apt</code> 用户时，请把它当作 <code>root</code> 用户对待。”</li>
+<li>因此，当 <code>apt</code> 进行网络操作时，它实际上是以 <code>root</code> 权限执行的。<code>root</code> 用户通常拥有无限制的网络访问权限，能够绕过那些可能阻止低权限用户（如原始 UID 的 <code>_apt</code> 用户）访问网络的限制。</li>
+</ul>
+</li>
+</ol>
+<p>简而言之，这个修改使得 <code>apt</code> 在进行网络通信时<strong>不再降权</strong>，而是始终以 <code>root</code> 权限运行，从而解决了在特定 Nethunter chroot 环境下低权限用户网络访问受限的问题。</p>
+<h2>安全性与实用性的权衡</h2>
+<blockquote>
+<p><strong>重要提示</strong>：将 <code>_apt</code> 用户的 UID 修改为 <code>0</code> <strong>会牺牲 <code>apt</code> 的权限分离安全机制</strong>。这意味着，如果 <code>apt</code> 连接到一个被篡改的恶意软件源，或者其网络处理部分存在可利用的漏洞，攻击者可能会直接获得 chroot 环境的 <code>root</code> 权限。</p>
+</blockquote>
+<p><strong>这是一种权宜之计，而非根本性的修复。</strong></p>
+<p>然而，考虑到 Nethunter 的使用场景：</p>
+<ul>
+<li><strong>临时性与特定目的</strong>：Nethunter 通常用于渗透测试、安全研究等特定任务，很多时候是在受控或临时的环境中使用。</li>
+<li><strong>用户认知</strong>：使用 Nethunter 的用户通常对安全风险有一定认知，并且可能更看重工具的即时可用性。</li>
+<li><strong>潜在的 Bug</strong>：正如我观察到的，Nethunter chroot 中创建非 root 用户后，有时会遇到各种命令执行问题，这可能暗示了 chroot 环境或其与 Android 系统交互层面存在一些更深层次的权限或配置问题。在这些根本问题得到解决之前，这种“不安全但实用”的方法或许是必要的妥协。</li>
+</ul>
+<p>因此，对于专门用于临时渗透测试的 Nethunter 环境，在官方修复此类 bug 或提供更优雅解决方案之前，将 <code>_apt</code> UID 修改为 <code>0</code> 可以作为一个快速恢复 <code>apt</code> 功能的方法。但务必清楚其潜在的安全风险。</p>
+<h2>结论</h2>
+<p>修改 <code>_apt</code> 用户的 UID 为 <code>0</code> 解决了 Nethunter chroot 中 <code>apt</code> 解析失败的问题，其原理是让 <code>apt</code> 的网络操作以 <code>root</code> 权限执行，绕过了低权限用户可能遇到的网络访问限制。虽然此方法会降低 <code>apt</code> 本身的安全性，但在特定的 Nethunter 应用场景下，它不失为一种实用的临时解决方案。</p>
+<p>希望未来 Nethunter 或相关的 chroot 实现能够更好地处理非 root 用户的权限和网络访问问题，让我们不再需要这样的“hack skill”。<br />
+（本文让Gemini2.5Pro润色，NCC表示心旷神怡并亲了亲提供模型的hxzzz）</p>
+<p><a href="https://blog.nancunchild.cn/2025/05/14/kali_nethunter_chroot_apt_reolv_error_explanation/">Kali Nethunter Chroot 中 `apt` 解析错误的临时解决方案及其原理</a>最先出现在<a href="https://blog.nancunchild.cn">NanCunChild的个人随想</a>。</p>
