@@ -1,0 +1,9 @@
+<p>今天给一台阿里云云服务器配置新网站的时候 [&#8230;]</p>
+<p><a href="https://blog.nancunchild.cn/2025/05/23/domain_filings_and_cloudflare_config_with_aliyunserver/">备案域名和CF配置导致Aliyun服务器白屏问题小记</a>最先出现在<a href="https://blog.nancunchild.cn">NanCunChild的个人随想</a>。</p>
+<hr /><p>今天给一台阿里云云服务器配置新网站的时候遇到一个问题，通过nginx配置的反向代理在使用SSL访问时出现一点问题，页面直接白屏。<br />
+<figure id="attachment_140" aria-describedby="caption-attachment-140" style="width: 640px" class="wp-caption alignnone"><img fetchpriority="high" decoding="async" src="https://blog.nancunchild.cn/wp-content/uploads/2025/05/Pasted-image-20250510103218-1024x611.png" alt="白屏啦" width="640" height="382" class="size-large wp-image-140" srcset="https://blog.nancunchild.cn/wp-content/uploads/2025/05/Pasted-image-20250510103218-1024x611.png 1024w, https://blog.nancunchild.cn/wp-content/uploads/2025/05/Pasted-image-20250510103218-300x179.png 300w, https://blog.nancunchild.cn/wp-content/uploads/2025/05/Pasted-image-20250510103218-768x458.png 768w, https://blog.nancunchild.cn/wp-content/uploads/2025/05/Pasted-image-20250510103218-1536x917.png 1536w, https://blog.nancunchild.cn/wp-content/uploads/2025/05/Pasted-image-20250510103218-2048x1222.png 2048w" sizes="(max-width: 640px) 100vw, 640px" /><figcaption id="caption-attachment-140" class="wp-caption-text">blank page makes ncc panic</figcaption></figure><br />
+经过排查，发现大致情况。<br />
+没有备案的域名可以直接解析到Aliyun服务器，而且可以添加私有的SSL证书。但是不允许使用Cloud-Flare托管后再解析到Aliyun服务器，这么做会导致Aliyun跳出未备案提示，但是因为某种原因无法显示，只会显示白屏。<br />
+可能设置CF的代理模式会缓解这一问题，目前机制还不明确。但是可以确定已经备案的域名可以随意折腾，套CF再解析也没问题。</p>
+<p>没啥大事，就是分享一下。</p>
+<p><a href="https://blog.nancunchild.cn/2025/05/23/domain_filings_and_cloudflare_config_with_aliyunserver/">备案域名和CF配置导致Aliyun服务器白屏问题小记</a>最先出现在<a href="https://blog.nancunchild.cn">NanCunChild的个人随想</a>。</p>

@@ -16,7 +16,7 @@
 <p>不是很会品酒，而且不是很爱喝。入口之后能明显感觉出有浓郁的米香味，而且有点烧喉，一盏一盏慢慢喝，还挺有古人的感觉。虽然劲度上比不过白酒，但还是能把我辣出眼泪来。</p>
 <h3>可丽饼</h3>
 <p>比较一般，只是因为拍了一张还可以的照片所以写一下</p>
-<p><img decoding="async" src="https://blog.nancunchild.cn/wp-content/uploads/2025/01/New1-300x225.jpg" alt="" width="300" height="225" class="alignnone size-medium wp-image-112" srcset="https://blog.nancunchild.cn/wp-content/uploads/2025/01/New1-300x225.jpg 300w, https://blog.nancunchild.cn/wp-content/uploads/2025/01/New1-1024x768.jpg 1024w, https://blog.nancunchild.cn/wp-content/uploads/2025/01/New1-768x576.jpg 768w, https://blog.nancunchild.cn/wp-content/uploads/2025/01/New1-1536x1152.jpg 1536w, https://blog.nancunchild.cn/wp-content/uploads/2025/01/New1-2048x1536.jpg 2048w" sizes="(max-width: 300px) 100vw, 300px" /></p>
+<p><img loading="lazy" decoding="async" src="https://blog.nancunchild.cn/wp-content/uploads/2025/01/New1-300x225.jpg" alt="" width="300" height="225" class="alignnone size-medium wp-image-112" srcset="https://blog.nancunchild.cn/wp-content/uploads/2025/01/New1-300x225.jpg 300w, https://blog.nancunchild.cn/wp-content/uploads/2025/01/New1-1024x768.jpg 1024w, https://blog.nancunchild.cn/wp-content/uploads/2025/01/New1-768x576.jpg 768w, https://blog.nancunchild.cn/wp-content/uploads/2025/01/New1-1536x1152.jpg 1536w, https://blog.nancunchild.cn/wp-content/uploads/2025/01/New1-2048x1536.jpg 2048w" sizes="auto, (max-width: 300px) 100vw, 300px" /></p>
 <h2>注意事项</h2>
 <ul>
 <li>老板比较散漫，店里也没有店员。上菜会比较慢，高峰期在位子上等接近一个小时不上菜也不奇怪。</li>
