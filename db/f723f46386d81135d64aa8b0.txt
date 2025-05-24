@@ -1,0 +1,207 @@
+<h1 id="Hysteria2--Trojan-科学上网">Hysteria2 + Trojan 科学上网<a class="headerlink" href="#Hysteria2--Trojan-科学上网" title="Permanent link">&para;</a></h1>
+<p>Hysteria2 基于魔改的 QUIC 协议，伪装成标准的 HTTP/3 流量，速度比较快，但它本质上是 UDP 流量，容易被运营商或校园网针对。Trojan 是 TCP + TLS，伪装成普通的 HTTPS 流量，速度相对慢一点，但是更稳定。</p>
+<p>我是自己买 VPS 搭的梯子，之前只使用 Hysteria2。最近校园网限制 UDP 流量，导致我一天只有几分钟能连上梯子，就算开端口跳跃或者换 IP 地址也没用。于是，我在原来的基础上又部署了 Trojan 作为 Fallback 方案。</p>
+<!-- more -->
+
+<h2 id="服务端">服务端<a class="headerlink" href="#服务端" title="Permanent link">&para;</a></h2>
+<p>我使用的是一台美国的 VPS，系统是 Ubuntu 22.04.1 LTS，每月 4TB 流量，一年 16.88 美元。</p>
+<h3 id="部署-Hysteria2">部署 Hysteria2<a class="headerlink" href="#部署-Hysteria2" title="Permanent link">&para;</a></h3>
+<p>使用官方的安装脚本</p>
+<div class="highlight"><pre><span></span><code>bash<span class="w"> </span>&lt;<span class="o">(</span>curl<span class="w"> </span>-fsSL<span class="w"> </span>https://get.hy2.sh/<span class="o">)</span>
+</code></pre></div>
+<p>修改配置文件</p>
+<div class="highlight"><pre><span></span><code>vim<span class="w"> </span>/etc/hysteria/config.yaml
+</code></pre></div>
+<p>重点：</p>
+<ul>
+<li>把 443 端口留给 Trojan，让 Hysteria2 监听其他端口，我使用 27015</li>
+<li>用 ACME 自动申请 TLS 证书</li>
+<li>在 80 和 27015 启动 HTTP/HTTPS 服务，不要开启 <code>forceHTTPS</code>，后面 Trojan 要反向代理 80 端口的 HTTP 服务，如果开启 <code>forceHTTPS</code> 则每次都会重定向到 27015 端口</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="nt">listen</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">:27015</span>
+
+<span class="nt">acme</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">domains</span><span class="p">:</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">域名</span>
+<span class="w">  </span><span class="nt">email</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">邮箱</span>
+
+<span class="nt">auth</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">userpass</span>
+<span class="w">  </span><span class="nt">userpass</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">用户名</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">密码</span>
+
+<span class="nt">masquerade</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">proxy</span>
+<span class="w">  </span><span class="nt">proxy</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">url</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">反向代理的网站</span>
+<span class="w">    </span><span class="nt">rewriteHost</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="w">  </span><span class="nt">listenHTTP</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">:80</span>
+<span class="w">  </span><span class="nt">listenHTTPS</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">:27015</span>
+<span class="w">  </span><span class="nt">forceHTTPS</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+</code></pre></div>
+<p>设置开机自启，并立即启动服务</p>
+<div class="highlight"><pre><span></span><code>systemctl<span class="w"> </span><span class="nb">enable</span><span class="w"> </span>--now<span class="w"> </span>hysteria-server
+</code></pre></div>
+<p>查询服务状态，检查是否成功启动</p>
+<div class="highlight"><pre><span></span><code>systemctl<span class="w"> </span>status<span class="w"> </span>hysteria-server
+</code></pre></div>
+<p>查询服务日志</p>
+<div class="highlight"><pre><span></span><code>journalctl<span class="w"> </span>--no-pager<span class="w"> </span>-e<span class="w"> </span>-u<span class="w"> </span>hysteria-server
+</code></pre></div>
+<p>修改配置文件后，需要用下面的命令重启服务</p>
+<div class="highlight"><pre><span></span><code>systemctl<span class="w"> </span>restart<span class="w"> </span>hysteria-server
+</code></pre></div>
+<h3 id="部署-Trojan">部署 Trojan<a class="headerlink" href="#部署-Trojan" title="Permanent link">&para;</a></h3>
+<p>下载并解压最新的 Trojan-Go</p>
+<div class="highlight"><pre><span></span><code>mkdir<span class="w"> </span>~/trojan-go<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nb">cd</span><span class="w"> </span>~/trojan-go
+wget<span class="w"> </span>https://github.com/p4gefau1t/trojan-go/releases/download/v0.10.6/trojan-go-linux-amd64.zip
+unzip<span class="w"> </span>trojan-go-linux-amd64.zip<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>rm<span class="w"> </span>trojan-go-linux-amd64.zip
+</code></pre></div>
+<p>编写配置文件</p>
+<div class="highlight"><pre><span></span><code>vim<span class="w"> </span>server.json
+</code></pre></div>
+<p>重点：</p>
+<ul>
+<li>监听 443 端口，HTTP 服务使用 Hysteria2 的 <code>127.0.0.1:80</code></li>
+<li>TLS 证书使用 Hysteria2 申请的，一般在 <code>/var/lib/hysteria/acme/certificates</code> 目录里，或者用 <code>find / -type d -name "acme"</code> 命令找一下</li>
+<li>TLS 握手失败后，把请求转发到 Hysteria2 的 HTTPS 服务 <code>127.0.0.1:27015</code> 上，伪装成正常的 HTTPS 服务</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;run_type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;server&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;local_addr&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;0.0.0.0&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;local_port&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">443</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;remote_addr&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;127.0.0.1&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;remote_port&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">80</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;password&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">        </span><span class="s2">&quot;密码&quot;</span>
+<span class="w">    </span><span class="p">],</span>
+<span class="w">    </span><span class="nt">&quot;ssl&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">&quot;cert&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;/var/lib/hysteria/acme/certificates/acme-v02.api.letsencrypt.org-directory/域名/域名.crt&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;key&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;/var/lib/hysteria/acme/certificates/acme-v02.api.letsencrypt.org-directory/域名/域名.key&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;fallback_addr&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;127.0.0.1&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;fallback_port&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">27015</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>制作一个 service</p>
+<div class="highlight"><pre><span></span><code>vim<span class="w"> </span>/etc/systemd/system/trojan-go.service
+</code></pre></div>
+<p>粘贴下面的内容，需要修改 <code>ExecStart</code> 中的路径</p>
+<div class="highlight"><pre><span></span><code><span class="k">[Unit]</span>
+<span class="na">Description</span><span class="o">=</span><span class="s">Trojan-Go - An unidentifiable mechanism that helps you bypass GFW</span>
+<span class="na">Documentation</span><span class="o">=</span><span class="s">https://github.com/p4gefau1t/trojan-go</span>
+<span class="na">After</span><span class="o">=</span><span class="s">network.target nss-lookup.target</span>
+<span class="na">Wants</span><span class="o">=</span><span class="s">network-online.target</span>
+
+<span class="k">[Service]</span>
+<span class="na">Type</span><span class="o">=</span><span class="s">simple</span>
+<span class="na">User</span><span class="o">=</span><span class="s">root</span>
+<span class="na">ExecStart</span><span class="o">=</span><span class="s">/path/to/trojan-go/trojan-go -config /path/to/trojan-go/server.json</span>
+<span class="na">Restart</span><span class="o">=</span><span class="s">on-failure</span>
+<span class="na">RestartSec</span><span class="o">=</span><span class="s">10</span>
+<span class="na">RestartPreventExitStatus</span><span class="o">=</span><span class="s">23</span>
+
+<span class="k">[Install]</span>
+<span class="na">WantedBy</span><span class="o">=</span><span class="s">multi-user.target</span>
+</code></pre></div>
+<p>设置开机自启，并立即启动服务</p>
+<div class="highlight"><pre><span></span><code>systemctl<span class="w"> </span><span class="nb">enable</span><span class="w"> </span>--now<span class="w"> </span>trojan-go
+</code></pre></div>
+<p>查询服务状态，检查是否成功启动</p>
+<div class="highlight"><pre><span></span><code>systemctl<span class="w"> </span>status<span class="w"> </span>trojan-go
+</code></pre></div>
+<p>查询服务日志</p>
+<div class="highlight"><pre><span></span><code>journalctl<span class="w"> </span>--no-pager<span class="w"> </span>-e<span class="w"> </span>-u<span class="w"> </span>trojan-go
+</code></pre></div>
+<p>修改配置文件后，需要用下面的命令重启服务</p>
+<div class="highlight"><pre><span></span><code>systemctl<span class="w"> </span>restart<span class="w"> </span>trojan-go
+</code></pre></div>
+<h3 id="使用-BBR-拥塞控制算法">使用 BBR 拥塞控制算法<a class="headerlink" href="#使用-BBR-拥塞控制算法" title="Permanent link">&para;</a></h3>
+<p>检查当前的 TCP 拥塞控制算法，默认是 Cubic</p>
+<div class="highlight"><pre><span></span><code>sysctl<span class="w"> </span>net.ipv4.tcp_congestion_control
+</code></pre></div>
+<p>Linux 4.9 及以上的内核内置了 BBR 算法，可以用下面的命令开启</p>
+<div class="highlight"><pre><span></span><code><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;net.core.default_qdisc=fq&quot;</span><span class="w"> </span>&gt;&gt;<span class="w"> </span>/etc/sysctl.conf
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;net.ipv4.tcp_congestion_control=bbr&quot;</span><span class="w"> </span>&gt;&gt;<span class="w"> </span>/etc/sysctl.conf
+sysctl<span class="w"> </span>-p
+</code></pre></div>
+<p>然而我这里 BBR 不如 Cubic 快，所以要测试一下，不能无脑换。</p>
+<h3 id="防火墙">防火墙<a class="headerlink" href="#防火墙" title="Permanent link">&para;</a></h3>
+<p>只放行 22，80，443，27015 端口，分别对应 SSH，HTTP，HTTPS（Trojan）和 HTTPS（Hysteria2）</p>
+<div class="highlight"><pre><span></span><code>ufw<span class="w"> </span><span class="nb">enable</span>
+ufw<span class="w"> </span>default<span class="w"> </span>deny
+ufw<span class="w"> </span>allow<span class="w"> </span><span class="m">22</span>
+ufw<span class="w"> </span>allow<span class="w"> </span><span class="m">80</span>
+ufw<span class="w"> </span>allow<span class="w"> </span><span class="m">443</span>
+ufw<span class="w"> </span>allow<span class="w"> </span><span class="m">27015</span>
+ufw<span class="w"> </span>reload
+</code></pre></div>
+<h2 id="Clash-配置">Clash 配置<a class="headerlink" href="#Clash-配置" title="Permanent link">&para;</a></h2>
+<p>配置文件可以放到 <a href="https://gist.github.com/">GitHub Secret Gist</a> 里。<sup id="fnref:1"><a class="footnote-ref" href="#fn:1">1</a></sup> 它无法被搜索到，只能通过 URL 访问。URL 后面有非常长的随机字符串，几乎不可能被猜到。</p>
+<p>在 Clash 客户端导入配置文件时，给出源文件的 URL 即可。修改 Gist 的文件后，需要在 Clash 客户端更新 URL。</p>
+<h3 id="代理组">代理组<a class="headerlink" href="#代理组" title="Permanent link">&para;</a></h3>
+<p>使用 Fallback 模式，当 Hysteria2 无法使用时改用 Trojan，每隔 300 秒检查一次</p>
+<div class="highlight"><pre><span></span><code><span class="nt">proxies</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;US</span><span class="nv"> </span><span class="s">27015&quot;</span>
+<span class="w">    </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">hysteria2</span>
+<span class="w">    </span><span class="nt">server</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">域名</span>
+<span class="w">    </span><span class="nt">port</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">27015</span>
+<span class="w">    </span><span class="nt">password</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;用户名:密码&quot;</span>
+<span class="w">    </span><span class="nt">sni</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">域名</span>
+<span class="w">    </span><span class="nt">skip-cert-verify</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;US</span><span class="nv"> </span><span class="s">443&quot;</span>
+<span class="w">    </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">trojan</span>
+<span class="w">    </span><span class="nt">server</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">域名</span>
+<span class="w">    </span><span class="nt">port</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">443</span>
+<span class="w">    </span><span class="nt">password</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;密码&quot;</span>
+<span class="w">    </span><span class="nt">udp</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="w">    </span><span class="nt">sni</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">域名</span>
+<span class="w">    </span><span class="nt">skip-cert-verify</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+
+<span class="nt">proxy-groups</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">PROXY</span>
+<span class="w">    </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">fallback</span>
+<span class="w">    </span><span class="nt">proxies</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;US</span><span class="nv"> </span><span class="s">27015&quot;</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;US</span><span class="nv"> </span><span class="s">443&quot;</span>
+<span class="w">    </span><span class="nt">interval</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">300</span>
+<span class="w">    </span><span class="nt">lazy</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+</code></pre></div>
+<h3 id="规则集">规则集<a class="headerlink" href="#规则集" title="Permanent link">&para;</a></h3>
+<p>在 <a href="https://github.com/Loyalsoldier/clash-rules">Loyalsoldier/clash-rules</a> 的基础上，按需添加下面的规则</p>
+<ul>
+<li>
+<p>将 <code>dcg.microsoft.com</code> 设置为直连，避免 Windows 11 的手机连接提示「无法连接到你的 Android 设备，因为你正在尝试访问中国以外的应用程序，目前我们不支持漫游区域」<sup id="fnref:2"><a class="footnote-ref" href="#fn:2">2</a></sup></p>
+<div class="highlight"><pre><span></span><code><span class="nt">rules</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">DOMAIN,dcg.microsoft.com,DIRECT</span>
+</code></pre></div>
+</li>
+<li>
+<p>Google Analytics 的 API 必须直连</p>
+<div class="highlight"><pre><span></span><code><span class="nt">rules</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">DOMAIN,www.googletagmanager.com,DIRECT</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">DOMAIN,www.google-analytics.com,DIRECT</span>
+</code></pre></div>
+</li>
+<li>
+<p>把梯子的 IP 也设置为直连，这样挂着梯子也能 SSH</p>
+</li>
+</ul>
+<h2 id="参考">参考<a class="headerlink" href="#参考" title="Permanent link">&para;</a></h2>
+<ul>
+<li><a href="https://wiki.metacubex.one/">虚空终端 Docs</a></li>
+<li><a href="https://v2.hysteria.network/zh/">Home - Hysteria 2</a></li>
+<li><a href="https://p4gefau1t.github.io/trojan-go/">简介 - Trojan-Go Docs</a></li>
+<li><a href="https://www.jkg.tw/p3360/">保姆級 Trojan-Go 與「誰在講幹話」入門搭建 | jkgtw's blog </a></li>
+</ul>
+<div class="footnote">
+<hr />
+<ol>
+<li id="fn:1">
+<p><a href="https://yizhimengxin.me/2022/10/27/%E6%89%93%E9%80%A0%E8%87%AA%E5%B7%B1%E7%9A%84Clash%E9%85%8D%E7%BD%AE%E5%B9%B6%E6%8F%90%E4%BE%9B%E8%AE%A2%E9%98%85/">打造自己的 Clash 配置并提供订阅 - 一只萌新</a>&#160;<a class="footnote-backref" href="#fnref:1" title="Jump back to footnote 1 in the text">&#8617;</a></p>
+</li>
+<li id="fn:2">
+<p><a href="https://www.zhihu.com/question/570222831">Windows的“手机连接”显示无法连接你的设备，你正尝试访问中国以外的应用，不支持漫游区域怎么解决？ - 知乎</a>&#160;<a class="footnote-backref" href="#fnref:2" title="Jump back to footnote 2 in the text">&#8617;</a></p>
+</li>
+</ol>
+</div><hr />
