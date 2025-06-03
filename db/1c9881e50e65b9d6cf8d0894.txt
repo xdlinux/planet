@@ -1,0 +1,58 @@
+半瓶子晃荡的小白vs软路由<hr /><p>#起因
+作为合格的计算机专业大学生，怎么能没有自己的软路由呢？两年间陆续购得/获得了四台不同配置的软路由。在各个场景进行了部署。可是每个路由器在使用一段时间之后，都会莫名其妙的报dns错误（使用的openclash版本是meta前的最后一个版本）。<img src="https://storage.lolicons.top/images/f16b5bad6116a9de6cfeb3f387c470b3248e0233.jpg" alt="Image_127000851828791.jpg"></p>
+<p>四台路由器都是基于openwrt，一台原版，一台istoreos，一台immortalwrt，一台个人定制版。
+这就让我很苦恼了，不过作为成熟的懒人，解决问题的最好方法就是重装！！！完全重装openclash，无用！重装dnsmasq，无用！重装系统，诶这你总该有用了吧😋。<del>真不愧是我，小小路由器还不老老实实接受调教</del>
+治好了一个，结果刚好两天，另一个也出现了同样的问题，emmm怎么路由器开始集体罢工了？？？是要对我搞叛乱嘛😠必须狠狠镇压！！重装系统！！刚治好，我到宿舍一闲逛，发现宿舍的居然也坏了，重装！
+之后的一个月我们相安无事，直到考试周。诶wc，怎么我openclash一关掉上不了网了？？一样的dns报错，只是这次是我最常用的<del>拿来刷网课的😋</del> ，怎么到了期末周给我犯病啊😭。本着期末周除了学习什么都想干的原则，果断开始解决问题。
+此时openclash是关闭的
+#问题溯源
+先dig一下，emm报错啊，dig baidu.com @8.8.8.8
+能通
+##第一反应是dns错了那我就改dns呗
+/etc/config/network ,这里我配置的手动获取dns，在wan口的配置中，似乎没有什么问题。
+<img src="https://storage.lolicons.top/images/ecf467418eab11bbc5e83b6dde977d8bf30ef5b0.png" alt="截圖 2025-06-02 9.31.43.png"></p>
+<p>转向其他地方。
+/etc/resolv.conf 这里配置nameserver，是dnsmasq会读的。进去一看是127.0.0.1和：：1，emmm这个正常吗？（实际上是正常的）怎么感觉看上去指向本机了（不愧是本小白）。改！改成8.8.8.8
+，果然正常了。
+你以为到这里就结束了吗😋。当开关一遍openclash之后，天又塌了，resolv.conf变回来了。！</p>
+<p>emmm，看来得进一步调教啊！</p>
+<p>既然resolv.conf指向的是127.0.0.1，那我就看看谁在占用53端口
+netstat -tunlp | grep 53
+emmm，dnsmasq果然是你啊。</p>
+<p>先google一下dnsmasq的配置文件吧。既然是dns报错，负责dns转发的又是dnsmasq，那包是你错的（本小白自信判断）。/etc下面有个dnsmasq.conf, vim看看，诶wc怎么是模版啊。一定找错了。继续google，原来这个是以前的位置，现在已经变到/var/etc了。这下总没错了吧，vim！！！！诶wc怎么又是模版啊？？？
+全盘查一下：
+pgrep -af dnsmasq
+emm /tmp/etc下面这个有点可疑啊<img src="https://storage.lolicons.top/images/dbeff1d72ea2df9c3de5d48bd6552d1f90f60865.png" alt="截圖 2025-06-02 9.43.25.png"></p>
+<p>先vim看看</p>
+<p><img src="https://storage.lolicons.top/images/21867774259973f852857545f66c67761d68075e.jpg" alt="Image_127016198334879.jpg"></p>
+<p>emm这个server=127是啥玩意啊？取看看5053/5054开了什么
+netstat -tunlp | grep 5053
+netstat -tunlp | grep 5054
+怎么啥也没有？？？那你加上干嘛，删了！！！（实际上这个是我之前配置doh的时候弄的）
+测试一下，果然还是没有恢复正常。
+<img src="https://storage.lolicons.top/images/8f0c628a25ad92413f91e2fac75771cfe1c4ce43.jpg" alt="Image_126940527865480.jpg">
+虽然报错变了，不过仍然在dns的范畴。看来方向是对的。
+那就继续。</p>
+<p>#解决篇
+emm既然打开openclash能上网，那我就打开看看呗。
+打开后
+<img src="https://storage.lolicons.top/images/c27e91cd73d7dcd933bbd63985f20f149164f506.png" alt="截圖 2025-06-02 9.49.25.png">
+这里出现个7874，经查是openclash干的，看上去这里需要有一个server=....才能上网，那就加上！！！
+果断添加：
+<img src="https://storage.lolicons.top/images/ec3510399f3de5d1bce46452a27d70c0082c0df0.jpg" alt="Image_126960580481410.jpg"></p>
+<p>添加好都:wq了才想起来我去openclash没关呢
+关上去。
+诶wc怎么你删7874就算了还给我1.1.1.1带走了呢
+<img src="https://storage.lolicons.top/images/bc07bb208f5c060b65b2ed4e25b57e07b35dc023.png" alt="截圖 2025-06-02 9.53.09.png"></p>
+<p>先测试一下能不能上网。</p>
+<p>诶似乎恢复正常了。</p>
+<p>可是这个仍然很玄学，为什么把1.1.1.1也带走呢？刚才是加在8.8.8.8下面，这次加在上面试试。
+开关一遍openclash，居然又消失了！
+还是只剩下8.8.8.8。
+再开关一遍不会把我8.8.8.8也带走吧？赶紧试试。
+好消息是8.8.8.8幸存了。
+好玄学的bug啊。
+不过看在能上网的份上放它一马。</p>
+<p>至此，困扰我长达半年的dns问题<del>彻底</del>解决。
+这个玄学问题已经提交到issue
+不知道会不会解决</p>
