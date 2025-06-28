@@ -1,0 +1,23 @@
+<hr /><h1><a id="content-目录" href="https://blog.lsy223622.com/archives/70/#content-%E7%9B%AE%E5%BD%95" class="heading-permalink" aria-hidden="true" title="Permalink"></a>目录</h1>
+<ul class="table-of-contents">
+<li>
+<a href="https://blog.lsy223622.com/archives/70/#content-%E7%9B%AE%E5%BD%95">目录</a>
+</li>
+<li>
+<a href="https://blog.lsy223622.com/archives/70/#content-%E7%AE%80%E5%8D%95%E9%83%A8%E5%88%86">简单部分</a>
+</li>
+<li>
+<a href="https://blog.lsy223622.com/archives/70/#content-%E7%89%B9%E5%88%AB%E7%9A%84%E6%B3%A8%E6%84%8F%E7%82%B9">特别的注意点</a>
+</li>
+</ul>
+<h1><a id="content-简单部分" href="https://blog.lsy223622.com/archives/70/#content-%E7%AE%80%E5%8D%95%E9%83%A8%E5%88%86" class="heading-permalink" aria-hidden="true" title="Permalink"></a>简单部分</h1>
+<ul>
+<li>一般的操作自己摸一下就懂了，主要是把网站文件和数据库备份了然后导入过来，可能有一些特别的配置需要手动配置一下。</li>
+<li>然后就是配置域名和证书，操作都差不多，不会网上随便搜个教程就行。</li>
+</ul>
+<h1><a id="content-特别的注意点" href="https://blog.lsy223622.com/archives/70/#content-%E7%89%B9%E5%88%AB%E7%9A%84%E6%B3%A8%E6%84%8F%E7%82%B9" class="heading-permalink" aria-hidden="true" title="Permalink"></a>特别的注意点</h1>
+<ul>
+<li>网站根目录的 <code>user.ini</code> 记得删了，不然访问不了。</li>
+<li>数据库访问地址不再是 <code>localhost</code> 了，而是数据库容器的名字，可以在 <code>数据库</code> 页面的 <code>连接信息</code> 查看。</li>
+</ul>
+
