@@ -1,0 +1,1 @@
+(*/ω＼*)<hr /><p>困扰好久的bug，spectacle总提示我缺各种共享库，包括但不限于<code>libx265.so.212</code>，<code>libavfilter.忘了多少</code>，<code>lib忘了是啥总之xjb链接一下倒是能糊弄着继续用</code>这样的情况。</p><p>最后发现原来是因为spectacle依赖那一堆libxxx，而它们由ffmpeg提供，显然这个ffmpeg要么比较老要么缺东西</p><p>所以换成默认的<code>ffmpeg</code>就好啦。</p>
