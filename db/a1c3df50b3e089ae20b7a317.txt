@@ -7,20 +7,63 @@
  <a href="#%e7%94%b5%e8%84%91%e9%85%8d%e7%bd%ae" class="heading-mark">
  <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
  </a>
-</h2><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-plaintext" data-lang="plaintext"><span class="line"><span class="cl">MODEL: ROG Zephyrus M16 GU604VI_GU604VI 1.0
+</h2><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-plaintext" data-lang="plaintext"><span class="line"><span class="cl">MODEL: ROG Zephyrus M16 GU604VI_GU604VI 1.0
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">CPU: 13th Gen Intel i9-13900H (20) @ 5.200GHz
 </span></span><span class="line"><span class="cl">GPU: NVIDIA GeForce RTX 4070 Max-Q / Mobile
 </span></span><span class="line"><span class="cl">MEM: 32GB
 </span></span><span class="line"><span class="cl">DISK 1: HFS001TEJ9X101N 1TB
-</span></span><span class="line"><span class="cl">DISK 2: ZHITAI Ti7100 2TB</span></span></code></pre></div><p>挺不错的，打算当主力机用个四五年，本文主要记录一下在这个本上装 Arch Linux 所做出的一些努力。</p>
+</span></span><span class="line"><span class="cl">DISK 2: ZHITAI Ti7100 2TB</span></span></code></pre></td></tr></table>
+</div>
+</div><p>挺不错的，打算当主力机用个四五年，本文主要记录一下在这个本上装 Arch Linux 所做出的一些努力。</p>
 <h2 class="heading-element" id="安装过程"><span>安装过程</span>
  <a href="#%e5%ae%89%e8%a3%85%e8%bf%87%e7%a8%8b" class="heading-mark">
  <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
  </a>
 </h2><p>总体来说没出什么幺蛾子，照着 <a href="https://wiki.archlinux.org/title/Installation_guide"target="_blank" rel="external nofollow noopener noreferrer">Wiki</a> 配就可以了。如果在 archiso 那里就卡显卡了，需要在内核参数里加上 <code>nouveau.modeset=0</code>，然后重新启动。</p>
 <p>桌面环境这里我继续选用了 KDE Plasma on Wayland，但是安装完成之后怎么都没法启动，一直以为是显卡问题…… 排查到最后发现是因为没装 <code>XWayland</code>，装上之后就好了，检查 <code>journalctl -b -1</code> 查看上次开关机 log，相关日志如下：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-plaintext" data-lang="plaintext"><span class="line"><span class="cl">Jun 21 13:39:13 Reverier-Arch dbus-daemon[825]: [session uid=1000 pid=825] Activating via systemd: service name=&#39;org.freedesktop.impl.portal.desktop.kde&#39; unit=&#39;plasma-xdg-desktop-portal-kde.service&#39; requested by &#39;:1.6&#39; (uid=1000 pid=849 comm=&#34;/usr/lib/xdg-desktop-portal&#34;)
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-plaintext" data-lang="plaintext"><span class="line"><span class="cl">Jun 21 13:39:13 Reverier-Arch dbus-daemon[825]: [session uid=1000 pid=825] Activating via systemd: service name=&#39;org.freedesktop.impl.portal.desktop.kde&#39; unit=&#39;plasma-xdg-desktop-portal-kde.service&#39; requested by &#39;:1.6&#39; (uid=1000 pid=849 comm=&#34;/usr/lib/xdg-desktop-portal&#34;)
 </span></span><span class="line"><span class="cl">Jun 21 13:39:13 Reverier-Arch kwin_wayland[836]: No backend specified, automatically choosing drm
 </span></span><span class="line"><span class="cl">Jun 21 13:39:13 Reverier-Arch dbus-daemon[572]: [system] Successfully activated service &#39;org.freedesktop.UPower&#39;
 </span></span><span class="line"><span class="cl">Jun 21 13:39:13 Reverier-Arch systemd[1]: Started Daemon for power management.
@@ -45,7 +88,9 @@
 </span></span><span class="line"><span class="cl">Jun 21 13:39:13 Reverier-Arch kwin_wayland[836]: kwin_xkbcommon: XKB: inet:324:58: unrecognized keysym &#34;XF86Dictate&#34;
 </span></span><span class="line"><span class="cl">Jun 21 13:39:13 Reverier-Arch kwin_wayland[836]: kwin_xwl: Xwayland process failed to start
 </span></span><span class="line"><span class="cl">Jun 21 13:39:22 Reverier-Arch systemd[1]: Stopping User Manager for UID 973...
-</span></span><span class="line"><span class="cl">Jun 21 13:39:23 Reverier-Arch systemd[641]: Activating special unit Exit the Session...</span></span></code></pre></div><h2 class="heading-element" id="内核和显卡驱动"><span>内核和显卡驱动</span>
+</span></span><span class="line"><span class="cl">Jun 21 13:39:23 Reverier-Arch systemd[641]: Activating special unit Exit the Session...</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 class="heading-element" id="内核和显卡驱动"><span>内核和显卡驱动</span>
  <a href="#%e5%86%85%e6%a0%b8%e5%92%8c%e6%98%be%e5%8d%a1%e9%a9%b1%e5%8a%a8" class="heading-mark">
  <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
  </a>
@@ -75,4 +120,11 @@
  </a>
 </h2><p>本来是想继续用Docker的，后来看了看podman，无守护进程的设计感觉还不错，于是就搞了podman，甚至还装了一个k3s（但是一次也没用到）。</p>
 <p>目前用起来唯一的问题是podman没有守护进程，因此每次开机之后无法恢复之前的容器运行状态，得手动启动一下。对于一些必要服务，倒也有解决方案：用systemd来启动。例如：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">podman generate systemd --new --name 服务名 -f</span></span></code></pre></div><p>可以生成一个systemd服务文件，复制到systemd文件夹下然后作为用户自启任务即可。</p><hr />
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">podman generate systemd --new --name 服务名 -f</span></span></code></pre></td></tr></table>
+</div>
+</div><p>可以生成一个systemd服务文件，复制到systemd文件夹下然后作为用户自启任务即可。</p><hr />

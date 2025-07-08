@@ -16,16 +16,37 @@
  </a>
 </h3><p>为了省事, 我们选择了美观而又方便的NexT主题.</p>
 <p>安装这么做:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">git clone https://github.com/theme-next/hexo-theme-next themes/next</span></span></code></pre></div><p>注意哦, 这一定是在你的博客目录下面执行的, 在别的文件夹下面是没有效果的哦!</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">git clone https://github.com/theme-next/hexo-theme-next themes/next</span></span></code></pre></td></tr></table>
+</div>
+</div><p>注意哦, 这一定是在你的博客目录下面执行的, 在别的文件夹下面是没有效果的哦!</p>
 <p>然后你可以用编辑器打开站点配置文件<code>_config.yml</code>, 然后找到<code>theme</code>, 把<code>landscape</code> 改成 <code>next</code>就大功告成啦! 但是一定要注意哦, 对于yml文件, 每个属性名称冒号的后面一定是有一个空格的, 否则设置会出错哦!</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-yml" data-lang="yml"><span class="line"><span class="cl"><span class="nt">theme</span><span class="p">:</span><span class="w"> </span><span class="l">next</span><span class="w"> </span><span class="c">#注意 ‘:’ 后面是有空格的!</span></span></span></code></pre></div><h3 class="heading-element" id="初级配置"><span>初级配置</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-yml" data-lang="yml"><span class="line"><span class="cl"><span class="nt">theme</span><span class="p">:</span><span class="w"> </span><span class="l">next</span><span class="w"> </span><span class="c">#注意 ‘:’ 后面是有空格的!</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h3 class="heading-element" id="初级配置"><span>初级配置</span>
  <a href="#%e5%88%9d%e7%ba%a7%e9%85%8d%e7%bd%ae" class="heading-mark">
  <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
  </a>
 </h3><p>现在我们对NexT主题进行一个小小的配置.</p>
 <p>打开博客文件夹下的<code>themes → next → _config.yml</code>文件, 对,也叫 <code>_config.yml</code> …… 不要晕了哦!</p>
 <p>NexT提供了四种主题风格, 分别是Muse、Mist、Pisces、Gemini, 可以在刚打开的<code>_config.yml</code>里找到<code>scheme</code>这一项进行修改,然后 :</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">hexo s</span></span></code></pre></div><p>浏览器打开 <a href="http://localhost:4000"target="_blank" rel="external nofollow noopener noreferrer">本地博客</a> 就能看见你的新主题啦!</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">hexo s</span></span></code></pre></td></tr></table>
+</div>
+</div><p>浏览器打开 <a href="http://localhost:4000"target="_blank" rel="external nofollow noopener noreferrer">本地博客</a> 就能看见你的新主题啦!</p>
 <p>想立刻部署到GitHub? 没问题呀, 但是我们先不急&hellip;&hellip;在本地配置满意了在上传也不迟呀.</p>
 <h3 class="heading-element" id="自定义外观"><span>自定义外观</span>
  <a href="#%e8%87%aa%e5%ae%9a%e4%b9%89%e5%a4%96%e8%a7%82" class="heading-mark">
@@ -37,7 +58,1145 @@
  </a>
 </h4><p>我先在这里贴一下我的站点配置,可以先跳过哦:</p>
 <p>主题配置文件:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-yml" data-lang="yml"><span class="line"><span class="cl"><span class="c">## ---------------------------------------------------------------</span><span class="w">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt"> 10
+</span><span class="lnt"> 11
+</span><span class="lnt"> 12
+</span><span class="lnt"> 13
+</span><span class="lnt"> 14
+</span><span class="lnt"> 15
+</span><span class="lnt"> 16
+</span><span class="lnt"> 17
+</span><span class="lnt"> 18
+</span><span class="lnt"> 19
+</span><span class="lnt"> 20
+</span><span class="lnt"> 21
+</span><span class="lnt"> 22
+</span><span class="lnt"> 23
+</span><span class="lnt"> 24
+</span><span class="lnt"> 25
+</span><span class="lnt"> 26
+</span><span class="lnt"> 27
+</span><span class="lnt"> 28
+</span><span class="lnt"> 29
+</span><span class="lnt"> 30
+</span><span class="lnt"> 31
+</span><span class="lnt"> 32
+</span><span class="lnt"> 33
+</span><span class="lnt"> 34
+</span><span class="lnt"> 35
+</span><span class="lnt"> 36
+</span><span class="lnt"> 37
+</span><span class="lnt"> 38
+</span><span class="lnt"> 39
+</span><span class="lnt"> 40
+</span><span class="lnt"> 41
+</span><span class="lnt"> 42
+</span><span class="lnt"> 43
+</span><span class="lnt"> 44
+</span><span class="lnt"> 45
+</span><span class="lnt"> 46
+</span><span class="lnt"> 47
+</span><span class="lnt"> 48
+</span><span class="lnt"> 49
+</span><span class="lnt"> 50
+</span><span class="lnt"> 51
+</span><span class="lnt"> 52
+</span><span class="lnt"> 53
+</span><span class="lnt"> 54
+</span><span class="lnt"> 55
+</span><span class="lnt"> 56
+</span><span class="lnt"> 57
+</span><span class="lnt"> 58
+</span><span class="lnt"> 59
+</span><span class="lnt"> 60
+</span><span class="lnt"> 61
+</span><span class="lnt"> 62
+</span><span class="lnt"> 63
+</span><span class="lnt"> 64
+</span><span class="lnt"> 65
+</span><span class="lnt"> 66
+</span><span class="lnt"> 67
+</span><span class="lnt"> 68
+</span><span class="lnt"> 69
+</span><span class="lnt"> 70
+</span><span class="lnt"> 71
+</span><span class="lnt"> 72
+</span><span class="lnt"> 73
+</span><span class="lnt"> 74
+</span><span class="lnt"> 75
+</span><span class="lnt"> 76
+</span><span class="lnt"> 77
+</span><span class="lnt"> 78
+</span><span class="lnt"> 79
+</span><span class="lnt"> 80
+</span><span class="lnt"> 81
+</span><span class="lnt"> 82
+</span><span class="lnt"> 83
+</span><span class="lnt"> 84
+</span><span class="lnt"> 85
+</span><span class="lnt"> 86
+</span><span class="lnt"> 87
+</span><span class="lnt"> 88
+</span><span class="lnt"> 89
+</span><span class="lnt"> 90
+</span><span class="lnt"> 91
+</span><span class="lnt"> 92
+</span><span class="lnt"> 93
+</span><span class="lnt"> 94
+</span><span class="lnt"> 95
+</span><span class="lnt"> 96
+</span><span class="lnt"> 97
+</span><span class="lnt"> 98
+</span><span class="lnt"> 99
+</span><span class="lnt"> 100
+</span><span class="lnt"> 101
+</span><span class="lnt"> 102
+</span><span class="lnt"> 103
+</span><span class="lnt"> 104
+</span><span class="lnt"> 105
+</span><span class="lnt"> 106
+</span><span class="lnt"> 107
+</span><span class="lnt"> 108
+</span><span class="lnt"> 109
+</span><span class="lnt"> 110
+</span><span class="lnt"> 111
+</span><span class="lnt"> 112
+</span><span class="lnt"> 113
+</span><span class="lnt"> 114
+</span><span class="lnt"> 115
+</span><span class="lnt"> 116
+</span><span class="lnt"> 117
+</span><span class="lnt"> 118
+</span><span class="lnt"> 119
+</span><span class="lnt"> 120
+</span><span class="lnt"> 121
+</span><span class="lnt"> 122
+</span><span class="lnt"> 123
+</span><span class="lnt"> 124
+</span><span class="lnt"> 125
+</span><span class="lnt"> 126
+</span><span class="lnt"> 127
+</span><span class="lnt"> 128
+</span><span class="lnt"> 129
+</span><span class="lnt"> 130
+</span><span class="lnt"> 131
+</span><span class="lnt"> 132
+</span><span class="lnt"> 133
+</span><span class="lnt"> 134
+</span><span class="lnt"> 135
+</span><span class="lnt"> 136
+</span><span class="lnt"> 137
+</span><span class="lnt"> 138
+</span><span class="lnt"> 139
+</span><span class="lnt"> 140
+</span><span class="lnt"> 141
+</span><span class="lnt"> 142
+</span><span class="lnt"> 143
+</span><span class="lnt"> 144
+</span><span class="lnt"> 145
+</span><span class="lnt"> 146
+</span><span class="lnt"> 147
+</span><span class="lnt"> 148
+</span><span class="lnt"> 149
+</span><span class="lnt"> 150
+</span><span class="lnt"> 151
+</span><span class="lnt"> 152
+</span><span class="lnt"> 153
+</span><span class="lnt"> 154
+</span><span class="lnt"> 155
+</span><span class="lnt"> 156
+</span><span class="lnt"> 157
+</span><span class="lnt"> 158
+</span><span class="lnt"> 159
+</span><span class="lnt"> 160
+</span><span class="lnt"> 161
+</span><span class="lnt"> 162
+</span><span class="lnt"> 163
+</span><span class="lnt"> 164
+</span><span class="lnt"> 165
+</span><span class="lnt"> 166
+</span><span class="lnt"> 167
+</span><span class="lnt"> 168
+</span><span class="lnt"> 169
+</span><span class="lnt"> 170
+</span><span class="lnt"> 171
+</span><span class="lnt"> 172
+</span><span class="lnt"> 173
+</span><span class="lnt"> 174
+</span><span class="lnt"> 175
+</span><span class="lnt"> 176
+</span><span class="lnt"> 177
+</span><span class="lnt"> 178
+</span><span class="lnt"> 179
+</span><span class="lnt"> 180
+</span><span class="lnt"> 181
+</span><span class="lnt"> 182
+</span><span class="lnt"> 183
+</span><span class="lnt"> 184
+</span><span class="lnt"> 185
+</span><span class="lnt"> 186
+</span><span class="lnt"> 187
+</span><span class="lnt"> 188
+</span><span class="lnt"> 189
+</span><span class="lnt"> 190
+</span><span class="lnt"> 191
+</span><span class="lnt"> 192
+</span><span class="lnt"> 193
+</span><span class="lnt"> 194
+</span><span class="lnt"> 195
+</span><span class="lnt"> 196
+</span><span class="lnt"> 197
+</span><span class="lnt"> 198
+</span><span class="lnt"> 199
+</span><span class="lnt"> 200
+</span><span class="lnt"> 201
+</span><span class="lnt"> 202
+</span><span class="lnt"> 203
+</span><span class="lnt"> 204
+</span><span class="lnt"> 205
+</span><span class="lnt"> 206
+</span><span class="lnt"> 207
+</span><span class="lnt"> 208
+</span><span class="lnt"> 209
+</span><span class="lnt"> 210
+</span><span class="lnt"> 211
+</span><span class="lnt"> 212
+</span><span class="lnt"> 213
+</span><span class="lnt"> 214
+</span><span class="lnt"> 215
+</span><span class="lnt"> 216
+</span><span class="lnt"> 217
+</span><span class="lnt"> 218
+</span><span class="lnt"> 219
+</span><span class="lnt"> 220
+</span><span class="lnt"> 221
+</span><span class="lnt"> 222
+</span><span class="lnt"> 223
+</span><span class="lnt"> 224
+</span><span class="lnt"> 225
+</span><span class="lnt"> 226
+</span><span class="lnt"> 227
+</span><span class="lnt"> 228
+</span><span class="lnt"> 229
+</span><span class="lnt"> 230
+</span><span class="lnt"> 231
+</span><span class="lnt"> 232
+</span><span class="lnt"> 233
+</span><span class="lnt"> 234
+</span><span class="lnt"> 235
+</span><span class="lnt"> 236
+</span><span class="lnt"> 237
+</span><span class="lnt"> 238
+</span><span class="lnt"> 239
+</span><span class="lnt"> 240
+</span><span class="lnt"> 241
+</span><span class="lnt"> 242
+</span><span class="lnt"> 243
+</span><span class="lnt"> 244
+</span><span class="lnt"> 245
+</span><span class="lnt"> 246
+</span><span class="lnt"> 247
+</span><span class="lnt"> 248
+</span><span class="lnt"> 249
+</span><span class="lnt"> 250
+</span><span class="lnt"> 251
+</span><span class="lnt"> 252
+</span><span class="lnt"> 253
+</span><span class="lnt"> 254
+</span><span class="lnt"> 255
+</span><span class="lnt"> 256
+</span><span class="lnt"> 257
+</span><span class="lnt"> 258
+</span><span class="lnt"> 259
+</span><span class="lnt"> 260
+</span><span class="lnt"> 261
+</span><span class="lnt"> 262
+</span><span class="lnt"> 263
+</span><span class="lnt"> 264
+</span><span class="lnt"> 265
+</span><span class="lnt"> 266
+</span><span class="lnt"> 267
+</span><span class="lnt"> 268
+</span><span class="lnt"> 269
+</span><span class="lnt"> 270
+</span><span class="lnt"> 271
+</span><span class="lnt"> 272
+</span><span class="lnt"> 273
+</span><span class="lnt"> 274
+</span><span class="lnt"> 275
+</span><span class="lnt"> 276
+</span><span class="lnt"> 277
+</span><span class="lnt"> 278
+</span><span class="lnt"> 279
+</span><span class="lnt"> 280
+</span><span class="lnt"> 281
+</span><span class="lnt"> 282
+</span><span class="lnt"> 283
+</span><span class="lnt"> 284
+</span><span class="lnt"> 285
+</span><span class="lnt"> 286
+</span><span class="lnt"> 287
+</span><span class="lnt"> 288
+</span><span class="lnt"> 289
+</span><span class="lnt"> 290
+</span><span class="lnt"> 291
+</span><span class="lnt"> 292
+</span><span class="lnt"> 293
+</span><span class="lnt"> 294
+</span><span class="lnt"> 295
+</span><span class="lnt"> 296
+</span><span class="lnt"> 297
+</span><span class="lnt"> 298
+</span><span class="lnt"> 299
+</span><span class="lnt"> 300
+</span><span class="lnt"> 301
+</span><span class="lnt"> 302
+</span><span class="lnt"> 303
+</span><span class="lnt"> 304
+</span><span class="lnt"> 305
+</span><span class="lnt"> 306
+</span><span class="lnt"> 307
+</span><span class="lnt"> 308
+</span><span class="lnt"> 309
+</span><span class="lnt"> 310
+</span><span class="lnt"> 311
+</span><span class="lnt"> 312
+</span><span class="lnt"> 313
+</span><span class="lnt"> 314
+</span><span class="lnt"> 315
+</span><span class="lnt"> 316
+</span><span class="lnt"> 317
+</span><span class="lnt"> 318
+</span><span class="lnt"> 319
+</span><span class="lnt"> 320
+</span><span class="lnt"> 321
+</span><span class="lnt"> 322
+</span><span class="lnt"> 323
+</span><span class="lnt"> 324
+</span><span class="lnt"> 325
+</span><span class="lnt"> 326
+</span><span class="lnt"> 327
+</span><span class="lnt"> 328
+</span><span class="lnt"> 329
+</span><span class="lnt"> 330
+</span><span class="lnt"> 331
+</span><span class="lnt"> 332
+</span><span class="lnt"> 333
+</span><span class="lnt"> 334
+</span><span class="lnt"> 335
+</span><span class="lnt"> 336
+</span><span class="lnt"> 337
+</span><span class="lnt"> 338
+</span><span class="lnt"> 339
+</span><span class="lnt"> 340
+</span><span class="lnt"> 341
+</span><span class="lnt"> 342
+</span><span class="lnt"> 343
+</span><span class="lnt"> 344
+</span><span class="lnt"> 345
+</span><span class="lnt"> 346
+</span><span class="lnt"> 347
+</span><span class="lnt"> 348
+</span><span class="lnt"> 349
+</span><span class="lnt"> 350
+</span><span class="lnt"> 351
+</span><span class="lnt"> 352
+</span><span class="lnt"> 353
+</span><span class="lnt"> 354
+</span><span class="lnt"> 355
+</span><span class="lnt"> 356
+</span><span class="lnt"> 357
+</span><span class="lnt"> 358
+</span><span class="lnt"> 359
+</span><span class="lnt"> 360
+</span><span class="lnt"> 361
+</span><span class="lnt"> 362
+</span><span class="lnt"> 363
+</span><span class="lnt"> 364
+</span><span class="lnt"> 365
+</span><span class="lnt"> 366
+</span><span class="lnt"> 367
+</span><span class="lnt"> 368
+</span><span class="lnt"> 369
+</span><span class="lnt"> 370
+</span><span class="lnt"> 371
+</span><span class="lnt"> 372
+</span><span class="lnt"> 373
+</span><span class="lnt"> 374
+</span><span class="lnt"> 375
+</span><span class="lnt"> 376
+</span><span class="lnt"> 377
+</span><span class="lnt"> 378
+</span><span class="lnt"> 379
+</span><span class="lnt"> 380
+</span><span class="lnt"> 381
+</span><span class="lnt"> 382
+</span><span class="lnt"> 383
+</span><span class="lnt"> 384
+</span><span class="lnt"> 385
+</span><span class="lnt"> 386
+</span><span class="lnt"> 387
+</span><span class="lnt"> 388
+</span><span class="lnt"> 389
+</span><span class="lnt"> 390
+</span><span class="lnt"> 391
+</span><span class="lnt"> 392
+</span><span class="lnt"> 393
+</span><span class="lnt"> 394
+</span><span class="lnt"> 395
+</span><span class="lnt"> 396
+</span><span class="lnt"> 397
+</span><span class="lnt"> 398
+</span><span class="lnt"> 399
+</span><span class="lnt"> 400
+</span><span class="lnt"> 401
+</span><span class="lnt"> 402
+</span><span class="lnt"> 403
+</span><span class="lnt"> 404
+</span><span class="lnt"> 405
+</span><span class="lnt"> 406
+</span><span class="lnt"> 407
+</span><span class="lnt"> 408
+</span><span class="lnt"> 409
+</span><span class="lnt"> 410
+</span><span class="lnt"> 411
+</span><span class="lnt"> 412
+</span><span class="lnt"> 413
+</span><span class="lnt"> 414
+</span><span class="lnt"> 415
+</span><span class="lnt"> 416
+</span><span class="lnt"> 417
+</span><span class="lnt"> 418
+</span><span class="lnt"> 419
+</span><span class="lnt"> 420
+</span><span class="lnt"> 421
+</span><span class="lnt"> 422
+</span><span class="lnt"> 423
+</span><span class="lnt"> 424
+</span><span class="lnt"> 425
+</span><span class="lnt"> 426
+</span><span class="lnt"> 427
+</span><span class="lnt"> 428
+</span><span class="lnt"> 429
+</span><span class="lnt"> 430
+</span><span class="lnt"> 431
+</span><span class="lnt"> 432
+</span><span class="lnt"> 433
+</span><span class="lnt"> 434
+</span><span class="lnt"> 435
+</span><span class="lnt"> 436
+</span><span class="lnt"> 437
+</span><span class="lnt"> 438
+</span><span class="lnt"> 439
+</span><span class="lnt"> 440
+</span><span class="lnt"> 441
+</span><span class="lnt"> 442
+</span><span class="lnt"> 443
+</span><span class="lnt"> 444
+</span><span class="lnt"> 445
+</span><span class="lnt"> 446
+</span><span class="lnt"> 447
+</span><span class="lnt"> 448
+</span><span class="lnt"> 449
+</span><span class="lnt"> 450
+</span><span class="lnt"> 451
+</span><span class="lnt"> 452
+</span><span class="lnt"> 453
+</span><span class="lnt"> 454
+</span><span class="lnt"> 455
+</span><span class="lnt"> 456
+</span><span class="lnt"> 457
+</span><span class="lnt"> 458
+</span><span class="lnt"> 459
+</span><span class="lnt"> 460
+</span><span class="lnt"> 461
+</span><span class="lnt"> 462
+</span><span class="lnt"> 463
+</span><span class="lnt"> 464
+</span><span class="lnt"> 465
+</span><span class="lnt"> 466
+</span><span class="lnt"> 467
+</span><span class="lnt"> 468
+</span><span class="lnt"> 469
+</span><span class="lnt"> 470
+</span><span class="lnt"> 471
+</span><span class="lnt"> 472
+</span><span class="lnt"> 473
+</span><span class="lnt"> 474
+</span><span class="lnt"> 475
+</span><span class="lnt"> 476
+</span><span class="lnt"> 477
+</span><span class="lnt"> 478
+</span><span class="lnt"> 479
+</span><span class="lnt"> 480
+</span><span class="lnt"> 481
+</span><span class="lnt"> 482
+</span><span class="lnt"> 483
+</span><span class="lnt"> 484
+</span><span class="lnt"> 485
+</span><span class="lnt"> 486
+</span><span class="lnt"> 487
+</span><span class="lnt"> 488
+</span><span class="lnt"> 489
+</span><span class="lnt"> 490
+</span><span class="lnt"> 491
+</span><span class="lnt"> 492
+</span><span class="lnt"> 493
+</span><span class="lnt"> 494
+</span><span class="lnt"> 495
+</span><span class="lnt"> 496
+</span><span class="lnt"> 497
+</span><span class="lnt"> 498
+</span><span class="lnt"> 499
+</span><span class="lnt"> 500
+</span><span class="lnt"> 501
+</span><span class="lnt"> 502
+</span><span class="lnt"> 503
+</span><span class="lnt"> 504
+</span><span class="lnt"> 505
+</span><span class="lnt"> 506
+</span><span class="lnt"> 507
+</span><span class="lnt"> 508
+</span><span class="lnt"> 509
+</span><span class="lnt"> 510
+</span><span class="lnt"> 511
+</span><span class="lnt"> 512
+</span><span class="lnt"> 513
+</span><span class="lnt"> 514
+</span><span class="lnt"> 515
+</span><span class="lnt"> 516
+</span><span class="lnt"> 517
+</span><span class="lnt"> 518
+</span><span class="lnt"> 519
+</span><span class="lnt"> 520
+</span><span class="lnt"> 521
+</span><span class="lnt"> 522
+</span><span class="lnt"> 523
+</span><span class="lnt"> 524
+</span><span class="lnt"> 525
+</span><span class="lnt"> 526
+</span><span class="lnt"> 527
+</span><span class="lnt"> 528
+</span><span class="lnt"> 529
+</span><span class="lnt"> 530
+</span><span class="lnt"> 531
+</span><span class="lnt"> 532
+</span><span class="lnt"> 533
+</span><span class="lnt"> 534
+</span><span class="lnt"> 535
+</span><span class="lnt"> 536
+</span><span class="lnt"> 537
+</span><span class="lnt"> 538
+</span><span class="lnt"> 539
+</span><span class="lnt"> 540
+</span><span class="lnt"> 541
+</span><span class="lnt"> 542
+</span><span class="lnt"> 543
+</span><span class="lnt"> 544
+</span><span class="lnt"> 545
+</span><span class="lnt"> 546
+</span><span class="lnt"> 547
+</span><span class="lnt"> 548
+</span><span class="lnt"> 549
+</span><span class="lnt"> 550
+</span><span class="lnt"> 551
+</span><span class="lnt"> 552
+</span><span class="lnt"> 553
+</span><span class="lnt"> 554
+</span><span class="lnt"> 555
+</span><span class="lnt"> 556
+</span><span class="lnt"> 557
+</span><span class="lnt"> 558
+</span><span class="lnt"> 559
+</span><span class="lnt"> 560
+</span><span class="lnt"> 561
+</span><span class="lnt"> 562
+</span><span class="lnt"> 563
+</span><span class="lnt"> 564
+</span><span class="lnt"> 565
+</span><span class="lnt"> 566
+</span><span class="lnt"> 567
+</span><span class="lnt"> 568
+</span><span class="lnt"> 569
+</span><span class="lnt"> 570
+</span><span class="lnt"> 571
+</span><span class="lnt"> 572
+</span><span class="lnt"> 573
+</span><span class="lnt"> 574
+</span><span class="lnt"> 575
+</span><span class="lnt"> 576
+</span><span class="lnt"> 577
+</span><span class="lnt"> 578
+</span><span class="lnt"> 579
+</span><span class="lnt"> 580
+</span><span class="lnt"> 581
+</span><span class="lnt"> 582
+</span><span class="lnt"> 583
+</span><span class="lnt"> 584
+</span><span class="lnt"> 585
+</span><span class="lnt"> 586
+</span><span class="lnt"> 587
+</span><span class="lnt"> 588
+</span><span class="lnt"> 589
+</span><span class="lnt"> 590
+</span><span class="lnt"> 591
+</span><span class="lnt"> 592
+</span><span class="lnt"> 593
+</span><span class="lnt"> 594
+</span><span class="lnt"> 595
+</span><span class="lnt"> 596
+</span><span class="lnt"> 597
+</span><span class="lnt"> 598
+</span><span class="lnt"> 599
+</span><span class="lnt"> 600
+</span><span class="lnt"> 601
+</span><span class="lnt"> 602
+</span><span class="lnt"> 603
+</span><span class="lnt"> 604
+</span><span class="lnt"> 605
+</span><span class="lnt"> 606
+</span><span class="lnt"> 607
+</span><span class="lnt"> 608
+</span><span class="lnt"> 609
+</span><span class="lnt"> 610
+</span><span class="lnt"> 611
+</span><span class="lnt"> 612
+</span><span class="lnt"> 613
+</span><span class="lnt"> 614
+</span><span class="lnt"> 615
+</span><span class="lnt"> 616
+</span><span class="lnt"> 617
+</span><span class="lnt"> 618
+</span><span class="lnt"> 619
+</span><span class="lnt"> 620
+</span><span class="lnt"> 621
+</span><span class="lnt"> 622
+</span><span class="lnt"> 623
+</span><span class="lnt"> 624
+</span><span class="lnt"> 625
+</span><span class="lnt"> 626
+</span><span class="lnt"> 627
+</span><span class="lnt"> 628
+</span><span class="lnt"> 629
+</span><span class="lnt"> 630
+</span><span class="lnt"> 631
+</span><span class="lnt"> 632
+</span><span class="lnt"> 633
+</span><span class="lnt"> 634
+</span><span class="lnt"> 635
+</span><span class="lnt"> 636
+</span><span class="lnt"> 637
+</span><span class="lnt"> 638
+</span><span class="lnt"> 639
+</span><span class="lnt"> 640
+</span><span class="lnt"> 641
+</span><span class="lnt"> 642
+</span><span class="lnt"> 643
+</span><span class="lnt"> 644
+</span><span class="lnt"> 645
+</span><span class="lnt"> 646
+</span><span class="lnt"> 647
+</span><span class="lnt"> 648
+</span><span class="lnt"> 649
+</span><span class="lnt"> 650
+</span><span class="lnt"> 651
+</span><span class="lnt"> 652
+</span><span class="lnt"> 653
+</span><span class="lnt"> 654
+</span><span class="lnt"> 655
+</span><span class="lnt"> 656
+</span><span class="lnt"> 657
+</span><span class="lnt"> 658
+</span><span class="lnt"> 659
+</span><span class="lnt"> 660
+</span><span class="lnt"> 661
+</span><span class="lnt"> 662
+</span><span class="lnt"> 663
+</span><span class="lnt"> 664
+</span><span class="lnt"> 665
+</span><span class="lnt"> 666
+</span><span class="lnt"> 667
+</span><span class="lnt"> 668
+</span><span class="lnt"> 669
+</span><span class="lnt"> 670
+</span><span class="lnt"> 671
+</span><span class="lnt"> 672
+</span><span class="lnt"> 673
+</span><span class="lnt"> 674
+</span><span class="lnt"> 675
+</span><span class="lnt"> 676
+</span><span class="lnt"> 677
+</span><span class="lnt"> 678
+</span><span class="lnt"> 679
+</span><span class="lnt"> 680
+</span><span class="lnt"> 681
+</span><span class="lnt"> 682
+</span><span class="lnt"> 683
+</span><span class="lnt"> 684
+</span><span class="lnt"> 685
+</span><span class="lnt"> 686
+</span><span class="lnt"> 687
+</span><span class="lnt"> 688
+</span><span class="lnt"> 689
+</span><span class="lnt"> 690
+</span><span class="lnt"> 691
+</span><span class="lnt"> 692
+</span><span class="lnt"> 693
+</span><span class="lnt"> 694
+</span><span class="lnt"> 695
+</span><span class="lnt"> 696
+</span><span class="lnt"> 697
+</span><span class="lnt"> 698
+</span><span class="lnt"> 699
+</span><span class="lnt"> 700
+</span><span class="lnt"> 701
+</span><span class="lnt"> 702
+</span><span class="lnt"> 703
+</span><span class="lnt"> 704
+</span><span class="lnt"> 705
+</span><span class="lnt"> 706
+</span><span class="lnt"> 707
+</span><span class="lnt"> 708
+</span><span class="lnt"> 709
+</span><span class="lnt"> 710
+</span><span class="lnt"> 711
+</span><span class="lnt"> 712
+</span><span class="lnt"> 713
+</span><span class="lnt"> 714
+</span><span class="lnt"> 715
+</span><span class="lnt"> 716
+</span><span class="lnt"> 717
+</span><span class="lnt"> 718
+</span><span class="lnt"> 719
+</span><span class="lnt"> 720
+</span><span class="lnt"> 721
+</span><span class="lnt"> 722
+</span><span class="lnt"> 723
+</span><span class="lnt"> 724
+</span><span class="lnt"> 725
+</span><span class="lnt"> 726
+</span><span class="lnt"> 727
+</span><span class="lnt"> 728
+</span><span class="lnt"> 729
+</span><span class="lnt"> 730
+</span><span class="lnt"> 731
+</span><span class="lnt"> 732
+</span><span class="lnt"> 733
+</span><span class="lnt"> 734
+</span><span class="lnt"> 735
+</span><span class="lnt"> 736
+</span><span class="lnt"> 737
+</span><span class="lnt"> 738
+</span><span class="lnt"> 739
+</span><span class="lnt"> 740
+</span><span class="lnt"> 741
+</span><span class="lnt"> 742
+</span><span class="lnt"> 743
+</span><span class="lnt"> 744
+</span><span class="lnt"> 745
+</span><span class="lnt"> 746
+</span><span class="lnt"> 747
+</span><span class="lnt"> 748
+</span><span class="lnt"> 749
+</span><span class="lnt"> 750
+</span><span class="lnt"> 751
+</span><span class="lnt"> 752
+</span><span class="lnt"> 753
+</span><span class="lnt"> 754
+</span><span class="lnt"> 755
+</span><span class="lnt"> 756
+</span><span class="lnt"> 757
+</span><span class="lnt"> 758
+</span><span class="lnt"> 759
+</span><span class="lnt"> 760
+</span><span class="lnt"> 761
+</span><span class="lnt"> 762
+</span><span class="lnt"> 763
+</span><span class="lnt"> 764
+</span><span class="lnt"> 765
+</span><span class="lnt"> 766
+</span><span class="lnt"> 767
+</span><span class="lnt"> 768
+</span><span class="lnt"> 769
+</span><span class="lnt"> 770
+</span><span class="lnt"> 771
+</span><span class="lnt"> 772
+</span><span class="lnt"> 773
+</span><span class="lnt"> 774
+</span><span class="lnt"> 775
+</span><span class="lnt"> 776
+</span><span class="lnt"> 777
+</span><span class="lnt"> 778
+</span><span class="lnt"> 779
+</span><span class="lnt"> 780
+</span><span class="lnt"> 781
+</span><span class="lnt"> 782
+</span><span class="lnt"> 783
+</span><span class="lnt"> 784
+</span><span class="lnt"> 785
+</span><span class="lnt"> 786
+</span><span class="lnt"> 787
+</span><span class="lnt"> 788
+</span><span class="lnt"> 789
+</span><span class="lnt"> 790
+</span><span class="lnt"> 791
+</span><span class="lnt"> 792
+</span><span class="lnt"> 793
+</span><span class="lnt"> 794
+</span><span class="lnt"> 795
+</span><span class="lnt"> 796
+</span><span class="lnt"> 797
+</span><span class="lnt"> 798
+</span><span class="lnt"> 799
+</span><span class="lnt"> 800
+</span><span class="lnt"> 801
+</span><span class="lnt"> 802
+</span><span class="lnt"> 803
+</span><span class="lnt"> 804
+</span><span class="lnt"> 805
+</span><span class="lnt"> 806
+</span><span class="lnt"> 807
+</span><span class="lnt"> 808
+</span><span class="lnt"> 809
+</span><span class="lnt"> 810
+</span><span class="lnt"> 811
+</span><span class="lnt"> 812
+</span><span class="lnt"> 813
+</span><span class="lnt"> 814
+</span><span class="lnt"> 815
+</span><span class="lnt"> 816
+</span><span class="lnt"> 817
+</span><span class="lnt"> 818
+</span><span class="lnt"> 819
+</span><span class="lnt"> 820
+</span><span class="lnt"> 821
+</span><span class="lnt"> 822
+</span><span class="lnt"> 823
+</span><span class="lnt"> 824
+</span><span class="lnt"> 825
+</span><span class="lnt"> 826
+</span><span class="lnt"> 827
+</span><span class="lnt"> 828
+</span><span class="lnt"> 829
+</span><span class="lnt"> 830
+</span><span class="lnt"> 831
+</span><span class="lnt"> 832
+</span><span class="lnt"> 833
+</span><span class="lnt"> 834
+</span><span class="lnt"> 835
+</span><span class="lnt"> 836
+</span><span class="lnt"> 837
+</span><span class="lnt"> 838
+</span><span class="lnt"> 839
+</span><span class="lnt"> 840
+</span><span class="lnt"> 841
+</span><span class="lnt"> 842
+</span><span class="lnt"> 843
+</span><span class="lnt"> 844
+</span><span class="lnt"> 845
+</span><span class="lnt"> 846
+</span><span class="lnt"> 847
+</span><span class="lnt"> 848
+</span><span class="lnt"> 849
+</span><span class="lnt"> 850
+</span><span class="lnt"> 851
+</span><span class="lnt"> 852
+</span><span class="lnt"> 853
+</span><span class="lnt"> 854
+</span><span class="lnt"> 855
+</span><span class="lnt"> 856
+</span><span class="lnt"> 857
+</span><span class="lnt"> 858
+</span><span class="lnt"> 859
+</span><span class="lnt"> 860
+</span><span class="lnt"> 861
+</span><span class="lnt"> 862
+</span><span class="lnt"> 863
+</span><span class="lnt"> 864
+</span><span class="lnt"> 865
+</span><span class="lnt"> 866
+</span><span class="lnt"> 867
+</span><span class="lnt"> 868
+</span><span class="lnt"> 869
+</span><span class="lnt"> 870
+</span><span class="lnt"> 871
+</span><span class="lnt"> 872
+</span><span class="lnt"> 873
+</span><span class="lnt"> 874
+</span><span class="lnt"> 875
+</span><span class="lnt"> 876
+</span><span class="lnt"> 877
+</span><span class="lnt"> 878
+</span><span class="lnt"> 879
+</span><span class="lnt"> 880
+</span><span class="lnt"> 881
+</span><span class="lnt"> 882
+</span><span class="lnt"> 883
+</span><span class="lnt"> 884
+</span><span class="lnt"> 885
+</span><span class="lnt"> 886
+</span><span class="lnt"> 887
+</span><span class="lnt"> 888
+</span><span class="lnt"> 889
+</span><span class="lnt"> 890
+</span><span class="lnt"> 891
+</span><span class="lnt"> 892
+</span><span class="lnt"> 893
+</span><span class="lnt"> 894
+</span><span class="lnt"> 895
+</span><span class="lnt"> 896
+</span><span class="lnt"> 897
+</span><span class="lnt"> 898
+</span><span class="lnt"> 899
+</span><span class="lnt"> 900
+</span><span class="lnt"> 901
+</span><span class="lnt"> 902
+</span><span class="lnt"> 903
+</span><span class="lnt"> 904
+</span><span class="lnt"> 905
+</span><span class="lnt"> 906
+</span><span class="lnt"> 907
+</span><span class="lnt"> 908
+</span><span class="lnt"> 909
+</span><span class="lnt"> 910
+</span><span class="lnt"> 911
+</span><span class="lnt"> 912
+</span><span class="lnt"> 913
+</span><span class="lnt"> 914
+</span><span class="lnt"> 915
+</span><span class="lnt"> 916
+</span><span class="lnt"> 917
+</span><span class="lnt"> 918
+</span><span class="lnt"> 919
+</span><span class="lnt"> 920
+</span><span class="lnt"> 921
+</span><span class="lnt"> 922
+</span><span class="lnt"> 923
+</span><span class="lnt"> 924
+</span><span class="lnt"> 925
+</span><span class="lnt"> 926
+</span><span class="lnt"> 927
+</span><span class="lnt"> 928
+</span><span class="lnt"> 929
+</span><span class="lnt"> 930
+</span><span class="lnt"> 931
+</span><span class="lnt"> 932
+</span><span class="lnt"> 933
+</span><span class="lnt"> 934
+</span><span class="lnt"> 935
+</span><span class="lnt"> 936
+</span><span class="lnt"> 937
+</span><span class="lnt"> 938
+</span><span class="lnt"> 939
+</span><span class="lnt"> 940
+</span><span class="lnt"> 941
+</span><span class="lnt"> 942
+</span><span class="lnt"> 943
+</span><span class="lnt"> 944
+</span><span class="lnt"> 945
+</span><span class="lnt"> 946
+</span><span class="lnt"> 947
+</span><span class="lnt"> 948
+</span><span class="lnt"> 949
+</span><span class="lnt"> 950
+</span><span class="lnt"> 951
+</span><span class="lnt"> 952
+</span><span class="lnt"> 953
+</span><span class="lnt"> 954
+</span><span class="lnt"> 955
+</span><span class="lnt"> 956
+</span><span class="lnt"> 957
+</span><span class="lnt"> 958
+</span><span class="lnt"> 959
+</span><span class="lnt"> 960
+</span><span class="lnt"> 961
+</span><span class="lnt"> 962
+</span><span class="lnt"> 963
+</span><span class="lnt"> 964
+</span><span class="lnt"> 965
+</span><span class="lnt"> 966
+</span><span class="lnt"> 967
+</span><span class="lnt"> 968
+</span><span class="lnt"> 969
+</span><span class="lnt"> 970
+</span><span class="lnt"> 971
+</span><span class="lnt"> 972
+</span><span class="lnt"> 973
+</span><span class="lnt"> 974
+</span><span class="lnt"> 975
+</span><span class="lnt"> 976
+</span><span class="lnt"> 977
+</span><span class="lnt"> 978
+</span><span class="lnt"> 979
+</span><span class="lnt"> 980
+</span><span class="lnt"> 981
+</span><span class="lnt"> 982
+</span><span class="lnt"> 983
+</span><span class="lnt"> 984
+</span><span class="lnt"> 985
+</span><span class="lnt"> 986
+</span><span class="lnt"> 987
+</span><span class="lnt"> 988
+</span><span class="lnt"> 989
+</span><span class="lnt"> 990
+</span><span class="lnt"> 991
+</span><span class="lnt"> 992
+</span><span class="lnt"> 993
+</span><span class="lnt"> 994
+</span><span class="lnt"> 995
+</span><span class="lnt"> 996
+</span><span class="lnt"> 997
+</span><span class="lnt"> 998
+</span><span class="lnt"> 999
+</span><span class="lnt">1000
+</span><span class="lnt">1001
+</span><span class="lnt">1002
+</span><span class="lnt">1003
+</span><span class="lnt">1004
+</span><span class="lnt">1005
+</span><span class="lnt">1006
+</span><span class="lnt">1007
+</span><span class="lnt">1008
+</span><span class="lnt">1009
+</span><span class="lnt">1010
+</span><span class="lnt">1011
+</span><span class="lnt">1012
+</span><span class="lnt">1013
+</span><span class="lnt">1014
+</span><span class="lnt">1015
+</span><span class="lnt">1016
+</span><span class="lnt">1017
+</span><span class="lnt">1018
+</span><span class="lnt">1019
+</span><span class="lnt">1020
+</span><span class="lnt">1021
+</span><span class="lnt">1022
+</span><span class="lnt">1023
+</span><span class="lnt">1024
+</span><span class="lnt">1025
+</span><span class="lnt">1026
+</span><span class="lnt">1027
+</span><span class="lnt">1028
+</span><span class="lnt">1029
+</span><span class="lnt">1030
+</span><span class="lnt">1031
+</span><span class="lnt">1032
+</span><span class="lnt">1033
+</span><span class="lnt">1034
+</span><span class="lnt">1035
+</span><span class="lnt">1036
+</span><span class="lnt">1037
+</span><span class="lnt">1038
+</span><span class="lnt">1039
+</span><span class="lnt">1040
+</span><span class="lnt">1041
+</span><span class="lnt">1042
+</span><span class="lnt">1043
+</span><span class="lnt">1044
+</span><span class="lnt">1045
+</span><span class="lnt">1046
+</span><span class="lnt">1047
+</span><span class="lnt">1048
+</span><span class="lnt">1049
+</span><span class="lnt">1050
+</span><span class="lnt">1051
+</span><span class="lnt">1052
+</span><span class="lnt">1053
+</span><span class="lnt">1054
+</span><span class="lnt">1055
+</span><span class="lnt">1056
+</span><span class="lnt">1057
+</span><span class="lnt">1058
+</span><span class="lnt">1059
+</span><span class="lnt">1060
+</span><span class="lnt">1061
+</span><span class="lnt">1062
+</span><span class="lnt">1063
+</span><span class="lnt">1064
+</span><span class="lnt">1065
+</span><span class="lnt">1066
+</span><span class="lnt">1067
+</span><span class="lnt">1068
+</span><span class="lnt">1069
+</span><span class="lnt">1070
+</span><span class="lnt">1071
+</span><span class="lnt">1072
+</span><span class="lnt">1073
+</span><span class="lnt">1074
+</span><span class="lnt">1075
+</span><span class="lnt">1076
+</span><span class="lnt">1077
+</span><span class="lnt">1078
+</span><span class="lnt">1079
+</span><span class="lnt">1080
+</span><span class="lnt">1081
+</span><span class="lnt">1082
+</span><span class="lnt">1083
+</span><span class="lnt">1084
+</span><span class="lnt">1085
+</span><span class="lnt">1086
+</span><span class="lnt">1087
+</span><span class="lnt">1088
+</span><span class="lnt">1089
+</span><span class="lnt">1090
+</span><span class="lnt">1091
+</span><span class="lnt">1092
+</span><span class="lnt">1093
+</span><span class="lnt">1094
+</span><span class="lnt">1095
+</span><span class="lnt">1096
+</span><span class="lnt">1097
+</span><span class="lnt">1098
+</span><span class="lnt">1099
+</span><span class="lnt">1100
+</span><span class="lnt">1101
+</span><span class="lnt">1102
+</span><span class="lnt">1103
+</span><span class="lnt">1104
+</span><span class="lnt">1105
+</span><span class="lnt">1106
+</span><span class="lnt">1107
+</span><span class="lnt">1108
+</span><span class="lnt">1109
+</span><span class="lnt">1110
+</span><span class="lnt">1111
+</span><span class="lnt">1112
+</span><span class="lnt">1113
+</span><span class="lnt">1114
+</span><span class="lnt">1115
+</span><span class="lnt">1116
+</span><span class="lnt">1117
+</span><span class="lnt">1118
+</span><span class="lnt">1119
+</span><span class="lnt">1120
+</span><span class="lnt">1121
+</span><span class="lnt">1122
+</span><span class="lnt">1123
+</span><span class="lnt">1124
+</span><span class="lnt">1125
+</span><span class="lnt">1126
+</span><span class="lnt">1127
+</span><span class="lnt">1128
+</span><span class="lnt">1129
+</span><span class="lnt">1130
+</span><span class="lnt">1131
+</span><span class="lnt">1132
+</span><span class="lnt">1133
+</span><span class="lnt">1134
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-yml" data-lang="yml"><span class="line"><span class="cl"><span class="c">## ---------------------------------------------------------------</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c">## Theme Core Configuration Settings</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c">## See: https://theme-next.org/docs/theme-settings/</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c">## ---------------------------------------------------------------</span><span class="w">
@@ -1170,8 +2329,105 @@
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">images</span><span class="p">:</span><span class="w"> </span><span class="l">images</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">passage_end_tag</span><span class="p">:</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"> </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span></span></span></code></pre></div><p>站点配置文件:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-yml" data-lang="yml"><span class="line"><span class="cl"><span class="c">## Hexo Configuration</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"> </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>站点配置文件:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span><span class="lnt">68
+</span><span class="lnt">69
+</span><span class="lnt">70
+</span><span class="lnt">71
+</span><span class="lnt">72
+</span><span class="lnt">73
+</span><span class="lnt">74
+</span><span class="lnt">75
+</span><span class="lnt">76
+</span><span class="lnt">77
+</span><span class="lnt">78
+</span><span class="lnt">79
+</span><span class="lnt">80
+</span><span class="lnt">81
+</span><span class="lnt">82
+</span><span class="lnt">83
+</span><span class="lnt">84
+</span><span class="lnt">85
+</span><span class="lnt">86
+</span><span class="lnt">87
+</span><span class="lnt">88
+</span><span class="lnt">89
+</span><span class="lnt">90
+</span><span class="lnt">91
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-yml" data-lang="yml"><span class="line"><span class="cl"><span class="c">## Hexo Configuration</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c">### Docs: https://hexo.io/docs/configuration.html</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c">### Source: https://github.com/hexojs/hexo/</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">
@@ -1261,7 +2517,9 @@
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">deploy</span><span class="p">:</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"> </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l">git</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"> </span><span class="nt">repository</span><span class="p">:</span><span class="w"> </span><span class="l">git@github.com:reverier-xu/reverier-xu.github.io.git</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"> </span><span class="nt">branch</span><span class="p">:</span><span class="w"> </span><span class="l">master</span></span></span></code></pre></div><p>可以看见, 文件中对于各项的设置介绍已经十分的清楚了.</p>
+</span></span></span><span class="line"><span class="cl"><span class="w"> </span><span class="nt">branch</span><span class="p">:</span><span class="w"> </span><span class="l">master</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>可以看见, 文件中对于各项的设置介绍已经十分的清楚了.</p>
 <h4 class="heading-element" id="开始配置"><span>开始配置</span>
  <a href="#%e5%bc%80%e5%a7%8b%e9%85%8d%e7%bd%ae" class="heading-mark">
  <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
@@ -1272,7 +2530,31 @@
  </a>
 </h5><p>首先, 大家也看到了笔者的博客, 鼠标点击会出来小红心 ( 别抬杠说不是红的 ), 这个效果怎么设置呢?</p>
 <p>在<code>/themes/next/source/js/src</code>下新建文件 <code>clicklove.js</code> , 接着把下面的代码拷贝粘贴到 <code>clicklove.js</code> 文件中:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="o">!</span><span class="kd">function</span> <span class="p">(</span><span class="nx">e</span><span class="p">,</span> <span class="nx">t</span><span class="p">,</span> <span class="nx">a</span><span class="p">)</span> <span class="p">{</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="o">!</span><span class="kd">function</span> <span class="p">(</span><span class="nx">e</span><span class="p">,</span> <span class="nx">t</span><span class="p">,</span> <span class="nx">a</span><span class="p">)</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl"> <span class="kd">function</span> <span class="nx">n</span><span class="p">()</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl"> <span class="nx">c</span><span class="p">(</span><span class="s2">&#34;.heart{width: 10px;height: 10px;position: fixed;background: #f00;transform: rotate(45deg);-webkit-transform: rotate(45deg);-moz-transform: rotate(45deg);}.heart:after,.heart:before{content: &#39;&#39;;width: inherit;height: inherit;background: inherit;border-radius: 50%;-webkit-border-radius: 50%;-moz-border-radius: 50%;position: fixed;}.heart:after{top: -5px;}.heart:before{left: -5px;}&#34;</span><span class="p">),</span> <span class="nx">o</span><span class="p">(),</span> <span class="nx">r</span><span class="p">()</span>
 </span></span><span class="line"><span class="cl"> <span class="p">}</span> <span class="kd">function</span> <span class="nx">r</span><span class="p">()</span> <span class="p">{</span>
@@ -1291,24 +2573,60 @@
 </span></span><span class="line"><span class="cl"> <span class="nx">e</span><span class="p">.</span><span class="nx">requestAnimationFrame</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl"> <span class="k">return</span> <span class="nx">e</span><span class="p">.</span><span class="nx">requestAnimationFrame</span> <span class="o">||</span> <span class="nx">e</span><span class="p">.</span><span class="nx">webkitRequestAnimationFrame</span> <span class="o">||</span> <span class="nx">e</span><span class="p">.</span><span class="nx">mozRequestAnimationFrame</span> <span class="o">||</span> <span class="nx">e</span><span class="p">.</span><span class="nx">oRequestAnimationFrame</span> <span class="o">||</span> <span class="nx">e</span><span class="p">.</span><span class="nx">msRequestAnimationFrame</span> <span class="o">||</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span> <span class="nx">setTimeout</span><span class="p">(</span><span class="nx">e</span><span class="p">,</span> <span class="mf">1e3</span> <span class="o">/</span> <span class="mi">60</span><span class="p">)</span> <span class="p">}</span>
 </span></span><span class="line"><span class="cl"> <span class="p">}(),</span> <span class="nx">n</span><span class="p">()</span>
-</span></span><span class="line"><span class="cl"><span class="p">}(</span><span class="nb">window</span><span class="p">,</span> <span class="nb">document</span><span class="p">);</span></span></span></code></pre></div><p>在<code>\themes\next\layout\_layout.swig</code>文件末尾添加:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">script</span> <span class="na">type</span><span class="o">=</span><span class="s">&#34;text/javascript&#34;</span> <span class="na">src</span><span class="o">=</span><span class="s">&#34;/js/src/clicklove.js&#34;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span></span></span></code></pre></div><p>然后跑一下:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">hexo s</span></span></code></pre></div><p>就能看见效果啦!</p>
+</span></span><span class="line"><span class="cl"><span class="p">}(</span><span class="nb">window</span><span class="p">,</span> <span class="nb">document</span><span class="p">);</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>在<code>\themes\next\layout\_layout.swig</code>文件末尾添加:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">script</span> <span class="na">type</span><span class="o">=</span><span class="s">&#34;text/javascript&#34;</span> <span class="na">src</span><span class="o">=</span><span class="s">&#34;/js/src/clicklove.js&#34;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>然后跑一下:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">hexo s</span></span></code></pre></td></tr></table>
+</div>
+</div><p>就能看见效果啦!</p>
 <h5 class="heading-element" id="动态背景变幻线"><span>动态背景:变幻线</span>
  <a href="#%e5%8a%a8%e6%80%81%e8%83%8c%e6%99%af%e5%8f%98%e5%b9%bb%e7%ba%bf" class="heading-mark">
  <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
  </a>
-</h5><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-yml" data-lang="yml"><span class="line"><span class="cl"><span class="nt">canvas_nest</span><span class="p">:</span><span class="w">
+</h5><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-yml" data-lang="yml"><span class="line"><span class="cl"><span class="nt">canvas_nest</span><span class="p">:</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"> </span><span class="nt">enable</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"> </span><span class="nt">onmobile</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w"> </span><span class="c"># display on mobile or not</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"> </span><span class="nt">color</span><span class="p">:</span><span class="w"> </span><span class="s1">&#39;0,0,0&#39;</span><span class="w"> </span><span class="c"># RGB values, use &#39;,&#39; to separate</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"> </span><span class="nt">opacity: 0.5 # the opacity of line</span><span class="p">:</span><span class="w"> </span><span class="m">0</span><span class="l">~1</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"> </span><span class="nt">zIndex</span><span class="p">:</span><span class="w"> </span>-<span class="m">1</span><span class="w"> </span><span class="c"># z-index property of the background</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"> </span><span class="nt">count</span><span class="p">:</span><span class="w"> </span><span class="m">150</span><span class="w"> </span><span class="c"># the number of lines</span></span></span></code></pre></div><p>在主题配置文件找到上面的配置, 然后把<code>enable</code>改成<code>true</code>就好啦!</p>
+</span></span></span><span class="line"><span class="cl"><span class="w"> </span><span class="nt">count</span><span class="p">:</span><span class="w"> </span><span class="m">150</span><span class="w"> </span><span class="c"># the number of lines</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>在主题配置文件找到上面的配置, 然后把<code>enable</code>改成<code>true</code>就好啦!</p>
 <p>其实NexT集成的特效有很多的,别的你可以去搜搜看,这里就只介绍博主的搭建过程啦.</p>
 <p>但是你用<code>hexo s</code>跑了一下,发现并没有出现想要的效果欸, 骗人!</p>
 <p>那当然不是啦,去下载一个资源包就好了:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">git clone https://github.com/theme-next/theme-next-canvas-nest themes/next/source/lib/canvas-nest</span></span></code></pre></div><p>这就OK啦!</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">git clone https://github.com/theme-next/theme-next-canvas-nest themes/next/source/lib/canvas-nest</span></span></code></pre></td></tr></table>
+</div>
+</div><p>这就OK啦!</p>
 <p>现在打开博客看看, 是不是很有趣呢?</p>
 <h5 class="heading-element" id="作者头像设置"><span>作者头像设置</span>
  <a href="#%e4%bd%9c%e8%80%85%e5%a4%b4%e5%83%8f%e8%ae%be%e7%bd%ae" class="heading-mark">
@@ -1316,7 +2634,22 @@
  </a>
 </h5><p>如何设置头像呢?</p>
 <p>你可以把头像文件放在<code>博客主目录/themes/next/source/images</code>目录下, 然后在主题配置文件中:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-yml" data-lang="yml"><span class="line"><span class="cl"><span class="nt">avatar</span><span class="p">:</span><span class="w">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-yml" data-lang="yml"><span class="line"><span class="cl"><span class="nt">avatar</span><span class="p">:</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"> </span><span class="c"># in theme directory(source/images): /images/avatar.gif</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"> </span><span class="c"># in site directory(source/uploads): /uploads/avatar.gif</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"> </span><span class="c"># You can also use other linking images.</span><span class="w">
@@ -1326,30 +2659,92 @@
 </span></span></span><span class="line"><span class="cl"><span class="w"> </span><span class="c"># The value of opacity should be choose from 0 to 1 to set the opacity of the avatar.</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"> </span><span class="nt">opacity</span><span class="p">:</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="c">#这个是缩放,,可以不设置</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"> </span><span class="c"># If true, the avatar would be rotated with the cursor.</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"> </span><span class="nt">rotated</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w"> </span><span class="c">#这个用来设置头像是否为圆形显示,true为圆形哦</span></span></span></code></pre></div><p>然后我们<code>hexo s</code>一下, 就能看见我们的头像出现啦! 现在把鼠标移上去, 是不是就能看见头像顺溜的转了一圈啦?</p>
+</span></span></span><span class="line"><span class="cl"><span class="w"> </span><span class="nt">rotated</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w"> </span><span class="c">#这个用来设置头像是否为圆形显示,true为圆形哦</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>然后我们<code>hexo s</code>一下, 就能看见我们的头像出现啦! 现在把鼠标移上去, 是不是就能看见头像顺溜的转了一圈啦?</p>
 <h5 class="heading-element" id="文章结束标志"><span>文章结束标志</span>
  <a href="#%e6%96%87%e7%ab%a0%e7%bb%93%e6%9d%9f%e6%a0%87%e5%bf%97" class="heading-mark">
  <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
  </a>
 </h5><p>在路径 <code>\themes\next\layout\_macro</code> 中新建一个叫 <code>passage-end-tag.swig</code> 文件, 注意后缀要正确哦, 然后把下面的代码复制进去:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span>
 </span></span><span class="line"><span class="cl"> {% if not is_index %}
 </span></span><span class="line"><span class="cl"> <span class="p">&lt;</span><span class="nt">div</span> <span class="na">style</span><span class="o">=</span><span class="s">&#34;text-align:center;color: #ccc;font-size:14px;&#34;</span><span class="p">&gt;</span>你想在文章末尾对读者说的话<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
 </span></span><span class="line"><span class="cl"> {% endif %}
-</span></span><span class="line"><span class="cl"><span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span></span></span></code></pre></div><p>接着我们打开<code>\themes\next\layout\_macro\post.swig</code>文件, 在<code>post-body</code> 之后你会看见一个<code>END POST BODY</code>, 然后继续往下翻, 最后在 <code>post-footer</code> 之前把这些代码粘贴进去:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>接着我们打开<code>\themes\next\layout\_macro\post.swig</code>文件, 在<code>post-body</code> 之后你会看见一个<code>END POST BODY</code>, 然后继续往下翻, 最后在 <code>post-footer</code> 之前把这些代码粘贴进去:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span>
 </span></span><span class="line"><span class="cl"> {% if not is_index %}
 </span></span><span class="line"><span class="cl"> {% include &#39;passage-end-tag.swig&#39; %}
 </span></span><span class="line"><span class="cl"> {% endif %}
-</span></span><span class="line"><span class="cl"><span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span></span></span></code></pre></div><p>最后我们打开主题配置文件<code>_config.yml</code>,在末尾添加下面的代码:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-yml" data-lang="yml"><span class="line"><span class="cl"><span class="nt">passage_end_tag</span><span class="p">:</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"> </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span></span></span></code></pre></div><p>大功告成啦!!!</p>
+</span></span><span class="line"><span class="cl"><span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>最后我们打开主题配置文件<code>_config.yml</code>,在末尾添加下面的代码:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-yml" data-lang="yml"><span class="line"><span class="cl"><span class="nt">passage_end_tag</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"> </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>大功告成啦!!!</p>
 <h5 class="heading-element" id="设置侧边栏"><span>设置侧边栏</span>
  <a href="#%e8%ae%be%e7%bd%ae%e4%be%a7%e8%be%b9%e6%a0%8f" class="heading-mark">
  <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
  </a>
 </h5><p>OK, 现在我们可以设置一下主题配置文件, 其中<code>social</code>表示社交信息, 我们可以填入我们相关的链接, 格式为链接名: 链接地址 || 链接图标, 其中链接图标必须是FontAwesome网站中存在的图标名哦, 否则在页面中是无法显示的!</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-yml" data-lang="yml"><span class="line"><span class="cl"><span class="c">## Posts / Categories / Tags in sidebar.</span><span class="w">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-yml" data-lang="yml"><span class="line"><span class="cl"><span class="c">## Posts / Categories / Tags in sidebar.</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">site_state</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c">## Social Links</span><span class="w">
@@ -1374,17 +2769,29 @@
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">social_icons</span><span class="p">:</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"> </span><span class="nt">enable</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"> </span><span class="nt">icons_only</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"> </span><span class="nt">transition</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span></span></span></code></pre></div><p>就像这样. 注意啊, 不要直接复制到你的博客里去! 否则你的名字下面就会挂上笔者的社交网站信息! 那就糗大咯!</p>
+</span></span></span><span class="line"><span class="cl"><span class="w"> </span><span class="nt">transition</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>就像这样. 注意啊, 不要直接复制到你的博客里去! 否则你的名字下面就会挂上笔者的社交网站信息! 那就糗大咯!</p>
 <h5 class="heading-element" id="添加文章版权信息"><span>添加文章版权信息</span>
  <a href="#%e6%b7%bb%e5%8a%a0%e6%96%87%e7%ab%a0%e7%89%88%e6%9d%83%e4%bf%a1%e6%81%af" class="heading-mark">
  <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
  </a>
 </h5><p>文章当然是要有自己的版权的咯! 我们在这里可以设置一下, 把自己的版权声明贴到博文下面去!</p>
 <p>当然还是在主题配置文件里啦:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-yml" data-lang="yml"><span class="line"><span class="cl"><span class="nt">creative_commons</span><span class="p">:</span><span class="w">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-yml" data-lang="yml"><span class="line"><span class="cl"><span class="nt">creative_commons</span><span class="p">:</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"> </span><span class="nt">license</span><span class="p">:</span><span class="w"> </span><span class="l">by-nc-sa</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"> </span><span class="nt">sidebar</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"> </span><span class="nt">post</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span></span></span></code></pre></div><p>找到这一项,然后修改就可以啦!</p>
+</span></span></span><span class="line"><span class="cl"><span class="w"> </span><span class="nt">post</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>找到这一项,然后修改就可以啦!</p>
 <p>不过个人建议放<code>sidebar</code>就可以了, 因为文章底部的好丑&hellip;&hellip;</p>
 <h2 class="heading-element" id="结束"><span>结束</span>
  <a href="#%e7%bb%93%e6%9d%9f" class="heading-mark">

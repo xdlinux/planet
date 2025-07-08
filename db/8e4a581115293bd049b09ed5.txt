@@ -79,14 +79,55 @@
 <blockquote>
 <p>为什么是四行代码？有三行是 <code>if err != nil { return nil, err }</code>​</p></blockquote>
 <p>　　首先, GORM 的API并不是统一的:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="c1">// 返回值是 *Cmd, 可以继续往后链式调用, 虽然不知道都写到First了后面还能有什么</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="c1">// 返回值是 *Cmd, 可以继续往后链式调用, 虽然不知道都写到First了后面还能有什么</span>
 </span></span><span class="line"><span class="cl"><span class="c1">// 如果想获取到这一行的错误时, 要使用 *Cmd.Error, 返回类型为 errors.Error</span>
 </span></span><span class="line"><span class="cl"><span class="nx">err</span> <span class="o">:=</span> <span class="nx">db</span><span class="p">.</span><span class="nf">Model</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">models</span><span class="p">.</span><span class="nx">User</span><span class="p">{}).</span><span class="nf">Where</span><span class="p">(</span><span class="s">&#34;name = ? and verified = ?&#34;</span><span class="p">,</span> <span class="nx">name</span><span class="p">,</span> <span class="kc">true</span><span class="p">).</span><span class="nf">First</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">user</span><span class="p">).</span><span class="nx">Error</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1">// 但是在 Association API 中, 返回值直接就是 errors.Error, 这个时候如果再往后面接一个 Error(), 结果就是err字符串</span>
-</span></span><span class="line"><span class="cl"><span class="nx">err</span> <span class="o">:=</span> <span class="nx">db</span><span class="p">.</span><span class="nf">Model</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">models</span><span class="p">.</span><span class="nx">Team</span><span class="p">{}).</span><span class="nf">Where</span><span class="p">(</span><span class="s">&#34;id = ?&#34;</span><span class="p">,</span> <span class="nx">teamID</span><span class="p">).</span><span class="nf">Association</span><span class="p">(</span><span class="s">&#34;Users&#34;</span><span class="p">).</span><span class="nf">Find</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">users</span><span class="p">)</span></span></span></code></pre></div><p>　　其次, 他自己文档里的实例跑不动:</p>
+</span></span><span class="line"><span class="cl"><span class="nx">err</span> <span class="o">:=</span> <span class="nx">db</span><span class="p">.</span><span class="nf">Model</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">models</span><span class="p">.</span><span class="nx">Team</span><span class="p">{}).</span><span class="nf">Where</span><span class="p">(</span><span class="s">&#34;id = ?&#34;</span><span class="p">,</span> <span class="nx">teamID</span><span class="p">).</span><span class="nf">Association</span><span class="p">(</span><span class="s">&#34;Users&#34;</span><span class="p">).</span><span class="nf">Find</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">users</span><span class="p">)</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>　　其次, 他自己文档里的实例跑不动:</p>
 <p>　　<a href="https://gorm.io/docs/data_types.html"target="_blank" rel="external nofollow noopener noreferrer">GORM: Customize Data Types</a></p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="c1">// 里面有这么一段用来自定义JSON字段的东西</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="c1">// 里面有这么一段用来自定义JSON字段的东西</span>
 </span></span><span class="line"><span class="cl"><span class="kd">type</span> <span class="nx">JSON</span> <span class="nx">json</span><span class="p">.</span><span class="nx">RawMessage</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1">// Scan scan value into Jsonb, implements sql.Scanner interface</span>
@@ -110,7 +151,9 @@
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"> <span class="c1">// 但是很奇怪的是这里吐出去的是个 []byte, 👴怀疑是他从数据库里取数据的时候没有保证前后一致</span>
 </span></span><span class="line"><span class="cl"> <span class="k">return</span> <span class="nx">json</span><span class="p">.</span><span class="nf">RawMessage</span><span class="p">(</span><span class="nx">j</span><span class="p">).</span><span class="nf">MarshalJSON</span><span class="p">()</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></div><p>　　再然后, 那个<a href="https://gorm.io/docs/associations.html"target="_blank" rel="external nofollow noopener noreferrer">关联模式 (Association Mode)</a>就是个半成品.</p>
+</span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>　　再然后, 那个<a href="https://gorm.io/docs/associations.html"target="_blank" rel="external nofollow noopener noreferrer">关联模式 (Association Mode)</a>就是个半成品.</p>
 <p>　　根据👴不多的数据库原理分数, 👴想起来数据库的关系模型分为三种: 一对一, 一对多, 多对多. 结果打开文档一看有四种: <code>belongs to</code>​, <code>has one</code>​, <code>has many</code>​, <code>many to many</code>​, 吓得我又去搜了一下<code>what is the difference between has one and belongs to?</code>​出来的链接除了第一个是 ThinkPHP5, 剩下全是 GORM.</p>
 <blockquote>
 <p>👴: 草, 我数据库原理白学了</p>
@@ -125,7 +168,36 @@
 <p>👴: ？</p></blockquote>
 <p>　　仔细读了一遍文档, 发现 belongs to 和 has one 都属于一对一关系, 看来是👴读文档不仔细, 挨一锤.</p>
 <p>　　于是👴仔细看了看两个一对一关系有啥区别:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="c1">// 文档里这个叫 belongs to</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="c1">// 文档里这个叫 belongs to</span>
 </span></span><span class="line"><span class="cl"><span class="kd">type</span> <span class="nx">Game</span> <span class="kd">struct</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl"> <span class="nx">ID</span> <span class="kt">uint</span>
 </span></span><span class="line"><span class="cl"> <span class="o">...</span>
@@ -149,20 +221,35 @@
 </span></span><span class="line"><span class="cl"> <span class="nx">ID</span> <span class="kt">uint</span>
 </span></span><span class="line"><span class="cl"> <span class="o">...</span>
 </span></span><span class="line"><span class="cl"> <span class="nx">Game</span> <span class="o">*</span><span class="nx">Game</span> <span class="c1">// &lt;-</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></div><p>　　建出来的数据表都是 <code>games</code>​ 中有一个 <code>category_id</code>​ 列, 和完全相同的关联约束, 区别只是一个Game结构体里包含Category, 一个Category结构体里包含Game.</p>
+</span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>　　建出来的数据表都是 <code>games</code>​ 中有一个 <code>category_id</code>​ 列, 和完全相同的关联约束, 区别只是一个Game结构体里包含Category, 一个Category结构体里包含Game.</p>
 <blockquote>
 <p>👴: 这有啥区别？奇怪的feature🐎</p>
 <p>👴: 那👴只写一个键, 在两边都内置一个对面的结构体指针应该没事吧, 这里面要加载另一个表需要显式preload的, 倒也不会循环引用</p>
 <p>(写、跑、寄了, 草)</p>
 <p>👴: ********************</p></blockquote>
 <p>　　于是出现了一个尴尬的情况, 无论用哪种方式, 都只能在一个数据模型上使用 Association Mode, 另一个模型只能手动过滤列:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="c1">// 用 Association 通过 game 查 category, 彳亍</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="c1">// 用 Association 通过 game 查 category, 彳亍</span>
 </span></span><span class="line"><span class="cl"><span class="nx">db</span><span class="p">.</span><span class="nf">Model</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">models</span><span class="p">.</span><span class="nx">Game</span><span class="p">{}).</span><span class="nf">Where</span><span class="p">(</span><span class="s">&#34;id = ?&#34;</span><span class="p">,</span> <span class="nx">gameID</span><span class="p">).</span><span class="nf">Association</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">models</span><span class="p">.</span><span class="nx">Category</span><span class="p">{}).</span><span class="nf">First</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">category</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl"><span class="c1">// 用 Association 通过category 查 game, 真不彳亍</span>
 </span></span><span class="line"><span class="cl"><span class="nx">db</span><span class="p">.</span><span class="nf">Model</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">models</span><span class="p">.</span><span class="nx">Category</span><span class="p">{}).</span><span class="nf">Joins</span><span class="p">(</span><span class="s">&#34;inner join games on games.category_id = categories.id and categories.id = ?&#34;</span><span class="p">,</span> <span class="nx">categoryID</span><span class="p">).</span><span class="nf">First</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">game</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl"><span class="c1">// 那👴干嘛不这样写</span>
 </span></span><span class="line"><span class="cl"><span class="nx">db</span><span class="p">.</span><span class="nf">Model</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">models</span><span class="p">.</span><span class="nx">Game</span><span class="p">{}).</span><span class="nf">Where</span><span class="p">(</span><span class="s">&#34;category_id = ?&#34;</span><span class="p">,</span> <span class="nx">categoryID</span><span class="p">).</span><span class="nf">First</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">category</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl"><span class="c1">// 👴: 这 Association Mode 存在的意义是啥</span></span></span></code></pre></div><p>　　同理, has many 也有这样的问题.</p>
+</span></span><span class="line"><span class="cl"><span class="c1">// 👴: 这 Association Mode 存在的意义是啥</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>　　同理, has many 也有这样的问题.</p>
 <p>　　在后面开发的时候👴基本上是开着Debug模式一路写过去的, 每次写完都要跑一次让GORM输出一下他构造好的SQL长什么样, 符不符合👴的预期, 然后发现了一大堆各种各样的奇怪问题, 这里就不详述了.</p>
 <blockquote>
 <p>👴: 啥啥啥, 这写的是个啥, 怎么User里<a href="https://gorm.io/docs/associations.html#Skip-Auto-Create-x2F-Update"target="_blank" rel="external nofollow noopener noreferrer">创建的时候有个Languages</a>一会儿<a href="https://gorm.io/docs/associations.html#Find-Associations"target="_blank" rel="external nofollow noopener noreferrer">过滤的时候又变成了codes</a>, 你们写文档都不带🧠放一下原始结构体到底长啥样🐎</p></blockquote><hr />

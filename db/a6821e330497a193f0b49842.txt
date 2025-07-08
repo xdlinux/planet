@@ -1,5 +1,20 @@
 <p>首先下载题目文件, 使用binwalk解压出固件内的文件</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-plaintext" data-lang="plaintext"><span class="line"><span class="cl">[Rx][•ᴗ•] &gt;&gt;&gt; binwalk -e ./51475f91-7b90-41dd-81a3-8b82df4f29d0.bin
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-plaintext" data-lang="plaintext"><span class="line"><span class="cl">[Rx][•ᴗ•] &gt;&gt;&gt; binwalk -e ./51475f91-7b90-41dd-81a3-8b82df4f29d0.bin
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">DECIMAL HEXADECIMAL DESCRIPTION
 </span></span><span class="line"><span class="cl">--------------------------------------------------------------------------------
@@ -9,9 +24,53 @@
 </span></span><span class="line"><span class="cl">94256 0x17030 CRC32 polynomial table, big endian
 </span></span><span class="line"><span class="cl">131584 0x20200 TP-Link firmware header, firmware version: 0.0.3, image version: &#34;&#34;, product ID: 0x0, product version: 155254791, kernel load address: 0x0, kernel entry point: 0x80002000, kernel offset: 3932160, kernel length: 512, rootfs offset: 772784, rootfs length: 1048576, bootloader offset: 2883584, bootloader length: 0
 </span></span><span class="line"><span class="cl">132096 0x20400 LZMA compressed data, properties: 0x5D, dictionary size: 33554432 bytes, uncompressed size: 2203728 bytes
-</span></span><span class="line"><span class="cl">1180160 0x120200 Squashfs filesystem, little endian, version 4.0, compression:lzma, size: 2774624 bytes, 519 inodes, blocksize: 131072 bytes, created: 2015-04-13 09:35:04</span></span></code></pre></div><p>在解压出来的文件中包含了kernel镜像以及一个squashfs文件系统镜像.</p>
+</span></span><span class="line"><span class="cl">1180160 0x120200 Squashfs filesystem, little endian, version 4.0, compression:lzma, size: 2774624 bytes, 519 inodes, blocksize: 131072 bytes, created: 2015-04-13 09:35:04</span></span></code></pre></td></tr></table>
+</div>
+</div><p>在解压出来的文件中包含了kernel镜像以及一个squashfs文件系统镜像.</p>
 <p>使用<code>firmware-mod-kit</code>工具包内的<code>unsquashfs_all.sh</code>解压文件系统镜像, 这个包在仓库<code>blackarch</code>中, 直接安装包名即可. <code>unsquashfs_all.sh</code>的位置在<code>/usr/share/firmware-mod-kit/unsquashfs_all.sh</code></p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-plaintext" data-lang="plaintext"><span class="line"><span class="cl">[Rx][•ᴗ•] &gt;&gt;&gt; /usr/share/firmware-mod-kit/unsquashfs_all.sh ./120200.squashfs
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-plaintext" data-lang="plaintext"><span class="line"><span class="cl">[Rx][•ᴗ•] &gt;&gt;&gt; /usr/share/firmware-mod-kit/unsquashfs_all.sh ./120200.squashfs
 </span></span><span class="line"><span class="cl">Exception ignored in: &lt;_io.TextIOWrapper name=&#39;&lt;stdout&gt;&#39; mode=&#39;w&#39; encoding=&#39;utf-8&#39;&gt;
 </span></span><span class="line"><span class="cl">BrokenPipeError: [Errno 32] Broken pipe
 </span></span><span class="line"><span class="cl">Attempting to extract SquashFS 4.X file system...
@@ -48,6 +107,8 @@
 </span></span><span class="line"><span class="cl">created 0 devices
 </span></span><span class="line"><span class="cl">created 0 fifos
 </span></span><span class="line"><span class="cl">File system sucessfully extracted!
-</span></span><span class="line"><span class="cl">MKFS=&#34;./src/others/squashfs-4.0-lzma/mksquashfs-lzma&#34;</span></span></code></pre></div><p>解压出来的文件夹中<code>tmp</code>目录下有一个叫做<code>backdoor</code>的后门二进制文件, 查壳发现被upx压缩过, <code>upx -d</code>解压之, 然后拖进IDA</p>
+</span></span><span class="line"><span class="cl">MKFS=&#34;./src/others/squashfs-4.0-lzma/mksquashfs-lzma&#34;</span></span></code></pre></td></tr></table>
+</div>
+</div><p>解压出来的文件夹中<code>tmp</code>目录下有一个叫做<code>backdoor</code>的后门二进制文件, 查壳发现被upx压缩过, <code>upx -d</code>解压之, 然后拖进IDA</p>
 <p><img loading="lazy" src='https://i.loli.net/2021/01/12/w4fhtJlqxSFE1mW.png' alt="image-20210112230311859"></p>
 <p>成了.</p><hr />

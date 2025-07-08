@@ -26,13 +26,53 @@
  <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
  </a>
 </h3><p><code>xdotool</code>是一个很方便实用的工具. 我们可以通过它来隐藏某个窗口, 只需要提供<code>window id</code>就可以了. 使用方法如下:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">xdotool windowunmap &lt;window-id&gt;</span></span></code></pre></div><p>于是我们只要找到<code>wechat.exe</code>的<code>&lt;window-id</code>然后用<code>xdotool windowunmap 0xXXXX0014</code>就可以达成我们的目标了.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">xdotool windowunmap &lt;window-id&gt;</span></span></code></pre></td></tr></table>
+</div>
+</div><p>于是我们只要找到<code>wechat.exe</code>的<code>&lt;window-id</code>然后用<code>xdotool windowunmap 0xXXXX0014</code>就可以达成我们的目标了.</p>
 <h3 class="heading-element" id="编写python脚本并集成到系统里"><span>编写Python脚本并集成到系统里</span>
  <a href="#%e7%bc%96%e5%86%99python%e8%84%9a%e6%9c%ac%e5%b9%b6%e9%9b%86%e6%88%90%e5%88%b0%e7%b3%bb%e7%bb%9f%e9%87%8c" class="heading-mark">
  <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
  </a>
 </h3><p>有了上面介绍的三个工具, 我们就可以通过写一个简单的小脚本来随着微信的启动而启动, 每五秒检测一次, 然后隐藏wechat的窗口阴影, 检测到wechat退出就自动退出.</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="ch">#!/usr/bin/env python3</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="ch">#!/usr/bin/env python3</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">time</span>
 </span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">os</span>
@@ -60,10 +100,20 @@
 </span></span><span class="line"><span class="cl"> <span class="nb">print</span><span class="p">(</span><span class="n">shadow</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl"> <span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s2">&#34;xdotool windowunmap &#34;</span> <span class="o">+</span> <span class="n">shadow</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl"> <span class="k">else</span><span class="p">:</span>
-</span></span><span class="line"><span class="cl"> <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;WeChat not display yet.&#34;</span><span class="p">)</span></span></span></code></pre></div><p>给这个脚本放在一个合适的位置, 加上权限后链接到<code>/bin/disable-wechat-shadow</code></p>
+</span></span><span class="line"><span class="cl"> <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;WeChat not display yet.&#34;</span><span class="p">)</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>给这个脚本放在一个合适的位置, 加上权限后链接到<code>/bin/disable-wechat-shadow</code></p>
 <p>然后编写启动脚本:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="cp">#!/bin/sh
-</span></span></span><span class="line"><span class="cl"><span class="cp"></span>env <span class="nv">WINEDEBUG</span><span class="o">=</span>-all /bin/wechat <span class="p">&amp;</span> /bin/disable-wechat-shadow</span></span></code></pre></div><p>然后把这个脚本加上执行权限, 链接到<code>/bin/wechat-start</code>.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="cp">#!/bin/sh
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span>env <span class="nv">WINEDEBUG</span><span class="o">=</span>-all /bin/wechat <span class="p">&amp;</span> /bin/disable-wechat-shadow</span></span></code></pre></td></tr></table>
+</div>
+</div><p>然后把这个脚本加上执行权限, 链接到<code>/bin/wechat-start</code>.</p>
 <p>修改开始菜单中wechat的启动命令.将其改为<code>/bin/wechat-start</code>.</p>
 <p>然后再打开微信, 登录后的主窗口阴影过一小会儿就消失了.</p>
 <h2 class="heading-element" id="小问题"><span>小问题</span>

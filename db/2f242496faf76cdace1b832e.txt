@@ -18,7 +18,14 @@
  <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
  </a>
 </h3><p><code>dde-file-manager</code>是Deepin操作系统的文件管理器, 而在KDE里面文件管理器是<code>dolphin</code>. 于是想办法:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo ln -s /bin/dolphin /bin/dde-file-manager</span></span></code></pre></div><p>试图通过给<code>dolphin</code>链接到<code>dde-file-manager</code>来伪造一个Deepin文件管理器, 将使用Deepin文件管理器打开的命令链接到<code>dolphin</code>上来解决. 但是点击链接依然打不开.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo ln -s /bin/dolphin /bin/dde-file-manager</span></span></code></pre></td></tr></table>
+</div>
+</div><p>试图通过给<code>dolphin</code>链接到<code>dde-file-manager</code>来伪造一个Deepin文件管理器, 将使用Deepin文件管理器打开的命令链接到<code>dolphin</code>上来解决. 但是点击链接依然打不开.</p>
 <h3 class="heading-element" id="再次查看出错"><span>再次查看出错</span>
  <a href="#%e5%86%8d%e6%ac%a1%e6%9f%a5%e7%9c%8b%e5%87%ba%e9%94%99" class="heading-mark">
  <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
@@ -29,7 +36,29 @@
  <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
  </a>
 </h3><p>运行<code>dolphin --help</code>:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">$ dolphin --help
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">$ dolphin --help
 </span></span><span class="line"><span class="cl">Usage: dolphin <span class="o">[</span>options<span class="o">]</span> +<span class="o">[</span>Url<span class="o">]</span>
 </span></span><span class="line"><span class="cl">文件管理器
 </span></span><span class="line"><span class="cl">
@@ -46,17 +75,40 @@
 </span></span><span class="line"><span class="cl"> --daemon 启动 Dolphin 守护进程 <span class="o">(</span>只在使用 DBus 接口时需要<span class="o">)</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">Arguments:
-</span></span><span class="line"><span class="cl"> +<span class="o">[</span>Url<span class="o">]</span> 要打开的文档</span></span></code></pre></div><p>从参数列表来看只需要把<code>--show-item</code>参数更换成<code>--select</code>参数就可以了. 我选择拿python简单的写几句来实现这个功能. 首先删掉原先的<code>dde-file-manager</code>链接: <code>sudo rm /bin/dde-file-manager</code></p>
+</span></span><span class="line"><span class="cl"> +<span class="o">[</span>Url<span class="o">]</span> 要打开的文档</span></span></code></pre></td></tr></table>
+</div>
+</div><p>从参数列表来看只需要把<code>--show-item</code>参数更换成<code>--select</code>参数就可以了. 我选择拿python简单的写几句来实现这个功能. 首先删掉原先的<code>dde-file-manager</code>链接: <code>sudo rm /bin/dde-file-manager</code></p>
 <p>然后想办法让python接受两个参数, 并调换第一个参数.</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1">##!/bin/python3</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1">##!/bin/python3</span>
 </span></span><span class="line"><span class="cl"><span class="c1">## -*- coding: UTF-8 -*-</span>
 </span></span><span class="line"><span class="cl"><span class="c1">## 文件名: dde-file-manager.py</span>
 </span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">sys</span>
 </span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">os</span>
 </span></span><span class="line"><span class="cl"><span class="n">options</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
 </span></span><span class="line"><span class="cl"><span class="n">path</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
-</span></span><span class="line"><span class="cl"><span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s2">&#34;dolphin --select &#34;</span><span class="o">+</span><span class="s1">&#39;&#34;&#39;</span><span class="o">+</span><span class="n">path</span><span class="o">+</span><span class="s1">&#39;&#34;&#39;</span><span class="p">)</span></span></span></code></pre></div><p>简单的替换掉就可以了. 加上执行权限, 扔到<code>$HOME/.local/share</code>目录下面, 然后:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo ln <span class="nv">$HOME</span>/.local/share/dde-file-manager.py /bin/dde-file-manager</span></span></code></pre></div><p>再然后打开TIM, 接收文件, 点击打开所在文件夹, 就可以非常顺利的用<code>dolphin</code>打开文件夹了.</p>
+</span></span><span class="line"><span class="cl"><span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s2">&#34;dolphin --select &#34;</span><span class="o">+</span><span class="s1">&#39;&#34;&#39;</span><span class="o">+</span><span class="n">path</span><span class="o">+</span><span class="s1">&#39;&#34;&#39;</span><span class="p">)</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>简单的替换掉就可以了. 加上执行权限, 扔到<code>$HOME/.local/share</code>目录下面, 然后:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo ln <span class="nv">$HOME</span>/.local/share/dde-file-manager.py /bin/dde-file-manager</span></span></code></pre></td></tr></table>
+</div>
+</div><p>再然后打开TIM, 接收文件, 点击打开所在文件夹, 就可以非常顺利的用<code>dolphin</code>打开文件夹了.</p>
 <h2 class="heading-element" id="结尾"><span>结尾</span>
  <a href="#%e7%bb%93%e5%b0%be" class="heading-mark">
  <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>

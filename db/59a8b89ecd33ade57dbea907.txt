@@ -35,10 +35,30 @@ for MoeCTF beginners only.</p></blockquote>
  </a>
 </h3><p>我们不从逆向工程师的角度来看, 我们从一个软件开发者的角度来看.</p>
 <p>比如让你写一个密码验证器, 你会怎么做?</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-C++" data-lang="C++"><span class="line"><span class="cl"><span class="n">strcmp</span><span class="p">(</span><span class="n">input</span><span class="p">,</span> <span class="s">&#34;this_is_password&#34;</span><span class="p">);</span></span></span></code></pre></div><p>你可能会这么写, 但是这样写毫无逻辑可言, 就是简单的字符串比对. 你编译一下扔进IDA, 然后按下F5键, 你就能发现你的密码就躺在程序里, 可以被轻松破解掉.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-C++" data-lang="C++"><span class="line"><span class="cl"><span class="n">strcmp</span><span class="p">(</span><span class="n">input</span><span class="p">,</span> <span class="s">&#34;this_is_password&#34;</span><span class="p">);</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>你可能会这么写, 但是这样写毫无逻辑可言, 就是简单的字符串比对. 你编译一下扔进IDA, 然后按下F5键, 你就能发现你的密码就躺在程序里, 可以被轻松破解掉.</p>
 <p>那安全一点的写法呢?</p>
 <p>你可以用各种算法来保证你的数据没有那么容易被别人给搞出来, 比如你可以使用异或:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-C++" data-lang="C++"><span class="line"><span class="cl"><span class="kt">char</span> <span class="n">password_enc</span><span class="p">[]</span> <span class="o">=</span> <span class="p">{</span><span class="mi">98</span><span class="p">,</span> <span class="mi">126</span><span class="p">,</span> <span class="mi">127</span><span class="p">,</span> <span class="mi">101</span><span class="p">,</span> <span class="mi">73</span><span class="p">,</span> <span class="mi">127</span><span class="p">,</span> <span class="mi">101</span><span class="p">,</span> <span class="mi">73</span><span class="p">,</span> <span class="mi">102</span><span class="p">,</span> <span class="mi">119</span><span class="p">,</span> <span class="mi">101</span><span class="p">,</span> <span class="mi">101</span><span class="p">,</span> <span class="mi">97</span><span class="p">,</span> <span class="mi">121</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">114</span><span class="p">};</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-C++" data-lang="C++"><span class="line"><span class="cl"><span class="kt">char</span> <span class="n">password_enc</span><span class="p">[]</span> <span class="o">=</span> <span class="p">{</span><span class="mi">98</span><span class="p">,</span> <span class="mi">126</span><span class="p">,</span> <span class="mi">127</span><span class="p">,</span> <span class="mi">101</span><span class="p">,</span> <span class="mi">73</span><span class="p">,</span> <span class="mi">127</span><span class="p">,</span> <span class="mi">101</span><span class="p">,</span> <span class="mi">73</span><span class="p">,</span> <span class="mi">102</span><span class="p">,</span> <span class="mi">119</span><span class="p">,</span> <span class="mi">101</span><span class="p">,</span> <span class="mi">101</span><span class="p">,</span> <span class="mi">97</span><span class="p">,</span> <span class="mi">121</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">114</span><span class="p">};</span>
 </span></span><span class="line"><span class="cl"><span class="c1">// password_enc的每一位和22进行异或, 就能得到真实的密码&#34;this_is_password&#34;
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">16</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl"> <span class="k">if</span> <span class="p">(</span><span class="n">input</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">^</span> <span class="mi">22</span> <span class="o">!=</span> <span class="n">password_enc</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="p">{</span>
@@ -46,7 +66,9 @@ for MoeCTF beginners only.</p></blockquote>
 </span></span><span class="line"><span class="cl"> <span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl"> <span class="p">}</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span><span class="line"><span class="cl"><span class="n">printf</span><span class="p">(</span><span class="s">&#34;Password is right!</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">);</span></span></span></code></pre></div><p>虽然这个算法也很简单, 但编译之后的破译难度是不是增加了?</p>
+</span></span><span class="line"><span class="cl"><span class="n">printf</span><span class="p">(</span><span class="s">&#34;Password is right!</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">);</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>虽然这个算法也很简单, 但编译之后的破译难度是不是增加了?</p>
 <p>那么作为一个逆向手, 你的主要工作就是:</p>
 <ul>
 <li>找到目标数据, 无论是加密过的还是没有加密过的</li>
@@ -55,14 +77,28 @@ for MoeCTF beginners only.</p></blockquote>
 <li>尝试通过写出逆算法, 把加密的目标数据成功还原为加密前的数据.</li>
 </ul>
 <p>例如上面那个异或数据的例子, 我们就很容易破解:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-C++" data-lang="C++"><span class="line"><span class="cl"><span class="c1">// 因为a^b=c时, b^c=a, 所以我们可以这样还原数据:
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-C++" data-lang="C++"><span class="line"><span class="cl"><span class="c1">// 因为a^b=c时, b^c=a, 所以我们可以这样还原数据:
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kt">char</span> <span class="n">password_enc</span><span class="p">[]</span> <span class="o">=</span> <span class="p">{</span><span class="mi">98</span><span class="p">,</span> <span class="mi">126</span><span class="p">,</span> <span class="mi">127</span><span class="p">,</span> <span class="mi">101</span><span class="p">,</span> <span class="mi">73</span><span class="p">,</span> <span class="mi">127</span><span class="p">,</span> <span class="mi">101</span><span class="p">,</span> <span class="mi">73</span><span class="p">,</span> <span class="mi">102</span><span class="p">,</span> <span class="mi">119</span><span class="p">,</span> <span class="mi">101</span><span class="p">,</span> <span class="mi">101</span><span class="p">,</span> <span class="mi">97</span><span class="p">,</span> <span class="mi">121</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">114</span><span class="p">};</span>
 </span></span><span class="line"><span class="cl"><span class="kt">char</span> <span class="n">password</span><span class="p">[</span><span class="mi">17</span><span class="p">];</span>
 </span></span><span class="line"><span class="cl"><span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">16</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl"> <span class="n">password</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">password_enc</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">^</span> <span class="mi">22</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span><span class="line"><span class="cl"><span class="n">password</span><span class="p">[</span><span class="mi">16</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl"><span class="n">printf</span><span class="p">(</span><span class="s">&#34;%s</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span> <span class="n">password</span><span class="p">);</span></span></span></code></pre></div><p>简单吧.</p>
+</span></span><span class="line"><span class="cl"><span class="n">printf</span><span class="p">(</span><span class="s">&#34;%s</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span> <span class="n">password</span><span class="p">);</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>简单吧.</p>
 <p>真实做题中你会逐渐遇到更难的加密方式与算法, 这不仅要求你的编程能力要逐步提高, 还要求你要有耐心, 逆向的过程一般都是冗长而无聊的, 但是解出题目那一瞬的快感可以让你高兴一整天(我是这样的).</p>
 <h3 class="heading-element" id="你说的好像挺简单-但是好像不是所有题目都长这样啊"><span>你说的好像挺简单, 但是好像不是所有题目都长这样啊</span>
  <a href="#%e4%bd%a0%e8%af%b4%e7%9a%84%e5%a5%bd%e5%83%8f%e6%8c%ba%e7%ae%80%e5%8d%95-%e4%bd%86%e6%98%af%e5%a5%bd%e5%83%8f%e4%b8%8d%e6%98%af%e6%89%80%e6%9c%89%e9%a2%98%e7%9b%ae%e9%83%bd%e9%95%bf%e8%bf%99%e6%a0%b7%e5%95%8a" class="heading-mark">

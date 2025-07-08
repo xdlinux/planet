@@ -38,9 +38,18 @@
  <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
  </a>
 </h3><p><code>tokenizer</code> 需要两个，一个用来解决 <code>$f(x)=x+y$</code> 这样的行内公式，一类用来对付</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-markdown" data-lang="markdown"><span class="line"><span class="cl">$$
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-markdown" data-lang="markdown"><span class="line"><span class="cl">$$
 </span></span><span class="line"><span class="cl">f(x) = \frac{1}{x}
-</span></span><span class="line"><span class="cl">$$</span></span></code></pre></div><p>这类的行间公式。匹配这些我们只需要两个正则表达式就可以了，一个匹配单个 <code>$</code>，一个匹配 <code>$$</code>。</p>
+</span></span><span class="line"><span class="cl">$$</span></span></code></pre></td></tr></table>
+</div>
+</div><p>这类的行间公式。匹配这些我们只需要两个正则表达式就可以了，一个匹配单个 <code>$</code>，一个匹配 <code>$$</code>。</p>
 <h3 class="heading-element" id="实现-render"><span>实现 <code>render</code></span>
  <a href="#%e5%ae%9e%e7%8e%b0-render" class="heading-mark">
  <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
@@ -50,7 +59,70 @@
  <a href="#%e4%bb%a3%e7%a0%81%e7%89%87%e6%ae%b5" class="heading-mark">
  <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
  </a>
-</h2><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-typescript" data-lang="typescript"><span class="line"><span class="cl"><span class="kr">import</span> <span class="nx">katex</span><span class="p">,</span> <span class="p">{</span><span class="kr">type</span> <span class="nx">KatexOptions</span><span class="p">}</span> <span class="kr">from</span> <span class="s1">&#39;katex&#39;</span>
+</h2><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-typescript" data-lang="typescript"><span class="line"><span class="cl"><span class="kr">import</span> <span class="nx">katex</span><span class="p">,</span> <span class="p">{</span><span class="kr">type</span> <span class="nx">KatexOptions</span><span class="p">}</span> <span class="kr">from</span> <span class="s1">&#39;katex&#39;</span>
 </span></span><span class="line"><span class="cl"><span class="kr">import</span> <span class="s1">&#39;katex/dist/katex.css&#39;</span>
 </span></span><span class="line"><span class="cl"><span class="kr">import</span> <span class="kr">type</span> <span class="p">{</span><span class="nx">marked</span><span class="p">}</span> <span class="kr">from</span> <span class="s1">&#39;marked&#39;</span>
 </span></span><span class="line"><span class="cl">
@@ -108,7 +180,17 @@
 </span></span><span class="line"><span class="cl"> <span class="k">return</span> <span class="sb">`&lt;p&gt;</span><span class="si">${</span><span class="nx">katex</span><span class="p">.</span><span class="nx">renderToString</span><span class="p">(</span><span class="nx">token</span><span class="p">.</span><span class="nx">text</span><span class="p">,</span> <span class="nx">options</span><span class="p">)</span><span class="si">}</span><span class="sb">&lt;/p&gt;`</span>
 </span></span><span class="line"><span class="cl"> <span class="p">}</span>
 </span></span><span class="line"><span class="cl"> <span class="p">}</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></div><p>保存到 <code>katex_extension.ts</code> 中，使用时只需要导入后 <code>marked.use(KatexExtension({}))</code> 即可，参数中接收的是 Katex 的设置项。</p>
+</span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>保存到 <code>katex_extension.ts</code> 中，使用时只需要导入后 <code>marked.use(KatexExtension({}))</code> 即可，参数中接收的是 Katex 的设置项。</p>
 <p>如果需要 lazy load，也可以</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-typescript" data-lang="typescript"><span class="line"><span class="cl"> <span class="kr">const</span> <span class="nx">katex</span> <span class="o">=</span> <span class="k">await</span> <span class="kr">import</span><span class="p">(</span><span class="s1">&#39;@/path/to/katex_extension.ts&#39;</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl"> <span class="nx">marked</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="nx">katex</span><span class="p">.</span><span class="k">default</span><span class="p">({</span><span class="nx">strict</span>: <span class="kt">false</span><span class="p">}))</span></span></span></code></pre></div><p>我先使用不带任何插件的 marked 将基础内容渲染出来，然后再加载katex与highlightJS重新渲染一遍，在某些网速不佳的环境下能提供更好的用户体验。</p><hr />
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-typescript" data-lang="typescript"><span class="line"><span class="cl"> <span class="kr">const</span> <span class="nx">katex</span> <span class="o">=</span> <span class="k">await</span> <span class="kr">import</span><span class="p">(</span><span class="s1">&#39;@/path/to/katex_extension.ts&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"> <span class="nx">marked</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="nx">katex</span><span class="p">.</span><span class="k">default</span><span class="p">({</span><span class="nx">strict</span>: <span class="kt">false</span><span class="p">}))</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>我先使用不带任何插件的 marked 将基础内容渲染出来，然后再加载katex与highlightJS重新渲染一遍，在某些网速不佳的环境下能提供更好的用户体验。</p><hr />

@@ -59,7 +59,29 @@
 <li>动态容器：在选手启动容器时，动态设置容器的环境变量；</li>
 </ol>
 <p>这两个侵入点都是可以通过插件进行扩展的，而且这两个侵入点的逻辑都是可以完全自定义的，这样就可以实现各种各样的题目类型了。</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="k">pub</span><span class="w"> </span><span class="k">trait</span><span class="w"> </span><span class="n">FlagChecker</span><span class="w"> </span><span class="p">{</span><span class="w">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="k">pub</span><span class="w"> </span><span class="k">trait</span><span class="w"> </span><span class="n">FlagChecker</span><span class="w"> </span><span class="p">{</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"> </span><span class="k">async</span><span class="w"> </span><span class="k">fn</span> <span class="nf">check</span><span class="p">(</span><span class="o">&amp;</span><span class="bp">self</span><span class="p">,</span><span class="w"> </span><span class="n">user</span>: <span class="kp">&amp;</span><span class="nc">User</span><span class="p">,</span><span class="w"> </span><span class="n">challenge</span>: <span class="kp">&amp;</span><span class="nc">Challenge</span><span class="p">,</span><span class="w"> </span><span class="n">flag</span>: <span class="kp">&amp;</span><span class="kt">str</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="nb">Result</span><span class="o">&lt;</span><span class="kt">bool</span><span class="p">,</span><span class="w"> </span><span class="n">CheckerError</span><span class="o">&gt;</span><span class="p">;</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"> </span><span class="k">async</span><span class="w"> </span><span class="k">fn</span> <span class="nf">get</span><span class="p">(</span><span class="o">&amp;</span><span class="bp">self</span><span class="p">,</span><span class="w"> </span><span class="n">user</span>: <span class="kp">&amp;</span><span class="nc">User</span><span class="p">,</span><span class="w"> </span><span class="n">challenge</span>: <span class="kp">&amp;</span><span class="nc">Challenge</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="nb">Result</span><span class="o">&lt;</span><span class="nb">String</span><span class="p">,</span><span class="w"> </span><span class="n">CheckerError</span><span class="o">&gt;</span><span class="p">;</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"> </span><span class="k">async</span><span class="w"> </span><span class="k">fn</span> <span class="nf">env_vars</span><span class="p">(</span><span class="o">&amp;</span><span class="bp">self</span><span class="p">,</span><span class="w"> </span><span class="n">user</span>: <span class="kp">&amp;</span><span class="nc">User</span><span class="p">,</span><span class="w"> </span><span class="n">challenge</span>: <span class="kp">&amp;</span><span class="nc">Challenge</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="nb">Result</span><span class="o">&lt;</span><span class="n">HashMap</span><span class="o">&lt;</span><span class="nb">String</span><span class="p">,</span><span class="w"> </span><span class="nb">String</span><span class="o">&gt;</span><span class="p">,</span><span class="w"> </span><span class="n">CheckerError</span><span class="o">&gt;</span><span class="p">;</span><span class="w">
@@ -76,4 +98,6 @@
 </span></span></span><span class="line"><span class="cl"><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">pub</span><span class="w"> </span><span class="k">struct</span> <span class="nc">EnvironmentChecker</span><span class="w"> </span><span class="p">{</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"> </span><span class="n">cache</span>: <span class="kp">&amp;</span><span class="nc">RedisPool</span><span class="p">,</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span></span></span></code></pre></div><hr />
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span></span></span></code></pre></td></tr></table>
+</div>
+</div><hr />

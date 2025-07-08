@@ -23,10 +23,20 @@
 <li>Update：一种根据消息更新状态的方法；</li>
 </ul>
 <p>因此整个消息循环实际上呈现出下面这样的结构：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-plaintext" data-lang="plaintext"><span class="line"><span class="cl"> +-----&gt; View -------+
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-plaintext" data-lang="plaintext"><span class="line"><span class="cl"> +-----&gt; View -------+
 </span></span><span class="line"><span class="cl"> | |
 </span></span><span class="line"><span class="cl"> | v
-</span></span><span class="line"><span class="cl"> Model &lt;----------- Update</span></span></code></pre></div><p>看起来有些像以前进化过的 <a href="https://developer.mozilla.org/en-US/docs/Glossary/MVC"target="_blank" rel="external nofollow noopener noreferrer">MVC(Model-View-Controller)</a> 模型？但实际上不太一样，Elm 的架构要更加简单一些。在传统 MVC 架构中，View 的行为是通过 Controller 直接控制的，但是 View 的更改会直接影响 Model，然后 Controller 通过监听 Model 的变化来进行响应（也有的 MVC 模型是 Controller -&gt; Model -&gt; View 的，然后 View 与 Controller 进行双向交互响应）；而 Elm 的架构中，View 操作会直接调用 Update 方法，Update 方法会采取措施更新 Model，最终 View 根据 Model 重新构建出用户界面达到一次响应。</p>
+</span></span><span class="line"><span class="cl"> Model &lt;----------- Update</span></span></code></pre></td></tr></table>
+</div>
+</div><p>看起来有些像以前进化过的 <a href="https://developer.mozilla.org/en-US/docs/Glossary/MVC"target="_blank" rel="external nofollow noopener noreferrer">MVC(Model-View-Controller)</a> 模型？但实际上不太一样，Elm 的架构要更加简单一些。在传统 MVC 架构中，View 的行为是通过 Controller 直接控制的，但是 View 的更改会直接影响 Model，然后 Controller 通过监听 Model 的变化来进行响应（也有的 MVC 模型是 Controller -&gt; Model -&gt; View 的，然后 View 与 Controller 进行双向交互响应）；而 Elm 的架构中，View 操作会直接调用 Update 方法，Update 方法会采取措施更新 Model，最终 View 根据 Model 重新构建出用户界面达到一次响应。</p>
 <p>我们可以发现 MVC 和 Elm 架构最大的区别是 Elm 保证了数据的单向流动。</p>
 <h3 class="heading-element" id="relm4"><span>Relm4</span>
  <a href="#relm4" class="heading-mark">
@@ -65,15 +75,104 @@
  </a>
 </h2><p>这里以一个简单的计数器作为例子。</p>
 <p>首先我们要定义组件的状态，在这个例子中组件的状态就是计数器的值，所以我们定义一个 <code>Model</code> 结构体：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="k">struct</span> <span class="nc">AppModel</span><span class="w"> </span><span class="p">{</span><span class="w">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="k">struct</span> <span class="nc">AppModel</span><span class="w"> </span><span class="p">{</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"> </span><span class="n">counter</span>: <span class="kt">u8</span><span class="p">,</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span></span></span></code></pre></div><p>接下来定义组件的消息，这里我们只需要一个 <code>Input</code> 类型的消息，用来表示用户点击了哪个按钮：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="cp">#[derive(Debug)]</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>接下来定义组件的消息，这里我们只需要一个 <code>Input</code> 类型的消息，用来表示用户点击了哪个按钮：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="cp">#[derive(Debug)]</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">enum</span> <span class="nc">AppInput</span><span class="w"> </span><span class="p">{</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"> </span><span class="n">Increment</span><span class="p">,</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"> </span><span class="n">Decrement</span><span class="p">,</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span></span></span></code></pre></div><p>最后是界面定义和 <code>SimpleComponent</code> 的实现：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="cp">#[relm4::component]</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>最后是界面定义和 <code>SimpleComponent</code> 的实现：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="cp">#[relm4::component]</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">impl</span><span class="w"> </span><span class="n">SimpleComponent</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">AppModel</span><span class="w"> </span><span class="p">{</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"> </span><span class="k">type</span> <span class="nc">Init</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kt">u8</span><span class="p">;</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">
@@ -137,4 +236,6 @@
 </span></span></span><span class="line"><span class="cl"><span class="w"> </span><span class="p">}</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"> </span><span class="p">}</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"> </span><span class="p">}</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span></span></span></code></pre></div><p><code>view!</code> 宏中以一种类似于 QML 的声明式界面写法构造了用户界面，并将 <code>Button</code> 的点击事件连接到组件上，通过 <code>sender</code> 方法通知 <code>update</code> 函数进行消息处理。</p><hr />
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p><code>view!</code> 宏中以一种类似于 QML 的声明式界面写法构造了用户界面，并将 <code>Button</code> 的点击事件连接到组件上，通过 <code>sender</code> 方法通知 <code>update</code> 函数进行消息处理。</p><hr />

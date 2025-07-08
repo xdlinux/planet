@@ -3,7 +3,20 @@
  <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
  </a>
 </h2><p>由于数组索引被解释成<code>指针+偏移</code>, 所以我们用<code>偏移+指针</code>也未尝不可.</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-C++" data-lang="C++"><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-C++" data-lang="C++"><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp">
 </span></span></span><span class="line"><span class="cl"><span class="cp"></span><span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">main</span> <span class="p">()</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl"> <span class="kt">int</span> <span class="n">a</span><span class="p">[]</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">};</span>
@@ -11,19 +24,51 @@
 </span></span><span class="line"><span class="cl"> <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;4[a]: &#34;</span> <span class="o">&lt;&lt;</span> <span class="mi">4</span><span class="p">[</span><span class="n">a</span><span class="p">]</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"> <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></div><h2 class="heading-element" id="lambda-的无限套娃"><span><code>lambda</code> 的无限套娃</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h2 class="heading-element" id="lambda-的无限套娃"><span><code>lambda</code> 的无限套娃</span>
  <a href="#lambda-%e7%9a%84%e6%97%a0%e9%99%90%e5%a5%97%e5%a8%83" class="heading-mark">
  <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
  </a>
-</h2><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-C++" data-lang="C++"><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">main</span><span class="p">(){[](){[](){[](){[](){[](){</span>
+</h2><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-C++" data-lang="C++"><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">main</span><span class="p">(){[](){[](){[](){[](){[](){</span>
 </span></span><span class="line"><span class="cl"> <span class="n">cout</span><span class="o">&lt;&lt;</span><span class="s">&#34;Hello World&#34;</span><span class="o">&lt;&lt;</span><span class="n">endl</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl"><span class="p">}();}();}();}();}();}</span></span></span></code></pre></div><blockquote>
+</span></span><span class="line"><span class="cl"><span class="p">}();}();}();}();}();}</span></span></span></code></pre></td></tr></table>
+</div>
+</div><blockquote>
 <p>转自<a href="https://www.zhihu.com/question/37135445/answer/71144368"target="_blank" rel="external nofollow noopener noreferrer">C++新标准中有哪些浪到没朋友的新写法？ - 王维一的回答 - 知乎</a></p></blockquote>
 <h2 class="heading-element" id="像python一样迭代"><span>像<code>Python</code>一样迭代</span>
  <a href="#%e5%83%8fpython%e4%b8%80%e6%a0%b7%e8%bf%ad%e4%bb%a3" class="heading-mark">
  <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
  </a>
-</h2><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-C++" data-lang="C++"><span class="line"><span class="cl"><span class="c1">// When you are using C++ 98:
+</h2><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-C++" data-lang="C++"><span class="line"><span class="cl"><span class="c1">// When you are using C++ 98:
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">circle</span> <span class="o">*</span><span class="n">p</span> <span class="o">=</span> <span class="k">new</span> <span class="n">circle</span><span class="p">(</span><span class="mi">42</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl"><span class="n">vector</span><span class="o">&lt;</span><span class="n">shape</span><span class="o">*&gt;</span> <span class="n">v</span> <span class="o">=</span> <span class="n">load_shapes</span><span class="p">();</span>
 </span></span><span class="line"><span class="cl"><span class="k">for</span> <span class="p">(</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">shape</span><span class="o">*&gt;::</span><span class="n">iterator</span> <span class="n">i</span> <span class="o">=</span> <span class="n">v</span><span class="p">.</span><span class="n">begin</span><span class="p">();</span> <span class="n">i</span> <span class="o">!=</span> <span class="n">v</span><span class="p">.</span><span class="n">end</span><span class="p">();</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
@@ -39,7 +84,9 @@
 </span></span><span class="line"><span class="cl"><span class="k">auto</span> <span class="n">v</span> <span class="o">=</span> <span class="n">load_shapes</span><span class="p">();</span>
 </span></span><span class="line"><span class="cl"><span class="k">for</span> <span class="p">(</span><span class="k">auto</span> <span class="o">&amp;</span><span class="nl">s</span> <span class="p">:</span> <span class="n">v</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl"> <span class="k">if</span> <span class="p">(</span><span class="n">s</span> <span class="o">&amp;&amp;</span> <span class="o">*</span><span class="n">s</span> <span class="o">==</span> <span class="o">*</span><span class="n">p</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl"> <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="o">*</span><span class="n">s</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;is a match</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">;</span></span></span></code></pre></div><blockquote>
+</span></span><span class="line"><span class="cl"> <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="o">*</span><span class="n">s</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;is a match</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">;</span></span></span></code></pre></td></tr></table>
+</div>
+</div><blockquote>
 <p>转自<a href="https://youtu.be/hEx5DNLWGgA"target="_blank" rel="external nofollow noopener noreferrer">YouTube</a></p></blockquote>
 <p>除了标准支持的<code>for</code>自动迭代器之外, 还有<code>std::for_each(container.begin(), container.end(), predicate_function)</code>与<code>Qt</code>的<code>for_each(item, container)</code>可用. 不过有了新标准之后这种写法更容易理解, 并且没有对库的依赖性.</p>
 <h2 class="heading-element" id="强大到没朋友的auto"><span>强大到没朋友的<code>auto</code></span>
@@ -47,21 +94,45 @@
  <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
  </a>
 </h2><p>据说2038年的C++标准就可以支持这么写了:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-C++" data-lang="C++"><span class="line"><span class="cl"><span class="k">auto</span> <span class="p">[</span><span class="k">auto</span><span class="p">](</span><span class="k">auto</span> <span class="k">auto</span><span class="p">)</span> <span class="k">auto</span> <span class="p">{</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-C++" data-lang="C++"><span class="line"><span class="cl"><span class="k">auto</span> <span class="p">[</span><span class="k">auto</span><span class="p">](</span><span class="k">auto</span> <span class="k">auto</span><span class="p">)</span> <span class="k">auto</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl"> <span class="k">auto</span><span class="p">(</span><span class="k">auto</span> <span class="k">auto</span><span class="p">{</span><span class="k">auto</span><span class="p">};</span> <span class="k">auto</span> <span class="o">&lt;</span> <span class="k">auto</span><span class="p">;</span> <span class="k">auto</span><span class="o">++</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl"> <span class="k">auto</span><span class="p">[</span><span class="k">auto</span><span class="p">]</span> <span class="o">=</span> <span class="k">auto</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl"> <span class="k">auto</span> <span class="k">auto</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></div><p>(这个代码就是开个玩笑)</p>
+</span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>(这个代码就是开个玩笑)</p>
 <p>看上一节中的应用, <code>auto</code>几乎万能.</p>
 <h2 class="heading-element" id="像for一样在if和while里使用变量初始化"><span>像<code>for</code>一样在<code>if</code>和<code>while</code>里使用变量初始化</span>
  <a href="#%e5%83%8ffor%e4%b8%80%e6%a0%b7%e5%9c%a8if%e5%92%8cwhile%e9%87%8c%e4%bd%bf%e7%94%a8%e5%8f%98%e9%87%8f%e5%88%9d%e5%a7%8b%e5%8c%96" class="heading-mark">
  <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
  </a>
-</h2><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-C++" data-lang="C++"><span class="line"><span class="cl"><span class="k">if</span> <span class="p">(</span><span class="nb">false</span><span class="p">;</span> <span class="nb">true</span><span class="p">)</span> <span class="p">{</span>
+</h2><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-C++" data-lang="C++"><span class="line"><span class="cl"><span class="k">if</span> <span class="p">(</span><span class="nb">false</span><span class="p">;</span> <span class="nb">true</span><span class="p">)</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl"> <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;Hello World~!&#34;</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span> <span class="c1">// 可以输出
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span>
 </span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="p">(</span><span class="k">auto</span> <span class="n">i</span> <span class="o">=</span> <span class="n">func</span><span class="p">(</span><span class="n">parameters</span><span class="p">);</span> <span class="n">judge</span><span class="p">(</span><span class="n">i</span><span class="p">))</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl"> <span class="c1">// do something...
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span> <span class="c1">// 根据judge()函数的判断决定要不要执行
-</span></span></span></code></pre></div><hr />
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><hr />

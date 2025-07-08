@@ -25,7 +25,38 @@
 </h2><p>要在 FUSE 中创建文件系统，需要安装 FUSE 内核模块，然后使用 FUSE 库和 API 集来创建文件系统。</p>
 <p>一般来说现代 Linux 发行版仓库里都会有 FUSE，并且作为默认内核模块提供。</p>
 <p>fuse_operation 结构体中的必要函数：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="k">struct</span> <span class="n">fuse_operations</span> <span class="p">{</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="k">struct</span> <span class="n">fuse_operations</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl"> <span class="kt">int</span> <span class="p">(</span><span class="n">getattr</span><span class="p">)</span> <span class="p">(</span><span class="k">const</span> <span class="kt">char</span> <span class="p">,</span> <span class="k">struct</span> <span class="n">stat</span> <span class="p">);</span>
 </span></span><span class="line"><span class="cl"> <span class="kt">int</span> <span class="p">(</span><span class="n">readlink</span><span class="p">)</span> <span class="p">(</span><span class="k">const</span> <span class="kt">char</span> <span class="p">,</span> <span class="kt">char</span> <span class="p">,</span> <span class="kt">size_t</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl"> <span class="kt">int</span> <span class="p">(</span><span class="n">getdir</span><span class="p">)</span> <span class="p">(</span><span class="k">const</span> <span class="kt">char</span> <span class="p">,</span> <span class="kt">fuse_dirh_t</span><span class="p">,</span> <span class="kt">fuse_dirfil_t</span><span class="p">);</span>
@@ -51,7 +82,9 @@
 </span></span><span class="line"><span class="cl"> <span class="kt">int</span> <span class="p">(</span><span class="n">getxattr</span><span class="p">)</span> <span class="p">(</span><span class="k">const</span> <span class="kt">char</span> <span class="p">,</span> <span class="k">const</span> <span class="kt">char</span> <span class="p">,</span> <span class="kt">char</span> <span class="p">,</span> <span class="kt">size_t</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl"> <span class="kt">int</span> <span class="p">(</span><span class="n">listxattr</span><span class="p">)</span> <span class="p">(</span><span class="k">const</span> <span class="kt">char</span> <span class="p">,</span> <span class="kt">char</span> <span class="p">,</span> <span class="kt">size_t</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl"> <span class="kt">int</span> <span class="p">(</span><span class="n">removexattr</span><span class="p">)</span> <span class="p">(</span><span class="k">const</span> <span class="kt">char</span> <span class="p">,</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl"><span class="p">};</span></span></span></code></pre></div><ul>
+</span></span><span class="line"><span class="cl"><span class="p">};</span></span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
 <li><code>getattr</code>：获取文件属性。这类似于 <code>stat()</code> ，<code>st_dev</code> 和 <code>st_blksize</code> 将被忽略。除非给出 <code>use_ino</code>，否则 <code>st_ino</code> 也会被忽略；</li>
 <li><code>readlink</code>：读取符号链接；</li>
 <li><code>getdir</code>：读取目录的内容，此操作是 <code>opendir()</code> 、 <code>readdir()</code> 、&hellip;、 <code>closedir()</code> 操作序列组合成的。对于每个目录条目，应调用 <code>filldir()</code> 函数；</li>

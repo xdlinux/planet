@@ -5,12 +5,24 @@
 </h2><p>大致可以把rust中的宏看作是一种完善了C语言中宏种种弊端又添加了一些新特性的实现.</p>
 <p>C语言中的宏是一种比复制粘贴稍微高明但有没那么高明的东西, 例如常见的 <code>#include</code> 宏将对应的文件递归复制并展开到当前文件, <code>#define</code> 宏将对应的占位符替换成对应的文本等等等. 这种设计颇有用 <code>sleep</code> 模拟异步的既视感, 其定义并没有一门编程语言那么精确.</p>
 <p>这种简陋的设计也会带来很多与人第一感觉不同的结果, 例如最经典的<a href="https://doc.rust-lang.org/1.30.0/book/first-edition/macros.html#hygiene"target="_blank" rel="external nofollow noopener noreferrer">非预期宏</a>例子:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="cp">#define FIVE_TIMES(x) 5 * x
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="cp">#define FIVE_TIMES(x) 5 * x
 </span></span></span><span class="line"><span class="cl"><span class="cp"></span>
 </span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl"> <span class="nf">printf</span><span class="p">(</span><span class="s">&#34;%d</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span> <span class="nf">FIVE_TIMES</span><span class="p">(</span><span class="mi">2</span> <span class="o">+</span> <span class="mi">3</span><span class="p">));</span>
 </span></span><span class="line"><span class="cl"> <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></div><p>由于宏只是简单替换, 上述语句会变成 <code>5 * 2 + 3</code>, 最后结果是 <code>13</code> 而并不是期望的 <code>25</code>.</p>
+</span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>由于宏只是简单替换, 上述语句会变成 <code>5 * 2 + 3</code>, 最后结果是 <code>13</code> 而并不是期望的 <code>25</code>.</p>
 <p>Rust的宏做了很多改进, 一个最经典的形容是 <em>hygenic</em> (干净的). 这一节在<a href="https://doc.rust-lang.org/1.30.0/book/first-edition/macros.html#hygiene"target="_blank" rel="external nofollow noopener noreferrer">Rust的文档</a>中就有单独介绍. 在设计上, 文档里有这么一句话:</p>
 <blockquote>
 <p>Each macro expansion happens in a distinct ‘syntax context’, and each variable is tagged with the syntax context where it was introduced.</p></blockquote>
@@ -32,7 +44,25 @@
  </a>
 </h2><p>通过上面的比较, 我们可以发现 <code>macro</code> 最突出的特点就是不会对传入的参数做过多的限制, 传入的表达式也不会被预先执行求值.</p>
 <p>先说情景所限, 必须要使用 <code>macro</code> 的情况, 这里直接拿官方 <code>assert!</code> 宏作为一个例子:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="cp">#[macro_export]</span><span class="w">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="cp">#[macro_export]</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="cp">#[stable(feature = </span><span class="s">&#34;rust1&#34;</span><span class="cp">, since = </span><span class="s">&#34;1.0.0&#34;</span><span class="cp">)]</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">macro_rules</span><span class="o">!</span><span class="w"> </span><span class="n">assert</span><span class="w"> </span><span class="p">{</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"> </span><span class="p">(</span><span class="cp">$cond</span>:<span class="nc">expr</span><span class="p">)</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="p">(</span><span class="w">
@@ -45,10 +75,21 @@
 </span></span></span><span class="line"><span class="cl"><span class="w"> </span><span class="fm">panic!</span><span class="p">(</span><span class="cp">$($arg</span><span class="p">)</span><span class="o">+</span><span class="p">)</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"> </span><span class="p">}</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"> </span><span class="p">);</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span></span></span></code></pre></div><p>如果这个宏写成函数的话, 大概长下面这个样子:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="k">fn</span> <span class="nf">assert</span><span class="p">(</span><span class="n">cond</span>: <span class="kt">bool</span><span class="p">,</span><span class="w"> </span><span class="n">expr</span>: <span class="o">?</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>如果这个宏写成函数的话, 大概长下面这个样子:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="k">fn</span> <span class="nf">assert</span><span class="p">(</span><span class="n">cond</span>: <span class="kt">bool</span><span class="p">,</span><span class="w"> </span><span class="n">expr</span>: <span class="o">?</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"> </span><span class="o">..</span><span class="p">.</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span></span></span></code></pre></div><p>显然 <code>expr</code> 是没有一个合适类型声明的, 同时 <code>expr</code> 在传入之前就会被执行求值, 传进去的仅仅只是一个值而不是表达式, 我们就没办法实现宏中 <code>stringify!($cond)</code> 这样的功能.</p>
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>显然 <code>expr</code> 是没有一个合适类型声明的, 同时 <code>expr</code> 在传入之前就会被执行求值, 传进去的仅仅只是一个值而不是表达式, 我们就没办法实现宏中 <code>stringify!($cond)</code> 这样的功能.</p>
 <p>除此之外, 一些类似 <code>printf</code> 之类需要进行不安全构造操作或者需要可变函数参数长度的功能也可以抽象成宏来使用.</p>
 <p>使用宏还有一个好处, 就是宏中的部分计算都可以在编译期完成, 这样就可以实现一些类似于编译器打表的操作, 可以显著缩减运行时间.</p>
 <p>一般的经验法则是, 在函数不能提供所需解决方案的情况下, 在你有相当重复的代码的情况下, 或者在你需要检查类型的结构并在编译时生成代码的情况下, 可以使用宏. 在能够使用函数的场景下还是要尽量使用函数.</p>

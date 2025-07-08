@@ -29,16 +29,44 @@
  <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
  </a>
 </h4><p>确保你的电脑上有<code>Python3</code>;</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">$ python3 -m pip install requests -i https://pypi.tuna.tsinghua.edu.cn/simple</span></span></code></pre></div><p><strong>请注意! 不要将<code>requests</code>错误的写为<code>request</code>, <code>request</code>库近期被检出投毒: <a href="https://bbs.pediy.com/thread-261274.htm"target="_blank" rel="external nofollow noopener noreferrer">链接</a></strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">$ python3 -m pip install requests -i https://pypi.tuna.tsinghua.edu.cn/simple</span></span></code></pre></td></tr></table>
+</div>
+</div><p><strong>请注意! 不要将<code>requests</code>错误的写为<code>request</code>, <code>request</code>库近期被检出投毒: <a href="https://bbs.pediy.com/thread-261274.htm"target="_blank" rel="external nofollow noopener noreferrer">链接</a></strong></p>
 <p>如果你使用<code>Linux</code>, 也可以在对应发行版的软件仓库里找到<code>requests</code>库的安装包. 例如<code>Arch Linux</code>:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">$ sudo pacman -Syyu python-requests</span></span></code></pre></div><p>即可安装<code>requests</code>库.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">$ sudo pacman -Syyu python-requests</span></span></code></pre></td></tr></table>
+</div>
+</div><p>即可安装<code>requests</code>库.</p>
 <p>尽量使用发行版的包管理器, 这样包管理器更新时会一并检查这些包并自动升级. 如果使用<code>pip</code>, 可能还需要隔一段时间手动更新以修复一些<code>bug</code>, 获得新的功能.</p>
 <h4 class="heading-element" id="使用requests"><span>使用<code>requests</code></span>
  <a href="#%e4%bd%bf%e7%94%a8requests" class="heading-mark">
  <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
  </a>
 </h4><p>使用如下脚本即可简单的对一个网站进行请求:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Python" data-lang="Python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">requests</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-Python" data-lang="Python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">requests</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="n">payload</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&#34;key&#34;</span> <span class="p">:</span> <span class="s2">&#34;value&#34;</span><span class="p">}</span>
 </span></span><span class="line"><span class="cl"><span class="n">url</span> <span class="o">=</span> <span class="s2">&#34;https://www.example.com&#34;</span>
@@ -47,5 +75,7 @@
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">text</span><span class="p">)</span> <span class="c1"># 输出响应主体</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">headers</span><span class="p">)</span> <span class="c1"># 输出HTTP响应头</span></span></span></code></pre></div><p><code>requests</code>库的用法十分丰富, 还可以使用<code>session</code>来维持一个会话, 请熟练掌握.</p>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">headers</span><span class="p">)</span> <span class="c1"># 输出HTTP响应头</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p><code>requests</code>库的用法十分丰富, 还可以使用<code>session</code>来维持一个会话, 请熟练掌握.</p>
 <p>关于更高级的用法本文不再介绍, 请阅读<a href="https://requests.readthedocs.io/zh_CN/latest/"target="_blank" rel="external nofollow noopener noreferrer">requests官方文档</a></p><hr />

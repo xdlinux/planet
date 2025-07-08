@@ -6,7 +6,14 @@
 <p>试图用<code>GDB</code>调试到此位置:</p>
 <p><img loading="lazy" src='https://i.loli.net/2020/10/26/pJzdlhiKQ9ejmrn.png' alt="image-20201026135656530"></p>
 <p>于是在<code>IDA</code>里将光标定位至<code>0x400BB1</code>的位置, 按下U键取消定义, 然后在<code>0x400BB2</code>的位置按下C键<code>Make Code</code>, 然后再用<code>IDAPython</code>给<code>0x400BB1</code>变成<code>nop</code></p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Python" data-lang="Python"><span class="line"><span class="cl"><span class="n">PatchByte</span><span class="p">(</span><span class="mh">0x400BB1</span><span class="p">,</span> <span class="mh">0x90</span><span class="p">)</span></span></span></code></pre></div><p><img loading="lazy" src='https://i.loli.net/2020/10/26/tSpYQhRyq5vgVOE.png' alt="image-20201026140032321"></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-Python" data-lang="Python"><span class="line"><span class="cl"><span class="n">PatchByte</span><span class="p">(</span><span class="mh">0x400BB1</span><span class="p">,</span> <span class="mh">0x90</span><span class="p">)</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p><img loading="lazy" src='https://i.loli.net/2020/10/26/tSpYQhRyq5vgVOE.png' alt="image-20201026140032321"></p>
 <p>继续往下分析, <code>0x400BBC</code>处还有几个神必数据莫得头绪. 不过从<code>BB7</code>跳转到了<code>BBF</code>, 所以继续往下看, 然后&hellip; 它<code>retn</code>了.</p>
 <p>继续用<code>gdb</code>断点到<code>0x400BB7</code>, 然后接着调试:</p>
 <p><img loading="lazy" src='https://i.loli.net/2020/10/26/qVp6i3Af4I9OoED.png' alt="image-20201026140355769"></p>
@@ -28,10 +35,20 @@
 <p>第<code>17</code>行那个函数, 里面调用了<code>ptrace</code>对程序的运行状态进行了监视. 而<code>gdb</code>也是通过<code>ptrace</code>进行调试的, 同一时间只能有一个调试器挂在程序上, 所以起到了反调试的作用. 不过往下看, <code>read</code>函数是在反调函数下面的, 所以可以先运行程序, 跑起来之后等待输入时用<code>gdb</code>再<code>attach</code>上去.</p>
 <p><img loading="lazy" src='https://i.loli.net/2020/10/26/9RPCKSzqh8itkbY.png' alt="https://i.loli.net/2020/10/26/9RPCKSzqh8itkbY.png"></p>
 <p>接下来定位到<code>0x400ABC</code>, 然后跟踪一下函数流程, 并把花指令都给处理掉. 有如下几个地方:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Python" data-lang="Python"><span class="line"><span class="cl"><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mh">0x400AC4</span><span class="p">,</span> <span class="mh">0x400AC9</span><span class="p">):</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-Python" data-lang="Python"><span class="line"><span class="cl"><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mh">0x400AC4</span><span class="p">,</span> <span class="mh">0x400AC9</span><span class="p">):</span>
 </span></span><span class="line"><span class="cl"> <span class="n">PatchByte</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="mh">0x90</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl"><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mh">0x400B0E</span><span class="p">,</span> <span class="mh">0x400B28</span><span class="p">):</span>
-</span></span><span class="line"><span class="cl"> <span class="n">PatchByte</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="mh">0x90</span><span class="p">)</span></span></span></code></pre></div><p>搞完了之后再<code>F5</code>一下, <code>evaluate</code>函数的真容就浮现出来了. 因为<code>smc</code>和花指令的影响, 之前<code>main</code>函数中给<code>evaluate</code>传的参数乱七八糟, 重新<code>F5</code>一下<code>main</code>函数, 找到这几行:</p>
+</span></span><span class="line"><span class="cl"> <span class="n">PatchByte</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="mh">0x90</span><span class="p">)</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>搞完了之后再<code>F5</code>一下, <code>evaluate</code>函数的真容就浮现出来了. 因为<code>smc</code>和花指令的影响, 之前<code>main</code>函数中给<code>evaluate</code>传的参数乱七八糟, 重新<code>F5</code>一下<code>main</code>函数, 找到这几行:</p>
 <p><img loading="lazy" src='https://i.loli.net/2020/10/26/tCdFBJEX1gyvA9q.png' alt="image-20201026145602058"></p>
 <p>然后再看重命名之后的<code>evaluate</code>函数:</p>
 <p><img loading="lazy" src='https://i.loli.net/2020/10/26/hN7m1LtlKy3O5vs.png' alt="image-20201026150058722"></p>
@@ -45,11 +62,25 @@
 <p>接下来就是快乐的拿<code>flag</code>时间了.</p>
 <p><img loading="lazy" src='https://i.loli.net/2020/10/26/JUIeNtiKOBwGvVC.png' alt="image-20201026152313624"></p>
 <p>脚本:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Python" data-lang="Python"><span class="line"><span class="cl"><span class="ch">#!/bin/python3</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-Python" data-lang="Python"><span class="line"><span class="cl"><span class="ch">#!/bin/python3</span>
 </span></span><span class="line"><span class="cl"><span class="c1"># from __future__ import print_function</span>
 </span></span><span class="line"><span class="cl"><span class="n">magic</span> <span class="o">=</span> <span class="p">[</span><span class="mi">53</span><span class="p">,</span> <span class="mi">45</span><span class="p">,</span> <span class="mi">17</span><span class="p">,</span> <span class="mi">26</span><span class="p">,</span> <span class="mi">73</span><span class="p">,</span> <span class="mi">125</span><span class="p">,</span> <span class="mi">17</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">43</span><span class="p">,</span> <span class="mi">59</span><span class="p">,</span> <span class="mi">62</span><span class="p">,</span> <span class="mi">61</span><span class="p">,</span> <span class="mi">60</span><span class="p">,</span> <span class="mi">95</span><span class="p">]</span>
 </span></span><span class="line"><span class="cl"><span class="n">space</span> <span class="o">=</span> <span class="s1">&#39;Linux Version &#39;</span>
 </span></span><span class="line"><span class="cl"><span class="n">head</span> <span class="o">=</span> <span class="s1">&#39;n1ctf&#39;</span>
 </span></span><span class="line"><span class="cl"><span class="nb">print</span> <span class="p">(</span><span class="n">head</span><span class="p">,</span><span class="n">end</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl"><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">magic</span><span class="p">)):</span>
-</span></span><span class="line"><span class="cl"> <span class="nb">print</span><span class="p">(</span><span class="nb">chr</span><span class="p">(</span><span class="n">magic</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">^</span> <span class="p">(</span><span class="nb">ord</span><span class="p">(</span><span class="n">space</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="o">+</span> <span class="mi">2</span><span class="p">)),</span> <span class="n">end</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span></span></span></code></pre></div><p><code>flag: n1ctf{Fam3_Is_NULL}</code></p><hr />
+</span></span><span class="line"><span class="cl"> <span class="nb">print</span><span class="p">(</span><span class="nb">chr</span><span class="p">(</span><span class="n">magic</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">^</span> <span class="p">(</span><span class="nb">ord</span><span class="p">(</span><span class="n">space</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="o">+</span> <span class="mi">2</span><span class="p">)),</span> <span class="n">end</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p><code>flag: n1ctf{Fam3_Is_NULL}</code></p><hr />
