@@ -1,0 +1,160 @@
+题目内容自行拍摄同一场景不同角度的两幅图像,编程实现图像的拼接：基于图像特征点提取的相关内容,选择相关特征点匹配算法(SIFT、SURF、HOG)完成特征点提取；利用 RANSAC 算法实现特征...<hr />
+<h2>题目内容</h2>
+<p>自行拍摄同一场景不同角度的两幅图像,编程实现图像的拼接：</p>
+<ul>
+<li>
+<p>基于图像特征点提取的相关内容,选择相关特征点匹配算法(SIFT、SURF、HOG)完成特征点提取；</p>
+</li>
+<li>
+<p>利用 RANSAC 算法实现特征点匹配；</p>
+</li>
+<li>利用图像几何变换算法实现图像变换和拼接。</li>
+</ul>
+<h2>原理分析</h2>
+<h3>操作步骤：</h3>
+<ol>
+<li>
+<p>给定图像，调用 opencv 库中 SIFT（SURF，HOG）算子分别对两幅图像进行特征点提取,计算获得特征点及其描述子；</p>
+</li>
+<li>
+<p>对第一步两张图片的结果进行匹配，具体方法有 BF(Brute-Force),暴力特征匹配方法和 FLANN 最快邻近区特征匹配，最终获得匹配点；</p>
+</li>
+<li>
+<p>利用 RANSAC 算法，计算单应性矩阵，去除误匹配点，获得内点；</p>
+</li>
+<li>对第一幅图像进行透视变换，将第二幅图像复制到变换后的图像上，得到拼接后的图像。</li>
+</ol>
+<h3>SIFJ 原理：</h3>
+<ol>
+<li>
+<p>建立高斯差分金字塔</p>
+<ul>
+<li>
+<p>首对图像做不同尺度的高斯模糊；</p>
+</li>
+<li>对图像做降采样(隔点采样)。</li>
+</ul>
+</li>
+<li>
+<p>关键点的确定</p>
+<ul>
+<li>
+<p>选取图像的局部极值点；</p>
+</li>
+<li>局部极值点的确定主要通过将该位置像素点与空间中相邻的 26 个点比较。</li>
+</ul>
+</li>
+<li>
+<p>构建关键点描述子</p>
+<ul>
+<li>
+<p>将 16x16 窗口划分为 4x4 单元格；</p>
+</li>
+<li>
+<p>为每个像素计算边缘方向， 为边缘方向建立直方图；</p>
+</li>
+<li>
+<p>计算每个单元格的方向直方图，16 个单元格 * 8 方向 = 128 维描述符；</p>
+</li>
+<li>将该 128 维向量归一化到单位长度。</li>
+</ul>
+</li>
+</ol>
+<h3>RANSAC 的算法步骤:</h3>
+<ol>
+<li>
+<p>假定模型（如直线方程），并随机抽取 N 个（以 2 个为例）样本点，对模型进行拟合；</p>
+</li>
+<li>
+<p>由于不是严格线性，数据点都有一定波动，假设容差范围为： sigma，找出距离拟合曲线容差范围内的点，并统计点的个数；</p>
+</li>
+<li>
+<p>重新随机选取 N 个点，重复第一步~第二步的操作，直到结束迭代；</p>
+</li>
+<li>每一次拟合后， 容差范围内都有对应的数据点数，找出数据点个数最多的情况，就是最终的拟合结果。</li>
+</ol>
+<h2>设计与实现</h2>
+<blockquote>
+<p><em>使用语言：Python</em></p>
+<p><em>使用的库：opencv-python, numpy, matplotlib.pyplot</em></p>
+</blockquote>
+<p><em>注：由于 SIFT（现已版权到期）和 SURF 的版权问题，使用 python 为 3.7 版本，opencv-python库版本为 3.4.2.16</em></p>
+<ol>
+<li>
+<p>特征点提取，选择特征点匹配算法</p>
+<pre><code class="python">
+def feature_points_extraction(src: np.ndarray, method: str) -&gt; tuple:
+   if method == 'SIFT':
+       sift = cv.xfeatures2d.SIFT_create()
+       kp, des = sift.detectAndCompute(src, None)
+   elif method == 'SURF':
+       surf = cv.xfeatures2d.SURF_create()
+       kp, des = surf.detectAndCompute(src, None)
+   elif method == 'HOG':
+       hog = cv.HOGDescriptor()
+       kp, des = hog.compute(src)
+   else:
+       raise ValueError('method error')
+   return kp, des特征点匹配及图像拼接</code></pre>
+</li>
+<li>
+<p>特征点匹配及图像拼接</p>
+<pre><code class="python">
+def feature_points_matching(src1: np.ndarray, src2: np.ndarray, method: str):
+   kp1, des1 = feature_points_extraction(src1, method)
+   kp2, des2 = feature_points_extraction(src2, method)
+
+   FLANN_INDEX_KDTREE = 0  # 建立FLANN匹配器的参数
+   index_params = dict(algorithm=FLANN_INDEX_KDTREE, trees=5)  # 配置索引，密度树的数量为5
+   search_params = dict(checks=50)  # 指定递归次数
+   match = cv.FlannBasedMatcher(index_params, search_params)  # 建立匹配器
+   matches = match.knnMatch(des1, des2, k=2)  # 得到匹配的关键点
+
+   good = []  # 良好的匹配点
+   for m, n in matches:  # 通过比值测试筛选出好的匹配点
+       if m.distance &lt; 0.75 * n.distance:  # 0.75是经验值
+           good.append([m])
+
+   if len(good) &gt; MIN:
+       src_pts = np.float32([kp1[m[0].queryIdx].pt for m in good]).reshape(-1, 1, 2)  
+       # queryIdx是第一幅图像中的描述子索引
+       dst_pts = np.float32([kp2[m[0].trainIdx].pt for m in good]).reshape(-1, 1, 2)  
+       # trainIdx是第二幅图像中的描述子索引
+
+       M, mask = cv.findHomography(src_pts, dst_pts, cv.RANSAC, 5.0)  
+       # 获取单应性矩阵，RANSAC是随机采样一致性算法，作用是去除异常值，
+       #原理：随机选择一些点，计算出单应性矩阵，然后计算所有点到单应性矩阵的距离，距离小于阈值的点认为是内点，
+       #然后计算内点的比例，如果比例大于设定的阈值，就认为这个单应性矩阵是正确的，否则就重新随机选择一些点，
+       #计算单应性矩阵，直到达到设定的迭代次数
+
+       # 展示匹配点
+       img3 = cv.drawMatchesKnn(src1, kp1, src2, kp2, good, None, flags=2)
+       plt.imshow(img3),plt.title('Matching points'),plt.xticks([]),plt.yticks([])
+       plt.show()
+
+       h, w = src1.shape[0], src1.shape[1]  # 获取图像的高和宽
+       pts = np.float32([[0, 0], [0, h - 1], 
+        [w - 1, h - 1], [w - 1, 0]]).reshape(-1, 1, 2)  # 获取图像的四个顶点
+
+       dst = cv.perspectiveTransform(pts, M)  # 对四个顶点进行透视变换
+
+       src2 = cv.polylines(src2, [np.int32(dst)], 
+        True, 255, 3, cv.LINE_AA)  # 画出变换后的图像
+
+   else:
+       print("Not enough matches are found - %d/%d" % (len(good), MIN))
+
+   dst = cv.warpPerspective(src1, M, 
+    (src2.shape[1] + src1.shape[1], src2.shape[0]))  # 将第一幅图像进行透视变换
+
+   dst[0:src2.shape[0], 0:src2.shape[1]] = src2  # 将第二幅图像复制到变换后的图像上
+
+   return dst</code></pre>
+</li>
+</ol>
+<h2>实验结果</h2>
+<p>原图如下所示，以不同角度选取了建筑室内的图片，经 SURF 与 RANSAC 算子处理，可见匹配中绝大部分为正确匹配，只有极少量的误匹配，可忽略不计。</p>
+<p><img src="https://cdn.aweip.com/%E5%9B%BE%E5%83%8F%E6%8B%BC%E6%8E%A5/%E5%9B%BE1.%E5%8E%9F%E5%9B%BE.png" alt="原图" /></p>
+<p><img src="https://cdn.aweip.com/%E5%9B%BE%E5%83%8F%E6%8B%BC%E6%8E%A5/%E5%9B%BE2.%E5%8C%B9%E9%85%8D%E7%82%B9.png" alt="匹配点" /></p>
+<p>经过透视变换后， 左右图以良好的角度拼接在了一起， 结果如下：  </p>
+<p><img src="https://cdn.aweip.com/%E5%9B%BE%E5%83%8F%E6%8B%BC%E6%8E%A5/%E5%9B%BE3.%E6%8B%BC%E6%8E%A5%E7%BB%93%E6%9E%9C.png" alt="拼接结果" /></p>

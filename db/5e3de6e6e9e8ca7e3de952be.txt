@@ -1,0 +1,58 @@
+由于在当前的网络环境下部署了软路由+NAS，由软路由延申到我房间的硬路由在DHCP模式下的网络多了一层NAT，无法向上一层访问，但刷了OpenWrt的硬路由没有常见商用路由器的AP模式切换，让路...<hr />
+<p>由于在当前的网络环境下部署了软路由+NAS，由软路由延申到我房间的硬路由在DHCP模式下的网络多了一层NAT，无法向上一层访问，但刷了OpenWrt的硬路由没有常见商用路由器的AP模式切换，让路由器将仅作为无线信号扩展设备。只能逐一对LAN口和WAN口以及防火墙进行设定，下文记录一下操作和背后的原理。</p>
+<hr />
+<h3><strong>1. 关闭 DHCP 服务</strong></h3>
+<ol>
+<li>进入 <strong>Network → Interfaces</strong>。</li>
+<li>编辑 <strong>LAN</strong> 接口，在 <strong>DHCP Server</strong> 选项卡下，勾选 <strong>Ignore interface</strong>。</li>
+<li>保存并应用。</li>
+</ol>
+<blockquote>
+<p>既然只作为 AP 使用了，自然不需要 DHCP 为局域网内的设备自动分配 IP 地址了</p>
+</blockquote>
+<hr />
+<h3><strong>2. 设置 LAN 口 IP（避免冲突）</strong></h3>
+<ol>
+<li>仍在 <strong>LAN</strong> 接口的 <code>General Settings</code> 选项卡下：
+<ul>
+<li>协议切换为静态地址，把 IPv4 地址改为与上级主路由<strong>同一网段且不冲突的 IP</strong>。<br />
+例如：主路由 IP 是 <code>192.168.2.1</code>，此处可设置为 <code>192.168.2.20</code>。</li>
+<li>子网掩码与主路由一致（通常 <code>255.255.255.0</code>）。</li>
+<li>网关填写主路由 IP（如 <code>192.168.2.1</code>）。</li>
+<li>DNS 服务器可填写主路由 IP 或公共 DNS（如 <code>8.8.8.8</code>）。</li>
+</ul></li>
+<li>保存并应用。</li>
+</ol>
+<blockquote>
+<p>此 IP 地址的存在意义：</p>
+<ul>
+<li>提供接口地址管理硬路由本身；</li>
+<li>和上级软路由网络层通信。</li>
+</ul>
+<p>个人曾经的误区：把 AP 模式和交换机模式混为一谈</p>
+</blockquote>
+<hr />
+<h3><strong>3. 关闭防火墙并桥接接口</strong></h3>
+<ol>
+<li>进入 <strong>Network → Firewall</strong>。</li>
+<li>删除所有防火墙规则，或直接关闭防火墙：
+<ul>
+<li>在 <strong>General Settings</strong> 选项卡，将 <strong>Forward</strong>、<strong>Input</strong>、<strong>Output</strong> 全部设为 <code>ACCEPT</code>。</li>
+<li>或直接删除所有防火墙区域（确保不阻断流量）。</li>
+</ul></li>
+</ol>
+<hr />
+<h3><strong>4.  WAN 和 WAN6 处理</strong></h3>
+<h4>方案一</h4>
+<p>如果固件里有 switch （交换机）的设置项，可以很方便的通过以下办法来实现将 OpenWrt 设置为交换机 / AP 模式，可以充分利用物理 WAN 口充当 LAN 口来用。</p>
+<ol>
+<li>进入 <strong>Network → Switch</strong>；</li>
+<li>将 <code>VLAN ID 1</code> 中的 WAN 口设置为未标记；</li>
+<li>删除 <strong>Interfaces</strong> 中的 WAN 口（包括 WAN6）。</li>
+</ol>
+<h4>方案二</h4>
+<p>如果固件里没有 switch （交换机）的设置项，可以进行以下设置，但此设置会浪费一个 WAN 口。</p>
+<ol>
+<li>删除 <strong>Interfaces</strong> 中的 WAN 口（包括 WAN6）；</li>
+<li>将连接主路由的网线连接到WAN口。</li>
+</ol>

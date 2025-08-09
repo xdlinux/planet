@@ -1,0 +1,2277 @@
+第一章 计算机网络体系结构I.计算机网络概述概念计算机网络是互连的、自治的计算机集合。由节点（Node）和连接这些节点的链路（Link）组成。组成组成部分：硬件、软件、协议工作方式：边缘部分：用...<hr />
+<h1>第一章 计算机网络体系结构</h1>
+<h2>I.计算机网络概述</h2>
+<h3>概念</h3>
+<ul>
+<li>计算机网络是互连的、自治的计算机集合。</li>
+<li>由节点（Node）和连接这些节点的链路（Link）组成。</li>
+</ul>
+<h3>组成</h3>
+<ul>
+<li>组成部分：硬件、软件、协议</li>
+<li>工作方式：
+<ul>
+<li>边缘部分：用户直接使用的主机</li>
+<li>核心部分：网络的基础设施，如路由器、交换机等</li>
+</ul></li>
+<li>功能组成：
+<ul>
+<li>通信子网：负责数据传输</li>
+<li>资源子网：负责资源管理</li>
+</ul></li>
+</ul>
+<h3>功能</h3>
+<ul>
+<li>数据通信</li>
+<li>资源共享</li>
+<li>分布式处理</li>
+<li>提高可靠性</li>
+<li>负载均衡</li>
+</ul>
+<h3>交换技术</h3>
+<h4>种类</h4>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">交换技术</th>
+<th style="text-align: left;">特点</th>
+<th style="text-align: left;">优点</th>
+<th>缺点</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">电路交换</td>
+<td style="text-align: left;">1.需要建立物理连接通道<br />2.传输过程中通道被==独占==<br /></td>
+<td style="text-align: left;">1.通信时延<br />2.适用于实时通信<br />3.能够完全有序传输</td>
+<td>1.建立连接时间长<br />2.线路利用率低灵活性差<br />3.难以实现差错控制<br /></td>
+</tr>
+<tr>
+<td style="text-align: left;">报文交换</td>
+<td style="text-align: left;">1.报文封装全部信息<br />2.==全部存储==后再转发<br />3.无需建立连接<br /></td>
+<td style="text-align: left;">1.适用于短报文传输<br />2.适用==不确定==通信量<br />3.线路可靠<br />4.动态分配线路</td>
+<td>1.转发时延长<br />2.缓存开销大<br />3.难以实现差错控制<br /></td>
+</tr>
+<tr>
+<td style="text-align: left;">分组交换</td>
+<td style="text-align: left;">1.报文分割成==固定长度==的分组<br />2.==存储转发==<br />3.无需建立连接<br /></td>
+<td style="text-align: left;">1.减少出错概率<br />2.简化缓存<br />3.流水线加速<br /></td>
+<td>1.存在存储转发时延<br />2.需要额外信息量<br />3.可能出现乱序、丢失、重复分组<br /></td>
+</tr>
+</tbody>
+</table>
+<p><img src="https://cdn.aweip.com/markdown/202411021618467.png" alt="image-20241024194659457" /></p>
+<blockquote>
+<p>[!Important]</p>
+<ol>
+<li>报文转发和分组转发存在处理延迟，即上图中的空隙</li>
+<li>分组转发花费时间和中间节点数量有关系，一些情况下可以简便运算</li>
+</ol>
+</blockquote>
+<h4>区别</h4>
+<ul>
+<li>
+<p>计算机的数据传送往往是<strong>突发式</strong>的，采用电路交换时通信线路的利用率很低。报文交换和分组交换不需要建立连接（即预先分配通信资源），在传送计算机的突发数据时可以提高通信线路的利用率</p>
+</li>
+<li>将报文构造成若干个更小的分组进行分组交换，比将整个报文进行报文交换的时延要小，并且还可以避免太长的报文长时间占用链路，有利于差错控制，同时具有更好的灵活性。</li>
+</ul>
+<h3>分类</h3>
+<h4>分布范围</h4>
+<ol>
+<li><strong>广域网</strong>（WAN）</li>
+<li>城域网（MAN）</li>
+<li><strong>局域网</strong>（LAN）</li>
+<li>个人区域网（PAN）</li>
+</ol>
+<h4>传输技术</h4>
+<ol>
+<li>广播式网络</li>
+<li>点对点网络</li>
+</ol>
+<h4>拓扑结构</h4>
+<ol>
+<li>总线型</li>
+<li>星型</li>
+<li>环型</li>
+<li>网状型</li>
+</ol>
+<blockquote>
+<p>关于差别，在通信效率、可靠性、扩展性、成本等方面出题</p>
+</blockquote>
+<h3>网络性能指标</h3>
+<blockquote>
+<p>[!Important]</p>
+<p>速率中的K、M、G表示的是十进制，分别为<katex-inline>10^3</katex-inline>、<katex-inline>10^6</katex-inline>、<katex-inline>10^9</katex-inline></p>
+</blockquote>
+<ol>
+<li>
+<p>速率</p>
+</li>
+<li>
+<p>带宽</p>
+<ul>
+<li>模拟信号：频率范围（Hz）</li>
+<li>计算机网络：最高数据传输速率</li>
+</ul>
+</li>
+<li>
+<p>吞吐量：单位时间通过网络的实际数据量</p>
+</li>
+<li>
+<p>时延</p>
+<ul>
+<li>发送时延 <katex-inline>t_s = 数据块长度/发送速率</katex-inline></li>
+<li>传播时延 <katex-inline>t_c = 信道长度/传播速率</katex-inline></li>
+<li>处理时延</li>
+<li>排队时延</li>
+</ul>
+<blockquote>
+<p>总时延 = 发送时延 + 传播时延 + 处理时延 + 排队时延</p>
+</blockquote>
+</li>
+<li>
+<p>时延带宽积: 传播时延 * 带宽</p>
+</li>
+<li>
+<p>往返时延 <katex-inline>RTT=|发送报文时间 - 接收确认ack时间|</katex-inline></p>
+</li>
+<li>
+<p>！信道利用率 <katex-inline>U</katex-inline></p>
+<ul>
+<li>空闲时延 <katex-inline>D_0</katex-inline>、当前时延 <katex-inline>D</katex-inline></li>
+<li><katex-inline>D = \frac{D_0}{1-U}</katex-inline>，<katex-inline>U</katex-inline> 越大，当前时延 <katex-inline>D</katex-inline> 越大</li>
+</ul>
+</li>
+</ol>
+<h2>II.计算机网络体系结构</h2>
+<h3>分层结构</h3>
+<h4>分层基本原则</h4>
+<ul>
+<li>每层实现特定功能</li>
+<li>各层间由可以互相通信的接口</li>
+<li>下层独立于上层，即没有上层也能工作</li>
+<li>上层==单向==使用下层服务</li>
+</ul>
+<h4>结构元素</h4>
+<ol>
+<li>实体</li>
+</ol>
+<ul>
+<li>实体：在通信过程中能够发送或接收信息的硬件或软件模块</li>
+<li>对等实体：在通信过程中能够相互通信的实体</li>
+</ul>
+<ol start="2">
+<li>
+<p>协议数据单元（PDU）：对等层水平传递的数据单元，分为数据和控制信息</p>
+</li>
+<li>
+<p>服务数据单元（SDU）：对等层垂直传递的数据单元，服务上层</p>
+</li>
+<li>协议控制信息（PCI）：对等层水平传递的控制信息</li>
+</ol>
+<blockquote>
+<p>[!Note]
+第n层收到的PDUs称为n-1层的SDUs，加上第n层的PCI就构成了n层的PDUs</p>
+</blockquote>
+<p><img src="https://cdn.aweip.com/markdown/202411021619859.png" alt="alt text" /></p>
+<h3>！协议、接口、服务</h3>
+<ul>
+<li>
+<p>协议（水平关系）</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">协议</th>
+<th style="text-align: left;">含义</th>
+<th style="text-align: left;">作用</th>
+<th>举例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">语法</td>
+<td style="text-align: left;">数据格式</td>
+<td style="text-align: left;">数据的结构和编码</td>
+<td>TCP 报文的格式由语法决定</td>
+</tr>
+<tr>
+<td style="text-align: left;">语义</td>
+<td style="text-align: left;">具体操作流程</td>
+<td style="text-align: left;">何时发何种控制信息、如何应答</td>
+<td>TCP 三次握手具体操作</td>
+</tr>
+<tr>
+<td style="text-align: left;">同步（时序）</td>
+<td style="text-align: left;">操作条件、时序</td>
+<td style="text-align: left;">明确数据交互的顺序流程</td>
+<td>TCP 连接的建立、关闭报文时序</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li>
+<p>接口
+服务访问点 SAP（Service Access Point）：同一节点内相邻层之间的接口，提供服务访问点</p>
+</li>
+<li>
+<p>服务（垂直关系）</p>
+<ul>
+<li>服务原语：服务提供者和服务用户之间的通信操作</li>
+<li>请求：服务用户向服务提供者发出的请求，请求服务提供者执行某种操作</li>
+<li>指示：服务提供者向服务用户发出的指示，要求服务用户执行某种操作</li>
+<li>响应：服务用户向服务提供者发出的响应，表示对指示的响应</li>
+<li>证实：服务提供者向服务用户发出的证实，表示对请求的证实</li>
+<li>服务分类</li>
+<li>面向连接服务和无连接服务：是否建立连接</li>
+<li>可靠服务和不可靠服务：是否保证数据传输的可靠性</li>
+<li>有应答服务和无应答服务：是否需要对数据传输进行应答</li>
+</ul>
+</li>
+</ul>
+<h3>OSI参考模型</h3>
+<blockquote>
+<p>低三层为通信子网，高三层为资源子网</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">层次</th>
+<th style="text-align: left;">名称</th>
+<th style="text-align: left;">传输单位</th>
+<th></th>
+<th>功能</th>
+<th>协议</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">物理层</td>
+<td style="text-align: left;">比特</td>
+<td></td>
+<td>1.规定物理接口参数<br />2.规定信号意义和电气特征</td>
+<td>IEEE802.3</td>
+</tr>
+<tr>
+<td style="text-align: left;">2</td>
+<td style="text-align: left;">数据链路层</td>
+<td style="text-align: left;">帧</td>
+<td></td>
+<td>1.速率协调<br />2.差错检测（==只能丢弃==）<br />3.流量控制</td>
+<td>SDLC、HDLC、STP、PPP、</td>
+</tr>
+<tr>
+<td style="text-align: left;">3</td>
+<td style="text-align: left;">网络层</td>
+<td style="text-align: left;">数据包</td>
+<td>点到点</td>
+<td>1.差错、拥塞控制<br />2.路由选择<br />3.分组交换<br />4.流量控制</td>
+<td>IP、ICMP、IGMP、ARP、RIP、OSPF</td>
+</tr>
+<tr>
+<td style="text-align: left;">4</td>
+<td style="text-align: left;">传输层</td>
+<td style="text-align: left;">段</td>
+<td>端到端</td>
+<td>1.差错控制<br />2.流量控制<br />3.拥塞控制</td>
+<td>TCP、UDP</td>
+</tr>
+<tr>
+<td style="text-align: left;">5</td>
+<td style="text-align: left;">会话层</td>
+<td style="text-align: left;">数据</td>
+<td></td>
+<td>1.建立、==同步==、释放会话<br />2.建立恢复点</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left;">6</td>
+<td style="text-align: left;">表示层</td>
+<td style="text-align: left;">数据</td>
+<td></td>
+<td>1.数据格式转换<br />2.数据==加密、压缩==</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left;">7</td>
+<td style="text-align: left;">应用层</td>
+<td style="text-align: left;">数据</td>
+<td></td>
+<td>1.提供用户接口<br />2.文件传输<br />3.电子邮件<br />4.远程登录</td>
+<td>HTTP、FTP、SMTP、POP3</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>[!Tip]</p>
+<ul>
+<li>
+<p>流量控制：</p>
+<ul>
+<li>
+<p>数据链路：相邻节点之间的流量控制</p>
+</li>
+<li>
+<p>网络层：==整个网络==中的流量控制</p>
+</li>
+<li>传输层：端到端的流量控制</li>
+</ul>
+</li>
+</ul>
+</blockquote>
+<h3>TCP/IP参考模型</h3>
+<ol>
+<li>
+<p>网络接口层</p>
+<ul>
+<li>
+<p>与OSI的物理层和数据链路层对应</p>
+</li>
+<li>
+<p>功能：定义网络接口标准</p>
+</li>
+<li>以太网、令牌环、FDDI、ATM、PPP、SLIP</li>
+</ul>
+</li>
+<li>
+<p>网际层</p>
+<ul>
+<li>
+<p>与OSI的网络层对应</p>
+</li>
+<li>
+<p>功能：IP寻址、路由选择、分片、差错检测</p>
+</li>
+<li>协议：IP、ICMP、ARP、RARP</li>
+</ul>
+</li>
+<li>
+<p>传输层</p>
+<ul>
+<li>
+<p>与OSI的传输层对应</p>
+</li>
+<li>
+<p>功能：差错控制、流量控制、拥塞控制</p>
+</li>
+<li>协议：TCP、UDP</li>
+</ul>
+</li>
+<li>
+<p>应用层</p>
+<ul>
+<li>
+<p>与OSI的应用层、表示层、会话层对应</p>
+</li>
+<li>
+<p>功能：提供用户接口、文件传输、电子邮件、远程登录</p>
+</li>
+<li>协议：HTTP、FTP、SMTP、POP3</li>
+</ul>
+</li>
+</ol>
+<h3>！OSI与TCP/IP对比</h3>
+<ol>
+<li>OSI 是理论模型，TCP/IP 是实际模型</li>
+<li>OSI 七层，TCP/IP 四层</li>
+<li>OSI 在网络层支持面向连接和无连接服务，而 TCP/IP 只支持无连接服务</li>
+<li>OSI 的传输层只提供端到端可靠传输，而 TCP/IP 的传输层提供不可靠传输 UPD 和可靠传输 TCP</li>
+</ol>
+<h1>第二章 物理层</h1>
+<blockquote>
+<p><strong>实现功能：</strong></p>
+<ul>
+<li>
+<p>“透明”传输比特流；</p>
+</li>
+<li>物理接口特性
+<ul>
+<li>机械特性：形状尺寸、引脚设计</li>
+<li>电气特性：信号电压、阻抗、传输速率、距离限制</li>
+<li>功能特性：规定接口各电缆作用（网线八根作用）、电压波形含义</li>
+<li>过程特性：信号时序关系</li>
+</ul></li>
+</ul>
+</blockquote>
+<h2>I.通信原理</h2>
+<h3>基本名词</h3>
+<ul>
+<li>
+<p>数据、信号和码元</p>
+<ul>
+<li>数据：传送信息的实体</li>
+<li>信号：数据的电气和电磁表现</li>
+<li>码元：不同离散数字的基本波形</li>
+</ul>
+<blockquote>
+<p>模拟数据（信号）是连续的</p>
+<p>数字数据（信号）是离散的</p>
+</blockquote>
+</li>
+<li>
+<p>信源、信道和信宿</p>
+<ul>
+<li>信源：产生和发送数据的源头</li>
+<li>信宿：接收数据的终点</li>
+<li>信道：</li>
+<li><strong>基带</strong>信号是数字0/1；<strong>宽带</strong>信号是模拟波形</li>
+<li>数字信道传输数字信号；模拟信道传输模拟信号</li>
+</ul>
+</li>
+<li>
+<p>速率、波特和带宽</p>
+<ul>
+<li>码元传输速率（波特率Baud/s）</li>
+<li>信息传输速率（比特率b/s）</li>
+<li>带宽</li>
+<li>模拟信号通信：频率范围Hz</li>
+<li>计算机网络：最高数据传输速率b/s</li>
+</ul>
+</li>
+</ul>
+<h3>传输方式</h3>
+<ul>
+<li>
+<p>串行并行</p>
+<ul>
+<li>局域网：串行</li>
+<li>计算机内部：并行</li>
+</ul>
+</li>
+<li>同步异步
+<ul>
+<li>同步传输</li>
+<li>外同步：外加时钟</li>
+<li>内同步：信号编码同步</li>
+<li>==异步传输==：字节间异步，字节内同步</li>
+</ul></li>
+<li>单工双工
+<ul>
+<li>单向：广播</li>
+<li>半双工：对讲机</li>
+<li>全双工：互联网</li>
+</ul></li>
+</ul>
+<h3>编码与调制</h3>
+<h4>数字数据-&gt;数字信号</h4>
+<ol>
+<li>归零（RZ）编码
+<ul>
+<li>0：前低后零</li>
+<li>1：前高后零</li>
+</ul></li>
+<li>不归零（NRZ）编码（==无自同步==）
+<ul>
+<li>0：低电平</li>
+<li>1：高电平</li>
+</ul></li>
+<li>曼彻斯特编码：<strong>以太网</strong>
+<ul>
+<li>设定初始信号形式</li>
+<li>码元必定在中间跳变</li>
+<li>码元==中间==电平变化表示信号0/1</li>
+</ul></li>
+<li>差分曼彻斯特编码
+<ul>
+<li>码元==开始==无跳变表示1，有跳变表示0</li>
+</ul></li>
+</ol>
+<h4>模拟数据-&gt;数字信号</h4>
+<blockquote>
+<p>奈奎斯特定理：<katex-inline>f_{采样}≥2*f</katex-inline>，才能完整保留信号信息</p>
+</blockquote>
+<h4>数字数据-&gt;模拟信号</h4>
+<ol>
+<li>调幅（AM）：载波振幅变化表示0、1</li>
+<li>调频（FM）：载波频率变化表示0、1</li>
+<li>调相（PM）：载波相位变化表示0、1</li>
+<li>正交幅度调制（QAM）：<katex-inline>R = B*log_{2}（mn）</katex-inline></li>
+</ol>
+<h3>信道容量</h3>
+<h4>奈奎斯特定理（无干扰）</h4>
+<katex>
+奈奎斯特速率v = 2Wlog_{2}V</katex>
+<blockquote>
+<p><katex-inline>W</katex-inline>：信道频率带宽<strong>范围</strong>（Hz）</p>
+<p><katex-inline>V</katex-inline>：码元离散电平数量</p>
+</blockquote>
+<h4>香农定理（有噪声）</h4>
+<katex>
+香农速率C = Wlog_{2}(1+\frac{S}{N})</katex>
+<blockquote>
+<p><katex-inline>W</katex-inline>：信道频率带宽<strong>范围</strong>（Hz）</p>
+<p><katex-inline>\frac{S}{N}</katex-inline>：信噪比</p>
+<p>[!Note]</p>
+<ul>
+<li>计算时注意“二进制”、“十六进制”等字眼，是波特值的含义，则要在v和C中选出最小的</li>
+<li>分贝值的大小为 <katex-inline>d=10log_{10}(\frac{S}{N})</katex-inline>，注意转换</li>
+</ul>
+</blockquote>
+<h3>信道复用</h3>
+<ol>
+<li>频分复用 FDM：不同用户用不同频率的信道，<strong>限于模拟信号</strong></li>
+<li>时分复用 TDM：分时服务用户</li>
+<li>波分复用 WDM：（光的）波长</li>
+<li>！码分复用 CDM
+<ul>
+<li>码片<katex-inline>m_i</katex-inline>：分给每个站码片 <katex-inline>m_i</katex-inline>，码片之间正交</li>
+<li>码片向量：码片 <katex-inline>m_i</katex-inline> 的1为1，0为-1</li>
+<li>站点发送：比特1为码片向量，比特0为码片销量负值</li>
+<li>站点接收：与自身码片向量相乘，除以码片长度</li>
+</ul></li>
+</ol>
+<h2>II.传输介质</h2>
+<ol>
+<li>双绞线</li>
+<li>同轴线缆</li>
+<li>光纤：==外低（反射率）内高（反射率）==
+<ul>
+<li>多模：光的全反射；光源为发光二极管</li>
+<li>单模：直径小于光的波长，光沿直线；光源为半导体激光</li>
+</ul></li>
+<li>无线传输：
+<ul>
+<li>无线电波</li>
+<li>激光、红外线、微波</li>
+</ul></li>
+</ol>
+<h2>III.物理层设备</h2>
+<ol>
+<li>
+<p>中继器</p>
+<ul>
+<li>
+<p>功能：整形、放大并转发<strong>数字</strong>信号</p>
+</li>
+<li>
+<p>“5-4-3”原则：5段通信介质由4个中继器连接，最多挂载3个计算机</p>
+<blockquote>
+<p>[!Tip]</p>
+<p>放大器放大的是模拟信号</p>
+<p>两端可以是不同介质，如无线有线，则两端可以是不同的链路层协议</p>
+</blockquote>
+</li>
+</ul>
+</li>
+<li>
+<p>集线器（Hub）</p>
+<ul>
+<li>功能：多端口中继器；整形、放大信号，扩大网络范围</li>
+<li>==半双工==</li>
+</ul>
+</li>
+</ol>
+<h1>第三章 数据链路层</h1>
+<blockquote>
+<p><strong>实现功能：</strong></p>
+<ol>
+<li>封装成帧</li>
+<li>透明传输</li>
+<li>差错检测</li>
+</ol>
+</blockquote>
+<h2>I.数据链路层概述</h2>
+<h3>相关名词</h3>
+<ol>
+<li>链路：从一个节点到相邻节点的通信信道，中间==无交换节点==</li>
+<li>数据链路：链路+链路层协议</li>
+<li>帧：数据链路层传输的数据单元 PDU</li>
+</ol>
+<h3>！服务</h3>
+<ol>
+<li>无确认的无连接服务：不需要建立连接，不需要确认，如以太网</li>
+<li>有确认的无连接服务：不需要建立连接，需要确认，如无线局域网</li>
+<li>有确认的面向连接服务：需要建立连接，需要确认，如PPP</li>
+</ol>
+<h3>设备</h3>
+<h4>交换机（多接口网桥）</h4>
+<ul>
+<li>
+<p>工作流程</p>
+<ul>
+<li>
+<p>自学习：收到帧，发现转发表中没有此帧的源MAC和目的MAC，记录MAC和对应接口，并<strong>广播</strong>到==其他==所有接口</p>
+</li>
+<li>转发：收到帧，转发表中有目的MAC表项，转发到对应接口</li>
+</ul>
+</li>
+<li>
+<p>工作模式</p>
+<ul>
+<li>直通交换：只检查帧首目的MAC地址，直接转发</li>
+<li>存储转发：存储到内存中进行检错，错则丢，无损则转发</li>
+</ul>
+</li>
+<li>特点
+<ul>
+<li>隔离冲突域：星型一对一</li>
+<li>不隔离广播域：广播帧都会被转发</li>
+</ul></li>
+</ul>
+<h3>！功能</h3>
+<h4>封装成帧</h4>
+<blockquote>
+<p>在数据前后加上帧首部和帧尾部</p>
+</blockquote>
+<ol>
+<li>
+<p>帧首部和帧尾部</p>
+<ul>
+<li>帧首部：帧起始标志、地址、控制、协议</li>
+<li>
+<p>帧尾部：校验和</p>
+</li>
+<li>以太网V2的MAC帧格式（左尾右首）</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">FCS</th>
+<th style="text-align: left;">数据载荷</th>
+<th style="text-align: left;">类型</th>
+<th style="text-align: left;">源地址</th>
+<th style="text-align: left;">目的地址</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">4B</td>
+<td style="text-align: left;">46-1500B</td>
+<td style="text-align: left;">2B</td>
+<td style="text-align: left;">6B</td>
+<td style="text-align: left;">6B</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>PPP的帧格式（左尾右首）</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">标志</th>
+<th style="text-align: left;">FCS</th>
+<th style="text-align: left;">数据载荷</th>
+<th style="text-align: left;">协议</th>
+<th style="text-align: left;">控制</th>
+<th style="text-align: left;">地址</th>
+<th style="text-align: left;">标志</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">1B</td>
+<td style="text-align: left;">2B</td>
+<td style="text-align: left;">最大1500B</td>
+<td style="text-align: left;">2B</td>
+<td style="text-align: left;">1B</td>
+<td style="text-align: left;">1B</td>
+<td style="text-align: left;">1B</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li>
+<p>帧定界</p>
+</li>
+<li>帧同步</li>
+</ol>
+<h4>透明传输</h4>
+<blockquote>
+<p>传输的数据不受特殊字符的影响</p>
+</blockquote>
+<ul>
+<li>字符填充：在数据中插入转义字符，如HDLC的ESC(11111101)</li>
+<li>字符计数：在帧首部加入帧长度</li>
+</ul>
+<h4>流量控制</h4>
+<blockquote>
+<p>控制==发送方==发送速率，防止接收方缓存溢出</p>
+</blockquote>
+<ul>
+<li>OSI体系中，数据链路层有流量控制的功能</li>
+<li>TCP/IP体系中，流量控制由==传输层==负责</li>
+</ul>
+<h4>差错检测</h4>
+<blockquote>
+<p>通过确认重传、CRC检测帧中的错误</p>
+</blockquote>
+<ul>
+<li>
+<p>CRC：检测帧内位错，将帧看成多项式，除以生成多项式，余数作为校验码</p>
+</li>
+<li>确认重传：帧丢失，超时重传
+<ul>
+<li>通信质量好的线路，仅进行CRC检测，重传由上层协议处理</li>
+<li>通信质量差的线路，进行确认重传</li>
+</ul></li>
+</ul>
+<h2>II.组帧</h2>
+<blockquote>
+<p>功能：将网络层递交的分组封装成帧</p>
+<p>问题：帧定界、帧同步、透明传输</p>
+</blockquote>
+<ol>
+<li>
+<p>字符计数法：帧首部添加==计数字段==记录该帧的字节数</p>
+</li>
+<li>
+<p>字节填充法：</p>
+<ul>
+<li>添加SOH、EOT标识帧头帧尾</li>
+<li>数据段中存在”SOH、EOT、ESC“字符，前面添加ESC进行转义</li>
+</ul>
+</li>
+<li>
+<p>（==HDLC==）零比特填充法：</p>
+<ul>
+<li>使用01111110标志帧开始和结束</li>
+<li>数据字段中每连续5个”1“后自动添加一个”0“</li>
+</ul>
+</li>
+<li>违规编码法：使用数据传输方式中不用的编码标识首尾</li>
+</ol>
+<h2>III.差错控制</h2>
+<h4>检错编码</h4>
+<ul>
+<li>
+<p>奇偶检验码：数据中”1“的个数</p>
+</li>
+<li>循环冗余码CRC
+<ul>
+<li>约定 <katex-inline>G(x) = x^{n_k}+x^{n_{k-1}}+···+x^{n_1}</katex-inline></li>
+<li>冗余码计算：在源数据后加 <katex-inline>G(x)</katex-inline> 中 <katex-inline>Max(x_{n_k}、x_{n_{k-1}}···x_{1})</katex-inline> 位，进行除法计算</li>
+</ul></li>
+</ul>
+<h4>纠错编码</h4>
+<ul>
+<li>
+<p>海明码距 <katex-inline>d_{min}</katex-inline></p>
+<ul>
+<li>检错数量 <katex-inline>r = d_{min}-1</katex-inline></li>
+<li>校正错误数量 <katex-inline>r = (d_{min}-1)/2</katex-inline></li>
+</ul>
+</li>
+<li>海明码：见车爹PPT</li>
+</ul>
+<h2>IV.流量控制和可靠传输</h2>
+<h4>流量控制</h4>
+<blockquote>
+<p><strong>流量控制指由==接收方控制发送方==的发送速率。</strong>  </p>
+<ol>
+<li>
+<p>数据链路层控制的相邻结点之间的流量；传输层控制端到端流量</p>
+</li>
+<li>数据链路层控制方法：接收方<u>是否返回ACK</u>控制；传输层控制方法：接收方在ACK设置窗口值调整发送方的发送窗口</li>
+</ol>
+</blockquote>
+<h4>可靠传输</h4>
+<blockquote>
+<p><strong>可靠传输是指发送方数据能被接收方正确接收</strong></p>
+<ol>
+<li>有线网络数据链路层不负责可靠运输</li>
+<li>无线网络数据链路层负责可靠运输</li>
+</ol>
+</blockquote>
+<ol>
+<li>
+<p>停止等待协议(S-W)</p>
+<ul>
+<li>
+<p>一次只发送一帧</p>
+</li>
+<li>超时重传</li>
+<li>一位比特编号</li>
+<li>设置帧缓冲区用于重传</li>
+</ul>
+</li>
+<li>
+<p>后退N帧协议(GBN)</p>
+<ul>
+<li>
+<p>发送方在发送窗口内连续发送</p>
+</li>
+<li>
+<p>接收方发现丢失一帧，后面全无效</p>
+</li>
+<li>
+<p>接收方可累计确认，只确认最新连续的一位</p>
+</li>
+<li>发送方接收到ACK后，可直接将窗口后滑</li>
+</ul>
+</li>
+<li>选择重传(SR)
+<ul>
+<li>发送方在发送窗口内连续发送</li>
+<li>接收方必须每帧都发送确认</li>
+<li>接收方检测到错误帧就发送NAK，要求==立即重传==要求的帧</li>
+</ul></li>
+</ol>
+<blockquote>
+<p>[!Tip]</p>
+<p>注意题目中的帧数和帧序号<strong>比特数</strong>区别</p>
+<p>帧序号比特数k：<katex-inline>2^k - 1 &gt;= n</katex-inline></p>
+</blockquote>
+<h2>V.介质访问控制</h2>
+<h3>随机访问控制</h3>
+<h4>ALOHA协议</h4>
+<ol>
+<li>
+<p>纯ALOHA协议</p>
+<p>发送方：随机发送数据帧，发送成功则等待下一帧，发送失败则等待<strong>随机时间</strong>后重传，直到发送成功</p>
+</li>
+<li>
+<p>时隙ALOHA协议</p>
+<p>发送方：等待下一个时隙发送数据帧，发送成功则等待下一帧，发送失败则等待<strong>下一个时隙</strong>后重传，直到发送成功</p>
+</li>
+</ol>
+<h4>CSMA协议</h4>
+<ol>
+<li>
+<p>1-坚持CSMA协议</p>
+<p>发送方：要发送信号时，<strong>持续监听</strong>信道，信道空闲则发送数据帧，直到发送成功</p>
+</li>
+<li>
+<p>非坚持CSMA协议</p>
+<p>发送方：要发送信号时，若信道忙则等待<strong>随机时间</strong>后再次监听信道，信道空闲则发送数据帧，直到发送成功</p>
+</li>
+<li>
+<p>p-坚持CSMA协议</p>
+<p>发送方：要发送信号时，若信道忙则等待<strong>随机时间</strong>后再次监听信道，信道空闲则以概率p发送数据帧，以概率1-p继续等待</p>
+</li>
+</ol>
+<h4>CSMA/CD协议</h4>
+<blockquote>
+<p>总线型有线网络</p>
+<p>半双工通信</p>
+</blockquote>
+<img src="https://cdn.aweip.com/markdown/202411021628211.png" alt="image-20241102160536375" style="zoom:33%;" />
+<ol>
+<li>
+<p>发送阶段：检测冲突</p>
+<ul>
+<li>
+<p><katex-inline>争用期 t=2τ</katex-inline> ：代表信号在端到端往返的最大时间，若在此时间内没有检测到冲突，则发送成功</p>
+</li>
+<li><katex-inline>最小帧长L_{min} = 2τ*v</katex-inline>：保证在发生冲突时，发送方能检测到冲突；
+10Mbps以太网：<katex-inline>t= 51.2μs</katex-inline>，<katex-inline>L_{min} = 512bit =64B</katex-inline></li>
+</ul>
+</li>
+<li>
+<p>！冲突阶段：截断二进制</p>
+<ul>
+<li>二进制指数退避算法：<katex-inline>R = rand(0,1,···,2^k-1)</katex-inline>，<katex-inline>k=min(n,10)</katex-inline>，<katex-inline>n</katex-inline>为冲突次数</li>
+<li><katex-inline>重传推迟时间t_{backoff} = R*2τ</katex-inline></li>
+<li>发送失败：当<katex-inline>n &gt;= 16</katex-inline>时，发送失败</li>
+</ul>
+</li>
+</ol>
+<h4>！CSMA/CA协议</h4>
+<blockquote>
+<p>无线局域网</p>
+</blockquote>
+<p><img src="https://cdn.aweip.com/markdown/202411022055051.png" alt="58e956f8659f871bdfb62cad6b56a6f5" /></p>
+<ol>
+<li>发送阶段
+<ul>
+<li>源站检测信道空闲，等待==DIFS==长度的时间准备发送</li>
+<li>源站检测信道空闲，使用==随机避让算法==延迟</li>
+</ul></li>
+<li>[可无此阶段]信道预约阶段
+<ul>
+<li>源站<strong>广播</strong>发送==RTS==报文</li>
+<li>目的站等待==SIFS==后，发出==CTS==，通信范围接收到此帧的其他站保持静默（处理隐蔽站问题）</li>
+</ul></li>
+<li>数据传输阶段
+<ul>
+<li>源站接收到CTS，等待SIFS后开始发送</li>
+<li>目的站接收完数据后，等待SIFS后发送ACK帧回应直到源站接收</li>
+<li>此阶段对于其他站为NAV（信道忙）时间</li>
+</ul></li>
+</ol>
+<blockquote>
+<ul>
+<li>
+<p>IFS（InterFrame Space）:帧间间隔</p>
+</li>
+<li>
+<p>DIFS：分布式协调IFS，只在源站侦测到空闲后触发</p>
+</li>
+<li>
+<p>SIFS：短IFS，在任意类型帧间触发</p>
+</li>
+<li>
+<p>RTS（Request To Send）：请求发送控制帧</p>
+<ul>
+<li>
+<p>源地址 + 目的地址</p>
+</li>
+<li>本次通信所需时间：SIFS + CTS + SIFS + 数据帧 + SIFS + ACK</li>
+</ul>
+<p>即对面接收完RTS开始，到己方接收完ACK结束</p>
+</li>
+<li>
+<p>CTS（Clear To Send）：允许发送控制帧</p>
+<ul>
+<li>
+<p>给源站明确的发送指令</p>
+</li>
+<li>
+<p>指示其他站在预约期内保持静默</p>
+</li>
+<li>预约期：SIFS + 数据帧 + SIFS +ACK</li>
+</ul>
+<p>即对面接收完CTS开始，到对面接收到ACK结束</p>
+</li>
+<li>
+<p>NAV（Network Allocation Vector）</p>
+<ul>
+<li>
+<p>预约时间/信道被分配时间</p>
+</li>
+<li>在CTS中标明，NAV = SIFS + 数据帧 + SIFS + ACK</li>
+</ul>
+</li>
+<li>
+<p>随机避让算法</p>
+<ul>
+<li>基本退避时间 <katex-inline>2τ</katex-inline></li>
+<li>退避计时器在第k次：<katex-inline>R=rand(0,1,···，2^{k+2}-1)，k&lt;=6</katex-inline> </li>
+<li>退避时间 <katex-inline>2τ*R</katex-inline></li>
+</ul>
+</li>
+</ul>
+</blockquote>
+<h3>轮询访问</h3>
+<p><strong>令牌传递协议</strong></p>
+<ol>
+<li>源站按环路连接，令牌轮流传递；</li>
+<li>
+<p>一个站点拥有令牌后</p>
+<ul>
+<li>
+<p>无数据发送，则<strong>立即</strong>传给下一站</p>
+</li>
+<li>有数据发送，将令牌中插入数据发送，每次只能发送一帧；</li>
+</ul>
+</li>
+<li>数据帧在环路循环转发，目的站收到后复制再继续转发；</li>
+<li>源站收到后检验帧，出错则重发，否则生成新令牌并传递给下一站。</li>
+</ol>
+<h2>VI.局域网</h2>
+<h3>概览</h3>
+<ol>
+<li>
+<p>介质访问控制方法：CSMA/CD、令牌总线、令牌环</p>
+</li>
+<li>
+<p>局域网拓扑：以太网、令牌环、FDDI</p>
+</li>
+<li><strong>IEEE802</strong>定义：
+<ul>
+<li>逻辑链路控制（LLC）：无确认无连接、带确认无连接（帧加序号）、面向连接、高速传送、寻址、竞争处理</li>
+<li>介质访问控制（MAC）：组帧、差错控制、透明传输</li>
+</ul></li>
+</ol>
+<h3>以太网V2/802.3</h3>
+<blockquote>
+<p>结构：逻辑总线型、物理星型（一交换机连多终端）</p>
+<p>CSMA/CD协议</p>
+<p>无连接、无确认、不可靠</p>
+<p>曼彻斯特编码</p>
+</blockquote>
+<ul>
+<li>
+<p>网卡（网络适配器）：数据==串并联转换==、直接丢弃差错帧、正确帧触发中断</p>
+</li>
+<li>
+<p>MAC地址：<strong>6B = 48b</strong></p>
+</li>
+<li>
+<p>以太网V2 MAC帧</p>
+<ul>
+<li>
+<p>MAC层：MAC帧
+<img src="https://cdn.aweip.com/markdown/202411061956126.png" alt="image-20241106195630983" /></p>
+</li>
+<li>物理层：前导码（8B，<em>7B前同步码+1B帧开始定界符</em>）+ 以太网MAC帧（64B~1518B）
+<img src="https://cdn.aweip.com/markdown/202411062002902.png" alt="image-20241106200241817" style="zoom:45%;" /></li>
+</ul>
+<blockquote>
+<p>[!TIP]</p>
+<p>以太网==没有帧停止定界==，由于使用曼彻斯特编码，发送完一帧后出现电平不变现象，接收方视其为帧结束（类似违规编码思想）</p>
+</blockquote>
+</li>
+<li>
+<p>高速以太网</p>
+<table>
+<thead>
+<tr>
+<th>速率</th>
+<th>帧间间隔</th>
+<th>通信方式</th>
+<th>介质访问控制协议</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>100Mbps</td>
+<td>9.6μs</td>
+<td>全双工+半双工</td>
+<td>CSMA/CD==（半双工）==</td>
+</tr>
+<tr>
+<td>1Gbps</td>
+<td>0.96μs（缩短信道长度到100M）</td>
+<td>全双工+半双工</td>
+<td></td>
+</tr>
+<tr>
+<td>10Gbps</td>
+<td></td>
+<td>全双工</td>
+<td>全双工不需要访问控制</td>
+</tr>
+</tbody>
+</table>
+</li>
+</ul>
+<h3>无线网802.11</h3>
+<blockquote>
+<p>802.11帧有==4个地址==</p>
+</blockquote>
+<ul>
+<li>
+<p>有固定基础设施</p>
+<ul>
+<li>基本服务集（BSS）：一个AP + 几个移动站</li>
+<li>AP接入点基站：</li>
+<li>服务及标识符SSID（WIFI名）</li>
+<li>信道Channl</li>
+<li>扩展服务集（ESS）：一个分配系统DS + 几个基本服务集BSS</li>
+<li>DS连接各BSS的基站AP</li>
+</ul>
+</li>
+<li>
+<p>自组织网络：节点平等，所有节点都有路由功能</p>
+</li>
+<li>
+<p>802.11帧</p>
+<ul>
+<li>
+<p>结构</p>
+<img src="https://cdn.aweip.com/markdown/202411062039419.png" alt="image-20241106203942285" style="zoom:40%;" />
+</li>
+<li>地址字段分配</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>方向</th>
+<th>地址1（接）</th>
+<th>地址2（发）</th>
+<th>地址3（末）</th>
+<th>地址4</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>发送给AP设备</td>
+<td>AP地址</td>
+<td>源地址</td>
+<td>目的地址</td>
+<td>—</td>
+</tr>
+<tr>
+<td>发送给终端设备</td>
+<td>目的地址</td>
+<td>AP地址</td>
+<td>源地址</td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+</li>
+</ul>
+<h3>VLAN服务802.1Q</h3>
+<ul>
+<li>
+<p>划分方式</p>
+<ul>
+<li>基于物理接口</li>
+<li>基于MAC地址</li>
+<li>基于IP地址</li>
+</ul>
+</li>
+<li>
+<p>！802.1Q帧</p>
+<blockquote>
+<p>[!TIP]</p>
+<p>比普通V2帧长度多4B，最大帧长1522B</p>
+<p>添加后，需要重新计算FSC</p>
+</blockquote>
+<ul>
+<li>结构：</li>
+</ul>
+<img src="https://cdn.aweip.com/markdown/202411062050031.png" alt="image-20241106205001939" style="zoom:40%;" />
+<ul>
+<li>TPID：0X8100</li>
+<li>PRI：优先级</li>
+<li>VID：标识符，==12位==</li>
+</ul>
+</li>
+</ul>
+<h2>VII.广域网</h2>
+<h3>PPP协议</h3>
+<blockquote>
+<p>用户与ISP的通信协议</p>
+<p>数据层面：不可靠、无序号和确认</p>
+<p>控制层面：面向连接</p>
+<p>只保证CRC检错实现<strong>无差错接收</strong></p>
+<p>面向==字节==、全双工</p>
+</blockquote>
+<ul>
+<li>
+<p>组成部分</p>
+<ul>
+<li>链路控制协议LCP：配置测试链路连接，协商参数</li>
+<li>网络控制协议NCP：对接兼容多种网络层协议</li>
+<li>组帧方法（规范）</li>
+</ul>
+</li>
+<li>
+<p>！PPP帧</p>
+<ul>
+<li>结构
+<img src="https://cdn.aweip.com/markdown/202411071640520.png" alt="image-20241107164016223" style="zoom:40%;" /></li>
+<li>
+<p>首尾标志字段F：0X7E，定界符（与V2帧相比，有尾定界符）</p>
+<ul>
+<li>同步传输：零比特填充法，防止0x7E（01111110）在内部出现</li>
+<li>异步传输：转义字符0x7D</li>
+</ul>
+</li>
+<li>地址字符A：0xFF，无用</li>
+<li>控制字符C：0x03，无用</li>
+<li>协议字符P：0x0021-&gt;IP数据报；0xC021-&gt;LCP数据</li>
+<li>数据载荷：0~1500B（不用CSMA/CD，无需最小帧长）</li>
+<li>帧检验FCS：CRC检验冗余码</li>
+</ul>
+</li>
+<li>
+<p>连接过程</p>
+<pre><code class="mermaid">flowchart TD
+A[链路静止] --&gt; |物理层链路建立| B[链路建立]
+B --&gt; |LCP协商失败|A
+B --&gt; |LCP配置协商|C[鉴别]
+C --&gt; |鉴别失败|D[链路终止]
+D --&gt; |LCP链路终止|A
+C --&gt; |鉴别成功|E[网络层协议]
+E --&gt; |NCP配置协商|F[链路打开]
+F --&gt; |链路故障或终止|D
+</code></pre>
+<p>无连接 -&gt; 物理链路 -&gt; LCP链路（控制）-&gt; NCP链路（数据）</p>
+</li>
+</ul>
+<h1>第四章 网络层</h1>
+<h2>I.网络层功能</h2>
+<blockquote>
+<p>屏蔽了各种局域网的异构细节，如链路层协议、网络层协议（IPv4和IPv6）</p>
+</blockquote>
+<h3>路由转发</h3>
+<ul>
+<li>路由选择</li>
+<li>分组转发</li>
+</ul>
+<h3>服务方式</h3>
+<h4>虚电路</h4>
+<blockquote>
+<p>面向连接</p>
+<p>保证可靠性</p>
+<p>设虚电路号码VCID</p>
+<ul>
+<li>
+<p>建立连接时：分组首部使用完整地址</p>
+</li>
+<li>后续：只使用VCID</li>
+</ul>
+</blockquote>
+<ul>
+<li>
+<p>工作流程</p>
+<ol>
+<li>
+<p>虚电路建立</p>
+<ul>
+<li>A：呼叫请求 -&gt; B</li>
+<li>B：呼叫应答 -&gt; A</li>
+</ul>
+</li>
+<li>
+<p>数据传输</p>
+<ul>
+<li>A：数据 -&gt; B</li>
+<li>B：ACK -&gt; A</li>
+</ul>
+</li>
+<li>
+<p>虚电路拆除</p>
+<ul>
+<li>
+<p>A：释放请求 -&gt; B</p>
+</li>
+<li>B：释放应答 -&gt; A</li>
+</ul>
+</li>
+</ol>
+</li>
+<li>
+<p>分类</p>
+<ul>
+<li>永久性虚电路（PVC）</li>
+<li>交换型虚电路（SVC）：临时</li>
+</ul>
+</li>
+</ul>
+<h4>数据报</h4>
+<blockquote>
+<p>无连接、不可靠</p>
+</blockquote>
+<h3>SDN网络</h3>
+<ul>
+<li>架构
+<ul>
+<li>数据平面：终端设备 + 路由器（感觉已经算是交换机了）</li>
+<li>控制平面：远程控制服务器计算路由</li>
+</ul></li>
+<li>接口
+<ul>
+<li>南向接口：转发设备（路由器）与控制服务器建立连接的接口，如Overflow协议</li>
+<li>北向接口：给上层开发者设计应用</li>
+<li>东西接口：SDN控制服务器之间的接口</li>
+</ul></li>
+</ul>
+<h3>拥塞控制</h3>
+<ul>
+<li>
+<p>判断方式：负载增加，吞吐量降低</p>
+</li>
+<li>
+<p>开环控制</p>
+<p>静态，设计时预计所有情况</p>
+</li>
+<li>
+<p>闭环控制</p>
+<p>动态，运行时对反馈的拥塞情况进行调整</p>
+<blockquote>
+<p>闭环：即运行时有反馈环</p>
+</blockquote>
+</li>
+</ul>
+<h2>II.IPv4</h2>
+<h3>IPv4地址</h3>
+<blockquote>
+<p>4B = 32bit</p>
+</blockquote>
+<h4>分类编址</h4>
+<img src="https://cdn.aweip.com/markdown/202411081950612.png" alt="image-20241108195007994" style="zoom:45%;" />
+<ul>
+<li>
+<p>主机号全0：网络地址标识</p>
+</li>
+<li>
+<p>主机号全1：广播地址</p>
+</li>
+<li>
+<p>划分规则：</p>
+<img src="https://cdn.aweip.com/markdown/202411082004565.png" alt="image-20241108200425068" style="zoom:35%;" />
+</li>
+<li>
+<p>特殊地址：</p>
+<img src="https://cdn.aweip.com/markdown/202411082023597.png" alt="image-20241108202340292" style="zoom:45%;" />
+</li>
+</ul>
+<h4>划分子网编址</h4>
+<blockquote>
+<p>分类编址 + 子网掩码，使部分主机号作为网络号，划分出多个子网</p>
+</blockquote>
+<ul>
+<li>范围：主机号全0、全1无法使用</li>
+<li>路由表变化：目的网络地址 + 子网掩码 + 下一跳地址</li>
+</ul>
+<h4>无分类编址CIDR</h4>
+<blockquote>
+<p>去除ABC分类编址的思想，只使用掩码标识网络号长度</p>
+<p>从ISP分到网络号后，仍然能自定义掩码长度来划分子网</p>
+</blockquote>
+<h4>V4首部格式</h4>
+<img src="https://cdn.aweip.com/markdown/202411111500020.png" alt="image-20241111150013836" style="zoom:40%;" />
+<table>
+<thead>
+<tr>
+<th>段名</th>
+<th>长度</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>版本</td>
+<td>4b</td>
+<td>协议版本为4</td>
+</tr>
+<tr>
+<td>首部长度</td>
+<td>4b</td>
+<td>单位为4B，长度范围20B~60B，数值范围0101~1111</td>
+</tr>
+<tr>
+<td>区分服务</td>
+<td>8b</td>
+<td>区分类别和优先级，很少使用</td>
+</tr>
+<tr>
+<td>总长度</td>
+<td>16b</td>
+<td>单位为1B，首部长度 + 数据载荷长度</td>
+</tr>
+<tr>
+<td>标识</td>
+<td>16b</td>
+<td>分片后通过同一标识合并</td>
+</tr>
+<tr>
+<td>标志</td>
+<td>3b</td>
+<td>MF：1表示后面还有分片，0表示没有；<br />DF：1表示允许分片，0表示不允许</td>
+</tr>
+<tr>
+<td>片偏移</td>
+<td>13b</td>
+<td>单位为8B，数值×8代表本段第一个字节在原数据载荷中的位置</td>
+</tr>
+<tr>
+<td>生存时间</td>
+<td>8b</td>
+<td>TTL，每转发一次跳数减1</td>
+</tr>
+<tr>
+<td>协议</td>
+<td>6b</td>
+<td>表示数据载荷协议类型（如TCP、UDP等）</td>
+</tr>
+<tr>
+<td>首部校验和</td>
+<td>16b</td>
+<td>用于检测首部差错</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<ol>
+<li>计算分片
+<ul>
+<li>片偏移计算（8B整数）</li>
+</ul></li>
+<li>生存时间判断</li>
+</ol>
+</blockquote>
+<h3>优化技术</h3>
+<ul>
+<li>
+<p>NAT：路由器构建NAT表，将外网地址+端口和内网地址+端口进行映射</p>
+<ul>
+<li>NAT路由要看到传输层的端口号</li>
+<li>转发时会改变源或者目的IP地址</li>
+</ul>
+</li>
+<li>
+<p>路由聚合：路由器对需要聚合的网络寻找最长前缀，并和变长掩码一起存入路由表</p>
+</li>
+<li>
+<p>特殊路由：</p>
+<ul>
+<li>特定主机路由：*.*.*.*/32，定位到单个主机</li>
+<li>默认路由：0.0.0.0/0，路由表无其他项则走默认路由</li>
+</ul>
+</li>
+</ul>
+<h3>ARP 地址解析协议</h3>
+<blockquote>
+<ul>
+<li>网络层/数据链路层，自生成报文</li>
+<li>每个主机、路由都有ARP表</li>
+<li>已知IP地址，需要询问MAC地址</li>
+<li>动态维护，一般2min更新</li>
+</ul>
+</blockquote>
+<ol>
+<li>
+<p>ARP请求报文</p>
+<ul>
+<li>主机A发送广播，目的MAC地址为全1</li>
+<li>目的主机B收到后，自身ARP表记录A的源IP和源MAC</li>
+</ul>
+</li>
+<li>ARP响应报文
+<ul>
+<li>主机B单播回应</li>
+<li>内容为自身MAC地址</li>
+<li>主机A更新ARP表</li>
+</ul></li>
+</ol>
+<h3>DHCP 协议</h3>
+<h3>ICMP 网际控制协议</h3>
+<blockquote>
+<ul>
+<li>IP报文</li>
+<li>网络层数据报转发时状态信息交互</li>
+</ul>
+</blockquote>
+<ul>
+<li>
+<p>ICMP差错报告报文</p>
+<ul>
+<li>终点不可达：路由器/主机==不能交付报文==时向源发送</li>
+<li>源点抑制：路由器/主机因为==拥塞==丢弃报文时向源发送</li>
+<li>超时：路由器收到TTL==为0==的报文时向源发送，若收不到全部分片则全部丢弃</li>
+<li>参数问题：路由器/主机收到==首部字段校验和错误==时丢弃报文，并向源发送</li>
+<li>改变路由（重定向）：路由器向源发送，告知源有更好的路由</li>
+</ul>
+<blockquote>
+<p>不发送ICMP差错报告的情况</p>
+<ul>
+<li>ICMP差错报告报文，不发送ICMP差错报告</li>
+<li>特殊地址不发（广播、回环）</li>
+<li>多分片报文只发送一次，后续分片不发</li>
+</ul>
+</blockquote>
+</li>
+<li>
+<p>ICMP询问报文</p>
+<ul>
+<li>回送请求和应答：PING（应用层）</li>
+<li>时间戳请求和应答：Traceroute（网络层）</li>
+<li>地址掩码请求和应答</li>
+<li>路由器请求和通告</li>
+</ul>
+</li>
+</ul>
+<h2>III.IPv6</h2>
+<blockquote>
+<p>128b = 16B</p>
+<p>基本首部长度固定，选项通过扩展首部实现，扩展首部算在有效载荷内</p>
+<p>不能分片，只能由源端分片，目的端合并</p>
+<p>中间路由接收到太长的数据报会丢弃报文，并发送ICMP差错报告</p>
+</blockquote>
+<h3>V6首部格式</h3>
+<img src="https://cdn.aweip.com/markdown/202411121521211.png" alt="image-20241112152147926" style="zoom:40%;" />
+<table>
+<thead>
+<tr>
+<th>段名</th>
+<th>长度</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>版本</td>
+<td>4</td>
+<td>内容6</td>
+</tr>
+<tr>
+<td>通信量类</td>
+<td>8</td>
+<td>区分类别和优先级</td>
+</tr>
+<tr>
+<td>流标号</td>
+<td>20</td>
+<td>类似于v4首部标识，同一个“流”内流标号相同</td>
+</tr>
+<tr>
+<td>有效载荷长度</td>
+<td>16</td>
+<td>单位1B，除基础首部的字段长度（包含扩展首部），最大65535</td>
+</tr>
+<tr>
+<td>下一个部首</td>
+<td>8</td>
+<td>无扩展首部时：数据载荷协议类型（TCP/UDP）<br />有扩展首部时：第一个扩展首部类型</td>
+</tr>
+<tr>
+<td>跳数限制</td>
+<td>8</td>
+<td>TTL，路由器转发-1，0则丢弃</td>
+</tr>
+</tbody>
+</table>
+<h3>V6地址</h3>
+<ul>
+<li>
+<p>表示方法</p>
+<ul>
+<li>
+<p>冒号十六进制：每4个十六进制数（2Byte）之间用冒号隔开</p>
+</li>
+<li>
+<p>左侧0省略：两个冒号间的十六进制数中最前面的一串0可以省略不写；冒号间全为0，可省略只写一个</p>
+</li>
+<li>连续0压缩：多个连续0，可只填俩个冒号，==只能出现一次==，多个则无法定位</li>
+</ul>
+<blockquote>
+<ul>
+<li>可结合点分十进制后缀
+<img src="https://cdn.aweip.com/markdown/202411121620998.png" alt="image-20241112162041599" style="zoom:50%;" /></li>
+</ul>
+</blockquote>
+</li>
+<li>
+<p>地址类型</p>
+<ul>
+<li>
+<p>未指明地址：0:0:0:0:0:0:0:0，::/128，只能作为源地址</p>
+</li>
+<li>
+<p>回环地址：0:0:0:0:0:0:0:1，::1/128，只有一个</p>
+</li>
+<li>
+<p>多播地址：FF00::/8，用于多播通信</p>
+</li>
+<li>
+<p>本地链路地址：FE80::/10，私有地址，只能在本地链路使用</p>
+</li>
+<li>全球单播地址：除了以上，其他都是</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">全球路由前缀</th>
+<th style="text-align: left;">子网标识</th>
+<th style="text-align: left;">接口标识</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">48b</td>
+<td style="text-align: left;">16b</td>
+<td style="text-align: left;">64b</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>[!TIP]</p>
+<p>由于接口标识可对MAC地址进行编码，所以可以通过IPv6地址直接找到MAC地址，==省去ARP协议==</p>
+</blockquote>
+</li>
+<li>
+<p>V4和V6地址转换</p>
+<ul>
+<li>双栈：同时支持V4和V6</li>
+<li>隧道：V4数据报封装在V6数据报中</li>
+<li>NAT64：V6数据报封装在V4数据报中</li>
+</ul>
+</li>
+</ul>
+<h2>IV.路由协议</h2>
+<h3>RIP协议</h3>
+<blockquote>
+<ul>
+<li>应用层，UDP封装</li>
+<li>基于距离向量</li>
+<li>路由器到直连网络的距离定义为1</li>
+<li>只和==相邻==路由器交换自己的<strong>路由表</strong></li>
+<li>周期30s交换更新路由表，180秒无报文则此路由失效</li>
+</ul>
+</blockquote>
+<ul>
+<li>
+<p>收敛：每个路由器都知道到达本自治系统AS内各网络的最短距离和下一跳路由器</p>
+</li>
+<li>
+<p>计算流程：</p>
+<ul>
+<li>
+<p>A向相邻的B发送路由表a</p>
+</li>
+<li>
+<p>B将a中所有距离条目加上与A的距离，下一跳改为A</p>
+</li>
+<li>和自身路由表进行比较，选最短的</li>
+</ul>
+<img src="https://cdn.aweip.com/markdown/202411122025517.png" alt="image-20241112202540416" style="zoom:50%;" />
+</li>
+<li>存在问题：网络N1突然失效，相邻路由器更新成16不可达之后，被相邻其他无法获取到N1状态的路由器路由表影响，16不可达被覆盖为可达。直到多次后才能确认不可达。</li>
+</ul>
+<h3>OSPF协议</h3>
+<blockquote>
+<ul>
+<li>
+<p>网络层，IP数据报</p>
+</li>
+<li>基于链路状态（量化为代价）</li>
+<li>支持CIDR</li>
+<li>有鉴别，保证安全</li>
+<li>链路状态有32位序号，越大越新</li>
+</ul>
+</blockquote>
+<ul>
+<li>
+<p>代价计算</p>
+<katex>
+cost = 100Mbps/链路带宽</katex>
+<p>cost大于1则保留整数，小于1则记为1</p>
+</li>
+<li>
+<p>链路状态表：相邻路由 + 代价</p>
+</li>
+<li>
+<p>区域划分：为适配大规模网络，OSPF将一个自治系统AS再划分为多个==区域==，限制洪泛范围，减少通信量，但OSPF更复杂了</p>
+<ul>
+<li>==主干==区域连接若干区域</li>
+<li>主干路由器：主干区域内的路由器，包含边缘</li>
+<li>区域内路由器：只在区域内，不连接主干路由器</li>
+<li>区域边界路由器：属于主干路由器，与其他区域连接</li>
+</ul>
+</li>
+</ul>
+<h4>链路建立和维护</h4>
+<ol>
+<li>
+<p><strong>问候（hello）</strong></p>
+<ul>
+<li>建立邻居表</li>
+<li>发送周期10s，若40s未收到某方hello则视为其已经不可达</li>
+</ul>
+</li>
+<li>
+<p><strong>链路状态更新分组（LSU）</strong></p>
+<ul>
+<li>
+<p>链路状态通告（LSA）：<strong>直连网络 + 邻居路由器</strong>的链路状态信息</p>
+</li>
+<li>
+<p>==可靠==的<strong>洪泛</strong>发送</p>
+<blockquote>
+<p>可靠：需要收到的路由器发送==链路状态确认==报文</p>
+<p>洪泛：向所有相邻路由器发送，它们收到后继续转发给相邻</p>
+</blockquote>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>链路状态数据库（LSDB）</strong></p>
+<ul>
+<li>每一个路由器都存储，记录链路状态通告（LSA）</li>
+<li>通过洪泛使得网络中所有LSDB一致</li>
+</ul>
+</li>
+</ol>
+<h4>报文类型</h4>
+<img src="https://cdn.aweip.com/markdown/202411122057959.png" alt="image-20241112205757856" style="zoom: 67%;" />
+<h4>基本工作流程</h4>
+<img src="https://cdn.aweip.com/markdown/202411122058266.png" alt="image-20241112205839183" style="zoom: 67%;" />
+<h3>BGP协议</h3>
+<blockquote>
+<ul>
+<li>
+<p>EGP：与RIP、OSPF内部网关协议（IGP）相对的外部网关协议</p>
+</li>
+<li>连接多个AS的协议</li>
+<li>非选择最佳，只求能比较好的到达</li>
+</ul>
+</blockquote>
+<img src="https://cdn.aweip.com/markdown/202411122130025.png" alt="image-20241112213040914" style="zoom:50%;" />
+<ul>
+<li>
+<p>基本概念</p>
+<ul>
+<li>各AS选择某个路由器作为<strong>BGP发言人</strong></li>
+<li>BGP发言人运行BGP + AS内部网关协议</li>
+<li>目的：构造出AS间不存在环路的树形结构连通图</li>
+<li>路径向量：（AS1，AS2）</li>
+</ul>
+</li>
+<li>
+<p>报文</p>
+<img src="https://cdn.aweip.com/markdown/202411122133800.png" alt="image-20241112213334664" style="zoom:40%;" />
+</li>
+</ul>
+<h2>V.IP多播</h2>
+<h3>基本概念</h3>
+<img src="https://cdn.aweip.com/markdown/202411131618627.png" alt="image-20241113161814463" style="zoom:40%;" />
+<ul>
+<li>一对多</li>
+<li>多端口转发</li>
+<li>IPv4中使用D类多播地址：1110****.*.*.*
+<ul>
+<li>==224==.0.0.0 ~ ==239==.255.255.255</li>
+<li>一个D类地址代表一个<strong>多播组</strong></li>
+</ul></li>
+</ul>
+<h3>！局域网硬件多播</h3>
+<blockquote>
+<p>解决本地局域网内多播数据包分发问题</p>
+</blockquote>
+<ol>
+<li>IPv4地址映射<u>多播MAC地址</u>
+<ul>
+<li>多播MAC号：前25比特相同，01：00：5E：0<strong><strong> </strong></strong>：···
+<img src="https://cdn.aweip.com/markdown/202411131632419.png" alt="image-20241113163231347" style="zoom:50%;" /></li>
+<li>后23位来自多播IP地址后23位</li>
+<li>由于D类前4位为1110，后23位映射到多播MAC，有32-4-23=5位没映射到MAC地址上，使得一个MAC地址对应2^{5}=32个IP上</li>
+<li>在网络层还需要过滤非目的IP的报文（IP和MAC双匹配）</li>
+</ul></li>
+</ol>
+<h3>因特网多播</h3>
+<blockquote>
+<p>解决多播组设备寻址问题</p>
+</blockquote>
+<h4>IGMP</h4>
+<blockquote>
+<ul>
+<li>
+<p>多播路由器运行IGMP，监视本局域网内多播组成员变化</p>
+</li>
+<li>路由器不知道多播组成员数量和网络分布情况</li>
+</ul>
+</blockquote>
+<ul>
+<li>IGMP报文类型
+<ul>
+<li>成员报告报文：设备-&gt;多播路由器，加入</li>
+<li>成员查询报文：多播路由器-&gt;设备，是否存活</li>
+<li>离开组报文：设备-&gt;多播路由器，直接退出</li>
+</ul></li>
+</ul>
+<h4>多播路由选择协议</h4>
+<ul>
+<li>目标：为每个多播组建立多播转发树，使报文只转发一次</li>
+<li>IP多播组沿多播转发树洪泛，能传到所有拥有多播成员的多播路由器</li>
+<li>多播路由器再进行硬件多播</li>
+</ul>
+<h2>VI.移动IP</h2>
+<ul>
+<li>
+<p>原因：移动设备在某个网络下获得了IP地址</p>
+<ul>
+<li>
+<p>设备在移动状态下需要在不同网域下使用网络</p>
+</li>
+<li>正在提供服务的服务器也需要定位到此设备，移动设备IP不能改变</li>
+</ul>
+</li>
+<li>
+<p>解决方法：代理</p>
+<ol>
+<li>设备在归属地获得永久（归属）地址，上级路由称为归属代理</li>
+<li>设备移动到其他网络下</li>
+<li>设备使用代理发现协议，在外地网络注册，并提供永久地址和归属代理地址</li>
+<li>外地代理通过以上信息与归属地代理建立IP隧道</li>
+<li>归属地代理==接收==到数据后，转发给外地代理，外地代理转发给移动设备</li>
+<li>移动主机==发送==数据时，交给外地代理直接转发，不需要送给归属代理</li>
+</ol>
+<img src="https://cdn.aweip.com/markdown/202411131713437.png" alt="image-20241113171312326" style="zoom:50%;" />
+</li>
+</ul>
+<h1>第五章 传输层</h1>
+<h2>I.概述</h2>
+<blockquote>
+<p>物理层+数据链路层+网络层 -&gt; 主机到主机通信</p>
+<p>传输层 -&gt; 进程到进程通信</p>
+</blockquote>
+<h3>端口号</h3>
+<blockquote>
+<p>区分计算机类进程的数据报文</p>
+<p>同设备内一个端口只能建立一个连接</p>
+</blockquote>
+<ul>
+<li>长度：2B</li>
+<li>范围：0 ~ 65535（<katex-inline>2^{16}-1</katex-inline>）</li>
+<li>分类
+<ul>
+<li>熟知端口：0~1023</li>
+<li>登记端口：1024~49151</li>
+<li>临时端口：49152~65535</li>
+</ul></li>
+</ul>
+<h3>复用分用</h3>
+<ul>
+<li>
+<p>复用</p>
+<ul>
+<li>TCP/UDP 复用：理解为应用报文打包</li>
+<li>IP复用：传输层报文打包为IP报文</li>
+</ul>
+</li>
+<li>分用：理解为解包并分流到各自应用进程</li>
+</ul>
+<img src="https://cdn.aweip.com/image-20241116103731026.png" alt="image-20241116103731026" style="zoom:50%;" />
+<h2>II.UDP</h2>
+<blockquote>
+<p>无连接不可靠，不使用流量控制和拥塞控制</p>
+<p>检查到错包就丢弃</p>
+<p>支持广播、多播、单播</p>
+<p>伪首部序号为17</p>
+</blockquote>
+<h3>UDP首部</h3>
+<table>
+<thead>
+<tr>
+<th>源端口</th>
+<th>目的端口</th>
+<th>长度</th>
+<th>校验和</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2B</td>
+<td>2B</td>
+<td>2B</td>
+<td>2B</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>源端口：可选，不需要时全0</li>
+<li>目的端口：</li>
+<li>长度：首部+数据，最小8（首部长度）</li>
+<li>校验和：需要加上12B伪首部</li>
+</ul>
+<h2>III.TCP</h2>
+<blockquote>
+<p>面向连接 可靠</p>
+<p>对==报文段==进行确认</p>
+<p>面向字节流</p>
+<p>伪首部中序号为6</p>
+</blockquote>
+<h3>TCP首部</h3>
+<img src="https://cdn.aweip.com/image-20241117200631937.png" alt="image-20241117200631937" style="zoom:50%;" />
+<ul>
+<li>序号：32b，代表本报文段第一个字节序号</li>
+<li>确认号：32b，指出期望收到对方下一个TCP报文段的数据载荷的第一个字节的序号</li>
+<li>数据偏移：4b，数据报长度，单位4B</li>
+<li>保留：6b，无用置0</li>
+<li>短状态：1有效
+<ul>
+<li>URG：紧急报文，首先传送</li>
+<li>ACK：为1则确认字段有效</li>
+<li>PSH：尽快交付，不保留在缓冲区</li>
+<li>RST：复位，释放连接再重新连接</li>
+<li>SYN</li>
+<li>连接请求报文：SYN=1，ACK=0</li>
+<li>连接确认报文：SYN=1，ACK=1</li>
+<li>FIN：终止位，代表要求释放连接</li>
+</ul></li>
+<li>窗口：16b，代表接收方所允许的对方发送的数据量（rnwd)</li>
+<li>校验和：12b，伪首部+首部+数据载荷计算反码算数运算求和</li>
+<li>紧急指针：16b，URG=1时才有效，指明紧急数据的<strong>长度</strong>，单位1B</li>
+</ul>
+<h3>建立连接</h3>
+<h4>三次挥手</h4>
+<img src="https://cdn.aweip.com/24d2e9bc13930dbe39a443b1f728e68.jpg" alt="24d2e9bc13930dbe39a443b1f728e68" style="zoom:50%;" />
+<ul>
+<li>第一次：SYN=1,ACK=0，==SYN占用一个序号==</li>
+<li>第二次：SYN=1,ACK=1，==SYN占用一个序号==</li>
+<li>第三次：ACK=1，可带可不带数据，不带数据则不占用序号</li>
+</ul>
+<blockquote>
+<p>[!TIP]</p>
+<ul>
+<li>采用“三报文握手”而不是“两报文握手”来建立TCP连接，是为了<strong>防止已失效的TCP连接请求报文段</strong>突然又传送到了TCP服务器进程，因而导致错误。</li>
+<li>左边：
+<ul>
+<li>CLOSED</li>
+<li>SYN-SENT</li>
+<li>ESTABLISHED</li>
+</ul></li>
+<li>右边：
+<ul>
+<li>CLOSED</li>
+<li>LISTEN</li>
+<li>SYN-RCVD</li>
+<li>ESTABLISHED</li>
+</ul></li>
+</ul>
+</blockquote>
+<h4>四次挥手</h4>
+<p><img src="https://cdn.aweip.com/image-20241117225138826.png" alt="image-20241117225138826" /></p>
+<ul>
+<li>第一次：FIN=1,ACK=1，==FIN占用一个序号==</li>
+<li>第二次：ACK=1，继续传送数据</li>
+<li>第三次：FIN=1,ACK=1，数据传送完，使用FIN表示准备断开</li>
+<li>第四次：ACK=1，对方收到后断开，己方等待2MSL</li>
+</ul>
+<blockquote>
+<p>[!TIP]</p>
+<ul>
+<li>等待2MSL是防止第四次丢失，导致对面无法关闭</li>
+<li>左边：
+<ul>
+<li>ESTABLISHED</li>
+<li>FIN-WAIT1</li>
+<li>FIN-WAIT2</li>
+<li>TIME-WAIT</li>
+<li>CLOSED</li>
+</ul></li>
+<li>右边：
+<ul>
+<li>ESTABLISHED</li>
+<li>CLOSE-WAIT</li>
+<li>LAST-ACK</li>
+<li>CLOSED</li>
+</ul></li>
+</ul>
+</blockquote>
+<h3>流量控制</h3>
+<blockquote>
+<ul>
+<li>接收窗口（rwnd)：发送方维持，代表缓冲区能接受的容量</li>
+<li>实现端到端的流量控制（两个进程直接），数据链路层是节点之间的流量控制</li>
+</ul>
+</blockquote>
+<p>滑动窗口+持续计时器</p>
+<h3>拥塞控制</h3>
+<blockquote>
+<ul>
+<li>
+<p>种类</p>
+<ul>
+<li>
+<p>开环控制：初始即设计好一切情况</p>
+</li>
+<li>闭环控制：引入反馈，边监测边调整</li>
+</ul>
+</li>
+<li>
+<p>拥塞窗口（cwnd)：发送方的窗口大小</p>
+</li>
+<li>发送上限 = min[cwnd, rwnd]</li>
+</ul>
+</blockquote>
+<h4>慢开始</h4>
+<ul>
+<li>
+<p>拥塞窗口cwnd从1开始，每经过一次确认（时隔1TTL）后乘2</p>
+</li>
+<li>慢开始门限（ssthresh)：到达限制后cwnd进入拥塞避免</li>
+</ul>
+<h4>拥塞避免</h4>
+<ul>
+<li>cwnd到达ssthresh后，每次加一</li>
+<li>直到发生超时（拥塞）或者收到三次确认报文，进入下一种调整模式</li>
+</ul>
+<h4>快重传</h4>
+<ul>
+<li>报文丢失（非拥塞状态）</li>
+<li>接受方发送三次确认报文冗余ACK</li>
+<li>发送方立即重传对方所需报文段</li>
+</ul>
+<h4>快恢复</h4>
+<blockquote>
+<p>收到==三次确认报文==后进行</p>
+</blockquote>
+<ul>
+<li>ssthresh调为当前cwnd一半</li>
+<li>cwnd调为当前一半</li>
+<li>进入拥塞避免</li>
+</ul>
+<h1>第六章 应用层</h1>
+<h2>I.网络应用模型</h2>
+<h3>C/S模型</h3>
+<ul>
+<li>服务器：总是打开，提供服务，面向任务</li>
+<li>客户机：请求服务，面向用户</li>
+<li>特点：
+<ul>
+<li>体系内计算机地位不平等</li>
+<li>客户机间不直接通信</li>
+<li><strong>可扩展性不佳</strong></li>
+</ul></li>
+</ul>
+<h3>P2P模型</h3>
+<ul>
+<li>对等方（Peer）：任意一对计算机，直接相互通信</li>
+<li>可扩展性好</li>
+<li>网络健壮性好</li>
+</ul>
+<h2>II.动态主机配置协议（DHCP）</h2>
+<blockquote>
+<p>动态分配地址</p>
+<p>基于UDP，主机端口68，服务器67</p>
+</blockquote>
+<h3>！工作流程</h3>
+<ol>
+<li>客户端加入：客户端广播<strong>DHCP发现</strong>，源地址全0，目的地址全1</li>
+<li>服务器接手：DHCP服务器收到后，广播<strong>DHCP提供</strong>，源地址服务器地址，目的地址全1</li>
+<li>客户端接受此服务器，广播<strong>DHCP请求</strong>，源地址全0，目的地址全1</li>
+<li>服务器广播<strong>DHCP确认</strong>，分配IP地址，源地址服务器地址，目的地址全1</li>
+</ol>
+<h3>报文</h3>
+<table>
+<thead>
+<tr>
+<th>种类</th>
+<th>目的</th>
+<th>源IP</th>
+<th>目的IP</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>DHCP发现</td>
+<td>客户端寻找DHCP服务器</td>
+<td>0.0.0.0</td>
+<td>255.255.255.255</td>
+</tr>
+<tr>
+<td>DHCP提供</td>
+<td>DHCP服务器确认给此客户端提供服务</td>
+<td>服务器地址</td>
+<td>255.255.255.255</td>
+</tr>
+<tr>
+<td>DHCP请求</td>
+<td>客户端要求分配IP</td>
+<td>0.0.0.0</td>
+<td>255.255.255.255</td>
+</tr>
+<tr>
+<td>DHCP确认</td>
+<td>服务器分配IP</td>
+<td>服务器地址</td>
+<td>255.255.255.255</td>
+</tr>
+</tbody>
+</table>
+<h2>III.域名系统（DNS）</h2>
+<blockquote>
+<p>命名系统，方便记忆</p>
+<p>基于UDP协议，53号端口</p>
+</blockquote>
+<h3>域名服务器</h3>
+<ol>
+<li>根域名服务器：被所有本地域名服务器所知</li>
+<li>顶级域名服务器：com、cn、site等</li>
+<li>权限域名服务器</li>
+<li>本地域名服务器</li>
+</ol>
+<h3>解析过程</h3>
+<ul>
+<li>
+<p>递归查询</p>
+<ul>
+<li>本地主机向本地域名服务器查询</li>
+<li>本地域名服务器向根域名服务器查询</li>
+<li>根域名服务器向顶级域名服务器查询</li>
+<li>···</li>
+</ul>
+<blockquote>
+<ul>
+<li>主机-&gt;本地-&gt;==根域名==-&gt;顶级域名-&gt;权限域名</li>
+<li>根域名负载大 ，基本不用</li>
+<li><strong>主机和本地域名服务器之间只使用递归查询</strong></li>
+</ul>
+</blockquote>
+</li>
+<li>
+<p>迭代查询</p>
+<ul>
+<li>本地主机向本地域名服务器查询</li>
+<li>本地域名服务器：</li>
+<li>向根域名服务器查询</li>
+<li>向顶级域名服务器查询</li>
+<li>向权限域名服务器查询</li>
+<li>本地域名服务器向主机返回结果</li>
+</ul>
+</li>
+</ul>
+<h2>IV.文件传输系统（FTP）</h2>
+<blockquote>
+<p>交互式访问，允许用户指明==文件类型和格式==</p>
+<p>控制连接：端口21，TCP</p>
+<p>数据连接：端口20，TCP</p>
+<p>会话过程，服务器保留用户状态信息，追踪用户在远程目录树位置</p>
+</blockquote>
+<h3>控制连接</h3>
+<ul>
+<li>传输控制信息</li>
+<li>会话期间保持打开</li>
+</ul>
+<h3>数据连接</h3>
+<ul>
+<li>接收到文件传输请求后，创建数据传送进程和数据连接</li>
+<li>传送完毕后关闭</li>
+<li>模式
+<ul>
+<li>主动模式PORT：客户端发送PORT命令和==客户端随机开放端口号<katex-inline>x</katex-inline>==，服务器通过20与<katex-inline>x</katex-inline>连接</li>
+<li>被动模式PASV：客户端发送PASV命令，==服务器在本地开放随机端口<katex-inline>y</katex-inline>==，告知客户端</li>
+<li>选择权都在客户端上</li>
+</ul></li>
+</ul>
+<blockquote>
+<p>网络文件系统NFS</p>
+<ul>
+<li>FTP：修改服务器上文件，先==全部==下载到本地，修改完再传回</li>
+<li>NFS：远程打开文件，在文件特定位置读写修改</li>
+</ul>
+</blockquote>
+<h2>V.电子邮件（Email）</h2>
+<h3>组成结构</h3>
+<ul>
+<li>用户代理UA：<strong>程序</strong>，如QQ邮箱、Outlook软件</li>
+<li>邮件服务器：用于发送、接收邮件</li>
+<li>邮件发送和读取协议：存取协议</li>
+</ul>
+<img src="https://cdn.aweip.com/markdown/202411181756805.png" alt="image-20241118175626645" style="zoom:50%;" />
+<ul>
+<li><strong>现状</strong>：用户通过浏览器使用HTTP协议发送邮件，SMTP只在服务器之间</li>
+</ul>
+<h3>邮件格式和MIME</h3>
+<h4>格式</h4>
+<ul>
+<li>
+<p>信封：从内容自动提取目的人和标题</p>
+</li>
+<li>内容
+<ul>
+<li>首部</li>
+<li>FROM</li>
+<li>To</li>
+<li>Subject</li>
+<li>主体内容</li>
+</ul></li>
+</ul>
+<h4>MIME</h4>
+<p>由于SMTP只能传输7位ASCII码文件，需要MIME进行内容扩展，可以讲图片音视频等转换为7位ASCII，并读取恢复</p>
+<h3>！发送协议IMAP</h3>
+<blockquote>
+<p>SMTP==服务器==端口号：25</p>
+</blockquote>
+<ol>
+<li>
+<p>连接建立</p>
+<ul>
+<li>发送方SMTP服务器（客户端）与接收方SMTP服务器建立TCP连接</li>
+<li>接收方服务器发出220服务就绪</li>
+<li>客户端发送HELLO+客户端主机名</li>
+<li>接收方发送250 OK</li>
+</ul>
+</li>
+<li>
+<p>邮件发送</p>
+<ul>
+<li>客户端发送MAIL FROM+主机名</li>
+<li>接收方服务器准备好则发送250 OK</li>
+<li>客户端发送RCPT TO+收件人地址</li>
+<li>接收方服务器准备好则发送250 OK</li>
+<li>客户端发送DATA命令</li>
+<li>接收方服务器准备好则发送250 OK</li>
+<li>客户端发邮件内容，<CRLF>.<CLRF>代表结束</li>
+<li>接收方服务器准备好则发送250 OK</li>
+<li>客户端发送QUIT</li>
+<li>接受方服务器发送221，==主动断开==</li>
+</ul>
+<p><img src="https://cdn.aweip.com/markdown/202411181811066.png" alt="image-20241118181130903" /></p>
+</li>
+</ol>
+<h3>接收协议POP3和IMAP</h3>
+<ul>
+<li>POP3
+<ul>
+<li>TCP，端口110</li>
+<li>工作方式</li>
+<li>下载并保留：主机下载完邮件保留在SMTP服务器上</li>
+<li>下载并删除：主机下载完邮件删除SMTP服务器的文件</li>
+</ul></li>
+<li>IMAP
+<ul>
+<li>允许用户创建文件夹，并移动位置</li>
+<li>允许用户只获取邮件部分报文</li>
+</ul></li>
+</ul>
+<h2>VI.万维网WWW</h2>
+<h3>URL</h3>
+<ul>
+<li>
+<p>统一资源定位符</p>
+</li>
+<li>
+<p>&lt;协议&gt;://&lt;域名（或IP）&gt;:&lt;端口&gt;/&lt;路径&gt;</p>
+<blockquote>
+<p>[!TIP]</p>
+<p><strong>当浏览器输入URL开始访问(无缓存）：</strong></p>
+<ol>
+<li>主机向本地域名服务器发出DNS查询</li>
+<li>本地域名服务器
+<ul>
+<li>向根域名服务器查询</li>
+<li>向顶级域名服务器查询</li>
+<li>向权限域名服务器查询</li>
+</ul></li>
+<li>本地域名服务器将结果IP返回主机</li>
+<li>主机发起TCP连接请求，三次握手后建立连接</li>
+<li>主机发出HTTP请求</li>
+<li>服务器处理请求，返回HTTP报文</li>
+<li>主机收到报文后进行处理</li>
+<li>传输结束，四次挥手结束TCP连接</li>
+</ol>
+</blockquote>
+</li>
+</ul>
+<h3>HTTP</h3>
+<blockquote>
+<p>无连接，TCP确保可靠连接</p>
+<p>无状态，引入Cookie后实现了有状态</p>
+</blockquote>
+<ul>
+<li>
+<p>Cookie</p>
+<ul>
+<li>网站服务器为用户生成Cookie识别码，在服务器中存储用户信息</li>
+<li>网站服务器发送给用户的响应报文中有&quot;Set cookie: ****&quot;</li>
+<li>用户在自己的Cookie文件中存储此信息</li>
+<li>用户下次访问时，在请求报文中添加Cookie值</li>
+<li>服务器识别后提供个性化服务</li>
+</ul>
+</li>
+<li>
+<p>非持续连接 HTTP1.0：==每个元素==传输都建立一次TCP连接，*<em>2</em>TTL开销**</p>
+<img src="https://cdn.aweip.com/markdown/202411181900930.png" alt="image-20241118190049617" style="zoom:50%;" />
+</li>
+<li>
+<p>持续连接 HTTP1.1：建立一次TCP连接后保持，主机发出请求，服务器发送文件</p>
+<ul>
+<li>
+<p>非流水线：一次请求，一个文件</p>
+</li>
+<li>流水线：可连续发送请求（可视为一次），服务器连续发送多个文件</li>
+</ul>
+<blockquote>
+<p>[!WARNING]</p>
+<p>！发送大文件时，需要注意TCP窗口大小（遵循慢启动）</p>
+</blockquote>
+</li>
+<li>
+<p>报文结构</p>
+<ul>
+<li>
+<p>请求报文</p>
+</li>
+<li>
+<p>方法+URL+版本：GET xidian.edu.cn HTTP1.1 </p>
+</li>
+<li>
+<p>首部字段名+值：Keep Alive：1</p>
+<img src="https://cdn.aweip.com/markdown/202411181906441.png" alt="image-20241118190626348" style="zoom:50%;" />
+</li>
+<li>
+<p>响应报文</p>
+</li>
+<li>版本+状态码+短语：HTTP1.1 202 Accepted</li>
+</ul>
+<img src="https://cdn.aweip.com/markdown/202411181905269.png" alt="image-20241118190549992" style="zoom:50%;" />
+</li>
+</ul>
