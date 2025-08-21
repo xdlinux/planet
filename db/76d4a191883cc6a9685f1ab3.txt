@@ -1,0 +1,83 @@
+<h1>QSL卡片展</h1><p>作者：孤筝（lvbowen040427@163.com）</p>
+        
+          <h2 id="1-noa-1">
+<a class="header-anchor" href="#1-noa-1"></a>
+1. Noa-1
+</h2><p><img src="https://cdn.jsdelivr.net/gh/GuZhengSVT/Hugo-media//photo/QSL-%E6%A0%87-1.jpeg" alt="Noa-1"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/GuZhengSVT/Hugo-media//photo/QSL-%E6%A0%87-2.jpeg" alt="Noa-2.jpeg"></p>
+<h3 id="设计理念">
+<a class="header-anchor" href="#%e8%ae%be%e8%ae%a1%e7%90%86%e5%bf%b5"></a>
+设计理念
+</h3><p>取材自我非常喜欢的 <em><strong>Blue Archive</strong></em> 中的角色生盐诺亚。</p>
+<ul>
+<li>正面是Noa的记忆大厅截图。Noa在落地窗上手写十九世纪法国现代派诗人夏尔·皮埃尔·波德莱尔的诗，《巴黎的忧郁》第一首《异乡人》。</li>
+</ul>
+<blockquote>
+<p>Qui aimes-tu le mieux, homme énigmatique, dis?<br>
+谜一样的人啊，说吧，你最爱的人是谁？</p></blockquote>
+<p>我在这一句后加了ITU、CQ分区和梅登海德网格，尽量选用手写体并拉伸透视效果，使得文字看起来是手写在窗上的。</p>
+<ul>
+<li>背面除了常规的通联必填信息，还加上了个人博客的二维码，背景照片是BA官方做的Noa视频截图。</li>
+<li><strong>Warning:</strong> 时区那里 <em>UTC</em> 写成了 <em>UCT</em> ，直到印下一张卡才发现，如果印第二批会更正。</li>
+</ul>
+<h3 id="印刷批次">
+<a class="header-anchor" href="#%e5%8d%b0%e5%88%b7%e6%89%b9%e6%ac%a1"></a>
+印刷批次
+</h3><ul>
+<li>1期：300g名片用铜版纸200张，切小圆角，淘宝久美印业。
+<ul>
+<li>卡片硬度不足，铜版纸背面书写困难。</li>
+<li>余量充足。</li>
+</ul>
+</li>
+</ul>
+<h2 id="2-dfh">
+<a class="header-anchor" href="#2-dfh"></a>
+2. DFH
+</h2><p><img src="https://cdn.jsdelivr.net/gh/GuZhengSVT/Hugo-media//photo/%E4%B8%9C%E6%96%B9%E7%BA%A2%E7%9A%84%E5%BF%83%E8%84%8F-1.png" alt="DFH-1"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/GuZhengSVT/Hugo-media//photo/%E4%B8%9C%E6%96%B9%E7%BA%A2%E7%9A%84%E5%BF%83%E8%84%8F-2-%E6%9B%B4%E6%AD%A3.png" alt="DFH-2"></p>
+<h3 id="设计理念-1">
+<a class="header-anchor" href="#%e8%ae%be%e8%ae%a1%e7%90%86%e5%bf%b5-1"></a>
+设计理念
+</h3><p>整体取材自BiliBili UP主<strong>炙弹冰</strong>的航天史填词歌曲 <a href="https://www.bilibili.com/video/BV129mGY3Efe/">《东方红的心脏》</a>（原曲为 <a href="https://music.163.com/#/artist?id=51020133">ヰ世界情緒</a> 的歌曲 <strong><a href="https://music.163.com/#/song?id=1907751320">シリウスの心臓(天狼星的心脏)</a></strong> ）。</p>
+<ul>
+<li>卡片正面右侧少女为《东方红的心脏》中曲绘，东方红卫星拟人形象。</li>
+<li>卡片正面左侧有重叠的两个卫星，左侧实体卫星为东方红一号的3D建模截图，右侧彩色卫星为前一截图经过 <a href="https://lab.magiconch.com/one-last-image/">One Last Image 卢浮宫生成器</a> 网站生成了一张类似 <em><strong>One Last Kiss</strong></em> 封面效果的彩色渐变卫星图。</li>
+<li>环绕卫星的红蓝两椭圆环由摩斯电码构成，红色是“中华人民共和国万岁”，蓝色是“世界人民大团结万岁”，参考1955年《标准电码本》翻译。</li>
+<li>实体东方红上的日期是东方红卫星1970年4月24日发射入轨，5月14日停止播放东方红乐曲。这是东方红短暂的一生，却是中华民族腾飞的开始。</li>
+<li>彩色东方红上的日期，1840年6月21日英军炮击澳门，开启第一次鸦片战争，直至1949年10月1日中华人民共和国成立，中国人民从此站起来了。它承载的是中华民族屈辱的近代史，也是第三世界其他国家反抗帝国主义列强入侵、追求独立的抗争史。</li>
+<li>卫星和人物之间用两条正弦线隔开，象征电波。</li>
+<li>相比于 <a href="/zh-cn/post/othernotes/qsl%E5%8D%A1%E7%89%87%E5%B1%95/#1-noa-1">Noa-1</a> ，这次背面设计增加了NFC标志，我计划为今后发放的卡片增加NFC标签，录入卡片信息、通联信息，或实现自动播放音乐、视频等。</li>
+<li>背面邮箱下面那段话“雾霭萦绕的人生，要如何度过？甩下踌躇吧，因为朝阳是你也是我。”是《东方红的心脏》中的歌词，我十分喜欢。</li>
+<li>背面右下角贴上了一段《东方红》的简谱，呼应此次卡片东方红一号卫星主题。</li>
+</ul>
+<p>另外，我还设计了此卡片的PCB版，加上NFC芯片、线圈，特别在正面人物胸口的位置放置一颗红色LED，手机贴近扫描后LED会亮，呼应“东方红的心脏”主题。<br>
+因为制作成本高昂，PCB版卡片预计只发给每个区第一个通联的友台，或某种通联方式第一个通联的友台。</p>
+<p>人民英雄纪念碑上这样写：</p>
+<blockquote>
+<p>三年以来，在人民解放战争和人民革命中牺牲的人民英雄们永垂不朽！<br>
+三十年以来，在人民解放战争和人民革命中牺牲的人民英雄们永垂不朽！<br>
+由此上溯到一千八百四十年，从那时起，为了反对内外敌人，争取民族独立和人民自由幸福，在历次斗争中牺牲的人民英雄们永垂不朽！</p></blockquote>
+<p>今日，东方红卫星仍然在轨，守望沧海变桑田。</p>
+<h3 id="印刷批次-1">
+<a class="header-anchor" href="#%e5%8d%b0%e5%88%b7%e6%89%b9%e6%ac%a1-1"></a>
+印刷批次
+</h3><p><strong>纸质：</strong></p>
+<ul>
+<li>1期：350g珠光纸（白滑影）150张，切小圆角，闲鱼未来既是未来
+<ul>
+<li>余量充足</li>
+</ul>
+</li>
+</ul>
+<p><strong>PCB：</strong></p>
+<ul>
+<li>1期：嘉立创彩色丝印50张，NT3H2111W0FHKH XQF，切小圆角
+<ul>
+<li>余量充足</li>
+</ul>
+</li>
+</ul>
+
+        
+        <hr><p>本文2025-08-21首发于<a href='https://guzhengsvt.cn/'>孤筝の温暖小家</a>，最后修改于2025-08-21</p><p>本博客所有文章除特别声明外，均采用 BY-NC-SA 许可协议。转载请注明出处！</p><hr />
