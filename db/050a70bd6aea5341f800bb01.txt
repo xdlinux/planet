@@ -1,0 +1,1416 @@
+<h1>量子物理学</h1><p>作者：孤筝（lvbowen040427@163.com）</p>
+        
+          <h2 id="第一章-微粒二象性与状态描述">
+<a class="header-anchor" href="#%e7%ac%ac%e4%b8%80%e7%ab%a0-%e5%be%ae%e7%b2%92%e4%ba%8c%e8%b1%a1%e6%80%a7%e4%b8%8e%e7%8a%b6%e6%80%81%e6%8f%8f%e8%bf%b0"></a>
+第一章 微粒二象性与状态描述
+</h2><h3 id="11-量子力学的形成与应用">
+<a class="header-anchor" href="#11-%e9%87%8f%e5%ad%90%e5%8a%9b%e5%ad%a6%e7%9a%84%e5%bd%a2%e6%88%90%e4%b8%8e%e5%ba%94%e7%94%a8"></a>
+1.1 量子力学的形成与应用
+</h3><h4 id="111-旧量子论">
+<a class="header-anchor" href="#111-%e6%97%a7%e9%87%8f%e5%ad%90%e8%ae%ba"></a>
+1.1.1 旧量子论
+</h4><h5 id="光电效应与光子假说">
+<a class="header-anchor" href="#%e5%85%89%e7%94%b5%e6%95%88%e5%ba%94%e4%b8%8e%e5%85%89%e5%ad%90%e5%81%87%e8%af%b4"></a>
+光电效应与光子假说
+</h5><ul>
+<li><strong>光子能量</strong>：$E = h\nu$</li>
+<li><strong>阈频</strong>：$\nu_0 = \dfrac{W_0}{h}$，$\nu < \nu_0$ 无光电子逸出</li>
+<li><strong>光电效应方程</strong>：<br>
+$$
+  E_k^{\text{max}} = \frac{1}{2}\mu v^2_m = h\nu - W_0
+  $$</li>
+<li>光电效应证明了光的粒子性。</li>
+</ul>
+<h5 id="光子的能量动量矢量关系与波粒统一">
+<a class="header-anchor" href="#%e5%85%89%e5%ad%90%e7%9a%84%e8%83%bd%e9%87%8f%e5%8a%a8%e9%87%8f%e7%9f%a2%e9%87%8f%e5%85%b3%e7%b3%bb%e4%b8%8e%e6%b3%a2%e7%b2%92%e7%bb%9f%e4%b8%80"></a>
+光子的能量—动量（矢量）关系与波粒统一
+</h5><ul>
+<li>
+<p><strong>相对论能量—动量关系式</strong><br>
+</p>
+$$
+  E^2=(pc)^2+(m_0c^2)^2,\quad m_0=0\ \Rightarrow\ E=c\,\lVert\vec p\rVert
+  $$</li>
+<li>
+<p><strong>光子能量</strong><br>
+</p>
+$$
+  E=h\nu=\frac{hc}{\lambda}=\hbar\omega
+  $$</li>
+<li>
+<p><strong>光子动量（矢量形式）</strong><br>
+令 $\mathbf n$ 为传播方向的单位向量，则
+</p>
+$$
+  \vec p=\frac{E}{c}\,\mathbf n=\frac{h}{\lambda}\,\mathbf n=\hbar\vec k,\quad
+  \vec k=\frac{2\pi}{\lambda}\,\mathbf n
+  $$</li>
+<li>
+<p><strong>波粒二象性统一（对应关系）</strong><br>
+</p>
+$$
+  E\ \longleftrightarrow\ \hbar\omega,\qquad
+  \vec p\ \longleftrightarrow\ \hbar\vec k
+  $$</li>
+</ul>
+<h5 id="氢原子玻尔结构">
+<a class="header-anchor" href="#%e6%b0%a2%e5%8e%9f%e5%ad%90%e7%8e%bb%e5%b0%94%e7%bb%93%e6%9e%84"></a>
+氢原子玻尔结构
+</h5><ul>
+<li>电子绕原子核运动的轨道角动量量子化：<br>
+$$
+  L = n\hbar,\quad n=1,2,3,\dots
+  $$</li>
+<li>能级公式：<br>
+$$
+  E_n = -\frac{13.6\ \text{eV}}{n^2}
+  $$</li>
+<li>成功解释了氢原子光谱的线状分布。</li>
+</ul>
+<h5 id="玻尔假说">
+<a class="header-anchor" href="#%e7%8e%bb%e5%b0%94%e5%81%87%e8%af%b4"></a>
+玻尔假说
+</h5><ul>
+<li>电子在稳定轨道上运动时不辐射能量。</li>
+<li>电子在不同能级之间跃迁时吸收或发射能量：<br>
+$$
+  \Delta E = h\nu
+  $$</li>
+</ul>
+<h5 id="康普顿效应">
+<a class="header-anchor" href="#%e5%ba%b7%e6%99%ae%e9%a1%bf%e6%95%88%e5%ba%94"></a>
+康普顿效应
+</h5><ul>
+<li>高能光子与电子散射后波长增加：<br>
+$$
+  \Delta\lambda = \lambda' - \lambda = \frac{h}{m_ec}(1-\cos\theta)
+  $$</li>
+<li>实验证实了光子的粒子性与动量守恒。</li>
+</ul>
+<h5 id="黑体辐射">
+<a class="header-anchor" href="#%e9%bb%91%e4%bd%93%e8%be%90%e5%b0%84"></a>
+黑体辐射
+</h5><ul>
+<li>能量量子化假设：电磁场能量按 $E=nh\nu$ 离散取值。</li>
+<li>普朗克公式：<br>
+$$
+  u(\nu,T)=\frac{8\pi h\nu^3}{c^3}\frac{1}{e^{h\nu/kT}-1}
+  $$</li>
+<li>成功解释了黑体辐射实验曲线，开启量子论。</li>
+</ul>
+<h4 id="112-微观粒子的波粒二象性">
+<a class="header-anchor" href="#112-%e5%be%ae%e8%a7%82%e7%b2%92%e5%ad%90%e7%9a%84%e6%b3%a2%e7%b2%92%e4%ba%8c%e8%b1%a1%e6%80%a7"></a>
+1.1.2 微观粒子的波粒二象性
+</h4><h5 id="德布罗意假说">
+<a class="header-anchor" href="#%e5%be%b7%e5%b8%83%e7%bd%97%e6%84%8f%e5%81%87%e8%af%b4"></a>
+德布罗意假说
+</h5><ul>
+<li>微观粒子不仅具有粒子性，也具有波动性。</li>
+<li>每一个动量为 $\vec p$ 的粒子，都对应一列物质波，其波长和频率与动量、能量相关。</li>
+</ul>
+<h5 id="德布罗意关系">
+<a class="header-anchor" href="#%e5%be%b7%e5%b8%83%e7%bd%97%e6%84%8f%e5%85%b3%e7%b3%bb"></a>
+德布罗意关系
+</h5><ul>
+<li>波长：<br>
+$$
+  \lambda = \frac{h}{p}
+  $$</li>
+<li>矢量形式：<br>
+$$
+  \vec p = \hbar \vec k
+  $$</li>
+<li>频率：<br>
+$$
+  E = h\nu = \hbar\omega
+  $$</li>
+</ul>
+<hr>
+<h3 id="12-状态与波函数">
+<a class="header-anchor" href="#12-%e7%8a%b6%e6%80%81%e4%b8%8e%e6%b3%a2%e5%87%bd%e6%95%b0"></a>
+1.2 状态与波函数
+</h3><h4 id="121-测不准原理">
+<a class="header-anchor" href="#121-%e6%b5%8b%e4%b8%8d%e5%87%86%e5%8e%9f%e7%90%86"></a>
+1.2.1 测不准原理
+</h4><ul>
+<li>微观粒子的位置与动量不能同时被精确测定，存在测量极限。</li>
+<li>海森堡测不准关系：<br>
+$$
+  \Delta x \cdot \Delta p_x \geq \frac{\hbar}{2}
+  $$</li>
+<li>能量与时间之间的测不准关系：<br>
+$$
+  \Delta E \cdot \Delta t \geq \frac{\hbar}{2}
+  $$</li>
+<li>本质：源于波粒二象性和算符的不对易性。</li>
+</ul>
+<h4 id="122-波函数">
+<a class="header-anchor" href="#122-%e6%b3%a2%e5%87%bd%e6%95%b0"></a>
+1.2.2 波函数
+</h4><ul>
+<li>为描述微观粒子状态，引入<strong>波函数</strong> $\psi(\vec r,t)$。</li>
+<li><strong>几率诠释</strong>：$|\psi(\vec r,t)|^2 dV$ 表示粒子在体积元 $dV$ 内出现的概率。</li>
+<li>波函数必须满足线性叠加原理和薛定谔方程。</li>
+<li>粒子必定在空间某点出现，其<strong>在空间各点出现几率的总和为 1</strong>，因而粒子在空间各点出现的几率只决定于波函数在空间各点的相对强度，而不决定于强度的绝对大小。</li>
+<li>将波函数乘上一个常数后，所描写的粒子的状态并不改变。</li>
+<li>波函数标准条件：单值、有限、连续</li>
+</ul>
+<h4 id="123-波函数归一化">
+<a class="header-anchor" href="#123-%e6%b3%a2%e5%87%bd%e6%95%b0%e5%bd%92%e4%b8%80%e5%8c%96"></a>
+1.2.3 波函数归一化
+</h4><ul>
+<li><strong>归一化条件</strong>：空间内找到粒子概率为 1。<br>
+$$
+  \int_{-\infty}^{\infty} \psi^* (\vec r,t) \psi (\vec r,t) dV = 1
+  $$</li>
+<li><strong>归一化波函数求法</strong>
+$$
+  \int_{-\infty}^{\infty} |\Psi(\vec r,t)|^2 dV = A^2 \int_{-\infty}^{\infty} |\psi(\vec r,t)|^2 dV = 1
+  $$
+A：归一化常数</li>
+</ul>
+<hr>
+<h3 id="13-薛定谔方程">
+<a class="header-anchor" href="#13-%e8%96%9b%e5%ae%9a%e8%b0%94%e6%96%b9%e7%a8%8b"></a>
+1.3 薛定谔方程
+</h3><h4 id="131-自由粒子的波动方程">
+<a class="header-anchor" href="#131-%e8%87%aa%e7%94%b1%e7%b2%92%e5%ad%90%e7%9a%84%e6%b3%a2%e5%8a%a8%e6%96%b9%e7%a8%8b"></a>
+1.3.1 自由粒子的波动方程
+</h4><p><strong>概念</strong><br>
+自由粒子是指不受外力作用的粒子，其运动仅受量子力学规律描述。在量子力学中，自由粒子的状态由波函数 $\psi(\vec{r},t)$ 描述，满足薛定谔方程。</p>
+<p><strong>薛定谔方程（自由粒子）</strong><br>
+</p>
+$$
+i\hbar \frac{\partial \psi(\vec{r},t)}{\partial t} = -\frac{\hbar^2}{2m} \nabla^2 \psi(\vec{r},t)
+$$<p>
+其中：</p>
+<ul>
+<li>$\hbar$：约化普朗克常数</li>
+<li>$m$：粒子质量</li>
+<li>$\nabla^2$：拉普拉斯算符</li>
+</ul>
+<p><strong>平面波解</strong><br>
+自由粒子波函数的一般解为平面波形式：<br>
+</p>
+$$
+\psi(\vec{r},t) = A e^{i(\vec{k}\cdot\vec{r} - \omega t)}
+$$<p>
+其中：</p>
+<ul>
+<li>$\vec{k}$：波矢，$|\vec{k}| = k$</li>
+<li>$\omega$：角频率，满足能量关系<br>
+$$
+E = \hbar \omega = \frac{\hbar^2 k^2}{2m}
+$$</li>
+</ul>
+<p><strong>动量与波矢关系（德布罗意关系）</strong><br>
+</p>
+$$
+\vec{p} = \hbar \vec{k}
+$$<h5 id="自由粒子薛定谔方程的平面波推导">
+<a class="header-anchor" href="#%e8%87%aa%e7%94%b1%e7%b2%92%e5%ad%90%e8%96%9b%e5%ae%9a%e8%b0%94%e6%96%b9%e7%a8%8b%e7%9a%84%e5%b9%b3%e9%9d%a2%e6%b3%a2%e6%8e%a8%e5%af%bc"></a>
+自由粒子薛定谔方程的平面波推导
+</h5><p><strong>1. 自由粒子波函数假设</strong><br>
+自由粒子波函数可以写成平面波形式：
+</p>
+$$
+\psi(\vec{r},t) = A e^{i(\vec{k}\cdot\vec{r} - \omega t)}
+$$<p>
+其中：</p>
+<ul>
+<li>$\vec{k}$ 为波矢</li>
+<li>$\omega$ 为角频率</li>
+<li>$A$ 为幅值常数</li>
+</ul>
+<p><strong>2. 求时间偏导数</strong><br>
+对时间 $t$ 求偏导：
+</p>
+$$
+\frac{\partial \psi}{\partial t} = \frac{\partial}{\partial t} \left[ A e^{i(\vec{k}\cdot\vec{r} - \omega t)} \right] 
+= -i \omega A e^{i(\vec{k}\cdot\vec{r} - \omega t)} 
+= -i \omega \psi
+$$<p>
+乘以 $i\hbar$：
+</p>
+$$
+i\hbar \frac{\partial \psi}{\partial t} = \hbar \omega \psi
+$$<p><strong>3. 求空间拉普拉斯（动能项）</strong><br>
+对空间 $\vec{r}$ 求二阶偏导：
+</p>
+$$
+\nabla^2 \psi = \nabla^2 \left[ A e^{i \vec{k}\cdot\vec{r}} e^{-i\omega t} \right] 
+= -k^2 A e^{i(\vec{k}\cdot\vec{r} - \omega t)} 
+= -k^2 \psi
+$$<p>
+因此动能项为：
+</p>
+$$
+-\frac{\hbar^2}{2m} \nabla^2 \psi = \frac{\hbar^2 k^2}{2m} \psi
+$$<p><strong>4. 建立能量关系</strong><br>
+自由粒子的总能量为动能：
+</p>
+$$
+E = \frac{\hbar^2 k^2}{2m} = \hbar \omega
+$$<p><strong>5. 得到薛定谔方程</strong><br>
+将时间导数与空间导数关系写出：
+</p>
+$$
+i\hbar \frac{\partial \psi}{\partial t} = -\frac{\hbar^2}{2m} \nabla^2 \psi
+$$<p><strong>说明</strong></p>
+<ul>
+<li>这种推导直接利用了平面波形式和微分运算，不依赖算符定义。</li>
+<li>对应自由粒子 $V=0$ 情况。</li>
+</ul>
+<h4 id="133-定态薛定谔方程和定态波函数">
+<a class="header-anchor" href="#133-%e5%ae%9a%e6%80%81%e8%96%9b%e5%ae%9a%e8%b0%94%e6%96%b9%e7%a8%8b%e5%92%8c%e5%ae%9a%e6%80%81%e6%b3%a2%e5%87%bd%e6%95%b0"></a>
+1.3.3 定态薛定谔方程和定态波函数
+</h4><p><strong>概念</strong><br>
+定态波函数是指时间依赖可分离的波函数，形如：
+</p>
+$$
+\psi(\vec{r},t) = \phi(\vec{r}) e^{-i E t / \hbar}
+$$<p>
+设 $f(t)=e^{-i E t / \hbar}$ 。<br>
+其中 $\phi(\vec{r})$ 只依赖空间坐标，$E$ 为粒子总能量。</p>
+<p><strong>推导定态薛定谔方程</strong><br>
+从时间依赖薛定谔方程：
+</p>
+$$
+i\hbar \frac{\partial \psi(\vec{r},t)}{\partial t} = \left[ -\frac{\hbar^2}{2m} \nabla^2 + V(\vec{r}) \right] \psi(\vec{r},t)
+$$<p>
+代入 $\psi(\vec{r},t) = \phi(\vec{r}) e^{-i E t / \hbar}$：
+</p>
+$$
+i\hbar \left( -\frac{i E}{\hbar} \phi(\vec{r}) e^{-i E t / \hbar} \right) = \left[ -\frac{\hbar^2}{2m} \nabla^2 + V(\vec{r}) \right] \phi(\vec{r}) e^{-i E t / \hbar}
+$$<p>
+化简得到时间独立部分：
+</p>
+$$
+\left[ -\frac{\hbar^2}{2m} \nabla^2 + V(\vec{r}) \right] \phi(\vec{r}) = E \phi(\vec{r})
+$$<p><strong>定态薛定谔方程（时间独立形式）</strong><br>
+</p>
+$$
+i \hbar \frac{df}{dt}=E f , \; f= e^{-i E t / \hbar}
+$$<p>
+</p>
+$$
+-\frac{\hbar^2}{2m} \nabla^2 \phi(\vec{r}) + V(\vec{r}) \phi(\vec{r}) = E \phi(\vec{r})
+$$<p><strong>说明</strong></p>
+<ul>
+<li>$\phi(\vec{r})$ 称为定态波函数或本征函数。</li>
+<li>$E$ 为对应的能量本征值。</li>
+</ul>
+<h4 id="薛定谔方程的推导算符">
+<a class="header-anchor" href="#%e8%96%9b%e5%ae%9a%e8%b0%94%e6%96%b9%e7%a8%8b%e7%9a%84%e6%8e%a8%e5%af%bc%e7%ae%97%e7%ac%a6"></a>
+薛定谔方程的推导（算符）
+</h4><p><strong>1. 从经典能量出发</strong><br>
+经典力学中，单个粒子的总能量为：
+</p>
+$$
+E = \frac{p^2}{2m} + V(\vec{r},t)
+$$<p>
+其中 $p$ 是动量，$V(\vec{r},t)$ 是势能。</p>
+<p><strong>2. 引入量子假设（德布罗意关系）</strong><br>
+粒子具有波动性，动量和能量对应波的性质：
+</p>
+$$
+\vec{p} = \hbar \vec{k}, \quad E = \hbar \omega
+$$<p>
+波函数可表示为：
+</p>
+$$
+\psi(\vec{r},t) \sim e^{i(\vec{k}\cdot\vec{r} - \omega t)}
+$$<p><strong>3. 引入算符表示</strong><br>
+根据量子力学公设，能量和动量用算符表示：
+</p>
+$$
+\hat{E} = i\hbar \frac{\partial}{\partial t}, \quad \hat{\vec{p}} = -i\hbar \nabla
+$$<p><strong>4. 将算符作用到波函数上</strong></p>
+<ul>
+<li>动能算符：
+$$
+\hat{T} = \frac{\hat{p}^2}{2m} = -\frac{\hbar^2}{2m}\nabla^2
+$$</li>
+<li>总能量算符：
+$$
+\hat{H} = \hat{T} + V(\vec{r},t) = -\frac{\hbar^2}{2m}\nabla^2 + V(\vec{r},t)
+$$</li>
+</ul>
+<p><strong>5. 写出薛定谔方程</strong><br>
+将总能量算符作用于波函数：
+</p>
+$$
+i\hbar \frac{\partial \psi(\vec{r},t)}{\partial t} = \hat{H} \psi(\vec{r},t)
+$$<p>
+即：
+</p>
+$$
+i\hbar \frac{\partial \psi(\vec{r},t)}{\partial t} = \left[ -\frac{\hbar^2}{2m}\nabla^2 + V(\vec{r},t) \right] \psi(\vec{r},t)
+$$<p><strong>说明</strong></p>
+<ul>
+<li>这是非相对论情况下的时间依赖薛定谔方程。</li>
+<li>对自由粒子 ($V=0$) 简化为：
+$$
+i\hbar \frac{\partial \psi}{\partial t} = -\frac{\hbar^2}{2m}\nabla^2 \psi
+$$</li>
+</ul>
+<h4 id="态叠加原理">
+<a class="header-anchor" href="#%e6%80%81%e5%8f%a0%e5%8a%a0%e5%8e%9f%e7%90%86"></a>
+态叠加原理
+</h4><p><strong>概念</strong><br>
+量子力学中，若 $\psi_1$ 和 $\psi_2$ 是同一体系的两个可能态，那么它们的线性组合：
+</p>
+$$
+\psi = c_1 \psi_1 + c_2 \psi_2
+$$<p>
+也是该体系的一个可能态。这里 $c_1, c_2$ 为复数系数，满足归一化条件。</p>
+<p><strong>一般形式</strong><br>
+对一组正交归一基态 $\{ \phi_n \}$，任意态可展开为：
+</p>
+$$
+\psi(\vec{r},t) = \sum_{n} c_n \phi_n(\vec{r},t)
+$$<p>
+其中：</p>
+<ul>
+<li>$c_n$ 为展开系数，表示体系处于 $\phi_n$ 态的概率幅；</li>
+<li>概率为 $|c_n|^2$，需满足：
+$$
+\sum_n |c_n|^2 = 1
+$$</li>
+</ul>
+<p><strong>说明</strong></p>
+<ul>
+<li>态叠加是量子力学最基本的原理之一。</li>
+<li>不同基态可以同时叠加，但观测时只能得到其中一个本征值。</li>
+<li>叠加态的干涉效应体现了量子力学与经典力学的根本区别。</li>
+</ul>
+<h2 id="第二章-薛定谔方程的简单应用">
+<a class="header-anchor" href="#%e7%ac%ac%e4%ba%8c%e7%ab%a0-%e8%96%9b%e5%ae%9a%e8%b0%94%e6%96%b9%e7%a8%8b%e7%9a%84%e7%ae%80%e5%8d%95%e5%ba%94%e7%94%a8"></a>
+第二章 薛定谔方程的简单应用
+</h2><h3 id="21-一维无限深势阱">
+<a class="header-anchor" href="#21-%e4%b8%80%e7%bb%b4%e6%97%a0%e9%99%90%e6%b7%b1%e5%8a%bf%e9%98%b1"></a>
+2.1 一维无限深势阱
+</h3><h4 id="211-方程求解">
+<a class="header-anchor" href="#211-%e6%96%b9%e7%a8%8b%e6%b1%82%e8%a7%a3"></a>
+2.1.1 方程求解
+</h4><p><strong>1. 势能函数定义</strong><br>
+一维无限深势阱（宽度 $L$）定义为：
+</p>
+$$
+V(x) =
+\begin{cases}
+0, & 0 < x < L \\
+\infty, & x \leq 0 \ \text{或} \ x \geq L
+\end{cases}
+$$<p><strong>2. 薛定谔方程</strong><br>
+在阱内 ($0 < x < L$)：
+</p>
+$$
+-\frac{\hbar^2}{2m} \frac{d^2 \phi(x)}{dx^2} = E \phi(x)
+$$<p>
+化简为：
+</p>
+$$
+\frac{d^2 \phi(x)}{dx^2} + k^2 \phi(x) = 0
+$$<p>
+其中：
+</p>
+$$
+k^2 = \frac{2mE}{\hbar^2}
+$$<p><strong>3. 通解</strong><br>
+方程的通解为：
+</p>
+$$
+\phi(x) = A \sin(kx) + B \cos(kx)
+$$<p><strong>4. 边界条件</strong><br>
+由于势阱无限深，波函数必须满足：
+</p>
+$$
+\phi(0) = 0, \quad \phi(L) = 0
+$$<ul>
+<li>由 $\phi(0) = 0 \implies B = 0$</li>
+<li>由 $\phi(L) = 0 \implies \sin(kL) = 0 \implies kL = n\pi \quad (n=1,2,3,\dots)$</li>
+</ul>
+<p><strong>5. 本征函数与能量</strong></p>
+<ul>
+<li>归一化波函数：
+$$
+\phi_n(x) = \sqrt{\frac{2}{L}} \sin\left(\frac{n\pi x}{L}\right), \quad n=1,2,3,\dots
+$$</li>
+<li>能量本征值：
+$$
+E_n = \frac{n^2 \pi^2 \hbar^2}{2mL^2}, \quad n=1,2,3,\dots
+$$</li>
+</ul>
+<p><strong>说明</strong></p>
+<ul>
+<li>粒子能量离散化，与量子数 $n$ 成正比。</li>
+<li>基态能量 ($n=1$) 非零，体现零点能量现象。</li>
+</ul>
+<hr>
+<h3 id="22-数理方程的特殊函数">
+<a class="header-anchor" href="#22-%e6%95%b0%e7%90%86%e6%96%b9%e7%a8%8b%e7%9a%84%e7%89%b9%e6%ae%8a%e5%87%bd%e6%95%b0"></a>
+2.2 数理方程的特殊函数
+</h3><h4 id="221-正交性和归一性">
+<a class="header-anchor" href="#221-%e6%ad%a3%e4%ba%a4%e6%80%a7%e5%92%8c%e5%bd%92%e4%b8%80%e6%80%a7"></a>
+2.2.1 正交性和归一性
+</h4><p><strong>正交性</strong><br>
+一组函数 $\{ \phi_n(x) \}$ 在区间 $[a,b]$ 上若满足：
+</p>
+$$
+\int_a^b \phi_m(x)\,\phi_n(x)\,dx = 0 \quad (m \neq n)
+$$<p>
+则称为正交。</p>
+<p><strong>归一性</strong><br>
+若同时满足：
+</p>
+$$
+\int_a^b |\phi_n(x)|^2 dx = 1
+$$<p>
+则称为归一。</p>
+<p><strong>正交归一性</strong><br>
+综合写为：
+</p>
+$$
+\int_a^b \phi_m(x)\,\phi_n(x)\,dx = \delta_{mn}
+$$<h4 id="222-用正交归一函数组展开">
+<a class="header-anchor" href="#222-%e7%94%a8%e6%ad%a3%e4%ba%a4%e5%bd%92%e4%b8%80%e5%87%bd%e6%95%b0%e7%bb%84%e5%b1%95%e5%bc%80"></a>
+2.2.2 用正交归一函数组展开
+</h4><p>任意满足一定条件的函数 $f(x)$ 可以展开为正交归一函数组 $\{ \phi_n(x) \}$ 的线性组合：
+</p>
+$$
+f(x) = \sum_{n=1}^{\infty} c_n \phi_n(x)
+$$<p>
+其中展开系数：
+</p>
+$$
+c_n = \int_a^b f(x)\,\phi_n(x)\,dx
+$$<h4 id="223-傅里叶级数">
+<a class="header-anchor" href="#223-%e5%82%85%e9%87%8c%e5%8f%b6%e7%ba%a7%e6%95%b0"></a>
+2.2.3 傅里叶级数
+</h4><p>在区间 $[-L,L]$ 上，周期函数 $f(x)$ 可展开为三角函数正交基的级数：
+</p>
+$$
+f(x) = \frac{a_0}{2} + \sum_{n=1}^\infty \left[ a_n \cos\left(\frac{n\pi x}{L}\right) + b_n \sin\left(\frac{n\pi x}{L}\right) \right]
+$$<p>
+其中：
+</p>
+$$
+a_n = \frac{1}{L} \int_{-L}^L f(x)\cos\left(\frac{n\pi x}{L}\right)\,dx, \quad
+b_n = \frac{1}{L} \int_{-L}^L f(x)\sin\left(\frac{n\pi x}{L}\right)\,dx
+$$<h4 id="224-构造正交归一函数">
+<a class="header-anchor" href="#224-%e6%9e%84%e9%80%a0%e6%ad%a3%e4%ba%a4%e5%bd%92%e4%b8%80%e5%87%bd%e6%95%b0"></a>
+2.2.4 构造正交归一函数
+</h4><p>常用方法：<strong>施密特正交化</strong>（Gram-Schmidt）。<br>
+给定一组函数 $\{ f_n(x) \}$，可依次构造：
+</p>
+$$
+\phi_1(x) = \frac{f_1(x)}{\sqrt{\int |f_1(x)|^2 dx}}
+$$<p>
+</p>
+$$
+\phi_2(x) = \frac{f_2(x) - \int \phi_1(x) f_2(x)\,dx \,\phi_1(x)}{\sqrt{\int \left|f_2(x) - \int \phi_1(x) f_2(x)\,dx \,\phi_1(x)\right|^2 dx}}
+$$<p>
+依此类推，得到一组正交归一函数。</p>
+<h4 id="225-勒让德多项式和其他特殊函数">
+<a class="header-anchor" href="#225-%e5%8b%92%e8%ae%a9%e5%be%b7%e5%a4%9a%e9%a1%b9%e5%bc%8f%e5%92%8c%e5%85%b6%e4%bb%96%e7%89%b9%e6%ae%8a%e5%87%bd%e6%95%b0"></a>
+2.2.5 勒让德多项式和其他特殊函数
+</h4><p><strong>勒让德多项式</strong><br>
+由勒让德方程：
+</p>
+$$
+(1-x^2)\frac{d^2 y}{dx^2} - 2x \frac{dy}{dx} + l(l+1)y = 0
+$$<p>
+解为勒让德多项式 $P_l(x)$。</p>
+<ul>
+<li>正交性：
+$$
+\int_{-1}^{1} P_l(x) P_{l'}(x)\,dx = \frac{2}{2l+1}\delta_{ll'}
+$$</li>
+</ul>
+<p><strong>其他常见特殊函数</strong></p>
+<ul>
+<li><strong>球谐函数</strong> $Y_l^m(\theta,\phi)$：角动量问题中出现。</li>
+<li><strong>贝塞尔函数</strong> $J_n(x)$：圆柱对称问题中出现。</li>
+<li><strong>厄米多项式</strong> $H_n(x)$：谐振子问题中出现。</li>
+</ul>
+<p>这些特殊函数都是满足不同边界条件和对称性的薛定谔方程解。</p>
+<hr>
+<h3 id="23-线性谐振子">
+<a class="header-anchor" href="#23-%e7%ba%bf%e6%80%a7%e8%b0%90%e6%8c%af%e5%ad%90"></a>
+2.3 线性谐振子
+</h3><hr>
+<h3 id="24-氢原子">
+<a class="header-anchor" href="#24-%e6%b0%a2%e5%8e%9f%e5%ad%90"></a>
+2.4 氢原子
+</h3><h4 id="241-方程求解分为--三个方程">
+<a class="header-anchor" href="#241-%e6%96%b9%e7%a8%8b%e6%b1%82%e8%a7%a3%e5%88%86%e4%b8%ba--%e4%b8%89%e4%b8%aa%e6%96%b9%e7%a8%8b"></a>
+2.4.1 方程求解（分为 $r,\ \theta,\ \phi$ 三个方程）
+</h4><p><strong>1. 时间独立薛定谔方程（库仑势）</strong><br>
+氢原子（单电子）势能：
+</p>
+$$
+V(r) = -\dfrac{e^2}{4\pi\varepsilon_0 r}
+$$<p>
+在球坐标 $(r,\theta,\phi)$ 中，时间独立薛定谔方程为
+</p>
+$$
+-\dfrac{\hbar^2}{2m}\nabla^2\Psi(r,\theta,\phi) + V(r)\Psi = E\Psi.
+$$<p><strong>2. 变量分离</strong><br>
+设
+</p>
+$$
+\Psi(r,\theta,\phi)=R(r)\,Y(\theta,\phi).
+$$<p>
+代入并除以 $\Psi$ 后可得到形如<br>
+</p>
+$$
+\frac{1}{R}\left[-\frac{\hbar^2}{2m}\left(\frac{1}{r^2}\frac{d}{dr}\! \left(r^2\frac{dR}{dr}\right)\right)+V(r)R\right]
++\frac{1}{Y}\left[-\frac{\hbar^2}{2m}\frac{1}{r^2}\hat{L}^2Y\right]=E,
+$$<p>
+其中 $\hat L^2$ 为角动量算符。将角动量部分移项并设分离常数 $l(l+1)\hbar^2$，得到三个独立方程（按变量分为 $r,\theta,\phi$）。</p>
+<p><strong>3. 方程 1 — 角方程（$\phi$ 方向）</strong><br>
+对 $\phi$ 变量：
+</p>
+$$
+\frac{1}{\Phi(\phi)}\frac{d^2\Phi}{d\phi^2} = -m^2 \quad\Rightarrow\quad
+\Phi_m(\phi)=\frac{1}{\sqrt{2\pi}} e^{i m\phi},\quad m\in\mathbb{Z}.
+$$<p><strong>4. 方程 2 — 角方程（$\theta$ 方向）</strong><br>
+极角方程（由 $\hat L^2$ 的 $\theta$ 部分给出）为关联勒让德方程：
+</p>
+$$
+\frac{1}{\sin\theta}\frac{d}{d\theta}\!\left(\sin\theta\frac{d\Theta}{d\theta}\right)
++\left[l(l+1)-\frac{m^2}{\sin^2\theta}\right]\Theta=0.
+$$<p>
+其解为关联勒让德函数：
+</p>
+$$
+\Theta_{l}^{m}(\theta)\propto P_l^{m}(\cos\theta).
+$$<p><strong>5. 角部综合（球谐函数）</strong><br>
+角函数组合为球谐函数：
+</p>
+$$
+Y_l^m(\theta,\phi)=N_{l}^{m}\,P_l^{m}(\cos\theta)\,e^{im\phi},
+$$<p>
+满足
+</p>
+$$
+\hat L^2 Y_l^m = l(l+1)\hbar^2 Y_l^m,\qquad \hat L_z Y_l^m = m\hbar Y_l^m,
+$$<p>
+其中 $l=0,1,2,\dots,\ -l\le m\le l$，且归一化：
+</p>
+$$
+\int_0^{2\pi}\!\int_0^{\pi} |Y_l^m|^2\sin\theta\,d\theta d\phi =1.
+$$<p><strong>6. 方程 3 — 径向方程</strong><br>
+令 $u(r)=rR(r)$，径向方程化为一维形式：
+</p>
+$$
+-\frac{\hbar^2}{2m}\frac{d^2 u}{dr^2} + \left[ -\frac{e^2}{4\pi\varepsilon_0 r} + \frac{\hbar^2 l(l+1)}{2m r^2} \right] u = E u.
+$$<p>
+解该方程并施加边界条件 $u(0)=0,\ u(r)\xrightarrow{r\to\infty}0$，得到离散能级与径向本征函数。</p>
+<p><strong>7. 能量本征值（玻尔能级）</strong><br>
+能量量子化结果：
+</p>
+$$
+E_n = -\frac{m e^4}{2(4\pi\varepsilon_0)^2 \hbar^2}\,\frac{1}{n^2} = -\frac{13.6057\ \mathrm{eV}}{n^2},\qquad n=1,2,3,\dots
+$$<p>
+主量子数 $n$ 与角量子数满足 $l=0,1,\dots,n-1$。</p>
+<p><strong>8. 波函数形式（归一化）</strong><br>
+完整本征函数写为
+</p>
+$$
+\Psi_{n l m}(r,\theta,\phi)=R_{n l}(r)\,Y_l^m(\theta,\phi),
+$$<p>
+径向部分（氢原子）可表示为
+</p>
+$$
+R_{n l}(r)=N_{n l}\left(\frac{2r}{n a_0}\right)^{l} e^{-r/(n a_0)} L_{n-l-1}^{2l+1}\!\left(\frac{2r}{n a_0}\right),
+$$<p>
+其中 $a_0=\dfrac{4\pi\varepsilon_0\hbar^2}{m e^2}$ 为波尔半径，$L_{n-l-1}^{2l+1}$ 为广义拉盖尔多项式，$N_{n l}$ 为归一化常数。</p>
+<h4 id="242-结果与讨论">
+<a class="header-anchor" href="#242-%e7%bb%93%e6%9e%9c%e4%b8%8e%e8%ae%a8%e8%ae%ba"></a>
+2.4.2 结果与讨论
+</h4><p><strong>1. 量子数与简要物理意义</strong></p>
+<ul>
+<li>$n$（主量子数）：决定能量与径向性质。</li>
+<li>$l$（角量子数）：与角动量大小相关，取 $0\le l\le n-1$。</li>
+<li>$m$（磁量子数）：角动量 $L_z$ 的本征值，取 $-l\le m\le l$。</li>
+</ul>
+<p><strong>2. 能级简并</strong><br>
+能量仅与 $n$ 有关（库仑势下的额外对称性），每一能级的简并度为 $n^2$（所有满足相同 $n$ 的 $(l,m)$ 组合）。</p>
+<p><strong>3. 波函数的空间结构</strong></p>
+<ul>
+<li>角部分由球谐函数给出，决定角向分布与节点数。</li>
+<li>径向部分由 $R_{nl}(r)$ 给出，具有 $n-l-1$ 个径向节点。</li>
+<li>基态 $(n,l,m)=(1,0,0)$ 的波函数无角向依赖、径向无节点，概率密度最大在 $r=a_0$ 附近（期望值 $\langle r\rangle = \tfrac{3}{2}a_0$）。</li>
+</ul>
+<p><strong>5. 总结</strong><br>
+氢原子问题通过在球坐标中按 $r,\theta,\phi$ 三个变量分离得到：两个角方程（$\theta,\phi$）给出球谐函数和角量子数谱，径向方程给出离散能级 $E_n$ 与径向本征函数。</p>
+<h2 id="第三章-力学量的算符表示与表象理论">
+<a class="header-anchor" href="#%e7%ac%ac%e4%b8%89%e7%ab%a0-%e5%8a%9b%e5%ad%a6%e9%87%8f%e7%9a%84%e7%ae%97%e7%ac%a6%e8%a1%a8%e7%a4%ba%e4%b8%8e%e8%a1%a8%e8%b1%a1%e7%90%86%e8%ae%ba"></a>
+第三章 力学量的算符表示与表象理论
+</h2><h3 id="31-力学量与算符的关系">
+<a class="header-anchor" href="#31-%e5%8a%9b%e5%ad%a6%e9%87%8f%e4%b8%8e%e7%ae%97%e7%ac%a6%e7%9a%84%e5%85%b3%e7%b3%bb"></a>
+3.1 力学量与算符的关系
+</h3><h4 id="311-算符数学知识">
+<a class="header-anchor" href="#311-%e7%ae%97%e7%ac%a6%e6%95%b0%e5%ad%a6%e7%9f%a5%e8%af%86"></a>
+3.1.1 算符数学知识
+</h4><ol>
+<li>
+<p><strong>算符的定义</strong><br>
+算符（Operator）是作用在函数空间或态空间上的运算规则。在量子力学中，物理量通过算符来刻画，波函数是算符作用的对象。</p>
+<ul>
+<li>若 $A$ 是一个算符，对波函数 $\psi$ 的作用记为<br>
+$$
+     A\psi(x)
+     $$</li>
+<li>算符可以是代数运算、微分运算或积分运算。</li>
+</ul>
+</li>
+<li>
+<p><strong>算符的线性性</strong><br>
+算符 $A$ 若满足<br>
+</p>
+$$
+   A(c_1\psi_1 + c_2\psi_2) = c_1 A\psi_1 + c_2 A\psi_2
+   $$<p>
+其中 $c_1, c_2$ 为常数，则称 $A$ 为线性算符。量子力学中的物理算符一般都是线性的。</p>
+</li>
+<li>
+<p><strong>算符的对易关系</strong></p>
+<ul>
+<li>两个算符 $A, B$ 的对易子定义为<br>
+$$
+     [A,B] = AB - BA
+     $$</li>
+<li>若 $[A,B]=0$，称 $A$ 与 $B$ 对易，可以有共同本征态。</li>
+<li>对易关系是量子力学的重要特征，与测不准原理密切相关。</li>
+</ul>
+</li>
+<li>
+<p><strong>厄米算符</strong></p>
+<ul>
+<li>定义：若算符 $A$ 满足<br>
+$$
+     \langle \psi | A\varphi \rangle = \langle A\psi | \varphi \rangle
+     $$
+对任意态矢量 $\psi, \varphi$ 都成立，则称 $A$ 为厄米算符。</li>
+<li>性质：厄米算符的本征值必为实数，本征函数可正交归一化。</li>
+<li>物理意义：所有可观测量都由厄米算符表示。</li>
+</ul>
+</li>
+</ol>
+<h4 id="312-力学量与算符">
+<a class="header-anchor" href="#312-%e5%8a%9b%e5%ad%a6%e9%87%8f%e4%b8%8e%e7%ae%97%e7%ac%a6"></a>
+3.1.2 力学量与算符
+</h4><ol>
+<li>
+<p><strong>基本思想</strong><br>
+在量子力学中，每一个经典力学量 $f(q,p)$ 都对应一个量子算符 $\hat{f}$，从而物理量的测量与算符的本征问题相联系。</p>
+</li>
+<li>
+<p><strong>典型的算符表示</strong><br>
+在位置表象下：</p>
+<ul>
+<li>坐标算符<br>
+$$
+     \hat{x} = x
+     $$</li>
+<li>动量算符<br>
+$$
+     \hat{p} = -i\hbar \frac{\partial}{\partial x}
+     $$</li>
+</ul>
+</li>
+<li>
+<p><strong>对易关系与基本假设</strong><br>
+坐标与动量算符满足基本对易关系：
+</p>
+$$
+   [\hat{x}, \hat{p}] = i\hbar
+   $$<p>
+这是量子力学的核心假设之一，反映了经典力学泊松括号与量子力学算符代数的对应关系。</p>
+</li>
+<li>
+<p><strong>物理量的测量与本征方程</strong></p>
+<ul>
+<li>测量某一物理量 $A$，等价于求解算符 $\hat{A}$ 的本征方程：<br>
+$$
+     \hat{A}\psi_a = a\psi_a
+     $$</li>
+<li>本征值 $a$ 是可能的测量结果，本征函数 $\psi_a$ 描述系统处于物理量 $A$ 取值为 $a$ 的状态。</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h3 id="32-算符对易关系与测不准原理">
+<a class="header-anchor" href="#32-%e7%ae%97%e7%ac%a6%e5%af%b9%e6%98%93%e5%85%b3%e7%b3%bb%e4%b8%8e%e6%b5%8b%e4%b8%8d%e5%87%86%e5%8e%9f%e7%90%86"></a>
+3.2 算符对易关系与测不准原理
+</h3><h4 id="321-算符对易关系">
+<a class="header-anchor" href="#321-%e7%ae%97%e7%ac%a6%e5%af%b9%e6%98%93%e5%85%b3%e7%b3%bb"></a>
+3.2.1 算符对易关系
+</h4><ol>
+<li>
+<p><strong>定义</strong><br>
+两个算符 $A, B$ 的对易子定义为：
+</p>
+$$
+   [A,B] = AB - BA
+   $$<ul>
+<li>若 $[A,B]=0$，称 $A$ 与 $B$ <strong>对易</strong>，说明它们可同时具有一组本征函数。</li>
+<li>若 $[A,B]\neq 0$，则 $A, B$ <strong>不对易</strong>，对应的物理量不能同时被精确测量。</li>
+</ul>
+</li>
+<li>
+<p><strong>基本对易关系</strong><br>
+在位置表象下：
+</p>
+$$
+   [\hat{x}, \hat{p}_x] = i\hbar
+   $$<p>
+这被称为量子力学的基本对易关系，是经典力学泊松括号与量子算符代数的对应结果。</p>
+</li>
+<li>
+<p><strong>推广形式</strong><br>
+在三维空间中，有：
+</p>
+$$
+   [\hat{x}_i, \hat{p}_j] = i\hbar \delta_{ij}, \quad [\hat{x}_i, \hat{x}_j]=0, \quad [\hat{p}_i, \hat{p}_j]=0
+   $$<p>
+其中 $\delta_{ij}$ 为克罗内克 δ 符号。</p>
+</li>
+<li>
+<p><strong>物理意义</strong></p>
+<ul>
+<li>对易关系刻画了物理量之间是否可以同时确定。</li>
+<li>若两个算符对易，则它们的物理量可以同时具有确定值。</li>
+<li>若不对易，则测量一个物理量会干扰另一个物理量的精确值。</li>
+</ul>
+</li>
+</ol>
+<h4 id="322-测不准原理">
+<a class="header-anchor" href="#322-%e6%b5%8b%e4%b8%8d%e5%87%86%e5%8e%9f%e7%90%86"></a>
+3.2.2 测不准原理
+</h4><ol>
+<li>
+<p><strong>数学表达式</strong><br>
+对于任意两个算符 $A, B$，定义其物理量的<strong>不确定度</strong>为：
+</p>
+$$
+   (\Delta A)^2 = \langle (A-\langle A \rangle)^2 \rangle
+   $$<p>
+</p>
+$$
+   (\Delta B)^2 = \langle (B-\langle B \rangle)^2 \rangle
+   $$<p>
+根据柯西–施瓦兹不等式，可以得到测不准关系：
+</p>
+$$
+   \Delta A \cdot \Delta B \geq \frac{1}{2}\left| \langle [A,B] \rangle \right|
+   $$</li>
+<li>
+<p><strong>坐标与动量的不确定关系</strong><br>
+对于 $\hat{x}, \hat{p}$：
+</p>
+$$
+   \Delta x \cdot \Delta p \geq \frac{\hbar}{2}
+   $$<p>
+这表明不可能同时无限精确地测量粒子的位置和动量。</p>
+</li>
+<li>
+<p><strong>能量与时间的不确定关系</strong><br>
+虽然时间在量子力学中不是算符，但可以得到类似关系：
+</p>
+$$
+   \Delta E \cdot \Delta t \gtrsim \hbar
+   $$<p>
+该关系对瞬时过程、能级寿命等物理现象有重要意义。</p>
+</li>
+</ol>
+<hr>
+<h3 id="33-表象理论">
+<a class="header-anchor" href="#33-%e8%a1%a8%e8%b1%a1%e7%90%86%e8%ae%ba"></a>
+3.3 表象理论
+</h3><h4 id="331-表象理论的数学基础">
+<a class="header-anchor" href="#331-%e8%a1%a8%e8%b1%a1%e7%90%86%e8%ae%ba%e7%9a%84%e6%95%b0%e5%ad%a6%e5%9f%ba%e7%a1%80"></a>
+3.3.1 表象理论的数学基础
+</h4><ol>
+<li>
+<p><strong>表象的概念</strong></p>
+<ul>
+<li>量子态与算符可在不同基底（如位置表象、动量表象、能量表象）下表示。</li>
+<li><strong>表象</strong>就是在某组正交归一基矢 $\{ | \phi_n \rangle \}$ 下，态矢量与算符的矩阵或函数表示形式。</li>
+</ul>
+</li>
+<li>
+<p><strong>态矢量的展开</strong><br>
+对于任意态 $|\psi\rangle$，可在基底 $\{|\phi_n\rangle\}$ 下展开为：
+</p>
+$$
+   |\psi\rangle = \sum_n c_n |\phi_n\rangle
+   $$<p>
+其中 $c_n = \langle \phi_n | \psi \rangle$。</p>
+</li>
+<li>
+<p><strong>算符的矩阵元</strong><br>
+算符 $\hat{A}$ 在基底 $\{|\phi_n\rangle\}$ 下的矩阵元定义为：
+</p>
+$$
+   A_{mn} = \langle \phi_m | \hat{A} | \phi_n \rangle
+   $$<p>
+这样，算符在该表象下对应一个矩阵。</p>
+</li>
+<li>
+<p><strong>完备性与正交性</strong></p>
+<ul>
+<li>完备性：
+$$
+     \sum_n |\phi_n\rangle \langle \phi_n| = I
+     $$</li>
+<li>正交性：
+$$
+     \langle \phi_m | \phi_n \rangle = \delta_{mn}
+     $$</li>
+</ul>
+</li>
+</ol>
+<h4 id="332-态与力学量的表象">
+<a class="header-anchor" href="#332-%e6%80%81%e4%b8%8e%e5%8a%9b%e5%ad%a6%e9%87%8f%e7%9a%84%e8%a1%a8%e8%b1%a1"></a>
+3.3.2 态与力学量的表象
+</h4><ol>
+<li>
+<p><strong>位置表象</strong></p>
+<ul>
+<li>基底：$|x\rangle$</li>
+<li>波函数表示：<br>
+$$
+     \psi(x) = \langle x|\psi\rangle
+     $$</li>
+<li>算符作用：
+$$
+     \hat{x} \psi(x) = x \psi(x), \quad \hat{p}_x \psi(x) = -i\hbar \frac{\partial}{\partial x}\psi(x)
+     $$</li>
+</ul>
+</li>
+<li>
+<p><strong>动量表象</strong></p>
+<ul>
+<li>基底：$|p\rangle$</li>
+<li>波函数表示：
+$$
+     \phi(p) = \langle p|\psi\rangle
+     $$</li>
+<li>算符作用：
+$$
+     \hat{p} \phi(p) = p \phi(p), \quad \hat{x} \phi(p) = i\hbar \frac{\partial}{\partial p}\phi(p)
+     $$</li>
+</ul>
+</li>
+<li>
+<p><strong>能量表象</strong></p>
+<ul>
+<li>基底：哈密顿算符的本征态 $|E_n\rangle$</li>
+<li>态矢量表示：
+$$
+     |\psi\rangle = \sum_n c_n |E_n\rangle, \quad c_n = \langle E_n|\psi\rangle
+     $$</li>
+<li>物理意义：能量表象下，态展开系数 $c_n$ 给出粒子处于能量本征态的概率幅。</li>
+</ul>
+</li>
+<li>
+<p><strong>表象之间的变换</strong></p>
+<ul>
+<li>不同表象之间通过傅里叶变换联系：<br>
+$$
+     \phi(p) = \frac{1}{\sqrt{2\pi\hbar}} \int_{-\infty}^{\infty} \psi(x) e^{-ipx/\hbar} dx
+     $$
+$$
+     \psi(x) = \frac{1}{\sqrt{2\pi\hbar}} \int_{-\infty}^{\infty} \phi(p) e^{ipx/\hbar} dp
+     $$</li>
+</ul>
+</li>
+</ol>
+<p><strong>总结</strong></p>
+<ul>
+<li>表象理论提供了在不同基底下处理量子态与算符的统一方法。</li>
+<li>位置表象和动量表象是最常用的两种形式，它们体现了量子力学的波粒二象性。</li>
+</ul>
+<hr>
+<h3 id="34-轨道角动量">
+<a class="header-anchor" href="#34-%e8%bd%a8%e9%81%93%e8%a7%92%e5%8a%a8%e9%87%8f"></a>
+3.4 轨道角动量
+</h3><h4 id="341-角动量">
+<a class="header-anchor" href="#341-%e8%a7%92%e5%8a%a8%e9%87%8f"></a>
+3.4.1 角动量
+</h4><ol>
+<li>
+<p><strong>定义</strong><br>
+在经典力学中，轨道角动量定义为：
+</p>
+$$
+   \vec{L} = \vec{r} \times \vec{p}
+   $$<p>
+在量子力学中，定义相应算符：
+</p>
+$$
+   \hat{\vec{L}} = \hat{\vec{r}} \times \hat{\vec{p}}
+   $$</li>
+<li>
+<p><strong>分量表示</strong><br>
+</p>
+$$
+   \hat{L}_x = y\hat{p}_z - z\hat{p}_y, \quad
+   \hat{L}_y = z\hat{p}_x - x\hat{p}_z, \quad
+   \hat{L}_z = x\hat{p}_y - y\hat{p}_x
+   $$</li>
+<li>
+<p><strong>对易关系</strong><br>
+</p>
+$$
+   [\hat{L}_x, \hat{L}_y] = i\hbar \hat{L}_z, \quad
+   [\hat{L}_y, \hat{L}_z] = i\hbar \hat{L}_x, \quad
+   [\hat{L}_z, \hat{L}_x] = i\hbar \hat{L}_y
+   $$<p>
+总角动量算符：
+</p>
+$$
+   \hat{L}^2 = \hat{L}_x^2 + \hat{L}_y^2 + \hat{L}_z^2
+   $$</li>
+</ol>
+<h4 id="342-角动量守恒">
+<a class="header-anchor" href="#342-%e8%a7%92%e5%8a%a8%e9%87%8f%e5%ae%88%e6%81%92"></a>
+3.4.2 角动量守恒
+</h4><ol>
+<li>
+<p><strong>守恒条件</strong><br>
+若体系的哈密顿算符与角动量分量对易，则该分量守恒：
+</p>
+$$
+   [\hat{H}, \hat{L}_i] = 0 \quad \Rightarrow \quad \hat{L}_i \ \text{守恒}
+   $$</li>
+<li>
+<p><strong>球对称势场</strong><br>
+在球对称势场 $V(r)$ 下：
+</p>
+$$
+   [\hat{H}, \hat{L}^2] = 0, \quad [\hat{H}, \hat{L}_z] = 0
+   $$<p>
+说明总角动量 $\hat{L}^2$ 与其 $z$ 分量 $\hat{L}_z$ 守恒。</p>
+</li>
+</ol>
+<h4 id="343-轨道角动量计算">
+<a class="header-anchor" href="#343-%e8%bd%a8%e9%81%93%e8%a7%92%e5%8a%a8%e9%87%8f%e8%ae%a1%e7%ae%97"></a>
+3.4.3 轨道角动量计算
+</h4><ol>
+<li>
+<p><strong>本征方程</strong><br>
+轨道角动量满足：
+</p>
+$$
+   \hat{L}^2 Y_{lm}(\theta,\varphi) = l(l+1)\hbar^2 Y_{lm}(\theta,\varphi)
+   $$<p>
+</p>
+$$
+   \hat{L}_z Y_{lm}(\theta,\varphi) = m\hbar Y_{lm}(\theta,\varphi)
+   $$<p>
+其中 $Y_{lm}(\theta,\varphi)$ 为球谐函数，$l=0,1,2,\dots$，$m=-l,\dots,l$。</p>
+</li>
+<li>
+<p><strong>本征值</strong></p>
+<ul>
+<li>角动量平方：
+$$
+     L = \sqrt{l(l+1)} \hbar
+     $$</li>
+<li>角动量 $z$ 分量：
+$$
+     L_z = m\hbar
+     $$</li>
+</ul>
+</li>
+<li>
+<p><strong>物理意义</strong></p>
+<ul>
+<li>$l$ 为轨道角动量量子数，决定角动量大小。</li>
+<li>$m$ 为磁量子数，决定角动量在 $z$ 方向上的投影。</li>
+<li>轨道角动量的量子化反映了微观粒子运动的离散性。</li>
+</ul>
+</li>
+</ol>
+<h2 id="第四章-微扰理论及其应用">
+<a class="header-anchor" href="#%e7%ac%ac%e5%9b%9b%e7%ab%a0-%e5%be%ae%e6%89%b0%e7%90%86%e8%ae%ba%e5%8f%8a%e5%85%b6%e5%ba%94%e7%94%a8"></a>
+第四章 微扰理论及其应用
+</h2><h3 id="41-定态微扰理论">
+<a class="header-anchor" href="#41-%e5%ae%9a%e6%80%81%e5%be%ae%e6%89%b0%e7%90%86%e8%ae%ba"></a>
+4.1 定态微扰理论
+</h3><h4 id="411-非简并微扰理论">
+<a class="header-anchor" href="#411-%e9%9d%9e%e7%ae%80%e5%b9%b6%e5%be%ae%e6%89%b0%e7%90%86%e8%ae%ba"></a>
+4.1.1 非简并微扰理论
+</h4><ol>
+<li>
+<p><strong>基本思想</strong><br>
+当体系的哈密顿量可以写成：
+</p>
+$$
+   \hat{H} = \hat{H}^{(0)} + \lambda \hat{H}'
+   $$<p>
+其中 $\hat{H}^{(0)}$ 为可解的零阶哈密顿量，$\hat{H}'$ 为较小的微扰项，$\lambda$ 为展开参数。<br>
+若能量本征态非简并，可展开为级数解。</p>
+</li>
+<li>
+<p><strong>能量修正</strong></p>
+<ul>
+<li>零阶：<br>
+$$
+     E_n^{(0)} , \quad \psi_n^{(0)}
+     $$</li>
+<li>一阶：<br>
+$$
+     E_n^{(1)} = \langle \psi_n^{(0)} | \hat{H}' | \psi_n^{(0)} \rangle
+     $$</li>
+<li>二阶：<br>
+$$
+     E_n^{(2)} = \sum_{m \neq n} \frac{|\langle \psi_m^{(0)} | \hat{H}' | \psi_n^{(0)} \rangle|^2}{E_n^{(0)} - E_m^{(0)}}
+     $$</li>
+</ul>
+</li>
+<li>
+<p><strong>波函数修正</strong><br>
+一阶波函数修正：
+</p>
+$$
+   \psi_n^{(1)} = \sum_{m \neq n} \frac{\langle \psi_m^{(0)} | \hat{H}' | \psi_n^{(0)} \rangle}{E_n^{(0)} - E_m^{(0)}} \psi_m^{(0)}
+   $$</li>
+</ol>
+<h4 id="412-简并微扰理论">
+<a class="header-anchor" href="#412-%e7%ae%80%e5%b9%b6%e5%be%ae%e6%89%b0%e7%90%86%e8%ae%ba"></a>
+4.1.2 简并微扰理论
+</h4><ol>
+<li>
+<p><strong>问题来源</strong><br>
+若零阶能量 $E^{(0)}$ 对应多个正交本征态，则称为简并态。直接套用非简并公式会出现分母为零的发散问题。</p>
+</li>
+<li>
+<p><strong>处理方法</strong><br>
+在简并子空间内，构造矩阵：
+</p>
+$$
+   H'_{ij} = \langle \psi_i^{(0)} | \hat{H}' | \psi_j^{(0)} \rangle
+   $$<p>
+对其进行对角化，得到修正后的能量和本征态。</p>
+</li>
+<li>
+<p><strong>结果</strong></p>
+<ul>
+<li>一阶能量修正由 $H'_{ij}$ 的本征值给出。</li>
+<li>修正后的本征态为 $H'_{ij}$ 的本征矢量在原简并子空间中的线性组合。</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h3 id="42-含时微扰理论">
+<a class="header-anchor" href="#42-%e5%90%ab%e6%97%b6%e5%be%ae%e6%89%b0%e7%90%86%e8%ae%ba"></a>
+4.2 含时微扰理论
+</h3><ol>
+<li>
+<p><strong>基本框架</strong><br>
+考虑体系哈密顿量：
+</p>
+$$
+   \hat{H}(t) = \hat{H}^{(0)} + \hat{H}'(t)
+   $$<p>
+其中 $\hat{H}'(t)$ 为随时间变化的微扰项。</p>
+</li>
+<li>
+<p><strong>态展开</strong><br>
+用零阶本征态展开体系波函数：
+</p>
+$$
+   |\psi(t)\rangle = \sum_n c_n(t) e^{-iE_n^{(0)}t/\hbar} |\psi_n^{(0)}\rangle
+   $$<p>
+微扰使得系数 $c_n(t)$ 随时间演化。</p>
+</li>
+<li>
+<p><strong>跃迁概率</strong><br>
+一阶近似下，从态 $i$ 跃迁到态 $f$ 的概率幅为：
+</p>
+$$
+   c_f^{(1)}(t) = \frac{1}{i\hbar} \int_0^t \langle \psi_f^{(0)} | \hat{H}'(t') | \psi_i^{(0)} \rangle 
+   e^{i\omega_{fi} t'} dt'
+   $$<p>
+其中 $\omega_{fi} = (E_f^{(0)} - E_i^{(0)})/\hbar$。</p>
+</li>
+<li>
+<p><strong>费米黄金法则</strong><br>
+当微扰近似为简谐形式，长时间平均下，跃迁速率为：
+</p>
+$$
+   W_{i \to f} = \frac{2\pi}{\hbar} \, |\langle f | \hat{H}' | i \rangle|^2 \, \rho(E_f)
+   $$<p>
+其中 $\rho(E_f)$ 为末态的密度。</p>
+</li>
+</ol>
+<p><strong>总结</strong></p>
+<ul>
+<li>定态微扰：适用于时间无关扰动，修正能量与波函数。</li>
+<li>含时微扰：研究能级间的跃迁过程，解释辐射与吸收等现象。</li>
+</ul>
+<h2 id="电子自旋">
+<a class="header-anchor" href="#%e7%94%b5%e5%ad%90%e8%87%aa%e6%97%8b"></a>
+电子自旋
+</h2><h3 id="电子自旋实验发现">
+<a class="header-anchor" href="#%e7%94%b5%e5%ad%90%e8%87%aa%e6%97%8b%e5%ae%9e%e9%aa%8c%e5%8f%91%e7%8e%b0"></a>
+电子自旋实验发现
+</h3><ol>
+<li>
+<p><strong>斯特恩–格拉赫实验</strong></p>
+<ul>
+<li>将银原子束通过非均匀磁场，观测到束分裂为两条轨迹。</li>
+<li>说明电子具有除轨道角动量之外的内禀角动量——自旋。</li>
+</ul>
+</li>
+<li>
+<p><strong>实验结论</strong></p>
+<ul>
+<li>自旋量子数为 $s = 1/2$。</li>
+<li>自旋有两个可能的投影 $m_s = \pm 1/2$。</li>
+<li>自旋引入了额外的磁矩：
+$$
+     \vec{\mu}_s = -g_s \frac{e}{2m_e} \vec{S}, \quad g_s \approx 2
+     $$</li>
+</ul>
+</li>
+</ol>
+<h3 id="电子自旋理论">
+<a class="header-anchor" href="#%e7%94%b5%e5%ad%90%e8%87%aa%e6%97%8b%e7%90%86%e8%ae%ba"></a>
+电子自旋理论
+</h3><ol>
+<li>
+<p><strong>自旋的量子描述</strong></p>
+<ul>
+<li>自旋是内禀角动量，不依赖空间坐标。</li>
+<li>其算符满足角动量对易关系：
+$$
+     [\hat{S}_i, \hat{S}_j] = i\hbar \epsilon_{ijk} \hat{S}_k
+     $$</li>
+</ul>
+</li>
+<li>
+<p><strong>物理意义</strong></p>
+<ul>
+<li>自旋决定了电子的磁性行为。</li>
+<li>自旋量子化导致费米–狄拉克统计和泡利不相容原理。</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h3 id="自旋角动量">
+<a class="header-anchor" href="#%e8%87%aa%e6%97%8b%e8%a7%92%e5%8a%a8%e9%87%8f"></a>
+自旋角动量
+</h3><h4 id="自旋算符">
+<a class="header-anchor" href="#%e8%87%aa%e6%97%8b%e7%ae%97%e7%ac%a6"></a>
+自旋算符
+</h4><ol>
+<li>
+<p><strong>自旋分量算符</strong><br>
+</p>
+$$
+   \hat{S}_x, \hat{S}_y, \hat{S}_z
+   $$<p>
+满足对易关系：
+</p>
+$$
+   [\hat{S}_x, \hat{S}_y] = i\hbar \hat{S}_z, \quad \text{循环对称}
+   $$</li>
+<li>
+<p><strong>总自旋算符</strong><br>
+</p>
+$$
+   \hat{S}^2 = \hat{S}_x^2 + \hat{S}_y^2 + \hat{S}_z^2
+   $$<p>
+对应总自旋量子数 $s$：
+</p>
+$$
+   \hat{S}^2 |\chi_s\rangle = s(s+1)\hbar^2 |\chi_s\rangle
+   $$</li>
+</ol>
+<h4 id="本征函数的矩阵表示">
+<a class="header-anchor" href="#%e6%9c%ac%e5%be%81%e5%87%bd%e6%95%b0%e7%9a%84%e7%9f%a9%e9%98%b5%e8%a1%a8%e7%a4%ba"></a>
+本征函数的矩阵表示
+</h4><ol>
+<li>
+<p><strong>自旋-1/2 粒子</strong></p>
+<ul>
+<li>自旋态空间二维，取基底：
+$$
+     |\uparrow\rangle = \begin{pmatrix}1\\0\end{pmatrix}, \quad
+     |\downarrow\rangle = \begin{pmatrix}0\\1\end{pmatrix}
+     $$</li>
+</ul>
+</li>
+<li>
+<p><strong>自旋算符的矩阵形式（泡利矩阵）</strong><br>
+</p>
+$$
+   \hat{S}_x = \frac{\hbar}{2} \sigma_x, \quad
+   \hat{S}_y = \frac{\hbar}{2} \sigma_y, \quad
+   \hat{S}_z = \frac{\hbar}{2} \sigma_z
+   $$<p>
+其中
+</p>
+$$
+   \sigma_x = \begin{pmatrix}0 & 1\\ 1 & 0\end{pmatrix},\quad
+   \sigma_y = \begin{pmatrix}0 & -i\\ i & 0\end{pmatrix},\quad
+   \sigma_z = \begin{pmatrix}1 & 0\\ 0 & -1\end{pmatrix}
+   $$</li>
+</ol>
+<h4 id="角动量耦合理论">
+<a class="header-anchor" href="#%e8%a7%92%e5%8a%a8%e9%87%8f%e8%80%a6%e5%90%88%e7%90%86%e8%ae%ba"></a>
+角动量耦合理论
+</h4><ol>
+<li>
+<p><strong>自旋-轨道耦合</strong></p>
+<ul>
+<li>电子轨道角动量 $\vec{L}$ 与自旋 $\vec{S}$ 耦合：
+$$
+     \hat{H}_{\text{SO}} = \xi(r)\, \vec{L} \cdot \vec{S}
+     $$</li>
+<li>造成能级分裂（精细结构）。</li>
+</ul>
+</li>
+<li>
+<p><strong>总角动量</strong><br>
+</p>
+$$
+   \vec{J} = \vec{L} + \vec{S}, \quad
+   \hat{J}^2 = (\hat{L}+\hat{S})^2
+   $$<p>
+本征态记为 $|j, m_j\rangle$，满足：
+</p>
+$$
+   \hat{J}^2 |j, m_j\rangle = j(j+1)\hbar^2 |j, m_j\rangle, \quad
+   \hat{J}_z |j, m_j\rangle = m_j \hbar |j, m_j\rangle
+   $$</li>
+<li>
+<p><strong>耦合结果</strong></p>
+<ul>
+<li>$j = l \pm s$，$m_j = -j, -j+1, ..., j$。</li>
+<li>自旋与轨道角动量的耦合是原子光谱精细结构的重要来源。</li>
+</ul>
+</li>
+</ol>
+<h2 id="全同性原理">
+<a class="header-anchor" href="#%e5%85%a8%e5%90%8c%e6%80%a7%e5%8e%9f%e7%90%86"></a>
+全同性原理
+</h2><h3 id="全同粒子体系">
+<a class="header-anchor" href="#%e5%85%a8%e5%90%8c%e7%b2%92%e5%ad%90%e4%bd%93%e7%b3%bb"></a>
+全同粒子体系
+</h3><h4 id="概念与原理">
+<a class="header-anchor" href="#%e6%a6%82%e5%bf%b5%e4%b8%8e%e5%8e%9f%e7%90%86"></a>
+概念与原理
+</h4><ol>
+<li>
+<p><strong>全同粒子定义</strong></p>
+<ul>
+<li>若两个粒子在物理性质上完全相同（质量、电荷、自旋等）且无法通过任何实验区分，则称为全同粒子（Identical particles）。</li>
+</ul>
+</li>
+<li>
+<p><strong>全同性原理</strong></p>
+<ul>
+<li>物理规律对全同粒子应保持不变。</li>
+<li>即交换任意两粒子的位置和自旋，哈密顿量及可观测量不变。</li>
+</ul>
+</li>
+</ol>
+<h4 id="全同粒子体系哈密顿算符特点">
+<a class="header-anchor" href="#%e5%85%a8%e5%90%8c%e7%b2%92%e5%ad%90%e4%bd%93%e7%b3%bb%e5%93%88%e5%af%86%e9%a1%bf%e7%ae%97%e7%ac%a6%e7%89%b9%e7%82%b9"></a>
+全同粒子体系哈密顿算符特点
+</h4><ol>
+<li>
+<p><strong>哈密顿量形式</strong><br>
+对 $N$ 个全同粒子：
+</p>
+$$
+   \hat{H} = \sum_{i=1}^N \hat{T}_i + \sum_{i<j} V(\vec{r}_i - \vec{r}_j)
+   $$<ul>
+<li>$\hat{T}_i$ 为第 $i$ 个粒子的动能算符。</li>
+<li>$V(\vec{r}_i - \vec{r}_j)$ 为两粒子间相互作用势。</li>
+</ul>
+</li>
+<li>
+<p><strong>对称性</strong></p>
+<ul>
+<li>$\hat{H}$ 在交换粒子算符下保持不变：
+$$
+     [\hat{H}, \hat{P}_{ij}] = 0
+     $$</li>
+<li>$\hat{P}_{ij}$ 为交换粒子 $i$ 与 $j$ 的交换算符。</li>
+</ul>
+</li>
+</ol>
+<h4 id="全同粒子体系波函数特点">
+<a class="header-anchor" href="#%e5%85%a8%e5%90%8c%e7%b2%92%e5%ad%90%e4%bd%93%e7%b3%bb%e6%b3%a2%e5%87%bd%e6%95%b0%e7%89%b9%e7%82%b9"></a>
+全同粒子体系波函数特点
+</h4><ol>
+<li>
+<p><strong>对称性要求</strong></p>
+<ul>
+<li>波函数必须满足交换对称性：
+$$
+     \hat{P}_{ij} \Psi(\dots, \vec{r}_i, \vec{r}_j, \dots) =
+     \pm \Psi(\dots, \vec{r}_i, \vec{r}_j, \dots)
+     $$</li>
+<li><strong>+号</strong>：玻色子（Bosons），波函数对称。</li>
+<li><strong>-号</strong>：费米子（Fermions），波函数反对称。</li>
+</ul>
+</li>
+<li>
+<p><strong>多粒子波函数构造</strong></p>
+<ul>
+<li>玻色子：对称化和式。</li>
+<li>费米子：反对称化行列式（Slater 行列式）：
+$$
+     \Psi(\vec{r}_1, \dots, \vec{r}_N) = \frac{1}{\sqrt{N!}}
+     \begin{vmatrix}
+     \psi_1(\vec{r}_1) & \cdots & \psi_1(\vec{r}_N) \\
+     \vdots & \ddots & \vdots \\
+     \psi_N(\vec{r}_1) & \cdots & \psi_N(\vec{r}_N)
+     \end{vmatrix}
+     $$</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h3 id="泡利不相容原理">
+<a class="header-anchor" href="#%e6%b3%a1%e5%88%a9%e4%b8%8d%e7%9b%b8%e5%ae%b9%e5%8e%9f%e7%90%86"></a>
+泡利不相容原理
+</h3><ol>
+<li>
+<p><strong>原理内容</strong></p>
+<ul>
+<li>对于自旋为半整数的全同费米子，任何两粒子不能占据完全相同的量子态。</li>
+<li>即：
+$$
+     \Psi(\text{同一量子态}) = 0
+     $$</li>
+</ul>
+</li>
+<li>
+<p><strong>物理意义</strong></p>
+<ul>
+<li>解释电子在原子轨道的排布规律。</li>
+<li>导致原子结构、化学性质及费米气体性质。</li>
+</ul>
+</li>
+<li>
+<p><strong>例子</strong></p>
+<ul>
+<li>原子中的电子：每个轨道最多两个电子，自旋相反。</li>
+<li>金属电子：形成费米能级，决定导电和热学性质。</li>
+</ul>
+</li>
+</ol>
+
+        
+        <hr><p>本文2025-09-05首发于<a href='https://guzhengsvt.cn/'>孤筝の温暖小家</a>，最后修改于2025-09-05</p><p>本博客所有文章除特别声明外，均采用 BY-NC-SA 许可协议。转载请注明出处！</p><hr />
