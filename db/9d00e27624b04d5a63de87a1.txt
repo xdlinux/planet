@@ -1,0 +1,182 @@
+<h1 id="linux">LINUX</h1>
+
+<ul>
+  <li>
+    <p>计算机由硬件与软件构成</p>
+  </li>
+  <li>
+    <p>LINUX（操作系统）属于软件，作为硬件和用户之间的桥梁，调度和管理硬件进行工作。</p>
+  </li>
+</ul>
+
+<h2 id="初识linux">初识LINUX</h2>
+
+<ol>
+  <li>
+    <p>Linux的诞生</p>
+  </li>
+  <li>
+    <p>Linux的内核</p>
+    <ul>
+      <li>Linux由内核与系统及应用程序构成</li>
+    </ul>
+  </li>
+</ol>
+
+<ul>
+  <li>
+    <p>Linux内核提供最核心功能，调度硬件，交互功能</p>
+  </li>
+  <li>
+    <p>系统及应用程序就像出厂自带程序</p>
+    <ol>
+      <li>发行版 内核加系统级程序</li>
+    </ol>
+  </li>
+</ul>
+
+<ol>
+  <li>虚拟机介绍
+    <ul>
+      <li>用虚拟化技术在电脑中虚拟硬件加上系统得到虚拟机</li>
+    </ul>
+  </li>
+  <li>VMware安装</li>
+</ol>
+
+<h2 id="linux-基础命令">LINUX 基础命令</h2>
+
+<ol>
+  <li>Linux的目录结构
+    <ul>
+      <li>是树形结构</li>
+    </ul>
+  </li>
+</ol>
+
+<ul>
+  <li>
+    <p>没有盘符的概念，只有一个根目录/(顶级目录)</p>
+  </li>
+  <li>Linux路径之间的层级关系用  “/”  表示
+    <ol>
+      <li>Linux命令入门</li>
+    </ol>
+  </li>
+  <li>Linux命令基础</li>
+</ul>
+
+<p>命令行就是Linux终端（terminal）</p>
+
+<p>命令就是可执行程序（相当于.exe）</p>
+
+<p>命令基本格式   command [-options] [parameter]</p>
+
+<h3 id="ls命令入门">ls命令入门</h3>
+
+<p>作用：列出目录下内容</p>
+
+<p>HOME目录：个人账户目录，路径在 /home/用户名 ，登陆时会默认处于HOME目录</p>
+
+<p>当前工作目录：打开时默认处于的目录</p>
+
+<ul>
+  <li>ls命令的参数和选项
+ls[-a -l -h][Linux路径]
+-a （all）列出全部文件，展示出隐藏内容
+-l 展示更多内容，竖向排列的方式
+-h 以易于阅读的格式展示文件大小
+命令选型可以组合使用</li>
+</ul>
+
+<h3 id="目录切换的相关命令cd-pwd">目录切换的相关命令（cd pwd）</h3>
+
+<p>cd  更改当前所在工作目录  cd[Linux路径] 无选项只有参数</p>
+
+<p>pwd（print work directory） 列出当前工作目录</p>
+
+<ul>
+  <li>相对路径，绝对路径</li>
+</ul>
+
+<p>绝对路径 以根目录为起点</p>
+
+<p>相对路径 以当前目录为起点</p>
+
+<p>特殊路径符</p>
+
+<p>.  当前目录</p>
+
+<p>.. 上一级目录</p>
+
+<p>~表示HOME 目录</p>
+
+<h3 id="创建目录命令mkdir">创建目录命令（mkdir）</h3>
+
+<p>mkdir(make directory)  mkdir [-p] linux路径</p>
+
+<p>参数必填</p>
+
+<p>-p 可选 自动创建不存在的父目录 一次性创造多个层级的目录</p>
+
+<p>创建文件夹需要修改权限</p>
+
+<h3 id="文件操作命令touch-cat-morecpmvrm">文件操作命令（touch ,cat ,more,cp,mv,rm）</h3>
+
+<ol>
+  <li>
+    <p>touch 创建文件  touch Linux路径</p>
+  </li>
+  <li>
+    <p>cat 查看文件内容   cat linux路径</p>
+  </li>
+  <li>
+    <p>more 查看文件内容（支持翻页） more Linux路径</p>
+  </li>
+  <li>
+    <p>cp（copy） 复制文件文件夹 cp[-r] 参数1 参数2     -r 用于复制文件夹   参数1 被复制    参数二  复制去的位置</p>
+  </li>
+  <li>
+    <p>mv（move） 完成文件移动，改名  mv 参数1 参数2</p>
+  </li>
+  <li>
+    <p>rm （remove）删除文件文件夹  rm[-r -f] 参数1 参数2 参数3…. （可删除多个）       -r选项用于删除文件夹  -f强制删除</p>
+  </li>
+</ol>
+
+<p>rm 支持通配符”<em>“用来匹配任意内容 “</em>test”   匹配以test结尾内容 test</p>
+
+<h3 id="查找命令whichfind">查找命令（which，find）</h3>
+
+<p>which 查看一系列命令的程序文件存放在哪里   which 要查找的<em>命令</em></p>
+
+<p>find 查找指定文件  （也可使用通配符）</p>
+
+<p>按文件名查找  find 起始路径  -name “被查找文件名”</p>
+
+<table>
+  <tbody>
+    <tr>
+      <td>按文件大小查找 find 起始路径 -size  +</td>
+      <td>- n[kMG]</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="grepwc和管道符">grep,wc和管道符</h3>
+
+<p>grep 从文件中通过关键字过滤文件行  grep [-n] 关键字 文件路径</p>
+
+<h2 id="linux权限管控">LINUX权限管控</h2>
+
+<h2 id="linux实用操作">LINUX实用操作</h2>
+
+<h2 id="实战软件操作">实战软件操作</h2>
+
+<h2 id="脚本和自动化">脚本和自动化</h2>
+
+<h2 id="项目实战">项目实战</h2>
+
+<h2 id="云平台技术">云平台技术</h2>
+
+<p>##</p><hr />
