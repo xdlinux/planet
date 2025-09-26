@@ -24,7 +24,7 @@
   <li>首先是word不适合理科报告书写的问题，我选择直接使用论文写作时会用到的markdown格式，个人用的是typdown编辑器微软商店里就有（免费）</li>
 </ul>
 
-<p><img class="shadow" src="/img/ 2025-09-25-1.png" width="700" /></p>
+<p><img src="https://raw.githubusercontent.com/yuki-1317/yuki-1317.github.io/refs/heads/master/img/%202025-09-25-1.png" alt="img" /></p>
 
 <p>markdown格式打物理符号很方便也很简单，网上教程也一大堆可以自己学习。</p>
 
