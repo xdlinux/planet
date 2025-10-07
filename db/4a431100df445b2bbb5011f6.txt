@@ -1,0 +1,108 @@
+<p>起因 参见：Klutton《使用 Hostapd + dnsmasq + flask web 服务器的 WiF [&#8230;]</p>
+<p><a href="https://www.xiaozonglin.cn/acrylic-wifi-phishing/">使用 Acrylic 复现百团大战 WiFi 钓鱼攻击——关于 Klutton 学长记录的补充</a>最先出现在<a href="https://www.xiaozonglin.cn">林林杂语</a>。</p>
+<hr />
+<h2 class="wp-block-heading">起因</h2>
+
+
+
+<p>参见：Klutton<a href="https://klutton.github.io/#/todolist/wifi_phishing">《使用 Hostapd + dnsmasq + flask web 服务器的 WiFi 钓鱼攻击研究》</a></p>
+
+
+
+<p>故事还要从上个月的百团大战说起，当时我看到信安协会的 Klutton 学长正对着大屏幕敲命令，我就在旁边驻足凑热闹，得知他们正在搭建钓鱼 WiFi。这个钓鱼 WiFi 的技术方案大致是用Hostapd创建热点，用 dnsmasq 实现 DNS 劫持，用 Python Flask 来 mock 学校校园网的登陆页面。</p>
+
+
+
+<p>当时钓鱼 WiFi 的 SSID 被精心设置成 stu-xdwlan，登陆页面的域名也被设置为 w.xidian.edu.cn。要不是我在现场看他们配置，不然根本分辨不出来，在场地的大屏幕上我看到有挺多人上当。</p>
+
+
+
+<p>因为此前略微用过 Python Flask，也粗略懂一点点（根本不懂）网页开发，所以我跟 Klutton 学长提出负责完善展示页面（其实只是显示一个 UA）。学长欣然同意了，我被拉进了代码仓库，得到了学长 mock 的校园网登陆页面。</p>
+
+
+
+<p>国庆使用 Windows Acrylic 成功复现百团大战 WiFi 钓鱼攻击后，学长邀请我写一篇。（其实我这篇没什么技术含量，只作本次尝试的记录）</p>
+
+
+
+<h2 class="wp-block-heading">照抄作业</h2>
+
+
+
+<p>国庆之前，我就想照抄学长的作业，跟着学长的方案复现一遍。我在 Deepseek 的指导下安装了 VisualBox，安装了 Kali Linux，配置了 Hostapd 和 dnsmasq。最后在如何发射网络这个问题上犯了难。</p>
+
+
+
+<p>在某宝上买了一个网卡，发现不能用，退了。又买了一个网卡，发现还是不能用，懒得退。</p>
+
+
+
+<p>我的笔记本自带“移动热点”功能，但 VisualBox 配置虚拟机的时候没有网络桥接选项，让虚拟机里的 Hostapd 用上我笔记本的热点功能对我这种小菜鸡来说基本无法实现。</p>
+
+
+
+<p>故，Linux 这条路是走不通了。</p>
+
+
+
+<h2 class="wp-block-heading">另寻出路</h2>
+
+
+
+<p>Linux 这条路给了我很大的折磨，我跟 Deepseek 说：</p>
+
+
+
+<blockquote class="wp-block-quote has-text-align-left is-layout-flow wp-block-quote-is-layout-flow">
+<p>有没有什么在windows上就可以实现的dhcp、dns和wifi热点的程序，我不太想配置虚拟环境了</p>
+</blockquote>
+
+
+
+<p>它向我推荐了 mHotspot 和 Acrylic DNS Proxy。我便用这两款软件进行尝试。mHotspot 我不知道哪里出问题了，可能是程序太老了，在我的电脑上跑不起来。</p>
+
+
+
+<p>我最终用 Acrylic DNS Proxy 取得了成功。虽然过程中有一点点小波折，但这里不赘述。</p>
+
+
+
+<p>如果需要用 Windows 笔记本自带的热点功能的话，需要先将热点开起来，修改热点的网络适配器设置，如图：</p>
+
+
+<div class="wp-block-image">
+<figure class="aligncenter size-full"><img fetchpriority="high" decoding="async" width="694" height="871" src="https://www.xiaozonglin.cn/wp-content/uploads/2025/10/图片.png" alt="" class="wp-image-404" srcset="https://www.xiaozonglin.cn/wp-content/uploads/2025/10/图片.png 694w, https://www.xiaozonglin.cn/wp-content/uploads/2025/10/图片-239x300.png 239w" sizes="(max-width: 694px) 100vw, 694px" /><figcaption class="wp-element-caption">192.168.137.1为移动热点默认的网关IP</figcaption></figure></div>
+
+
+<p>然后在 Acrylic 的 hosts 文件中添加这样一条，将所有的域名都解析到自己的电脑，如图：</p>
+
+
+<div class="wp-block-image">
+<figure class="aligncenter size-large"><img decoding="async" width="1024" height="761" src="https://www.xiaozonglin.cn/wp-content/uploads/2025/10/图片-1-1024x761.png" alt="" class="wp-image-406" srcset="https://www.xiaozonglin.cn/wp-content/uploads/2025/10/图片-1-1024x761.png 1024w, https://www.xiaozonglin.cn/wp-content/uploads/2025/10/图片-1-300x223.png 300w, https://www.xiaozonglin.cn/wp-content/uploads/2025/10/图片-1-768x571.png 768w, https://www.xiaozonglin.cn/wp-content/uploads/2025/10/图片-1-1200x892.png 1200w, https://www.xiaozonglin.cn/wp-content/uploads/2025/10/图片-1.png 1462w" sizes="(max-width: 1024px) 100vw, 1024px" /></figure></div>
+
+
+<p>最后，运行 Python Flask 代码，就可以了。</p>
+
+
+<div class="wp-block-image">
+<figure class="aligncenter size-large"><img decoding="async" width="1024" height="413" src="https://www.xiaozonglin.cn/wp-content/uploads/2025/10/图片-2-1024x413.png" alt="" class="wp-image-407" srcset="https://www.xiaozonglin.cn/wp-content/uploads/2025/10/图片-2-1024x413.png 1024w, https://www.xiaozonglin.cn/wp-content/uploads/2025/10/图片-2-300x121.png 300w, https://www.xiaozonglin.cn/wp-content/uploads/2025/10/图片-2-768x309.png 768w, https://www.xiaozonglin.cn/wp-content/uploads/2025/10/图片-2-1200x484.png 1200w, https://www.xiaozonglin.cn/wp-content/uploads/2025/10/图片-2.png 1350w" sizes="(max-width: 1024px) 100vw, 1024px" /></figure></div>
+
+
+<h2 class="wp-block-heading">更进一步</h2>
+
+
+
+<p>关于 Acrylic 的尝试并不是一次就成功的，也是失败到让我怀疑人生。就在我怀疑人生的时候，我突然想到：能不能把热点这个身份“外包”出去呢？买一个路由器，让电脑通过网线连接路由器，并在路由器设置中将&nbsp;DNS&nbsp;服务器指向电脑，从而一劳永逸地解决网络发射问题，还可以增强网络的发射功率，使其更好与校园网的正版 WiFi 竞争。某宝物流显示路由器明天到货，到货了会用路由器再做一次尝试。</p>
+
+
+
+<p>在上面的步骤中，我让所有的域名都解析到我的电脑上，我是否可以构造一个透明代理实现流量的中间人攻击？我向 Deepseek 分享了这个想法，它向我推荐了 mitmproxy。貌似代理加密流量需要安装并信任根证书。这个东西有待日后尝试。</p>
+
+
+
+<p>是否可以对仍然支持 SSL 3.0 协议的网站进行 https 降级攻击？是否可以对不支持 HSTS 的网站进行中间人攻击？有待日后尝试。</p>
+
+
+
+<p>文毕。</p>
+<p><a href="https://www.xiaozonglin.cn/acrylic-wifi-phishing/">使用 Acrylic 复现百团大战 WiFi 钓鱼攻击——关于 Klutton 学长记录的补充</a>最先出现在<a href="https://www.xiaozonglin.cn">林林杂语</a>。</p>

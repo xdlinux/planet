@@ -33,7 +33,7 @@
 
 
 <div class="wp-block-image">
-<figure class="aligncenter size-large"><img fetchpriority="high" decoding="async" width="1024" height="322" src="https://www.xiaozonglin.cn/wp-content/uploads/2025/09/image-1024x322.png" alt="" class="wp-image-382" srcset="https://www.xiaozonglin.cn/wp-content/uploads/2025/09/image-1024x322.png 1024w, https://www.xiaozonglin.cn/wp-content/uploads/2025/09/image-300x94.png 300w, https://www.xiaozonglin.cn/wp-content/uploads/2025/09/image-768x241.png 768w, https://www.xiaozonglin.cn/wp-content/uploads/2025/09/image.png 1111w" sizes="(max-width: 1024px) 100vw, 1024px" /><figcaption class="wp-element-caption">用 OneNote 画的超级丑的图</figcaption></figure></div>
+<figure class="aligncenter size-large"><img loading="lazy" decoding="async" width="1024" height="322" src="https://www.xiaozonglin.cn/wp-content/uploads/2025/09/image-1024x322.png" alt="" class="wp-image-382" srcset="https://www.xiaozonglin.cn/wp-content/uploads/2025/09/image-1024x322.png 1024w, https://www.xiaozonglin.cn/wp-content/uploads/2025/09/image-300x94.png 300w, https://www.xiaozonglin.cn/wp-content/uploads/2025/09/image-768x241.png 768w, https://www.xiaozonglin.cn/wp-content/uploads/2025/09/image.png 1111w" sizes="auto, (max-width: 1024px) 100vw, 1024px" /><figcaption class="wp-element-caption">用 OneNote 画的超级丑的图</figcaption></figure></div>
 
 
 <p>但是，当我真的去按照这个思路写代码的时候，电脑报错了。检查之后发现是中文博客列表导航有频率限制。我尝试 sleep 了一下，发现效果不好。这样会给中文博客列表导航发一千多次请求，对项目不友好。</p>
@@ -143,7 +143,7 @@ tree.write('result-tech.xml', encoding = 'utf-8', xml_declaration = True)</code>
 
 
 <div class="wp-block-image">
-<figure class="aligncenter size-full"><img decoding="async" width="321" height="202" src="https://www.xiaozonglin.cn/wp-content/uploads/2025/09/image-1.png" alt="" class="wp-image-383" srcset="https://www.xiaozonglin.cn/wp-content/uploads/2025/09/image-1.png 321w, https://www.xiaozonglin.cn/wp-content/uploads/2025/09/image-1-300x189.png 300w" sizes="(max-width: 321px) 100vw, 321px" /><figcaption class="wp-element-caption">一句玩笑话</figcaption></figure></div>
+<figure class="aligncenter size-full"><img loading="lazy" decoding="async" width="321" height="202" src="https://www.xiaozonglin.cn/wp-content/uploads/2025/09/image-1.png" alt="" class="wp-image-383" srcset="https://www.xiaozonglin.cn/wp-content/uploads/2025/09/image-1.png 321w, https://www.xiaozonglin.cn/wp-content/uploads/2025/09/image-1-300x189.png 300w" sizes="auto, (max-width: 321px) 100vw, 321px" /><figcaption class="wp-element-caption">一句玩笑话</figcaption></figure></div>
 
 
 <p>开往的巡查工具又是一个拖了很久的东西，之前大蛋糕写的前端代码还在。我来<s>折腾</s>（捣乱）一下。</p>
@@ -154,7 +154,7 @@ tree.write('result-tech.xml', encoding = 'utf-8', xml_declaration = True)</code>
 
 
 <div class="wp-block-image">
-<figure class="aligncenter size-large"><img decoding="async" width="1024" height="372" src="https://www.xiaozonglin.cn/wp-content/uploads/2025/09/image-2-1024x372.png" alt="" class="wp-image-384" srcset="https://www.xiaozonglin.cn/wp-content/uploads/2025/09/image-2-1024x372.png 1024w, https://www.xiaozonglin.cn/wp-content/uploads/2025/09/image-2-300x109.png 300w, https://www.xiaozonglin.cn/wp-content/uploads/2025/09/image-2-768x279.png 768w, https://www.xiaozonglin.cn/wp-content/uploads/2025/09/image-2-1200x436.png 1200w, https://www.xiaozonglin.cn/wp-content/uploads/2025/09/image-2.png 1522w" sizes="(max-width: 1024px) 100vw, 1024px" /><figcaption class="wp-element-caption">用飞书画的模式图，比较漂亮</figcaption></figure></div>
+<figure class="aligncenter size-large"><img loading="lazy" decoding="async" width="1024" height="372" src="https://www.xiaozonglin.cn/wp-content/uploads/2025/09/image-2-1024x372.png" alt="" class="wp-image-384" srcset="https://www.xiaozonglin.cn/wp-content/uploads/2025/09/image-2-1024x372.png 1024w, https://www.xiaozonglin.cn/wp-content/uploads/2025/09/image-2-300x109.png 300w, https://www.xiaozonglin.cn/wp-content/uploads/2025/09/image-2-768x279.png 768w, https://www.xiaozonglin.cn/wp-content/uploads/2025/09/image-2-1200x436.png 1200w, https://www.xiaozonglin.cn/wp-content/uploads/2025/09/image-2.png 1522w" sizes="auto, (max-width: 1024px) 100vw, 1024px" /><figcaption class="wp-element-caption">用飞书画的模式图，比较漂亮</figcaption></figure></div>
 
 
 <p>然后，因为我喜欢折腾，所以这个东西前端和后端分成两个人完成——前端由组里的 Lee 同学负责，后端就由我来糟蹋了。</p>
