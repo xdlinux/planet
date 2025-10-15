@@ -1,0 +1,439 @@
+<img src="https://raw.githubusercontent.com/fanshanng/blog_picture/master/2.jpg" alt="Featured image of post Buuctf刷题记录" /><p>并非是wp，而是做题过程中的一些记录</p>
+<h1 id="luck_guy">luck_guy
+</h1><p>主函数
+<img src="https://raw.githubusercontent.com/fanshanng/blog_picture/master/30487447-bd1f8a2f09c4c524.png"
+	
+	
+	
+	loading="lazy"
+	
+	
+></p>
+<ul>
+<li>①.Case2 和 case3 只是一个打印函数。</li>
+<li>②.strcat 是连接字符串函数，所以 case4 是对 s 赋值并将 s 与 f2 进行拼接。</li>
+<li>③.case5 是对 f2 进行处理：j 为奇数，f2 减 2；j 为偶数，f2 减 1。</li>
+<li>④.Case1 是要得到 flag，首先memset函数先对 s 进行初始化，s 变成了一个空数组，所以之后的 strcat 函数相当于直接把 f1 复制到了 s 里，再之后的 strcat 函数将 s 与 f2 连接相当于 f1 与 f2 连接，最终打印出来的 flag 就是 f1 加上 f2。
+s=0x7F666F6067756369LL，按r键将它转换为字符就是“\x7Ffo`guci”，这里要注意是小端序存储！所以要把字符顺序反过来，就是“icug`of\x7F”</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span><span class="n">using</span> <span class="n">namespace</span> <span class="n">std</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">char</span> <span class="n">f2</span><span class="p">[]</span> <span class="o">=</span> <span class="s">&#34;icug`of</span><span class="se">\x7F</span><span class="s">&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"> 
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="mi">8</span><span class="p">;</span> <span class="o">++</span><span class="n">j</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="p">(</span> <span class="n">j</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">1</span> <span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="n">f2</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="o">-=</span><span class="mi">2</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">else</span>
+</span></span><span class="line"><span class="cl">            <span class="n">f2</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="o">--</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"> 
+</span></span><span class="line"><span class="cl">    <span class="nf">printf</span><span class="p">(</span><span class="s">&#34;%s&#34;</span><span class="p">,</span><span class="n">f2</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"> 
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h1 id="刮开有奖">刮开有奖
+</h1><p><img src="https://raw.githubusercontent.com/fanshanng/blog_picture/master/0ab10ae0dd0e4cf13ceabed5f5f6cc9d.png"
+	
+	
+	
+	loading="lazy"
+	
+	
+></p>
+<p><img src="https://raw.githubusercontent.com/fanshanng/blog_picture/master/0ab10ae0dd0e4cf13ceabed5f5f6cc9d.png"
+	
+	
+	
+	loading="lazy"
+	
+	
+></p>
+<p>加密逻辑其实挺清晰的一道题，快速排序+base64编码，<strong>快速排序这里不懂的话可以去问ai，不过还是要自己判断，也可以把代码复制下来在vscode中运行一遍看看结果</strong>
+但是第一次疑惑的地方是加密排序那个数组a1只初始化了两个数，但是它的结束索引却是十。<strong>这里学到的知识是：</strong></p>
+<p><img src="https://raw.githubusercontent.com/fanshanng/blog_picture/master/abac7fd51be869e9bfd22c166f30c962.png"
+	
+	
+	
+	loading="lazy"
+	
+	
+></p>
+<p>根据这段初始化，知道这段的地址是连续的。所以实际上是一个长度为11的数组，<del>别问我为什么不动调，F9点开后调不了一点</del>
+然后就是</p>
+<p><img src="https://raw.githubusercontent.com/fanshanng/blog_picture/master/3f1c956d4e2b228e4db3f12a45ce89ea.png"
+	
+	
+	
+	loading="lazy"
+	
+	
+></p>
+<p>对比判断的时候这里用的是地址处的值也就是说是排序后的值</p>
+<p>然后要提一嘴的是</p>
+<p><img src="https://raw.githubusercontent.com/fanshanng/blog_picture/master/20250522211252884.png"
+	
+	
+	
+	loading="lazy"
+	
+	
+></p>
+<p>具体可以去看这里
+<a class="link" href="https://learn.microsoft.com/zh-cn/windows/win32/api/winbase/nf-winbase-winmain"  target="_blank" rel="noopener"
+    >WinMain函数 （winbase.h）</a>
+<strong>WinMain 函数（Windows图形应用程序入口点）</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-C++" data-lang="C++"><span class="line"><span class="cl"><span class="kt">int</span> <span class="n">__clrcall</span> <span class="nf">WinMain</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">  <span class="p">[</span><span class="n">in</span><span class="p">]</span>           <span class="n">HINSTANCE</span> <span class="n">hInstance</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="p">[</span><span class="n">in</span><span class="p">,</span> <span class="n">optional</span><span class="p">]</span> <span class="n">HINSTANCE</span> <span class="n">hPrevInstance</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="p">[</span><span class="n">in</span><span class="p">]</span>           <span class="n">LPSTR</span>     <span class="n">lpCmdLine</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="p">[</span><span class="n">in</span><span class="p">]</span>           <span class="kt">int</span>       <span class="n">nShowCmd</span>
+</span></span><span class="line"><span class="cl"><span class="p">);</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>参数：
+<code>hInstance</code>：当前应用程序实例的句柄。
+<code>hPrevInstance</code>：上一个实例的句柄（在现代Windows中始终为NULL）。
+<code>lpCmdLine</code>：命令行参数，不包括程序名称。
+<code>nShowCmd</code>：控制窗口显示方式的标志。
+<strong>返回值</strong>：程序的退出状态码，通常返回 <code>WM_QUIT</code> 消息的 <code>wParam</code> 参数值。</p>
+<h1 id="easyre">easyre
+</h1><p><img src="https://raw.githubusercontent.com/fanshanng/blog_picture/master/20250522211335598.png"
+	
+	
+	
+	loading="lazy"
+	
+	
+></p>
+<p>脱壳后的主函数
+分析比较语句，大致猜到v5就是输入的函数，这里的意思是输入字符的ascii值+1后作为索引进行判断</p>
+<ul>
+<li>python中的find()函数是找到对应的下标值</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">U
+</span></span><span class="line"><span class="cl">U9
+</span></span><span class="line"><span class="cl">U9X
+</span></span><span class="line"><span class="cl">U9X_
+</span></span><span class="line"><span class="cl">U9X_1
+</span></span><span class="line"><span class="cl">U9X_1S
+</span></span><span class="line"><span class="cl">U9X_1S_
+</span></span><span class="line"><span class="cl">U9X_1S_W
+</span></span><span class="line"><span class="cl">U9X_1S_W6
+</span></span><span class="line"><span class="cl">U9X_1S_W6@
+</span></span><span class="line"><span class="cl">U9X_1S_W6@T
+</span></span><span class="line"><span class="cl">U9X_1S_W6@T?
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h1 id="guet-ctf2019re">[GUET-CTF2019]re
+</h1><p><img src="https://raw.githubusercontent.com/fanshanng/blog_picture/master/image-20250522210301316.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="image-20250522210301316"
+	
+	
+></p>
+<p>考z3处理</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">z3</span> <span class="kn">import</span> <span class="o">*</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">solver</span> <span class="o">=</span> <span class="n">Solver</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 使用Int类型而非BitVec，并添加字符范围约束</span>
+</span></span><span class="line"><span class="cl"><span class="n">a1</span> <span class="o">=</span> <span class="p">[</span><span class="n">Int</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;a1_</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">32</span><span class="p">)]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 添加所有等式约束</span>
+</span></span><span class="line"><span class="cl"><span class="n">solver</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="mi">1629056</span> <span class="o">*</span> <span class="n">a1</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mi">166163712</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">solver</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="mi">6771600</span> <span class="o">*</span> <span class="n">a1</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mi">731332800</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">solver</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="mi">3682944</span> <span class="o">*</span> <span class="n">a1</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">==</span> <span class="mi">357245568</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">solver</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="mi">10431000</span> <span class="o">*</span> <span class="n">a1</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1074393000</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">solver</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="mi">3977328</span> <span class="o">*</span> <span class="n">a1</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span> <span class="o">==</span> <span class="mi">489211344</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">solver</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="mi">5138336</span> <span class="o">*</span> <span class="n">a1</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span> <span class="o">==</span> <span class="mi">518971936</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">solver</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="mi">7532250</span> <span class="o">*</span> <span class="n">a1</span><span class="p">[</span><span class="mi">7</span><span class="p">]</span> <span class="o">==</span> <span class="mi">406741500</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">solver</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="mi">5551632</span> <span class="o">*</span> <span class="n">a1</span><span class="p">[</span><span class="mi">8</span><span class="p">]</span> <span class="o">==</span> <span class="mi">294236496</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">solver</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="mi">3409728</span> <span class="o">*</span> <span class="n">a1</span><span class="p">[</span><span class="mi">9</span><span class="p">]</span> <span class="o">==</span> <span class="mi">177305856</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">solver</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="mi">13013670</span> <span class="o">*</span> <span class="n">a1</span><span class="p">[</span><span class="mi">10</span><span class="p">]</span> <span class="o">==</span> <span class="mi">650683500</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">solver</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="mi">6088797</span> <span class="o">*</span> <span class="n">a1</span><span class="p">[</span><span class="mi">11</span><span class="p">]</span> <span class="o">==</span> <span class="mi">298351053</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">solver</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="mi">7884663</span> <span class="o">*</span> <span class="n">a1</span><span class="p">[</span><span class="mi">12</span><span class="p">]</span> <span class="o">==</span> <span class="mi">386348487</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">solver</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="mi">8944053</span> <span class="o">*</span> <span class="n">a1</span><span class="p">[</span><span class="mi">13</span><span class="p">]</span> <span class="o">==</span> <span class="mi">438258597</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">solver</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="mi">5198490</span> <span class="o">*</span> <span class="n">a1</span><span class="p">[</span><span class="mi">14</span><span class="p">]</span> <span class="o">==</span> <span class="mi">249527520</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">solver</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="mi">4544518</span> <span class="o">*</span> <span class="n">a1</span><span class="p">[</span><span class="mi">15</span><span class="p">]</span> <span class="o">==</span> <span class="mi">445362764</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">solver</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="mi">3645600</span> <span class="o">*</span> <span class="n">a1</span><span class="p">[</span><span class="mi">17</span><span class="p">]</span> <span class="o">==</span> <span class="mi">174988800</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">solver</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="mi">10115280</span> <span class="o">*</span> <span class="n">a1</span><span class="p">[</span><span class="mi">16</span><span class="p">]</span> <span class="o">==</span> <span class="mi">981182160</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">solver</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="mi">9667504</span> <span class="o">*</span> <span class="n">a1</span><span class="p">[</span><span class="mi">18</span><span class="p">]</span> <span class="o">==</span> <span class="mi">493042704</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">solver</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="mi">5364450</span> <span class="o">*</span> <span class="n">a1</span><span class="p">[</span><span class="mi">19</span><span class="p">]</span> <span class="o">==</span> <span class="mi">257493600</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">solver</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="mi">13464540</span> <span class="o">*</span> <span class="n">a1</span><span class="p">[</span><span class="mi">20</span><span class="p">]</span> <span class="o">==</span> <span class="mi">767478780</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">solver</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="mi">5488432</span> <span class="o">*</span> <span class="n">a1</span><span class="p">[</span><span class="mi">21</span><span class="p">]</span> <span class="o">==</span> <span class="mi">312840624</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">solver</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="mi">14479500</span> <span class="o">*</span> <span class="n">a1</span><span class="p">[</span><span class="mi">22</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1404511500</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">solver</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="mi">6451830</span> <span class="o">*</span> <span class="n">a1</span><span class="p">[</span><span class="mi">23</span><span class="p">]</span> <span class="o">==</span> <span class="mi">316139670</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">solver</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="mi">6252576</span> <span class="o">*</span> <span class="n">a1</span><span class="p">[</span><span class="mi">24</span><span class="p">]</span> <span class="o">==</span> <span class="mi">619005024</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">solver</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="mi">7763364</span> <span class="o">*</span> <span class="n">a1</span><span class="p">[</span><span class="mi">25</span><span class="p">]</span> <span class="o">==</span> <span class="mi">372641472</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">solver</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="mi">7327320</span> <span class="o">*</span> <span class="n">a1</span><span class="p">[</span><span class="mi">26</span><span class="p">]</span> <span class="o">==</span> <span class="mi">373693320</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">solver</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="mi">8741520</span> <span class="o">*</span> <span class="n">a1</span><span class="p">[</span><span class="mi">27</span><span class="p">]</span> <span class="o">==</span> <span class="mi">498266640</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">solver</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="mi">8871876</span> <span class="o">*</span> <span class="n">a1</span><span class="p">[</span><span class="mi">28</span><span class="p">]</span> <span class="o">==</span> <span class="mi">452465676</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">solver</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="mi">4086720</span> <span class="o">*</span> <span class="n">a1</span><span class="p">[</span><span class="mi">29</span><span class="p">]</span> <span class="o">==</span> <span class="mi">208422720</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">solver</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="mi">9374400</span> <span class="o">*</span> <span class="n">a1</span><span class="p">[</span><span class="mi">30</span><span class="p">]</span> <span class="o">==</span> <span class="mi">515592000</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">solver</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="mi">5759124</span> <span class="o">*</span> <span class="n">a1</span><span class="p">[</span><span class="mi">31</span><span class="p">]</span> <span class="o">==</span> <span class="mi">719890500</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 确保每个字符在0-255范围内（ASCII）</span>
+</span></span><span class="line"><span class="cl"><span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">a1</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">solver</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">c</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">c</span> <span class="o">&lt;=</span> <span class="mi">255</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="n">solver</span><span class="o">.</span><span class="n">check</span><span class="p">()</span> <span class="o">==</span> <span class="n">sat</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">model</span> <span class="o">=</span> <span class="n">solver</span><span class="o">.</span><span class="n">model</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="n">flag</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="nb">chr</span><span class="p">(</span><span class="n">model</span><span class="p">[</span><span class="n">c</span><span class="p">]</span><span class="o">.</span><span class="n">as_long</span><span class="p">())</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">a1</span><span class="p">])</span> <span class="c1"># type: ignore</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;&#34;</span><span class="p">,</span> <span class="n">flag</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;无解&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># flag{e65421110ba03099a1c039337}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>但是疑惑的是少了一位，最后看别人题解都是爆破出来的（，a1[6]=&lsquo;1&rsquo;,
+所以正确的应该是flag{e165421110ba03099a1c039337}</p>
+<h1 id="crackrtf">CrackRTF
+</h1><p>这道题的考点是<strong>rtf</strong>文件,主要的逻辑是先输入六个数字拼接<code>@DBApp</code>然后判断hash-sha1编码，这里爆破出的结果是123321，然后是长度为6的字符串，拼接在一起进行MD5编码，<strong>由于MD5编码不可逆</strong>，我尝试过爆破，生成所有 6 位组合，总数为 95^6 ≈ 735 亿次，遂放弃。</p>
+<blockquote>
+<p>RTF是<strong>Rich Text Format</strong>的缩写，意即多文本格式。</p></blockquote>
+<p><img src="https://raw.githubusercontent.com/fanshanng/blog_picture/master/image-20250523212038394.png"
+	
+	
+	
+	loading="lazy"
+	
+	
+></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-c++" data-lang="c++"><span class="line"><span class="cl"><span class="kt">char</span> <span class="kr">__cdecl</span> <span class="nf">sub_4014D0</span><span class="p">(</span><span class="n">LPCSTR</span> <span class="n">Destination</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">LPCVOID</span> <span class="n">lpBuffer</span><span class="p">;</span> <span class="c1">// [esp+50h] [ebp-1Ch]
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">DWORD</span> <span class="n">NumberOfBytesWritten</span><span class="p">;</span> <span class="c1">// [esp+58h] [ebp-14h] BYREF
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">DWORD</span> <span class="n">nNumberOfBytesToWrite</span><span class="p">;</span> <span class="c1">// [esp+5Ch] [ebp-10h]
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">HGLOBAL</span> <span class="n">hResData</span><span class="p">;</span> <span class="c1">// [esp+60h] [ebp-Ch]
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">HRSRC</span> <span class="n">hResInfo</span><span class="p">;</span> <span class="c1">// [esp+64h] [ebp-8h]
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">HANDLE</span> <span class="n">hFile</span><span class="p">;</span> <span class="c1">// [esp+68h] [ebp-4h]
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl">    <span class="n">hFile</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">hResData</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">nNumberOfBytesToWrite</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">NumberOfBytesWritten</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">hResInfo</span> <span class="o">=</span> <span class="n">FindResourceA</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="p">(</span><span class="n">LPCSTR</span><span class="p">)</span><span class="mh">0x65</span><span class="p">,</span> <span class="s">&#34;AAA&#34;</span><span class="p">);</span><span class="c1">// FindResourceA 函数用于查找程序资源中的一个资源。
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="c1">// 第一个参数为 NULL，表示查找当前进程的资源。
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="c1">// 第二个参数为资源标识符，这里是 0x65。
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="c1">// 第三个参数为资源类型，这里是 &#34;AAA&#34;。
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="k">if</span> <span class="p">(</span> <span class="o">!</span><span class="n">hResInfo</span> <span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">nNumberOfBytesToWrite</span> <span class="o">=</span> <span class="n">SizeofResource</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">hResInfo</span><span class="p">);</span><span class="c1">// SizeofResource 函数用于获取资源的大小。
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="c1">// 如果资源大小为 0，表示资源无效。
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">hResData</span> <span class="o">=</span> <span class="n">LoadResource</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">hResInfo</span><span class="p">);</span>         <span class="c1">// LoadResource 函数用于加载资源。
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="k">if</span> <span class="p">(</span> <span class="o">!</span><span class="n">hResData</span> <span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">lpBuffer</span> <span class="o">=</span> <span class="n">LockResource</span><span class="p">(</span><span class="n">hResData</span><span class="p">);</span>            <span class="c1">// LockResource 函数用于锁定资源，并返回资源的指针。
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">sub_401005</span><span class="p">(</span><span class="n">Destination</span><span class="p">,</span> <span class="p">(</span><span class="kt">int</span><span class="p">)</span><span class="n">lpBuffer</span><span class="p">,</span> <span class="n">nNumberOfBytesToWrite</span><span class="p">);</span><span class="c1">// 异或
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">hFile</span> <span class="o">=</span> <span class="n">CreateFileA</span><span class="p">(</span><span class="s">&#34;dbapp.rtf&#34;</span><span class="p">,</span> <span class="n">GENERIC_ALL</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">CREATE_ALWAYS</span><span class="p">,</span> <span class="n">FILE_READ_ATTRIBUTES</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span><span class="c1">// CreateFileA 函数用于创建或打开一个文件。
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="c1">// 文件名为 &#34;dbapp.rtf&#34;。
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="c1">// 打开模式为 CREATE_ALWAYS，表示如果文件不存在则创建，如果存在则覆盖。
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="c1">// 文件访问权限为 GENERIC_ALL，表示完全访问权限。
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="k">if</span> <span class="p">(</span> <span class="n">hFile</span> <span class="o">==</span> <span class="p">(</span><span class="n">HANDLE</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span> <span class="p">)</span>                    <span class="c1">// 如果文件创建失败，返回 0。
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span> <span class="o">!</span><span class="n">WriteFile</span><span class="p">(</span><span class="n">hFile</span><span class="p">,</span> <span class="n">lpBuffer</span><span class="p">,</span> <span class="n">nNumberOfBytesToWrite</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">NumberOfBytesWritten</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">CloseHandle</span><span class="p">(</span><span class="n">hFile</span><span class="p">);</span>                           <span class="c1">// 关闭文件句柄。
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img src="https://raw.githubusercontent.com/fanshanng/blog_picture/master/20250523212652662.png"
+	
+	
+	
+	loading="lazy"
+	
+	
+></p>
+<p>这里就是我们输入的东西拼接后与“AAA”文件中的读取的前几位异或</p>
+<p><img src="https://raw.githubusercontent.com/fanshanng/blog_picture/master/20250523212835709.png"
+	
+	
+	
+	loading="lazy"
+	
+	
+></p>
+<p>从网上找到<a class="link" href="https://sample.cat/zh/rtf"  target="_blank" rel="noopener"
+    >rtf的示例文件</a>下下来对比发现前几位都是一样的</p>
+<p><img src="https://raw.githubusercontent.com/fanshanng/blog_picture/master/image-20250523210836973.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="image-20250523210836973"
+	
+	
+></p>
+<p><img src="https://raw.githubusercontent.com/fanshanng/blog_picture/master/20250523221341419.png"
+	
+	
+	
+	loading="lazy"
+	
+	
+></p>
+<p>把前几位截下来，然后进行异或处理就能得到前六位<code>~!3a@0123321</code>,很明显**~!3a@0**为所求。于是在ida中动调，生成rtf文件，打开后得到flag
+<img src="https://raw.githubusercontent.com/fanshanng/blog_picture/master/20250523221721960.png"
+	
+	
+	
+	loading="lazy"
+	
+	
+></p><hr />

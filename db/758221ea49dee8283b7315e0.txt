@@ -1,0 +1,426 @@
+<img src="https://s.panlai.com/zb_users/upload/2025/06/20250625120242175082416230890.jpg-arthumbs" alt="Featured image of post 一次IDA动态调试安卓apk记录" /><h1 id="一次ida动态调试安卓apk记录">一次IDA动态调试安卓apk记录
+</h1><ul>
+<li>工具清单：IDA Pro9.1 小米手机（MIUI 15.5.2）<a class="link" href="https://pan.baidu.com/share/init?surl=cFWTLn14jeWfpXxlx3syYw&amp;pwd=nqu9"  target="_blank" rel="noopener"
+    >吾爱破解的教程demo（解压密码：52pj）</a> ADB环境</li>
+<li>在IDA目录下的dbgsrv，选择跟手机架构一致的server</li>
+</ul>
+<p><img src="https://raw.githubusercontent.com/fanshanng/blog_picture/master/20250926222949.png"
+	
+	
+	
+	loading="lazy"
+	
+	
+></p>
+<ul>
+<li>在mt管理器中点开目标app的属性进行手动提权</li>
+</ul>
+<p><img src="https://raw.githubusercontent.com/fanshanng/blog_picture/master/20250926133418.png"
+	
+	
+	
+	loading="lazy"
+	
+	
+></p>
+<p><img src="https://raw.githubusercontent.com/fanshanng/blog_picture/master/20250926222837.png"
+	
+	
+	
+	loading="lazy"
+	
+	
+></p>
+<ul>
+<li>也可以adb进入提权</li>
+</ul>
+<p><img src="https://raw.githubusercontent.com/fanshanng/blog_picture/master/20250926223018.png"
+	
+	
+	
+	loading="lazy"
+	
+	
+></p>
+<ul>
+<li>
+<p>重命名<code>android_server</code>为<code>as</code>，可以防止一些反调试</p>
+</li>
+<li>
+<p>此处运行编辑好的<code>.bat</code>文件，也可以用命令行替代</p>
+</li>
+</ul>
+<p><img src="https://raw.githubusercontent.com/fanshanng/blog_picture/master/20250926223340.png"
+	
+	
+	
+	loading="lazy"
+	
+	
+></p>
+<ul>
+<li>运行成功就会显示如下画面（只需点击IDAdebug1.bat即可）</li>
+</ul>
+<p><img src="https://raw.githubusercontent.com/fanshanng/blog_picture/master/20250926191108.png"
+	
+	
+	
+	loading="lazy"
+	
+	
+></p>
+<ul>
+<li>
+<p>打开ida pro，设置<code>Hostname</code>为<code>127.0.0.1</code>      使用默认端口号为<code>23946</code>
+<img src="https://raw.githubusercontent.com/fanshanng/blog_picture/master/20250926224056.png"
+	
+	
+	
+	loading="lazy"
+	
+	
+></p>
+</li>
+<li>
+<p>对check函数下断点</p>
+</li>
+</ul>
+<p><img src="https://raw.githubusercontent.com/fanshanng/blog_picture/master/20250926224820.png"
+	
+	
+	
+	loading="lazy"
+	
+	
+>然后</p>
+<p><img src="https://raw.githubusercontent.com/fanshanng/blog_picture/master/20250926224332.png"
+	
+	
+	
+	loading="lazy"
+	
+	
+></p>
+<ul>
+<li>附加到对应进程，会出现如下所示窗口，选择same</li>
+</ul>
+<p><img src="https://raw.githubusercontent.com/fanshanng/blog_picture/master/20250926211222.png"
+	
+	
+	
+	loading="lazy"
+	
+	
+></p>
+<p><img src="https://raw.githubusercontent.com/fanshanng/blog_picture/master/20250926225114.png"
+	
+	
+	
+	loading="lazy"
+	
+	
+></p>
+<ul>
+<li>然后程序会停在如图所示的地方，这时候要点开始调试（蓝色小三角），在手机输入任意字符串后点击验证</li>
+</ul>
+<p><img src="https://raw.githubusercontent.com/fanshanng/blog_picture/master/20250926225316.png"
+	
+	
+	
+	loading="lazy"
+	
+	
+></p>
+<p><img src="https://raw.githubusercontent.com/fanshanng/blog_picture/master/20250926225337.png"
+	
+	
+	
+	loading="lazy"
+	
+	
+></p>
+<ul>
+<li>
+<p>等待程序运行到断点</p>
+</li>
+<li>
+<p>步进到比较函数处</p>
+</li>
+</ul>
+<p><img src="https://raw.githubusercontent.com/fanshanng/blog_picture/master/20250926231056.png"
+	
+	
+	
+	loading="lazy"
+	
+	
+></p>
+<ul>
+<li>点击<code>_wuaipojie0123456</code>就可以看到比较的值，即为flag</li>
+</ul>
+<p><img src="https://raw.githubusercontent.com/fanshanng/blog_picture/master/20250926231114.png"
+	
+	
+	
+	loading="lazy"
+	
+	
+></p>
+<ul>
+<li><strong>在第一次调试过程遇到了反调试，在<code>JNI_OnLoad</code>中</strong></li>
+</ul>
+<p><img src="https://raw.githubusercontent.com/fanshanng/blog_picture/master/20250926231500.png"
+	
+	
+	
+	loading="lazy"
+	
+	
+></p>
+<ul>
+<li>将对应代码patch掉后，右键保存</li>
+</ul>
+<p><img src="https://raw.githubusercontent.com/fanshanng/blog_picture/master/20250926231637.png"
+	
+	
+	
+	loading="lazy"
+	
+	
+></p>
+<p><img src="https://raw.githubusercontent.com/fanshanng/blog_picture/master/20250926231706.png"
+	
+	
+	
+	loading="lazy"
+	
+	
+></p>
+<ul>
+<li>点击<code>Apply patches</code>覆盖掉原本的so文件，然后将这个so文件替换原本的apk/lib/arm64-v8a中的so文件，重新安装该应用，再次运行上述操作，即可绕过反调试</li>
+</ul>
+<h1 id="补充常见寄存器知识">补充常见寄存器知识
+</h1><p>在进行动态调试，以下是一些常用的寄存器介绍：</p>
+<table>
+  <thead>
+      <tr>
+          <th style="text-align: left">寄存器名称</th>
+          <th style="text-align: left">功能介绍</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td style="text-align: left"><code>R0-R12</code></td>
+          <td style="text-align: left">通用寄存器，用于存储临时数据。在函数调用时，<code>R0-R3</code>用于存储前四个参数，其余的参数通过堆栈传递。返回值也通过<code>R0</code>和<code>R1</code>传递。</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><code>R13 (SP)</code></td>
+          <td style="text-align: left">堆栈指针寄存器，指向当前堆栈的顶部。</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><code>R14 (LR)</code></td>
+          <td style="text-align: left">链接寄存器，存储子程序的返回地址。</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><code>R15 (PC)</code></td>
+          <td style="text-align: left">程序计数器，指向下一条要执行的指令。</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><code>CPSR</code></td>
+          <td style="text-align: left">当前程序状态寄存器，保存程序的状态信息，如算术运算的结果标志、中断禁止标志等。</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><code>FPSCR</code></td>
+          <td style="text-align: left">浮点状态和控制寄存器，如果你在调试的代码中涉及到浮点运算，那么这个寄存器会比较重要。</td>
+      </tr>
+  </tbody>
+</table>
+<h2 id="常用快捷键">常用快捷键
+</h2><table>
+  <thead>
+      <tr>
+          <th style="text-align: left">快捷键</th>
+          <th style="text-align: left">功能</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td style="text-align: left"><code>F2</code></td>
+          <td style="text-align: left">在所在行下断点</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><code>F5</code></td>
+          <td style="text-align: left">可以将ARM指令转化为可读的C代码，同时可以使用Y键，对JNIEnv指针做一个类型转换，从而对JNI里经常使用的JNIEnv方法能够识别</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><code>F7</code></td>
+          <td style="text-align: left">单步进入调试</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><code>F8</code></td>
+          <td style="text-align: left">按照顺序一行一行，单步调试</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><code>F9</code></td>
+          <td style="text-align: left">直接跳到下一个断点处</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><code>Shift + F12</code></td>
+          <td style="text-align: left">快速查看so文件中的字符串信息，分析过程中通过一些关键字符串能够迅速定位到关键函数</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><code>Ctrl + s</code></td>
+          <td style="text-align: left">有两个用途，在IDA View页面中可以查看文件so文件的所有段信息，在调试页面可以查看程序中所有so文件映射到内存的基地址。tips:在进行so调试过程中，很有用的一个小技巧就是IDA双开，一个用于进行静态分析；一个用于动态调试。比如说调试过程中要找到一个函数的加载到内存中的位置</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><code>Esc</code></td>
+          <td style="text-align: left">回退键，能够倒回上一部操作的视图（只有在反汇编窗口才是这个作用，如果是在其他窗口按下esc，会关闭该窗口）</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><code>g</code></td>
+          <td style="text-align: left">直接跳到某个地址</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><code>y</code></td>
+          <td style="text-align: left">更改变量的类型</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><code>x</code></td>
+          <td style="text-align: left">对着某个函数、变量按该快捷键，可以查看它的交叉引用</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><code>n</code></td>
+          <td style="text-align: left">更改变量的名称</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><code>p</code></td>
+          <td style="text-align: left">创建函数</td>
+      </tr>
+  </tbody>
+</table>
+<h2 id="可能遇到的问题">可能遇到的问题
+</h2><ul>
+<li>1.<code>jdb</code> 不是内部或外部命令，也不是可运行的程序或批处理文件。</li>
+</ul>
+<p>​	http://t.csdn.cn/paKAt</p>
+<ul>
+<li>
+<ol start="2">
+<li></li>
+</ol>
+</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="n">java</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">IOException</span><span class="p">:</span> <span class="n">handshake</span> <span class="n">failed</span> <span class="o">-</span> <span class="n">connection</span> <span class="n">prematurally</span> <span class="n">closed</span>
+</span></span><span class="line"><span class="cl">        <span class="n">at</span> <span class="n">com</span><span class="o">.</span><span class="n">sun</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">jdi</span><span class="o">.</span><span class="n">SocketTransportService</span><span class="o">.</span><span class="n">handshake</span><span class="p">(</span><span class="n">SocketTransportService</span><span class="o">.</span><span class="n">java</span><span class="p">:</span><span class="mi">136</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">at</span> <span class="n">com</span><span class="o">.</span><span class="n">sun</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">jdi</span><span class="o">.</span><span class="n">SocketTransportService</span><span class="o">.</span><span class="n">attach</span><span class="p">(</span><span class="n">SocketTransportService</span><span class="o">.</span><span class="n">java</span><span class="p">:</span><span class="mi">232</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">at</span> <span class="n">com</span><span class="o">.</span><span class="n">sun</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">jdi</span><span class="o">.</span><span class="n">GenericAttachingConnector</span><span class="o">.</span><span class="n">attach</span><span class="p">(</span><span class="n">GenericAttachingConnector</span><span class="o">.</span><span class="n">java</span><span class="p">:</span><span class="mi">116</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">at</span> <span class="n">com</span><span class="o">.</span><span class="n">sun</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">jdi</span><span class="o">.</span><span class="n">SocketAttachingConnector</span><span class="o">.</span><span class="n">attach</span><span class="p">(</span><span class="n">SocketAttachingConnector</span><span class="o">.</span><span class="n">java</span><span class="p">:</span><span class="mi">90</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">at</span> <span class="n">com</span><span class="o">.</span><span class="n">sun</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">example</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">tty</span><span class="o">.</span><span class="n">VMConnection</span><span class="o">.</span><span class="n">attachTarget</span><span class="p">(</span><span class="n">VMConnection</span><span class="o">.</span><span class="n">java</span><span class="p">:</span><span class="mi">519</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">at</span> <span class="n">com</span><span class="o">.</span><span class="n">sun</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">example</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">tty</span><span class="o">.</span><span class="n">VMConnection</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">VMConnection</span><span class="o">.</span><span class="n">java</span><span class="p">:</span><span class="mi">328</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">at</span> <span class="n">com</span><span class="o">.</span><span class="n">sun</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">example</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">tty</span><span class="o">.</span><span class="n">Env</span><span class="o">.</span><span class="n">init</span><span class="p">(</span><span class="n">Env</span><span class="o">.</span><span class="n">java</span><span class="p">:</span><span class="mi">63</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">at</span> <span class="n">com</span><span class="o">.</span><span class="n">sun</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">example</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">tty</span><span class="o">.</span><span class="n">TTY</span><span class="o">.</span><span class="n">main</span><span class="p">(</span><span class="n">TTY</span><span class="o">.</span><span class="n">java</span><span class="p">:</span><span class="mi">1066</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="err">致命错误</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl"><span class="err">无法附加到目标</span> <span class="n">VM</span><span class="err">。</span>
+</span></span><span class="line"><span class="cl"><span class="err">解决方法：有可能是手机问题，建议低版本真机，不要用模拟器！切命令顺序不要乱！另外也有可能软件有反调试！</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>
+<p>3.<strong>动态调试中找不到so文件</strong>
+解决方法：可以尝试手动复制一份对应的so文件放到data/app/包名/lib目录下</p>
+</li>
+<li>
+<p>4.<code>device offline</code>
+解决方法：重新插拔usb，再不行就重启机子</p>
+</li>
+<li>
+<p>5.<code>0.0.0.0:23946: bind: Address already in use</code>
+解决方案：
+<code>adb shell &quot;su -c 'lsof | grep 23946'&quot;</code> //获取pid
+<code>adb shell &quot;su -c 'kill -9 PID'&quot;</code> //这里的pid要根据上一步获取的填写</p>
+</li>
+<li>
+<p>6.<strong>常见反调试</strong></p>
+</li>
+<li>
+<p>调试端口检测</p>
+<p>检测常见的<code>23946</code>端口，所以在运行时可以加<code>-p</code>指定一个另外的端口来过掉这个检测</p>
+<p>例如，使用<code>./as -p 12345</code>命令启动调试server，将调试端口改为<code>12345</code>，然后在IDA Pro中相应地修改端口号为<code>12345</code>进行连接。</p>
+</li>
+<li>
+<p>调试进程名检测</p>
+<p>固定的进程名 <code>android_server gdb_server</code>等等，所以要改个名字，例如<code>as64</code></p>
+</li>
+<li>
+<p>ptrace检测</p>
+<p>每个进程同时刻只能被1个调试进程ptrace ，主动ptrace本进程可以使得其他调试器无法调试</p>
+<p>实现代码：</p>
+</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">ptrace_protect</span><span class="p">()</span><span class="c1">//ptrace附加自身线程 会导致此进程TracerPid 变为父进程的TracerPid 即zygote
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">ptrace</span><span class="p">(</span><span class="n">PTRACE_TRACEME</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">);;</span><span class="c1">//返回-1即为已经被调试
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><hr>
+<h3 id="推荐一个安卓的显示控制软件qtscrcpy">推荐一个安卓的显示控制软件：<a class="link" href="https://github.com/barry-ran/QtScrcpy/blob/dev/README_zh.md"  target="_blank" rel="noopener"
+    >QtScrcpy</a>
+</h3><p><img src="https://raw.githubusercontent.com/fanshanng/blog_picture/master/20250926234643.png"
+	
+	
+	
+	loading="lazy"
+	
+	
+></p>
+<p><img src="https://raw.githubusercontent.com/fanshanng/blog_picture/master/20250926234951.png"
+	
+	
+	
+	loading="lazy"
+	
+	
+></p>
+<ul>
+<li><strong>打开如下按钮后可以实现电脑的模拟点击，非常好用</strong></li>
+</ul>
+<p><img src="https://raw.githubusercontent.com/fanshanng/blog_picture/master/20250926234805.png"
+	
+	
+	
+	loading="lazy"
+	
+	
+></p>
+<p>参考文件：</p>
+<p><a class="link" href="https://www.52pojie.cn/thread-1809646-1-1.html"  target="_blank" rel="noopener"
+    ><strong>《安卓逆向这档事》十二、大佬帮我分析一下</strong></a></p>
+<p><a class="link" href="https://blog.csdn.net/Onlyone_1314/article/details/108697155"  target="_blank" rel="noopener"
+    ><strong>IDA修改exe并保存运行</strong></a></p>
+<p><a class="link" href="https://www.cnblogs.com/bmjoker/p/11891123.html"  target="_blank" rel="noopener"
+    >使用IDA进行动态调试与过反调试（上）（三）</a></p><hr />

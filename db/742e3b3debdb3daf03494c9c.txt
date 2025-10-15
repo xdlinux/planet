@@ -1,0 +1,107 @@
+<img src="https://s.panlai.com/upload/bizhihui_com_20231111141953169968359310619.jpg-arthumbs" alt="Featured image of post 光速虚拟机3.8.2 root及adb远程连接操作" /><h2 id="一手机端下载并配置光速虚拟机-382">一、手机端下载并配置光速虚拟机 3.8.2
+</h2><p><strong>1.下载模拟器</strong>：在手机应用商店或官方渠道，搜索并下载 “光速虚拟机 3.8.2” 版本，安装完成后打开，此时会指导进行解除安卓进程限制，跟着步骤来即可。</p>
+<p><img src="https://raw.githubusercontent.com/fanshanng/blog_picture/master/a0d0ec8f8a4bd5a1224ab0a3e53c77f6.jpg"
+	
+	
+	
+	loading="lazy"
+	
+	
+><strong>2.创建安卓 10 实例</strong>：进入模拟器主界面，点击 “新建实例”，在系统版本选项中选择 “安卓 10”，等待实例创建完成（过程需耐心等待，避免中途退出)。</p>
+<p><strong>3.开启 root 相关权限</strong>：</p>
+<ul>
+<li>进入已创建的安卓 10 实例，在实例浮窗内找到 “设置” 图标，进入后依次开启 “Magisk 支持” 和 “超级用户” 功能。</li>
+</ul>
+<p><strong>4.调整网络设置</strong>：</p>
+<ul>
+<li>因使用手机自身流量（路由器不支持远程 adb），需关闭网络隔离：进入浮窗内的 “设置 - 网络设置”，找到 “本地网络隔离” 选项，将其关闭（防止流量网络被隔离，影响后续连接）。</li>
+</ul>
+<h2 id="二安装-magisk250-完成-root">二、安装 Magisk25.0 完成 root
+</h2><ol>
+<li>
+<p><strong>下载指定版本 Magisk</strong>：在安卓 10 实例内，通过浏览器访问 Magisk 官网旧版本页面，下载 “Magisk25.0” 安装包（高版本不兼容光速虚拟机 3.8.2，需严格选择 25.0 版本，其余低版本未曾尝试，可能也支持）。
+<img src="https://raw.githubusercontent.com/fanshanng/blog_picture/master/628b7787ff11043aa07df1cb4496dc89.jpg"
+	
+	
+	
+	loading="lazy"
+	
+	
+></p>
+</li>
+<li>
+<p><strong>安装 Magisk</strong>：</p>
+</li>
+</ol>
+<ul>
+<li>找到下载好的 Magisk25.0 安装包，点击Magisk处的“安装”，弹出安装界面后直接点击 “下一步”，在安装方式中选择 “直接安装（推荐）”，等待安装进度完成。</li>
+</ul>
+<ol>
+<li><strong>重启验证 root</strong>：</li>
+</ol>
+<ul>
+<li>安装完成后，按照提示重启安卓 10 实例；重启后先关闭实例内的 “超级用户” 功能，再重启，此时 root 操作完成（可通过实例内的 Magisk 应用查看 “已安装” 状态，确认 root 成功）。</li>
+</ul>
+<h2 id="三在安卓-10-实例内开启开发者模式与-usb-调试">三、在安卓 10 实例内开启开发者模式与 USB 调试
+</h2><ol>
+<li>
+<p><strong>进入 “关于手机”</strong>：在安卓 10 实例内打开 “设置”，滑动至底部找到 “关于手机” 选项，点击进入。</p>
+</li>
+<li>
+<p><strong>触发开发者模式</strong>：在 “关于手机” 页面中，找到 “版本号” 选项，连续点击 7 次 “版本号”，此时会弹出 “您现在处于开发者模式！” 的提示（若弹出验证密码 / 指纹，按实例内设置完成验证即可）。</p>
+</li>
+<li>
+<p><strong>开启 USB 调试</strong>：返回 “设置” 主界面，找到 “系统” 选项；点击进入 “开发者选项”，找到 “USB 调试” 选项并开启（部分系统需勾选 “允许 USB 调试” 弹窗，点击 “确定” 即可）。</p>
+</li>
+</ol>
+<h2 id="四电脑端通过-adb-远程连接手机">四、电脑端通过 adb 远程连接手机
+</h2><ol>
+<li>
+<p><strong>准备工作</strong>：确保电脑已提前下载并配置好 adb 环境（adb 工具包路径已添加至系统环境变量，可通过 “cmd 输入 adb &ndash;version” 验证配置）。</p>
+</li>
+<li>
+<p><strong>建立网络连接</strong>：</p>
+</li>
+</ol>
+<ul>
+<li>打开手机的 “个人热点”，将电脑连接至该热点（确保手机与电脑处于同一热点网络，替代不支持 adb 的路由器）。</li>
+</ul>
+<ol>
+<li><strong>获取手机 IP</strong>：</li>
+</ol>
+<ul>
+<li>在手机 “设置 - 无线和网络 - 个人热点” 中，查看热点的 “已连接设备” 或 “网络详情”，记录手机当前的 IP 地址（如 10.77.xx.xx）。</li>
+</ul>
+<ol>
+<li><strong>执行 adb 连接命令</strong>：</li>
+</ol>
+<ul>
+<li>
+<p>打开电脑的命令提示符（CMD），输入命令：<code>adb connect 手机IP:6556</code>（将 “手机 IP” 替换为实际记录的地址，如<code>adb connect 10.77.xx.xx:6556</code>）。</p>
+</li>
+<li>
+<p>若一切正常此时手机会弹出提示，点击确认即可。</p>
+<p><img src="https://raw.githubusercontent.com/fanshanng/blog_picture/master/20250923004414.png"
+	
+	
+	
+	loading="lazy"
+	
+	
+></p>
+</li>
+<li>
+<p>若命令行显示 “connected to 手机 IP:6556”，则表示远程 adb 调试连接成功，可开始进行后续调试操作。</p>
+</li>
+</ul>
+<p><img src="https://raw.githubusercontent.com/fanshanng/blog_picture/master/324bf2ba9613fad56c221f3071f240cb.png"
+	
+	
+	
+	loading="lazy"
+	
+	
+></p>
+<p>下载用的模拟器以及magisk：</p>
+<p><a class="link" href="https://pan.baidu.com/s/1ePYYJIPQXNRKJyA9qJclWA?pwd=kdcq"  target="_blank" rel="noopener"
+    >https://pan.baidu.com/s/1ePYYJIPQXNRKJyA9qJclWA?pwd=kdcq</a> 提取码: kdcq</p><hr />

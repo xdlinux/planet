@@ -1,0 +1,339 @@
+<img src="https://raw.githubusercontent.com/fanshanng/blog_picture/master/preview.jpg" alt="Featured image of post 安卓逆向学习一" /><h1 id="安卓逆向入门一">安卓逆向入门一
+</h1><h2 id="0x01-前置">0x01 前置
+</h2><ul>
+<li>
+<p>下载<strong>migisk</strong></p>
+</li>
+<li>
+<p>Magisk（俗称面具），是一个ROOT工具。</p>
+<ul>
+<li>它提供了多种功能，包括但不限于：</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-apl" data-lang="apl"><span class="line"><span class="cl"><span class="nv">MagiskSU</span><span class="bp">:</span> <span class="err">提供应用程序的</span> <span class="nv">root</span> <span class="err">访问权限。</span>
+</span></span><span class="line"><span class="cl"><span class="nv">Magisk</span> <span class="err">模块</span><span class="bp">:</span> <span class="err">通过安装模块来修改只读分区。</span>
+</span></span><span class="line"><span class="cl"><span class="nv">MagiskBoot</span><span class="bp">:</span> <span class="err">用于解包和重新打包</span> <span class="nv">Android</span> <span class="err">启动镜像的最完整工具。</span>
+</span></span><span class="line"><span class="cl"><span class="nv">Zygisk</span><span class="bp">:</span> <span class="err">在每个</span> <span class="nv">Android</span> <span class="err">应用程序的进程中运行代码。</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p><strong>不要去<a class="link" href="https://magiskcn.com/"  target="_blank" rel="noopener"
+    >Magisk中文网</a></strong>,这里用的是正己提供的安装包</p>
+</li>
+</ul>
+<p><img src="https://raw.githubusercontent.com/fanshanng/blog_picture/master/image-20250524081513729.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="image-20250524081513729"
+	
+	
+></p>
+<p>这里如果下载失败的话，可以去设置里修改下图选项<img src="https://raw.githubusercontent.com/fanshanng/blog_picture/master/image-20250524081618279.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="image-20250524081618279"
+	
+	
+></p>
+<p><img src="https://raw.githubusercontent.com/fanshanng/blog_picture/master/image-20250524082215789.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="image-20250524082215789"
+	
+	
+></p>
+<h2 id="0x02-apk的文件结构">0x02 apk的文件结构
+</h2><h3 id="apk结构">Apk结构
+</h3><p><strong>apk</strong> 全称 <strong>Android Package</strong>，它相当于一个压缩文件，只要在电脑上将apk后缀改为zip即可解压。</p>
+<table>
+  <thead>
+      <tr>
+          <th style="text-align: left">文件</th>
+          <th style="text-align: left">注释</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td style="text-align: left">assets目录</td>
+          <td style="text-align: left">存放APK的静态资源文件，比如视频，音频，图片等</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">lib 目录</td>
+          <td style="text-align: left">armeabi-v7a基本通用所有android设备，arm64-v8a只适用于64位的android设备，x86常见用于android模拟器，其目录下的.so文件是c或c++编译的动态链接库文件</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">META-INF目录</td>
+          <td style="text-align: left">保存应用的签名信息，签名信息可以验证APK文件的完整性，相当于APK的身份证(验证文件是否又被修改)</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">res目录</td>
+          <td style="text-align: left">res目录存放资源文件，包括图片，字符串等等，APK的脸蛋由他的layout文件设计</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">AndroidManifest.xml文件</td>
+          <td style="text-align: left">APK的应用清单信息，它描述了应用的名字，版本，权限，引用的库文件等等信息</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">classes.dex文件</td>
+          <td style="text-align: left">classes.dex是java源码编译后生成的java字节码文件，APK运行的主要逻辑</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">resources.arsc文件</td>
+          <td style="text-align: left">resources.arsc是编译后的二进制资源文件，它是一个映射表，映射着资源和id，通过R文件中的id就可以找到对应的资源</td>
+      </tr>
+  </tbody>
+</table>
+<p><img src="https://raw.githubusercontent.com/fanshanng/blog_picture/master/image-20250524083039265.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="image-20250524083039265"
+	
+	
+></p>
+<ul>
+<li>demo实例中另外出现的<strong>kotlin</strong>代表这个apk文件大概是有<strong>kotlin</strong>语言编写，<strong>OkHttp</strong> 是一个流行的<strong>开源 HTTP 客户端库</strong>，<strong>用于发送和接收网络请求。</strong></li>
+</ul>
+<blockquote>
+<p><strong>Kotlin</strong> 是一种在 Java 虚拟机上运行的<strong>静态类型编程语言</strong>，被称之为 Android 世界的Swift，由 JetBrains 设计开发并开源。</p>
+<p><strong>Kotlin 可以编译成Java字节码，也可以编译成 JavaScript，方便在没有 JVM 的设备上运行。</strong></p>
+<p>在Google I/O 2017中，Google 宣布 Kotlin 成为 Android 官方开发语言。</p></blockquote>
+<h2 id="0x03-双开及原理">0x03 双开及原理
+</h2><ul>
+<li>
+<p><strong>指手机同时运行两个或多个相同的应用</strong></p>
+</li>
+<li>
+<p><a class="link" href="https://blog.csdn.net/u014294681/article/details/116270479"  target="_blank" rel="noopener"
+    >【VirtualAPP 双开系列08】如何实现多开 - UID</a></p>
+</li>
+<li>
+<blockquote>
+<p>通过在宿主容器上面<strong>新建一个进程供插件 APK 寄宿</strong>，然后通过 <strong>hook 一些系统接口欺骗应用</strong>—让<strong>虚拟化后应用以为自己是正常运行的独立 APP</strong>，欺骗系统—让系统认为此虚拟化应用是一个已正常安装在系统的应用。</p></blockquote>
+</li>
+</ul>
+<table>
+  <thead>
+      <tr>
+          <th style="text-align: left">原理</th>
+          <th style="text-align: left">解释</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td style="text-align: left">修改包名</td>
+          <td style="text-align: left">让手机系统认为这是2个APP，这样的话就能生成2个数据存储路径，此时的多开就等于你打开了两个互不干扰的APP</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">修改Framework</td>
+          <td style="text-align: left">对于有系统修改权限的厂商，可以修改Framework来实现双开的目的，例如：小米自带多开</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">通过虚拟化技术实现</td>
+          <td style="text-align: left">虚拟Framework层、虚拟文件系统、模拟Android对组件的管理、虚拟应用进程管理 等一整套虚拟技术，将APK复制一份到虚拟空间中运行，例如：平行空间</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">以插件机制运行</td>
+          <td style="text-align: left">利用反射替换，动态代{过}{滤}理，hook了系统的大部分与system—server进程通讯的函数，以此作为“欺上瞒下”的目的，欺骗系统“以为”只有一个apk在运行，瞒过插件让其“认为”自己已经安装。例如：VirtualApp</td>
+      </tr>
+  </tbody>
+</table>
+<p><img src="https://raw.githubusercontent.com/fanshanng/blog_picture/master/20250524090006213.png"
+	
+	
+	
+	loading="lazy"
+	
+	
+></p>
+<h2 id="0x04-汉化apk">0x04 汉化APK
+</h2><ul>
+<li>
+<p>1.Arsc汉化</p>
+</li>
+<li>
+<p>2.xml汉化</p>
+</li>
+<li>
+<p>3.Dex汉化
+(<del>教程里的汉化插件需要vip，我这里是手动改的，知道原理就行</del>)</p>
+<p>教程中用到的主要就是在mt管理器或者np管理器中对文件进行字符串搜索（管理器中设置了自动签名），如果手动的话，可以反编译改源码等
+<a class="link" href="https://blog.csdn.net/Nobody_else_/article/details/83996441"  target="_blank" rel="noopener"
+    >apk安装包快速反编译，多种反编译及失败的解决方案</a></p>
+<p>这是汉化前⬇</p>
+<p><img src="https://raw.githubusercontent.com/fanshanng/blog_picture/master/20250525153149550.png"
+	
+	
+	
+	loading="lazy"
+	
+	
+></p>
+</li>
+</ul>
+<p>这是汉化（<del>手改</del>）后⬇</p>
+<p><img src="https://raw.githubusercontent.com/fanshanng/blog_picture/master/20250525153131255.png"
+	
+	
+	
+	loading="lazy"
+	
+	
+></p>
+<h2 id="0x05-初识androidmanifestxml">0x05 初识AndroidManifest.xml
+</h2><p><strong>AndroidManifest.xml</strong>是Android应用的入口文件，它描述了<strong>package中暴露的组件</strong>（activities, services, 等等），他们各自的实现类，各种能被处理的数据和启动位置。 除了能声明程序中的Activities, ContentProviders, Services, 和Intent Receivers,还能指定permissions和instrumentation（安全控制和测试）。</p>
+<p>注：<strong>这里文件名不能修改</strong></p>
+<ul>
+<li><a class="link" href="https://www.cnblogs.com/shujk/p/14961572.html"  target="_blank" rel="noopener"
+    >AndroidManifest.xml 最全详解</a></li>
+</ul>
+<p><strong>AndroidManifest.xml</strong>文件主要包含以下几个元素：</p>
+<table>
+  <thead>
+      <tr>
+          <th><strong>元素</strong></th>
+          <th><strong>功能描述</strong></th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><a class="link" href="https://blog.csdn.net/u013560890/article/details/81263002"  target="_blank" rel="noopener"
+    >action</a></td>
+          <td>添加一个<code>action</code>到<code>intent filter</code></td>
+      </tr>
+      <tr>
+          <td><a class="link" href="https://blog.csdn.net/u013560890/article/details/81277233"  target="_blank" rel="noopener"
+    >activity</a></td>
+          <td>声明 activity组件</td>
+      </tr>
+      <tr>
+          <td>activity-alias</td>
+          <td>声明activity别名</td>
+      </tr>
+      <tr>
+          <td>application</td>
+          <td>声明应用程序</td>
+      </tr>
+      <tr>
+          <td>category</td>
+          <td>添加一个<code>category</code>名称到<code>intent filter</code></td>
+      </tr>
+      <tr>
+          <td>compatible-screens</td>
+          <td>定义应用所兼容的每种屏幕配置</td>
+      </tr>
+      <tr>
+          <td>data</td>
+          <td>添加数据定义到<code>intent filter</code></td>
+      </tr>
+      <tr>
+          <td>grant-uri-permission</td>
+          <td>定义应用数据的子集以供父内容提供者有权限可以访问</td>
+      </tr>
+      <tr>
+          <td>instrumentation</td>
+          <td>声明<strong>Instrumentation</strong>工具类并是您可以监控应用程序的交互系统</td>
+      </tr>
+      <tr>
+          <td>intent-filter</td>
+          <td>定义activity、service或者是broadcast receiver可以响应的意图（intent）类型，</td>
+      </tr>
+      <tr>
+          <td>manifest</td>
+          <td>AndroidManifest.xml文件中的根元素</td>
+      </tr>
+      <tr>
+          <td>meta-data</td>
+          <td>一条额外添加的<strong>名称-值</strong>对，可以给父组件提供任意的数据。</td>
+      </tr>
+      <tr>
+          <td>path-permission</td>
+          <td>在content provider内定义所需路径和权限特定子集数据</td>
+      </tr>
+      <tr>
+          <td>permission</td>
+          <td>声明一个安全权限，可以用来限制访问特定应用的组件或功能</td>
+      </tr>
+      <tr>
+          <td>permission-group</td>
+          <td>声明一个相关权限的逻辑组名称</td>
+      </tr>
+      <tr>
+          <td>permission-tree</td>
+          <td>声明权限树的基础名称</td>
+      </tr>
+      <tr>
+          <td>provider</td>
+          <td>声明一个内容提供者(content provider)组件</td>
+      </tr>
+      <tr>
+          <td>receiver</td>
+          <td>声明一个广播接收器(broadcast receiver)组件</td>
+      </tr>
+      <tr>
+          <td>service</td>
+          <td>声明一个服务(service)组件</td>
+      </tr>
+      <tr>
+          <td>supports-gl-texture</td>
+          <td>声明一种应用单一支持的GL纹理(texture)压缩格式</td>
+      </tr>
+      <tr>
+          <td>supports-screens</td>
+          <td>声明应用所支持的屏幕尺寸大小以及在启用兼容模式下系统屏幕超出应用所支持的尺寸</td>
+      </tr>
+      <tr>
+          <td>uses-configuration</td>
+          <td>声明应用程序的软硬件需求</td>
+      </tr>
+      <tr>
+          <td>uses-feature</td>
+          <td>声明应用程序需要用到的软、硬件特性。</td>
+      </tr>
+      <tr>
+          <td>uses-library</td>
+          <td>指定应用程序必须引用的共享库</td>
+      </tr>
+      <tr>
+          <td>uses-permission</td>
+          <td>指定了让应用程序正常运行，用户必须授予的系统权限。</td>
+      </tr>
+      <tr>
+          <td>uses-permission-sdk-23</td>
+          <td>指定了应用程序在Android 6.0以上所需的特定权限</td>
+      </tr>
+      <tr>
+          <td>uses-sdk</td>
+          <td>通过API整数值来声明应用程序所兼容的Android平台版</td>
+      </tr>
+  </tbody>
+</table>
+<ul>
+<li>
+<p><a class="link" href="https://www.bookstack.cn/read/mt-manual/80b8084f6be128c0.md"  target="_blank" rel="noopener"
+    >MT管理器使用手册</a></p>
+</li>
+<li>
+<p><a class="link" href="https://bbs.kanxue.com/thread-285906.htm"  target="_blank" rel="noopener"
+    >Android逆向0基础入门-APK全面解析,动调与脱壳</a></p>
+</li>
+</ul><hr />

@@ -1,0 +1,202 @@
+<img src="https://raw.githubusercontent.com/fanshanng/blog_picture/master/20250720124652.png" alt="Featured image of post 安卓逆向入门三" /><h1 id="安卓逆向入门三">安卓逆向入门三
+</h1><p>学习关键词: Jeb、动态调试、Log插桩</p>
+<p>学习链接：<a class="link" href="https://www.52pojie.cn/thread-1714727-1-1.html"  target="_blank" rel="noopener"
+    ><strong>《安卓逆向这档事》五、1000-7=？&amp;动态调试&amp;Log插桩</strong></a></p>
+<h2 id="jeb学习">JEB学习
+</h2><p><strong>环境配置</strong></p>
+<ul>
+<li>Java环境配置，我这里不细讲。没有配置过java环境的我建议去看看  <a class="link" href="https://blog.csdn.net/taiyang3285/article/details/135231807"  target="_blank" rel="noopener"
+    >多个 JDK 版本（Java 8、Java 17、Java 21）下载和切换</a>  这篇文章，我的建议是一开始就做好java多版本共存的准备</li>
+</ul>
+<p><strong>下载JEB</strong></p>
+<blockquote>
+<p><strong>JEB</strong> (Java Editor for Android) 是一款用于安卓应用逆向工程的工具，它可以帮助开发者分析和修改安卓应用的字节码。</p></blockquote>
+<ul>
+<li>
+<p>jeb推荐jdk-11或jdk-17（我用的是jdk-11）</p>
+</li>
+<li>
+<p>下载教程可以看这篇文章：<a class="link" href="https://www.52pojie.cn/thread-1598242-1-1.html"  target="_blank" rel="noopener"
+    ><strong>JEB动态调试Smali-真机/模拟器（详细，新手必看）</strong></a></p>
+</li>
+<li>
+<p>本次学习下载正己提供的jeb安装包，下载好就可以使用，如果需要激活就去看上面的文章</p>
+</li>
+</ul>
+<h2 id="动态调试">动态调试
+</h2><p>熟悉IDA的逆向人应该知道动态调试是什么，这里指的是Android动态调试，</p>
+<p>修改方法：</p>
+<h3 id="修改debug权限">修改debug权限
+</h3><p>**方法一:**在<code>AndroidManifest.xml</code>里添加可调试权限</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-xml" data-lang="xml"><span class="line"><span class="cl">android:debuggable=&#34;true&#34;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img src="https://raw.githubusercontent.com/fanshanng/blog_picture/master/image-20250626153816877.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="image-20250626153816877"
+	
+	
+></p>
+<p>**方法二：**XappDebug模块hook对应的app</p>
+<p>**方法三：**Magisk命令(重启失效)</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="mf">1.</span>  <span class="n">adb</span> <span class="n">shell</span> <span class="err">#</span><span class="n">adb进入命令行模式</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="mf">2.</span>  <span class="n">su</span> <span class="err">#切换至超级用户</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="mf">3.</span>  <span class="n">magisk</span> <span class="n">resetprop</span> <span class="n">ro</span><span class="p">.</span><span class="n">debuggable</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="mf">4.</span>  <span class="n">stop</span><span class="p">;</span><span class="n">start</span><span class="p">;</span> <span class="err">#一定要通过该方式重启</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>**方法四:**刷入MagiskHide Props Config模块</p>
+<ul>
+<li>
+<p>一般来说，在4选项中如果有ro.debuggable那就直接修改</p>
+</li>
+<li>
+<p>没有的话就选5</p>
+<p><img src="https://raw.githubusercontent.com/fanshanng/blog_picture/master/20250626162704.png"
+	
+	
+	
+	loading="lazy"
+	
+	
+></p>
+</li>
+</ul>
+<h3 id="端口转发以及开启adb权限">端口转发以及开启adb权限
+</h3><ul>
+<li>版本号点击七次开启开发者模式并开启adb调试权限</li>
+<li>有时候重新进入模拟器的时候usb调试会取消，需要手动开启</li>
+</ul>
+<h3 id="下断点">下断点
+</h3><p><code>ctrl+b</code>下断点</p>
+<h3 id="debug模式启动">debug模式启动
+</h3><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">adb shell am start -D -n com.zj.wuaipojie/.ui.MainActivity
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><code>adb shell am start -D -n adb shell am start -D -n 包名/类名 am start -n 表示启动一个activity am start -D 表示将应用设置为可调试模式</code></p>
+<p><img src="https://raw.githubusercontent.com/fanshanng/blog_picture/master/6643aba11f49d750402b98478138126.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="6643aba11f49d750402b98478138126"
+	
+	
+></p>
+<p><img src="https://raw.githubusercontent.com/fanshanng/blog_picture/master/c80d2a148be5fa70145c3bc5784019b.png"
+	
+	
+	
+	loading="lazy"
+	
+	
+></p>
+<h3 id="jeb附加调试进程">Jeb附加调试进程
+</h3><p>常用快捷键：
+<strong>F6  进入方法</strong>
+<strong>F6  跳过方法</strong>
+<strong>F7  从方法中跳出来</strong>
+<strong>R  运行到光标处</strong></p>
+<p><img src="https://raw.githubusercontent.com/fanshanng/blog_picture/master/627c47033b7d9648cd05a40c7471073.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="627c47033b7d9648cd05a40c7471073"
+	
+	
+></p>
+<ul>
+<li>运行到断点</li>
+</ul>
+<p><img src="https://raw.githubusercontent.com/fanshanng/blog_picture/master/5d85411c54e3edf29265b7062be3e5a.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="5d85411c54e3edf29265b7062be3e5a"
+	
+	
+></p>
+<ul>
+<li>步进</li>
+</ul>
+<p><img src="https://raw.githubusercontent.com/fanshanng/blog_picture/master/b0b853bdee7eeba384f25b1e1891a99.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="b0b853bdee7eeba384f25b1e1891a99"
+	
+	
+></p>
+<p>得到参数值：<strong>5qKA5q61DAUM</strong></p>
+<h3 id="log插桩">Log插桩
+</h3><p><strong>定义</strong>：Log 插桩是在反编译 APK 后的 Smali 代码中插入日志输出语句，通过<code>Log.v()</code>等方法将关键变量、函数调用过程打印到系统日志，适用于无法动态调试或需要追踪后台逻辑的场景。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="n">invoke</span><span class="o">-</span><span class="k">static</span> <span class="p">{</span><span class="err">对应寄存器</span><span class="p">},</span> <span class="n">Lcom</span><span class="o">/</span><span class="n">mtools</span><span class="o">/</span><span class="n">LogUtils</span><span class="p">;</span><span class="o">-&gt;</span><span class="n">v</span><span class="p">(</span><span class="n">Ljava</span><span class="o">/</span><span class="n">lang</span><span class="o">/</span><span class="ne">Object</span><span class="p">;)</span><span class="n">V</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img src="https://raw.githubusercontent.com/fanshanng/blog_picture/master/db09905d9407505121290fbdaf05b4e.png"
+	
+	
+	
+	loading="lazy"
+	
+	
+></p>
+<ul>
+<li>在应用里随机输入字符串，然后查看日志</li>
+</ul>
+<p><img src="https://raw.githubusercontent.com/fanshanng/blog_picture/master/c740ec1e82dc69684ba15c82489b8b0.png"
+	
+	
+	
+	loading="lazy"
+	
+	
+></p>
+<p><img src="https://raw.githubusercontent.com/fanshanng/blog_picture/master/8ef3d97c1d07785c6f62c1dd3034f38.png"
+	
+	
+	
+	loading="lazy"
+	
+	
+></p><hr />

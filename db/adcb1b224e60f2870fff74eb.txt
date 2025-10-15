@@ -1,0 +1,659 @@
+<img src="https://raw.githubusercontent.com/fanshanng/blog_picture/master/20250925233532.png" alt="Featured image of post 安卓逆向入门六：so(ELF)文件分析与ARM基础知识" /><p>关键词：ELF文件入门、so文件分析 、ARM基础知识</p>
+<h1 id="0x00-elf文件入门">0x00 ELF文件入门
+</h1><p><strong>ELF</strong>（<code>Executable and Linkable Format</code>）是一种<em><strong>可执行</strong></em>和<em><strong>可链接</strong></em>的文件格式，是linux底下二进制文件，可以理解为windows下的<code>PE文件</code>，在Android中可以比作<code>SO</code>，方便函数的移植，在常用于保护Android软件，增加逆向难度。其核心价值在于支持程序的<strong>执行</strong>（如二进制程序运行、动态库加载）和<strong>链接</strong>（编译过程中的模块组合），是跨平台二进制兼容的基础。</p>
+<p><strong>ELF文件的主要组成部分包括：</strong></p>
+<ul>
+<li>
+<p><code>ELF Header</code>：文件头，描述文件的基本信息</p>
+</li>
+<li>
+<p><code>Program Header Table</code>：程序头表，描述进程映像的布局</p>
+</li>
+<li>
+<p><code>Section Header Table</code>：节区头表，描述文件的各个节区</p>
+</li>
+<li>
+<p>程序头表与分段头表引用的数据，比如 .text .data。</p>
+<p><img src="https://ctf-wiki.org/executable/elf/structure/figure/object_file_format.png"
+	
+	
+	
+	loading="lazy"
+	
+	
+></p>
+</li>
+</ul>
+<h2 id="elf-header文件头">ELF Header（文件头）
+</h2><ul>
+<li>ELF Header 描述了 ELF 文件的概要信息，利用这个数据结构可以索引到 ELF 文件的全部信息，是ELF 文件的 &ldquo;总目录&rdquo;，存储文件的基础元信息，可通过这些信息索引到其他所有结构。32 位 ELF 的文件头结构定义如下：</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-elm" data-lang="elm"><span class="line"><span class="cl"><span class="err">#</span><span class="nv">define</span> <span class="kt">EI_NIDENT</span>   <span class="mi">16</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nv">typedef</span> <span class="nv">struct</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nv">unsigned</span> <span class="nv">char</span>   <span class="nv">e_ident</span><span class="p">[</span><span class="kt">EI_NIDENT</span><span class="p">]</span><span class="err">;</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">ELF32_Half</span>      <span class="nv">e_type</span><span class="err">;</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">ELF32_Half</span>      <span class="nv">e_machine</span><span class="err">;</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">ELF32_Word</span>      <span class="nv">e_version</span><span class="err">;</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">ELF32_Addr</span>      <span class="nv">e_entry</span><span class="err">;</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">ELF32_Off</span>       <span class="nv">e_phoff</span><span class="err">;</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">ELF32_Off</span>       <span class="nv">e_shoff</span><span class="err">;</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">ELF32_Word</span>      <span class="nv">e_flags</span><span class="err">;</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">ELF32_Half</span>      <span class="nv">e_ehsize</span><span class="err">;</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">ELF32_Half</span>      <span class="nv">e_phentsize</span><span class="err">;</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">ELF32_Half</span>      <span class="nv">e_phnum</span><span class="err">;</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">ELF32_Half</span>      <span class="nv">e_shentsize</span><span class="err">;</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">ELF32_Half</span>      <span class="nv">e_shnum</span><span class="err">;</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">ELF32_Half</span>      <span class="nv">e_shstrndx</span><span class="err">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span> <span class="kt">Elf32_Ehdr</span><span class="err">;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>ELF 头中的 <code>e_shoff</code> 项给出了<strong>从文件开头到节头表位置的字节偏移</strong>。<code>e_shnum</code> 告诉了我们节头表包含的<strong>项数</strong>；<code>e_shentsize</code> 给出了每一项的<strong>字节大小</strong>。</p>
+<h2 id="program-header-table程序头表">Program Header Table（程序头表）
+</h2><p><strong>Program Header Table</strong> 是一个结构体数组，每一个元素的类型是 <code>Elf32_Phdr</code>，描述了一个段或者其它系统在准备程序执行时所需要的信息。</p>
+<p>其中，ELF 头中的 <code>e_phentsize</code> 和 <code>e_phnum</code> 指定了该数组每个元素的大小以及元素个数。一个目标文件的段包含一个或者多个节。<strong>程序的头部只有对于可执行文件和共享目标文件有意义。</strong></p>
+<p>可以说，<strong>Program Header Table</strong> 就是专门为 ELF 文件运行时中的段所准备的。</p>
+<p><code>Elf32_Phdr</code>的定义如下</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-elm" data-lang="elm"><span class="line"><span class="cl"><span class="nv">typedef</span> <span class="nv">struct</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">ELF32_Word</span>  <span class="nv">p_type</span><span class="err">;</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">ELF32_Off</span>   <span class="nv">p_offset</span><span class="err">;</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">ELF32_Addr</span>  <span class="nv">p_vaddr</span><span class="err">;</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">ELF32_Addr</span>  <span class="nv">p_paddr</span><span class="err">;</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">ELF32_Word</span>  <span class="nv">p_filesz</span><span class="err">;</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">ELF32_Word</span>  <span class="nv">p_memsz</span><span class="err">;</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">ELF32_Word</span>  <span class="nv">p_flags</span><span class="err">;</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">ELF32_Word</span>  <span class="nv">p_align</span><span class="err">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span> <span class="kt">Elf32_Phdr</span><span class="err">;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>字段说明</li>
+</ul>
+<table>
+  <thead>
+      <tr>
+          <th style="text-align: left">字段</th>
+          <th style="text-align: left">说明</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td style="text-align: left"><code>p_type</code></td>
+          <td style="text-align: left">该字段为段的类型，或者表明了该结构的相关信息。</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><code>p_offset</code></td>
+          <td style="text-align: left">该字段给出了从文件开始到该段开头的第一个字节的偏移。</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><code>p_vaddr</code></td>
+          <td style="text-align: left">该字段给出了该段第一个字节在内存中的虚拟地址。</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><code>p_paddr</code></td>
+          <td style="text-align: left">该字段仅用于物理地址寻址相关的系统中， 由于 “System V” 忽略了应用程序的物理寻址，可执行文件和共享目标文件的该项内容并未被限定。</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><code>p_filesz</code></td>
+          <td style="text-align: left">该字段给出了文件镜像中该段的大小，可能为 0。</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><code>p_memsz</code></td>
+          <td style="text-align: left">该字段给出了内存镜像中该段的大小，可能为 0。</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><code>p_flags</code></td>
+          <td style="text-align: left">该字段给出了与段相关的标记。</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><code>p_align</code></td>
+          <td style="text-align: left">可加载的程序的段的 <code>p_vaddr</code> 以及<code> p_offset</code> 的大小必须是<code> page</code> 的整数倍。该成员给出了段在文件以及内存中的对齐方式。如果该值为 0 或 1 的话，表示不需要对齐。除此之外，p_align 应该是 2 的整数指数次方，并且 <code>p_vaddr</code> 与 <code>p_offset</code> 在模 <code>p_align</code> 的意义下，应该相等。</td>
+      </tr>
+  </tbody>
+</table>
+<p><strong>核心意义</strong>：操作系统加载 ELF 文件时，根据程序头表将 &ldquo;段&rdquo; 映射到内存，例如：</p>
+<ul>
+<li><code>p_type=PT_LOAD</code>的段会被加载到<code>p_vaddr</code>指定的内存地址。</li>
+<li><code>p_flags=0x5</code>（R+X）通常对应代码段（可执行且只读），<code>p_flags=0x6</code>（R+W）对应数据段。</li>
+</ul>
+<h2 id="section-header-table节区头表">Section Header Table（节区头表）
+</h2><p>该结构用于定位 ELF 文件中的每个节区的具体位置。描述 ELF 文件在<strong>编译链接时</strong>的结构（即 &ldquo;节区&rdquo; 信息），用于调试、静态分析等场景。每个条目对应一个<code>Elf32_Shdr</code>结构：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-elm" data-lang="elm"><span class="line"><span class="cl"><span class="nv">typedef</span> <span class="nv">struct</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">ELF32_Word</span>      <span class="nv">sh_name</span><span class="err">;</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">ELF32_Word</span>      <span class="nv">sh_type</span><span class="err">;</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">ELF32_Word</span>      <span class="nv">sh_flags</span><span class="err">;</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">ELF32_Addr</span>      <span class="nv">sh_addr</span><span class="err">;</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">ELF32_Off</span>       <span class="nv">sh_offset</span><span class="err">;</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">ELF32_Word</span>      <span class="nv">sh_size</span><span class="err">;</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">ELF32_Word</span>      <span class="nv">sh_link</span><span class="err">;</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">ELF32_Word</span>      <span class="nv">sh_info</span><span class="err">;</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">ELF32_Word</span>      <span class="nv">sh_addralign</span><span class="err">;</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">ELF32_Word</span>      <span class="nv">sh_entsize</span><span class="err">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span> <span class="kt">Elf32_Shdr</span><span class="err">;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><table>
+  <thead>
+      <tr>
+          <th style="text-align: left">成员</th>
+          <th style="text-align: left">说明</th>
+          <th>取值</th>
+          <th>说明</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td style="text-align: left"><code>sh_name</code></td>
+          <td style="text-align: left"><code>sh_name</code>节名称，是节区头字符串表节区中（Section Header String Table Section）的索引，因此该字段实际是一个数值。在字符串表中的具体内容是以 NULL 结尾的字符串。</td>
+          <td>0</td>
+          <td>无名称</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><code>sh_type</code></td>
+          <td style="text-align: left"><code>sh_type</code>根据节的内容和语义进行分类，具体的类型下面会介绍。</td>
+          <td>SHT_NULL</td>
+          <td>限制</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><code>sh_flags</code></td>
+          <td style="text-align: left"><code>sh_flags</code>每一比特代表不同的标志，描述节是否可写，可执行，需要分配内存等属性。</td>
+          <td>0</td>
+          <td>无标志</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><code>sh_addr</code></td>
+          <td style="text-align: left"><code>sh_addr</code>如果节区将出现在进程的内存映像中，此成员给出节区的第一个字节应该在进程镜像中的位置。否则，此字段为 0。</td>
+          <td>0</td>
+          <td>无地址</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><code>sh_offset</code></td>
+          <td style="text-align: left"><code>sh_offset</code>给出节区的第一个字节与文件开始处之间的偏移。SHT_NOBITS 类型的节区不占用文件的空间，因此其 sh_offset 成员给出的是概念性的偏移。</td>
+          <td>0</td>
+          <td>无文件偏移</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><code>sh_size</code></td>
+          <td style="text-align: left"><code>sh_size</code>此成员给出节区的字节大小。除非节区的类型是 SHT_NOBITS ，否则该节占用文件中的 <code>sh_size</code> 字节。类型为 SHT_NOBITS 的节区长度可能非零，不过却不占用文件中的空间。</td>
+          <td>0</td>
+          <td>无大小</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><code>sh_link</code></td>
+          <td style="text-align: left"><code>sh_link</code>此成员给出节区头部表索引链接，其具体的解释依赖于节区类型。</td>
+          <td>SHN_UNDEF</td>
+          <td>无链接信息</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><code>sh_info</code></td>
+          <td style="text-align: left"><code>sh_info</code>此成员给出附加信息，其解释依赖于节区类型。</td>
+          <td>0</td>
+          <td>无辅助信息</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><code>sh_addralign</code></td>
+          <td style="text-align: left"><code>sh_addralign</code>某些节区的地址需要对齐。例如，如果一个节区有一个 doubleword 类型的变量，那么系统必须保证整个节区按双字对齐。也就是说，sh_addr%sh_addralign=0。目前它仅允许为 0，以及 2 的正整数幂数。 0 和 1 表示没有对齐约束。</td>
+          <td>0</td>
+          <td>无对齐要求</td>
+      </tr>
+  </tbody>
+</table>
+<h2 id="常见节区sections">常见节区（Sections）
+</h2><p>节区是 ELF 文件的实际数据载体，常见类型及作用如下：</p>
+<table>
+  <thead>
+      <tr>
+          <th style="text-align: left">节区名</th>
+          <th style="text-align: left">描述</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td style="text-align: left"><code>.text</code></td>
+          <td style="text-align: left">代码段，存放程序的指令</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><code>.data</code></td>
+          <td style="text-align: left">数据段，存放已初始化的全局变量和静态变量</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><code>.rodata</code></td>
+          <td style="text-align: left">只读数据段，存放只读数据</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><code>.bss</code></td>
+          <td style="text-align: left">未初始化数据段，存放未初始化的全局变量和静态变量</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><code>.symtab</code></td>
+          <td style="text-align: left">符号表，存放符号信息</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><code>.strtab</code></td>
+          <td style="text-align: left">字符串表，存放字符串数据</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><code>.dynsym</code></td>
+          <td style="text-align: left">动态符号表，存放动态链接需要的符号信息</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><code>.dynamic</code></td>
+          <td style="text-align: left">动态链接信息，存放动态链接器需要的信息</td>
+      </tr>
+  </tbody>
+</table>
+<p><strong>段与节区的关系</strong></p>
+<ul>
+<li><strong>段（Segment）</strong>：面向运行时，由一个或多个节区组成（如<code>.text</code>和<code>.rodata</code>可合并为一个 &ldquo;代码段&rdquo;）。</li>
+<li><strong>节区（Section）</strong>：面向编译时，按功能划分的最小数据单元。</li>
+</ul>
+<p>例如：一个<code>PT_LOAD</code>段可能包含<code>.text</code>（代码）和<code>.rodata</code>（只读数据）两个节区，共同映射到内存的只读可执行区域。</p>
+<p><img src="https://ctf-wiki.org/executable/elf/structure/figure/ELF-Walkthrough.png"
+	
+	
+	
+	loading="lazy"
+	
+	
+></p>
+<h1 id="0x01-arm基础知识">0x01 ARM基础知识
+</h1><ul>
+<li>
+<p>&ldquo;<strong>x86、arm、RISC-V</strong>&rdquo; 都是 <strong>指令集架构 ( CPU架构 )</strong>。ARM 是主流的 RISC（精简指令集）架构，广泛用于嵌入式设备（如 Android 手机）。</p>
+</li>
+<li>
+<p><strong>指令集特点</strong></p>
+</li>
+<li>
+<p>固定指令长度（32 位 ARM 指令，Thumb 模式为 16 位）。</p>
+</li>
+<li>
+<p>大部分指令可条件执行（如<code>ADDNE R0, R1, R2</code>：仅当标志位不为 0 时执行加法）。</p>
+</li>
+<li>
+<p>寄存器操作优先（算术 / 逻辑运算通常基于寄存器，内存访问需专用指令）。</p>
+</li>
+<li>
+<p><strong>核心寄存器</strong></p>
+</li>
+</ul>
+<p>​	ARM32 架构有 16 个通用寄存器（<code>R0-R15</code>），其中：</p>
+<ul>
+<li><code>R0-R3</code>：函数调用参数 / 返回值寄存器。</li>
+<li><code>R4-R11</code>：通用寄存器（需手动保存）。</li>
+<li><code>R12</code>（IP）：临时寄存器。</li>
+<li><code>R13</code>（SP）：栈指针寄存器（指向栈顶）。</li>
+<li><code>R14</code>（LR）：链接寄存器（存储函数返回地址）。</li>
+<li><code>R15</code>（PC）：程序计数器（存储下一条执行的指令地址）。</li>
+</ul>
+<h2 id="常见寻址方式">常见寻址方式
+</h2><table>
+  <thead>
+      <tr>
+          <th style="text-align: left">寻址方式</th>
+          <th style="text-align: left">描述</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td style="text-align: left">立即数寻址</td>
+          <td style="text-align: left">直接使用立即数值作为操作数，例如：<code>MOV R0, #5</code></td>
+      </tr>
+      <tr>
+          <td style="text-align: left">寄存器直接寻址</td>
+          <td style="text-align: left">使用寄存器中的值作为操作数，例如：<code>MOV R0, R1</code></td>
+      </tr>
+      <tr>
+          <td style="text-align: left">寄存器间接寻址</td>
+          <td style="text-align: left">使用寄存器中的值作为内存地址，访问该地址中的数据，例如：<code>LDR R0, [R1]</code></td>
+      </tr>
+      <tr>
+          <td style="text-align: left">寄存器相对寻址</td>
+          <td style="text-align: left">使用寄存器中的值加上一个立即偏移量作为内存地址，例如：<code>LDR R0, [R1, #4]</code></td>
+      </tr>
+      <tr>
+          <td style="text-align: left">寄存器变址寻址</td>
+          <td style="text-align: left">使用两个寄存器中的值相加作为内存地址，例如：<code>LDR R0, [R1, R2]</code></td>
+      </tr>
+      <tr>
+          <td style="text-align: left">带有变址寄存器的寄存器相对寻址</td>
+          <td style="text-align: left">使用寄存器中的值加上另一个寄存器的值乘以一个比例因子作为内存地址，例如：<code>LDR R0, [R1, R2, LSL #2]</code></td>
+      </tr>
+      <tr>
+          <td style="text-align: left">堆栈寻址</td>
+          <td style="text-align: left">使用堆栈指针寄存器（如SP）进行操作，例如：<code>PUSH {R0, R1}</code> 或 <code>POP {R0, R1}</code></td>
+      </tr>
+  </tbody>
+</table>
+<h2 id="压栈和出栈指令">压栈和出栈指令
+</h2><table>
+  <thead>
+      <tr>
+          <th style="text-align: left">指令类型</th>
+          <th style="text-align: left">指令示例</th>
+          <th style="text-align: left">描述</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td style="text-align: left">压栈</td>
+          <td style="text-align: left"><code>PUSH {R0, R1}</code></td>
+          <td style="text-align: left">将寄存器R0和R1的内容压入堆栈中</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">压栈</td>
+          <td style="text-align: left"><code>PUSH {R0-R5}</code></td>
+          <td style="text-align: left">将寄存器R0到R5的内容压入堆栈中</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">压栈</td>
+          <td style="text-align: left"><code>STMDB SP!, {R0-R5}</code></td>
+          <td style="text-align: left">将寄存器R0到R5的内容压入堆栈中（与PUSH等效）</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">出栈</td>
+          <td style="text-align: left"><code>POP {R0, R1}</code></td>
+          <td style="text-align: left">从堆栈中弹出数据，恢复到寄存器R0和R1中</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">出栈</td>
+          <td style="text-align: left"><code>POP {R0-R5}</code></td>
+          <td style="text-align: left">从堆栈中弹出数据，恢复到寄存器R0到R5中</td>
+      </tr>
+  </tbody>
+</table>
+<h2 id="跳转指令">跳转指令
+</h2><table>
+  <thead>
+      <tr>
+          <th style="text-align: left">指令类型</th>
+          <th style="text-align: left">指令示例</th>
+          <th style="text-align: left">描述</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td style="text-align: left">无条件跳转</td>
+          <td style="text-align: left"><code>B label</code></td>
+          <td style="text-align: left">无条件跳转到标签<code>label</code>指向的位置</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">子程序调用</td>
+          <td style="text-align: left"><code>BL label</code></td>
+          <td style="text-align: left">调用子程序，将当前指令的下一条指令地址存入链接寄存器（LR），然后跳转到标签<code>label</code>指向的位置</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">子程序返回</td>
+          <td style="text-align: left"><code>BX LR</code></td>
+          <td style="text-align: left">返回子程序调用前的位置，跳转到链接寄存器（LR）中存储的地址</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">寄存器跳转</td>
+          <td style="text-align: left"><code>BX Rn</code></td>
+          <td style="text-align: left">跳转到寄存器Rn中存储的地址</td>
+      </tr>
+  </tbody>
+</table>
+<h2 id="算术运算指令">算术运算指令
+</h2><p>汇编中也可以进行算术运算， 比如加减乘除，常用的运算指令用法如表 所示：</p>
+<table>
+  <thead>
+      <tr>
+          <th style="text-align: left">指令</th>
+          <th style="text-align: left">计算公式</th>
+          <th style="text-align: left">备注</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td style="text-align: left"><code>ADD Rd, Rn, Rm</code></td>
+          <td style="text-align: left">Rd = Rn + Rm</td>
+          <td style="text-align: left">加法运算，指令为 ADD</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><code>ADD Rd, Rn, #immed</code></td>
+          <td style="text-align: left">Rd = Rn + #immed</td>
+          <td style="text-align: left">加法运算，指令为 ADD</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><code>ADC Rd, Rn, Rm</code></td>
+          <td style="text-align: left">Rd = Rn + Rm + 进位</td>
+          <td style="text-align: left">带进位的加法运算，指令为 ADC</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><code>ADC Rd, Rn, #immed</code></td>
+          <td style="text-align: left">Rd = Rn + #immed + 进位</td>
+          <td style="text-align: left">带进位的加法运算，指令为 ADC</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><code>SUB Rd, Rn, Rm</code></td>
+          <td style="text-align: left">Rd = Rn - Rm</td>
+          <td style="text-align: left">减法</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><code>SUB Rd, #immed</code></td>
+          <td style="text-align: left">Rd = Rd - #immed</td>
+          <td style="text-align: left">减法</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><code>SUB Rd, Rn, #immed</code></td>
+          <td style="text-align: left">Rd = Rn - #immed</td>
+          <td style="text-align: left">减法</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><code>SBC Rd, Rn, #immed</code></td>
+          <td style="text-align: left">Rd = Rn - #immed - 借位</td>
+          <td style="text-align: left">带借位的减法</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><code>SBC Rd, Rn ,Rm</code></td>
+          <td style="text-align: left">Rd = Rn - Rm - 借位</td>
+          <td style="text-align: left">带借位的减法</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><code>MUL Rd, Rn, Rm</code></td>
+          <td style="text-align: left">Rd = Rn * Rm</td>
+          <td style="text-align: left">乘法 (32 位)</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><code>UDIV Rd, Rn, Rm</code></td>
+          <td style="text-align: left">Rd = Rn / Rm</td>
+          <td style="text-align: left">无符号除法</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><code>SDIV Rd, Rn, Rm</code></td>
+          <td style="text-align: left">Rd = Rn / Rm</td>
+          <td style="text-align: left">有符号除法</td>
+      </tr>
+  </tbody>
+</table>
+<h2 id="逻辑运算">逻辑运算
+</h2><p>汇编语言的时候也可以使用逻辑运算指令，常用的运算指令用法如表 所示：
+<img src="http://pic.rmb.bdstatic.com/bjh/35d0832fb2523805c2a2165ec5458caa.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="img"
+	
+	
+></p>
+<h1 id="0x02-android-so文件分析">0x02 Android so文件分析
+</h1><h2 id="1so-文件概述">1.SO 文件概述
+</h2><ul>
+<li>
+<p><strong>SO</strong> 文件是 Unix/Linux 系统中的动态库文件，被称为共享目标文件（<strong>Shared Object File</strong>），后缀名为 <code>.so</code>，它是 ELF 的一种，另外属于 <strong>ELF</strong> 类型的还有可重定位文件（Relocatable File）以及核心转储文件（Core Dump File）。</p>
+</li>
+<li>
+<p>SO 文件通常用于提高开发效率、方便快速移植代码，以及保护 Android 应用的核心逻辑，增加逆向工程的难度。不同的 CPU 架构（如 ARM、x86 等）需要不同版本的 SO 文件来适配其指令集和运行环境。</p>
+</li>
+</ul>
+<table>
+  <thead>
+      <tr>
+          <th>ELF 文件类型</th>
+          <th>典型后缀</th>
+          <th>核心用途</th>
+          <th>逆向 / 开发场景举例</th>
+          <th>与 ARM 的关联</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>可执行文件</td>
+          <td>无（如<code>/bin/ls</code>）</td>
+          <td>直接运行的程序</td>
+          <td>分析 Linux/ARM 嵌入式设备的二进制逻辑</td>
+          <td>ARM32/64 位设备的可执行文件需对应架构</td>
+      </tr>
+      <tr>
+          <td>共享目标文件（SO）</td>
+          <td><code>.so</code></td>
+          <td>供其他程序动态调用的库（代码复用 + 保护）</td>
+          <td>逆向 Android 的<code>libnative.so</code>（核心逻辑载体）</td>
+          <td>Android SO 分<code>armeabi-v7a</code>（ARM32）、<code>arm64-v8a</code>（ARM64）</td>
+      </tr>
+      <tr>
+          <td>目标文件</td>
+          <td><code>.o</code></td>
+          <td>编译后的中间文件（未链接）</td>
+          <td>分析编译后的单个模块代码（如 NDK 编译的<code>xxx.o</code>）</td>
+          <td>ARM 编译器（如<code>arm-linux-androideabi-gcc</code>）生成对应.o</td>
+      </tr>
+      <tr>
+          <td>核心转储文件</td>
+          <td><code>.core</code></td>
+          <td>程序崩溃时的内存快照</td>
+          <td>分析 SO 崩溃原因（如空指针访问导致的 core dump）</td>
+          <td>ARM 设备崩溃时生成的 core 需用 ARM 架构的 gdb 分析</td>
+      </tr>
+  </tbody>
+</table>
+<ul>
+<li>
+<p><strong>Android</strong> 是基于 <strong>Linux</strong> 内核开发的操作系统，所以 <strong>Android</strong> 平台上的可执行文件格式和 <strong>Unix/Linux</strong> 是一致的。</p>
+</li>
+<li>
+<p><strong>so文件大体上可分为四部分，一般来说从上往下是<code>ELF头部-&gt;Pargarm头部-&gt;节区(Section)-&gt;节区头</code>，其中，除了<code>ELF头部</code>在文件位置固定不变外，其余三部分的位置都不固定。</strong></p>
+</li>
+<li>
+<p>整体结构图参考非虫大佬的图：</p>
+</li>
+</ul>
+<p><img src="https://cdn.jsdelivr.net/gh/windy-purple/blog_picture_bed//soparser/1.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="img"
+	
+	
+></p>
+<h2 id="2so-文件的加载方法">2.SO 文件的加载方法
+</h2><p>Android 通过 Java 层的<code>System</code>类加载 SO，核心方法有两种：</p>
+<table>
+  <thead>
+      <tr>
+          <th>方法</th>
+          <th>签名</th>
+          <th>特点</th>
+          <th>适用场景</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><code>loadLibrary</code></td>
+          <td><code>System.loadLibrary(String name)</code></td>
+          <td>自动拼接文件名（name → libname.so），从默认路径（如<code>/data/app/.../lib</code>）加载。</td>
+          <td>应用内置 SO 的常规加载。</td>
+      </tr>
+      <tr>
+          <td><code>load</code></td>
+          <td><code>System.load(String path)</code></td>
+          <td>需传入 SO 的绝对路径（如<code>/sdcard/libtest.so</code>）。</td>
+          <td>插件化加载、动态下载的 SO。</td>
+      </tr>
+  </tbody>
+</table>
+<h2 id="3so-文件的加载流程">3.SO 文件的加载流程
+</h2><h3 id="loadlibrary-加载流程">loadLibrary 加载流程
+</h3><ul>
+<li>调用 <code>System.loadLibrary(String libName)</code> 时，实际上会调用 <code>Runtime.getRuntime().loadLibrary(String libName)</code>。</li>
+<li><code>Runtime.loadLibrary(String libName)</code> 会进一步调用 <code>Runtime.loadLibrary(String libName, ClassLoader loader)</code>，其中 <code>loader</code> 是当前线程的类加载器。</li>
+<li>通过类加载器找到对应的 SO 文件路径，然后调用 <code>doLoad(String name, ClassLoader loader)</code> 方法进行加载。</li>
+</ul>
+<h3 id="load-加载流程">load 加载流程
+</h3><ul>
+<li>调用 <code>System.load(String pathName)</code> 时，实际上会调用 <code>Runtime.getRuntime().load(String pathName)</code>。</li>
+<li><code>Runtime.load(String pathName)</code> 会调用 <code>Runtime.load(String pathName, ClassLoader loader)</code>，同样会调用 <code>doLoad(String name, ClassLoader loader)</code> 方法进行加载。</li>
+</ul>
+<h3 id="核心加载流程doload">核心加载流程：doLoad
+</h3><ul>
+<li><strong>路径处理</strong>：<code>doLoad</code> 方法会根据传入的路径和类加载器，确定 SO 文件的实际路径。</li>
+<li><strong>动态链接库加载</strong>：调用 <code>dlopen</code> 函数加载动态链接库。</li>
+<li><strong>JNI_OnLoad 调用</strong>：如果 SO 文件中定义了 <code>JNI_OnLoad</code> 函数，则在加载完成后调用该函数进行初始化。</li>
+</ul>
+<hr>
+<p>参考文件：</p>
+<p><a class="link" href="https://www.52pojie.cn/forum.php?mod=viewthread&amp;tid=1282554#34529205_%E5%85%AB%E3%80%81.symtab%E8%A7%A3%E6%9E%90"  target="_blank" rel="noopener"
+    ><strong>Android so(ELF)文件解析</strong></a></p>
+<p><a class="link" href="https://www.52pojie.cn/thread-1787667-1-1.html"  target="_blank" rel="noopener"
+    ><strong>《安卓逆向这档事》十、不是我说，有了IDA还要什么女朋友？</strong></a></p>
+<p><a class="link" href="https://cloud.tencent.com/developer/article/2362433"  target="_blank" rel="noopener"
+    ><strong>android 加载so过程分析</strong></a></p>
+<p><a class="link" href="https://ctf-wiki.org/android/basic_operating_mechanism/native_layer/so/"  target="_blank" rel="noopener"
+    ><strong>[ctfwiki]so 介绍</strong> </a></p><hr />

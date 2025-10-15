@@ -1,0 +1,1031 @@
+<img src="https://raw.githubusercontent.com/fanshanng/blog_picture/master/20250921233613.png" alt="Featured image of post 安卓逆向入门五：Xposed和hook入门" /><p>关键词：<strong>Xposed原理和常用api</strong>、<strong>Android Studio</strong>安装以及环境配置、<strong>hook</strong>、借助<strong>lspatch</strong>实现<strong>免root注入</strong>、<strong>SimpleHook</strong>快速hook</p>
+<h1 id="0x00-什么是xposed">0x00 什么是Xposed
+</h1><p><strong>Xposed 是一款无需修改 APK 即可影响程序运行的 Hook 框架</strong>，基于它可以开发功能强大的插件 APP，实现对目标应用的注入、拦截、修改等操作，且多个功能不冲突的模块可同时运行。</p>
+<p>简单来说，Xposed 的核心是 “在不改变原应用代码的情况下，动态干预其运行逻辑”，这使得它成为安卓逆向、功能扩展的重要工具。</p>
+<p><a class="link" href="https://zh.wikipedia.org/wiki/Xposed_%28%E6%A1%86%E6%9E%B6%29"  target="_blank" rel="noopener"
+    >Xposed (维基百科)</a></p>
+<p><img src="https://raw.githubusercontent.com/fanshanng/blog_picture/master/20250921162625.png"
+	
+	
+	
+	loading="lazy"
+	
+	
+></p>
+<h1 id="0x01-xposed原理">0x01 Xposed原理
+</h1><p>Xposed 的核心是<strong>劫持 Zygote 进程</strong>（安卓系统的进程孵化器，所有应用进程都由它创建），具体过程如下：</p>
+<ol>
+<li>用自定义实现的<code>app_process</code>替换系统原生的<code>app_process</code>；</li>
+<li>加载额外的 XposedBridge.jar 包，将程序入口从系统默认的<code>com.android.internal.os.ZygoteInit.main()</code>替换为<code>de.robv.android.xposed.XposedBridge.main()</code>；</li>
+<li>改造后的 Zygote 进程创建的所有 Dalvik/ART 虚拟机都会被 Hook，从而实现对所有应用进程的动态干预。</li>
+</ol>
+<p><del>通俗来讲，hook就是<strong>狸猫换太子</strong></del></p>
+<p><img src="https://raw.githubusercontent.com/fanshanng/blog_picture/master/20250921162739.png"
+	
+	
+	
+	loading="lazy"
+	
+	
+></p>
+<h1 id="0x02-xposed的发展及免root框架">0x02 Xposed的发展及免root框架
+</h1><p>随着安卓版本迭代，Xposed 衍生出多个分支，下表整理了主流框架的特点：</p>
+<table>
+  <thead>
+      <tr>
+          <th style="text-align: left">名称</th>
+          <th style="text-align: left">地址</th>
+          <th style="text-align: left">支持版本</th>
+          <th style="text-align: left">是否免root</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td style="text-align: left">xposed</td>
+          <td style="text-align: left"><a class="link" href="https://github.com/rovo89/Xposed"  target="_blank" rel="noopener"
+    >https://github.com/rovo89/Xposed</a></td>
+          <td style="text-align: left">2.3-8.1</td>
+          <td style="text-align: left">否</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">EDXposed</td>
+          <td style="text-align: left"><a class="link" href="https://github.com/ElderDrivers/EdXposed"  target="_blank" rel="noopener"
+    >https://github.com/ElderDrivers/EdXposed</a></td>
+          <td style="text-align: left">8.0-10</td>
+          <td style="text-align: left">否</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">LSPosed</td>
+          <td style="text-align: left"><a class="link" href="https://github.com/LSPosed/LSPosed"  target="_blank" rel="noopener"
+    >https://github.com/LSPosed/LSPosed</a></td>
+          <td style="text-align: left">8.1-13</td>
+          <td style="text-align: left">否</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">VirtualXposed</td>
+          <td style="text-align: left"><a class="link" href="https://github.com/android-hacker/VirtualXposed"  target="_blank" rel="noopener"
+    >https://github.com/android-hacker/VirtualXposed</a></td>
+          <td style="text-align: left">5.0-10.0</td>
+          <td style="text-align: left">是</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">太极</td>
+          <td style="text-align: left"><a class="link" href="https://www.coolapk.com/apk/me.weishu.exp"  target="_blank" rel="noopener"
+    >https://www.coolapk.com/apk/me.weishu.exp</a></td>
+          <td style="text-align: left">5.0-13</td>
+          <td style="text-align: left">是</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">两仪</td>
+          <td style="text-align: left"><a class="link" href="https://www.coolapk.com/apk/io.twoyi"  target="_blank" rel="noopener"
+    >https://www.coolapk.com/apk/io.twoyi</a></td>
+          <td style="text-align: left">8.1-13</td>
+          <td style="text-align: left">是</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">天鉴</td>
+          <td style="text-align: left"><a class="link" href="https://github.com/Katana-Official/SPatch-Update"  target="_blank" rel="noopener"
+    >https://github.com/Katana-Official/SPatch-Update</a></td>
+          <td style="text-align: left">6-10</td>
+          <td style="text-align: left">是</td>
+      </tr>
+  </tbody>
+</table>
+<h1 id="0x03-xposed可以用来做什么">0x03 Xposed可以用来做什么？
+</h1><ul>
+<li>
+<p><strong>功能增强</strong>：修改应用布局（如<a class="link" href="https://github.com/kaisar945/Xposed-GodMode"  target="_blank" rel="noopener"
+    >上帝模式</a>）、去除广告（如<a class="link" href="https://github.com/shatyuka/Zhiliao"  target="_blank" rel="noopener"
+    >知乎去广告模块</a>）；</p>
+</li>
+<li>
+<p><strong>数据干预</strong>：劫持参数 / 返回值（如微信防撤回、步数修改、一键新机）；</p>
+</li>
+<li>
+<p><strong>自动化操作</strong>：微信自动抢红包、抖音自动操作等；</p>
+</li>
+<li>
+<p><strong>逆向辅助</strong>：动态分析应用逻辑、绕过加密 / 验证（如<a class="link" href="https://github.com/monkeylord/XServer"  target="_blank" rel="noopener"
+    >XServer</a>）。</p>
+</li>
+</ul>
+<p><a class="link" href="https://www.xda-developers.com/best-xposed-modules/"  target="_blank" rel="noopener"
+    >2022 最好的Xposed模块: GravityBox, Pixelify, XPrivacyLua</a></p>
+<p><a class="link" href="https://github.com/Lstaynight/xposed-dy"  target="_blank" rel="noopener"
+    >基于Xposed的抖音爬虫，抖音风控后自动一键新机，模拟一个全新的运行环境</a></p>
+<p><a class="link" href="https://github.com/svengong/xcubebase"  target="_blank" rel="noopener"
+    >基于xposed的frida持久化方案</a></p>
+<p><a class="link" href="https://github.com/monkeylord/XServer"  target="_blank" rel="noopener"
+    >A Xposed Module for Android Penetration Test, with NanoHttpd.</a></p>
+<p><a class="link" href="https://github.com/GravityBox/GravityBox"  target="_blank" rel="noopener"
+    >GravityBox</a></p>
+<p><a class="link" href="https://github.com/Xposed-Modules-Repo"  target="_blank" rel="noopener"
+    >Xposed-Modules-Repo</a>]</p>
+<p><a class="link" href="https://github.com/ferredoxin/QNotified"  target="_blank" rel="noopener"
+    >一个旨在使QQ变得更好用的开源Xposed模块</a></p>
+<p><a class="link" href="https://github.com/nining377/dolby_beta"  target="_blank" rel="noopener"
+    >杜比大喇叭</a></p>
+<p><a class="link" href="https://github.com/yujincheng08/BiliRoaming"  target="_blank" rel="noopener"
+    >哔哩漫游</a></p>
+<p><a class="link" href="https://github.com/Mocha-L/QuJing"  target="_blank" rel="noopener"
+    >曲境</a></p>
+<p><a class="link" href="https://github.com/monkeylord/XposedTemplateForAS"  target="_blank" rel="noopener"
+    >自动化创建Xposed模块及钩子，让Xposed模块编写时只需关注钩子实现</a></p>
+<h1 id="0x04-xposed环境配置">0x04 Xposed环境配置
+</h1><p>这里下载的是正己提供的<a class="link" href="https://www.vmware.com/cn/products/workstation-pro/workstation-pro-evaluation.html"  target="_blank" rel="noopener"
+    >Ubuntu虚拟机</a>    密码:toor</p>
+<p><strong>内置:</strong></p>
+<ul>
+<li><code>Frida</code>开发环境</li>
+<li>动态分析及开发工具：android-studio</li>
+<li>动态分析工具：ddms</li>
+<li>静态分析工具：jadx1.4.4</li>
+<li>动静态分析工具：jeb</li>
+<li>动态分析工具：集成HyperPwn</li>
+<li>静态分析工具：010 editor</li>
+<li>抓包工具：Charles</li>
+<li>抓包工具：WireShark</li>
+<li>动态分析工具:unidbg</li>
+</ul>
+<p><img src="https://raw.githubusercontent.com/fanshanng/blog_picture/master/20250921154314.png"
+	
+	
+	
+	loading="lazy"
+	
+	
+></p>
+<ul>
+<li>
+<p>1.Android Studio创建新项目</p>
+</li>
+<li>
+<p>2.将下载的<code>xposedBridgeApi.jar</code>包拖进<code>libs</code>文件夹</p>
+</li>
+<li>
+<p>3.右击<code>jar</code>包，选择<code>add as library</code></p>
+</li>
+<li>
+<p>4.修改<strong>AndroidManifest.xml</strong>文件配置</p>
+<ul>
+<li>
+<p>将如下代码复制到xml文件中，如图</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-xml" data-lang="xml"><span class="line"><span class="cl"><span class="c">&lt;!-- 是否是xposed模块，xposed根据这个来判断是否是模块 --&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="nt">&lt;meta-data</span>
+</span></span><span class="line"><span class="cl">    <span class="na">android:name=</span><span class="s">&#34;xposedmodule&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="na">android:value=</span><span class="s">&#34;true&#34;</span> <span class="nt">/&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="c">&lt;!-- 模块描述，显示在xposed模块列表那里第二行 --&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="nt">&lt;meta-data</span>
+</span></span><span class="line"><span class="cl">    <span class="na">android:name=</span><span class="s">&#34;xposeddescription&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="na">android:value=</span><span class="s">&#34;这是一个Xposed模块&#34;</span> <span class="nt">/&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="c">&lt;!-- 最低xposed版本号(lib文件名可知) --&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="nt">&lt;meta-data</span>
+</span></span><span class="line"><span class="cl">    <span class="na">android:name=</span><span class="s">&#34;xposedminversion&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="na">android:value=</span><span class="s">&#34;89&#34;</span> <span class="nt">/&gt;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+</li>
+</ul>
+<p><img src="https://raw.githubusercontent.com/fanshanng/blog_picture/master/20250921154711.png"
+	
+	
+	
+	loading="lazy"
+	
+	
+></p>
+<ul>
+<li>
+<p>5.修改<code>build.gradle</code>,将此处修改为<code>compileOnly</code> 默认的是<code>implementation</code></p>
+<blockquote>
+<p>implementation 使用该方式依赖的库将会参与编译和打包</p>
+<p>compileOnly 只在编译时有效，不会参与打包</p></blockquote>
+</li>
+</ul>
+<p><img src="https://raw.githubusercontent.com/fanshanng/blog_picture/master/32a45106-67a2-4528-b1a1-4606bed14803.png"
+	
+	
+	
+	loading="lazy"
+	
+	
+></p>
+<ul>
+<li>
+<p>6.新建&ndash;&gt;Folder&ndash;&gt;Assets Folder，创建xposed_init(不要后缀名):只有一行代码，就是说明入口类</p>
+<p><img src="https://raw.githubusercontent.com/fanshanng/blog_picture/master/20250917114023.png"
+	
+	
+	
+	loading="lazy"
+	
+	
+></p>
+</li>
+<li>
+<p>7.新建Hook类，实现<code>IXposedHookLoadPackage</code>接口，然后在<code>handleLoadPackage</code>函数内编写Hook逻辑</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kn">import</span><span class="w"> </span><span class="nn">de.robv.android.xposed.IXposedHookLoadPackage</span><span class="p">;</span><span class="w"> 
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kn">import</span><span class="w"> </span><span class="nn">de.robv.android.xposed.callbacks.XC_LoadPackage</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">Hook</span><span class="w"> </span><span class="kd">implements</span><span class="w"> </span><span class="n">IXposedHookLoadPackage</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nd">@Override</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">handleLoadPackage</span><span class="p">(</span><span class="n">XC_LoadPackage</span><span class="p">.</span><span class="na">LoadPackageParam</span><span class="w"> </span><span class="n">loadPackageParam</span><span class="p">)</span><span class="w"> </span><span class="kd">throws</span><span class="w"> </span><span class="n">Throwable</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>继承了IXposedHookLoadPackag便拥有了hook的能力</p>
+</li>
+</ul>
+<h1 id="0x05--xposed常用api">0x05  Xposed常用API
+</h1><h2 id="1hook普通方法">1.Hook普通方法
+</h2><ul>
+<li>
+<p>修改返回值</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="n">XposedHelpers</span><span class="p">.</span><span class="na">findAndHookMethod</span><span class="p">(</span><span class="s">&#34;com.zj.wuaipojie.Demo&#34;</span><span class="p">,</span><span class="w"> </span><span class="n">loadPackageParam</span><span class="p">.</span><span class="na">classLoader</span><span class="p">,</span><span class="w"> </span><span class="s">&#34;a&#34;</span><span class="p">,</span><span class="w"> </span><span class="n">String</span><span class="p">.</span><span class="na">class</span><span class="p">,</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">XC_MethodHook</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nd">@Override</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">protected</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">afterHookedMethod</span><span class="p">(</span><span class="n">MethodHookParam</span><span class="w"> </span><span class="n">param</span><span class="p">)</span><span class="w"> </span><span class="kd">throws</span><span class="w"> </span><span class="n">Throwable</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="kd">super</span><span class="p">.</span><span class="na">afterHookedMethod</span><span class="p">(</span><span class="n">param</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">param</span><span class="p">.</span><span class="na">setResult</span><span class="p">(</span><span class="n">999</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">});</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>修改参数</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="n">XposedHelpers</span><span class="p">.</span><span class="na">findAndHookMethod</span><span class="p">(</span><span class="s">&#34;com.zj.wuaipojie.Demo&#34;</span><span class="p">,</span><span class="w"> </span><span class="n">loadPackageParam</span><span class="p">.</span><span class="na">classLoader</span><span class="p">,</span><span class="w"> </span><span class="s">&#34;a&#34;</span><span class="p">,</span><span class="w"> </span><span class="n">String</span><span class="p">.</span><span class="na">class</span><span class="p">,</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">XC_MethodHook</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nd">@Override</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">protected</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">beforeHookedMethod</span><span class="p">(</span><span class="n">MethodHookParam</span><span class="w"> </span><span class="n">param</span><span class="p">)</span><span class="w"> </span><span class="kd">throws</span><span class="w"> </span><span class="n">Throwable</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="kd">super</span><span class="p">.</span><span class="na">beforeHookedMethod</span><span class="p">(</span><span class="n">param</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">String</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#34;pt&#34;</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">param</span><span class="p">.</span><span class="na">args</span><span class="o">[</span><span class="n">0</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">a</span><span class="p">;</span><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">});</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+<p><img src="https://raw.githubusercontent.com/fanshanng/blog_picture/master/f2c285d9eb7101daf57e03195d6edc24.png"
+	
+	
+	
+	loading="lazy"
+	
+	
+></p>
+<p><img src="https://raw.githubusercontent.com/fanshanng/blog_picture/master/00f9bc7b44068db4458184d7275456e0.png"
+	
+	
+	
+	loading="lazy"
+	
+	
+></p>
+<h2 id="2hook复杂自定义参数">2.Hook复杂&amp;自定义参数
+</h2><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="n">Class</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">loadPackageParam</span><span class="p">.</span><span class="na">classLoader</span><span class="p">.</span><span class="na">loadClass</span><span class="p">(</span><span class="s">&#34;类名&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">XposedBridge</span><span class="p">.</span><span class="na">hookAllMethods</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="s">&#34;方法名&#34;</span><span class="p">,</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">XC_MethodHook</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nd">@Override</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">protected</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">beforeHookedMethod</span><span class="p">(</span><span class="n">MethodHookParam</span><span class="w"> </span><span class="n">param</span><span class="p">)</span><span class="w"> </span><span class="kd">throws</span><span class="w"> </span><span class="n">Throwable</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="kd">super</span><span class="p">.</span><span class="na">beforeHookedMethod</span><span class="p">(</span><span class="n">param</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">});</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p><img src="https://raw.githubusercontent.com/fanshanng/blog_picture/master/99881de9606e7e5c6737a8c9590ffecf.png"
+	
+	
+	
+	loading="lazy"
+	
+	
+></p>
+<h2 id="3hook替换函数">3.Hook替换函数
+</h2><p>使用<code>XC_MethodReplacement</code>直接替换原方法：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-Java" data-lang="Java"><span class="line"><span class="cl"><span class="n">Class</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">classLoader</span><span class="p">.</span><span class="na">loadClass</span><span class="p">(</span><span class="s">&#34;类名&#34;</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">XposedBridge</span><span class="p">.</span><span class="na">hookAllMethods</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="s">&#34;方法名&#34;</span><span class="p">,</span><span class="k">new</span><span class="w"> </span><span class="n">XC_MethodReplacement</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">  
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nd">@Override</span><span class="w">  
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">protected</span><span class="w"> </span><span class="n">Object</span><span class="w"> </span><span class="nf">replaceHookedMethod</span><span class="p">(</span><span class="n">MethodHookParam</span><span class="w"> </span><span class="n">methodHookParam</span><span class="p">)</span><span class="w"> </span><span class="kd">throws</span><span class="w"> </span><span class="n">Throwable</span><span class="w"> </span><span class="p">{</span><span class="w">  
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="s">&#34;&#34;</span><span class="p">;</span><span class="w">  
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">  
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">});</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p><img src="https://raw.githubusercontent.com/fanshanng/blog_picture/master/20250921155958.png"
+	
+	
+	
+	loading="lazy"
+	
+	
+>上图中日志这里的 <em>“这是替换函数”</em> 就被替换无了</p>
+<h2 id="4hook加固通杀">4.Hook加固通杀
+</h2><p>加固应用会动态加载 dex，需在<code>Application.attach</code>时获取加载后的类加载器：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="n">XposedHelpers</span><span class="p">.</span><span class="na">findAndHookMethod</span><span class="p">(</span><span class="n">Application</span><span class="p">.</span><span class="na">class</span><span class="p">,</span><span class="w"> </span><span class="s">&#34;attach&#34;</span><span class="p">,</span><span class="w"> </span><span class="n">Context</span><span class="p">.</span><span class="na">class</span><span class="p">,</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">XC_MethodHook</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">  
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nd">@Override</span><span class="w">  
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">protected</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">afterHookedMethod</span><span class="p">(</span><span class="n">MethodHookParam</span><span class="w"> </span><span class="n">param</span><span class="p">)</span><span class="w"> </span><span class="kd">throws</span><span class="w"> </span><span class="n">Throwable</span><span class="w"> </span><span class="p">{</span><span class="w">  
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">Context</span><span class="w"> </span><span class="n">context</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">Context</span><span class="p">)</span><span class="w"> </span><span class="n">param</span><span class="p">.</span><span class="na">args</span><span class="o">[</span><span class="n">0</span><span class="o">]</span><span class="p">;</span><span class="w">  
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">ClassLoader</span><span class="w"> </span><span class="n">classLoader</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">context</span><span class="p">.</span><span class="na">getClassLoader</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="c1">//hook逻辑在这里面写  </span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">  
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">});</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p><img src="https://raw.githubusercontent.com/fanshanng/blog_picture/master/91e07704b5022d9612c35cd6893c86cd.png"
+	
+	
+	
+	loading="lazy"
+	
+	
+></p>
+<h2 id="5hook变量">5.Hook变量
+</h2><ul>
+<li>静态变量与实例变量
+<ul>
+<li>静态变量(static)：类被初始化，同步进行初始化</li>
+<li>非静态变量：类被实例化(产生一个对象的时候)，进行初始化</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://raw.githubusercontent.com/fanshanng/blog_picture/master/20250921170530.png"
+	
+	
+	
+	loading="lazy"
+	
+	
+></p>
+<h2 id="6hook构造函数">6.Hook构造函数
+</h2><ul>
+<li>
+<p>无参构造函数</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="n">XposedHelpers</span><span class="p">.</span><span class="na">findAndHookConstructor</span><span class="p">(</span><span class="s">&#34;com.zj.wuaipojie.Demo&#34;</span><span class="p">,</span><span class="w"> </span><span class="n">classLoader</span><span class="p">,</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">XC_MethodHook</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nd">@Override</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">protected</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">beforeHookedMethod</span><span class="p">(</span><span class="n">MethodHookParam</span><span class="w"> </span><span class="n">param</span><span class="p">)</span><span class="w"> </span><span class="kd">throws</span><span class="w"> </span><span class="n">Throwable</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="kd">super</span><span class="p">.</span><span class="na">beforeHookedMethod</span><span class="p">(</span><span class="n">param</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nd">@Override</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">protected</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">afterHookedMethod</span><span class="p">(</span><span class="n">MethodHookParam</span><span class="w"> </span><span class="n">param</span><span class="p">)</span><span class="w"> </span><span class="kd">throws</span><span class="w"> </span><span class="n">Throwable</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="kd">super</span><span class="p">.</span><span class="na">afterHookedMethod</span><span class="p">(</span><span class="n">param</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">});</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>有参构造函数</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="n">XposedHelpers</span><span class="p">.</span><span class="na">findAndHookConstructor</span><span class="p">(</span><span class="s">&#34;com.zj.wuaipojie.Demo&#34;</span><span class="p">,</span><span class="w"> </span><span class="n">classLoader</span><span class="p">,</span><span class="w"> </span><span class="n">String</span><span class="p">.</span><span class="na">class</span><span class="p">,</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">XC_MethodHook</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nd">@Override</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">protected</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">beforeHookedMethod</span><span class="p">(</span><span class="n">MethodHookParam</span><span class="w"> </span><span class="n">param</span><span class="p">)</span><span class="w"> </span><span class="kd">throws</span><span class="w"> </span><span class="n">Throwable</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="kd">super</span><span class="p">.</span><span class="na">beforeHookedMethod</span><span class="p">(</span><span class="n">param</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nd">@Override</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">protected</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">afterHookedMethod</span><span class="p">(</span><span class="n">MethodHookParam</span><span class="w"> </span><span class="n">param</span><span class="p">)</span><span class="w"> </span><span class="kd">throws</span><span class="w"> </span><span class="n">Throwable</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="kd">super</span><span class="p">.</span><span class="na">afterHookedMethod</span><span class="p">(</span><span class="n">param</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">});</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+<p><img src="https://raw.githubusercontent.com/fanshanng/blog_picture/master/20250921181509.png"
+	
+	
+	
+	loading="lazy"
+	
+	
+></p>
+<h2 id="7hook-multidex方法">7.Hook multiDex方法
+</h2><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="n">XposedHelpers</span><span class="p">.</span><span class="na">findAndHookMethod</span><span class="p">(</span><span class="n">Application</span><span class="p">.</span><span class="na">class</span><span class="p">,</span><span class="w"> </span><span class="s">&#34;attach&#34;</span><span class="p">,</span><span class="w"> </span><span class="n">Context</span><span class="p">.</span><span class="na">class</span><span class="p">,</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">XC_MethodHook</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">  
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nd">@Override</span><span class="w">  
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">protected</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">afterHookedMethod</span><span class="p">(</span><span class="n">MethodHookParam</span><span class="w"> </span><span class="n">param</span><span class="p">)</span><span class="w"> </span><span class="kd">throws</span><span class="w"> </span><span class="n">Throwable</span><span class="w"> </span><span class="p">{</span><span class="w">  
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">ClassLoader</span><span class="w"> </span><span class="n">cl</span><span class="o">=</span><span class="w"> </span><span class="p">((</span><span class="n">Context</span><span class="p">)</span><span class="n">param</span><span class="p">.</span><span class="na">args</span><span class="o">[</span><span class="n">0</span><span class="o">]</span><span class="p">).</span><span class="na">getClassLoader</span><span class="p">();</span><span class="w">  
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">Class</span><span class="o">&lt;?&gt;</span><span class="w"> </span><span class="n">hookclass</span><span class="o">=</span><span class="kc">null</span><span class="p">;</span><span class="w">  
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">try</span><span class="w"> </span><span class="p">{</span><span class="w">  
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">hookclass</span><span class="o">=</span><span class="n">cl</span><span class="p">.</span><span class="na">loadClass</span><span class="p">(</span><span class="s">&#34;类名&#34;</span><span class="p">);</span><span class="w">  
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">Exception</span><span class="w"> </span><span class="n">e</span><span class="p">){</span><span class="w">  
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">Log</span><span class="p">.</span><span class="na">e</span><span class="p">(</span><span class="s">&#34;zj2595&#34;</span><span class="p">,</span><span class="s">&#34;未找到类&#34;</span><span class="p">,</span><span class="n">e</span><span class="p">);</span><span class="w">  
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="k">return</span><span class="p">;</span><span class="w">        
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w">  
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">XposedHelpers</span><span class="p">.</span><span class="na">findAndHookMethod</span><span class="p">(</span><span class="n">hookclass</span><span class="p">,</span><span class="w"> </span><span class="s">&#34;方法名&#34;</span><span class="p">,</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">XC_MethodHook</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">  
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="nd">@Override</span><span class="w">  
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="kd">protected</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">afterHookedMethod</span><span class="p">(</span><span class="n">MethodHookParam</span><span class="w"> </span><span class="n">param</span><span class="p">)</span><span class="w"> </span><span class="kd">throws</span><span class="w"> </span><span class="n">Throwable</span><span class="w"> </span><span class="p">{</span><span class="w">  
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="p">}</span><span class="w">        
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">});</span><span class="w">  
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">  
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">});</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="8主动调用">8.主动调用
+</h2><ul>
+<li>
+<p>静态方法</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="n">Class</span><span class="w"> </span><span class="n">clazz</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">XposedHelpers</span><span class="p">.</span><span class="na">findClass</span><span class="p">(</span><span class="s">&#34;类名&#34;</span><span class="p">,</span><span class="n">lpparam</span><span class="p">.</span><span class="na">classLoader</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">XposedHelpers</span><span class="p">.</span><span class="na">callStaticMethod</span><span class="p">(</span><span class="n">clazz</span><span class="p">,</span><span class="s">&#34;方法名&#34;</span><span class="p">,</span><span class="n">参数</span><span class="p">(</span><span class="n">非必须</span><span class="p">));</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>实例方法</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="n">Class</span><span class="w"> </span><span class="n">clazz</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">XposedHelpers</span><span class="p">.</span><span class="na">findClass</span><span class="p">(</span><span class="s">&#34;类名&#34;</span><span class="p">,</span><span class="n">lpparam</span><span class="p">.</span><span class="na">classLoader</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">XposedHelpers</span><span class="p">.</span><span class="na">callMethod</span><span class="p">(</span><span class="n">clazz</span><span class="p">.</span><span class="na">newInstance</span><span class="p">(),</span><span class="s">&#34;方法名&#34;</span><span class="p">,</span><span class="n">参数</span><span class="p">(</span><span class="n">非必须</span><span class="p">));</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p><img src="https://raw.githubusercontent.com/fanshanng/blog_picture/master/20250921182801.png"
+	
+	
+	
+	loading="lazy"
+	
+	
+></p>
+</li>
+</ul>
+<h2 id="9hook内部类">9.Hook内部类
+</h2><p>内部类名格式为<code>外部类$内部类</code>（如<code>com.zj.wuaipojie.Demo$InnerClass</code>）</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="n">XposedHelpers</span><span class="p">.</span><span class="na">findAndHookMethod</span><span class="p">(</span><span class="s">&#34;com.zj.wuaipojie.Demo$InnerClass&#34;</span><span class="p">,</span><span class="w"> </span><span class="n">lpparam</span><span class="p">.</span><span class="na">classLoader</span><span class="p">,</span><span class="w"> </span><span class="s">&#34;innerFunc&#34;</span><span class="p">,</span><span class="n">String</span><span class="p">.</span><span class="na">class</span><span class="p">,</span><span class="w">  </span><span class="k">new</span><span class="w"> </span><span class="n">XC_MethodHook</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">  
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nd">@Override</span><span class="w">  
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">protected</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">beforeHookedMethod</span><span class="p">(</span><span class="n">MethodHookParam</span><span class="w"> </span><span class="n">param</span><span class="p">)</span><span class="w"> </span><span class="kd">throws</span><span class="w"> </span><span class="n">Throwable</span><span class="w"> </span><span class="p">{</span><span class="w">  
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="kd">super</span><span class="p">.</span><span class="na">beforeHookedMethod</span><span class="p">(</span><span class="n">param</span><span class="p">);</span><span class="w">  
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">  
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">});</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p><img src="https://raw.githubusercontent.com/fanshanng/blog_picture/master/20250921183118.png"
+	
+	
+	
+	loading="lazy"
+	
+	
+></p>
+<h2 id="10反射大法">10.反射大法
+</h2><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="n">Class</span><span class="w"> </span><span class="n">clazz</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">XposedHelpers</span><span class="p">.</span><span class="na">findClass</span><span class="p">(</span><span class="s">&#34;com.zj.wuaipojie.Demo&#34;</span><span class="p">,</span><span class="w"> </span><span class="n">lpparam</span><span class="p">.</span><span class="na">classLoader</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">XposedHelpers</span><span class="p">.</span><span class="na">findAndHookMethod</span><span class="p">(</span><span class="s">&#34;com.zj.wuaipojie.Demo$InnerClass&#34;</span><span class="p">,</span><span class="w"> </span><span class="n">lpparam</span><span class="p">.</span><span class="na">classLoader</span><span class="p">,</span><span class="w"> </span><span class="s">&#34;innerFunc&#34;</span><span class="p">,</span><span class="n">String</span><span class="p">.</span><span class="na">class</span><span class="p">,</span><span class="w">  </span><span class="k">new</span><span class="w"> </span><span class="n">XC_MethodHook</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">  
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nd">@Override</span><span class="w">  
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">protected</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">beforeHookedMethod</span><span class="p">(</span><span class="n">MethodHookParam</span><span class="w"> </span><span class="n">param</span><span class="p">)</span><span class="w"> </span><span class="kd">throws</span><span class="w"> </span><span class="n">Throwable</span><span class="w"> </span><span class="p">{</span><span class="w">  
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="kd">super</span><span class="p">.</span><span class="na">beforeHookedMethod</span><span class="p">(</span><span class="n">param</span><span class="p">);</span><span class="w">  
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="c1">//第一步找到类</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="c1">//找到方法，如果是私有方法就要setAccessible设置访问权限</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="c1">//invoke主动调用或者set修改值(变量)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">Class</span><span class="w"> </span><span class="n">democlass</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Class</span><span class="p">.</span><span class="na">forName</span><span class="p">(</span><span class="s">&#34;com.zj.wuaipojie.Demo&#34;</span><span class="p">,</span><span class="kc">false</span><span class="p">,</span><span class="n">lpparam</span><span class="p">.</span><span class="na">classLoader</span><span class="p">);</span><span class="w">  
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">Method</span><span class="w"> </span><span class="n">demomethod</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">democlass</span><span class="p">.</span><span class="na">getDeclaredMethod</span><span class="p">(</span><span class="s">&#34;refl&#34;</span><span class="p">);</span><span class="w">  
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">demomethod</span><span class="p">.</span><span class="na">setAccessible</span><span class="p">(</span><span class="kc">true</span><span class="p">);</span><span class="w">  
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">demomethod</span><span class="p">.</span><span class="na">invoke</span><span class="p">(</span><span class="n">clazz</span><span class="p">.</span><span class="na">newInstance</span><span class="p">());</span><span class="w">  
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">  
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">});</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p><img src="https://raw.githubusercontent.com/fanshanng/blog_picture/master/20250921183654.png"
+	
+	
+	
+	loading="lazy"
+	
+	
+></p>
+<h2 id="11遍历所有类下的所有方法">11.遍历所有类下的所有方法
+</h2><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="n">XposedHelpers</span><span class="p">.</span><span class="na">findAndHookMethod</span><span class="p">(</span><span class="n">ClassLoader</span><span class="p">.</span><span class="na">class</span><span class="p">,</span><span class="w"> </span><span class="s">&#34;loadClass&#34;</span><span class="p">,</span><span class="w"> </span><span class="n">String</span><span class="p">.</span><span class="na">class</span><span class="p">,</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">XC_MethodHook</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">  
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nd">@Override</span><span class="w">  
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">protected</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">afterHookedMethod</span><span class="p">(</span><span class="n">MethodHookParam</span><span class="w"> </span><span class="n">param</span><span class="p">)</span><span class="w"> </span><span class="kd">throws</span><span class="w"> </span><span class="n">Throwable</span><span class="w"> </span><span class="p">{</span><span class="w">  
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="kd">super</span><span class="p">.</span><span class="na">afterHookedMethod</span><span class="p">(</span><span class="n">param</span><span class="p">);</span><span class="w">  
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">Class</span><span class="w"> </span><span class="n">clazz</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">Class</span><span class="p">)</span><span class="w"> </span><span class="n">param</span><span class="p">.</span><span class="na">getResult</span><span class="p">();</span><span class="w">  
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">String</span><span class="w"> </span><span class="n">clazzName</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">clazz</span><span class="p">.</span><span class="na">getName</span><span class="p">();</span><span class="w">  
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="c1">//排除非包名的类  </span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">if</span><span class="p">(</span><span class="n">clazzName</span><span class="p">.</span><span class="na">contains</span><span class="p">(</span><span class="s">&#34;com.zj.wuaipojie&#34;</span><span class="p">)){</span><span class="w">  
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">Method</span><span class="o">[]</span><span class="w"> </span><span class="n">mds</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">clazz</span><span class="p">.</span><span class="na">getDeclaredMethods</span><span class="p">();</span><span class="w">  
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="k">for</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="n">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="n">mds</span><span class="p">.</span><span class="na">length</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">){</span><span class="w">  
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="kd">final</span><span class="w"> </span><span class="n">Method</span><span class="w"> </span><span class="n">md</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mds</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="p">;</span><span class="w">  
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="kt">int</span><span class="w"> </span><span class="n">mod</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mds</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="p">.</span><span class="na">getModifiers</span><span class="p">();</span><span class="w">  
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="c1">//去除抽象、native、接口方法  </span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">Modifier</span><span class="p">.</span><span class="na">isAbstract</span><span class="p">(</span><span class="n">mod</span><span class="p">)</span><span class="w">  
+</span></span></span><span class="line"><span class="cl"><span class="w">                    </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="o">!</span><span class="n">Modifier</span><span class="p">.</span><span class="na">isNative</span><span class="p">(</span><span class="n">mod</span><span class="p">)</span><span class="w">  
+</span></span></span><span class="line"><span class="cl"><span class="w">                    </span><span class="o">&amp;&amp;!</span><span class="n">Modifier</span><span class="p">.</span><span class="na">isAbstract</span><span class="p">(</span><span class="n">mod</span><span class="p">)){</span><span class="w">  
+</span></span></span><span class="line"><span class="cl"><span class="w">                    </span><span class="n">XposedBridge</span><span class="p">.</span><span class="na">hookMethod</span><span class="p">(</span><span class="n">mds</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="p">,</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">XC_MethodHook</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">  
+</span></span></span><span class="line"><span class="cl"><span class="w">                        </span><span class="nd">@Override</span><span class="w">  
+</span></span></span><span class="line"><span class="cl"><span class="w">                        </span><span class="kd">protected</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">beforeHookedMethod</span><span class="p">(</span><span class="n">MethodHookParam</span><span class="w"> </span><span class="n">param</span><span class="p">)</span><span class="w"> </span><span class="kd">throws</span><span class="w"> </span><span class="n">Throwable</span><span class="w"> </span><span class="p">{</span><span class="w">  
+</span></span></span><span class="line"><span class="cl"><span class="w">                            </span><span class="kd">super</span><span class="p">.</span><span class="na">beforeHookedMethod</span><span class="p">(</span><span class="n">param</span><span class="p">);</span><span class="w">  
+</span></span></span><span class="line"><span class="cl"><span class="w">                            </span><span class="n">Log</span><span class="p">.</span><span class="na">d</span><span class="p">(</span><span class="s">&#34;zj2595&#34;</span><span class="p">,</span><span class="n">md</span><span class="p">.</span><span class="na">toString</span><span class="p">());</span><span class="w">  
+</span></span></span><span class="line"><span class="cl"><span class="w">                        </span><span class="p">}</span><span class="w">  
+</span></span></span><span class="line"><span class="cl"><span class="w">                    </span><span class="p">});</span><span class="w">  
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="p">}</span><span class="w">  
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">           </span><span class="p">}</span><span class="w">  
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w">  
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">  
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">});</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p><img src="https://raw.githubusercontent.com/fanshanng/blog_picture/master/20250921184352.png"
+	
+	
+	
+	loading="lazy"
+	
+	
+></p>
+<h1 id="0x06-xposed妙用">0x06 Xposed妙用
+</h1><ul>
+<li>
+<p>字符串赋值定位:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="n">XposedHelpers</span><span class="p">.</span><span class="na">findAndHookMethod</span><span class="p">(</span><span class="s">&#34;android.widget.TextView&#34;</span><span class="p">,</span><span class="w"> </span><span class="n">lpparam</span><span class="p">.</span><span class="na">classLoader</span><span class="p">,</span><span class="w"> </span><span class="s">&#34;setText&#34;</span><span class="p">,</span><span class="w"> </span><span class="n">CharSequence</span><span class="p">.</span><span class="na">class</span><span class="p">,</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">XC_MethodHook</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">  
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nd">@Override</span><span class="w">  
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">protected</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">beforeHookedMethod</span><span class="p">(</span><span class="n">MethodHookParam</span><span class="w"> </span><span class="n">param</span><span class="p">)</span><span class="w"> </span><span class="kd">throws</span><span class="w"> </span><span class="n">Throwable</span><span class="w"> </span><span class="p">{</span><span class="w">  
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="kd">super</span><span class="p">.</span><span class="na">beforeHookedMethod</span><span class="p">(</span><span class="n">param</span><span class="p">);</span><span class="w">  
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">Log</span><span class="p">.</span><span class="na">d</span><span class="p">(</span><span class="s">&#34;zj2595&#34;</span><span class="p">,</span><span class="n">param</span><span class="p">.</span><span class="na">args</span><span class="o">[</span><span class="n">0</span><span class="o">]</span><span class="p">.</span><span class="na">toString</span><span class="p">());</span><span class="w">  
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="k">if</span><span class="p">(</span><span class="n">param</span><span class="p">.</span><span class="na">args</span><span class="o">[</span><span class="n">0</span><span class="o">]</span><span class="p">.</span><span class="na">equals</span><span class="p">(</span><span class="s">&#34;已过期&#34;</span><span class="p">)){</span><span class="w">  
+</span></span></span><span class="line"><span class="cl"><span class="w">                    </span><span class="n">printStackTrace</span><span class="p">();</span><span class="w">  
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">  
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">});</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">private</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">printStackTrace</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">  
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">Throwable</span><span class="w"> </span><span class="n">ex</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Throwable</span><span class="p">();</span><span class="w">  
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">StackTraceElement</span><span class="o">[]</span><span class="w"> </span><span class="n">stackElements</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ex</span><span class="p">.</span><span class="na">getStackTrace</span><span class="p">();</span><span class="w">  
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">stackElements</span><span class="p">.</span><span class="na">length</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">  
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">StackTraceElement</span><span class="w"> </span><span class="n">element</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">stackElements</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="p">;</span><span class="w">  
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">Log</span><span class="p">.</span><span class="na">d</span><span class="p">(</span><span class="s">&#34;zj2595&#34;</span><span class="p">,</span><span class="s">&#34;at &#34;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">element</span><span class="p">.</span><span class="na">getClassName</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&#34;.&#34;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">element</span><span class="p">.</span><span class="na">getMethodName</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&#34;(&#34;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">element</span><span class="p">.</span><span class="na">getFileName</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&#34;:&#34;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">element</span><span class="p">.</span><span class="na">getLineNumber</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&#34;)&#34;</span><span class="p">);</span><span class="w">  
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">  
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p><img src="https://raw.githubusercontent.com/fanshanng/blog_picture/master/20250921185837.png"
+	
+	
+	
+	loading="lazy"
+	
+	
+></p>
+</li>
+<li>
+<p>点击事件监听</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="n">Class</span><span class="w"> </span><span class="n">clazz</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">XposedHelpers</span><span class="p">.</span><span class="na">findClass</span><span class="p">(</span><span class="s">&#34;android.view.View&#34;</span><span class="p">,</span><span class="w"> </span><span class="n">lpparam</span><span class="p">.</span><span class="na">classLoader</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">XposedBridge</span><span class="p">.</span><span class="na">hookAllMethods</span><span class="p">(</span><span class="n">clazz</span><span class="p">,</span><span class="w"> </span><span class="s">&#34;performClick&#34;</span><span class="p">,</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">XC_MethodHook</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">  
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nd">@Override</span><span class="w">  
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">protected</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">afterHookedMethod</span><span class="p">(</span><span class="n">MethodHookParam</span><span class="w"> </span><span class="n">param</span><span class="p">)</span><span class="w"> </span><span class="kd">throws</span><span class="w"> </span><span class="n">Throwable</span><span class="w"> </span><span class="p">{</span><span class="w">  
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="kd">super</span><span class="p">.</span><span class="na">afterHookedMethod</span><span class="p">(</span><span class="n">param</span><span class="p">);</span><span class="w">  
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">Object</span><span class="w"> </span><span class="n">listenerInfoObject</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">XposedHelpers</span><span class="p">.</span><span class="na">getObjectField</span><span class="p">(</span><span class="n">param</span><span class="p">.</span><span class="na">thisObject</span><span class="p">,</span><span class="w"> </span><span class="s">&#34;mListenerInfo&#34;</span><span class="p">);</span><span class="w">  
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">Object</span><span class="w"> </span><span class="n">mOnClickListenerObject</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">XposedHelpers</span><span class="p">.</span><span class="na">getObjectField</span><span class="p">(</span><span class="n">listenerInfoObject</span><span class="p">,</span><span class="w"> </span><span class="s">&#34;mOnClickListener&#34;</span><span class="p">);</span><span class="w">  
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">String</span><span class="w"> </span><span class="n">callbackType</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mOnClickListenerObject</span><span class="p">.</span><span class="na">getClass</span><span class="p">().</span><span class="na">getName</span><span class="p">();</span><span class="w">  
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">Log</span><span class="p">.</span><span class="na">d</span><span class="p">(</span><span class="s">&#34;zj2595&#34;</span><span class="p">,</span><span class="n">callbackType</span><span class="p">);</span><span class="w">  
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">  
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">});</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p><img src="https://raw.githubusercontent.com/fanshanng/blog_picture/master/20250921190211.png"
+	
+	
+	
+	loading="lazy"
+	
+	
+></p>
+</li>
+<li>
+<p>改写布局</p>
+<p>在 Activity 初始化后修改 UI 元素（如隐藏图片）：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="n">XposedHelpers</span><span class="p">.</span><span class="na">findAndHookMethod</span><span class="p">(</span><span class="s">&#34;com.zj.wuaipojie.ui.ChallengeSixth&#34;</span><span class="p">,</span><span class="w"> </span><span class="n">lpparam</span><span class="p">.</span><span class="na">classLoader</span><span class="p">,</span><span class="w">  
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="s">&#34;onCreate&#34;</span><span class="p">,</span><span class="w"> </span><span class="n">Bundle</span><span class="p">.</span><span class="na">class</span><span class="p">,</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">XC_MethodHook</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">  
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nd">@Override</span><span class="w">  
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">protected</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">afterHookedMethod</span><span class="p">(</span><span class="n">MethodHookParam</span><span class="w"> </span><span class="n">param</span><span class="p">)</span><span class="w"> </span><span class="kd">throws</span><span class="w"> </span><span class="n">Throwable</span><span class="w"> </span><span class="p">{</span><span class="w">  
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="kd">super</span><span class="p">.</span><span class="na">afterHookedMethod</span><span class="p">(</span><span class="n">param</span><span class="p">);</span><span class="w">  
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">View</span><span class="w"> </span><span class="n">img</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">View</span><span class="p">)</span><span class="n">XposedHelpers</span><span class="p">.</span><span class="na">callMethod</span><span class="p">(</span><span class="n">param</span><span class="p">.</span><span class="na">thisObject</span><span class="p">,</span><span class="w">  
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="s">&#34;findViewById&#34;</span><span class="p">,</span><span class="w"> </span><span class="n">0x7f0800de</span><span class="p">);</span><span class="w">  
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">img</span><span class="p">.</span><span class="na">setVisibility</span><span class="p">(</span><span class="n">View</span><span class="p">.</span><span class="na">GONE</span><span class="p">);</span><span class="w">  
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">  
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">});</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+<table>
+  <thead>
+      <tr>
+          <th>修改前</th>
+          <th>修改后</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><img src="https://raw.githubusercontent.com/fanshanng/blog_picture/master/d6e19d174340d14e81bc882d67e38f61.jpeg"
+	
+	
+	
+	loading="lazy"
+	
+	
+></td>
+          <td><img src="https://raw.githubusercontent.com/fanshanng/blog_picture/master/Screenshot_20250921_190430_com.vphonegaga.titan.jpg"
+	
+	
+	
+	loading="lazy"
+	
+	
+></td>
+      </tr>
+  </tbody>
+</table>
+<h1 id="0x07-lsposed-免root实现">0x07 Lsposed 免root实现
+</h1><ul>
+<li><a class="link" href="https://github.com/LSPosed/LSPatch"  target="_blank" rel="noopener"
+    >Lsposed</a>：LSPosed 框架的无 Root 实现方案，通过将 dex 文件与 so 文件插入到目标 APK（安卓应用安装包）中，实现 Xposed API（应用程序编程接口）的集成。</li>
+<li><strong>核心原理</strong>：重打包目标 APK，将模块代码集成到其中，避免对系统环境的依赖。</li>
+</ul>
+<table>
+  <thead>
+      <tr>
+          <th><img src="https://raw.githubusercontent.com/fanshanng/blog_picture/master/c2057631e9347fa1774c7038ff71908f.jpeg"
+	
+	
+	
+	loading="lazy"
+	
+	
+></th>
+          <th><img src="https://raw.githubusercontent.com/fanshanng/blog_picture/master/df88157a075e458a489051fc31d6a03f.jpeg"
+	
+	
+	
+	loading="lazy"
+	
+	
+></th>
+      </tr>
+  </thead>
+  <tbody>
+  </tbody>
+</table>
+<h1 id="0x07-xposed快速hooksimplehook">0x07 Xposed快速Hook&mdash;&ndash;<strong>SimpleHook</strong>
+</h1><p><a class="link" href="https://github.com/littleWhiteDuck/SimpleHook"  target="_blank" rel="noopener"
+    >SimpleHook</a> 是 GitHub 用户 littleWhiteDuck 开发的一款 <strong>Android 轻量型 Hook 工具</strong>，核心定位是 “简单易用”—— 无需复杂配置即可实现常见 Hook 需求，适合对 Hook 操作复杂度要求低的用户；若需复杂功能（如自定义脚本）或更多扩展能力，官方推荐搭配 <a class="link" href="https://github.com/Xposed-Modules-Repo/me.jsonet.jshook"  target="_blank" rel="noopener"
+    >jshook（复杂功能）</a>、<a class="link" href="https://github.com/Mocha-L/QuJing"  target="_blank" rel="noopener"
+    >曲境（电脑端浏览器操作）</a>或算法助手（扩展功能）使用。</p>
+<ul>
+<li><strong>使用步骤</strong>：
+<ul>
+<li>在 LSPosed 中启用 SimpleHook 模块；</li>
+<li>选择目标应用，添加 Hook 配置（类名、方法名、参数类型等）；</li>
+<li>重启应用，配置生效。</li>
+</ul>
+</li>
+</ul>
+<table>
+  <thead>
+      <tr>
+          <th><img src="https://raw.githubusercontent.com/fanshanng/blog_picture/master/de9ac7bb0e43419dc96076d22cee9cb6.jpeg"
+	
+	
+	
+	loading="lazy"
+	
+	
+></th>
+          <th><img src="https://raw.githubusercontent.com/fanshanng/blog_picture/master/7c5b8f7f32f97c1526cf5358dd7a63fa.jpeg"
+	
+	
+	
+	loading="lazy"
+	
+	
+></th>
+      </tr>
+  </thead>
+  <tbody>
+  </tbody>
+</table>
+<p>工具覆盖多种常见 Hook 场景，部分关键模式及示例如下：</p>
+<table>
+  <thead>
+      <tr>
+          <th>模式类型</th>
+          <th>功能说明</th>
+          <th>关键特点</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Hook 返回值</td>
+          <td>修改目标方法的返回结果，支持基本类型（如 boolean、int）、字符串及 null</td>
+          <td>参数类型留空表示无参，多参数用英文逗号分隔（如 <code>java.lang.String,int</code>）</td>
+      </tr>
+      <tr>
+          <td>Hook 返回值 +</td>
+          <td>进阶功能，支持通过 JSON 格式将数据转为目标对象（依赖 Gson）</td>
+          <td>需填写 “返回值类名”，修改值为 JSON 字符串（如 <code>{&quot;isHook&quot;:false,&quot;level&quot;:10000}</code>）</td>
+      </tr>
+      <tr>
+          <td>Hook 参数值</td>
+          <td>修改目标方法的输入参数，支持部分参数或全部参数修改</td>
+          <td>未修改的参数留空（如仅改第 2、3 个参数，修改值填 <code>,啦啦啦,99</code>）</td>
+      </tr>
+      <tr>
+          <td>中断执行</td>
+          <td>拦截目标方法执行，使其不触发原有逻辑</td>
+          <td>无需填写修改值，仅需配置类名、方法名及参数类型</td>
+      </tr>
+      <tr>
+          <td>特殊方法 Hook</td>
+          <td>- 构造方法：方法名填写 <code>&lt;init&gt;</code>- 所有同名方法：参数类型填 <code>*</code>- 类内所有方法：方法名填 <code>*</code></td>
+          <td>适配不同场景下的批量或特殊方法 Hook 需求</td>
+      </tr>
+      <tr>
+          <td>变量 Hook</td>
+          <td>- 静态变量：支持 <code>before/after</code> 两个 Hook 点（方法执行前后修改）- 实例变量：仅支持在本类方法执行后修改，不可跨类</td>
+          <td>仅支持基本类型和字符串，需填写 “变量所在类名”“变量名”</td>
+      </tr>
+      <tr>
+          <td>记录类模式（3 种）</td>
+          <td>记录参数值、记录返回值、记录参返（参数 + 返回值）</td>
+          <td>数组或 List 类型参数 / 返回值会自动转为 JSON 格式，便于查看</td>
+      </tr>
+  </tbody>
+</table>
+<p>该软件还满足自定义hook，具体细节请前往<a class="link" href="https://github.com/littleWhiteDuck/SimpleHook"  target="_blank" rel="noopener"
+    >SimpleHook</a>学习。</p>
+<h2 id="参考文档">参考文档
+</h2><p><a class="link" href="https://www.52pojie.cn/thread-1740944-1-1.html"  target="_blank" rel="noopener"
+    ><strong>《安卓逆向这档事》七、Sorry，会Hook真的可以为所欲为-Xposed快速上手(上)</strong></a></p>
+<p><a class="link" href="https://www.52pojie.cn/thread-1748081-1-1.html"  target="_blank" rel="noopener"
+    ><strong>《安卓逆向这档事》八、Sorry，会Hook真的可以为所欲为-xposed快速上手(下)</strong></a></p>
+<p><a class="link" href="https://bbs.kanxue.com/thread-269616.htm#msg_header_h2_0"  target="_blank" rel="noopener"
+    >源码编译（2）——Xopsed源码编译详解</a>
+<a class="link" href="https://bbs.kanxue.com/thread-260484.htm"  target="_blank" rel="noopener"
+    >Xposed Hook技巧，代{过}{滤}理abstract</a>
+<a class="link" href="https://bbs.kanxue.com/thread-257100.htm"  target="_blank" rel="noopener"
+    >Xposed callMethod 如何传入接口参数</a></p>
+<p><a class="link" href="https://www.52pojie.cn/thread-1149210-1-1.html"  target="_blank" rel="noopener"
+    >XPOSED魔改一：获取特征</a>
+<a class="link" href="https://www.52pojie.cn/thread-1694093-1-1.html"  target="_blank" rel="noopener"
+    >Lsposed 技术原理探讨 &amp;&amp; 基本安装使用</a></p><hr />

@@ -1,0 +1,766 @@
+<img src="https://raw.githubusercontent.com/fanshanng/blog_picture/master/20250601010933131.png" alt="Featured image of post 安卓逆向入门二" /><h1 id="0x00-smali及其语法">0x00 smali及其语法
+</h1><h2 id="smali是dalvik的寄存器语言smali代码是dex反编译而来的"><strong>smali</strong>是<strong>Dalvik的寄存器语言</strong>，smali代码是dex反编译而来的。
+</h2><p><strong>Smali</strong>是Dalvik虚拟机和ART运行时的寄存器指令语言，相当于Android平台的汇编语言。当APK被反编译时，DEX文件会转换为Smali代码（<code>.smali</code>文件），它是逆向分析的核心载体。</p>
+<p><strong>关键字</strong></p>
+<table>
+  <thead>
+      <tr>
+          <th style="text-align: left">名称</th>
+          <th style="text-align: left">注释</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td style="text-align: left">.class</td>
+          <td style="text-align: left">类名</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">.super</td>
+          <td style="text-align: left">父类名，继承的上级类名名称</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">.source</td>
+          <td style="text-align: left">源名</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">.field</td>
+          <td style="text-align: left">变量</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">.method</td>
+          <td style="text-align: left">方法名</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">.register</td>
+          <td style="text-align: left">寄存器</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">.end method</td>
+          <td style="text-align: left">方法名的结束</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">public</td>
+          <td style="text-align: left">公有</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">protected</td>
+          <td style="text-align: left">半公开，只有同一家人才能用</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">private</td>
+          <td style="text-align: left">私有，只能自己使用</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">.parameter</td>
+          <td style="text-align: left">方法参数</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">.prologue</td>
+          <td style="text-align: left">方法开始</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">.line xxx</td>
+          <td style="text-align: left">位于第xxx行</td>
+      </tr>
+  </tbody>
+</table>
+<p><strong>数据类型对应</strong></p>
+<table>
+  <thead>
+      <tr>
+          <th style="text-align: left">smali类型</th>
+          <th style="text-align: left">java类型</th>
+          <th style="text-align: left">注释</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td style="text-align: left">V</td>
+          <td style="text-align: left">void</td>
+          <td style="text-align: left">无返回值</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">Z</td>
+          <td style="text-align: left">boolean</td>
+          <td style="text-align: left">布尔值类型，返回0或1</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">B</td>
+          <td style="text-align: left">byte</td>
+          <td style="text-align: left">字节类型，返回字节</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">S</td>
+          <td style="text-align: left">short</td>
+          <td style="text-align: left">短整数类型，返回数字</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">C</td>
+          <td style="text-align: left">char</td>
+          <td style="text-align: left">字符类型，返回字符</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">I</td>
+          <td style="text-align: left">int</td>
+          <td style="text-align: left">整数类型，返回数字</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">J</td>
+          <td style="text-align: left">long （64位 需要2个寄存器存储）</td>
+          <td style="text-align: left">长整数类型，返回数字</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">F</td>
+          <td style="text-align: left">float</td>
+          <td style="text-align: left">单浮点类型，返回数字</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">D</td>
+          <td style="text-align: left">double （64位 需要2个寄存器存储）</td>
+          <td style="text-align: left">双浮点类型，返回数字</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">string</td>
+          <td style="text-align: left">String</td>
+          <td style="text-align: left">文本类型，返回字符串</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">Lxxx/xxx/xxx</td>
+          <td style="text-align: left">object</td>
+          <td style="text-align: left">对象类型，返回对象</td>
+      </tr>
+  </tbody>
+</table>
+<p><strong>常用指令</strong></p>
+<table>
+  <thead>
+      <tr>
+          <th style="text-align: left">关键字</th>
+          <th style="text-align: left">注释</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td style="text-align: left"><strong>const</strong></td>
+          <td style="text-align: left">重写整数属性，真假属性内容，只能是数字类型</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><strong>const-string</strong></td>
+          <td style="text-align: left">重写字符串内容</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><strong>const-wide</strong></td>
+          <td style="text-align: left">重写长整数类型，多用于修改到期时间。</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><strong>return</strong></td>
+          <td style="text-align: left">返回指令</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><strong>if-eq</strong></td>
+          <td style="text-align: left">全称equal(a=b)，比较寄存器ab内容，相同则跳</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><strong>if-ne</strong></td>
+          <td style="text-align: left">全称not equal(a!=b)，ab内容不相同则跳</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><strong>if-eqz</strong></td>
+          <td style="text-align: left">全称equal zero(a=0)，z即是0的标记，a等于0则跳</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><strong>if-nez</strong></td>
+          <td style="text-align: left">全称not equal zero(a!=0)，a不等于0则跳</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><strong>if-ge</strong></td>
+          <td style="text-align: left">全称greater equal(a&gt;=b)，a大于或等于则跳</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><strong>if-le</strong></td>
+          <td style="text-align: left">全称little equal(a&lt;=b)，a小于或等于则跳</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><strong>goto</strong></td>
+          <td style="text-align: left">强制跳到指定位置</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><strong>switch</strong></td>
+          <td style="text-align: left">分支跳转，一般会有多个分支线，并根据指令跳转到适当位置</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><strong>iget</strong></td>
+          <td style="text-align: left">获取寄存器数据</td>
+      </tr>
+  </tbody>
+</table>
+<h2 id="vip终结者"><strong>“vip终结者”</strong>
+</h2><ul>
+<li>
+<p>定位方法：</p>
+<p><strong>搜索弹窗关键字</strong>（用jd-gui搜索字符串）、<strong>抓取按钮id</strong>（本质与前一个方法一样）</p>
+</li>
+</ul>
+<p>（字符串有时候是用unicode显示，搜关键文字搜不到的话可以试试搜对应的unicode）</p>
+<p>（此处演示的是抓取按钮id）</p>
+<p><img src="https://raw.githubusercontent.com/fanshanng/blog_picture/master/image-20250531190454469.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="image-20250531190454469"
+	
+	
+></p>
+<ul>
+<li>
+<p>修改方法：</p>
+<p><strong>修改判断、强制跳转、修改寄存器的值</strong> (这里与反调试中修改标志位或者修改跳转指令类似)</p>
+</li>
+</ul>
+<p>demo代码例子（注释为正己所写）：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span><span class="lnt">68
+</span><span class="lnt">69
+</span><span class="lnt">70
+</span><span class="lnt">71
+</span><span class="lnt">72
+</span><span class="lnt">73
+</span><span class="lnt">74
+</span><span class="lnt">75
+</span><span class="lnt">76
+</span><span class="lnt">77
+</span><span class="lnt">78
+</span><span class="lnt">79
+</span><span class="lnt">80
+</span><span class="lnt">81
+</span><span class="lnt">82
+</span><span class="lnt">83
+</span><span class="lnt">84
+</span><span class="lnt">85
+</span><span class="lnt">86
+</span><span class="lnt">87
+</span><span class="lnt">88
+</span><span class="lnt">89
+</span><span class="lnt">90
+</span><span class="lnt">91
+</span><span class="lnt">92
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="c1">//一个私有、静态、不可变的方法   方法名</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">.</span><span class="na">method</span><span class="w"> </span><span class="kd">private</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="n">onCreate$lambda</span><span class="o">-</span><span class="n">2</span><span class="p">(</span><span class="n">Lkotlin</span><span class="o">/</span><span class="n">jvm</span><span class="o">/</span><span class="n">internal</span><span class="o">/</span><span class="n">Ref$IntRef</span><span class="p">;</span><span class="n">Lcom</span><span class="o">/</span><span class="n">zj</span><span class="o">/</span><span class="n">wuaipojie</span><span class="o">/</span><span class="n">ui</span><span class="o">/</span><span class="n">ChallengeSecond</span><span class="p">;</span><span class="n">Landroid</span><span class="o">/</span><span class="n">widget</span><span class="o">/</span><span class="n">ImageView</span><span class="p">;</span><span class="n">Landroid</span><span class="o">/</span><span class="n">widget</span><span class="o">/</span><span class="n">ImageView</span><span class="p">;</span><span class="n">Landroid</span><span class="o">/</span><span class="n">widget</span><span class="o">/</span><span class="n">ImageView</span><span class="p">;</span><span class="n">Landroid</span><span class="o">/</span><span class="n">view</span><span class="o">/</span><span class="n">View</span><span class="p">;)</span><span class="n">Z</span><span class="w"> </span><span class="c1">//(这里面是方法的参数)这里是方法返回值类型，表示布尔值类型，返回假或真</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">.</span><span class="na">registers</span><span class="w"> </span><span class="n">7</span><span class="w">  </span><span class="c1">//寄存器数量</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">.</span><span class="na">line</span><span class="w"> </span><span class="n">33</span><span class="w">  </span><span class="c1">//代码所在的行数</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">iget</span><span class="w"> </span><span class="n">p0</span><span class="p">,</span><span class="w"> </span><span class="n">p0</span><span class="p">,</span><span class="w"> </span><span class="n">Lkotlin</span><span class="o">/</span><span class="n">jvm</span><span class="o">/</span><span class="n">internal</span><span class="o">/</span><span class="n">Ref$IntRef</span><span class="p">;</span><span class="o">-&gt;</span><span class="n">element</span><span class="p">:</span><span class="n">I</span><span class="w">  </span><span class="c1">//读取p0(第一个参数，参考寄存器知识)中element的值赋值给p0</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">const</span><span class="o">/</span><span class="n">4</span><span class="w"> </span><span class="n">p5</span><span class="p">,</span><span class="w"> </span><span class="n">0x1</span><span class="w">  </span><span class="c1">//p5赋值1</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">const</span><span class="o">/</span><span class="n">16</span><span class="w"> </span><span class="n">v0</span><span class="p">,</span><span class="w"> </span><span class="n">0xa</span><span class="w"> </span><span class="c1">//v0赋值10，在16进制里a表示10</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">if</span><span class="o">-</span><span class="n">ge</span><span class="w"> </span><span class="n">p0</span><span class="p">,</span><span class="w"> </span><span class="n">v0</span><span class="p">,</span><span class="w"> </span><span class="p">:</span><span class="n">cond_15</span><span class="w">  </span><span class="c1">//判断p0的值是否大于或等于v0的值(即p0的值是否大于或等于10)，如果大于或等于则跳转到:cond_15</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">.</span><span class="na">line</span><span class="w"> </span><span class="n">34</span><span class="w">  </span><span class="c1">//以下是常见的Toast弹窗代码</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">check</span><span class="o">-</span><span class="n">cast</span><span class="w"> </span><span class="n">p1</span><span class="p">,</span><span class="w"> </span><span class="n">Landroid</span><span class="o">/</span><span class="n">content</span><span class="o">/</span><span class="n">Context</span><span class="p">;</span><span class="w"> </span><span class="c1">//检查Context对象引用</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">const</span><span class="o">-</span><span class="n">string</span><span class="w"> </span><span class="n">p0</span><span class="p">,</span><span class="w"> </span><span class="s">&#34;请先获取10个硬币哦&#34;</span><span class="w"> </span><span class="c1">//弹窗文本信息，把&#34;&#34;里的字符串数据赋值给p0</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">check</span><span class="o">-</span><span class="n">cast</span><span class="w"> </span><span class="n">p0</span><span class="p">,</span><span class="w"> </span><span class="n">Ljava</span><span class="o">/</span><span class="n">lang</span><span class="o">/</span><span class="n">CharSequence</span><span class="p">;</span><span class="w"> </span><span class="c1">//检查CharSequence对象引用</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">invoke</span><span class="o">-</span><span class="kd">static</span><span class="w"> </span><span class="p">{</span><span class="n">p1</span><span class="p">,</span><span class="w"> </span><span class="n">p0</span><span class="p">,</span><span class="w"> </span><span class="n">p5</span><span class="p">},</span><span class="w"> </span><span class="n">Landroid</span><span class="o">/</span><span class="n">widget</span><span class="o">/</span><span class="n">Toast</span><span class="p">;</span><span class="o">-&gt;</span><span class="n">makeText</span><span class="p">(</span><span class="n">Landroid</span><span class="o">/</span><span class="n">content</span><span class="o">/</span><span class="n">Context</span><span class="p">;</span><span class="n">Ljava</span><span class="o">/</span><span class="n">lang</span><span class="o">/</span><span class="n">CharSequence</span><span class="p">;</span><span class="n">I</span><span class="p">)</span><span class="n">Landroid</span><span class="o">/</span><span class="n">widget</span><span class="o">/</span><span class="n">Toast</span><span class="p">;</span><span class="w"> 
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">//将弹窗文本、显示时间等信息传给p1</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">move</span><span class="o">-</span><span class="n">result</span><span class="o">-</span><span class="n">object</span><span class="w"> </span><span class="n">p0</span><span class="w">  </span><span class="c1">//结果传递给p0</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">invoke</span><span class="o">-</span><span class="n">virtual</span><span class="w"> </span><span class="p">{</span><span class="n">p0</span><span class="p">},</span><span class="w"> </span><span class="n">Landroid</span><span class="o">/</span><span class="n">widget</span><span class="o">/</span><span class="n">Toast</span><span class="p">;</span><span class="o">-&gt;</span><span class="n">show</span><span class="p">()</span><span class="n">V</span><span class="w">  </span><span class="c1">//当看到这个Toast;-&gt;show你就应该反应过来这里是弹窗代码</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">goto</span><span class="w"> </span><span class="p">:</span><span class="n">goto_31</span><span class="w">  </span><span class="c1">//跳转到:goto_31</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">:</span><span class="n">cond_15</span><span class="w"> </span><span class="c1">//跳转的一个地址</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">invoke</span><span class="o">-</span><span class="n">virtual</span><span class="w"> </span><span class="p">{</span><span class="n">p1</span><span class="p">},</span><span class="w"> </span><span class="n">Lcom</span><span class="o">/</span><span class="n">zj</span><span class="o">/</span><span class="n">wuaipojie</span><span class="o">/</span><span class="n">ui</span><span class="o">/</span><span class="n">ChallengeSecond</span><span class="p">;</span><span class="o">-&gt;</span><span class="n">isvip</span><span class="p">()</span><span class="n">Z</span><span class="w">  </span><span class="c1">//判断isvip方法的返回值是否为真(即结果是否为1)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">move</span><span class="o">-</span><span class="n">result</span><span class="w"> </span><span class="n">p0</span><span class="w">  </span><span class="c1">//结果赋值给p0</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">if</span><span class="o">-</span><span class="n">eqz</span><span class="w"> </span><span class="n">p0</span><span class="p">,</span><span class="w"> </span><span class="p">:</span><span class="n">cond_43</span><span class="w"> </span><span class="c1">//如果结果为0则跳转cond_43地址</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="n">p0</span><span class="p">,</span><span class="w"> </span><span class="n">0x7f0d0018</span><span class="w">  </span><span class="c1">//在arsc中的id索引，这个值可以进行查询</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">.</span><span class="na">line</span><span class="w"> </span><span class="n">37</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">invoke</span><span class="o">-</span><span class="n">virtual</span><span class="w"> </span><span class="p">{</span><span class="n">p2</span><span class="p">,</span><span class="w"> </span><span class="n">p0</span><span class="p">},</span><span class="w"> </span><span class="n">Landroid</span><span class="o">/</span><span class="n">widget</span><span class="o">/</span><span class="n">ImageView</span><span class="p">;</span><span class="o">-&gt;</span><span class="n">setImageResource</span><span class="p">(</span><span class="n">I</span><span class="p">)</span><span class="n">V</span><span class="w"> </span><span class="c1">//设置图片资源</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="n">p0</span><span class="p">,</span><span class="w"> </span><span class="n">0x7f0d0008</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">.</span><span class="na">line</span><span class="w"> </span><span class="n">38</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">invoke</span><span class="o">-</span><span class="n">virtual</span><span class="w"> </span><span class="p">{</span><span class="n">p3</span><span class="p">,</span><span class="w"> </span><span class="n">p0</span><span class="p">},</span><span class="w"> </span><span class="n">Landroid</span><span class="o">/</span><span class="n">widget</span><span class="o">/</span><span class="n">ImageView</span><span class="p">;</span><span class="o">-&gt;</span><span class="n">setImageResource</span><span class="p">(</span><span class="n">I</span><span class="p">)</span><span class="n">V</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="n">p0</span><span class="p">,</span><span class="w"> </span><span class="n">0x7f0d000a</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">.</span><span class="na">line</span><span class="w"> </span><span class="n">39</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">invoke</span><span class="o">-</span><span class="n">virtual</span><span class="w"> </span><span class="p">{</span><span class="n">p4</span><span class="p">,</span><span class="w"> </span><span class="n">p0</span><span class="p">},</span><span class="w"> </span><span class="n">Landroid</span><span class="o">/</span><span class="n">widget</span><span class="o">/</span><span class="n">ImageView</span><span class="p">;</span><span class="o">-&gt;</span><span class="n">setImageResource</span><span class="p">(</span><span class="n">I</span><span class="p">)</span><span class="n">V</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">.</span><span class="na">line</span><span class="w"> </span><span class="n">40</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">sget</span><span class="o">-</span><span class="n">object</span><span class="w"> </span><span class="n">p0</span><span class="p">,</span><span class="w"> </span><span class="n">Lcom</span><span class="o">/</span><span class="n">zj</span><span class="o">/</span><span class="n">wuaipojie</span><span class="o">/</span><span class="n">util</span><span class="o">/</span><span class="n">SPUtils</span><span class="p">;</span><span class="o">-&gt;</span><span class="n">INSTANCE</span><span class="p">:</span><span class="n">Lcom</span><span class="o">/</span><span class="n">zj</span><span class="o">/</span><span class="n">wuaipojie</span><span class="o">/</span><span class="n">util</span><span class="o">/</span><span class="n">SPUtils</span><span class="p">;</span><span class="w"> 
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">check</span><span class="o">-</span><span class="n">cast</span><span class="w"> </span><span class="n">p1</span><span class="p">,</span><span class="w"> </span><span class="n">Landroid</span><span class="o">/</span><span class="n">content</span><span class="o">/</span><span class="n">Context</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">const</span><span class="o">/</span><span class="n">4</span><span class="w"> </span><span class="n">p2</span><span class="p">,</span><span class="w"> </span><span class="n">0x2</span><span class="w"> </span><span class="c1">//p2赋值2</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">const</span><span class="o">-</span><span class="n">string</span><span class="w"> </span><span class="n">p3</span><span class="p">,</span><span class="w"> </span><span class="s">&#34;level&#34;</span><span class="w"> </span><span class="c1">//sp的索引</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">invoke</span><span class="o">-</span><span class="n">virtual</span><span class="w"> </span><span class="p">{</span><span class="n">p0</span><span class="p">,</span><span class="w"> </span><span class="n">p1</span><span class="p">,</span><span class="w"> </span><span class="n">p3</span><span class="p">,</span><span class="w"> </span><span class="n">p2</span><span class="p">},</span><span class="w"> </span><span class="n">Lcom</span><span class="o">/</span><span class="n">zj</span><span class="o">/</span><span class="n">wuaipojie</span><span class="o">/</span><span class="n">util</span><span class="o">/</span><span class="n">SPUtils</span><span class="p">;</span><span class="o">-&gt;</span><span class="n">saveInt</span><span class="p">(</span><span class="n">Landroid</span><span class="o">/</span><span class="n">content</span><span class="o">/</span><span class="n">Context</span><span class="p">;</span><span class="n">Ljava</span><span class="o">/</span><span class="n">lang</span><span class="o">/</span><span class="n">String</span><span class="p">;</span><span class="n">I</span><span class="p">)</span><span class="n">V</span><span class="w"> </span><span class="c1">//写入数据</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">goto</span><span class="w"> </span><span class="p">:</span><span class="n">goto_50</span><span class="w"> </span><span class="c1">//跳转地址</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">:</span><span class="n">cond_43</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">check</span><span class="o">-</span><span class="n">cast</span><span class="w"> </span><span class="n">p1</span><span class="p">,</span><span class="w"> </span><span class="n">Landroid</span><span class="o">/</span><span class="n">content</span><span class="o">/</span><span class="n">Context</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">const</span><span class="o">-</span><span class="n">string</span><span class="w"> </span><span class="n">p0</span><span class="p">,</span><span class="w"> </span><span class="s">&#34;\u8bf7\u5148\u5145\u503c\u5927\u4f1a\u5458\u54e6\uff01&#34;</span><span class="w"> </span><span class="c1">//请先充值大会员哦！</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">check</span><span class="o">-</span><span class="n">cast</span><span class="w"> </span><span class="n">p0</span><span class="p">,</span><span class="w"> </span><span class="n">Ljava</span><span class="o">/</span><span class="n">lang</span><span class="o">/</span><span class="n">CharSequence</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">invoke</span><span class="o">-</span><span class="kd">static</span><span class="w"> </span><span class="p">{</span><span class="n">p1</span><span class="p">,</span><span class="w"> </span><span class="n">p0</span><span class="p">,</span><span class="w"> </span><span class="n">p5</span><span class="p">},</span><span class="w"> </span><span class="n">Landroid</span><span class="o">/</span><span class="n">widget</span><span class="o">/</span><span class="n">Toast</span><span class="p">;</span><span class="o">-&gt;</span><span class="n">makeText</span><span class="p">(</span><span class="n">Landroid</span><span class="o">/</span><span class="n">content</span><span class="o">/</span><span class="n">Context</span><span class="p">;</span><span class="n">Ljava</span><span class="o">/</span><span class="n">lang</span><span class="o">/</span><span class="n">CharSequence</span><span class="p">;</span><span class="n">I</span><span class="p">)</span><span class="n">Landroid</span><span class="o">/</span><span class="n">widget</span><span class="o">/</span><span class="n">Toast</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">move</span><span class="o">-</span><span class="n">result</span><span class="o">-</span><span class="n">object</span><span class="w"> </span><span class="n">p0</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">invoke</span><span class="o">-</span><span class="n">virtual</span><span class="w"> </span><span class="p">{</span><span class="n">p0</span><span class="p">},</span><span class="w"> </span><span class="n">Landroid</span><span class="o">/</span><span class="n">widget</span><span class="o">/</span><span class="n">Toast</span><span class="p">;</span><span class="o">-&gt;</span><span class="n">show</span><span class="p">()</span><span class="n">V</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">:</span><span class="n">goto_50</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">p5</span><span class="w">  </span><span class="c1">//返回p5的值</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">.</span><span class="na">end</span><span class="w"> </span><span class="n">method</span><span class="w"> </span><span class="c1">//方法结束</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c1">//判断是否是大会员的方法</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">.</span><span class="na">method</span><span class="w"> </span><span class="kd">public</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="nf">isvip</span><span class="p">()</span><span class="n">Z</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">.</span><span class="na">registers</span><span class="w"> </span><span class="n">2</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">const</span><span class="o">/</span><span class="n">4</span><span class="w"> </span><span class="n">v0</span><span class="p">,</span><span class="w"> </span><span class="n">0x0</span><span class="w"> </span><span class="c1">//v0赋值0</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">v0</span><span class="w"> </span><span class="c1">//返回v0的值</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">.</span><span class="na">end</span><span class="w"> </span><span class="n">method</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<h3 id="寄存器机制">寄存器机制
+</h3><ul>
+<li><strong>命名规则</strong>：<code>v0</code>-<code>vN</code> 本地寄存器，<code>p0</code>-<code>pN</code> 参数寄存器</li>
+<li><strong>关键特性</strong>：
+<ul>
+<li>非静态方法中 <strong><code>p0</code> 固定表示<code>this</code>指针</strong></li>
+<li>静态方法中 <code>p0</code> 对应第一个参数</li>
+<li>64位类型(long/double)占用<strong>两个连续寄存器</strong>（如v0-v1）</li>
+</ul>
+</li>
+</ul></blockquote>
+<p><img src="https://raw.githubusercontent.com/fanshanng/blog_picture/master/image-20250531191307992.png"
+	
+	
+	
+	loading="lazy"
+	
+	
+></p>
+<p>这里可以切换成Smali语言（但是java代码更好看一点）</p>
+<h1 id="0x02-activity的切换">0x02 activity的切换
+</h1><table>
+  <thead>
+      <tr>
+          <th style="text-align: left">组件</th>
+          <th style="text-align: left">描述</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td style="text-align: left">Activity(活动)</td>
+          <td style="text-align: left">在应用中的一个Activity可以用来表示一个界面，意思可以理解为“活动”，即一个活动开始，代表 Activity组件启动，活动结束，代表一个Activity的生命周期结束。一个Android应用必须通过Activity来运行和启动，Activity的生命周期交给系统统一管理。</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">Service(服务)</td>
+          <td style="text-align: left">Service它可以在后台执行长时间运行操作而没有用户界面的应用组件，不依赖任何用户界面，例如后台播放音乐，后台下载文件等。</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">Broadcast Receiver(广播接收器)</td>
+          <td style="text-align: left">一个用于接收广播信息，并做出对应处理的组件。比如我们常见的系统广播：通知时区改变、电量低、用户改变了语言选项等。</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">Content Provider(内容提供者)</td>
+          <td style="text-align: left">作为应用程序之间唯一的共享数据的途径，Content Provider主要的功能就是存储并检索数据以及向其他应用程序提供访问数据的接口。Android内置的许多数据都是使用Content Provider形式，供开发者调用的（如视频，音频，图片，通讯录等）</td>
+      </tr>
+  </tbody>
+</table>
+<h2 id="广告拦截实战">广告拦截实战
+</h2><ul>
+<li>
+<p>启动广告流程：
+<strong>启动Activity-&gt;广告Activity-&gt;主页Activity</strong></p>
+</li>
+<li>
+<p>修改方法：</p>
+<ul>
+<li>
+<p>1.<strong>修改加载时间</strong></p>
+<p>此小节中用到了mt管理器的<strong>Activity管理器</strong>，可以用于记录广告用到的AdActivity类
+<img src="https://raw.githubusercontent.com/fanshanng/blog_picture/master/20250601001310690.png"
+	
+	
+	
+	loading="lazy"
+	
+	
+></p>
+<p>然后通过类名搜索可以定位到代码位置</p>
+<p><img src="https://raw.githubusercontent.com/fanshanng/blog_picture/master/20250601001918653.png"
+	
+	
+	
+	loading="lazy"
+	
+	
+></p>
+<p>转换成java
+<img src="https://raw.githubusercontent.com/fanshanng/blog_picture/master/1748707880407.jpg"
+	
+	
+	
+	loading="lazy"
+	
+	
+></p>
+<p>阅读java代码，然后可以知道有一个3000毫秒广告显示时间，退回到smali代码中修改为零即可。</p>
+</li>
+<li></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>
+<p>2.<strong>Acitivity切换定位，修改Intent的Activity类名</strong>（直接在AndroidManifest.xml文件中修改）</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-xml" data-lang="xml"><span class="line"><span class="cl"><span class="c">&lt;!---声明实现应用部分可视化界面的 Activity，必须使用 AndroidManifest 中的 &lt;activity&gt; 元素表示所有 Activity。系统不会识别和运行任何未进行声明的Activity。-----&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="nt">&lt;activity</span>  
+</span></span><span class="line"><span class="cl">    <span class="na">android:label=</span><span class="s">&#34;@string/app_name&#34;</span>  
+</span></span><span class="line"><span class="cl">    <span class="na">android:name=</span><span class="s">&#34;com.zj.wuaipojie.ui.MainActivity&#34;</span>  
+</span></span><span class="line"><span class="cl">    <span class="na">android:exported=</span><span class="s">&#34;true&#34;</span><span class="nt">&gt;</span>  <span class="c">&lt;!--当前Activity是否可以被另一个Application的组件启动：true允许被启动；false不允许被启动--&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="c">&lt;!---指明这个activity可以以什么样的意图(intent)启动---&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&lt;intent-filter&gt;</span>  
+</span></span><span class="line"><span class="cl">        <span class="c">&lt;!--表示activity作为一个什么动作启动，android.intent.action.MAIN表示作为主activity启动---&gt;</span>
+</span></span><span class="line"><span class="cl">        <span class="nt">&lt;action</span>  
+</span></span><span class="line"><span class="cl">            <span class="na">android:name=</span><span class="s">&#34;android.intent.action.MAIN&#34;</span> <span class="nt">/&gt;</span>  
+</span></span><span class="line"><span class="cl">        <span class="c">&lt;!--这是action元素的额外类别信息，android.intent.category.LAUNCHER表示这个activity为当前应用程序优先级最高的Activity--&gt;</span>
+</span></span><span class="line"><span class="cl">        <span class="nt">&lt;category</span>  
+</span></span><span class="line"><span class="cl">            <span class="na">android:name=</span><span class="s">&#34;android.intent.category.LAUNCHER&#34;</span> <span class="nt">/&gt;</span>  
+</span></span><span class="line"><span class="cl">    <span class="nt">&lt;/intent-filter&gt;</span>  
+</span></span><span class="line"><span class="cl"><span class="nt">&lt;/activity&gt;</span>  
+</span></span><span class="line"><span class="cl"><span class="nt">&lt;activity</span>  
+</span></span><span class="line"><span class="cl">    <span class="na">android:name=</span><span class="s">&#34;com.zj.wuaipojie.ui.ChallengeFirst&#34;</span> <span class="nt">/&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="nt">&lt;activity</span>  
+</span></span><span class="line"><span class="cl">    <span class="na">android:name=</span><span class="s">&#34;com.zj.wuaipojie.ui.ChallengeFifth&#34;</span>  
+</span></span><span class="line"><span class="cl">    <span class="na">android:exported=</span><span class="s">&#34;true&#34;</span> <span class="nt">/&gt;</span>  
+</span></span><span class="line"><span class="cl"><span class="nt">&lt;activity</span>  
+</span></span><span class="line"><span class="cl">    <span class="na">android:name=</span><span class="s">&#34;com.zj.wuaipojie.ui.ChallengeFourth&#34;</span>  
+</span></span><span class="line"><span class="cl">    <span class="na">android:exported=</span><span class="s">&#34;true&#34;</span> <span class="nt">/&gt;</span>  
+</span></span><span class="line"><span class="cl"><span class="nt">&lt;activity</span>  
+</span></span><span class="line"><span class="cl">    <span class="na">android:name=</span><span class="s">&#34;com.zj.wuaipojie.ui.ChallengeThird&#34;</span>  
+</span></span><span class="line"><span class="cl">    <span class="na">android:exported=</span><span class="s">&#34;false&#34;</span> <span class="nt">/&gt;</span>  
+</span></span><span class="line"><span class="cl"><span class="nt">&lt;activity</span>  
+</span></span><span class="line"><span class="cl">    <span class="na">android:name=</span><span class="s">&#34;com.zj.wuaipojie.ui.ChallengeSecond&#34;</span>  
+</span></span><span class="line"><span class="cl">    <span class="na">android:exported=</span><span class="s">&#34;false&#34;</span> <span class="nt">/&gt;</span>  
+</span></span><span class="line"><span class="cl"><span class="nt">&lt;activity</span>  
+</span></span><span class="line"><span class="cl">    <span class="na">android:name=</span><span class="s">&#34;com.zj.wuaipojie.ui.AdActivity&#34;</span> <span class="nt">/&gt;</span>  
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>​</p>
+</li>
+<li>
+<p>3.在classes.dex文件中查找并修改</p>
+<p><img src="https://raw.githubusercontent.com/fanshanng/blog_picture/master/20250601003405442.png"
+	
+	
+	
+	loading="lazy"
+	
+	
+><img src="https://raw.githubusercontent.com/fanshanng/blog_picture/master/20250601003459496.png"
+	
+	
+	
+	loading="lazy"
+	
+	
+></p>
+<p>图一为之前的查找内容，图二是<strong>类的一个smali路径代码</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="w">    </span><span class="k">switch</span><span class="w"> </span><span class="p">(</span><span class="n">position</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">  
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">case</span><span class="w"> </span><span class="n">0</span><span class="p">:</span><span class="w">  
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">Intent</span><span class="w"> </span><span class="n">intent</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Intent</span><span class="p">();</span><span class="w">  
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">intent</span><span class="p">.</span><span class="na">setClass</span><span class="p">(</span><span class="n">it</span><span class="p">.</span><span class="na">getContext</span><span class="p">(),</span><span class="w"> </span><span class="n">ChallengeFirst</span><span class="p">.</span><span class="na">class</span><span class="p">);</span><span class="w">  
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">it</span><span class="p">.</span><span class="na">getContext</span><span class="p">().</span><span class="na">startActivity</span><span class="p">(</span><span class="n">intent</span><span class="p">);</span><span class="w">  
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="k">return</span><span class="p">;</span><span class="w">  
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">case</span><span class="w"> </span><span class="n">1</span><span class="p">:</span><span class="w">  
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">Intent</span><span class="w"> </span><span class="n">intent2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Intent</span><span class="p">();</span><span class="w">  
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">intent2</span><span class="p">.</span><span class="na">setClass</span><span class="p">(</span><span class="n">it</span><span class="p">.</span><span class="na">getContext</span><span class="p">(),</span><span class="w"> </span><span class="n">ChallengeSecond</span><span class="p">.</span><span class="na">class</span><span class="p">);</span><span class="w">  
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">it</span><span class="p">.</span><span class="na">getContext</span><span class="p">().</span><span class="na">startActivity</span><span class="p">(</span><span class="n">intent2</span><span class="p">);</span><span class="w">  
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="k">return</span><span class="p">;</span><span class="w">  
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">case</span><span class="w"> </span><span class="n">2</span><span class="p">:</span><span class="w">  
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">Intent</span><span class="w"> </span><span class="n">intent3</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Intent</span><span class="p">();</span><span class="w">  </span><span class="c1">//new一个Intent，</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">intent3</span><span class="p">.</span><span class="na">setClass</span><span class="p">(</span><span class="n">it</span><span class="p">.</span><span class="na">getContext</span><span class="p">(),</span><span class="w"> </span><span class="n">AdActivity</span><span class="p">.</span><span class="na">class</span><span class="p">);</span><span class="w">  </span><span class="c1">//传入要切换的Acitivity的类名</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">it</span><span class="p">.</span><span class="na">getContext</span><span class="p">().</span><span class="na">startActivity</span><span class="p">(</span><span class="n">intent3</span><span class="p">);</span><span class="w">  </span><span class="c1">//启动对应的Activity</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="k">return</span><span class="p">;</span><span class="w">  
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">case</span><span class="w"> </span><span class="n">3</span><span class="p">:</span><span class="w">  
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">Intent</span><span class="w"> </span><span class="n">intent4</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Intent</span><span class="p">();</span><span class="w">  
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">intent4</span><span class="p">.</span><span class="na">setClass</span><span class="p">(</span><span class="n">it</span><span class="p">.</span><span class="na">getContext</span><span class="p">(),</span><span class="w"> </span><span class="n">ChallengeFourth</span><span class="p">.</span><span class="na">class</span><span class="p">);</span><span class="w">  
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">it</span><span class="p">.</span><span class="na">getContext</span><span class="p">().</span><span class="na">startActivity</span><span class="p">(</span><span class="n">intent4</span><span class="p">);</span><span class="w">  
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="k">return</span><span class="p">;</span><span class="w"> 
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">default</span><span class="p">:</span><span class="w">  
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="k">return</span><span class="p">;</span><span class="w">  
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+<h1 id="0x03-activity生命周期">0x03 Activity生命周期
+</h1><table>
+  <thead>
+      <tr>
+          <th style="text-align: left">函数名称</th>
+          <th style="text-align: left">描述</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td style="text-align: left">onCreate()</td>
+          <td style="text-align: left">一个Activity启动后第一个被调用的函数，常用来在此方法中进行Activity的一些初始化操作。例如创建View，绑定数据，注册监听，加载参数等。</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">onStart()</td>
+          <td style="text-align: left">当Activity显示在屏幕上时，此方法被调用但此时还无法进行与用户的交互操作。</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">onResume()</td>
+          <td style="text-align: left">这个方法在onStart()之后调用，也就是在Activity准备好与用户进行交互的时候调用，此时的Activity一定位于Activity栈顶，处于运行状态。</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">onPause()</td>
+          <td style="text-align: left">这个方法是在系统准备去启动或者恢复另外一个Activity的时候调用，通常在这个方法中执行一些释放资源的方法，以及保存一些关键数据。</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">onStop()</td>
+          <td style="text-align: left">这个方法是在Activity完全不可见的时候调用的。</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">onDestroy()</td>
+          <td style="text-align: left">这个方法在Activity销毁之前调用，之后Activity的状态为销毁状态。</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">onRestart()</td>
+          <td style="text-align: left">当Activity从停止stop状态恢进入start状态时调用状态。</td>
+      </tr>
+  </tbody>
+</table>
+<p><img src="https://raw.githubusercontent.com/fanshanng/blog_picture/master/20250531232332807.png"
+	
+	
+	
+	loading="lazy"
+	
+	
+></p>
+<h1 id="0x04-弹窗定位堆栈分析">0x04 弹窗定位&amp;堆栈分析
+</h1><h2 id="修改方法">修改方法：
+</h2><h3 id="1修改xml中的versioncode">1.修改xml中的versioncode
+</h3><p><img src="https://raw.githubusercontent.com/fanshanng/blog_picture/master/20250601004020202.png"
+	
+	
+	
+	loading="lazy"
+	
+	
+></p>
+<h3 id="2hook弹窗推荐算法助手开启弹窗定位">2.Hook弹窗(推荐算法助手开启弹窗定位)
+</h3><ul>
+<li>
+<p>这里demo中的广告<strong>返回键被劫持</strong>，只能跟着广告走，就需要hook</p>
+<p><img src="https://raw.githubusercontent.com/fanshanng/blog_picture/master/20250601004355582.png"
+	
+	
+	
+	loading="lazy"
+	
+	
+></p>
+</li>
+</ul>
+<h3 id="3修改dex弹窗代码">3.修改dex弹窗代码
+</h3><p>在算法助手里找到最新的日志，找到对应打方法名，然后搜索查找对应<code>-&gt;show()</code>代码，删掉或者注释掉就行</p>
+<p><img src="https://raw.githubusercontent.com/fanshanng/blog_picture/master/20250601004900729.png"
+	
+	
+	
+	loading="lazy"
+	
+	
+></p>
+<h3 id="4抓包修改响应体也可以路由器拦截">4.抓包修改响应体(也可以路由器拦截)
+</h3><h1 id="0x05-布局优化">0x05 布局优化
+</h1><h3 id="1开发者助手抓布局">1.开发者助手抓布局
+</h3><h3 id="2mt管理器xml搜索定位">2.MT管理器xml搜索定位
+</h3><h3 id="3修改xml代码">3.修改xml代码
+</h3><ul>
+<li>用的软件：开发助手（可以识别到图片信息），通过搜索Veiw id（hex），可以查找到对应的xml文件，<strong>注意这里是xml文件不是之前的dex文件里搜索</strong>。</li>
+</ul>
+<p><img src="https://raw.githubusercontent.com/fanshanng/blog_picture/master/20250601005724432.png"
+	
+	
+	
+	loading="lazy"
+	
+	
+><img src="https://raw.githubusercontent.com/fanshanng/blog_picture/master/20250601005828880.png"
+	
+	
+	
+	loading="lazy"
+	
+	
+></p>
+<p>此处既可以修改图片显示的长宽，也可以通过加入下面这段代码隐藏（布局隐藏，文字图片都可以隐藏）。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-xml" data-lang="xml"><span class="line"><span class="cl">android:visibility=&#34;gone&#34;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><hr />

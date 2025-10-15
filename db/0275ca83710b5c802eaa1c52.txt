@@ -1,0 +1,85 @@
+<img src="https://raw.githubusercontent.com/fanshanng/blog_picture/master/1.jpg" alt="Featured image of post Hook" /><h1 id="hook随记">hook随记
+</h1><blockquote>
+<p>此文目前为摘录他人</p></blockquote>
+<p><strong>hook</strong>（钩子）是一种编程机制，在操作系统、编程里也会用到。</p>
+<p>hook的作用是让程序能够在特定事件发生时插入自定义代码，或者对系统行为进行拦截和修改。它是一种软件设计模式，借助预留接口，实现对系统或框架原有流程的扩展与增强。</p>
+<p>Java中有一种机制，叫做<code>动态代理</code>（Dynamic Proxy），它可以被视为一种特殊的运行时钩子（Runtime Hook），因为它允许你在不修改原有代码的情况下，拦截并增强对象方法的调用。</p>
+<p>在编程中，Hook（钩子）的<strong>本质</strong>是一种 “<strong>程序拦截机制</strong>”，它允许你在不修改原始代码的前提下，介入并改变程序的执行流程。这种机制通过<strong>注入自定义逻辑</strong>到现有系统的特定点来实现增强或修改功能的目的。</p>
+<p>以JavaScript为例，
+源代码</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="line"><span class="cl"><span class="kd">function</span> <span class="nx">add</span><span class="p">(</span><span class="nx">a</span><span class="p">,</span><span class="nx">b</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="nx">a</span> <span class="o">+</span> <span class="nx">b</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nx">res</span> <span class="o">=</span> <span class="nx">add</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&#34;结果: &#34;</span> <span class="o">+</span> <span class="nx">res</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>结果显而易见，是4.</p>
+<p>但是，我们想在不改变调用的情况下，在执行add方法时，在其前面打印”add方法执行“，结束时打印”add方法结束“，并让返回的结果+1。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="line"><span class="cl"><span class="kd">function</span> <span class="nx">add</span><span class="p">(</span><span class="nx">a</span><span class="p">,</span> <span class="nx">b</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="nx">a</span> <span class="o">+</span> <span class="nx">b</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kr">const</span> <span class="nx">hook</span> <span class="o">=</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">originalAdd</span><span class="o">:</span> <span class="nx">add</span> <span class="c1">// 立即保存引用
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">};</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// 重新定义add函数
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">add</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">a</span><span class="p">,</span> <span class="nx">b</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&#34;add方法调用前&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">let</span> <span class="nx">res</span> <span class="o">=</span> <span class="nx">hook</span><span class="p">.</span><span class="nx">originalAdd</span><span class="p">(</span><span class="nx">a</span><span class="p">,</span> <span class="nx">b</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&#34;add方法调用后&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="nx">res</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">let</span> <span class="nx">res</span> <span class="o">=</span> <span class="nx">add</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&#34;结果: &#34;</span> <span class="o">+</span> <span class="nx">res</span><span class="p">);</span> <span class="c1">// 输出5
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>结果如图：</p>
+<p><img src="https://raw.githubusercontent.com/fanshanng/blog_picture/master/640"
+	
+	
+	
+	loading="lazy"
+	
+		alt="813f7075c381ea8d32bcb7d79f3dd430.png"
+	
+	
+></p>
+<p>调用的代码并未变化，但是结果发声改变了。
+上述的案例就是一个hook的过程。
+它先将原函数对象的引用（即内存地址）保存起来，然后在新函数中调用原<code>add</code>函数，最后令<code>add</code>指向一个新函数。</p><hr />

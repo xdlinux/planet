@@ -1,0 +1,298 @@
+<img src="https://raw.githubusercontent.com/fanshanng/blog_picture/master/3.png" alt="Featured image of post Frida" /><h1 id="frida基础知识">frida基础知识
+</h1><h2 id="基础命令">基础命令
+</h2><p>1.<code>frida-ps -U</code>  查看当前手机运行的进程
+<img src="https://raw.githubusercontent.com/fanshanng/blog_picture/master/da378d98da6719ae8917d13facc3b2af.png"
+	
+	
+	
+	loading="lazy"
+	
+	
+></p>
+<p>2.<code>frida-ps --help</code> 查看help指令
+<img src="https://raw.githubusercontent.com/fanshanng/blog_picture/master/4200b8fb51e6201341a6620ffe7fd595.png"
+	
+	
+	
+	loading="lazy"
+	
+	
+></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">frida-ps --help
+</span></span><span class="line"><span class="cl">使用方式: frida-ps [选项]
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">选项:
+</span></span><span class="line"><span class="cl">  -h, --help            显示帮助信息并退出
+</span></span><span class="line"><span class="cl">  -D ID, --device ID    连接到具有给定ID的设备
+</span></span><span class="line"><span class="cl">  -U, --usb             连接到USB设备
+</span></span><span class="line"><span class="cl">  -R, --remote          连接到远程frida-server
+</span></span><span class="line"><span class="cl">  -H HOST, --host HOST  连接到HOST上的远程frida-server
+</span></span><span class="line"><span class="cl">  --certificate CERTIFICATE
+</span></span><span class="line"><span class="cl">                        与HOST进行TLS通信，期望的CERTIFICATE
+</span></span><span class="line"><span class="cl">  --origin ORIGIN       连接到设置了&#34;Origin&#34;头为ORIGIN的远程服务器
+</span></span><span class="line"><span class="cl">  --token TOKEN         使用TOKEN验证HOST
+</span></span><span class="line"><span class="cl">  --keepalive-interval INTERVAL
+</span></span><span class="line"><span class="cl">                        设置心跳包间隔(秒)，或设置为0以禁用(默认为-1，根据传输方式自动选择)
+</span></span><span class="line"><span class="cl">  --p2p                 与目标建立点对点连接
+</span></span><span class="line"><span class="cl">  --stun-server ADDRESS
+</span></span><span class="line"><span class="cl">                        设置与--p2p一起使用的STUN服务器地址
+</span></span><span class="line"><span class="cl">  --relay address,username,password,turn-{udp,tcp,tls}
+</span></span><span class="line"><span class="cl">                        添加与--p2p一起使用的中继
+</span></span><span class="line"><span class="cl">  -O FILE, --options-file FILE
+</span></span><span class="line"><span class="cl">                        包含额外命令行选项的文本文件
+</span></span><span class="line"><span class="cl">  --version             显示程序版本号并退出
+</span></span><span class="line"><span class="cl">  -a, --applications    只列出应用程序
+</span></span><span class="line"><span class="cl">  -i, --installed       包括所有已安装的应用程序
+</span></span><span class="line"><span class="cl">  -j, --json            以JSON格式输出结果
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ol start="3">
+<li>操作模式
+CLI模式：通过命令行直接将JavaScript脚本注入进程中。
+RPC模式：使用Python进行JavaScript脚本的注入，适合复杂数据处理。</li>
+</ol>
+<p>4.注入模式与启动命令</p>
+<ul>
+<li>Spawn模式</li>
+</ul>
+<blockquote>
+<p>将启动App的权利交由Frida来控制，即使目标App已经启动，在使用Frida注入程序时还是会重新启动App</p></blockquote>
+<p>当需要监控App从启动开始的所有行为时使用
+<code>frida -U -f 进程名 -l hook.js</code>
+<strong>进程名</strong>可以通过<code>frida-ps -U</code>来查看</p>
+<ul>
+<li>Attach模式</li>
+</ul>
+<blockquote>
+<p>在目标App已经启动的情况下，Frida通过ptrace注入程序从而执行Hook的操作</p></blockquote>
+<p><code>frida -U 进程名 -l hook.js</code>
+在App已经启动，或者我们只关心特定时刻或特定功能的行为时使用</p>
+<p>5.基础语法
+<code>Java.use(className)</code>：获取指定的Java类并使其在JavaScript代码中可用。
+<code>Java.perform(callback)</code>：确保回调函数在Java的主线程上执行。
+<code>Java.choose(className, callbacks)</code>：枚举指定类的所有实例。
+<code>Java.cast(obj, cls)</code>：将一个Java对象转换成另一个Java类的实例。</p>
+<p>6.日志输出
+<code>console.log()</code>：直接在命令行输出日志。
+<code>send()</code>：将日志发送到外部Python脚本进行处理。</p>
+<ul>
+<li>
+<p>日志捕获
+D：表示级别  &ldquo;zj2595&quot;这个是标签</p>
+<p><img src="https://raw.githubusercontent.com/fanshanng/blog_picture/master/772e19d59a20e4ba444856b3496b254a.png"
+	
+	
+	
+	loading="lazy"
+	
+	
+></p>
+</li>
+</ul>
+<h2 id="frida常用api">Frida常用API
+</h2><h3 id="1-hook普通方法">1. Hook普通方法
+</h3><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="line"><span class="cl"><span class="c1">//定义一个名为hookTest1的函数
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">function</span> <span class="nx">hookTest1</span><span class="p">(){</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">//获取一个名为&#34;类名&#34;的Java类，并将其实例赋值给JavaScript变量utils
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kd">var</span> <span class="nx">utils</span> <span class="o">=</span> <span class="nx">Java</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="s2">&#34;类名&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">//修改&#34;类名&#34;的&#34;method&#34;方法的实现。这个新的实现会接收两个参数（a和b）
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="nx">utils</span><span class="p">.</span><span class="nx">method</span><span class="p">.</span><span class="nx">implementation</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">a</span><span class="p">,</span> <span class="nx">b</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">            <span class="c1">//将参数a和b的值改为123和456。
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="nx">a</span> <span class="o">=</span> <span class="mi">123</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">b</span> <span class="o">=</span> <span class="mi">456</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">//调用修改过的&#34;method&#34;方法，并将返回值存储在`retval`变量中
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="kd">var</span> <span class="nx">retval</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">method</span><span class="p">(</span><span class="nx">a</span><span class="p">,</span> <span class="nx">b</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">//在控制台上打印参数a，b的值以及&#34;method&#34;方法的返回值
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">a</span><span class="p">,</span> <span class="nx">b</span><span class="p">,</span> <span class="nx">retval</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">//返回&#34;method&#34;方法的返回值
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="k">return</span> <span class="nx">retval</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="2-hook重载参数">2. Hook重载参数
+</h3><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="line"><span class="cl"><span class="c1">// .overload()
+</span></span></span><span class="line"><span class="cl"><span class="c1">// .overload(&#39;自定义参数&#39;)
+</span></span></span><span class="line"><span class="cl"><span class="c1">// .overload(&#39;int&#39;)
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">function</span> <span class="nx">hookTest2</span><span class="p">(){</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">var</span> <span class="nx">utils</span> <span class="o">=</span> <span class="nx">Java</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="s2">&#34;com.zj.wuaipojie.Demo&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">//overload定义重载函数，根据函数的参数类型填
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="nx">utils</span><span class="p">.</span><span class="nx">Inner</span><span class="p">.</span><span class="nx">overload</span><span class="p">(</span><span class="s1">&#39;com.zj.wuaipojie.Demo$Animal&#39;</span><span class="p">,</span><span class="s1">&#39;java.lang.String&#39;</span><span class="p">).</span><span class="nx">implementation</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">a</span><span class="err">，</span><span class="nx">b</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">b</span> <span class="o">=</span> <span class="s2">&#34;aaaaaaaaaa&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">this</span><span class="p">.</span><span class="nx">Inner</span><span class="p">(</span><span class="nx">a</span><span class="p">,</span><span class="nx">b</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">b</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="3-hook构造函数">3. Hook构造函数
+</h3><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="line"><span class="cl"><span class="kd">function</span> <span class="nx">hookTest3</span><span class="p">(){</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">var</span> <span class="nx">utils</span> <span class="o">=</span> <span class="nx">Java</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="s2">&#34;com.zj.wuaipojie.Demo&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">//修改类的构造函数的实现，$init表示构造函数
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="nx">utils</span><span class="p">.</span><span class="nx">$init</span><span class="p">.</span><span class="nx">overload</span><span class="p">(</span><span class="s1">&#39;java.lang.String&#39;</span><span class="p">).</span><span class="nx">implementation</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">str</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">str</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">str</span> <span class="o">=</span> <span class="s2">&#34;52&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">this</span><span class="p">.</span><span class="nx">$init</span><span class="p">(</span><span class="nx">str</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="4-hook字段">4. Hook字段
+</h3><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="line"><span class="cl"><span class="kd">function</span> <span class="nx">hookTest5</span><span class="p">(){</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">Java</span><span class="p">.</span><span class="nx">perform</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">//静态字段的修改
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="kd">var</span> <span class="nx">utils</span> <span class="o">=</span> <span class="nx">Java</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="s2">&#34;com.zj.wuaipojie.Demo&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">//修改类的静态字段&#34;flag&#34;的值
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="nx">utils</span><span class="p">.</span><span class="nx">staticField</span><span class="p">.</span><span class="nx">value</span> <span class="o">=</span> <span class="s2">&#34;我是被修改的静态变量&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">utils</span><span class="p">.</span><span class="nx">staticField</span><span class="p">.</span><span class="nx">value</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">//非静态字段的修改
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="c1">//使用`Java.choose()`枚举类的所有实例
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="nx">Java</span><span class="p">.</span><span class="nx">choose</span><span class="p">(</span><span class="s2">&#34;com.zj.wuaipojie.Demo&#34;</span><span class="p">,</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="nx">onMatch</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">obj</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">                    <span class="c1">//修改实例的非静态字段&#34;_privateInt&#34;的值为&#34;123456&#34;，并修改非静态字段&#34;privateInt&#34;的值为9999。
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>                <span class="nx">obj</span><span class="p">.</span><span class="nx">_privateInt</span><span class="p">.</span><span class="nx">value</span> <span class="o">=</span> <span class="s2">&#34;123456&#34;</span><span class="p">;</span> <span class="c1">//字段名与函数名相同 前面加个下划线
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>                <span class="nx">obj</span><span class="p">.</span><span class="nx">privateInt</span><span class="p">.</span><span class="nx">value</span> <span class="o">=</span> <span class="mi">9999</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="p">},</span>
+</span></span><span class="line"><span class="cl">            <span class="nx">onComplete</span><span class="o">:</span> <span class="kd">function</span><span class="p">(){</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">            <span class="p">}</span>
+</span></span><span class="line"><span class="cl">        <span class="p">});</span>
+</span></span><span class="line"><span class="cl">    <span class="p">});</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="5-枚举所有类与方法">5. 枚举所有类与方法
+</h3><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="line"><span class="cl"><span class="kd">function</span> <span class="nx">hookTest7</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">Java</span><span class="p">.</span><span class="nx">perform</span><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">Java</span><span class="p">.</span><span class="nx">enumerateLoadedClasses</span><span class="p">({</span>
+</span></span><span class="line"><span class="cl">            <span class="nx">onMatch</span><span class="o">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">name</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">name</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">            <span class="p">},</span>
+</span></span><span class="line"><span class="cl">            <span class="nx">onComplete</span><span class="o">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{}</span>
+</span></span><span class="line"><span class="cl">        <span class="p">});</span>
+</span></span><span class="line"><span class="cl">    <span class="p">});</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><hr />
