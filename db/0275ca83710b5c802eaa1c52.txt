@@ -1,6 +1,7 @@
 <img src="https://raw.githubusercontent.com/fanshanng/blog_picture/master/1.jpg" alt="Featured image of post Hook" /><h1 id="hook随记">hook随记
 </h1><blockquote>
-<p>此文目前为摘录他人</p></blockquote>
+<p>此文目前为摘录他人</p>
+</blockquote>
 <p><strong>hook</strong>（钩子）是一种编程机制，在操作系统、编程里也会用到。</p>
 <p>hook的作用是让程序能够在特定事件发生时插入自定义代码，或者对系统行为进行拦截和修改。它是一种软件设计模式，借助预留接口，实现对系统或框架原有流程的扩展与增强。</p>
 <p>Java中有一种机制，叫做<code>动态代理</code>（Dynamic Proxy），它可以被视为一种特殊的运行时钩子（Runtime Hook），因为它允许你在不修改原有代码的情况下，拦截并增强对象方法的调用。</p>

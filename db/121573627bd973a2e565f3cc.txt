@@ -217,7 +217,8 @@
 <p>5.修改<code>build.gradle</code>,将此处修改为<code>compileOnly</code> 默认的是<code>implementation</code></p>
 <blockquote>
 <p>implementation 使用该方式依赖的库将会参与编译和打包</p>
-<p>compileOnly 只在编译时有效，不会参与打包</p></blockquote>
+<p>compileOnly 只在编译时有效，不会参与打包</p>
+</blockquote>
 </li>
 </ul>
 <p><img src="https://raw.githubusercontent.com/fanshanng/blog_picture/master/32a45106-67a2-4528-b1a1-4606bed14803.png"

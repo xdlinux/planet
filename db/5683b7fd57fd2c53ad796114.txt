@@ -116,7 +116,8 @@
 <blockquote>
 <p><strong>Kotlin</strong> 是一种在 Java 虚拟机上运行的<strong>静态类型编程语言</strong>，被称之为 Android 世界的Swift，由 JetBrains 设计开发并开源。</p>
 <p><strong>Kotlin 可以编译成Java字节码，也可以编译成 JavaScript，方便在没有 JVM 的设备上运行。</strong></p>
-<p>在Google I/O 2017中，Google 宣布 Kotlin 成为 Android 官方开发语言。</p></blockquote>
+<p>在Google I/O 2017中，Google 宣布 Kotlin 成为 Android 官方开发语言。</p>
+</blockquote>
 <h2 id="0x03-双开及原理">0x03 双开及原理
 </h2><ul>
 <li>
@@ -128,7 +129,8 @@
 </li>
 <li>
 <blockquote>
-<p>通过在宿主容器上面<strong>新建一个进程供插件 APK 寄宿</strong>，然后通过 <strong>hook 一些系统接口欺骗应用</strong>—让<strong>虚拟化后应用以为自己是正常运行的独立 APP</strong>，欺骗系统—让系统认为此虚拟化应用是一个已正常安装在系统的应用。</p></blockquote>
+<p>通过在宿主容器上面<strong>新建一个进程供插件 APK 寄宿</strong>，然后通过 <strong>hook 一些系统接口欺骗应用</strong>—让<strong>虚拟化后应用以为自己是正常运行的独立 APP</strong>，欺骗系统—让系统认为此虚拟化应用是一个已正常安装在系统的应用。</p>
+</blockquote>
 </li>
 </ul>
 <table>

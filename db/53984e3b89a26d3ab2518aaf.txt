@@ -10,7 +10,8 @@
 </ul>
 <p><strong>下载JEB</strong></p>
 <blockquote>
-<p><strong>JEB</strong> (Java Editor for Android) 是一款用于安卓应用逆向工程的工具，它可以帮助开发者分析和修改安卓应用的字节码。</p></blockquote>
+<p><strong>JEB</strong> (Java Editor for Android) 是一款用于安卓应用逆向工程的工具，它可以帮助开发者分析和修改安卓应用的字节码。</p>
+</blockquote>
 <ul>
 <li>
 <p>jeb推荐jdk-11或jdk-17（我用的是jdk-11）</p>

@@ -1,0 +1,750 @@
+<img src="https://s.panlai.com/upload/bizhihui_com_20231112122819169976329926177.png-arthumbs" alt="Featured image of post 软件逆向工程组会：IDA 常见操作与基础知识" /><h1 id="软件逆向工程组会ida-常见操作与基础知识">软件逆向工程组会：IDA 常见操作与基础知识
+</h1><p align="right">
+  <a href="https://fanshanng.cn/">
+    <img alt="fanshanng"
+         src="https://img.shields.io/badge/fanshanng-3b82f6?style=flat&labelColor=111827">
+  </a>
+  <a href="https://xdsec.org/">
+    <img alt="xdsec"
+         src="https://img.shields.io/badge/xdsec-22d3ee?style=flat&labelColor=0b1220">
+  </a>
+</p>
+<blockquote>
+<p>面向课程与安全研究，请遵守所在地法律与软件授权。涉及下载/外链：<strong>按授权使用或选开源替代（Ghidra/Cutter）</strong>。</p>
+</blockquote>
+<h2 id="一核心认知ida-作用与逆向目标">一、核心认知：IDA 作用与逆向目标
+</h2><h3 id="11-ida-pro-定位">1.1 IDA Pro 定位
+</h3><p>IDA Pro 是逆向工程核心工具，支持将二进制文件（exe/so/elf/dll）反汇编为汇编代码并生成伪代码，辅助解析程序逻辑。</p>
+<h3 id="12-逆向入门核心目标">1.2 逆向入门核心目标
+</h3><p>将 “不可读的二进制文件” 转化为 “可理解的逻辑”，具体包括：</p>
+<ul>
+<li>
+<p>定位程序入口（主函数）；</p>
+</li>
+<li>
+<p>识别关键逻辑（验证、加密等）；</p>
+</li>
+<li>
+<p>修改程序行为（Patch 操作）；</p>
+</li>
+<li>
+<p>跟踪运行流程（动态调试）。</p>
+</li>
+</ul>
+<h2 id="二环境准备ida工具安装">二、环境准备：IDA工具安装
+</h2><p>IDA Pro 版本：推荐 9.1/9.2（稳定性与新功能兼顾），需匹配样本位数（32 位 / 64 位）；</p>
+<p>通过网盘分享的文件：IDA Professional 9.1.7z
+链接: <a class="link" href="https://pan.baidu.com/s/1yrROk_2y_jpwky_AsaOQSw?pwd=f4ns"  target="_blank" rel="noopener"
+    >https://pan.baidu.com/s/1yrROk_2y_jpwky_AsaOQSw?pwd=f4ns</a> 提取码: f4ns</p>
+<p>通过网盘分享的文件：ida9.2.zip
+链接: <a class="link" href="https://pan.baidu.com/s/1YInTZr7qnGNMLvqz9b-5ZQ?pwd=f4ns"  target="_blank" rel="noopener"
+    >https://pan.baidu.com/s/1YInTZr7qnGNMLvqz9b-5ZQ?pwd=f4ns</a> 提取码: f4ns</p>
+<blockquote>
+<p><a class="link" href="https://docs.hex-rays.com/release-notes/9_2"  target="_blank" rel="noopener"
+    >IDA 9.2的官方文档</a></p>
+</blockquote>
+<h2 id="三核心操作静态分析逆向基础">三、核心操作：静态分析（逆向基础）
+</h2><p>静态分析无需运行程序，直接通过 IDA 解析代码逻辑，是逆向的核心环节。</p>
+<h3 id="31-视图切换与高频快捷键分类汇总">3.1 视图切换与高频快捷键（分类汇总）
+</h3><table>
+  <thead>
+      <tr>
+          <th>功能类型</th>
+          <th>快捷键</th>
+          <th>作用说明</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>视图切换</td>
+          <td>tab</td>
+          <td>汇编视图 ↔ 伪代码视图（核心切换方式）</td>
+      </tr>
+      <tr>
+          <td></td>
+          <td>空格</td>
+          <td>text view（文本视图） ↔ graph view（图表视图）</td>
+      </tr>
+      <tr>
+          <td>导航类</td>
+          <td>G</td>
+          <td>跳转至指定地址（需输入目标地址）</td>
+      </tr>
+      <tr>
+          <td></td>
+          <td>Alt+T</td>
+          <td>全局文本搜索（搜指令、字符串、函数名）</td>
+      </tr>
+      <tr>
+          <td>编辑类（汇编）</td>
+          <td>;（分号）</td>
+          <td>为汇编指令添加注释（便于后续回溯）</td>
+      </tr>
+      <tr>
+          <td></td>
+          <td>U</td>
+          <td>Undefine：将代码转换为 “数据”（处理花指令）</td>
+      </tr>
+      <tr>
+          <td></td>
+          <td>C</td>
+          <td>Code：将数据转换为 “代码”（恢复误判代码）</td>
+      </tr>
+      <tr>
+          <td>编辑类（伪代码）</td>
+          <td>N</td>
+          <td>变量 / 函数重命名（如 sub_401000 → main）</td>
+      </tr>
+      <tr>
+          <td></td>
+          <td>Y</td>
+          <td>修改变量 / 函数类型（如 void → int，识别 JNI）</td>
+      </tr>
+      <tr>
+          <td></td>
+          <td>/（斜杠）</td>
+          <td>为伪代码添加多行注释（可读性优先）</td>
+      </tr>
+      <tr>
+          <td>LazyIDA</td>
+          <td>Ctrl+Alt+N</td>
+          <td>一键 NOP 选中代码（过反调、去花指令，基础功能）</td>
+      </tr>
+      <tr>
+          <td>函数 / 字符串</td>
+          <td>Shift+F12</td>
+          <td>打开字符串窗口（定位关键逻辑核心工具）</td>
+      </tr>
+      <tr>
+          <td><strong>ida9.2</strong>更新跳转</td>
+          <td>Ctrl-Alt-G</td>
+          <td><strong>函数</strong>、<strong>局部类型</strong>、<strong>名称</strong>和<strong>段</strong>进行不区分大小写的搜索</td>
+      </tr>
+  </tbody>
+</table>
+<blockquote>
+<p>重点提示：空格（视图切换）、G（地址跳转）、N/Y（伪代码编辑）、Shift+F12（字符串查询）为基础高频操作；LazyIDA 进阶功能见第四章专项。</p>
+</blockquote>
+<h3 id="32-汇编界面操作要点">3.2 汇编界面操作要点
+</h3><h4 id="321-必认汇编指令对应-c-语言逻辑">3.2.1 必认汇编指令（对应 C 语言逻辑）
+</h4><table>
+  <thead>
+      <tr>
+          <th>汇编指令</th>
+          <th>核心作用</th>
+          <th>对应 C 语言场景</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>mov</td>
+          <td>数据赋值（mov a,b → a=b）</td>
+          <td>变量赋值（如 int a = b;）</td>
+      </tr>
+      <tr>
+          <td>push/pop</td>
+          <td>栈操作（push：数据入栈；pop：数据出栈）</td>
+          <td>函数传参（参数入栈）、局部变量初始化（栈空间分配 / 释放）</td>
+      </tr>
+      <tr>
+          <td>call</td>
+          <td>调用函数（call sub_401000 → 跳转到 sub_401000 执行）</td>
+          <td>函数调用（如 check_password (input);）</td>
+      </tr>
+      <tr>
+          <td>ret</td>
+          <td>函数返回（从当前函数跳回调用处）</td>
+          <td>函数执行结束（return 语句）</td>
+      </tr>
+      <tr>
+          <td>jmp</td>
+          <td>无条件跳转（jmp 0x401200 → 强制跳转到 0x401200）</td>
+          <td>goto 语句（如 goto end;）</td>
+      </tr>
+      <tr>
+          <td>je/jne</td>
+          <td>条件跳转（je：等于时跳；jne：不等于时跳）</td>
+          <td>if-else（如 if (a==b) { &hellip; } else { &hellip; }）、循环</td>
+      </tr>
+      <tr>
+          <td>cmp</td>
+          <td>比较两个值（cmp a,b → 计算 a - b，仅置标志位不保存结果）</td>
+          <td>if 判断的条件基础（如 if (a==b)、if (a&gt;b) 的底层判断）</td>
+      </tr>
+      <tr>
+          <td>jz</td>
+          <td>零标志位（ZF=1）时跳转（即上一步结果为 0 时跳）</td>
+          <td>if (结果 == 0)（如 if (func_return == 0) { &hellip; }）</td>
+      </tr>
+      <tr>
+          <td>jnz</td>
+          <td>零标志位（ZF=0）时跳转（即上一步结果不为 0 时跳）</td>
+          <td>if (结果！= 0)（如 if (func_return != 0) { &hellip; }）</td>
+      </tr>
+      <tr>
+          <td>test</td>
+          <td>按位与运算（不保存结果，仅置标志位），常用于判断是否为 0</td>
+          <td>if (变量 == 0)（如 test eax,eax → 判断 eax 是否为 0，对应 if (eax == 0)）</td>
+      </tr>
+      <tr>
+          <td>and</td>
+          <td>按位与运算（a and b → 结果存回 a），可用于清零、保留特定位</td>
+          <td>按位与操作（如 a &amp;= b;）、清零变量（如 a &amp;= 0;）</td>
+      </tr>
+      <tr>
+          <td>lea</td>
+          <td>计算有效地址（非加载数据），常用于取变量地址或简单计算</td>
+          <td>取变量地址（如 int *p = &amp;a; → lea eax,[a]）、简单表达式计算（如 lea eax,[ebx+4] → eax = ebx + 4）</td>
+      </tr>
+      <tr>
+          <td>add</td>
+          <td>加法运算（add a,b → a = a + b）</td>
+          <td>数值加法（如 a = a + b;）</td>
+      </tr>
+      <tr>
+          <td>sub</td>
+          <td>减法运算（sub a,b → a = a - b）</td>
+          <td>数值减法（如 a = a - b;）</td>
+      </tr>
+      <tr>
+          <td>xor</td>
+          <td>按位异或运算（a xor b → 结果存回 a），可用于清零、交换变量</td>
+          <td>按位异或操作（如 a ^= b;）、清零变量（如 xor eax,eax → eax = 0）、交换变量（无需临时变量）</td>
+      </tr>
+      <tr>
+          <td>shr</td>
+          <td>逻辑右移（shr a,n → a 右移 n 位，高位补 0）</td>
+          <td>无符号数除法（如 a = a &raquo; 1; → a = a / 2）、取高位字节</td>
+      </tr>
+      <tr>
+          <td>shl</td>
+          <td>逻辑左移（shl a,n → a 左移 n 位，低位补 0）</td>
+          <td>无符号数乘法（如 a = a &laquo; 1; → a = a * 2）、低位字节赋值</td>
+      </tr>
+      <tr>
+          <td>leave</td>
+          <td>释放当前函数栈帧（等价于 mov esp, ebp; pop ebp），恢复调用者栈环境</td>
+          <td>函数执行结束前清理栈空间（对应 C 函数中局部变量销毁、栈帧恢复，通常紧跟在 return 前）</td>
+      </tr>
+      <tr>
+          <td>nop</td>
+          <td>无操作（仅占用 1 个指令周期，不修改寄存器 / 内存）</td>
+          <td>代码字节对齐（编译器填充空白）、调试占位（预留指令位置）、延时（底层简单延时逻辑）、屏蔽无用指令（如破解时 nop 掉校验指令）</td>
+      </tr>
+  </tbody>
+</table>
+<h4 id="322-汇编界面核心操作">3.2.2 汇编界面核心操作
+</h4><ol>
+<li>
+<p>注释添加：选中目标指令，按「;」输入注释内容；</p>
+</li>
+<li>
+<p>关键词搜索：按「Alt+T」输入关键词（如 <code>password</code>,<code>success</code>），定位关键逻辑；</p>
+</li>
+<li>
+<p>交叉引用查询：选中函数名（如 sub_401000），按「Alt+F7」，查看调用该函数的指令位置。</p>
+</li>
+</ol>
+<h3 id="33-伪代码界面操作要点">3.3 伪代码界面操作要点
+</h3><p>伪代码可读性优于汇编，是逆向分析的主力视图。</p>
+<h4 id="331-核心编辑操作">3.3.1 核心编辑操作
+</h4><ol>
+<li>
+<p>重命名（<code>N</code>）：选中默认名称（如 v1、sub_401000），按「N」输入有意义名称（如 input、check）；</p>
+</li>
+<li>
+<p>类型修改（<code>Y</code>）：选中变量 / 函数，按「Y」修改类型，例如：</p>
+</li>
+</ol>
+<ul>
+<li>
+<p>JNI 函数（so文件分析）：将 void __cdecl sub_10001234() 改为 JNIEXPORT jint JNICALL Java_com_example_Test_check(JNIEnv *env, jobject thiz, jstring input)，IDA 自动识别 JNI 参数；</p>
+</li>
+<li>
+<p>数组类型：将 int v2 改为 char v2[]，明确数组逻辑；</p>
+</li>
+</ul>
+<ol start="3">
+<li>注释添加：按「/」输入多行注释，补充逻辑说明（如 “密码验证核心逻辑，返回 1 表示验证通过”）。</li>
+</ol>
+<h4 id="332-伪代码生成失败解决">3.3.2 伪代码生成失败解决
+</h4><p>若提示 “Cannot generate pseudocode”，需修正 IDA 代码识别：</p>
+<ol>
+<li>
+<p>切换至汇编视图，定位报错地址；</p>
+</li>
+<li>
+<p>选中误判为 “数据” 的代码段，按「U」（undefine）转为数据；</p>
+</li>
+<li>
+<p>重新选中目标段，按「C」（code）转为代码（按P识别成函数）；</p>
+</li>
+<li>
+<p>按「tab」切换回伪代码视图，即可正常生成。</p>
+</li>
+</ol>
+<h3 id="34-主函数定位方法分场景">3.4 主函数定位方法（分场景）
+</h3><h4 id="场景-1样本带符号如调试版-exeso">场景 1：样本带符号（如调试版 exe/so）
+</h4><ol>
+<li>
+<p>一般主界面左侧就是函数列表，如果不存在就按「Shift+F3」打开函数列表；</p>
+</li>
+<li>
+<p>搜索目标函数名：C 语言程序搜 main/start，Windows GUI 程序搜 WinMain，Android so 搜 JNI_OnLoad；</p>
+</li>
+<li>
+<p>双击函数名跳转至主函数。</p>
+</li>
+</ol>
+<h4 id="场景-2样本无符号脱壳后-release-版">场景 2：样本无符号（脱壳后 /release 版）
+</h4><ol>
+<li>
+<p>按「Shift+F12」打开字符串窗口，筛选关键字符串（如 “success”“right”“flag”）；</p>
+</li>
+<li>
+<p>右键选中目标字符串 → 「Jump to xref」（交叉引用 , 快捷键是[ x ]），跳转至引用该字符串的代码；</p>
+</li>
+<li>
+<p>向上追溯代码，找到 “调用次数最少、层级最顶层” 的函数（通常整个程序仅调用一次，且调用其他函数），即为主函数。</p>
+</li>
+</ol>
+<h4 id="场景-3dllso-文件导出函数">场景 3：DLL/so 文件（导出函数）
+</h4><ol>
+<li>
+<p>按「Ctrl+I」打开导出表；</p>
+</li>
+<li>
+<p>筛选对外提供的函数（如 DLL 的 <code>ExportFunc</code>、<code>so 的 Java_包名_类名_方法名</code>）；</p>
+</li>
+<li>
+<p>此类导出函数为外部调用入口，等效于 DLL/so 的 “主函数”。</p>
+</li>
+</ol>
+<blockquote>
+<p>重点提示：无符号样本优先使用「Shift+F12 找关键字符串」，为最高效的主函数定位方式。</p>
+</blockquote>
+<h2 id="四lazyida-专项速查">四、LazyIDA 专项速查
+</h2><p>LazyIDA 是逆向高频操作的 “加速器”，以下按「快捷键」「右键菜单」「实操工作流」分类，覆盖地址处理、Patch、格式转换等核心场景（组会重点演示功能）。</p>
+<h3 id="41-快捷键速查表按视图--上下文分类">4.1 快捷键速查表（按视图 / 上下文分类）
+</h3><table>
+  <thead>
+      <tr>
+          <th>快捷键</th>
+          <th>动作</th>
+          <th>作用说明</th>
+          <th>适用视图 / 上下文</th>
+          <th>备注</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>w</td>
+          <td>Copy EA</td>
+          <td>复制当前地址到剪贴板（如：0x401000）</td>
+          <td>反汇编视图 / 转储视图</td>
+          <td>输出窗口会打印确认信息</td>
+      </tr>
+      <tr>
+          <td>Shift+G</td>
+          <td>Goto clip EA</td>
+          <td>读取剪贴板地址 / 文本，打开 Lazy Jumper 窗口并跳转</td>
+          <td>反汇编视图 / 转储视图</td>
+          <td>支持 “新镜像基址 + 目标地址” 的无重定位跳转，Esc 关闭窗口</td>
+      </tr>
+      <tr>
+          <td>Ctrl+Alt+N</td>
+          <td>NOP them</td>
+          <td>对选区批量写 NOP；无选区时对当前指令地址写 1 个 NOP</td>
+          <td>反汇编视图</td>
+          <td>输出区打印起止地址与字节数，比基础 Ctrl+N 更灵活</td>
+      </tr>
+      <tr>
+          <td>v</td>
+          <td>Remove return type</td>
+          <td>把当前函数 / 调用点的返回类型临时改为 void（再次按可还原）</td>
+          <td>Hex-Rays 伪代码视图</td>
+          <td>针对 VDI_FUNC / 函数指针调用生效</td>
+      </tr>
+      <tr>
+          <td>w（伪代码）</td>
+          <td>Copy EA (Hex-Rays)</td>
+          <td>复制当前伪代码位置关联的 EA</td>
+          <td>Hex-Rays 伪代码视图</td>
+          <td>与反汇编视图的 w 不冲突，各自生效</td>
+      </tr>
+      <tr>
+          <td>c（伪代码）</td>
+          <td>Copy name</td>
+          <td>复制当前高亮名称（变量 / 函数名等）</td>
+          <td>Hex-Rays 伪代码视图</td>
+          <td>取自 IDA 的 get_highlight () 接口</td>
+      </tr>
+      <tr>
+          <td>Shift+G（伪代码）</td>
+          <td>Goto clip EA (Hex-Rays)</td>
+          <td>从剪贴板取地址并在 IDA 中跳转</td>
+          <td>Hex-Rays 伪代码视图</td>
+          <td>与反汇编视图的 Shift+G 行为一致</td>
+      </tr>
+  </tbody>
+</table>
+<blockquote>
+<p>小技巧：Lazy Jumper 对话框中，按 Enter/Return 可触发跳转，Esc 关闭窗口，无需鼠标点击（组会实操演示重点）。</p>
+</blockquote>
+<h3 id="42-右键菜单功能按视图分类">4.2 右键菜单功能（按视图分类）
+</h3><h4 id="421-反汇编--转储视图通用右键菜单">4.2.1 反汇编 / 转储视图（通用右键菜单）
+</h4><table>
+  <thead>
+      <tr>
+          <th>菜单项</th>
+          <th>作用说明</th>
+          <th>备注</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Paste Data</td>
+          <td>弹出 “粘贴数据” 窗口，支持 HEX / BASE64 / ASCII 三种输入并写回字节</td>
+          <td>适合快速打补丁，输入后点击 Apply 生效（组会实操演示）</td>
+      </tr>
+      <tr>
+          <td>Lazy Dumper</td>
+          <td>弹出转储窗口：输入基址与大小，保存选定范围字节到文件</td>
+          <td>操作失败会在输出窗口提示原因</td>
+      </tr>
+      <tr>
+          <td>Lazy Jumper [Shift + G]</td>
+          <td>打开跳转窗口：输入新基址 / 目标地址，计算偏移后跳到当前 IDB 的等效位置</td>
+          <td>自动记忆历史基址，下次打开可快速复用</td>
+      </tr>
+      <tr>
+          <td>Copy RVA</td>
+          <td>计算并复制当前地址的 RVA（相对虚拟地址）</td>
+          <td>调试中按 “模块基址” 计算，非调试按 “imagebase” 计算</td>
+      </tr>
+      <tr>
+          <td>NOP them</td>
+          <td>与 Ctrl+Alt+N 功能一致：选区批量 NOP / 无选区单字节 NOP</td>
+          <td>快速过反调、去花指令（组会实操演示）</td>
+      </tr>
+      <tr>
+          <td>Get xored data</td>
+          <td>选中一段代码→输入 0–255 的 XOR 值，输出异或后的文本</td>
+          <td>仅只读输出结果到输出窗口，不写回二进制文件</td>
+      </tr>
+      <tr>
+          <td>Fill with NOPs</td>
+          <td>把选区整段填充为 NOP</td>
+          <td>必须先框选代码段（单指令不生效），比 NOP them 更彻底</td>
+      </tr>
+      <tr>
+          <td>Convert/ → 格式选项</td>
+          <td>把选中字节转为指定格式：- 转义字符串- 十六进制串- C 数组（BYTE/WORD/DWORD/QWORD）- Python 列表（同上）</td>
+          <td>转换结果打印到 Output 窗口，需手动复制使用</td>
+      </tr>
+  </tbody>
+</table>
+<blockquote>
+<p>注：Get xored data / Fill with NOPs / Convert/ 仅在 “存在选区” 或 “当前指令大小 &gt; 1” 时显示。</p>
+</blockquote>
+<h4 id="422-仅反汇编视图特定架构专属菜单">4.2.2 仅反汇编视图（特定架构专属菜单）
+</h4><table>
+  <thead>
+      <tr>
+          <th>菜单项</th>
+          <th>作用说明</th>
+          <th>备注</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Scan format string vulnerabilities</td>
+          <td>扫描 printf/sprintf/fprintf 等调用点，若格式串来自可写段则标记为 “可能漏洞”，列表展示可跳转</td>
+          <td>仅支持 x86 (32/64)、ARM32 架构，其他架构不挂载</td>
+      </tr>
+  </tbody>
+</table>
+<h4 id="423-hex-rays-伪代码视图右键菜单">4.2.3 Hex-Rays 伪代码视图（右键菜单）
+</h4><table>
+  <thead>
+      <tr>
+          <th>菜单项</th>
+          <th>作用说明</th>
+          <th>备注</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Remove return type</td>
+          <td>与快捷键 v 一致：临时将返回类型改为 void（再次点击还原）</td>
+          <td>针对复杂函数指针调用场景优化</td>
+      </tr>
+      <tr>
+          <td>Copy ea</td>
+          <td>与快捷键 w（伪代码）一致：复制当前伪代码关联的 EA</td>
+          <td>快速定位伪代码对应的汇编地址</td>
+      </tr>
+      <tr>
+          <td>Copy name</td>
+          <td>与快捷键 c（伪代码）一致：复制高亮的变量 / 函数名</td>
+          <td>避免手动输入名称，减少拼写错误</td>
+      </tr>
+      <tr>
+          <td>Goto clipboard ea</td>
+          <td>与快捷键 Shift+G（伪代码）一致：从剪贴板跳转地址</td>
+          <td>伪代码中快速跳转到外部引用的地址</td>
+      </tr>
+      <tr>
+          <td>双击增强：obj-&gt;func () 表达式</td>
+          <td>自动解析并跳转到目标 func；若找不到则尝试 Class::func</td>
+          <td>命中时直接跳转，未命中无响应（需手动定位）</td>
+      </tr>
+  </tbody>
+</table>
+<h3 id="43-常见工作流">4.3 常见工作流
+</h3><ol>
+<li><strong>一键 NOP 某段代码</strong>：</li>
+</ol>
+<p>框选目标代码段 → 右键点击「Fill with NOPs」（或按 Ctrl+Alt+N）→ 输出窗口确认 NOP 范围。</p>
+<p>（适用场景：批量去除花指令、跳过反调试检测代码）</p>
+<ol>
+<li><strong>快速打补丁</strong>：</li>
+</ol>
+<p>定位需修改的地址 → 右键「Paste Data」→ 选择输入格式（如 HEX）→ 粘贴修改后的字节（如将 74 改为 75，je 改 jne）→ 点击「Apply」→ 保存 Patch 后的文件。</p>
+<p>（适用场景：修改跳转条件、绕过验证逻辑）</p>
+<ol>
+<li><strong>跨镜像基址跳转</strong>：</li>
+</ol>
+<p>复制外部样本的目标地址（如 0x10001234）→ 在当前 IDA 按 Shift+G → Lazy Jumper 窗口输入 “新镜像基址（如 0x10000000）” 和 “目标地址（0x10001234）”→ 按 Enter 跳转。</p>
+<p>（适用场景：对比多个样本、分析脱壳后代码）</p>
+<h2 id="五patchkeypatch修改程序逻辑">五、Patch/Keypatch（修改程序逻辑）
+</h2><p>Patch 即 “二进制打补丁”，通过修改代码实现逻辑调整（如过反调、跳过验证），依赖 IDA+LazyIDA+Keypatch 组合（LazyIDA 负责高效操作，Keypatch 负责指令汇编）。</p>
+<h3 id="51-keypatch-插件安装">5.1 Keypatch 插件安装
+</h3><p>将 Keypatch 插件文件复制至 IDA 的 plugins 目录，重启 IDA 即可（与 IDA 9.1/9.2 兼容），功能为 “可视化修改汇编指令，无需手动计算机器码”。</p>
+<h3 id="52-核心-patch-操作分场景">5.2 核心 Patch 操作（分场景）
+</h3><h4 id="场景-1nop-掉无用代码基础版">场景 1：NOP 掉无用代码（基础版）
+</h4><p>（LazyIDA 已实现进阶批量 NOP，见第四章 4.3 工作流）</p>
+<ul>
+<li>
+<p>适用场景：单指令 NOP、简单逻辑跳过；</p>
+</li>
+<li>
+<p>操作步骤：选中指令 → 按 Ctrl+N（LazyIDA 基础功能）→ 指令替换为 NOP。</p>
+</li>
+</ul>
+<h4 id="场景-2修改指令调整跳转条件">场景 2：修改指令（调整跳转条件）
+</h4><ul>
+<li>
+<p>适用场景：强制跳转至正确逻辑（如跳过验证失败分支）；</p>
+</li>
+<li>
+<p>操作步骤：</p>
+</li>
+</ul>
+<ol>
+<li>
+<p>在汇编视图选中待修改指令（如 je 0x401200）；</p>
+</li>
+<li>
+<p>右键 → 「Keypatch」→ 输入新指令（如 jmp 0x401300）；</p>
+</li>
+<li>
+<p>点击「Assemble」→ 「Patch file」→ 保存修改后的二进制文件。</p>
+</li>
+</ol>
+<h4 id="场景-3恢复误判代码uc-组合">场景 3：恢复误判代码（U+C 组合）
+</h4><ul>
+<li>
+<p>适用场景：IDA 将正常代码误判为数据（显示为十六进制）；</p>
+</li>
+<li>
+<p>操作步骤：</p>
+</li>
+</ul>
+<ol>
+<li>
+<p>选中误判数据段，按「U」（undefine）转为数据；</p>
+</li>
+<li>
+<p>重新选中目标段，按「C」（code）转为代码；</p>
+</li>
+<li>
+<p>按「tab」切换回伪代码视图，恢复解析。</p>
+</li>
+</ol>
+<h3 id="53-地址跳转操作g-快捷键--lazy-jumper">5.3 地址跳转操作（G 快捷键 + Lazy Jumper）
+</h3><ul>
+<li>
+<p>基础跳转：已知地址（如 0x401100）→ 按「G」→ 输入地址跳转；</p>
+</li>
+<li>
+<p>进阶跳转：跨基址 / 剪贴板地址 → 按 W和Shift+G（Lazy Jumper）组合→ 输入参数跳转（见第四章 4.1）。</p>
+</li>
+</ul>
+<h2 id="六动态调试跟踪程序运行">六、动态调试：跟踪程序运行
+</h2><p>动态调试通过运行程序、下断点，观察变量值与函数调用，精准定位核心逻辑。</p>
+<h3 id="61-核心概念">6.1 核心概念
+</h3><ul>
+<li>
+<p>断点：程序运行至指定位置暂停，便于观察；</p>
+</li>
+<li>
+<p>单步执行：暂停后逐行执行代码，跟踪变量变化；</p>
+</li>
+<li>
+<p>本地调试：在本地设备运行并调试程序；</p>
+</li>
+<li>
+<p>远程调试：调试其他设备（如 Linux 服务器、Android 手机）上的程序。</p>
+</li>
+</ul>
+<h3 id="62-断点类型对比分场景选用">6.2 断点类型对比（分场景选用）
+</h3><table>
+  <thead>
+      <tr>
+          <th>断点类型</th>
+          <th>操作方式</th>
+          <th>原理</th>
+          <th>优点</th>
+          <th>缺点</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>软件断点</td>
+          <td>选中指令按「F2」</td>
+          <td>将指令替换为 int3（调试中断指令）</td>
+          <td>操作简单、无数量限制</td>
+          <td>易被程序检测（int3 为特征）</td>
+      </tr>
+      <tr>
+          <td>硬件断点</td>
+          <td>右键断点 → 「Edit breakpoint」→ 勾选「Hardware breakpoint」</td>
+          <td>利用 CPU 调试寄存器实现</td>
+          <td>隐蔽性强、不易被检测</td>
+          <td>数量有限（通常最多 4 个）</td>
+      </tr>
+  </tbody>
+</table>
+<blockquote>
+<p>重点提示：新手优先使用软件断点（F2），遇到反调试检测时切换为硬件断点（组会实操演示）。</p>
+</blockquote>
+<h3 id="63-windows-平台调试exedll">6.3 Windows 平台调试（exe/dll）
+</h3><h4 id="631-本地调试步骤">6.3.1 本地调试步骤
+</h4><ol>
+<li>
+<p>IDA 加载 exe 文件，等待分析完成；</p>
+</li>
+<li>
+<p>按「F9」（Start process）启动程序（无断点时程序会直接运行结束）；</p>
+</li>
+<li>
+<p>在关键位置（如验证函数、字符串引用处）按「F2」下断点，程序运行至断点处自动暂停；</p>
+</li>
+<li>
+<p>单步操作：</p>
+</li>
+</ol>
+<ul>
+<li>
+<p>F7：单步步入（进入函数内部，如 call 指令时跟进）；</p>
+</li>
+<li>
+<p>F8：单步步过（不进入函数，直接执行完 call 指令）；</p>
+</li>
+<li>
+<p>F9：运行至当前函数结束（快速跳出函数）；</p>
+</li>
+</ul>
+<ol start="5">
+<li>变量观察：暂停时，鼠标悬停伪代码中的变量（如 input_pass），显示当前变量值（组会实操演示重点）。</li>
+</ol>
+<h4 id="632-附加进程调试调试已运行程序">6.3.2 附加进程调试（调试已运行程序）
+</h4><ol>
+<li>
+<p>确保目标程序已在本地运行；</p>
+</li>
+<li>
+<p>IDA 菜单栏 → 「Debugger」→ 「Attach」→ 「Local Process」；</p>
+</li>
+<li>
+<p>在进程列表中筛选目标程序（按名称检索），选中后点击「Attach」；</p>
+</li>
+<li>
+<p>按「F2」下断点，按「F9」恢复程序运行，触发断点后按单步操作调试。</p>
+</li>
+</ol>
+<h3 id="64-linux-平台调试elfso">6.4 Linux 平台调试（elf/so）
+</h3><h4 id="641-远程调试步骤如调试服务器--手机-so">6.4.1 远程调试步骤（如调试服务器 / 手机 so）
+</h4><ol>
+<li>
+<p>从本地 IDA 安装目录获取调试服务器：</p>
+<ul>
+<li>本地路径：<code>E:\IDA\IDA Professional 9.2\dbgsrv</code></li>
+<li>选择对应版本：32 位样本用 <code>linux_server</code>，64 位样本用 <code>linux_server</code>（Android 对应 <code>android_server</code>/<code>android_server32</code>）；</li>
+</ul>
+</li>
+<li>
+<p>将调试服务器文件复制到目标机的「调试样本同目录」；</p>
+</li>
+<li>
+<p>给调试服务器和样本文件加权（赋予执行权限）：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">chmod <span class="m">777</span> linux_server  <span class="c1"># 调试服务器加权</span>
+</span></span><span class="line"><span class="cl">chmod <span class="m">777</span> test.exe        <span class="c1"># 待调试样本加权</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>启动调试服务器：</p>
+<ul>
+<li>
+<p>方式 1：使用自定义端口（推荐，避免端口冲突）</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">./linux_server -p <span class="m">1234</span>  <span class="c1"># 1234 为自定义端口，可替换为 1024-65535 之间未占用端口</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>方式 2：使用默认端口（无需指定 -p，默认端口为 23946）</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">./linux_server
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+</li>
+<li>
+<p>启动成功后，终端会显示 “Listening on port XXXX”（XXXX 为端口号），保持终端窗口开启。</p>
+</li>
+</ol>
+<h3 id="65-调试避坑指南">6.5 调试避坑指南
+</h3><ol>
+<li>
+<p>调试前关闭杀毒软件 / 防火墙，避免程序被拦截；</p>
+</li>
+<li>
+<p>Windows 调试 GUI 程序时，断点不设置在 UI 初始化函数（易导致程序卡住）；</p>
+</li>
+<li>
+<p>远程调试需确保目标机与本地机网络互通（如同一局域网，关闭防火墙）；</p>
+</li>
+<li>
+<p>Android so 调试：先将 so 文件从手机拉取至本地，IDA 加载后远程附加手机进程。这里可以参考</p>
+<p><a class="link" href="https://fanshanng.cn/p/as_debug/"  target="_blank" rel="noopener"
+    >[一次IDA动态调试安卓apk记录]</a></p>
+</li>
+</ol><hr />

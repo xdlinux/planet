@@ -3,7 +3,8 @@
     >frida官方文档</a></p>
 <blockquote>
 <p>它是原生应用的<a class="link" href="https://translate.google.com/website?sl=auto&amp;tl=en&amp;hl=zh-CN&amp;client=webapp&amp;u=https://addons.mozilla.org/en-US/firefox/addon/greasemonkey/"  target="_blank" rel="noopener"
-    >Greasemonkey</a>，或者用更专业的术语来说，它是一个动态代码插桩工具包。它允许你将 JavaScript 代码片段或你自己的库注入到 Windows、macOS、GNU/Linux、iOS、watchOS、tvOS、Android、FreeBSD 和 QNX 上的原生应用中。Frida 还提供了基于 Frida API 构建的一些简单工具。这些工具可以直接使用，也可以根据你的需求进行调整，或者作为 API 使用示例。</p></blockquote>
+    >Greasemonkey</a>，或者用更专业的术语来说，它是一个动态代码插桩工具包。它允许你将 JavaScript 代码片段或你自己的库注入到 Windows、macOS、GNU/Linux、iOS、watchOS、tvOS、Android、FreeBSD 和 QNX 上的原生应用中。Frida 还提供了基于 Frida API 构建的一些简单工具。这些工具可以直接使用，也可以根据你的需求进行调整，或者作为 API 使用示例。</p>
+</blockquote>
 <h2 id="frida原理及重要组件">Frida原理及重要组件
 </h2><p><code>frida</code>注入的原理就是找到目标进程,使用<code>ptrace</code>跟踪目标进程获取<code>mmap</code>，<code>dlpoen</code>，<code>dlsym</code>等函数库的偏移获取<code>mmap</code>在目标进程申请一段内存空间将在目标进程中找到存放<code>frida-agent-32/64.so</code>的空间启动执行各种操作由<code>agent</code>去实现</p>
 <table>
@@ -178,7 +179,8 @@ RPC模式：使用Python进行JavaScript脚本的注入，适合复杂数据处�
 <li><strong>Spawn模式</strong></li>
 </ul>
 <blockquote>
-<p>将启动App的权利交由Frida来控制，即使目标App已经启动，在使用Frida注入程序时还是会重新启动App</p></blockquote>
+<p>将启动App的权利交由Frida来控制，即使目标App已经启动，在使用Frida注入程序时还是会重新启动App</p>
+</blockquote>
 <p>当需要监控App从启动开始的所有行为时使用
 <code>frida -U -f 进程名 -l hook.js</code>
 <strong>进程名</strong>可以通过<code>frida-ps -U</code>来查看</p>
@@ -186,7 +188,8 @@ RPC模式：使用Python进行JavaScript脚本的注入，适合复杂数据处�
 <li><strong>Attach模式</strong></li>
 </ul>
 <blockquote>
-<p>在目标App已经启动的情况下，Frida通过ptrace注入程序从而执行Hook的操作</p></blockquote>
+<p>在目标App已经启动的情况下，Frida通过ptrace注入程序从而执行Hook的操作</p>
+</blockquote>
 <p><code>frida -U 进程名 -l hook.js</code>
 在App已经启动，或者我们只关心特定时刻或特定功能的行为时使用</p>
 </li>
@@ -893,9 +896,9 @@ D：表示级别  &ldquo;zj2595&quot;这个是标签</p>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="n">objection</span>   	   <span class="mf">1.11.0</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="n">frida</span>              <span class="mf">15.2.2</span>
+</span></span><span class="line"><span class="cl"><span class="n">frida</span>              <span class="mf">16.2.1</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="n">frida</span><span class="o">-</span><span class="n">tools</span>        <span class="mf">11.0.0</span>
+</span></span><span class="line"><span class="cl"><span class="n">frida</span><span class="o">-</span><span class="n">tools</span>        <span class="mf">13.2.0</span>
 </span></span></code></pre></td></tr></table>
 </div>
 </div></li>
@@ -1356,7 +1359,8 @@ D：表示级别  &ldquo;zj2595&quot;这个是标签</p>
 </li>
 </ul>
 <blockquote>
-<p>AKA：精简版 objection + Wallbreaker</p></blockquote>
+<p>AKA：精简版 objection + Wallbreaker</p>
+</blockquote>
 <h1 id="0x02-processmodulememory基础">0x02 Process、Module、Memory基础
 </h1><h2 id="1process">1.Process
 </h2><p><code>Process</code> 对象代表当前被Hook的进程，能获取进程的信息，枚举模块，枚举范围等</p>
@@ -1685,7 +1689,7 @@ D：表示级别  &ldquo;zj2595&quot;这个是标签</p>
 </span></span></code></pre></td></tr></table>
 </div>
 </div><h1 id="0x04-native函数的基础hook打印">0x04 Native函数的基础Hook打印
-</h1><h2 id="1整数型布尔值类型char类型">1.整数型、布尔值类型、char类型
+</h1><h2 id="1整数型布尔值类型char类型hook">1.整数型、布尔值类型、char类型Hook
 </h2><div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
@@ -1744,7 +1748,7 @@ D：表示级别  &ldquo;zj2595&quot;这个是标签</p>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><h2 id="2字符串类型">2.字符串类型
+</div><h2 id="2字符串类型hook">2.字符串类型Hook
 </h2><div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1

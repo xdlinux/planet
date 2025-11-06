@@ -86,7 +86,8 @@ RPC模式：使用Python进行JavaScript脚本的注入，适合复杂数据处�
 <li>Spawn模式</li>
 </ul>
 <blockquote>
-<p>将启动App的权利交由Frida来控制，即使目标App已经启动，在使用Frida注入程序时还是会重新启动App</p></blockquote>
+<p>将启动App的权利交由Frida来控制，即使目标App已经启动，在使用Frida注入程序时还是会重新启动App</p>
+</blockquote>
 <p>当需要监控App从启动开始的所有行为时使用
 <code>frida -U -f 进程名 -l hook.js</code>
 <strong>进程名</strong>可以通过<code>frida-ps -U</code>来查看</p>
@@ -94,7 +95,8 @@ RPC模式：使用Python进行JavaScript脚本的注入，适合复杂数据处�
 <li>Attach模式</li>
 </ul>
 <blockquote>
-<p>在目标App已经启动的情况下，Frida通过ptrace注入程序从而执行Hook的操作</p></blockquote>
+<p>在目标App已经启动的情况下，Frida通过ptrace注入程序从而执行Hook的操作</p>
+</blockquote>
 <p><code>frida -U 进程名 -l hook.js</code>
 在App已经启动，或者我们只关心特定时刻或特定功能的行为时使用</p>
 <p>5.基础语法
