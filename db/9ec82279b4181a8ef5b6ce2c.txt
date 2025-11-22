@@ -1,0 +1,196 @@
+<p>高考结束，回到开往项目组。大学录取了计算机方向的专业，之前做项目的经历告诉我开发这件事情不能靠别人，自己不太好 [&#8230;]</p>
+<p><a href="https://www.xiaozonglin.cn/python-is-so-convient/">Python真香：尝试开发数据爬取与后端接口</a>最先出现在<a href="https://www.xiaozonglin.cn">林林杂语</a>。</p>
+<hr />
+<p>高考结束，回到开往项目组。大学录取了计算机方向的专业，之前做项目的经历告诉我开发这件事情不能靠别人，自己不太好意思再给别人提需求了，也对同龄人已经熟练使用 Node.js 感到焦虑，所以这几个月自己尝试打开电脑为项目写点东西。</p>
+
+
+
+<p>此前用 PHP 和原生 JavaScript 写过一点点东西，但都不算作一个项目——要么就是从网上搜随机数来实现随机动漫图片，要么就是搜索关于数组的处理方法用函数实现了一下并集、补集之类的东西。</p>
+
+
+
+<p>这并不算是一个技术笔记，只是我的碎碎念。</p>
+
+
+
+<h2 class="wp-block-heading">编写 Python 数据爬取脚本</h2>
+
+
+
+<p>开往此前有一个“成员文章同步”的 ToDo，但是一直没有人实现。所以，我来<s>折腾</s>了（实则为捣乱）。</p>
+
+
+
+<p>成员文章同步计划用 FreshRSS 实现，现在只需要用一个脚本爬取开往成员的订阅地址，生成一个 OPML 文件就好了。</p>
+
+
+
+<p>开往成员的订阅地址从哪里整呢？组里原先有一些想法：弄个平台让站长自行提交；内置订阅地址的一些常见 uri 去测测哪个可以访问&#8230;&#8230;最后，我想到了自己此前维护过的项目——中文博客列表导航。自己之前收集的那些订阅地址不就派上用场了？我可真是一个<s>天才</s>（猪）。</p>
+
+
+
+<p>第一次，我的想法是这样的：</p>
+
+
+<div class="wp-block-image">
+<figure class="aligncenter size-large"><img loading="lazy" decoding="async" width="1024" height="322" src="https://www.xiaozonglin.cn/wp-content/uploads/2025/09/image-1024x322.png" alt="" class="wp-image-382" srcset="https://www.xiaozonglin.cn/wp-content/uploads/2025/09/image-1024x322.png 1024w, https://www.xiaozonglin.cn/wp-content/uploads/2025/09/image-300x94.png 300w, https://www.xiaozonglin.cn/wp-content/uploads/2025/09/image-768x241.png 768w, https://www.xiaozonglin.cn/wp-content/uploads/2025/09/image.png 1111w" sizes="auto, (max-width: 1024px) 100vw, 1024px" /><figcaption class="wp-element-caption">用 OneNote 画的超级丑的图</figcaption></figure></div>
+
+
+<p>但是，当我真的去按照这个思路写代码的时候，电脑报错了。检查之后发现是中文博客列表导航有频率限制。我尝试 sleep 了一下，发现效果不好。这样会给中文博客列表导航发一千多次请求，对项目不友好。</p>
+
+
+
+<p>所以，我对思路进行了改进（其实并不是）：首先请求中文博客列表导航和开往的全量数据（相当于复刻了两个项目的数据库），再在中文博客列表导航的数据里查开往的成员网站，找到订阅地址信息。代码碎片如下：</p>
+
+
+
+<pre class="wp-block-code"><code>travellingsData = requests.get('https://api.travellings.cn/all', headers = headers)
+travellingsData = list(json.loads(travellingsData.text)&#91;"data"])
+
+regex = r"^(?:https?:\/\/)?(?:&#91;^@\/\n]+@)?(?:www\.)?(&#91;^\/:\?\n]+)"
+
+zhblogsRequestUrl = 'https://www.zhblogs.net/api/blog/list?page=1&amp;pageSize=7000'
+zhblogsData = requests.get(zhblogsRequestUrl)
+zhblogsData = json.loads(zhblogsData.text)&#91;"data"]&#91;"data"]
+
+def searchZhblogs(targetDomain, zhblogsAllData):
+    for j in zhblogsAllData:
+        if targetDomain in j&#91;"url"]:
+            return j
+    return 0</code></pre>
+
+
+
+<p>这里有一个细节，中文博客列表导航并没有获取全量数据的接口，怎么办呢？我发现项目的博客列表请求接口时会带一个 Size 参数。我试着把这个 Size 调成一个很大很大的值，这样数据就可以覆盖项目收录的全部博客。我试了一下，果不其然，成功了。我真是一个<s>小机灵鬼</s>。</p>
+
+
+
+<p>接下来是如何生成 OPML。我找组里的  Kegongteng 要了一份文件，看了一下文件的结构，感觉还挺简单的，就是这个 xml 不知道要用什么东西搞定。字符串拼接？我之前想过这个东西，但是肉眼可见的麻烦。懒惰的我上网搜了一下 Python 生成 xml 文件的方法，发现了一个东西，让我眼前一亮。</p>
+
+
+
+<pre class="wp-block-code"><code>import xml.etree.ElementTree as ET
+
+# 创建根元素
+root = ET.Element("RootElement")
+
+# 创建子元素
+child1 = ET.SubElement(root, "ChildElement")
+
+# 添加属性
+child1.attrib&#91;"attribute"] = "value"
+
+# 创建子元素的文本内容
+child1.text = "Hello, World!"
+
+# 创建XML文件
+tree = ET.ElementTree(root)
+tree.write("example.xml")</code></pre>
+
+
+
+<p>当时看到这个东西就喜欢上了。这才是适合我这种小菜鸡使用的库。Python 真香！我不知道该怎么形容我喜欢它的原因，可能是“高度的语义化”？不懂。</p>
+
+
+
+<p>有了这个库，我就可以不用尝试痛苦的字符串拼接了，直接写成以下代码：</p>
+
+
+
+<pre class="wp-block-code"><code>root = Element('opml')
+root.attrib&#91;"xmlns:frss"] = "https://freshrss.org/opml"
+root.attrib&#91;"version"] = "2.0"
+
+# head元素
+head = SubElement(root, 'head')
+
+# head里套title元素
+title = SubElement(head, 'title')
+title.text = "开往成员文章订阅"
+
+# body元素
+body = SubElement(root, 'body')
+
+outline1 = SubElement(body, 'outline')
+outline1.attrib&#91;"text"] = "技术博客"
+
+for j in travellingsTechBlogData:
+    searchResult = searchZhblogs(re.match(regex, j&#91;"url"]).group(1), zhblogsData)
+    if searchResult != 0 and searchResult&#91;"feed"] != None:
+        outline = SubElement(outline1, 'outline')
+        outline.attrib&#91;"text"] = j&#91;"name"]
+        outline.attrib&#91;"type"] = "rss"
+        outline.attrib&#91;"xmlUrl"] = searchResult&#91;"feed"]&#91;0]&#91;"url"]
+        outline.attrib&#91;"htmlUrl"] = j&#91;"url"]
+        outline.attrib&#91;"description"] = searchResult&#91;"sign"]
+
+tree = ElementTree(root)
+
+# write out xml data
+tree.write('result-tech.xml', encoding = 'utf-8', xml_declaration = True)</code></pre>
+
+
+
+<p>最后，拖了一年多的 ToDo 就被我这么折腾完了。</p>
+
+
+
+<p>整完成员文章订阅的东西之后，我还弄了一个标签同步的东西，这里不再赘述。</p>
+
+
+
+<h2 class="wp-block-heading">用 Python 写巡查工具后端</h2>
+
+
+<div class="wp-block-image">
+<figure class="aligncenter size-full"><img loading="lazy" decoding="async" width="321" height="202" src="https://www.xiaozonglin.cn/wp-content/uploads/2025/09/image-1.png" alt="" class="wp-image-383" srcset="https://www.xiaozonglin.cn/wp-content/uploads/2025/09/image-1.png 321w, https://www.xiaozonglin.cn/wp-content/uploads/2025/09/image-1-300x189.png 300w" sizes="auto, (max-width: 321px) 100vw, 321px" /><figcaption class="wp-element-caption">一句玩笑话</figcaption></figure></div>
+
+
+<p>开往的巡查工具又是一个拖了很久的东西，之前大蛋糕写的前端代码还在。我来<s>折腾</s>（捣乱）一下。</p>
+
+
+
+<p>最开始是跟组里的同学确定一下需求，是这样的：</p>
+
+
+<div class="wp-block-image">
+<figure class="aligncenter size-large"><img loading="lazy" decoding="async" width="1024" height="372" src="https://www.xiaozonglin.cn/wp-content/uploads/2025/09/image-2-1024x372.png" alt="" class="wp-image-384" srcset="https://www.xiaozonglin.cn/wp-content/uploads/2025/09/image-2-1024x372.png 1024w, https://www.xiaozonglin.cn/wp-content/uploads/2025/09/image-2-300x109.png 300w, https://www.xiaozonglin.cn/wp-content/uploads/2025/09/image-2-768x279.png 768w, https://www.xiaozonglin.cn/wp-content/uploads/2025/09/image-2-1200x436.png 1200w, https://www.xiaozonglin.cn/wp-content/uploads/2025/09/image-2.png 1522w" sizes="auto, (max-width: 1024px) 100vw, 1024px" /><figcaption class="wp-element-caption">用飞书画的模式图，比较漂亮</figcaption></figure></div>
+
+
+<p>然后，因为我喜欢折腾，所以这个东西前端和后端分成两个人完成——前端由组里的 Lee 同学负责，后端就由我来糟蹋了。</p>
+
+
+
+<p>首先是看看用 Python 的什么开发。Django？太重了，还会把前端的活给刨了。FastAPI？文档看不懂（太真实了）。为什么不用 Node.js 开发呢？因为我看不懂教程。所以，我用 Python Flask 来做后端，因为它够轻，够简单，够友好。</p>
+
+
+
+<p>接着，我对要用到的接口进行了整理，大致如下：</p>
+
+
+<div class="wp-block-image">
+<figure class="aligncenter size-large"><img loading="lazy" decoding="async" width="1024" height="445" src="https://www.xiaozonglin.cn/wp-content/uploads/2025/09/image-3-1024x445.png" alt="" class="wp-image-385" srcset="https://www.xiaozonglin.cn/wp-content/uploads/2025/09/image-3-1024x445.png 1024w, https://www.xiaozonglin.cn/wp-content/uploads/2025/09/image-3-300x130.png 300w, https://www.xiaozonglin.cn/wp-content/uploads/2025/09/image-3-768x333.png 768w, https://www.xiaozonglin.cn/wp-content/uploads/2025/09/image-3-1200x521.png 1200w, https://www.xiaozonglin.cn/wp-content/uploads/2025/09/image-3.png 1513w" sizes="auto, (max-width: 1024px) 100vw, 1024px" /></figure></div>
+
+
+<p>这是我第一次做项目。虽然最后没有严格按照这样开发，但我仍然认为这样做是必要的，因为这样做我不再是无头苍蝇了。</p>
+
+
+
+<p>然后，我用 PHPStudy 配了一下 MySQL 数据库环境，开始“查文档-写代码-调试”的循环。这个过程超级花时间，我还容易忘记时间。几次下午坐在电脑面前一坐就坐到夜晚。几次我爸我妈教我下楼吃饭，我都还在忙着改 SQL 查询语句，最后我爸把饭端到房间让我边写边吃。</p>
+
+
+
+<p>开发过程琐碎。这里列出一些问题，以及我的解决方法（或者是组里的 Lee 和 Xuanzhi 同学告诉我的）</p>
+
+
+
+<figure class="wp-block-table"><table class="has-fixed-layout"><tbody><tr><td>问题</td><td>解决方法</td></tr><tr><td>路由挤在一个文件里面不利于维护</td><td>使用 Flask 的 Blueprint</td></tr><tr><td>要防止 SQL 注入攻击</td><td>使用参数化查询</td></tr><tr><td>CORS 跨域</td><td>使用 flask_cors 拓展库</td></tr><tr><td>配置参数硬写在代码里不好</td><td>使用 .env 以及 Python 相应的库</td></tr></tbody></table></figure>
+
+
+
+<p>Xuanzhi 还提了一些关于接口设计的问题，比如不宜用 ifSuccess 作布尔值的名称，而应为 Success 或 isSuccess。我发现我把 is 记成 if 了。</p>
+
+
+
+<p>各位大佬可以在 <a href="https://github.com/travellings-link/check-tool-backend">GitHub</a> 上看到本小菜鸡的代码。如果有改进建议，还请批评指出。</p>
+<p><a href="https://www.xiaozonglin.cn/python-is-so-convient/">Python真香：尝试开发数据爬取与后端接口</a>最先出现在<a href="https://www.xiaozonglin.cn">林林杂语</a>。</p>
