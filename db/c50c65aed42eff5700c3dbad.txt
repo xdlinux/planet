@@ -1,0 +1,22 @@
+<h2 id="前言">前言</h2>
+<p>NCC换服务器啦！</p>
+<p>NCC最近被阿里云发邮件让补多年前忘记申请的公网安备，但是多次申请总是没通过（后来才知道填错管辖区了）。正好又对阿里云200M锐驰服务器的经常卡顿有点不满（因为只是满速为200Mbps，完全没有保底速度，而且晚高峰延迟不行），于是找到了Hostdare的美国服务器CN2 GIA线路，一个月要12刀，但是不像其它海外服务器一样卡顿，国内直连带宽也不错。</p>
+<p>备份旧服务器时看到原先的博客是Wordpress，每次加载都得转圈，背后的PHP一直在动态加载界面放在前端，特别是进入管理页面很卡。于是想起了Hexo，Hugo等静态博客，不仅方便CDN托管，速度应该也会快上不少。而且同时舍弃掉WordPress里面一堆用不到的奇怪功能也更清爽。</p>
+<p>NCC 想起了 <strong>Hugo</strong></p>
+<p>如果说 WordPress 是个现炒现卖的厨师，那 Hugo 就是个食品加工厂。它把所有文章一次性编译成静态 HTML 预制菜，客人来了，Nginx 直接端盘子就行。<br>
+这种架构，别说现在的云服务器，就算是二十年前的电脑也能跑得飞快，而且配合 CDN 简直是0成本并行接待，速度起飞。</p>
+<h2 id="hugo初始化">hugo初始化</h2>
+<p>Hugo 不像 WordPress 需要复杂的环境，它只是一个命令行工具。运行这个指令可以直接得到它需要的文件结构：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>hugo new site . --force
+</span></span></code></pre></div><p>为了方便后续管理，强烈建议使用 Git 或者你喜欢的版本跟踪器来跟踪整个项目：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>git init
+</span></span><span style="display:flex;"><span>git checkout main
+</span></span><span style="display:flex;"><span>git add .
+</span></span><span style="display:flex;"><span>git commit -m <span style="color:#e6db74">&#34;initialize&#34;</span>
+</span></span><span style="display:flex;"><span>git remote add origin https://<span style="color:#f92672">{</span>Change_This_to_Your_Git_Repository_URL<span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>git push -u origin main
+</span></span></code></pre></div><h2 id="选择主题">选择主题</h2>
+<p>Hugo选择主题也是一门学问，严格来说这个主题是一个非常重要的生成模板，而且这个Hugo没有所谓开机自带默认主题。可以自己去 <code>Hugo Theme</code> 网站选一个看起来喜欢的。
+但是这里有个<strong>巨大</strong>的坑：很多主题是开源社区维护的，质量参差不齐。选主题不能光看颜值，一定要看 <strong>GitHub Star 数</strong>、<strong>Issues 活跃度</strong> 以及 <strong>文档</strong> 是否齐全。否则你可能会遇到各种玄学 Bug，最后只能对着源码发呆。</p>
+<p>NCC 最终看中了 <a href="https://github.com/rhazdon/hugo-theme-hello-friend-ng">Hello Friend NG</a> 这个主题，文档齐全且看起来很清爽。<br>
+安装主题推荐使用 Git Submodule（子模块）的方式，这样方便后续更新：</p><hr />
