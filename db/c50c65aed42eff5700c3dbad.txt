@@ -19,4 +19,224 @@
 <p>Hugo选择主题也是一门学问，严格来说这个主题是一个非常重要的生成模板，而且这个Hugo没有所谓开机自带默认主题。可以自己去 <code>Hugo Theme</code> 网站选一个看起来喜欢的。
 但是这里有个<strong>巨大</strong>的坑：很多主题是开源社区维护的，质量参差不齐。选主题不能光看颜值，一定要看 <strong>GitHub Star 数</strong>、<strong>Issues 活跃度</strong> 以及 <strong>文档</strong> 是否齐全。否则你可能会遇到各种玄学 Bug，最后只能对着源码发呆。</p>
 <p>NCC 最终看中了 <a href="https://github.com/rhazdon/hugo-theme-hello-friend-ng">Hello Friend NG</a> 这个主题，文档齐全且看起来很清爽。<br>
-安装主题推荐使用 Git Submodule（子模块）的方式，这样方便后续更新：</p><hr />
+安装主题推荐使用 Git Submodule（子模块）的方式，这样方便后续更新：</p><hr /><h2 id="前言">前言</h2>
+<p>NCC换服务器啦！</p>
+<p>NCC最近被阿里云发邮件让补多年前忘记申请的公网安备，但是多次申请总是没通过（后来才知道填错管辖区了）。正好又对阿里云200M锐驰服务器的经常卡顿有点不满（因为只是满速为200Mbps，完全没有保底速度，而且晚高峰延迟不行），于是找到了Hostdare的美国服务器CN2 GIA线路，一个月要12刀，但是不像其它海外服务器一样卡顿，国内直连带宽也不错。</p>
+<p>备份旧服务器时看到原先的博客是Wordpress，每次加载都得转圈，背后的PHP一直在动态加载界面放在前端，特别是进入管理页面很卡。于是想起了Hexo，Hugo等静态博客，不仅方便CDN托管，速度应该也会快上不少。而且同时舍弃掉WordPress里面一堆用不到的奇怪功能也更清爽。</p>
+<p>NCC 想起了 <strong>Hugo</strong></p>
+<p>如果说 WordPress 是个现炒现卖的厨师，那 Hugo 就是个食品加工厂。它把所有文章一次性编译成静态 HTML 预制菜，客人来了，Nginx 直接端盘子就行。<br>
+这种架构，别说现在的云服务器，就算是二十年前的电脑也能跑得飞快，而且配合 CDN 简直是0成本并行接待，速度起飞。</p>
+<h2 id="hugo初始化">hugo初始化</h2>
+<p>Hugo 不像 WordPress 需要复杂的环境，它只是一个命令行工具。运行这个指令可以直接得到它需要的文件结构：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>hugo new site . --force
+</span></span></code></pre></div><p>为了方便后续管理，强烈建议使用 Git 或者你喜欢的版本跟踪器来跟踪整个项目：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>git init
+</span></span><span style="display:flex;"><span>git checkout main
+</span></span><span style="display:flex;"><span>git add .
+</span></span><span style="display:flex;"><span>git commit -m <span style="color:#e6db74">&#34;initialize&#34;</span>
+</span></span><span style="display:flex;"><span>git remote add origin https://<span style="color:#f92672">{</span>Change_This_to_Your_Git_Repository_URL<span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>git push -u origin main
+</span></span></code></pre></div><h2 id="选择主题">选择主题</h2>
+<p>Hugo选择主题也是一门学问，严格来说这个主题是一个非常重要的生成模板，而且这个Hugo没有所谓开机自带默认主题。可以自己去 <code>Hugo Theme</code> 网站选一个看起来喜欢的。
+但是这里有个<strong>巨大</strong>的坑：很多主题是开源社区维护的，质量参差不齐。选主题不能光看颜值，一定要看 <strong>GitHub Star 数</strong>、<strong>Issues 活跃度</strong> 以及 <strong>文档</strong> 是否齐全。否则你可能会遇到各种玄学 Bug，最后只能对着源码发呆。</p>
+<p>NCC 最终看中了 <a href="https://github.com/rhazdon/hugo-theme-hello-friend-ng">Hello Friend NG</a> 这个主题，文档齐全且看起来很清爽。<br>
+安装主题推荐使用 Git Submodule（子模块）的方式，这样方便后续更新：</p>
+<p>看中喜欢的主题之后记下它的源码URL，NCC看中了 <code>hello-friend-ng</code> 这个主题，安装主题推荐使用 <strong>Git Submodule</strong> 的方式，而不是直接下载解压，这样方便后续跟随作者更新：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>git submodule add https://github.com/rhazdon/hugo-theme-hello-friend-ng themes/hugo-theme-hello-friend-ng
+</span></span></code></pre></div><h2 id="配置文件">配置文件</h2>
+<p>配置文件居然在选择主题之后！是的，因为hugo的配置文件依赖于你选择的主题（感觉有点不太聪明的组织方式）。
+你所需要配置的文件只有<code>hugo.toml</code>这一个，这回指导hugo进行所有任务。</p>
+<p><strong>注意</strong>：配置文件里有一个 <code>dateFrom</code> 相关的日期格式，这是一个 Go 语言特有的“魔法数字”。NCC 起初以为要改成当前日期，还在思考怎么这个项目从 2006 年就开始了，结果一改就导致博客前端日期全崩了。后来查阅官方文档才知道，<strong>2006 年 1 月 2 日 15 点 04 分</strong> 是 Go 语言的时间格式化标准，不能乱动。</p>
+<p>随后就可以在<code>hugo.toml</code>里面指定 <code>theme = 'hugo-theme-hello-friend-ng'</code> 了。以下是 NCC 踩坑后总结出的 <strong>生产环境可用配置</strong>（解决了后面提到的多语言路由问题）：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-toml" data-lang="toml"><span style="display:flex;"><span><span style="color:#a6e22e">baseURL</span> = <span style="color:#e6db74">&#39;https://blog.nancunchild.cn/&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">languageCode</span> = <span style="color:#e6db74">&#39;zh-CN&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">title</span> = <span style="color:#e6db74">&#39;NanCunChild的碎碎念&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">theme</span> = <span style="color:#e6db74">&#39;hugo-theme-hello-friend-ng&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">pagination</span>.<span style="color:#a6e22e">pagerSize</span> = <span style="color:#ae81ff">10</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">defaultContentLanguage</span> = <span style="color:#e6db74">&#39;zh-cn&#39;</span> <span style="color:#75715e"># 加入这个可以让访问中文博客时路径中没有zh-cn，而是将中文作为默认</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">defaultContentLanguageInSubdir</span> = <span style="color:#66d9ef">false</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>[<span style="color:#a6e22e">params</span>]
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">#不要手欠改日期</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">dateform</span>        = <span style="color:#e6db74">&#34;Jan 02, 2006&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">dateformShort</span>   = <span style="color:#e6db74">&#34;Jan 02&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">dateformNum</span>     = <span style="color:#e6db74">&#34;2006-01-02&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">dateformNumTime</span> = <span style="color:#e6db74">&#34;2006-01-02 15:04&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">subtitle</span> = <span style="color:#e6db74">&#34;NCC的碎碎念&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">description</span> = <span style="color:#e6db74">&#34;NanCunChild的个人博客，包含生活，技术和幻想&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">keywords</span> = <span style="color:#e6db74">&#34;homepage, blog, nancunchild, tech&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">images</span> = [<span style="color:#e6db74">&#34;assets/web_icon.ico&#34;</span>]
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">disableReadOtherPosts</span> = <span style="color:#66d9ef">false</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">enableSharingButtons</span> = <span style="color:#66d9ef">false</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">enableGlobalLanguageMenu</span> = <span style="color:#66d9ef">true</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">defaultTheme</span> = <span style="color:#e6db74">&#34;auto&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    [<span style="color:#a6e22e">params</span>.<span style="color:#a6e22e">author</span>]
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">name</span> = <span style="color:#e6db74">&#34;NanCunChild&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    [<span style="color:#a6e22e">params</span>.<span style="color:#a6e22e">contact</span>]
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">email</span> = <span style="color:#e6db74">&#39;nancunchild@gmail.com&#39;</span>
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>[<span style="color:#a6e22e">languages</span>]
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">#这里需要是zh-cn，而不是zh短码</span>
+</span></span><span style="display:flex;"><span>    [<span style="color:#a6e22e">languages</span>.<span style="color:#a6e22e">zh-cn</span>]
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">languageCode</span> = <span style="color:#e6db74">&#39;zh-CN&#39;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">languageName</span> = <span style="color:#e6db74">&#39;中文&#39;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">weight</span> = <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">title</span> = <span style="color:#e6db74">&#39;NanCunChild的碎碎念&#39;</span>
+</span></span><span style="display:flex;"><span>        [<span style="color:#a6e22e">languages</span>.<span style="color:#a6e22e">zh-cn</span>.<span style="color:#a6e22e">params</span>]
+</span></span><span style="display:flex;"><span>            <span style="color:#a6e22e">subtitle</span> = <span style="color:#e6db74">&#39;生活、技术与幻想&#39;</span>
+</span></span><span style="display:flex;"><span>            [<span style="color:#a6e22e">languages</span>.<span style="color:#a6e22e">zh</span>.<span style="color:#a6e22e">params</span>.<span style="color:#a6e22e">homeInfoParams</span>]
+</span></span><span style="display:flex;"><span>                <span style="color:#a6e22e">Title</span> = <span style="color:#e6db74">&#34;你好 👋&#34;</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#a6e22e">Content</span> = <span style="color:#e6db74">&#34;欢迎来到NCC的碎碎念&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        [[<span style="color:#a6e22e">languages</span>.<span style="color:#a6e22e">zh-cn</span>.<span style="color:#a6e22e">menu</span>.<span style="color:#a6e22e">main</span>]]
+</span></span><span style="display:flex;"><span>            <span style="color:#a6e22e">identifier</span> = <span style="color:#e6db74">&#34;about&#34;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#a6e22e">name</span> = <span style="color:#e6db74">&#34;关于我&#34;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#a6e22e">url</span> = <span style="color:#e6db74">&#34;/about/&#34;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#a6e22e">weight</span> = <span style="color:#ae81ff">5</span>
+</span></span><span style="display:flex;"><span>        [[<span style="color:#a6e22e">languages</span>.<span style="color:#a6e22e">zh-cn</span>.<span style="color:#a6e22e">menu</span>.<span style="color:#a6e22e">main</span>]]
+</span></span><span style="display:flex;"><span>            <span style="color:#a6e22e">identifier</span> = <span style="color:#e6db74">&#34;posts&#34;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#a6e22e">name</span> = <span style="color:#e6db74">&#34;文章&#34;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#a6e22e">url</span> = <span style="color:#e6db74">&#34;/posts/&#34;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#a6e22e">weight</span> = <span style="color:#ae81ff">10</span>
+</span></span><span style="display:flex;"><span>        [[<span style="color:#a6e22e">languages</span>.<span style="color:#a6e22e">zh-cn</span>.<span style="color:#a6e22e">menu</span>.<span style="color:#a6e22e">main</span>]]
+</span></span><span style="display:flex;"><span>            <span style="color:#a6e22e">identifier</span> = <span style="color:#e6db74">&#34;archives&#34;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#a6e22e">name</span> = <span style="color:#e6db74">&#34;归档&#34;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#a6e22e">url</span> = <span style="color:#e6db74">&#34;/archives/&#34;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#a6e22e">weight</span> = <span style="color:#ae81ff">20</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    [<span style="color:#a6e22e">languages</span>.<span style="color:#a6e22e">en</span>]
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">languageCode</span> = <span style="color:#e6db74">&#39;en-US&#39;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">languageName</span> = <span style="color:#e6db74">&#39;English&#39;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">weight</span> = <span style="color:#ae81ff">2</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">title</span> = <span style="color:#e6db74">&#34;NanCunChild&#39;s Blog&#34;</span>
+</span></span><span style="display:flex;"><span>        [<span style="color:#a6e22e">languages</span>.<span style="color:#a6e22e">en</span>.<span style="color:#a6e22e">params</span>]
+</span></span><span style="display:flex;"><span>            <span style="color:#a6e22e">subtitle</span> = <span style="color:#e6db74">&#39;Tech, Life and Fantasy&#39;</span>
+</span></span><span style="display:flex;"><span>            [<span style="color:#a6e22e">languages</span>.<span style="color:#a6e22e">en</span>.<span style="color:#a6e22e">params</span>.<span style="color:#a6e22e">homeInfoParams</span>]
+</span></span><span style="display:flex;"><span>                <span style="color:#a6e22e">Title</span> = <span style="color:#e6db74">&#34;Hi there 👋&#34;</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#a6e22e">Content</span> = <span style="color:#e6db74">&#34;Welcome to NCC&#39;s Blog&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        [[<span style="color:#a6e22e">languages</span>.<span style="color:#a6e22e">en</span>.<span style="color:#a6e22e">menu</span>.<span style="color:#a6e22e">main</span>]]
+</span></span><span style="display:flex;"><span>            <span style="color:#a6e22e">identifier</span> = <span style="color:#e6db74">&#34;about&#34;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#a6e22e">name</span> = <span style="color:#e6db74">&#34;About&#34;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#a6e22e">url</span> = <span style="color:#e6db74">&#34;/en/about/&#34;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#a6e22e">weight</span> = <span style="color:#ae81ff">5</span>
+</span></span><span style="display:flex;"><span>        [[<span style="color:#a6e22e">languages</span>.<span style="color:#a6e22e">en</span>.<span style="color:#a6e22e">menu</span>.<span style="color:#a6e22e">main</span>]]
+</span></span><span style="display:flex;"><span>            <span style="color:#a6e22e">identifier</span> = <span style="color:#e6db74">&#34;posts&#34;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#a6e22e">name</span> = <span style="color:#e6db74">&#34;Posts&#34;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#a6e22e">url</span> = <span style="color:#e6db74">&#34;/en/posts/&#34;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#a6e22e">weight</span> = <span style="color:#ae81ff">10</span>
+</span></span><span style="display:flex;"><span>        [[<span style="color:#a6e22e">languages</span>.<span style="color:#a6e22e">en</span>.<span style="color:#a6e22e">menu</span>.<span style="color:#a6e22e">main</span>]]
+</span></span><span style="display:flex;"><span>            <span style="color:#a6e22e">identifier</span> = <span style="color:#e6db74">&#34;archives&#34;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#a6e22e">name</span> = <span style="color:#e6db74">&#34;Archives&#34;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#a6e22e">url</span> = <span style="color:#e6db74">&#34;/en/archives/&#34;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#a6e22e">weight</span> = <span style="color:#ae81ff">20</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    [<span style="color:#a6e22e">languages</span>.<span style="color:#a6e22e">ja</span>]
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">languageCode</span> = <span style="color:#e6db74">&#39;ja-JP&#39;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">languageName</span> = <span style="color:#e6db74">&#39;日本語&#39;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">weight</span> = <span style="color:#ae81ff">3</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">title</span> = <span style="color:#e6db74">&#39;NanCunChildのブログ&#39;</span>
+</span></span><span style="display:flex;"><span>        [<span style="color:#a6e22e">languages</span>.<span style="color:#a6e22e">ja</span>.<span style="color:#a6e22e">params</span>]
+</span></span><span style="display:flex;"><span>            <span style="color:#a6e22e">subtitle</span> = <span style="color:#e6db74">&#39;生活、技術とファンタジー&#39;</span>
+</span></span><span style="display:flex;"><span>            [<span style="color:#a6e22e">languages</span>.<span style="color:#a6e22e">ja</span>.<span style="color:#a6e22e">params</span>.<span style="color:#a6e22e">homeInfoParams</span>]
+</span></span><span style="display:flex;"><span>                <span style="color:#a6e22e">Title</span> = <span style="color:#e6db74">&#34;こんにちは 👋&#34;</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#a6e22e">Content</span> = <span style="color:#e6db74">&#34;NCCのブログへようこそ&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        [[<span style="color:#a6e22e">languages</span>.<span style="color:#a6e22e">ja</span>.<span style="color:#a6e22e">menu</span>.<span style="color:#a6e22e">main</span>]]
+</span></span><span style="display:flex;"><span>            <span style="color:#a6e22e">identifier</span> = <span style="color:#e6db74">&#34;about&#34;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#a6e22e">name</span> = <span style="color:#e6db74">&#34;プロフィール&#34;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#a6e22e">url</span> = <span style="color:#e6db74">&#34;/ja/about/&#34;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#a6e22e">weight</span> = <span style="color:#ae81ff">5</span>
+</span></span><span style="display:flex;"><span>        [[<span style="color:#a6e22e">languages</span>.<span style="color:#a6e22e">ja</span>.<span style="color:#a6e22e">menu</span>.<span style="color:#a6e22e">main</span>]]
+</span></span><span style="display:flex;"><span>            <span style="color:#a6e22e">identifier</span> = <span style="color:#e6db74">&#34;posts&#34;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#a6e22e">name</span> = <span style="color:#e6db74">&#34;記事一覧&#34;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#a6e22e">url</span> = <span style="color:#e6db74">&#34;/ja/posts/&#34;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#a6e22e">weight</span> = <span style="color:#ae81ff">10</span>
+</span></span><span style="display:flex;"><span>        [[<span style="color:#a6e22e">languages</span>.<span style="color:#a6e22e">ja</span>.<span style="color:#a6e22e">menu</span>.<span style="color:#a6e22e">main</span>]]
+</span></span><span style="display:flex;"><span>            <span style="color:#a6e22e">identifier</span> = <span style="color:#e6db74">&#34;archives&#34;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#a6e22e">name</span> = <span style="color:#e6db74">&#34;アーカイブ&#34;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#a6e22e">url</span> = <span style="color:#e6db74">&#34;/ja/archives/&#34;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#a6e22e">weight</span> = <span style="color:#ae81ff">20</span>
+</span></span></code></pre></div><p>而且还可以注意一下，如果不准备使用多语言，可以不管<code>[language]</code>标签，直接使用<code>[menu]</code> 标签即可，同时设置 <code>enableGlobalLanguageMenu = false</code> ：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-toml" data-lang="toml"><span style="display:flex;"><span>[<span style="color:#a6e22e">menu</span>]
+</span></span><span style="display:flex;"><span>    [[<span style="color:#a6e22e">menu</span>.<span style="color:#a6e22e">main</span>]]
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">identifier</span> = <span style="color:#e6db74">&#34;posts&#34;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">name</span> = <span style="color:#e6db74">&#34;文章&#34;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">url</span> = <span style="color:#e6db74">&#34;/posts/&#34;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">weight</span> = <span style="color:#ae81ff">10</span>
+</span></span><span style="display:flex;"><span>    [[<span style="color:#a6e22e">menu</span>.<span style="color:#a6e22e">main</span>]]
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">identifier</span> = <span style="color:#e6db74">&#34;archives&#34;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">name</span> = <span style="color:#e6db74">&#34;归档&#34;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">url</span> = <span style="color:#e6db74">&#34;/archives/&#34;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">weight</span> = <span style="color:#ae81ff">20</span>
+</span></span></code></pre></div><h2 id="自动化上传博客">自动化上传博客</h2>
+<p>上传博客有多种方式，平时写博客就只需要一个符合hugo标准的markdown文件，通过hugo编译好之后放在服务器上，你配置的nginx会很听话地照顾这些静态文件。而我们的目标是让这个过程变优雅。</p>
+<p>首先，写博客当然在本地，NCC推荐VS Code安装MD扩展、以及Obsidian两款软件来写。使用VSCode可以在任意地方写，然后自己使用喜欢的版本控制软件管理。使用Obsidian的话它会有一个Vault位置用于存放，而且登录账户了似乎可以云存储。两个在管理上都非常不错，在操作习惯和界面上各有千秋。不过NCC总是觉得Obsidian的界面很不错，简单从而不会分心，自带无需配置的快速预览，面对这样的界面更能专注写文章。</p>
+<p>第二步，将Markdown格式的博客原文使用hugo编译为网站代码。这一步说法就超多啦！本地下载一个hugo，写完就编译，还能本地查看，满意之后就使用自己喜欢的方式传入服务器，应该是大多数人的选择。不过NCC喜欢更符合工作流的方式，就是希望版本管理和远程同步能一键完成而不是胶水粘合，此时看来使用git是一个非常不错的选择，于是在开始提出两种方案：</p>
+<ul>
+<li>本地编写，使用git push到服务器上，服务器检测到仓库变动就马上唤起hugo编译部署，一气呵成。</li>
+<li>本地编写，使用git push到GitHub，GitHub帮忙编译之后使用某些方法传到服务器上。</li>
+</ul>
+<p>NCC第一次接触Hugo，误以为编译时间会比较长，可能比较消耗性能，于是选择了把任务交给Github（但是实际上几篇博客编译出来，只有单核的Linux机器编译时间不超过5秒钟），所以NCC做了这个不算非常安全的决定，将一个用户的登录权限交给GitHub，让它自己登录服务器去更新网页。这比让服务器不断轮询GitHub，GitHub还得永久保存编译后文件给它留着的主动方式方便很多，算是使用些微的安全性更换了巨大的便利。
+所以目前的情况是这样的：NCC在终端写好博客，使用git上传到GitHub，GitHub上的CI/CD发力编译出成品，然后使用ssh链接到NCC的服务器，使用rsync同步编译文件。</p>
+<p>这里是NCC的workflow文件，大家可以抄抄作业：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yml" data-lang="yml"><span style="display:flex;"><span><span style="color:#f92672">name</span>: <span style="color:#ae81ff">Deploy Hugo to NCC Server</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">on</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">push</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">branches</span>:
+</span></span><span style="display:flex;"><span>      - <span style="color:#ae81ff">main</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">workflow_dispatch</span>:
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">jobs</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">build-and-deploy</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">runs-on</span>: <span style="color:#ae81ff">ubuntu-latest</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">steps</span>:
+</span></span><span style="display:flex;"><span>      - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">Checkout</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">uses</span>: <span style="color:#ae81ff">actions/checkout@v4</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">with</span>:
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">submodules</span>: <span style="color:#66d9ef">true</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">fetch-depth</span>: <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>      - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">Setup Hugo</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">uses</span>: <span style="color:#ae81ff">peaceiris/actions-hugo@v2</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">with</span>:
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">hugo-version</span>: <span style="color:#e6db74">&#39;latest&#39;</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">extended</span>: <span style="color:#66d9ef">true</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>      - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">Build</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">run</span>: <span style="color:#ae81ff">hugo --minify</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>      - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">Setup SSH Key</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">uses</span>: <span style="color:#ae81ff">shimataro/ssh-key-action@v2</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">with</span>:
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">key</span>: <span style="color:#ae81ff">${{ secrets.SSH_KEY }}</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">known_hosts</span>: <span style="color:#e6db74">&#39;just-a-placeholder-so-we-dont-get-errors&#39;</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">if_key_exists</span>: <span style="color:#ae81ff">replace</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>      - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">Add Known Hosts</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">run</span>: <span style="color:#ae81ff">ssh-keyscan -H ${{ secrets.HOST }} &gt;&gt; ~/.ssh/known_hosts</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>      - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">Deploy with rsync</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">run</span>: |<span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">          # attention, path problem
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">          rsync -avz --delete public/ ${{ secrets.USER }}@${{ secrets.HOST }}:/var/www/ncc_sites/ncc_blog/html</span>
+</span></span></code></pre></div><p>接下来记得给GitHub创建一个非特权账户，然后指定SSH密钥之后，将私钥导入进这个项目的SecretVariable里面，它会替换这里面的变量值，同时也防止别人看到。永远记住权限最小原则，只允许GitHub上传用的用户使用这个网站目录，必要时可以使用SELinux安全上下文约束它。</p>
+<h2 id="遇到i18n">遇到i18n</h2>
+<p>NCC以为一切已经落定，只剩下i18n这朵乌云也是优化配置很快可以解决的时候。i18n和历史遗留问题给NCC迎面一拳。NCC使用了中文，英文，日语三国语言，准备之后给每篇博客都配三语内容，但是发现英文可以索引到正确文章，日语也可以，就只有中文不行，只要访问中文博客和路径，就会变成404，或者回退到英文显示。接下来就是为期2小时的翻源码，找引用，拆开i18n，逐行核对Nginx配置，问Gemini的时间。最终找到一个可疑点，询问Gemini后发现就是问题所在。</p>
+<p>i18n中定义的简体中文文件名是 <code>zh-CN.toml</code>，所以不能简单在配置文件中指定 <code>[languageCode = 'zh']</code>，而必须是 <code>[languageCode = 'zh-cn']</code>。因为此外还有 <code>zh-tw</code>, <code>zh-hk</code> 等。在其它国家语言代码都只有两位的时候，这玩意有4位。而且之后写中文博客还需要添加 <code>.zh-cn.md</code> 后缀才行。</p>
+<h2 id="目前情况">目前情况</h2>
+<p>现在，NCC 的博客完全运行在 Docker 容器中的 Nginx 上。</p>
+<ul>
+<li><strong>性能</strong>：10 个并发访问时 CPU 占用不足 5%，秒开。</li>
+<li><strong>安全</strong>：静态文件天然免疫 SQL 注入和 PHP 漏洞。</li>
+<li><strong>体验</strong>：本地 Obsidian 写作 -&gt; Git Push -&gt; 全自动上线。</li>
+</ul>
+<p>超优雅的哇，而且GitHub Action失败了还会给你发邮件，既能防止配置错误造成博客宕机，还可以第一时间看到部署情况。</p>
