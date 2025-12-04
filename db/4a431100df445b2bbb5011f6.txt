@@ -71,21 +71,24 @@
 
 
 <div class="wp-block-image">
-<figure class="aligncenter size-full"><img loading="lazy" decoding="async" width="694" height="871" src="https://www.xiaozonglin.cn/wp-content/uploads/2025/10/图片.png" alt="" class="wp-image-404" srcset="https://www.xiaozonglin.cn/wp-content/uploads/2025/10/图片.png 694w, https://www.xiaozonglin.cn/wp-content/uploads/2025/10/图片-239x300.png 239w" sizes="auto, (max-width: 694px) 100vw, 694px" /><figcaption class="wp-element-caption">192.168.137.1为移动热点默认的网关IP</figcaption></figure></div>
+<figure class="aligncenter size-full"><img loading="lazy" decoding="async" width="694" height="871" src="https://www.xiaozonglin.cn/wp-content/uploads/2025/10/图片.png" alt="" class="wp-image-404" srcset="https://www.xiaozonglin.cn/wp-content/uploads/2025/10/图片.png 694w, https://www.xiaozonglin.cn/wp-content/uploads/2025/10/图片-239x300.png 239w" sizes="auto, (max-width: 694px) 100vw, 694px" /><figcaption class="wp-element-caption">192.168.137.1为移动热点默认的网关IP</figcaption></figure>
+</div>
 
 
 <p>然后在 Acrylic 的 hosts 文件中添加这样一条，将所有的域名都解析到自己的电脑，如图：</p>
 
 
 <div class="wp-block-image">
-<figure class="aligncenter size-large"><img loading="lazy" decoding="async" width="1024" height="761" src="https://www.xiaozonglin.cn/wp-content/uploads/2025/10/图片-1-1024x761.png" alt="" class="wp-image-406" srcset="https://www.xiaozonglin.cn/wp-content/uploads/2025/10/图片-1-1024x761.png 1024w, https://www.xiaozonglin.cn/wp-content/uploads/2025/10/图片-1-300x223.png 300w, https://www.xiaozonglin.cn/wp-content/uploads/2025/10/图片-1-768x571.png 768w, https://www.xiaozonglin.cn/wp-content/uploads/2025/10/图片-1-1200x892.png 1200w, https://www.xiaozonglin.cn/wp-content/uploads/2025/10/图片-1.png 1462w" sizes="auto, (max-width: 1024px) 100vw, 1024px" /></figure></div>
+<figure class="aligncenter size-large"><img loading="lazy" decoding="async" width="1024" height="761" src="https://www.xiaozonglin.cn/wp-content/uploads/2025/10/图片-1-1024x761.png" alt="" class="wp-image-406" srcset="https://www.xiaozonglin.cn/wp-content/uploads/2025/10/图片-1-1024x761.png 1024w, https://www.xiaozonglin.cn/wp-content/uploads/2025/10/图片-1-300x223.png 300w, https://www.xiaozonglin.cn/wp-content/uploads/2025/10/图片-1-768x571.png 768w, https://www.xiaozonglin.cn/wp-content/uploads/2025/10/图片-1-1200x892.png 1200w, https://www.xiaozonglin.cn/wp-content/uploads/2025/10/图片-1.png 1462w" sizes="auto, (max-width: 1024px) 100vw, 1024px" /></figure>
+</div>
 
 
 <p>最后，运行 Python Flask 代码，就可以了。</p>
 
 
 <div class="wp-block-image">
-<figure class="aligncenter size-large"><img loading="lazy" decoding="async" width="1024" height="413" src="https://www.xiaozonglin.cn/wp-content/uploads/2025/10/图片-2-1024x413.png" alt="" class="wp-image-407" srcset="https://www.xiaozonglin.cn/wp-content/uploads/2025/10/图片-2-1024x413.png 1024w, https://www.xiaozonglin.cn/wp-content/uploads/2025/10/图片-2-300x121.png 300w, https://www.xiaozonglin.cn/wp-content/uploads/2025/10/图片-2-768x309.png 768w, https://www.xiaozonglin.cn/wp-content/uploads/2025/10/图片-2-1200x484.png 1200w, https://www.xiaozonglin.cn/wp-content/uploads/2025/10/图片-2.png 1350w" sizes="auto, (max-width: 1024px) 100vw, 1024px" /></figure></div>
+<figure class="aligncenter size-large"><img loading="lazy" decoding="async" width="1024" height="413" src="https://www.xiaozonglin.cn/wp-content/uploads/2025/10/图片-2-1024x413.png" alt="" class="wp-image-407" srcset="https://www.xiaozonglin.cn/wp-content/uploads/2025/10/图片-2-1024x413.png 1024w, https://www.xiaozonglin.cn/wp-content/uploads/2025/10/图片-2-300x121.png 300w, https://www.xiaozonglin.cn/wp-content/uploads/2025/10/图片-2-768x309.png 768w, https://www.xiaozonglin.cn/wp-content/uploads/2025/10/图片-2-1200x484.png 1200w, https://www.xiaozonglin.cn/wp-content/uploads/2025/10/图片-2.png 1350w" sizes="auto, (max-width: 1024px) 100vw, 1024px" /></figure>
+</div>
 
 
 <h2 class="wp-block-heading">更进一步</h2>
