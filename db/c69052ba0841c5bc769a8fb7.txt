@@ -437,4 +437,192 @@ s=0x7F666F6067756369LL，按r键将它转换为字符就是“\x7Ffo`guci”，�
 	loading="lazy"
 	
 	
-></p><hr />
+></p>
+<h1 id="ezpyexe">ezpy.exe
+</h1><h2 id="1-初始侦察-initial-reconnaissance">1. 初始侦察 (Initial Reconnaissance)
+</h2><p>拿到题目文件 <code>ezpy.exe</code> 后，首先需要确定其文件类型。</p>
+<ul>
+<li><strong>查壳/识别</strong>: 这是一个 Windows 可执行文件。通常 Python 逆向题目都是由 PyInstaller 或 py2exe 打包的。</li>
+<li><strong>特征</strong>: 文件图标、字符串信息通常会暴露它是 PyInstaller 打包的。</li>
+<li><strong>解包</strong>: 使用工具 <code>pyinstxtractor.py</code> 对 <code>ezpy.exe</code> 进行解包。</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">python pyinstxtractor.py ezpy.exe
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>解包后得到 <code>ezpy.exe_extracted</code> 文件夹。</p>
+<h2 id="2-python-层分析-python-layer-analysis">2. Python 层分析 (Python Layer Analysis)
+</h2><p>在解包后的文件夹中，寻找入口点。通常与 EXE 同名的 <code>.pyc</code> 文件是入口脚本。</p>
+<ul>
+<li><strong>目标文件</strong>: <code>ezpy.pyc</code></li>
+<li><strong>版本识别</strong>: 检查文件头 Magic Number 为 <code>3571</code>，确认为 <strong>Python 3.13</strong>。</li>
+</ul>
+<h3 id="21-反编译挑战">2.1 反编译挑战
+</h3><p>尝试使用传统的 <code>uncompyle6</code> 或 <code>decompyle3</code> 失败，原因如下：</p>
+<ol>
+<li><strong>版本过新</strong>: 这些工具主要支持到 Python 3.8/3.9，无法解析 Python 3.13 的新指令集（如 <code>CACHE</code>, <code>RESUME</code> 等）。</li>
+<li><strong>工具报错</strong>: 强制运行会抛出 Magic Number 不匹配或 Crash。</li>
+</ol>
+<h3 id="22-字节码分析方案">2.2 字节码分析方案
+</h3><p>针对高版本 Python，我们采用了以下两种有效方案：</p>
+<h4 id="方案-a使用-xdis-库的-pydisasm-推荐">方案 A：使用 <code>xdis</code> 库的 <code>pydisasm</code> (推荐)
+</h4><p>如果环境中安装了 <code>xdis</code> (<code>pip install xdis</code>)，可以直接使用 <code>pydisasm</code> 命令，它对多版本 Python 支持极好。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-powershell" data-lang="powershell"><span class="line"><span class="cl"><span class="n">pydisasm</span> <span class="n">ezpy</span><span class="p">.</span><span class="py">pyc</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="方案-b使用-python-内置-dis-模块-原生">方案 B：使用 Python 内置 <code>dis</code> 模块 (原生)
+</h4><p>利用当前环境的 Python 3.13 解释器，编写脚本手动反汇编。这是最准确的方法。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">marshal</span><span class="o">,</span> <span class="nn">dis</span>
+</span></span><span class="line"><span class="cl"><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&#34;ezpy.pyc&#34;</span><span class="p">,</span> <span class="s2">&#34;rb&#34;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">f</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="mi">16</span><span class="p">)</span> <span class="c1"># 跳过 16 字节文件头</span>
+</span></span><span class="line"><span class="cl">    <span class="n">code</span> <span class="o">=</span> <span class="n">marshal</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">dis</span><span class="o">.</span><span class="n">dis</span><span class="p">(</span><span class="n">code</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="23-逻辑还原">2.3 逻辑还原
+</h3><p>通过分析反汇编输出（关键指令如下）：</p>
+<ul>
+<li><code>IMPORT_NAME (mypy)</code>: 导入扩展模块。</li>
+<li><code>LOAD_GLOBAL (input)</code> + <code>CALL</code>: 获取输入。</li>
+<li><code>LOAD_GLOBAL (check)</code> + <code>CALL</code>: 调用 <code>mypy.check()</code>。</li>
+<li><code>POP_JUMP_IF_FALSE</code>: 根据检查结果跳转分支。</li>
+</ul>
+<p><strong>还原后的 Python 源码</strong>:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">try</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="kn">from</span> <span class="nn">mypy</span> <span class="kn">import</span> <span class="n">check</span>
+</span></span><span class="line"><span class="cl"><span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Error: Cannot import mypy module&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">    <span class="n">user_input</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s1">&#39;Please input your flag: &#39;</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">check</span><span class="p">(</span><span class="n">user_input</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Correct!&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Wrong!&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">main</span><span class="p">()</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>结论：核心校验逻辑下沉到了 <code>mypy</code> 模块中。在解包目录中找到了 <code>mypy.cp313-win_amd64.pyd</code>，这是一个 C++ 编写的 Python 扩展（本质是 DLL）。</p>
+<h2 id="3-native-层分析-c-extension-analysis">3. Native 层分析 (C Extension Analysis)
+</h2><p>使用 IDA Pro (或通过 MCP 连接) 分析 <code>mypy.cp313-win_amd64.pyd</code>。</p>
+<h3 id="31-定位关键函数">3.1 定位关键函数
+</h3><p>Python 扩展通常导出一个初始化函数 <code>PyInit_mypy</code>。</p>
+<ol>
+<li>找到 <code>PyInit_mypy</code>。</li>
+<li>查看其返回的 <code>PyModuleDef</code> 结构体。</li>
+<li>在 <code>PyModuleDef</code> 中找到 <code>m_methods</code> (方法表)。</li>
+<li>方法表中包含模块导出的函数名和对应的 C 函数地址。
+<ul>
+<li>发现导出函数 <code>&quot;check&quot;</code> 对应地址 <code>0x36F4D1519</code> (偏移地址)。</li>
+</ul>
+</li>
+</ol>
+<h3 id="32-分析-check-函数-sub_36f4d1519">3.2 分析 <code>check</code> 函数 (<code>sub_36F4D1519</code>)
+</h3><p>反编译该函数，逻辑如下：</p>
+<ol>
+<li><strong>参数解析</strong>: 接收一个字符串参数。</li>
+<li><strong>长度检查</strong>: 检查输入长度是否为 <strong>25</strong>。</li>
+<li><strong>密钥准备</strong>: 代码中硬编码了字符串 <code>&quot;ISCTF2025&quot;</code>。</li>
+<li><strong>加密算法</strong>: 调用了一个子函数 <code>sub_36F4D149C</code>。
+<ul>
+<li>分析该子函数，发现典型的 <strong>RC4</strong> 算法特征（256次循环初始化 S 盒，异或交换）。</li>
+<li>密钥为 <code>&quot;ISCTF2025&quot;</code>。</li>
+</ul>
+</li>
+<li><strong>比较逻辑</strong>:
+<ul>
+<li>将用户输入经过 RC4 加密后的密文，与全局变量 <code>byte_36F4D4050</code> 处的字节数组进行逐字节比较。</li>
+</ul>
+</li>
+</ol>
+<h2 id="4-数据提取-data-extraction">4. 数据提取 (Data Extraction)
+</h2><p>我们需要提取用于比较的密文数据。</p>
+<ul>
+<li><strong>目标地址</strong>: <code>0x36F4D4050</code></li>
+<li><strong>数据长度</strong>: 25 字节 (由输入长度限制推断)。</li>
+<li><strong>提取困难</strong>: 在动态调试或 MCP 工具受限（无法直接读取内存字节）的情况下，需要静态提取。</li>
+<li><strong>静态提取方法</strong>:
+<ol>
+<li>计算 RVA (相对虚拟地址): <code>0x36F4D4050</code> - 基址 <code>0x36F4D0000</code> = <code>0x4050</code>。</li>
+<li>查看 PE 节表 (Section Table):
+<ul>
+<li><code>.rdata</code> 节的虚拟地址 (Virtual Address) 通常包含此范围。</li>
+<li>计算文件偏移 (File Offset) = RVA - 节虚拟地址 + 节原始数据偏移 (PointerToRawData)。</li>
+</ul>
+</li>
+<li>编写脚本 (<code>inspect_pe.py</code>) 读取文件并提取这 25 个字节。</li>
+</ol>
+</li>
+</ul>
+<p><strong>提取到的密文 (Hex)</strong>:
+<code>1d d5 38 33 af b5 51 f3 2c 6b 6e fe 41 24 43 d2 71 cf a4 4c e3 9a 9a b5 31</code></p>
+<h2 id="5-解密-decryption">5. 解密 (Decryption)
+</h2><p>RC4 是对称加密算法，加密和解密过程相同。</p>
+<ul>
+<li><strong>算法</strong>: RC4</li>
+<li><strong>密钥</strong>: <code>ISCTF2025</code></li>
+<li><strong>密文</strong>: 上述提取的 25 字节。</li>
+</ul>
+<p>编写脚本 (<code>solve_flag.py</code>) 运行解密：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">key</span> <span class="o">=</span> <span class="sa">b</span><span class="s2">&#34;ISCTF2025&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="n">ciphertext</span> <span class="o">=</span> <span class="p">[</span><span class="o">...</span><span class="p">]</span> <span class="c1"># 提取的数据</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="n">rc4</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">ciphertext</span><span class="p">))</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><strong>最终 Flag</strong>: <code>ISCTF{Y0U_GE7_7HE_PYD!!!}</code></p>
+<h2 id="总结-summary">总结 (Summary)
+</h2><p>这是一道典型的 Python + C 扩展逆向题。</p>
+<ol>
+<li><strong>入口</strong>: PyInstaller 解包。</li>
+<li><strong>定位</strong>: 发现逻辑下沉到 <code>.pyd</code> (DLL)。</li>
+<li><strong>逆向</strong>: 识别标准加密算法 (RC4)。</li>
+<li><strong>数据</strong>: 从二进制文件中提取加密常量。</li>
+<li><strong>还原</strong>: 编写脚本解密。</li>
+</ol><hr />
