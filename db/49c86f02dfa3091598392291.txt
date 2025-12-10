@@ -1,0 +1,571 @@
+第一讲 引言网络安全核心地位的关键目标保密性（Confidentiality）数据保密性隐私性完整性（Integrity）(包括不可否认性、真实性)数据完整性系统完整性可用性（Availabil...<hr />
+<h2>第一讲 引言</h2>
+<h3>网络安全核心地位的关键目标</h3>
+<ul>
+<li>保密性（Confidentiality）
+<ul>
+<li>数据保密性</li>
+<li>隐私性</li>
+</ul></li>
+<li>完整性（Integrity）(包括不可否认性、真实性)
+<ul>
+<li>数据完整性</li>
+<li>系统完整性</li>
+</ul></li>
+<li>可用性（Availability）</li>
+<li>真实性（Authenticity）</li>
+<li>可追溯性（Accountability）</li>
+</ul>
+<h3>安全攻击</h3>
+<h4>被动攻击</h4>
+<blockquote>
+<p>在未经用户同意和认可的情况下将信息或数据文件<strong>泄露</strong>给系统攻击者，但对数据信息<strong>不做任何修改</strong></p>
+</blockquote>
+<ul>
+<li>
+<p><strong>常见手段</strong></p>
+<ul>
+<li>
+<p>搭线监听</p>
+</li>
+<li>
+<p>无线截获</p>
+</li>
+<li>其他截获</li>
+</ul>
+</li>
+<li>应对措施：重点在于<strong>预防</strong></li>
+</ul>
+<h4>主动攻击</h4>
+<blockquote>
+<p>涉及某些<strong>数据流的篡改</strong>或<strong>虚假流的产生</strong></p>
+</blockquote>
+<ul>
+<li><strong>分类</strong>
+<ul>
+<li>阻断攻击</li>
+<li>伪造攻击</li>
+<li>重放攻击</li>
+<li>篡改攻击</li>
+<li>拒绝服务攻击</li>
+</ul></li>
+<li>应对措施
+<ul>
+<li>自动审计</li>
+<li>入侵检测</li>
+<li>完整性恢复</li>
+</ul></li>
+</ul>
+<h3>安全机制</h3>
+<blockquote>
+<p>安全机制要具备检测、防御或从安全攻击中恢复的能力，<strong>没有单一的机制能够提供所有的安全服务</strong></p>
+</blockquote>
+<ul>
+<li>
+<p><strong>特定的安全机制</strong>（specific security mechanisms）</p>
+<ul>
+<li>加密， 数字签名， 访问控制，数据完整性，认证交换，流量填充，路由控制，公证等</li>
+</ul>
+</li>
+<li><strong>普遍的安全机制</strong>（pervasive security mechanisms）
+<ul>
+<li>可信功能，安全标签，事件检测，安全审计跟踪，安全恢复</li>
+</ul></li>
+</ul>
+<h3>安全服务</h3>
+<ul>
+<li><strong>可认证性</strong> <strong>Authentication</strong></li>
+<li><strong>访问控制</strong> <strong>Access Control</strong></li>
+<li><strong>机密性</strong> <strong>Confidentiality</strong></li>
+<li><strong>完整性</strong> <strong>Integrity</strong></li>
+<li><strong>不可否认性</strong> <strong>Non-repudiation</strong></li>
+<li><strong>可用性</strong> <strong>Availability</strong></li>
+</ul>
+<h2>第二讲 传统加密技术</h2>
+<h3>密码学</h3>
+<ul>
+<li>密码编码学
+<ul>
+<li>研究内容：主要研究对信息进行编码，实现对信息的隐蔽</li>
+<li>特征</li>
+<li>密码编码学常用运算：代替与置换</li>
+<li>所用的密钥数：单钥与双钥</li>
+<li>处理明文的方法：分组密码与流密码</li>
+</ul></li>
+<li>密码分析学
+<ul>
+<li>研究内容：主要研究如何破解密文的方法</li>
+<li>攻击的两种常用方法</li>
+<li>密码分析学： cryptanalytic attack</li>
+<li>穷举攻击： brute-force attack</li>
+</ul></li>
+</ul>
+<h3>保护密码算法还是密钥</h3>
+<ol>
+<li>
+<p>与维护算法的保密性相比，维护密钥的保密性更容易。</p>
+</li>
+<li>
+<p>万一密钥暴露了，Alice 和 Bob 可以很容易地更换密钥；而万一算法被攻破，重新设计一个很好的加密算法要难得多。</p>
+</li>
+<li>万一有多对人员需要加密其通信，这些人可以使用相同的算法和不同的密钥，而使用不同的程序则太难。</li>
+</ol>
+<h3>加密算法</h3>
+<ul>
+<li>凯撒密码：共有密钥25个、移位、替换</li>
+<li>单表代替密码：任意地打乱字母的顺序，密钥数目： <katex-inline>26！＞ 4 × 10^{26}</katex-inline></li>
+<li>playfair 密码：多字母代替密码，密钥空间：<katex-inline>25！≈1.6×10^{25}</katex-inline></li>
+<li>Hill 密码
+<ul>
+<li>加密：<katex-inline>C≡KP  mod 26</katex-inline>，其中，K为密钥矩阵，P、C分别为明、密文分组</li>
+<li>解密：<katex-inline>P≡K^{-1}C  mod 26</katex-inline></li>
+</ul></li>
+<li>维吉尼亚密码</li>
+<li>置换密码</li>
+</ul>
+<h2>第三讲 分组密码与 DES</h2>
+<h3>Feistel 密码结构</h3>
+<h3>混淆和扩散</h3>
+<ul>
+<li>
+<p><strong>混淆</strong>：使得<strong>密文</strong>的统计特性与<strong>密钥</strong>的取值之间的关系尽量复杂</p>
+</li>
+<li><strong>扩散</strong>：明文的统计特征消散在密文中，使得<strong>明文和密文</strong>之间的统计关系尽量复杂</li>
+</ul>
+<h3>DES 加解密</h3>
+<ol>
+<li>
+<p>两次置换（初始置换和初始逆置换）</p>
+</li>
+<li>
+<p>密钥控制下的十六轮迭代加密</p>
+</li>
+<li>
+<p>轮密钥生成</p>
+</li>
+<li>DES 是一种用 56 位密钥来加密 64 位数据的方法</li>
+</ol>
+<img src="https://cdn.aweip.com/image-20230616200930016.png" alt="image-20230616200930016" style="zoom:50%;" />
+<h3>雪崩效应</h3>
+<p>明文或者密钥的某一位发生变化，会导致密文很多位的变化</p>
+<h2>第四讲 代数基础</h2>
+<h4>模运算性质</h4>
+<ul>
+<li>
+<p>对称</p>
+</li>
+<li>
+<p>传递</p>
+<blockquote>
+<p>计算<katex-inline>2^{64}  mod 2012</katex-inline></p>
+</blockquote>
+</li>
+</ul>
+<katex>
+\begin{flalign*}
+
+&amp;2^2  =4   mod 2012\\
+&amp;2^4  =16   mod 2012\\
+&amp;2^8  =256   mod 2012\\
+&amp;2^{16}=65536 ≡1152   mod 2012\\
+&amp;2^{32}=1152^2  ≡1196   mod 2012\\
+&amp;2^{64}=1196^2 ≡1896   mod 2012&amp;
+\end{flalign*}</katex>
+<h4>欧几里得算法（辗转相除法）</h4>
+<blockquote>
+<p>求gcd(1970, 1066)</p>
+</blockquote>
+<katex>
+\begin{flalign*}
+&amp;令a=1970，b=1066\\
+&amp;1970=1×1066+904\\
+&amp;1066=1×904+162\\
+&amp;904=5×162+94 \\
+&amp;……    …… \\
+&amp;10=1×6+4\\
+&amp;6=1×4+2\\
+&amp;4=2×2\\
+&amp;因此gcd(1970, 1066)=2 &amp;
+\end{flalign*}</katex>
+<h4>求乘法逆元</h4>
+<blockquote>
+<p>已知28与81互素，求<katex-inline>81 mod 28</katex-inline>的逆元。</p>
+</blockquote>
+<katex>
+\begin{flalign*}
+&amp;81=2×28+25\\
+&amp;28=1×25+3\\
+&amp;25=8×3+1\\
+\\
+&amp;1=25-8×3\\
+&amp; =25-8×(28-25)\\
+&amp; =(-8)×28+9×(81-2×28)\\
+&amp; =9×81+(-26)×28\\
+&amp;所以81×9≡1  mod 28，同时 28×（－26）≡1  mod 81, 81 mod 28的逆元为9\\
+&amp;而28 mod 81的逆元为－26≡55&amp;
+
+ \end{flalign*}</katex>
+<h4>群环域基本概念</h4>
+<ul>
+<li>群：群是定义了一个二元运算“•”<katex-inline>的集合</katex-inline>G<katex-inline>，表示为</katex-inline>(G，•)$，并且满足以下公理：
+<ul>
+<li>封闭性</li>
+<li>结合律</li>
+<li>单位元</li>
+<li>逆元</li>
+</ul></li>
+<li>环：设R是至少含有两个元素的集合，R中定义了两种运算“+”和“•”，如果代数系统<katex-inline>&lt;R,+, • &gt;</katex-inline>满足以下公理，则称其为环
+<ul>
+<li>R关于加法构成交换群</li>
+<li>R关于乘法构成半群，即乘法满足封闭性和结合律</li>
+<li>分配律</li>
+</ul></li>
+<li>域：设F是至少含有两个元素的集合，F中定义了两种运算“+”和“•”，如果代数系统<katex-inline>&lt;F,+, • &gt;</katex-inline>满足以下公理，则称其为域
+<ul>
+<li>F是一个整环</li>
+<li>有乘法逆元：对于任意<katex-inline>a ∈F</katex-inline>，存在<katex-inline>a-1∈F</katex-inline>，使得<katex-inline>a • a -1=a-1 • a=1</katex-inline>成立</li>
+</ul></li>
+</ul>
+<h4>基于多项式的有限域构造及运算</h4>
+<h4>密码学中为什么用 <katex-inline>GF(2^m)</katex-inline></h4>
+<h2>第五讲 AES 加密</h2>
+<h3>AES 加解密过程</h3>
+<ul>
+<li>字节代替</li>
+<li>行移位</li>
+<li>列混合</li>
+<li>轮密钥加</li>
+</ul>
+<img src="https://cdn.aweip.com/image-20230616210726210.png" alt="image-20230616210726210" style="zoom:%;" />
+<ul>
+<li>轮函数四步：字节代替、行移位、列混合、轮密钥加（注：最后一轮无列混合）</li>
+</ul>
+<h3>AES 密钥生成过程</h3>
+<h2>第六讲A 分组密码工作模式</h2>
+<h3>2DES</h3>
+<ul>
+<li>加密：<katex-inline>C = EK2(EK1(P))</katex-inline></li>
+<li>解密：<katex-inline>P = DK1(DK2(P))</katex-inline></li>
+</ul>
+<h3><strong>双重</strong> <strong>DES</strong> 为什么不行？（中间相遇攻击）</h3>
+<blockquote>
+<p><strong>中间相遇攻击</strong>是一种针对双重加密算法的攻击，需要一个已知的明、密文对，本质上，明文在双重加密中被加密产生中间值，密文在双重加密中被解密产生中间值，表查找方式可以用这种方法改进对密钥的蛮力尝试。</p>
+</blockquote>
+<ul>
+<li>已知明文攻击可以成功对付密钥长度为 112 位的 2DES
+<ul>
+<li><katex-inline>C = E_{K2}(E_{K1}(P)), X = E_{K1}(P) = D_{K2}(C)</katex-inline></li>
+<li>用所有可能的密钥加密明文并存储</li>
+<li>用所有可能的密钥解密密文，并与存储的X匹配。如果有相等的，那么获得一组可能的密钥对，并用新的明密文对验证。</li>
+<li>概率分析：<katex-inline>2^{112}/2^{64}=2^{48}，2^{48}/2^{64}=2^{-16}</katex-inline>，两组明密文对后，正确密钥的概率是<katex-inline>1-2^{-16}</katex-inline>；三组明密对后，正确密钥的概率是<katex-inline>1-2^{-80}</katex-inline></li>
+<li>付出数量级为 <katex-inline>O(256)</katex-inline>,比攻击单DES的<katex-inline>O(255)</katex-inline>多不了多</li>
+</ul></li>
+</ul>
+<h3>为什么需要分组密码工作模式</h3>
+<p>如果待加密的消息过长，需要将消息分组后，一组一组的使用加密算法，然后输出密文。在这一过程存在两个问题：</p>
+<ul>
+<li>分组密码不能隐蔽数据模式，即相同的明文分组对应着相同的密文分组，容易受到攻击</li>
+<li>分组加密不能抵抗重放、插入和删除攻击等。把分组密码算法用在不同环境时，环境不同要求也不同。</li>
+</ul>
+<p>为了满足不同要求，需要通过改变分组密码输入和输出的形式，得到分组密码的不同工作模式。</p>
+<h3>五种工作模式的具体构造及特点</h3>
+<table>
+<thead>
+<tr>
+<th>模式</th>
+<th>特点</th>
+<th>典型应用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>电码本 ECB</td>
+<td>用相同的密钥分别对明文组加密</td>
+<td>单个数据的安全传输</td>
+</tr>
+<tr>
+<td>密文分组链接 CBC <strong>有 IV</strong></td>
+<td>加密算法的输入是上一个密文组合下一个明文组的异或</td>
+<td>加密长度大于 64 位明文 P、认证</td>
+</tr>
+<tr>
+<td>密文反馈 CFB <strong>有 IV</strong></td>
+<td>分组任意，安全性优于 ECB 模式加、解密都使用加密运算（不用解密运算）</td>
+<td>加密长度大于 64 位的明文，分组随意；可作为流密码使用、认证</td>
+</tr>
+<tr>
+<td>输出反馈 OFB <strong>有 IV</strong></td>
+<td>抗消息流篡改攻击的能力不如 CFB</td>
+<td>噪声信道上的数据流的传输,比如卫星通信</td>
+</tr>
+<tr>
+<td>计数器 CTR <strong>有 IV</strong></td>
+<td>硬(软)件效率：并行、预处理、随机访问、可证明的安全性、简单性：只用到加密算法</td>
+<td>分组传输，高速需求的应用</td>
+</tr>
+</tbody>
+</table>
+<h2>第六讲B 随机数与流密码</h2>
+<h3>随机数基本概念</h3>
+<ul>
+<li>（随机数在密码学中的）应用
+<ul>
+<li>临时交互号，用于防止重复攻击</li>
+<li>会话密钥产生</li>
+<li>RSA算法中密钥的产生</li>
+</ul></li>
+<li>（对随机数产生的）要求
+<ul>
+<li>随机性和不可预测性</li>
+</ul></li>
+</ul>
+<h3>基于密码学的随机数生成</h3>
+<ul>
+<li>
+<p>循环加密：设E为加密算法，C为计数器，预置其初值为0，<katex-inline>K_m</katex-inline>为保密的主密钥，每加密一次，产生一个随机数，同时计数器的值加1</p>
+<img src="https://cdn.aweip.com/image-20230616213511265.png" alt="image-20230616213511265" style="zoom:33%;" />
+</li>
+<li>
+<p>用DES的输出反馈方式产生</p>
+<p><img src="https://cdn.aweip.com/DES.png" alt="DES" /></p>
+</li>
+</ul>
+<h3>流密码的基本原理</h3>
+<p><img src="https://cdn.aweip.com/image-20230616213717542.png" alt="image-20230616213717542" /></p>
+<ul>
+<li>消息的处理以字节为单位以流的方式进行 </li>
+<li>伪随机密钥流 keystream</li>
+<li>密钥流与明文进行按位的异或运算 (XOR) </li>
+<li>密钥的随机性破坏明文中的统计规律 <katex-inline>C_i = M_i \ \ XOR \ \   StreamKey_i</katex-inline></li>
+<li>不能重复使用密钥流，否则将被破译</li>
+</ul>
+<h2>第七讲 数论基础</h2>
+<h3>素数基本概念</h3>
+<h3>费马小定理、欧拉定理、素性检测概率算法</h3>
+<h3>离散对数的基本概念</h3>
+<h2>第八讲 公钥密码学与RSA</h2>
+<h3>对称密码弱点</h3>
+<ol>
+<li>密钥量大 </li>
+<li>密钥管理困难：传递、换发、保存</li>
+<li>无法实现网络中的数字签名、消息认证、用户认证等应用</li>
+</ol>
+<blockquote>
+<p>系统中有 <strong>n</strong> <strong>个用户</strong>，两两进行保密通信：</p>
+<p>每个用户需要有 <strong>n-1</strong> 个密钥 总密钥数<katex-inline>C(n,2) = n(n-1)/2</katex-inline></p>
+</blockquote>
+<h3><strong>Shamir</strong> 盒及公钥密码基本原理</h3>
+<h4>Shamir 盒模型的两点启示：</h4>
+<ul>
+<li>不事先交换密钥就能进行秘密通信</li>
+<li>加密、解密的密钥可以分开</li>
+</ul>
+<h4>公钥密码基本原理：</h4>
+<ul>
+<li>
+<p>使用两个不同的密钥，一个用于加密，一个用于解密</p>
+</li>
+<li>
+<p>用于加密的密钥 <katex-inline>E_k</katex-inline> 可以公开，用于解密的密钥<katex-inline>D_k</katex-inline> 保密</p>
+</li>
+<li><katex-inline>E_k</katex-inline> 与 <katex-inline>D_k</katex-inline> 之间有联系，但不能由 <katex-inline>E_k</katex-inline>很容易地算出 <katex-inline>D_k</katex-inline></li>
+</ul>
+<h3>RSA 公钥密码基本原理及计算</h3>
+<ul>
+<li>
+<p>RSA算法密钥的建立</p>
+<ul>
+<li>
+<p>选择素数：<katex-inline>p = 17 \&amp; q = 11</katex-inline>，计算<katex-inline>n = p q =17 x 11 = 187</katex-inline></p>
+</li>
+<li>
+<p>计算 <katex-inline>ø(n) = (p–1)(q-1) = 16 * 10 = 160</katex-inline></p>
+</li>
+<li>
+<p>选择 e: <katex-inline>gcd(e, 160) = 1</katex-inline>; 选择 <katex-inline>e = 7</katex-inline></p>
+</li>
+<li>
+<p>确定 d: <katex-inline>d*e = 1 mod 160</katex-inline> 且 <katex-inline>d &lt; 160 d = 23</katex-inline> 因为  <katex-inline>23 *7=161= 10 * 160+1</katex-inline></p>
+</li>
+<li>公钥  <katex-inline>PU = { 7, 187 }</katex-inline>，私钥 <katex-inline>PR = { 23, 187 }</katex-inline></li>
+</ul>
+</li>
+<li>明文消息：<katex-inline>m = 88 (&lt;187)</katex-inline></li>
+<li>加密：<katex-inline>c = 887 mod 187 ≡ 11</katex-inline></li>
+<li>解密：<katex-inline>m = 1123 mod 187 ≡ 88</katex-inline></li>
+</ul>
+<h2>第九讲 其他公钥密码体制</h2>
+<h3>(重点)Diffie-Hellman 密钥交换</h3>
+<h3>中间人攻击</h3>
+<ol>
+<li>
+<p>Darth生成两个随机数<katex-inline>X_{D1}</katex-inline>和<katex-inline>X_{D2}</katex-inline>，随后计算相应的公钥<katex-inline>Y_{D1}</katex-inline>和<katex-inline>Y_{D2}</katex-inline>;</p>
+</li>
+<li>
+<p>Alice将<katex-inline>Y_A</katex-inline>传递给Bob;</p>
+</li>
+<li>
+<p>Darth截获了<katex-inline>Y_A</katex-inline>，将<katex-inline>Y_{D1}</katex-inline>传给Bob，同时计算</p>
+<p><katex-inline>K_{2}=\left(Y_{A}\right)^{X_{D 2}} \bmod q</katex-inline></p>
+</li>
+<li>
+<p>Bob收到<katex-inline>Y_{D1}</katex-inline>，计算</p>
+<p><katex-inline>K_{1}=\left(Y_{D1}\right)^{X_{B}} \bmod q</katex-inline></p>
+</li>
+<li>
+<p>Bob将<katex-inline>Y_B</katex-inline>传给Alice;</p>
+</li>
+<li>
+<p>Darth截获了<katex-inline>Y_B</katex-inline>，将<katex-inline>Y_{D2}</katex-inline>传给Alice，Darth计算</p>
+<p><katex-inline>K_{1}=\left(Y_{B}\right)^{X_{D1}} \bmod q</katex-inline></p>
+</li>
+<li>
+<p>Alice收到<katex-inline>Y_{D2}</katex-inline>，计算</p>
+<p><katex-inline>K_{2}=\left(Y_{D2}\right)^{X_{A}} \bmod q</katex-inline></p>
+</li>
+</ol>
+<h3>ElGamal 密码体制</h3>
+<ul>
+<li>困难问题：离散对数问题</li>
+<li>
+<p>特点：加密是概率算法—有随机数参与</p>
+</li>
+<li>
+<p>加密过程</p>
+<ul>
+<li>设m为明文，随机选择整数k，k与p-1互素，计算</li>
+<li><katex-inline>c_1 ≡ g^k mod p</katex-inline></li>
+<li><katex-inline>c_2 ≡ my^k mod p</katex-inline></li>
+<li>密文<katex-inline>c=(c1, c2)</katex-inline></li>
+</ul>
+</li>
+<li>
+<p>解密过程</p>
+<ul>
+<li>收到密文<katex-inline>c=(c1, c2)</katex-inline>后，接收方进行如下计算
+<katex>
+\begin{array}{l}
+c_{2} \cdot\left(c_{1}^{x}\right)^{-1}=m y^{k} \cdot\left(g^{k x}\right)^{-1} 
+=m g^{k x}\left(g^{k x}\right)^{-1} \equiv m \bmod p
+\end{array}</katex></li>
+</ul>
+</li>
+</ul>
+<h2>第十讲 密码学Hash函数</h2>
+<h3><strong>Hash</strong> 函数的基本特性、基本设计框架</h3>
+<p>任意长度的明文进行变换得到相应的函数值，称为散列值(长度固定)。</p>
+<ul>
+<li>
+<p>用途：消息认证码、数字签名预处理、从口令衍生密钥等。</p>
+</li>
+<li>
+<p>特性：</p>
+<ul>
+<li>对任意长度输入进行变换，得到固定长度输出</li>
+<li>求逆不可行                                                                    抗原像攻击/单向性</li>
+<li>对给定 x，很难找到<katex-inline>x’≠x</katex-inline>，使得<katex-inline>h(x’)=h(x)</katex-inline>     抗弱碰撞性</li>
+<li>很难找到一对不同的<katex-inline>x, x’</katex-inline>，使得 <katex-inline>h(x’)=h(x)</katex-inline>       抗强碰撞性</li>
+</ul>
+<blockquote>
+<p>满足1-2为单向散列函数，1-3为弱散列函数，1-4 为强散列函数</p>
+</blockquote>
+<p><img src="https://cdn.aweip.com/image-20230616220452210.png" alt="image-20230616220452210" /></p>
+<blockquote>
+<p>CVL 为最终的哈希输出</p>
+</blockquote>
+</li>
+</ul>
+<h3>生日攻击基本原理</h3>
+<ol>
+<li>攻击者产生一份合法的明文，再产生232个不同的明文变形，构成一个合法明文组；</li>
+<li>生成一份非法明文，构造232个不同的非法明文变形，产生一个非法明文组；</li>
+<li>分别对以上两个组产生散列值，在两组明文中找出具有相同散列值的一对明文。如果没有找到，则再增加每组明文变形的数目，直至找到。由 “生日悖论”可知，其成功的概率很大；</li>
+<li>于是，攻击者找到了一则与合法明文（至少内容合法）具有相同散列值的非法明文。</li>
+</ol>
+<h2>第十一讲 消息认证码</h2>
+<h3>消息认证码如何设计？基于hash和基于密码的(大致思路)</h3>
+<p><strong>基于密码</strong> <strong>hash</strong> <strong>函数的</strong> <strong>MAC**</strong>：<strong>**HMAC</strong></p>
+<ul>
+<li>不用分组密码，而用 hash 函数来产生 MAC，因为 hash 函数一般都较快 没有出口限制，(分组密码有出口限制)</li>
+<li>hash 函数不依赖于密钥，所以不能直接用于 MAC</li>
+<li>建议: <katex-inline>KeyedHash = Hash( Key || Message )</katex-inline></li>
+</ul>
+<p><strong>基于密码的：</strong>采用分组密码（DES）的链接工作（CBC 模式）模式，并把最后分组作为 MAC</p>
+<p><strong>看复习PPT，最好能直接画出框图</strong></p>
+<p>CMAC：基于密码的消息认证码，框架与 DAA 类似，加密用 AES 和 3DES 实现</p>
+<h2>第十二讲 数字签名</h2>
+<h3><strong>数字签名的基本特性和用途，如何构造 （私钥签名，公钥验证）</strong></h3>
+<ul>
+<li>特性：
+<ol>
+<li>签名值必须依赖于所签的消息</li>
+<li>必须使用对于发送者唯一的信息，以防止伪造和否认</li>
+<li>产生签名比较容易</li>
+<li>识别和验证签名比较容易</li>
+<li>伪造数字签名在计算上是不可行的。包括已知数字签名，伪造新的消息和已知消息，伪造数字签名 </li>
+<li>保存数字签名的拷贝是可行的</li>
+</ol></li>
+</ul>
+<h2>第十三讲 密钥管理与分发</h2>
+<h3>典型的基于对称加密的密钥分发方案（步骤）</h3>
+<img src="https://cdn.aweip.com/image-20230616221307785.png" alt="image-20230616221307785" style="zoom:70%;" />
+<h3>公钥基础设施</h3>
+<ol>
+<li>
+<p>公钥基础设施 (PKI) 系统是有硬件、软件、人、策略和程序构成的一整套体系</p>
+</li>
+<li>
+<p>公钥基础设施实体：</p>
+<ul>
+<li>端实体 </li>
+<li>签证机构 CA </li>
+<li>
+<p>注册机构 RA </p>
+</li>
+<li>证书撤销列表发布 CRL </li>
+<li>证书存储库</li>
+</ul>
+</li>
+</ol>
+<p>公钥分发机制、X.509 证书、PKI 基本概念</p>
+<h2>第十四讲 用户认证</h2>
+<p>Needham-Schroeder 认证协议、Kerberos 基本原理及步骤、基于公钥的远程认证步骤</p>
+<h2>第十五讲 传输层安全</h2>
+<p>SSL 协议设计思路、SSL 握手协议过程以及其能对抗攻击的原因</p>
+<h3>SSL握手协议的具体交互过程</h3>
+<ol>
+<li>建立安全协商：交换 Hello 消息，对于算法、交换随机值等协商一致</li>
+<li>服务器鉴别：交换必要的密码参数，以便双方得到统一的 premaster secret</li>
+<li>
+<p>客户端鉴别和密钥交换：交换证书和相应的密码信息，以便进行身份认证产生 master secret</p>
+</li>
+<li>结束：把安全参数提供给 SSL 记录层检验双方是否已经获得同样的安全参数</li>
+</ol>
+<h3>SSL的安全性</h3>
+<ul>
+<li>保护主密钥</li>
+<li>保护服务器的私钥</li>
+<li>使用良好的随机数</li>
+<li>证书链检查</li>
+<li>算法选择（强度）</li>
+</ul>
+<h2>第十六讲 IP安全</h2>
+<p>IPSec 基本原理、AH、ESP、传输模式、隧道模式、密钥管理基本思路</p>
+<h3><strong>IPsec</strong> 优点</h3>
+<ol>
+<li>对应用和最终用户透明</li>
+<li>
+<p>在防火墙或路由器中实现时可以防止 IP 旁路</p>
+</li>
+<li>
+<p>需要时 IPSec 可以提供个人安全性</p>
+</li>
+<li>弥补 IPv4 在协议设计时缺乏安全性考虑的不足</li>
+</ol>
+<h3><strong>IPsec</strong> <strong>两种模式：传输模式和隧道模式</strong></h3>
+<ul>
+<li>
+<p>传输模式为上层协议提供保护，用于两台主机间的端到端通信</p>
+</li>
+<li>隧道模式对整个 IP 数据包提供保护</li>
+</ul>
