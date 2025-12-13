@@ -41,7 +41,7 @@
 
 
 <div class="wp-block-image">
-<figure class="aligncenter size-full"><img fetchpriority="high" decoding="async" width="286" height="239" src="https://www.xiaozonglin.cn/wp-content/uploads/2025/11/image-1.png" alt="" class="wp-image-438"/><figcaption class="wp-element-caption">图1 存储博客网站信息</figcaption></figure>
+<figure class="aligncenter size-full"><img decoding="async" width="286" height="239" src="https://www.xiaozonglin.cn/wp-content/uploads/2025/11/image-1.png" alt="" class="wp-image-438"/><figcaption class="wp-element-caption">图1 存储博客网站信息</figcaption></figure>
 </div>
 
 
@@ -65,7 +65,7 @@
 
 
 <div class="wp-block-image">
-<figure class="aligncenter size-full"><img decoding="async" width="322" height="354" src="https://www.xiaozonglin.cn/wp-content/uploads/2025/11/image-4.png" alt="" class="wp-image-441" srcset="https://www.xiaozonglin.cn/wp-content/uploads/2025/11/image-4.png 322w, https://www.xiaozonglin.cn/wp-content/uploads/2025/11/image-4-273x300.png 273w" sizes="(max-width: 322px) 100vw, 322px" /><figcaption class="wp-element-caption">图 3&nbsp;传递给AI的数据</figcaption></figure>
+<figure class="aligncenter size-full"><img loading="lazy" decoding="async" width="322" height="354" src="https://www.xiaozonglin.cn/wp-content/uploads/2025/11/image-4.png" alt="" class="wp-image-441" srcset="https://www.xiaozonglin.cn/wp-content/uploads/2025/11/image-4.png 322w, https://www.xiaozonglin.cn/wp-content/uploads/2025/11/image-4-273x300.png 273w" sizes="auto, (max-width: 322px) 100vw, 322px" /><figcaption class="wp-element-caption">图 3&nbsp;传递给AI的数据</figcaption></figure>
 </div>
 
 
