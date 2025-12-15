@@ -1,4 +1,4 @@
-<img src="https://s.panlai.com/upload/20231108125026169941902637945.jpg-arthumbs" alt="Featured image of post 博客新增5个小功能" /><p>为了提升博客的趣味性和交互体验，今天给博客添加了5个实用又好玩的小功能。本文记录了这些功能的实现方法，主要通过修改 <code>static/js/custom.js</code> 和相关模板文件实现。</p>
+<img src="https://s.panlai.com/upload/20231108125026169941902637945.jpg-arthumbs" alt="Featured image of post 博客新增小功能" /><p>为了提升博客的趣味性和交互体验，今天给博客添加了一些小功能。本文记录了这些功能的实现方法，主要通过修改 <code>static/js/custom.js</code> 和相关模板文件实现。</p>
 <h2 id="1-网站运行时间-site-running-time">1. 网站运行时间 (Site Running Time)
 </h2><p>在页脚显示博客已经安全运行了多久，给访客一种持久运营的信任感。</p>
 <p><strong>实现效果</strong>：
@@ -104,5 +104,78 @@
 <li>修改 <code>layouts/partials/sidebar/left.html</code>，将副标题内容放入 <code>data-text</code> 属性。</li>
 <li>使用 JS 递归函数 <code>typeWriter</code> 逐个字符读取并添加到 innerHTML 中。</li>
 </ol>
-<hr>
-<p>这些功能虽然简单，但组合在一起能让静态博客显得不再单调。如果你也喜欢，可以参考我的代码进行修改！</p><hr />
+<h2 id="6-全局悬浮音乐播放器-metingjs">6. 全局悬浮音乐播放器 (MetingJS)
+</h2><p>在页面左下角添加一个悬浮的音乐播放器，直接同步网易云歌单，无需手动维护歌曲链接。</p>
+<p><strong>实现步骤</strong>：</p>
+<ol>
+<li>在 <code>layouts/partials/head/custom.html</code> 引入 APlayer 的样式：
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">link</span> <span class="na">rel</span><span class="o">=</span><span class="s">&#34;stylesheet&#34;</span> <span class="na">href</span><span class="o">=</span><span class="s">&#34;https://unpkg.com/aplayer@1.10.1/dist/APlayer.min.css&#34;</span> <span class="na">crossorigin</span><span class="o">=</span><span class="s">&#34;anonymous&#34;</span><span class="p">&gt;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+<li>在 <code>layouts/partials/footer/footer.html</code> 引入 APlayer 和 MetingJS 脚本：
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&#34;https://unpkg.com/aplayer@1.10.1/dist/APlayer.min.js&#34;</span> <span class="na">crossorigin</span><span class="o">=</span><span class="s">&#34;anonymous&#34;</span> <span class="na">defer</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&#34;https://unpkg.com/meting@2.0.1/dist/Meting.min.js&#34;</span> <span class="na">crossorigin</span><span class="o">=</span><span class="s">&#34;anonymous&#34;</span> <span class="na">defer</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+<li>在 <code>layouts/partials/sidebar/left.html</code> 的末尾添加 MetingJS 标签（开启 <code>fixed=&quot;true&quot;</code>）：
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl"><span class="c">&lt;!-- 悬浮音乐播放器 (MetingJS) --&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">meting-js</span> 
+</span></span><span class="line"><span class="cl">    <span class="na">server</span><span class="o">=</span><span class="s">&#34;netease&#34;</span> 
+</span></span><span class="line"><span class="cl">    <span class="na">type</span><span class="o">=</span><span class="s">&#34;playlist&#34;</span> 
+</span></span><span class="line"><span class="cl">    <span class="na">id</span><span class="o">=</span><span class="s">&#34;17556275859&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="na">fixed</span><span class="o">=</span><span class="s">&#34;true&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="na">list-folded</span><span class="o">=</span><span class="s">&#34;true&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="na">theme</span><span class="o">=</span><span class="s">&#34;#2980b9&#34;</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="p">&lt;/</span><span class="nt">meting-js</span><span class="p">&gt;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+</ol>
+<p><strong>优势</strong>：</p>
+<ul>
+<li><strong>自动解析</strong>：MetingJS 会自动处理网易云音乐的防盗链和真实地址解析。</li>
+<li><strong>全局悬浮</strong>：播放器固定在左下角，不占用页面布局空间，且随时可控。</li>
+<li><strong>实时同步</strong>：在网易云 APP 里更新歌单，博客上也会自动更新。</li>
+</ul>
+<p><strong>关于音乐中断问题</strong>：
+由于博客是静态网站（多页架构），每次点击链接跳转都会重新加载页面，因此音乐会中断。这是静态网站的特性。</p>
+<h2 id="7-暗色模式滑动开关-dark-mode-slider">7. 暗色模式滑动开关 (Dark Mode Slider)
+</h2><p>将原本单调的暗色模式切换按钮（月亮/太阳图标）升级为更现代的滑动开关样式。</p>
+<p><strong>实现效果</strong>：</p>
+<ul>
+<li><strong>外观</strong>：采用圆角胶囊形状，内部包含太阳和月亮图标。</li>
+<li><strong>动画</strong>：点击切换时，滑块平滑移动，背景色和图标颜色随之渐变。</li>
+<li><strong>交互</strong>：太阳和月亮图标在激活状态下会有缩放和变色效果（太阳变橙色，月亮变金色）。</li>
+</ul>
+<p><strong>实现原理</strong>：</p>
+<ol>
+<li><strong>HTML 结构</strong>：修改 <code>layouts/partials/sidebar/left.html</code>，将原来的简单 <code>li</code> 标签替换为包含轨道、滑块和图标的复杂结构。</li>
+<li><strong>CSS 样式</strong>：在 <code>assets/scss/custom.scss</code> 中添加样式。利用 <code>:root[data-scheme=&quot;dark&quot;]</code> 选择器来区分深色和浅色模式下的样式，通过 <code>transition</code> 属性实现平滑过渡动画。</li>
+<li><strong>逻辑保持</strong>：保留原有的 <code>colorScheme.ts</code> 逻辑，点击事件依然绑定在父容器上，确保功能不受影响。</li>
+</ol><hr />

@@ -1,4 +1,4 @@
-<img src="https://img.scwcd.cn/markdown/27lh0p36.jpg" alt="Featured image of post 安卓逆向入门七：Frida入门" /><h1 id="0x00-什么是frida">0x00 什么是Frida
+<img src="https://s.panlai.com/zb_users/upload/2025/04/bizhihui_com_202504061743931299117236.jpg-arthumbs" alt="Featured image of post 安卓逆向入门七：Frida入门" /><h1 id="0x00-什么是frida">0x00 什么是Frida
 </h1><p><a class="link" href="https://frida.re/docs/home/"  target="_blank" rel="noopener"
     >frida官方文档</a></p>
 <blockquote>

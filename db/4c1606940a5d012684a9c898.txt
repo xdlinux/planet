@@ -1,19 +1,32 @@
 <blockquote>
-<h3 id="泥嚎我是梵殇-fanshanng">泥嚎，我是梵殇-fanshanng
+<h3 id="-泥嚎我是梵殇-fanshanng">👋 泥嚎，我是梵殇 (fanshanng)
 </h3></blockquote>
-<ul>
-<li>
-<p>西安电子科技大学的网络空间安全专业的学牲。</p>
-</li>
-<li>
-<p>目前担任逆向手在 <a class="link" href="https://xdsec.org/"  target="_blank" rel="noopener"
-    >XDSEC</a>/<a class="link" href="https://l.xdsec.org/"  target="_blank" rel="noopener"
-    >L-team</a>。</p>
-</li>
-<li>
-<p>邮箱：fanshanng@gmail.com</p>
-</li>
-<li>
-<p>欢迎师傅们来交流(๑•̀ㅂ•́)و✧</p>
-</li>
+<p>这里是我的个人博客，主要用于记录 <strong>CTF 刷题</strong>、<strong>安卓逆向</strong> 以及各种技术折腾的笔记。</p>
+<h3 id="-whoami">👨‍💻 Whoami
+</h3><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="nt">User</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">Name</span><span class="p">:</span><span class="w"> </span><span class="l">梵殇 (fanshanng)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">University</span><span class="p">:</span><span class="w"> </span><span class="l">Xidian University (XDU)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">Major</span><span class="p">:</span><span class="w"> </span><span class="l">Cyberspace Security</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">Status</span><span class="p">:</span><span class="w"> </span><span class="l">CTFer / Reverser</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="-技能栈">🛠️ 技能栈
+</h3><ul>
+<li><strong>Languages</strong>: Python, Java, C/C++, Smali</li>
+<li><strong>Tools</strong>: IDA Pro, Frida, Xposed, JEB, Android Studio</li>
+<li><strong>Focus</strong>: Android Reverse, Hook Technology, Malware Analysis</li>
+</ul>
+<h3 id="-联系我">📬 联系我
+</h3><ul>
+<li>Email: <a class="link" href="mailto:fanshanng@gmail.com" >fanshanng@gmail.com</a></li>
+<li>欢迎师傅们邮件交流，一起进步！(๑•̀ㅂ•́)و✧</li>
 </ul><hr />

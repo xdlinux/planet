@@ -1,7 +1,11 @@
+<p>欢迎交换友链，请先添加本站链接后留言或邮件告知~ (￣▽￣)~*</p>
 <ul>
-<li>欢迎申请友链</li>
-<li>发送信息至邮箱：<code>fanshanng@gmail.com</code></li>
-<li>格式如下</li>
+<li><strong>名称</strong>: 梵殇-fanshanng</li>
+<li><strong>简介</strong>: 安卓逆向 / CTF / 摸鱼</li>
+<li><strong>链接</strong>: <a class="link" href="https://fanshanng.cn/"  target="_blank" rel="noopener"
+    >https://fanshanng.cn/</a></li>
+<li><strong>图标</strong>: <a class="link" href="https://fanshanng.cn/img/avatar.png"  target="_blank" rel="noopener"
+    >https://fanshanng.cn/img/avatar.png</a></li>
 </ul>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -11,10 +15,26 @@
 </span><span class="lnt">4
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="w">  </span><span class="nt">title</span><span class="p">:</span><span class="w"> 
-</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">description</span><span class="p">:</span><span class="w"> 
-</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">website</span><span class="p">:</span><span class="w"> 
-</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">image</span><span class="p">:</span><span class="w">
+<pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl">- <span class="nt">title</span><span class="p">:</span><span class="w"> </span><span class="l">梵殇-fanshanng</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l">安卓逆向 / CTF / 摸鱼</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">website</span><span class="p">:</span><span class="w"> </span><span class="l">https://fanshanng.cn/</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l">https://fanshanng.cn/img/avatar.png</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="-申请格式">🤝 申请格式
+</h3><p>请在下方评论区留言或发送邮件至 <code>fanshanng@gmail.com</code></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl">- <span class="nt">title</span><span class="p">:</span><span class="w"> </span><span class="l">你的博客名称</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l">一句话简介</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">website</span><span class="p">:</span><span class="w"> </span><span class="l">你的博客链接</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l">头像链接</span><span class="w">
 </span></span></span></code></pre></td></tr></table>
 </div>
 </div><hr />
