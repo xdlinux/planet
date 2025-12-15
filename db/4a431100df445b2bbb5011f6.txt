@@ -1,4 +1,4 @@
-<p>起因 参见：Klutton《使用 Hostapd + dnsmasq + flask web 服务器的 WiF [&#8230;]</p>
+<p>在百团大战了解了受控 DNS 的钓鱼网络攻击，并在国庆假期用 Acrylic 替代 dnsmasq 复现了这个实验。</p>
 <p><a href="https://www.xiaozonglin.cn/acrylic-wifi-phishing/">使用 Acrylic 复现百团大战 WiFi 钓鱼攻击：关于 Klutton 学长记录的补充</a>最先出现在<a href="https://www.xiaozonglin.cn">林林杂语</a>。</p>
 <hr />
 <h2 class="wp-block-heading">起因</h2>
