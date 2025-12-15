@@ -1,0 +1,108 @@
+<img src="https://s.panlai.com/upload/20231108125026169941902637945.jpg-arthumbs" alt="Featured image of post 博客新增5个小功能" /><p>为了提升博客的趣味性和交互体验，今天给博客添加了5个实用又好玩的小功能。本文记录了这些功能的实现方法，主要通过修改 <code>static/js/custom.js</code> 和相关模板文件实现。</p>
+<h2 id="1-网站运行时间-site-running-time">1. 网站运行时间 (Site Running Time)
+</h2><p>在页脚显示博客已经安全运行了多久，给访客一种持久运营的信任感。</p>
+<p><strong>实现效果</strong>：
+页脚显示 &ldquo;本站已安全运行 XX 天 XX 小时 XX 分 XX 秒&rdquo;。</p>
+<p><strong>代码片段</strong>：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="line"><span class="cl"><span class="kd">function</span> <span class="nx">runtime</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">window</span><span class="p">.</span><span class="nx">setTimeout</span><span class="p">(</span><span class="s2">&#34;runtime()&#34;</span><span class="p">,</span> <span class="mi">1000</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">let</span> <span class="nx">startTime</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Date</span><span class="p">(</span><span class="s1">&#39;01/01/2024 00:00:00&#39;</span><span class="p">);</span> <span class="c1">// 修改为你的建站时间
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kd">let</span> <span class="nx">endTime</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Date</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">let</span> <span class="nx">timeDiff</span> <span class="o">=</span> <span class="nx">endTime</span><span class="p">.</span><span class="nx">getTime</span><span class="p">()</span> <span class="o">-</span> <span class="nx">startTime</span><span class="p">.</span><span class="nx">getTime</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// ... 计算天、时、分、秒 ...
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kd">let</span> <span class="nx">timeDisplay</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">&#34;run-time&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span><span class="p">(</span><span class="nx">timeDisplay</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">timeDisplay</span><span class="p">.</span><span class="nx">innerHTML</span> <span class="o">=</span> <span class="sb">`本站已安全运行 </span><span class="si">${</span><span class="nx">days</span><span class="si">}</span><span class="sb"> 天 </span><span class="si">${</span><span class="nx">hours</span><span class="si">}</span><span class="sb"> 小时 </span><span class="si">${</span><span class="nx">minutes</span><span class="si">}</span><span class="sb"> 分 </span><span class="si">${</span><span class="nx">seconds</span><span class="si">}</span><span class="sb"> 秒`</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="nx">runtime</span><span class="p">();</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="2-网页标题动态变化-dynamic-title">2. 网页标题动态变化 (Dynamic Title)
+</h2><p>当用户切换到其他标签页时，网页标题会卖萌；切回来时，又会变回来。为了增加趣味性，设置了随机语录。</p>
+<p><strong>实现效果</strong>：</p>
+<ul>
+<li>离开页面：随机显示 &ldquo;(つェ⊂) 我藏好了哦~&quot;、&ldquo;看不见我&hellip;&rdquo; 等。</li>
+<li>回到页面：随机显示 &ldquo;(<em>´∇｀</em>) 被你发现啦~&quot;、&quot;(OwO) 抓到你了&rdquo; 等。</li>
+</ul>
+<p><strong>代码片段</strong>：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="line"><span class="cl"><span class="kr">const</span> <span class="nx">hiddenTitles</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&#34;(つェ⊂) 我藏好了哦~&#34;</span><span class="p">,</span> <span class="s2">&#34;看不见我...&#34;</span><span class="p">,</span> <span class="s2">&#34;( .•́ _ʖ •̀.) 等你回来&#34;</span><span class="p">,</span> <span class="s2">&#34;404 Not Found&#34;</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl"><span class="kr">const</span> <span class="nx">visibleTitles</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&#34;(*´∇｀*) 被你发现啦~&#34;</span><span class="p">,</span> <span class="s2">&#34;(OwO) 抓到你了&#34;</span><span class="p">,</span> <span class="s2">&#34;欢迎回来！&#34;</span><span class="p">,</span> <span class="s2">&#34;(HzH) 嘻嘻&#34;</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nb">document</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s1">&#39;visibilitychange&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="nb">document</span><span class="p">.</span><span class="nx">hidden</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">document</span><span class="p">.</span><span class="nx">title</span> <span class="o">=</span> <span class="nx">getRandomItem</span><span class="p">(</span><span class="nx">hiddenTitles</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">document</span><span class="p">.</span><span class="nx">title</span> <span class="o">=</span> <span class="nx">getRandomItem</span><span class="p">(</span><span class="nx">visibleTitles</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">setTimeout</span><span class="p">(()</span> <span class="p">=&gt;</span> <span class="p">{</span> <span class="nb">document</span><span class="p">.</span><span class="nx">title</span> <span class="o">=</span> <span class="nx">originTitle</span><span class="p">;</span> <span class="p">},</span> <span class="mi">2000</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">});</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="3-鼠标点击爱心特效-click-heart-effect">3. 鼠标点击爱心特效 (Click Heart Effect)
+</h2><p>点击页面任意位置，会弹出随机颜色的爱心动画，增加点击反馈。</p>
+<p><strong>实现原理</strong>：
+监听 <code>click</code> 事件，在鼠标点击坐标处创建一个 <code>div</code> 元素，应用 CSS 动画使其向上浮动并消失。</p>
+<h2 id="4-复制成功提示-copy-toast">4. 复制成功提示 (Copy Toast)
+</h2><p>当用户复制博客内容时，不再是无声无息，而是弹出一个友好的提示框。</p>
+<p><strong>实现效果</strong>：
+屏幕上方弹出黑色半透明提示框：&ldquo;复制成功！转载请注明出处哦~&quot;。</p>
+<p><strong>代码片段</strong>：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="line"><span class="cl"><span class="nb">document</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s1">&#39;copy&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kr">const</span> <span class="nx">toast</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="s1">&#39;div&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">toast</span><span class="p">.</span><span class="nx">innerText</span> <span class="o">=</span> <span class="s1">&#39;复制成功！转载请注明出处哦~&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// ... 设置样式和动画 ...
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="nb">document</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">appendChild</span><span class="p">(</span><span class="nx">toast</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">});</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="5-侧边栏打字机特效-typewriter-effect">5. 侧边栏打字机特效 (Typewriter Effect)
+</h2><p>让侧边栏的个人简介（Subtitle）像打字机一样逐字显示，比静态文字更有灵动感。</p>
+<p><strong>实现原理</strong>：</p>
+<ol>
+<li>修改 <code>layouts/partials/sidebar/left.html</code>，将副标题内容放入 <code>data-text</code> 属性。</li>
+<li>使用 JS 递归函数 <code>typeWriter</code> 逐个字符读取并添加到 innerHTML 中。</li>
+</ol>
+<hr>
+<p>这些功能虽然简单，但组合在一起能让静态博客显得不再单调。如果你也喜欢，可以参考我的代码进行修改！</p><hr />
