@@ -1,0 +1,2159 @@
+<img src="https://s.panlai.com/zb_users/upload/2025/05/20250524082018174804601878294.png-arthumbs" alt="Featured image of post DES 学习笔记" /><h2 id="1-算法概览">1. 算法概览
+</h2><ul>
+<li><strong>全称</strong>：Data Encryption Standard (数据加密标准)</li>
+<li><strong>类型</strong>：对称加密（加密和解密使用同一个密钥）</li>
+<li><strong>分组长度</strong>：64位 (8字节)</li>
+<li><strong>密钥长度</strong>：64位 (实际有效位 56位，其余8位为奇偶校验位)</li>
+<li><strong>结构</strong>：Feistel 网络结构 (16轮迭代)</li>
+</ul>
+<hr>
+<h2 id="2-密钥生成-key-schedule">2. 密钥生成 (Key Schedule)
+</h2><p>这是 DES 的第一步，目的是从原始的 64 位密钥中生成 <strong>16 个 48 位的子密钥</strong> ($K_1, K_2, &hellip;, K_{16}$)。</p>
+<h3 id="理论与代码对应详解">理论与代码对应详解
+</h3><ol>
+<li>
+<p><strong>PC-1 置换 (64位 -&gt; 56位)</strong></p>
+<ul>
+<li>
+<p><strong>理论</strong>：原始密钥是 64 位，但其中第 8, 16, 24&hellip; 等 8 个位是奇偶校验位，不参与加密。PC-1 表将这 8 位丢弃，并打乱剩余 56 位的顺序。</p>
+</li>
+<li>
+<p><strong>代码实现</strong>：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1"># 对应代码中的 generate_subkeys 函数</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># PC1_TABLE 只有 56 个索引，直接完成了&#34;去校验位&#34;和&#34;乱序&#34;两件事</span>
+</span></span><span class="line"><span class="cl"><span class="n">key_56</span> <span class="o">=</span> <span class="n">permute</span><span class="p">(</span><span class="n">key_bin</span><span class="p">,</span> <span class="n">PC1_TABLE</span><span class="p">)</span> 
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+</li>
+<li>
+<p><strong>左右拆分</strong></p>
+<ul>
+<li>
+<p><strong>理论</strong>：将 56 位分为前 28 位 ($C_0$) 和后 28 位 ($D_0$)。</p>
+</li>
+<li>
+<p><strong>代码实现</strong>：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">c</span> <span class="o">=</span> <span class="n">key_56</span><span class="p">[:</span><span class="mi">28</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl"><span class="n">d</span> <span class="o">=</span> <span class="n">key_56</span><span class="p">[</span><span class="mi">28</span><span class="p">:]</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+</li>
+<li>
+<p><strong>16轮循环左移 (Left Shift)</strong></p>
+<ul>
+<li>
+<p><strong>理论</strong>：每一轮根据固定的规则左移 1 位或 2 位。这能保证每一轮的子密钥都不同。</p>
+</li>
+<li>
+<p><strong>代码实现</strong>：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1"># SHIFT_SCHEDULE 定义了每轮左移的位数</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># [1, 1, 2, 2, 2, 2, 2, 2, 1, 2, 2, 2, 2, 2, 2, 1]</span>
+</span></span><span class="line"><span class="cl"><span class="n">shift</span> <span class="o">=</span> <span class="n">SHIFT_SCHEDULE</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># 辅助函数 left_shift 实现切片拼接：data[n:] + data[:n]</span>
+</span></span><span class="line"><span class="cl"><span class="n">c</span> <span class="o">=</span> <span class="n">left_shift</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">shift</span><span class="p">)</span> 
+</span></span><span class="line"><span class="cl"><span class="n">d</span> <span class="o">=</span> <span class="n">left_shift</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">shift</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+</li>
+<li>
+<p><strong>PC-2 置换 (56位 -&gt; 48位)</strong></p>
+<ul>
+<li>
+<p><strong>理论</strong>：从移位后的 56 位 ($C_i + D_i$) 中选出 48 位，作为本轮的子密钥 $K_i$。</p>
+</li>
+<li>
+<p><strong>代码实现</strong>：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">cd</span> <span class="o">=</span> <span class="n">c</span> <span class="o">+</span> <span class="n">d</span>
+</span></span><span class="line"><span class="cl"><span class="n">k</span> <span class="o">=</span> <span class="n">permute</span><span class="p">(</span><span class="n">cd</span><span class="p">,</span> <span class="n">PC2_TABLE</span><span class="p">)</span> <span class="c1"># 再次利用通用置换函数，选出48位</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+</li>
+</ol>
+<hr>
+<h2 id="3-加密主流程-feistel-结构">3. 加密主流程 (Feistel 结构)
+</h2><p>DES 的核心是 <strong>16 轮迭代</strong>，加上头尾的两个置换。</p>
+<h3 id="理论与代码对应详解-1">理论与代码对应详解
+</h3><ol>
+<li>
+<p><strong>初始置换 (IP)</strong></p>
+<ul>
+<li><strong>理论</strong>：将 64 位明文按照 IP 表打乱。</li>
+<li><strong>代码实现</strong>：<code>ip_data = permute(data_bin, IP_TABLE)</code></li>
+</ul>
+</li>
+<li>
+<p><strong>左右拆分</strong></p>
+<ul>
+<li><strong>理论</strong>：$L_0$ (前32位), $R_0$ (后32位)。</li>
+<li><strong>代码实现</strong>：<code>l, r = ip_data[:32], ip_data[32:]</code></li>
+</ul>
+</li>
+<li>
+<p><strong>16 轮迭代 (Round Function)</strong></p>
+<ul>
+<li>
+<p><strong>理论公式</strong>：</p>
+<ul>
+<li>$L_i = R_{i-1}$</li>
+<li>$R_i = L_{i-1} \oplus f(R_{i-1}, K_i)$</li>
+</ul>
+</li>
+<li>
+<p><strong>代码核心逻辑</strong> (<code>des_process</code> 函数中)：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">16</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="n">prev_l</span> <span class="o">=</span> <span class="n">l</span>
+</span></span><span class="line"><span class="cl">    <span class="n">prev_r</span> <span class="o">=</span> <span class="n">r</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1"># 新的左边 = 旧的右边</span>
+</span></span><span class="line"><span class="cl">    <span class="n">l</span> <span class="o">=</span> <span class="n">prev_r</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1"># 新的右边 = 旧的左边 XOR 轮函数结果</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># f_function 是核心复杂部分，见下文详解</span>
+</span></span><span class="line"><span class="cl">    <span class="n">f_res</span> <span class="o">=</span> <span class="n">f_function</span><span class="p">(</span><span class="n">prev_r</span><span class="p">,</span> <span class="n">subkeys</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">verbose</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">r</span> <span class="o">=</span> <span class="n">xor</span><span class="p">(</span><span class="n">prev_l</span><span class="p">,</span> <span class="n">f_res</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+</li>
+<li>
+<p><strong>32位互换与逆初始置换</strong></p>
+<ul>
+<li>
+<p><strong>理论</strong>：标准 DES 在第 16 轮后，输出是 $R_{16}L_{16}$（注意不是 $L_{16}R_{16}$）。然后进行 $IP^{-1}$。</p>
+</li>
+<li>
+<p><strong>代码实现</strong>：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">final_rl</span> <span class="o">=</span> <span class="n">r</span> <span class="o">+</span> <span class="n">l</span>  <span class="c1"># 注意这里是 r + l，实现了32位互换</span>
+</span></span><span class="line"><span class="cl"><span class="n">cipher_bin</span> <span class="o">=</span> <span class="n">permute</span><span class="p">(</span><span class="n">final_rl</span><span class="p">,</span> <span class="n">IP_INV_TABLE</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+</li>
+</ol>
+<h3 id="-重点解密过程">💡 重点：解密过程
+</h3><p>解密过程与加密<strong>完全相同</strong>，唯一的区别是<strong>子密钥的使用顺序相反</strong> ($K_{16} \to K_1$)。</p>
+<ul>
+<li>
+<p><strong>代码实现</strong>：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">if</span> <span class="n">mode</span> <span class="o">==</span> <span class="s1">&#39;decrypt&#39;</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">subkeys</span> <span class="o">=</span> <span class="n">subkeys</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="c1"># Python 列表切片反转</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+<hr>
+<h2 id="4-核心轮函数-fr-k">4. 核心：轮函数 $f(R, K)$
+</h2><p>这是 DES 最复杂的部分，输入 32 位数据 $R$，与 48 位子密钥 $K$ 混合，输出 32 位结果。</p>
+<h3 id="理论与代码对应详解-2">理论与代码对应详解
+</h3><ol>
+<li>
+<p><strong>E 扩展置换 (Expansion)</strong></p>
+<ul>
+<li><strong>理论</strong>：将 32 位扩展为 48 位，让数据长度匹配子密钥。</li>
+<li><strong>代码实现</strong>：<code>expanded_r = permute(right_data, E_BOX_TABLE)</code></li>
+</ul>
+</li>
+<li>
+<p><strong>密钥加 (XOR)</strong></p>
+<ul>
+<li><strong>理论</strong>：数据与子密钥进行异或运算。</li>
+<li><strong>代码实现</strong>：<code>xored = xor(expanded_r, subkey)</code></li>
+</ul>
+</li>
+<li>
+<p><strong>S 盒代换 (Substitution) —— 关键难点</strong></p>
+<ul>
+<li>
+<p><strong>理论</strong>：将 48 位压缩回 32 位。48位被分为 8 组，每组 6 位。每组 6 位通过查表变成 4 位。</p>
+</li>
+<li>
+<p><strong>代码细节详解</strong>：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1"># 遍历 8 个 S盒</span>
+</span></span><span class="line"><span class="cl"><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">8</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="n">chunk</span> <span class="o">=</span> <span class="n">xored</span><span class="p">[</span><span class="n">i</span><span class="o">*</span><span class="mi">6</span> <span class="p">:</span> <span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="mi">6</span><span class="p">]</span> <span class="c1"># 取出 6 位，例如 &#34;101101&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1"># 行号计算：取第1位和第6位 (&#34;1...1&#34; -&gt; &#34;11&#34; -&gt; 3)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">row</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">chunk</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">chunk</span><span class="p">[</span><span class="mi">5</span><span class="p">],</span> <span class="mi">2</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1"># 列号计算：取中间4位 (&#34;0110&#34; -&gt; 6)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">col</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">chunk</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="mi">5</span><span class="p">],</span> <span class="mi">2</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1"># 查表并转回 4位二进制字符串</span>
+</span></span><span class="line"><span class="cl">    <span class="n">val</span> <span class="o">=</span> <span class="n">S_BOXES</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">row</span><span class="p">][</span><span class="n">col</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">    <span class="n">s_box_output</span> <span class="o">+=</span> <span class="nb">format</span><span class="p">(</span><span class="n">val</span><span class="p">,</span> <span class="s1">&#39;04b&#39;</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+</li>
+<li>
+<p><strong>P 盒置换 (Permutation)</strong></p>
+<ul>
+<li><strong>理论</strong>：将 S 盒输出的 32 位再次打乱，让某一位的变化能扩散到下一轮的更多位中。</li>
+<li><strong>代码实现</strong>：<code>p_box_output = permute(s_box_output, P_BOX_TABLE)</code></li>
+</ul>
+</li>
+</ol>
+<h2 id="5-工程化处理分组与填充">5. 工程化处理：分组与填充
+</h2><p>标准的 DES 只能处理 64 位 (8字节) 的数据块。如果明文长度不是 8 字节的整数倍，或者超过 8 字节，就需要进行<strong>填充 (Padding)</strong> 和 <strong>分组模式 (Block Cipher Mode)</strong> 处理。</p>
+<h3 id="51-pkcs5-填充">5.1 PKCS#5 填充
+</h3><p>最常见的填充方式是 <strong>PKCS#5</strong> (对于 8 字节分组也常称为 PKCS#7)。
+规则：缺 $N$ 个字节，就填充 $N$ 个数值为 $N$ 的字节。</p>
+<ul>
+<li>如果刚好是 8 字节倍数，则填充 8 个 <code>0x08</code>。</li>
+<li>数据 <code>ABCDE</code> (5字节)，缺 3 字节 $\to$ 填充 3 个 <code>0x03</code> $\to$ <code>ABCDE\x03\x03\x03</code>。数据刚好 8 字节 $\to$​ 填充 8 个 <code>0x08</code> (增加一个完整块，以便解密时知道有填充)。</li>
+</ul>
+<h3 id="52--密钥处理">5.2  密钥处理
+</h3><ul>
+<li><strong>过短</strong>：通常用 <code>\0</code> 补齐，或重复密钥。</li>
+<li><strong>过长</strong>：直接截断取前 8 字节，或进行 Hash 运算 (如 MD5) 取前 8 字节。</li>
+</ul>
+<h3 id="53-ecb-模式-electronic-codebook电子密码本模式">5.3 ECB 模式 (Electronic Codebook)(电子密码本模式)
+</h3><p>最简单的分组模式。将明文分成 8 字节的块，每块独立加密。</p>
+<ul>
+<li><strong>优点</strong>：简单，可并行。</li>
+<li><strong>缺点</strong>：相同的明文块会产生相同的密文块，容易被模式分析。</li>
+</ul>
+<p>附：<strong>CBC (密码分组链接模式)</strong>：更安全。当前明文块先与前一个密文块异或，再加密。</p>
+<h3 id="53-常见疑问密钥过长怎么办">5.3 常见疑问：密钥过长怎么办？
+</h3><p>很多初学者会有疑问：<strong>如果密钥长度超过 8 字节，是取前 8 字节，还是也进行分组？</strong></p>
+<p>答案是：<strong>标准 DES 密钥必须是 8 字节</strong>。</p>
+<ol>
+<li>
+<p><strong>截断 (Truncation)</strong>：</p>
+<ul>
+<li>大多数简单的 DES 实现（包括本代码）如果收到长密钥，只会读取前 64 位（8字节）参与密钥生成（PC-1 置换只看前 64 位），<strong>后面的部分会被直接忽略</strong>。</li>
+<li>并<strong>不会</strong>出现“用密钥的第一组加密明文第一组，用密钥第二组加密明文第二组”的情况。密钥在整个通信过程中必须是固定的。</li>
+</ul>
+</li>
+<li>
+<p><strong>3DES (Triple DES)</strong>：</p>
+<ul>
+<li>如果需要使用更长的密钥（如 16 字节或 24 字节）来提升安全性，标准做法是使用 3DES。</li>
+<li>3DES 实际上是运行三次 DES：$C = E_{K3}(D_{K2}(E_{K1}(P)))$。</li>
+</ul>
+</li>
+<li>
+<p><strong>工程实践</strong>：</p>
+<ul>
+<li>在实际工程中，如果用户输入了一个长密码（Passphrase），通常会使用哈希函数（如 SHA-256）将其转换为固定长度的摘要，然后截取前 8 字节作为 DES 密钥。</li>
+</ul>
+</li>
+</ol>
+<h2 id="6-附录完整-python-实现代码">6. 附录：完整 Python 实现代码
+</h2><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">  1
+</span><span class="lnt">  2
+</span><span class="lnt">  3
+</span><span class="lnt">  4
+</span><span class="lnt">  5
+</span><span class="lnt">  6
+</span><span class="lnt">  7
+</span><span class="lnt">  8
+</span><span class="lnt">  9
+</span><span class="lnt"> 10
+</span><span class="lnt"> 11
+</span><span class="lnt"> 12
+</span><span class="lnt"> 13
+</span><span class="lnt"> 14
+</span><span class="lnt"> 15
+</span><span class="lnt"> 16
+</span><span class="lnt"> 17
+</span><span class="lnt"> 18
+</span><span class="lnt"> 19
+</span><span class="lnt"> 20
+</span><span class="lnt"> 21
+</span><span class="lnt"> 22
+</span><span class="lnt"> 23
+</span><span class="lnt"> 24
+</span><span class="lnt"> 25
+</span><span class="lnt"> 26
+</span><span class="lnt"> 27
+</span><span class="lnt"> 28
+</span><span class="lnt"> 29
+</span><span class="lnt"> 30
+</span><span class="lnt"> 31
+</span><span class="lnt"> 32
+</span><span class="lnt"> 33
+</span><span class="lnt"> 34
+</span><span class="lnt"> 35
+</span><span class="lnt"> 36
+</span><span class="lnt"> 37
+</span><span class="lnt"> 38
+</span><span class="lnt"> 39
+</span><span class="lnt"> 40
+</span><span class="lnt"> 41
+</span><span class="lnt"> 42
+</span><span class="lnt"> 43
+</span><span class="lnt"> 44
+</span><span class="lnt"> 45
+</span><span class="lnt"> 46
+</span><span class="lnt"> 47
+</span><span class="lnt"> 48
+</span><span class="lnt"> 49
+</span><span class="lnt"> 50
+</span><span class="lnt"> 51
+</span><span class="lnt"> 52
+</span><span class="lnt"> 53
+</span><span class="lnt"> 54
+</span><span class="lnt"> 55
+</span><span class="lnt"> 56
+</span><span class="lnt"> 57
+</span><span class="lnt"> 58
+</span><span class="lnt"> 59
+</span><span class="lnt"> 60
+</span><span class="lnt"> 61
+</span><span class="lnt"> 62
+</span><span class="lnt"> 63
+</span><span class="lnt"> 64
+</span><span class="lnt"> 65
+</span><span class="lnt"> 66
+</span><span class="lnt"> 67
+</span><span class="lnt"> 68
+</span><span class="lnt"> 69
+</span><span class="lnt"> 70
+</span><span class="lnt"> 71
+</span><span class="lnt"> 72
+</span><span class="lnt"> 73
+</span><span class="lnt"> 74
+</span><span class="lnt"> 75
+</span><span class="lnt"> 76
+</span><span class="lnt"> 77
+</span><span class="lnt"> 78
+</span><span class="lnt"> 79
+</span><span class="lnt"> 80
+</span><span class="lnt"> 81
+</span><span class="lnt"> 82
+</span><span class="lnt"> 83
+</span><span class="lnt"> 84
+</span><span class="lnt"> 85
+</span><span class="lnt"> 86
+</span><span class="lnt"> 87
+</span><span class="lnt"> 88
+</span><span class="lnt"> 89
+</span><span class="lnt"> 90
+</span><span class="lnt"> 91
+</span><span class="lnt"> 92
+</span><span class="lnt"> 93
+</span><span class="lnt"> 94
+</span><span class="lnt"> 95
+</span><span class="lnt"> 96
+</span><span class="lnt"> 97
+</span><span class="lnt"> 98
+</span><span class="lnt"> 99
+</span><span class="lnt">100
+</span><span class="lnt">101
+</span><span class="lnt">102
+</span><span class="lnt">103
+</span><span class="lnt">104
+</span><span class="lnt">105
+</span><span class="lnt">106
+</span><span class="lnt">107
+</span><span class="lnt">108
+</span><span class="lnt">109
+</span><span class="lnt">110
+</span><span class="lnt">111
+</span><span class="lnt">112
+</span><span class="lnt">113
+</span><span class="lnt">114
+</span><span class="lnt">115
+</span><span class="lnt">116
+</span><span class="lnt">117
+</span><span class="lnt">118
+</span><span class="lnt">119
+</span><span class="lnt">120
+</span><span class="lnt">121
+</span><span class="lnt">122
+</span><span class="lnt">123
+</span><span class="lnt">124
+</span><span class="lnt">125
+</span><span class="lnt">126
+</span><span class="lnt">127
+</span><span class="lnt">128
+</span><span class="lnt">129
+</span><span class="lnt">130
+</span><span class="lnt">131
+</span><span class="lnt">132
+</span><span class="lnt">133
+</span><span class="lnt">134
+</span><span class="lnt">135
+</span><span class="lnt">136
+</span><span class="lnt">137
+</span><span class="lnt">138
+</span><span class="lnt">139
+</span><span class="lnt">140
+</span><span class="lnt">141
+</span><span class="lnt">142
+</span><span class="lnt">143
+</span><span class="lnt">144
+</span><span class="lnt">145
+</span><span class="lnt">146
+</span><span class="lnt">147
+</span><span class="lnt">148
+</span><span class="lnt">149
+</span><span class="lnt">150
+</span><span class="lnt">151
+</span><span class="lnt">152
+</span><span class="lnt">153
+</span><span class="lnt">154
+</span><span class="lnt">155
+</span><span class="lnt">156
+</span><span class="lnt">157
+</span><span class="lnt">158
+</span><span class="lnt">159
+</span><span class="lnt">160
+</span><span class="lnt">161
+</span><span class="lnt">162
+</span><span class="lnt">163
+</span><span class="lnt">164
+</span><span class="lnt">165
+</span><span class="lnt">166
+</span><span class="lnt">167
+</span><span class="lnt">168
+</span><span class="lnt">169
+</span><span class="lnt">170
+</span><span class="lnt">171
+</span><span class="lnt">172
+</span><span class="lnt">173
+</span><span class="lnt">174
+</span><span class="lnt">175
+</span><span class="lnt">176
+</span><span class="lnt">177
+</span><span class="lnt">178
+</span><span class="lnt">179
+</span><span class="lnt">180
+</span><span class="lnt">181
+</span><span class="lnt">182
+</span><span class="lnt">183
+</span><span class="lnt">184
+</span><span class="lnt">185
+</span><span class="lnt">186
+</span><span class="lnt">187
+</span><span class="lnt">188
+</span><span class="lnt">189
+</span><span class="lnt">190
+</span><span class="lnt">191
+</span><span class="lnt">192
+</span><span class="lnt">193
+</span><span class="lnt">194
+</span><span class="lnt">195
+</span><span class="lnt">196
+</span><span class="lnt">197
+</span><span class="lnt">198
+</span><span class="lnt">199
+</span><span class="lnt">200
+</span><span class="lnt">201
+</span><span class="lnt">202
+</span><span class="lnt">203
+</span><span class="lnt">204
+</span><span class="lnt">205
+</span><span class="lnt">206
+</span><span class="lnt">207
+</span><span class="lnt">208
+</span><span class="lnt">209
+</span><span class="lnt">210
+</span><span class="lnt">211
+</span><span class="lnt">212
+</span><span class="lnt">213
+</span><span class="lnt">214
+</span><span class="lnt">215
+</span><span class="lnt">216
+</span><span class="lnt">217
+</span><span class="lnt">218
+</span><span class="lnt">219
+</span><span class="lnt">220
+</span><span class="lnt">221
+</span><span class="lnt">222
+</span><span class="lnt">223
+</span><span class="lnt">224
+</span><span class="lnt">225
+</span><span class="lnt">226
+</span><span class="lnt">227
+</span><span class="lnt">228
+</span><span class="lnt">229
+</span><span class="lnt">230
+</span><span class="lnt">231
+</span><span class="lnt">232
+</span><span class="lnt">233
+</span><span class="lnt">234
+</span><span class="lnt">235
+</span><span class="lnt">236
+</span><span class="lnt">237
+</span><span class="lnt">238
+</span><span class="lnt">239
+</span><span class="lnt">240
+</span><span class="lnt">241
+</span><span class="lnt">242
+</span><span class="lnt">243
+</span><span class="lnt">244
+</span><span class="lnt">245
+</span><span class="lnt">246
+</span><span class="lnt">247
+</span><span class="lnt">248
+</span><span class="lnt">249
+</span><span class="lnt">250
+</span><span class="lnt">251
+</span><span class="lnt">252
+</span><span class="lnt">253
+</span><span class="lnt">254
+</span><span class="lnt">255
+</span><span class="lnt">256
+</span><span class="lnt">257
+</span><span class="lnt">258
+</span><span class="lnt">259
+</span><span class="lnt">260
+</span><span class="lnt">261
+</span><span class="lnt">262
+</span><span class="lnt">263
+</span><span class="lnt">264
+</span><span class="lnt">265
+</span><span class="lnt">266
+</span><span class="lnt">267
+</span><span class="lnt">268
+</span><span class="lnt">269
+</span><span class="lnt">270
+</span><span class="lnt">271
+</span><span class="lnt">272
+</span><span class="lnt">273
+</span><span class="lnt">274
+</span><span class="lnt">275
+</span><span class="lnt">276
+</span><span class="lnt">277
+</span><span class="lnt">278
+</span><span class="lnt">279
+</span><span class="lnt">280
+</span><span class="lnt">281
+</span><span class="lnt">282
+</span><span class="lnt">283
+</span><span class="lnt">284
+</span><span class="lnt">285
+</span><span class="lnt">286
+</span><span class="lnt">287
+</span><span class="lnt">288
+</span><span class="lnt">289
+</span><span class="lnt">290
+</span><span class="lnt">291
+</span><span class="lnt">292
+</span><span class="lnt">293
+</span><span class="lnt">294
+</span><span class="lnt">295
+</span><span class="lnt">296
+</span><span class="lnt">297
+</span><span class="lnt">298
+</span><span class="lnt">299
+</span><span class="lnt">300
+</span><span class="lnt">301
+</span><span class="lnt">302
+</span><span class="lnt">303
+</span><span class="lnt">304
+</span><span class="lnt">305
+</span><span class="lnt">306
+</span><span class="lnt">307
+</span><span class="lnt">308
+</span><span class="lnt">309
+</span><span class="lnt">310
+</span><span class="lnt">311
+</span><span class="lnt">312
+</span><span class="lnt">313
+</span><span class="lnt">314
+</span><span class="lnt">315
+</span><span class="lnt">316
+</span><span class="lnt">317
+</span><span class="lnt">318
+</span><span class="lnt">319
+</span><span class="lnt">320
+</span><span class="lnt">321
+</span><span class="lnt">322
+</span><span class="lnt">323
+</span><span class="lnt">324
+</span><span class="lnt">325
+</span><span class="lnt">326
+</span><span class="lnt">327
+</span><span class="lnt">328
+</span><span class="lnt">329
+</span><span class="lnt">330
+</span><span class="lnt">331
+</span><span class="lnt">332
+</span><span class="lnt">333
+</span><span class="lnt">334
+</span><span class="lnt">335
+</span><span class="lnt">336
+</span><span class="lnt">337
+</span><span class="lnt">338
+</span><span class="lnt">339
+</span><span class="lnt">340
+</span><span class="lnt">341
+</span><span class="lnt">342
+</span><span class="lnt">343
+</span><span class="lnt">344
+</span><span class="lnt">345
+</span><span class="lnt">346
+</span><span class="lnt">347
+</span><span class="lnt">348
+</span><span class="lnt">349
+</span><span class="lnt">350
+</span><span class="lnt">351
+</span><span class="lnt">352
+</span><span class="lnt">353
+</span><span class="lnt">354
+</span><span class="lnt">355
+</span><span class="lnt">356
+</span><span class="lnt">357
+</span><span class="lnt">358
+</span><span class="lnt">359
+</span><span class="lnt">360
+</span><span class="lnt">361
+</span><span class="lnt">362
+</span><span class="lnt">363
+</span><span class="lnt">364
+</span><span class="lnt">365
+</span><span class="lnt">366
+</span><span class="lnt">367
+</span><span class="lnt">368
+</span><span class="lnt">369
+</span><span class="lnt">370
+</span><span class="lnt">371
+</span><span class="lnt">372
+</span><span class="lnt">373
+</span><span class="lnt">374
+</span><span class="lnt">375
+</span><span class="lnt">376
+</span><span class="lnt">377
+</span><span class="lnt">378
+</span><span class="lnt">379
+</span><span class="lnt">380
+</span><span class="lnt">381
+</span><span class="lnt">382
+</span><span class="lnt">383
+</span><span class="lnt">384
+</span><span class="lnt">385
+</span><span class="lnt">386
+</span><span class="lnt">387
+</span><span class="lnt">388
+</span><span class="lnt">389
+</span><span class="lnt">390
+</span><span class="lnt">391
+</span><span class="lnt">392
+</span><span class="lnt">393
+</span><span class="lnt">394
+</span><span class="lnt">395
+</span><span class="lnt">396
+</span><span class="lnt">397
+</span><span class="lnt">398
+</span><span class="lnt">399
+</span><span class="lnt">400
+</span><span class="lnt">401
+</span><span class="lnt">402
+</span><span class="lnt">403
+</span><span class="lnt">404
+</span><span class="lnt">405
+</span><span class="lnt">406
+</span><span class="lnt">407
+</span><span class="lnt">408
+</span><span class="lnt">409
+</span><span class="lnt">410
+</span><span class="lnt">411
+</span><span class="lnt">412
+</span><span class="lnt">413
+</span><span class="lnt">414
+</span><span class="lnt">415
+</span><span class="lnt">416
+</span><span class="lnt">417
+</span><span class="lnt">418
+</span><span class="lnt">419
+</span><span class="lnt">420
+</span><span class="lnt">421
+</span><span class="lnt">422
+</span><span class="lnt">423
+</span><span class="lnt">424
+</span><span class="lnt">425
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">sys</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># =============================================================================</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># DES 算法常量定义 (标准表)</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># =============================================================================</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 初始置换表 (IP)</span>
+</span></span><span class="line"><span class="cl"><span class="n">IP_TABLE</span> <span class="o">=</span> <span class="p">[</span>
+</span></span><span class="line"><span class="cl">    <span class="mi">58</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">42</span><span class="p">,</span> <span class="mi">34</span><span class="p">,</span> <span class="mi">26</span><span class="p">,</span> <span class="mi">18</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="mi">60</span><span class="p">,</span> <span class="mi">52</span><span class="p">,</span> <span class="mi">44</span><span class="p">,</span> <span class="mi">36</span><span class="p">,</span> <span class="mi">28</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="mi">62</span><span class="p">,</span> <span class="mi">54</span><span class="p">,</span> <span class="mi">46</span><span class="p">,</span> <span class="mi">38</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">22</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="mi">64</span><span class="p">,</span> <span class="mi">56</span><span class="p">,</span> <span class="mi">48</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">24</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="mi">57</span><span class="p">,</span> <span class="mi">49</span><span class="p">,</span> <span class="mi">41</span><span class="p">,</span> <span class="mi">33</span><span class="p">,</span> <span class="mi">25</span><span class="p">,</span> <span class="mi">17</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="mi">59</span><span class="p">,</span> <span class="mi">51</span><span class="p">,</span> <span class="mi">43</span><span class="p">,</span> <span class="mi">35</span><span class="p">,</span> <span class="mi">27</span><span class="p">,</span> <span class="mi">19</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="mi">61</span><span class="p">,</span> <span class="mi">53</span><span class="p">,</span> <span class="mi">45</span><span class="p">,</span> <span class="mi">37</span><span class="p">,</span> <span class="mi">29</span><span class="p">,</span> <span class="mi">21</span><span class="p">,</span> <span class="mi">13</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="mi">63</span><span class="p">,</span> <span class="mi">55</span><span class="p">,</span> <span class="mi">47</span><span class="p">,</span> <span class="mi">39</span><span class="p">,</span> <span class="mi">31</span><span class="p">,</span> <span class="mi">23</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">7</span>
+</span></span><span class="line"><span class="cl"><span class="p">]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 逆初始置换表 (IP^-1)</span>
+</span></span><span class="line"><span class="cl"><span class="n">IP_INV_TABLE</span> <span class="o">=</span> <span class="p">[</span>
+</span></span><span class="line"><span class="cl">    <span class="mi">40</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">48</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">56</span><span class="p">,</span> <span class="mi">24</span><span class="p">,</span> <span class="mi">64</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="mi">39</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">47</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">55</span><span class="p">,</span> <span class="mi">23</span><span class="p">,</span> <span class="mi">63</span><span class="p">,</span> <span class="mi">31</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="mi">38</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">46</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">54</span><span class="p">,</span> <span class="mi">22</span><span class="p">,</span> <span class="mi">62</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="mi">37</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">45</span><span class="p">,</span> <span class="mi">13</span><span class="p">,</span> <span class="mi">53</span><span class="p">,</span> <span class="mi">21</span><span class="p">,</span> <span class="mi">61</span><span class="p">,</span> <span class="mi">29</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="mi">36</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">44</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">52</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">60</span><span class="p">,</span> <span class="mi">28</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="mi">35</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">43</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">51</span><span class="p">,</span> <span class="mi">19</span><span class="p">,</span> <span class="mi">59</span><span class="p">,</span> <span class="mi">27</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="mi">34</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">42</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">18</span><span class="p">,</span> <span class="mi">58</span><span class="p">,</span> <span class="mi">26</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="mi">33</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">41</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">49</span><span class="p">,</span> <span class="mi">17</span><span class="p">,</span> <span class="mi">57</span><span class="p">,</span> <span class="mi">25</span>
+</span></span><span class="line"><span class="cl"><span class="p">]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 扩展置换表 (E-Box): 32位 -&gt; 48位</span>
+</span></span><span class="line"><span class="cl"><span class="n">E_BOX_TABLE</span> <span class="o">=</span> <span class="p">[</span>
+</span></span><span class="line"><span class="cl">    <span class="mi">32</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">13</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="mi">12</span><span class="p">,</span> <span class="mi">13</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">17</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="mi">16</span><span class="p">,</span> <span class="mi">17</span><span class="p">,</span> <span class="mi">18</span><span class="p">,</span> <span class="mi">19</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">21</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="mi">20</span><span class="p">,</span> <span class="mi">21</span><span class="p">,</span> <span class="mi">22</span><span class="p">,</span> <span class="mi">23</span><span class="p">,</span> <span class="mi">24</span><span class="p">,</span> <span class="mi">25</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="mi">24</span><span class="p">,</span> <span class="mi">25</span><span class="p">,</span> <span class="mi">26</span><span class="p">,</span> <span class="mi">27</span><span class="p">,</span> <span class="mi">28</span><span class="p">,</span> <span class="mi">29</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="mi">28</span><span class="p">,</span> <span class="mi">29</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">31</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl"><span class="p">]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># P盒置换表 (P-Box): 32位 -&gt; 32位</span>
+</span></span><span class="line"><span class="cl"><span class="n">P_BOX_TABLE</span> <span class="o">=</span> <span class="p">[</span>
+</span></span><span class="line"><span class="cl">    <span class="mi">16</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">21</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="mi">29</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">28</span><span class="p">,</span> <span class="mi">17</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="mi">1</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">23</span><span class="p">,</span> <span class="mi">26</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="mi">5</span><span class="p">,</span> <span class="mi">18</span><span class="p">,</span> <span class="mi">31</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="mi">2</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">24</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="mi">32</span><span class="p">,</span> <span class="mi">27</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="mi">19</span><span class="p">,</span> <span class="mi">13</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="mi">22</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">25</span>
+</span></span><span class="line"><span class="cl"><span class="p">]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 密钥置换表 1 (PC-1): 64位 -&gt; 56位 (去掉了校验位)</span>
+</span></span><span class="line"><span class="cl"><span class="n">PC1_TABLE</span> <span class="o">=</span> <span class="p">[</span>
+</span></span><span class="line"><span class="cl">    <span class="mi">57</span><span class="p">,</span> <span class="mi">49</span><span class="p">,</span> <span class="mi">41</span><span class="p">,</span> <span class="mi">33</span><span class="p">,</span> <span class="mi">25</span><span class="p">,</span> <span class="mi">17</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="mi">1</span><span class="p">,</span> <span class="mi">58</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">42</span><span class="p">,</span> <span class="mi">34</span><span class="p">,</span> <span class="mi">26</span><span class="p">,</span> <span class="mi">18</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="mi">10</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">59</span><span class="p">,</span> <span class="mi">51</span><span class="p">,</span> <span class="mi">43</span><span class="p">,</span> <span class="mi">35</span><span class="p">,</span> <span class="mi">27</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="mi">19</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">60</span><span class="p">,</span> <span class="mi">52</span><span class="p">,</span> <span class="mi">44</span><span class="p">,</span> <span class="mi">36</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="mi">63</span><span class="p">,</span> <span class="mi">55</span><span class="p">,</span> <span class="mi">47</span><span class="p">,</span> <span class="mi">39</span><span class="p">,</span> <span class="mi">31</span><span class="p">,</span> <span class="mi">23</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="mi">7</span><span class="p">,</span> <span class="mi">62</span><span class="p">,</span> <span class="mi">54</span><span class="p">,</span> <span class="mi">46</span><span class="p">,</span> <span class="mi">38</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">22</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="mi">14</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">61</span><span class="p">,</span> <span class="mi">53</span><span class="p">,</span> <span class="mi">45</span><span class="p">,</span> <span class="mi">37</span><span class="p">,</span> <span class="mi">29</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="mi">21</span><span class="p">,</span> <span class="mi">13</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">28</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">4</span>
+</span></span><span class="line"><span class="cl"><span class="p">]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 密钥置换表 2 (PC-2): 56位 -&gt; 48位</span>
+</span></span><span class="line"><span class="cl"><span class="n">PC2_TABLE</span> <span class="o">=</span> <span class="p">[</span>
+</span></span><span class="line"><span class="cl">    <span class="mi">14</span><span class="p">,</span> <span class="mi">17</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">24</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="mi">3</span><span class="p">,</span> <span class="mi">28</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">21</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="mi">23</span><span class="p">,</span> <span class="mi">19</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">26</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="mi">16</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">27</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">13</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="mi">41</span><span class="p">,</span> <span class="mi">52</span><span class="p">,</span> <span class="mi">31</span><span class="p">,</span> <span class="mi">37</span><span class="p">,</span> <span class="mi">47</span><span class="p">,</span> <span class="mi">55</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="mi">30</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="mi">51</span><span class="p">,</span> <span class="mi">45</span><span class="p">,</span> <span class="mi">33</span><span class="p">,</span> <span class="mi">48</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="mi">44</span><span class="p">,</span> <span class="mi">49</span><span class="p">,</span> <span class="mi">39</span><span class="p">,</span> <span class="mi">56</span><span class="p">,</span> <span class="mi">34</span><span class="p">,</span> <span class="mi">53</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="mi">46</span><span class="p">,</span> <span class="mi">42</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">36</span><span class="p">,</span> <span class="mi">29</span><span class="p">,</span> <span class="mi">32</span>
+</span></span><span class="line"><span class="cl"><span class="p">]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 密钥左移位数表 (每轮左移的位数)</span>
+</span></span><span class="line"><span class="cl"><span class="n">SHIFT_SCHEDULE</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># S盒 (S-Boxes): 8个 S盒，每个将 6位 映射为 4位</span>
+</span></span><span class="line"><span class="cl"><span class="n">S_BOXES</span> <span class="o">=</span> <span class="p">[</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># S1</span>
+</span></span><span class="line"><span class="cl">    <span class="p">[</span>
+</span></span><span class="line"><span class="cl">        <span class="p">[</span><span class="mi">14</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">13</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">7</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">        <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">13</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">8</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">        <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">13</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">        <span class="p">[</span><span class="mi">15</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">13</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">    <span class="p">],</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># S2</span>
+</span></span><span class="line"><span class="cl">    <span class="p">[</span>
+</span></span><span class="line"><span class="cl">        <span class="p">[</span><span class="mi">15</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">13</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">        <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">13</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">5</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">        <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">13</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">15</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">        <span class="p">[</span><span class="mi">13</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">9</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">    <span class="p">],</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># S3</span>
+</span></span><span class="line"><span class="cl">    <span class="p">[</span>
+</span></span><span class="line"><span class="cl">        <span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">13</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">8</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">        <span class="p">[</span><span class="mi">13</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">        <span class="p">[</span><span class="mi">13</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">7</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">        <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">13</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">12</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">    <span class="p">],</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># S4</span>
+</span></span><span class="line"><span class="cl">    <span class="p">[</span>
+</span></span><span class="line"><span class="cl">        <span class="p">[</span><span class="mi">7</span><span class="p">,</span> <span class="mi">13</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">15</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">        <span class="p">[</span><span class="mi">13</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">9</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">        <span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">13</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">4</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">        <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">13</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">14</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">    <span class="p">],</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># S5</span>
+</span></span><span class="line"><span class="cl">    <span class="p">[</span>
+</span></span><span class="line"><span class="cl">        <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">13</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">9</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">        <span class="p">[</span><span class="mi">14</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">13</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">6</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">        <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">13</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">14</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">        <span class="p">[</span><span class="mi">11</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">13</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">    <span class="p">],</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># S6</span>
+</span></span><span class="line"><span class="cl">    <span class="p">[</span>
+</span></span><span class="line"><span class="cl">        <span class="p">[</span><span class="mi">12</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">13</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">11</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">        <span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">13</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">8</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">        <span class="p">[</span><span class="mi">9</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">13</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">6</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">        <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">13</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">    <span class="p">],</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># S7</span>
+</span></span><span class="line"><span class="cl">    <span class="p">[</span>
+</span></span><span class="line"><span class="cl">        <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">13</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">        <span class="p">[</span><span class="mi">13</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">6</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">        <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">13</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">        <span class="p">[</span><span class="mi">6</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">13</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">12</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">    <span class="p">],</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># S8</span>
+</span></span><span class="line"><span class="cl">    <span class="p">[</span>
+</span></span><span class="line"><span class="cl">        <span class="p">[</span><span class="mi">13</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">7</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">        <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">13</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">        <span class="p">[</span><span class="mi">7</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">13</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">8</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">        <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">13</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">11</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">    <span class="p">]</span>
+</span></span><span class="line"><span class="cl"><span class="p">]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># =============================================================================</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># 辅助工具函数</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># =============================================================================</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">str_to_bin</span><span class="p">(</span><span class="n">text</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;将字符串转换为二进制字符串 (每个字符8位)&#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">format</span><span class="p">(</span><span class="nb">ord</span><span class="p">(</span><span class="n">c</span><span class="p">),</span> <span class="s1">&#39;08b&#39;</span><span class="p">)</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">text</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">bin_to_str</span><span class="p">(</span><span class="n">binary</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;将二进制字符串转换为 ASCII 字符串&#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># 每8位一组</span>
+</span></span><span class="line"><span class="cl">    <span class="n">chars</span> <span class="o">=</span> <span class="p">[</span><span class="n">binary</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">i</span><span class="o">+</span><span class="mi">8</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">binary</span><span class="p">),</span> <span class="mi">8</span><span class="p">)]</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">chr</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">chars</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">hex_to_bin</span><span class="p">(</span><span class="n">hex_str</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;将十六进制字符串转换为二进制字符串&#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># 每个hex字符对应4位bin</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">format</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="mi">16</span><span class="p">),</span> <span class="s1">&#39;04b&#39;</span><span class="p">)</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">hex_str</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">bin_to_hex</span><span class="p">(</span><span class="n">binary</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;将二进制字符串转换为十六进制字符串&#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># 每4位一组</span>
+</span></span><span class="line"><span class="cl">    <span class="n">hex_str</span> <span class="o">=</span> <span class="s2">&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">binary</span><span class="p">),</span> <span class="mi">4</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="n">chunk</span> <span class="o">=</span> <span class="n">binary</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">i</span><span class="o">+</span><span class="mi">4</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">        <span class="n">hex_str</span> <span class="o">+=</span> <span class="nb">format</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">chunk</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="s1">&#39;x&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">hex_str</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">permute</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">table</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;
+</span></span></span><span class="line"><span class="cl"><span class="s2">    通用置换函数
+</span></span></span><span class="line"><span class="cl"><span class="s2">    data: 输入的二进制字符串
+</span></span></span><span class="line"><span class="cl"><span class="s2">    table: 置换表 (1-based index)
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">table</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">xor</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;对两个等长的二进制字符串进行异或运算&#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s1">&#39;1&#39;</span> <span class="k">if</span> <span class="n">x</span> <span class="o">!=</span> <span class="n">y</span> <span class="k">else</span> <span class="s1">&#39;0&#39;</span> <span class="k">for</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">left_shift</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;循环左移 n 位&#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">data</span><span class="p">[</span><span class="n">n</span><span class="p">:]</span> <span class="o">+</span> <span class="n">data</span><span class="p">[:</span><span class="n">n</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># =============================================================================</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># 填充与密钥处理 (新增)</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># =============================================================================</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">pkcs7_pad</span><span class="p">(</span><span class="n">text</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;PKCS#7 填充: 将文本填充为 8 的倍数&#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">pad_len</span> <span class="o">=</span> <span class="mi">8</span> <span class="o">-</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">text</span><span class="p">)</span> <span class="o">%</span> <span class="mi">8</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">padding</span> <span class="o">=</span> <span class="nb">chr</span><span class="p">(</span><span class="n">pad_len</span><span class="p">)</span> <span class="o">*</span> <span class="n">pad_len</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">text</span> <span class="o">+</span> <span class="n">padding</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">pkcs7_unpad</span><span class="p">(</span><span class="n">text</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;PKCS#7 去填充&#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">pad_len</span> <span class="o">=</span> <span class="nb">ord</span><span class="p">(</span><span class="n">text</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">text</span><span class="p">[:</span><span class="o">-</span><span class="n">pad_len</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">process_key</span><span class="p">(</span><span class="n">key_str</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;处理密钥: 确保是 8 字节&#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># 如果太短，补 \0</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">key_str</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">8</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">key_str</span><span class="o">.</span><span class="n">ljust</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="s1">&#39;</span><span class="se">\0</span><span class="s1">&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># 如果太长，截断 (实际应用中通常做 Hash)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">key_str</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">8</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">key_str</span><span class="p">[:</span><span class="mi">8</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">key_str</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># =============================================================================</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># 核心逻辑函数</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># =============================================================================</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">generate_subkeys</span><span class="p">(</span><span class="n">key_bin</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;
+</span></span></span><span class="line"><span class="cl"><span class="s2">    生成 16 个 48 位的子密钥
+</span></span></span><span class="line"><span class="cl"><span class="s2">    key_bin: 64位二进制密钥
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;</span><span class="se">\n</span><span class="s2">[密钥生成] 原始密钥 (64位): </span><span class="si">{</span><span class="n">key_bin</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1"># 1. PC-1 置换 (64位 -&gt; 56位)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">key_56</span> <span class="o">=</span> <span class="n">permute</span><span class="p">(</span><span class="n">key_bin</span><span class="p">,</span> <span class="n">PC1_TABLE</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;[密钥生成] PC-1置换后 (56位): </span><span class="si">{</span><span class="n">key_56</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1"># 分为左右两部分 C0, D0</span>
+</span></span><span class="line"><span class="cl">    <span class="n">c</span> <span class="o">=</span> <span class="n">key_56</span><span class="p">[:</span><span class="mi">28</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">    <span class="n">d</span> <span class="o">=</span> <span class="n">key_56</span><span class="p">[</span><span class="mi">28</span><span class="p">:]</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="n">subkeys</span> <span class="o">=</span> <span class="p">[]</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">16</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># 2. 循环左移</span>
+</span></span><span class="line"><span class="cl">        <span class="n">shift</span> <span class="o">=</span> <span class="n">SHIFT_SCHEDULE</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">        <span class="n">c</span> <span class="o">=</span> <span class="n">left_shift</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">shift</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">d</span> <span class="o">=</span> <span class="n">left_shift</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">shift</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        
+</span></span><span class="line"><span class="cl">        <span class="c1"># 合并</span>
+</span></span><span class="line"><span class="cl">        <span class="n">cd</span> <span class="o">=</span> <span class="n">c</span> <span class="o">+</span> <span class="n">d</span>
+</span></span><span class="line"><span class="cl">        
+</span></span><span class="line"><span class="cl">        <span class="c1"># 3. PC-2 置换 (56位 -&gt; 48位)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">k</span> <span class="o">=</span> <span class="n">permute</span><span class="p">(</span><span class="n">cd</span><span class="p">,</span> <span class="n">PC2_TABLE</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">subkeys</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">k</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;  Round </span><span class="si">{</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="si">:</span><span class="s2">2d</span><span class="si">}</span><span class="s2">: 左移 </span><span class="si">{</span><span class="n">shift</span><span class="si">}</span><span class="s2"> 位 -&gt; 子密钥: </span><span class="si">{</span><span class="n">bin_to_hex</span><span class="p">(</span><span class="n">k</span><span class="p">)</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">subkeys</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">f_function</span><span class="p">(</span><span class="n">right_data</span><span class="p">,</span> <span class="n">subkey</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;
+</span></span></span><span class="line"><span class="cl"><span class="s2">    Feistel 轮函数 f(R, K)
+</span></span></span><span class="line"><span class="cl"><span class="s2">    right_data: 32位
+</span></span></span><span class="line"><span class="cl"><span class="s2">    subkey: 48位
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># 1. 扩展置换 E (32 -&gt; 48)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">expanded_r</span> <span class="o">=</span> <span class="n">permute</span><span class="p">(</span><span class="n">right_data</span><span class="p">,</span> <span class="n">E_BOX_TABLE</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="c1"># 2. 与子密钥异或</span>
+</span></span><span class="line"><span class="cl">    <span class="n">xored</span> <span class="o">=</span> <span class="n">xor</span><span class="p">(</span><span class="n">expanded_r</span><span class="p">,</span> <span class="n">subkey</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="c1"># 3. S盒代换 (48 -&gt; 32)</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># 将48位分为8组，每组6位</span>
+</span></span><span class="line"><span class="cl">    <span class="n">s_box_output</span> <span class="o">=</span> <span class="s2">&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">8</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="n">chunk</span> <span class="o">=</span> <span class="n">xored</span><span class="p">[</span><span class="n">i</span><span class="o">*</span><span class="mi">6</span> <span class="p">:</span> <span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="mi">6</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">        
+</span></span><span class="line"><span class="cl">        <span class="c1"># 行号：第1位和第6位</span>
+</span></span><span class="line"><span class="cl">        <span class="n">row</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">chunk</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">chunk</span><span class="p">[</span><span class="mi">5</span><span class="p">],</span> <span class="mi">2</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># 列号：第2,3,4,5位</span>
+</span></span><span class="line"><span class="cl">        <span class="n">col</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">chunk</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="mi">5</span><span class="p">],</span> <span class="mi">2</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        
+</span></span><span class="line"><span class="cl">        <span class="c1"># 查表</span>
+</span></span><span class="line"><span class="cl">        <span class="n">val</span> <span class="o">=</span> <span class="n">S_BOXES</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">row</span><span class="p">][</span><span class="n">col</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># 转为4位二进制</span>
+</span></span><span class="line"><span class="cl">        <span class="n">s_box_output</span> <span class="o">+=</span> <span class="nb">format</span><span class="p">(</span><span class="n">val</span><span class="p">,</span> <span class="s1">&#39;04b&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        
+</span></span><span class="line"><span class="cl">    <span class="c1"># 4. P盒置换 (32 -&gt; 32)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">p_box_output</span> <span class="o">=</span> <span class="n">permute</span><span class="p">(</span><span class="n">s_box_output</span><span class="p">,</span> <span class="n">P_BOX_TABLE</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">p_box_output</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">des_process</span><span class="p">(</span><span class="n">data_bin</span><span class="p">,</span> <span class="n">key_bin</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;encrypt&#39;</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;
+</span></span></span><span class="line"><span class="cl"><span class="s2">    DES 核心处理流程 (加密/解密共用)
+</span></span></span><span class="line"><span class="cl"><span class="s2">    data_bin: 64位数据
+</span></span></span><span class="line"><span class="cl"><span class="s2">    key_bin: 64位密钥
+</span></span></span><span class="line"><span class="cl"><span class="s2">    mode: &#39;encrypt&#39; 或 &#39;decrypt&#39;
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">action_name</span> <span class="o">=</span> <span class="s2">&#34;加密&#34;</span> <span class="k">if</span> <span class="n">mode</span> <span class="o">==</span> <span class="s1">&#39;encrypt&#39;</span> <span class="k">else</span> <span class="s2">&#34;解密&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;</span><span class="se">\n</span><span class="si">{</span><span class="s1">&#39;=&#39;</span><span class="o">*</span><span class="mi">20</span><span class="si">}</span><span class="s2"> 开始 DES </span><span class="si">{</span><span class="n">action_name</span><span class="si">}</span><span class="s2"> (单块) </span><span class="si">{</span><span class="s1">&#39;=&#39;</span><span class="o">*</span><span class="mi">20</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;输入数据 (Hex): </span><span class="si">{</span><span class="n">bin_to_hex</span><span class="p">(</span><span class="n">data_bin</span><span class="p">)</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;密钥     (Hex): </span><span class="si">{</span><span class="n">bin_to_hex</span><span class="p">(</span><span class="n">key_bin</span><span class="p">)</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1"># 1. 生成子密钥</span>
+</span></span><span class="line"><span class="cl">    <span class="n">subkeys</span> <span class="o">=</span> <span class="n">generate_subkeys</span><span class="p">(</span><span class="n">key_bin</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="n">verbose</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="c1"># 如果是解密，子密钥顺序反转</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">mode</span> <span class="o">==</span> <span class="s1">&#39;decrypt&#39;</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">subkeys</span> <span class="o">=</span> <span class="n">subkeys</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;</span><span class="se">\n</span><span class="s2">[注意] 解密模式：子密钥顺序已反转&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1"># 2. 初始置换 IP</span>
+</span></span><span class="line"><span class="cl">    <span class="n">ip_data</span> <span class="o">=</span> <span class="n">permute</span><span class="p">(</span><span class="n">data_bin</span><span class="p">,</span> <span class="n">IP_TABLE</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;</span><span class="se">\n</span><span class="s2">[初始置换 IP] 结果: </span><span class="si">{</span><span class="n">bin_to_hex</span><span class="p">(</span><span class="n">ip_data</span><span class="p">)</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1"># 将数据分为左右两部分 L0, R0</span>
+</span></span><span class="line"><span class="cl">    <span class="n">l</span> <span class="o">=</span> <span class="n">ip_data</span><span class="p">[:</span><span class="mi">32</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">    <span class="n">r</span> <span class="o">=</span> <span class="n">ip_data</span><span class="p">[</span><span class="mi">32</span><span class="p">:]</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;初始 L0: </span><span class="si">{</span><span class="n">bin_to_hex</span><span class="p">(</span><span class="n">l</span><span class="p">)</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;初始 R0: </span><span class="si">{</span><span class="n">bin_to_hex</span><span class="p">(</span><span class="n">r</span><span class="p">)</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;-&#34;</span> <span class="o">*</span> <span class="mi">60</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1"># 3. 16轮迭代</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">16</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="n">prev_l</span> <span class="o">=</span> <span class="n">l</span>
+</span></span><span class="line"><span class="cl">        <span class="n">prev_r</span> <span class="o">=</span> <span class="n">r</span>
+</span></span><span class="line"><span class="cl">        
+</span></span><span class="line"><span class="cl">        <span class="c1"># L(i) = R(i-1)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">l</span> <span class="o">=</span> <span class="n">prev_r</span>
+</span></span><span class="line"><span class="cl">        
+</span></span><span class="line"><span class="cl">        <span class="c1"># R(i) = L(i-1) XOR f(R(i-1), K(i))</span>
+</span></span><span class="line"><span class="cl">        <span class="n">f_res</span> <span class="o">=</span> <span class="n">f_function</span><span class="p">(</span><span class="n">prev_r</span><span class="p">,</span> <span class="n">subkeys</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">verbose</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">r</span> <span class="o">=</span> <span class="n">xor</span><span class="p">(</span><span class="n">prev_l</span><span class="p">,</span> <span class="n">f_res</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;Round </span><span class="si">{</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="si">:</span><span class="s2">2d</span><span class="si">}</span><span class="s2">:&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;  K</span><span class="si">{</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span> <span class="k">if</span> <span class="n">mode</span><span class="o">==</span><span class="s1">&#39;encrypt&#39;</span> <span class="k">else</span> <span class="mi">16</span><span class="o">-</span><span class="n">i</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">bin_to_hex</span><span class="p">(</span><span class="n">subkeys</span><span class="p">[</span><span class="n">i</span><span class="p">])</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;  L</span><span class="si">{</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">bin_to_hex</span><span class="p">(</span><span class="n">l</span><span class="p">)</span><span class="si">}</span><span class="s2"> (from old R)&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;  f(R,K): </span><span class="si">{</span><span class="n">bin_to_hex</span><span class="p">(</span><span class="n">f_res</span><span class="p">)</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;  R</span><span class="si">{</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">bin_to_hex</span><span class="p">(</span><span class="n">r</span><span class="p">)</span><span class="si">}</span><span class="s2"> (L XOR f)&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1"># 4. 32位互换</span>
+</span></span><span class="line"><span class="cl">    <span class="n">final_rl</span> <span class="o">=</span> <span class="n">r</span> <span class="o">+</span> <span class="n">l</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;-&#34;</span> <span class="o">*</span> <span class="mi">60</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;[32位互换] 结果 (R16 L16): </span><span class="si">{</span><span class="n">bin_to_hex</span><span class="p">(</span><span class="n">final_rl</span><span class="p">)</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1"># 5. 逆初始置换 IP^-1</span>
+</span></span><span class="line"><span class="cl">    <span class="n">cipher_bin</span> <span class="o">=</span> <span class="n">permute</span><span class="p">(</span><span class="n">final_rl</span><span class="p">,</span> <span class="n">IP_INV_TABLE</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;</span><span class="se">\n</span><span class="s2">[</span><span class="si">{</span><span class="n">action_name</span><span class="si">}</span><span class="s2">结果] (Hex): </span><span class="si">{</span><span class="n">bin_to_hex</span><span class="p">(</span><span class="n">cipher_bin</span><span class="p">)</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;</span><span class="si">{</span><span class="s1">&#39;=&#39;</span><span class="o">*</span><span class="mi">20</span><span class="si">}</span><span class="s2"> 结束 DES </span><span class="si">{</span><span class="n">action_name</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="s1">&#39;=&#39;</span><span class="o">*</span><span class="mi">20</span><span class="si">}</span><span class="se">\n</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">cipher_bin</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># =============================================================================</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># 高级接口 (支持不定长数据)</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># =============================================================================</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">des_encrypt_ecb</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;ECB 模式加密&#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">key</span> <span class="o">=</span> <span class="n">process_key</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">key_bin</span> <span class="o">=</span> <span class="n">str_to_bin</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="c1"># 1. 填充</span>
+</span></span><span class="line"><span class="cl">    <span class="n">text_padded</span> <span class="o">=</span> <span class="n">pkcs7_pad</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;原始长度: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">text</span><span class="p">)</span><span class="si">}</span><span class="s2">, 填充后长度: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">text_padded</span><span class="p">)</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="n">ciphertext_hex</span> <span class="o">=</span> <span class="s2">&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="c1"># 2. 分组处理</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">text_padded</span><span class="p">),</span> <span class="mi">8</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="n">block</span> <span class="o">=</span> <span class="n">text_padded</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">i</span><span class="o">+</span><span class="mi">8</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;</span><span class="se">\n</span><span class="s2">&gt;&gt;&gt; 处理第 </span><span class="si">{</span><span class="n">i</span><span class="o">//</span><span class="mi">8</span> <span class="o">+</span> <span class="mi">1</span><span class="si">}</span><span class="s2"> 块: </span><span class="si">{</span><span class="n">block</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">block_bin</span> <span class="o">=</span> <span class="n">str_to_bin</span><span class="p">(</span><span class="n">block</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">cipher_bin</span> <span class="o">=</span> <span class="n">des_process</span><span class="p">(</span><span class="n">block_bin</span><span class="p">,</span> <span class="n">key_bin</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;encrypt&#39;</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="n">verbose</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">ciphertext_hex</span> <span class="o">+=</span> <span class="n">bin_to_hex</span><span class="p">(</span><span class="n">cipher_bin</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">ciphertext_hex</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">des_decrypt_ecb</span><span class="p">(</span><span class="n">hex_str</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;ECB 模式解密&#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">key</span> <span class="o">=</span> <span class="n">process_key</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">key_bin</span> <span class="o">=</span> <span class="n">str_to_bin</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="n">plaintext</span> <span class="o">=</span> <span class="s2">&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="c1"># 1. 分组处理</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">hex_str</span><span class="p">),</span> <span class="mi">16</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="n">block_hex</span> <span class="o">=</span> <span class="n">hex_str</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">i</span><span class="o">+</span><span class="mi">16</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;</span><span class="se">\n</span><span class="s2">&gt;&gt;&gt; 处理第 </span><span class="si">{</span><span class="n">i</span><span class="o">//</span><span class="mi">16</span> <span class="o">+</span> <span class="mi">1</span><span class="si">}</span><span class="s2"> 块 (Hex): </span><span class="si">{</span><span class="n">block_hex</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">block_bin</span> <span class="o">=</span> <span class="n">hex_to_bin</span><span class="p">(</span><span class="n">block_hex</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">plain_bin</span> <span class="o">=</span> <span class="n">des_process</span><span class="p">(</span><span class="n">block_bin</span><span class="p">,</span> <span class="n">key_bin</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;decrypt&#39;</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="n">verbose</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">plaintext</span> <span class="o">+=</span> <span class="n">bin_to_str</span><span class="p">(</span><span class="n">plain_bin</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        
+</span></span><span class="line"><span class="cl">    <span class="c1"># 2. 去填充</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">pkcs7_unpad</span><span class="p">(</span><span class="n">plaintext</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># =============================================================================</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># 用户接口</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># =============================================================================</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># 示例：不定长数据和短密钥</span>
+</span></span><span class="line"><span class="cl">    <span class="n">raw_key</span> <span class="o">=</span> <span class="s2">&#34;secret&#34;</span>  <span class="c1"># 6字节 (不足8字节)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">raw_text</span> <span class="o">=</span> <span class="s2">&#34;hello fanshanng&#34;</span> <span class="c1"># 15字节</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;原始明文: </span><span class="si">{</span><span class="n">raw_text</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;原始密钥: </span><span class="si">{</span><span class="n">raw_key</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="c1"># 1. 加密</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;</span><span class="se">\n</span><span class="s2">开始加密...&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># verbose=False 避免打印太多细节，只看分组流程</span>
+</span></span><span class="line"><span class="cl">    <span class="n">cipher_hex</span> <span class="o">=</span> <span class="n">des_encrypt_ecb</span><span class="p">(</span><span class="n">raw_text</span><span class="p">,</span> <span class="n">raw_key</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;</span><span class="se">\n</span><span class="s2">最终密文 (Hex): </span><span class="si">{</span><span class="n">cipher_hex</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="c1"># 2. 解密</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;</span><span class="se">\n</span><span class="s2">开始解密...&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">decrypted_text</span> <span class="o">=</span> <span class="n">des_decrypt_ecb</span><span class="p">(</span><span class="n">cipher_hex</span><span class="p">,</span> <span class="n">raw_key</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;</span><span class="se">\n</span><span class="s2">最终验证:&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;  原始明文: </span><span class="si">{</span><span class="n">raw_text</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;  解密明文: </span><span class="si">{</span><span class="n">decrypted_text</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;  匹配成功: </span><span class="si">{</span><span class="n">raw_text</span> <span class="o">==</span> <span class="n">decrypted_text</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&#34;__main__&#34;</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">main</span><span class="p">()</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="7-附录运行结果示例">7. 附录：运行结果示例
+</h2><blockquote>
+<p>注意：运行日志保留了加密过程，实际使用中可以通过设置<code>verbose</code>的值来显示/隐藏。</p>
+</blockquote>
+<details>
+<summary>点击展开查看完整运行日志</summary>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">  1
+</span><span class="lnt">  2
+</span><span class="lnt">  3
+</span><span class="lnt">  4
+</span><span class="lnt">  5
+</span><span class="lnt">  6
+</span><span class="lnt">  7
+</span><span class="lnt">  8
+</span><span class="lnt">  9
+</span><span class="lnt"> 10
+</span><span class="lnt"> 11
+</span><span class="lnt"> 12
+</span><span class="lnt"> 13
+</span><span class="lnt"> 14
+</span><span class="lnt"> 15
+</span><span class="lnt"> 16
+</span><span class="lnt"> 17
+</span><span class="lnt"> 18
+</span><span class="lnt"> 19
+</span><span class="lnt"> 20
+</span><span class="lnt"> 21
+</span><span class="lnt"> 22
+</span><span class="lnt"> 23
+</span><span class="lnt"> 24
+</span><span class="lnt"> 25
+</span><span class="lnt"> 26
+</span><span class="lnt"> 27
+</span><span class="lnt"> 28
+</span><span class="lnt"> 29
+</span><span class="lnt"> 30
+</span><span class="lnt"> 31
+</span><span class="lnt"> 32
+</span><span class="lnt"> 33
+</span><span class="lnt"> 34
+</span><span class="lnt"> 35
+</span><span class="lnt"> 36
+</span><span class="lnt"> 37
+</span><span class="lnt"> 38
+</span><span class="lnt"> 39
+</span><span class="lnt"> 40
+</span><span class="lnt"> 41
+</span><span class="lnt"> 42
+</span><span class="lnt"> 43
+</span><span class="lnt"> 44
+</span><span class="lnt"> 45
+</span><span class="lnt"> 46
+</span><span class="lnt"> 47
+</span><span class="lnt"> 48
+</span><span class="lnt"> 49
+</span><span class="lnt"> 50
+</span><span class="lnt"> 51
+</span><span class="lnt"> 52
+</span><span class="lnt"> 53
+</span><span class="lnt"> 54
+</span><span class="lnt"> 55
+</span><span class="lnt"> 56
+</span><span class="lnt"> 57
+</span><span class="lnt"> 58
+</span><span class="lnt"> 59
+</span><span class="lnt"> 60
+</span><span class="lnt"> 61
+</span><span class="lnt"> 62
+</span><span class="lnt"> 63
+</span><span class="lnt"> 64
+</span><span class="lnt"> 65
+</span><span class="lnt"> 66
+</span><span class="lnt"> 67
+</span><span class="lnt"> 68
+</span><span class="lnt"> 69
+</span><span class="lnt"> 70
+</span><span class="lnt"> 71
+</span><span class="lnt"> 72
+</span><span class="lnt"> 73
+</span><span class="lnt"> 74
+</span><span class="lnt"> 75
+</span><span class="lnt"> 76
+</span><span class="lnt"> 77
+</span><span class="lnt"> 78
+</span><span class="lnt"> 79
+</span><span class="lnt"> 80
+</span><span class="lnt"> 81
+</span><span class="lnt"> 82
+</span><span class="lnt"> 83
+</span><span class="lnt"> 84
+</span><span class="lnt"> 85
+</span><span class="lnt"> 86
+</span><span class="lnt"> 87
+</span><span class="lnt"> 88
+</span><span class="lnt"> 89
+</span><span class="lnt"> 90
+</span><span class="lnt"> 91
+</span><span class="lnt"> 92
+</span><span class="lnt"> 93
+</span><span class="lnt"> 94
+</span><span class="lnt"> 95
+</span><span class="lnt"> 96
+</span><span class="lnt"> 97
+</span><span class="lnt"> 98
+</span><span class="lnt"> 99
+</span><span class="lnt">100
+</span><span class="lnt">101
+</span><span class="lnt">102
+</span><span class="lnt">103
+</span><span class="lnt">104
+</span><span class="lnt">105
+</span><span class="lnt">106
+</span><span class="lnt">107
+</span><span class="lnt">108
+</span><span class="lnt">109
+</span><span class="lnt">110
+</span><span class="lnt">111
+</span><span class="lnt">112
+</span><span class="lnt">113
+</span><span class="lnt">114
+</span><span class="lnt">115
+</span><span class="lnt">116
+</span><span class="lnt">117
+</span><span class="lnt">118
+</span><span class="lnt">119
+</span><span class="lnt">120
+</span><span class="lnt">121
+</span><span class="lnt">122
+</span><span class="lnt">123
+</span><span class="lnt">124
+</span><span class="lnt">125
+</span><span class="lnt">126
+</span><span class="lnt">127
+</span><span class="lnt">128
+</span><span class="lnt">129
+</span><span class="lnt">130
+</span><span class="lnt">131
+</span><span class="lnt">132
+</span><span class="lnt">133
+</span><span class="lnt">134
+</span><span class="lnt">135
+</span><span class="lnt">136
+</span><span class="lnt">137
+</span><span class="lnt">138
+</span><span class="lnt">139
+</span><span class="lnt">140
+</span><span class="lnt">141
+</span><span class="lnt">142
+</span><span class="lnt">143
+</span><span class="lnt">144
+</span><span class="lnt">145
+</span><span class="lnt">146
+</span><span class="lnt">147
+</span><span class="lnt">148
+</span><span class="lnt">149
+</span><span class="lnt">150
+</span><span class="lnt">151
+</span><span class="lnt">152
+</span><span class="lnt">153
+</span><span class="lnt">154
+</span><span class="lnt">155
+</span><span class="lnt">156
+</span><span class="lnt">157
+</span><span class="lnt">158
+</span><span class="lnt">159
+</span><span class="lnt">160
+</span><span class="lnt">161
+</span><span class="lnt">162
+</span><span class="lnt">163
+</span><span class="lnt">164
+</span><span class="lnt">165
+</span><span class="lnt">166
+</span><span class="lnt">167
+</span><span class="lnt">168
+</span><span class="lnt">169
+</span><span class="lnt">170
+</span><span class="lnt">171
+</span><span class="lnt">172
+</span><span class="lnt">173
+</span><span class="lnt">174
+</span><span class="lnt">175
+</span><span class="lnt">176
+</span><span class="lnt">177
+</span><span class="lnt">178
+</span><span class="lnt">179
+</span><span class="lnt">180
+</span><span class="lnt">181
+</span><span class="lnt">182
+</span><span class="lnt">183
+</span><span class="lnt">184
+</span><span class="lnt">185
+</span><span class="lnt">186
+</span><span class="lnt">187
+</span><span class="lnt">188
+</span><span class="lnt">189
+</span><span class="lnt">190
+</span><span class="lnt">191
+</span><span class="lnt">192
+</span><span class="lnt">193
+</span><span class="lnt">194
+</span><span class="lnt">195
+</span><span class="lnt">196
+</span><span class="lnt">197
+</span><span class="lnt">198
+</span><span class="lnt">199
+</span><span class="lnt">200
+</span><span class="lnt">201
+</span><span class="lnt">202
+</span><span class="lnt">203
+</span><span class="lnt">204
+</span><span class="lnt">205
+</span><span class="lnt">206
+</span><span class="lnt">207
+</span><span class="lnt">208
+</span><span class="lnt">209
+</span><span class="lnt">210
+</span><span class="lnt">211
+</span><span class="lnt">212
+</span><span class="lnt">213
+</span><span class="lnt">214
+</span><span class="lnt">215
+</span><span class="lnt">216
+</span><span class="lnt">217
+</span><span class="lnt">218
+</span><span class="lnt">219
+</span><span class="lnt">220
+</span><span class="lnt">221
+</span><span class="lnt">222
+</span><span class="lnt">223
+</span><span class="lnt">224
+</span><span class="lnt">225
+</span><span class="lnt">226
+</span><span class="lnt">227
+</span><span class="lnt">228
+</span><span class="lnt">229
+</span><span class="lnt">230
+</span><span class="lnt">231
+</span><span class="lnt">232
+</span><span class="lnt">233
+</span><span class="lnt">234
+</span><span class="lnt">235
+</span><span class="lnt">236
+</span><span class="lnt">237
+</span><span class="lnt">238
+</span><span class="lnt">239
+</span><span class="lnt">240
+</span><span class="lnt">241
+</span><span class="lnt">242
+</span><span class="lnt">243
+</span><span class="lnt">244
+</span><span class="lnt">245
+</span><span class="lnt">246
+</span><span class="lnt">247
+</span><span class="lnt">248
+</span><span class="lnt">249
+</span><span class="lnt">250
+</span><span class="lnt">251
+</span><span class="lnt">252
+</span><span class="lnt">253
+</span><span class="lnt">254
+</span><span class="lnt">255
+</span><span class="lnt">256
+</span><span class="lnt">257
+</span><span class="lnt">258
+</span><span class="lnt">259
+</span><span class="lnt">260
+</span><span class="lnt">261
+</span><span class="lnt">262
+</span><span class="lnt">263
+</span><span class="lnt">264
+</span><span class="lnt">265
+</span><span class="lnt">266
+</span><span class="lnt">267
+</span><span class="lnt">268
+</span><span class="lnt">269
+</span><span class="lnt">270
+</span><span class="lnt">271
+</span><span class="lnt">272
+</span><span class="lnt">273
+</span><span class="lnt">274
+</span><span class="lnt">275
+</span><span class="lnt">276
+</span><span class="lnt">277
+</span><span class="lnt">278
+</span><span class="lnt">279
+</span><span class="lnt">280
+</span><span class="lnt">281
+</span><span class="lnt">282
+</span><span class="lnt">283
+</span><span class="lnt">284
+</span><span class="lnt">285
+</span><span class="lnt">286
+</span><span class="lnt">287
+</span><span class="lnt">288
+</span><span class="lnt">289
+</span><span class="lnt">290
+</span><span class="lnt">291
+</span><span class="lnt">292
+</span><span class="lnt">293
+</span><span class="lnt">294
+</span><span class="lnt">295
+</span><span class="lnt">296
+</span><span class="lnt">297
+</span><span class="lnt">298
+</span><span class="lnt">299
+</span><span class="lnt">300
+</span><span class="lnt">301
+</span><span class="lnt">302
+</span><span class="lnt">303
+</span><span class="lnt">304
+</span><span class="lnt">305
+</span><span class="lnt">306
+</span><span class="lnt">307
+</span><span class="lnt">308
+</span><span class="lnt">309
+</span><span class="lnt">310
+</span><span class="lnt">311
+</span><span class="lnt">312
+</span><span class="lnt">313
+</span><span class="lnt">314
+</span><span class="lnt">315
+</span><span class="lnt">316
+</span><span class="lnt">317
+</span><span class="lnt">318
+</span><span class="lnt">319
+</span><span class="lnt">320
+</span><span class="lnt">321
+</span><span class="lnt">322
+</span><span class="lnt">323
+</span><span class="lnt">324
+</span><span class="lnt">325
+</span><span class="lnt">326
+</span><span class="lnt">327
+</span><span class="lnt">328
+</span><span class="lnt">329
+</span><span class="lnt">330
+</span><span class="lnt">331
+</span><span class="lnt">332
+</span><span class="lnt">333
+</span><span class="lnt">334
+</span><span class="lnt">335
+</span><span class="lnt">336
+</span><span class="lnt">337
+</span><span class="lnt">338
+</span><span class="lnt">339
+</span><span class="lnt">340
+</span><span class="lnt">341
+</span><span class="lnt">342
+</span><span class="lnt">343
+</span><span class="lnt">344
+</span><span class="lnt">345
+</span><span class="lnt">346
+</span><span class="lnt">347
+</span><span class="lnt">348
+</span><span class="lnt">349
+</span><span class="lnt">350
+</span><span class="lnt">351
+</span><span class="lnt">352
+</span><span class="lnt">353
+</span><span class="lnt">354
+</span><span class="lnt">355
+</span><span class="lnt">356
+</span><span class="lnt">357
+</span><span class="lnt">358
+</span><span class="lnt">359
+</span><span class="lnt">360
+</span><span class="lnt">361
+</span><span class="lnt">362
+</span><span class="lnt">363
+</span><span class="lnt">364
+</span><span class="lnt">365
+</span><span class="lnt">366
+</span><span class="lnt">367
+</span><span class="lnt">368
+</span><span class="lnt">369
+</span><span class="lnt">370
+</span><span class="lnt">371
+</span><span class="lnt">372
+</span><span class="lnt">373
+</span><span class="lnt">374
+</span><span class="lnt">375
+</span><span class="lnt">376
+</span><span class="lnt">377
+</span><span class="lnt">378
+</span><span class="lnt">379
+</span><span class="lnt">380
+</span><span class="lnt">381
+</span><span class="lnt">382
+</span><span class="lnt">383
+</span><span class="lnt">384
+</span><span class="lnt">385
+</span><span class="lnt">386
+</span><span class="lnt">387
+</span><span class="lnt">388
+</span><span class="lnt">389
+</span><span class="lnt">390
+</span><span class="lnt">391
+</span><span class="lnt">392
+</span><span class="lnt">393
+</span><span class="lnt">394
+</span><span class="lnt">395
+</span><span class="lnt">396
+</span><span class="lnt">397
+</span><span class="lnt">398
+</span><span class="lnt">399
+</span><span class="lnt">400
+</span><span class="lnt">401
+</span><span class="lnt">402
+</span><span class="lnt">403
+</span><span class="lnt">404
+</span><span class="lnt">405
+</span><span class="lnt">406
+</span><span class="lnt">407
+</span><span class="lnt">408
+</span><span class="lnt">409
+</span><span class="lnt">410
+</span><span class="lnt">411
+</span><span class="lnt">412
+</span><span class="lnt">413
+</span><span class="lnt">414
+</span><span class="lnt">415
+</span><span class="lnt">416
+</span><span class="lnt">417
+</span><span class="lnt">418
+</span><span class="lnt">419
+</span><span class="lnt">420
+</span><span class="lnt">421
+</span><span class="lnt">422
+</span><span class="lnt">423
+</span><span class="lnt">424
+</span><span class="lnt">425
+</span><span class="lnt">426
+</span><span class="lnt">427
+</span><span class="lnt">428
+</span><span class="lnt">429
+</span><span class="lnt">430
+</span><span class="lnt">431
+</span><span class="lnt">432
+</span><span class="lnt">433
+</span><span class="lnt">434
+</span><span class="lnt">435
+</span><span class="lnt">436
+</span><span class="lnt">437
+</span><span class="lnt">438
+</span><span class="lnt">439
+</span><span class="lnt">440
+</span><span class="lnt">441
+</span><span class="lnt">442
+</span><span class="lnt">443
+</span><span class="lnt">444
+</span><span class="lnt">445
+</span><span class="lnt">446
+</span><span class="lnt">447
+</span><span class="lnt">448
+</span><span class="lnt">449
+</span><span class="lnt">450
+</span><span class="lnt">451
+</span><span class="lnt">452
+</span><span class="lnt">453
+</span><span class="lnt">454
+</span><span class="lnt">455
+</span><span class="lnt">456
+</span><span class="lnt">457
+</span><span class="lnt">458
+</span><span class="lnt">459
+</span><span class="lnt">460
+</span><span class="lnt">461
+</span><span class="lnt">462
+</span><span class="lnt">463
+</span><span class="lnt">464
+</span><span class="lnt">465
+</span><span class="lnt">466
+</span><span class="lnt">467
+</span><span class="lnt">468
+</span><span class="lnt">469
+</span><span class="lnt">470
+</span><span class="lnt">471
+</span><span class="lnt">472
+</span><span class="lnt">473
+</span><span class="lnt">474
+</span><span class="lnt">475
+</span><span class="lnt">476
+</span><span class="lnt">477
+</span><span class="lnt">478
+</span><span class="lnt">479
+</span><span class="lnt">480
+</span><span class="lnt">481
+</span><span class="lnt">482
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">原始明文: hello fanshanng
+</span></span><span class="line"><span class="cl">原始密钥: secret
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">开始加密...
+</span></span><span class="line"><span class="cl">原始长度: 15, 填充后长度: 16
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">&gt;&gt;&gt; 处理第 1 块: hello fa
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">==================== 开始 DES 加密 (单块) ===================
+</span></span><span class="line"><span class="cl">=                                                            输入数据 (Hex): 68656C6C6F206661
+</span></span><span class="line"><span class="cl">密钥     (Hex): 7365637265740000
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">[密钥生成] 原始密钥 (64位): 011100110110010101100011011100100
+</span></span><span class="line"><span class="cl">1100101011101000000000000000000                              [密钥生成] PC-1置换后 (56位): 0000000000111111001111110010000
+</span></span><span class="line"><span class="cl">0110100110010000000001001                                      Round  1: 左移 1 位 -&gt; 子密钥: A0BE86442211
+</span></span><span class="line"><span class="cl">  Round  2: 左移 1 位 -&gt; 子密钥: E03606B08081
+</span></span><span class="line"><span class="cl">  Round  3: 左移 2 位 -&gt; 子密钥: 609E74420607
+</span></span><span class="line"><span class="cl">  Round  4: 左移 2 位 -&gt; 子密钥: C4F0721E2188
+</span></span><span class="line"><span class="cl">  Round  5: 左移 2 位 -&gt; 子密钥: A6C772205141
+</span></span><span class="line"><span class="cl">  Round  6: 左移 2 位 -&gt; 子密钥: EE530342A022
+</span></span><span class="line"><span class="cl">  Round  7: 左移 2 位 -&gt; 子密钥: 2B9359E40D08
+</span></span><span class="line"><span class="cl">  Round  8: 左移 2 位 -&gt; 子密钥: 0D50DB08125A
+</span></span><span class="line"><span class="cl">  Round  9: 左移 1 位 -&gt; 子密钥: 1D43D8C80560
+</span></span><span class="line"><span class="cl">  Round 10: 左移 2 位 -&gt; 子密钥: 16599908CA0C
+</span></span><span class="line"><span class="cl">  Round 11: 左移 2 位 -&gt; 子密钥: 1F2945505490
+</span></span><span class="line"><span class="cl">  Round 12: 左移 2 位 -&gt; 子密钥: 0B6C8D890029
+</span></span><span class="line"><span class="cl">  Round 13: 左移 2 位 -&gt; 子密钥: 5925AC827A00
+</span></span><span class="line"><span class="cl">  Round 14: 左移 2 位 -&gt; 子密钥: D08CA9300334
+</span></span><span class="line"><span class="cl">  Round 15: 左移 2 位 -&gt; 子密钥: D1AA26910882
+</span></span><span class="line"><span class="cl">  Round 16: 左移 1 位 -&gt; 子密钥: B0AE2E0123C4
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">[初始置换 IP] 结果: DF005E9200FF1D50
+</span></span><span class="line"><span class="cl">初始 L0: DF005E92
+</span></span><span class="line"><span class="cl">初始 R0: 00FF1D50
+</span></span><span class="line"><span class="cl">------------------------------------------------------------ 
+</span></span><span class="line"><span class="cl">Round  1:
+</span></span><span class="line"><span class="cl">  K1: A0BE86442211
+</span></span><span class="line"><span class="cl">  L1: 00FF1D50 (from old R)
+</span></span><span class="line"><span class="cl">  f(R,K): ED9BF922
+</span></span><span class="line"><span class="cl">  R1: 329BA7B0 (L XOR f)
+</span></span><span class="line"><span class="cl">Round  2:
+</span></span><span class="line"><span class="cl">  K2: E03606B08081
+</span></span><span class="line"><span class="cl">  L2: 329BA7B0 (from old R)
+</span></span><span class="line"><span class="cl">  f(R,K): E13F4440
+</span></span><span class="line"><span class="cl">  R2: E1C05910 (L XOR f)
+</span></span><span class="line"><span class="cl">Round  3:
+</span></span><span class="line"><span class="cl">  K3: 609E74420607
+</span></span><span class="line"><span class="cl">  L3: E1C05910 (from old R)
+</span></span><span class="line"><span class="cl">  f(R,K): F7D9E90A
+</span></span><span class="line"><span class="cl">  R3: C5424EBA (L XOR f)
+</span></span><span class="line"><span class="cl">Round  4:
+</span></span><span class="line"><span class="cl">  K4: C4F0721E2188
+</span></span><span class="line"><span class="cl">  L4: C5424EBA (from old R)
+</span></span><span class="line"><span class="cl">  f(R,K): 1057B4FD
+</span></span><span class="line"><span class="cl">  R4: F197EDED (L XOR f)
+</span></span><span class="line"><span class="cl">Round  5:
+</span></span><span class="line"><span class="cl">  K5: A6C772205141
+</span></span><span class="line"><span class="cl">  L5: F197EDED (from old R)
+</span></span><span class="line"><span class="cl">  f(R,K): 54E93256
+</span></span><span class="line"><span class="cl">  R5: 91AB7CEC (L XOR f)
+</span></span><span class="line"><span class="cl">Round  6:
+</span></span><span class="line"><span class="cl">  K6: EE530342A022
+</span></span><span class="line"><span class="cl">  L6: 91AB7CEC (from old R)
+</span></span><span class="line"><span class="cl">  f(R,K): 6448A9B5
+</span></span><span class="line"><span class="cl">  R6: 95DF4458 (L XOR f)
+</span></span><span class="line"><span class="cl">Round  7:
+</span></span><span class="line"><span class="cl">  K7: 2B9359E40D08
+</span></span><span class="line"><span class="cl">  L7: 95DF4458 (from old R)
+</span></span><span class="line"><span class="cl">  f(R,K): 7057F913
+</span></span><span class="line"><span class="cl">  R7: E1FC85FF (L XOR f)
+</span></span><span class="line"><span class="cl">Round  8:
+</span></span><span class="line"><span class="cl">  K8: 0D50DB08125A
+</span></span><span class="line"><span class="cl">  L8: E1FC85FF (from old R)
+</span></span><span class="line"><span class="cl">  f(R,K): 28EFD137
+</span></span><span class="line"><span class="cl">  R8: BD30956F (L XOR f)
+</span></span><span class="line"><span class="cl">Round  9:
+</span></span><span class="line"><span class="cl">  K9: 1D43D8C80560
+</span></span><span class="line"><span class="cl">  L9: BD30956F (from old R)
+</span></span><span class="line"><span class="cl">  f(R,K): 1887DA46
+</span></span><span class="line"><span class="cl">  R9: F97B5FB9 (L XOR f)
+</span></span><span class="line"><span class="cl">Round 10:
+</span></span><span class="line"><span class="cl">  K10: 16599908CA0C
+</span></span><span class="line"><span class="cl">  L10: F97B5FB9 (from old R)
+</span></span><span class="line"><span class="cl">  f(R,K): 7CBA0E4C
+</span></span><span class="line"><span class="cl">  R10: C18A9B23 (L XOR f)
+</span></span><span class="line"><span class="cl">Round 11:
+</span></span><span class="line"><span class="cl">  K11: 1F2945505490
+</span></span><span class="line"><span class="cl">  L11: C18A9B23 (from old R)
+</span></span><span class="line"><span class="cl">  f(R,K): D9AFC90B
+</span></span><span class="line"><span class="cl">  R11: 20D496B2 (L XOR f)
+</span></span><span class="line"><span class="cl">Round 12:
+</span></span><span class="line"><span class="cl">  K12: 0B6C8D890029
+</span></span><span class="line"><span class="cl">  L12: 20D496B2 (from old R)
+</span></span><span class="line"><span class="cl">  f(R,K): B31E0DF2
+</span></span><span class="line"><span class="cl">  R12: 729496D1 (L XOR f)
+</span></span><span class="line"><span class="cl">Round 13:
+</span></span><span class="line"><span class="cl">  K13: 5925AC827A00
+</span></span><span class="line"><span class="cl">  L13: 729496D1 (from old R)
+</span></span><span class="line"><span class="cl">  f(R,K): AF7A0F53
+</span></span><span class="line"><span class="cl">  R13: 8FAE99E1 (L XOR f)
+</span></span><span class="line"><span class="cl">Round 14:
+</span></span><span class="line"><span class="cl">  K14: D08CA9300334
+</span></span><span class="line"><span class="cl">  L14: 8FAE99E1 (from old R)
+</span></span><span class="line"><span class="cl">  f(R,K): D46C878B
+</span></span><span class="line"><span class="cl">  R14: A6F8115A (L XOR f)
+</span></span><span class="line"><span class="cl">Round 15:
+</span></span><span class="line"><span class="cl">  K15: D1AA26910882
+</span></span><span class="line"><span class="cl">  L15: A6F8115A (from old R)
+</span></span><span class="line"><span class="cl">  f(R,K): E5189084
+</span></span><span class="line"><span class="cl">  R15: 6AB60965 (L XOR f)
+</span></span><span class="line"><span class="cl">Round 16:
+</span></span><span class="line"><span class="cl">  K16: B0AE2E0123C4
+</span></span><span class="line"><span class="cl">  L16: 6AB60965 (from old R)
+</span></span><span class="line"><span class="cl">  f(R,K): 93045CD9
+</span></span><span class="line"><span class="cl">  R16: 35FC4D83 (L XOR f)
+</span></span><span class="line"><span class="cl">------------------------------------------------------------ 
+</span></span><span class="line"><span class="cl">[32位互换] 结果 (R16 L16): 35FC4D836AB60965
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">[加密结果] (Hex): 4FA1769C70F29631
+</span></span><span class="line"><span class="cl">==================== 结束 DES 加密 ====================      
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">&gt;&gt;&gt; 处理第 2 块: nshanng
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">==================== 开始 DES 加密 (单块) ===================
+</span></span><span class="line"><span class="cl">=                                                            输入数据 (Hex): 6E7368616E6E6701
+</span></span><span class="line"><span class="cl">密钥     (Hex): 7365637265740000
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">[密钥生成] 原始密钥 (64位): 011100110110010101100011011100100
+</span></span><span class="line"><span class="cl">1100101011101000000000000000000                              [密钥生成] PC-1置换后 (56位): 0000000000111111001111110010000
+</span></span><span class="line"><span class="cl">0110100110010000000001001                                      Round  1: 左移 1 位 -&gt; 子密钥: A0BE86442211
+</span></span><span class="line"><span class="cl">  Round  2: 左移 1 位 -&gt; 子密钥: E03606B08081
+</span></span><span class="line"><span class="cl">  Round  3: 左移 2 位 -&gt; 子密钥: 609E74420607
+</span></span><span class="line"><span class="cl">  Round  4: 左移 2 位 -&gt; 子密钥: C4F0721E2188
+</span></span><span class="line"><span class="cl">  Round  5: 左移 2 位 -&gt; 子密钥: A6C772205141
+</span></span><span class="line"><span class="cl">  Round  6: 左移 2 位 -&gt; 子密钥: EE530342A022
+</span></span><span class="line"><span class="cl">  Round  7: 左移 2 位 -&gt; 子密钥: 2B9359E40D08
+</span></span><span class="line"><span class="cl">  Round  8: 左移 2 位 -&gt; 子密钥: 0D50DB08125A
+</span></span><span class="line"><span class="cl">  Round  9: 左移 1 位 -&gt; 子密钥: 1D43D8C80560
+</span></span><span class="line"><span class="cl">  Round 10: 左移 2 位 -&gt; 子密钥: 16599908CA0C
+</span></span><span class="line"><span class="cl">  Round 11: 左移 2 位 -&gt; 子密钥: 1F2945505490
+</span></span><span class="line"><span class="cl">  Round 12: 左移 2 位 -&gt; 子密钥: 0B6C8D890029
+</span></span><span class="line"><span class="cl">  Round 13: 左移 2 位 -&gt; 子密钥: 5925AC827A00
+</span></span><span class="line"><span class="cl">  Round 14: 左移 2 位 -&gt; 子密钥: D08CA9300334
+</span></span><span class="line"><span class="cl">  Round 15: 左移 2 位 -&gt; 子密钥: D1AA26910882
+</span></span><span class="line"><span class="cl">  Round 16: 左移 1 位 -&gt; 子密钥: B0AE2E0123C4
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">[初始置换 IP] 结果: 7F0271CA007F3573
+</span></span><span class="line"><span class="cl">初始 L0: 7F0271CA
+</span></span><span class="line"><span class="cl">初始 R0: 007F3573
+</span></span><span class="line"><span class="cl">------------------------------------------------------------ 
+</span></span><span class="line"><span class="cl">Round  1:
+</span></span><span class="line"><span class="cl">  K1: A0BE86442211
+</span></span><span class="line"><span class="cl">  L1: 007F3573 (from old R)
+</span></span><span class="line"><span class="cl">  f(R,K): E3311305
+</span></span><span class="line"><span class="cl">  R1: 9C3362CF (L XOR f)
+</span></span><span class="line"><span class="cl">Round  2:
+</span></span><span class="line"><span class="cl">  K2: E03606B08081
+</span></span><span class="line"><span class="cl">  L2: 9C3362CF (from old R)
+</span></span><span class="line"><span class="cl">  f(R,K): 12526FF1
+</span></span><span class="line"><span class="cl">  R2: 122D5A82 (L XOR f)
+</span></span><span class="line"><span class="cl">Round  3:
+</span></span><span class="line"><span class="cl">  K3: 609E74420607
+</span></span><span class="line"><span class="cl">  L3: 122D5A82 (from old R)
+</span></span><span class="line"><span class="cl">  f(R,K): 9A973D7F
+</span></span><span class="line"><span class="cl">  R3: 06A45FB0 (L XOR f)
+</span></span><span class="line"><span class="cl">Round  4:
+</span></span><span class="line"><span class="cl">  K4: C4F0721E2188
+</span></span><span class="line"><span class="cl">  L4: 06A45FB0 (from old R)
+</span></span><span class="line"><span class="cl">  f(R,K): 2D61EC83
+</span></span><span class="line"><span class="cl">  R4: 3F4CB601 (L XOR f)
+</span></span><span class="line"><span class="cl">Round  5:
+</span></span><span class="line"><span class="cl">  K5: A6C772205141
+</span></span><span class="line"><span class="cl">  L5: 3F4CB601 (from old R)
+</span></span><span class="line"><span class="cl">  f(R,K): FB826C35
+</span></span><span class="line"><span class="cl">  R5: FD263385 (L XOR f)
+</span></span><span class="line"><span class="cl">Round  6:
+</span></span><span class="line"><span class="cl">  K6: EE530342A022
+</span></span><span class="line"><span class="cl">  L6: FD263385 (from old R)
+</span></span><span class="line"><span class="cl">  f(R,K): B1C4E5B3
+</span></span><span class="line"><span class="cl">  R6: 8E8853B2 (L XOR f)
+</span></span><span class="line"><span class="cl">Round  7:
+</span></span><span class="line"><span class="cl">  K7: 2B9359E40D08
+</span></span><span class="line"><span class="cl">  L7: 8E8853B2 (from old R)
+</span></span><span class="line"><span class="cl">  f(R,K): 7B44D49F
+</span></span><span class="line"><span class="cl">  R7: 8662E71A (L XOR f)
+</span></span><span class="line"><span class="cl">Round  8:
+</span></span><span class="line"><span class="cl">  K8: 0D50DB08125A
+</span></span><span class="line"><span class="cl">  L8: 8662E71A (from old R)
+</span></span><span class="line"><span class="cl">  f(R,K): EB40BF7C
+</span></span><span class="line"><span class="cl">  R8: 65C8ECCE (L XOR f)
+</span></span><span class="line"><span class="cl">Round  9:
+</span></span><span class="line"><span class="cl">  K9: 1D43D8C80560
+</span></span><span class="line"><span class="cl">  L9: 65C8ECCE (from old R)
+</span></span><span class="line"><span class="cl">  f(R,K): 21455B31
+</span></span><span class="line"><span class="cl">  R9: A727BC2B (L XOR f)
+</span></span><span class="line"><span class="cl">Round 10:
+</span></span><span class="line"><span class="cl">  K10: 16599908CA0C
+</span></span><span class="line"><span class="cl">  L10: A727BC2B (from old R)
+</span></span><span class="line"><span class="cl">  f(R,K): C80AD43B
+</span></span><span class="line"><span class="cl">  R10: ADC238F5 (L XOR f)
+</span></span><span class="line"><span class="cl">Round 11:
+</span></span><span class="line"><span class="cl">  K11: 1F2945505490
+</span></span><span class="line"><span class="cl">  L11: ADC238F5 (from old R)
+</span></span><span class="line"><span class="cl">  f(R,K): C481D96D
+</span></span><span class="line"><span class="cl">  R11: 63A66546 (L XOR f)
+</span></span><span class="line"><span class="cl">Round 12:
+</span></span><span class="line"><span class="cl">  K12: 0B6C8D890029
+</span></span><span class="line"><span class="cl">  L12: 63A66546 (from old R)
+</span></span><span class="line"><span class="cl">  f(R,K): C9BB716D
+</span></span><span class="line"><span class="cl">  R12: 64794998 (L XOR f)
+</span></span><span class="line"><span class="cl">Round 13:
+</span></span><span class="line"><span class="cl">  K13: 5925AC827A00
+</span></span><span class="line"><span class="cl">  L13: 64794998 (from old R)
+</span></span><span class="line"><span class="cl">  f(R,K): 82D5154B
+</span></span><span class="line"><span class="cl">  R13: E173700D (L XOR f)
+</span></span><span class="line"><span class="cl">Round 14:
+</span></span><span class="line"><span class="cl">  K14: D08CA9300334
+</span></span><span class="line"><span class="cl">  L14: E173700D (from old R)
+</span></span><span class="line"><span class="cl">  f(R,K): DA486AA4
+</span></span><span class="line"><span class="cl">  R14: BE31233C (L XOR f)
+</span></span><span class="line"><span class="cl">Round 15:
+</span></span><span class="line"><span class="cl">  K15: D1AA26910882
+</span></span><span class="line"><span class="cl">  L15: BE31233C (from old R)
+</span></span><span class="line"><span class="cl">  f(R,K): 42C8DCE9
+</span></span><span class="line"><span class="cl">  R15: A3BBACE4 (L XOR f)
+</span></span><span class="line"><span class="cl">Round 16:
+</span></span><span class="line"><span class="cl">  K16: B0AE2E0123C4
+</span></span><span class="line"><span class="cl">  L16: A3BBACE4 (from old R)
+</span></span><span class="line"><span class="cl">  f(R,K): 920A0F2E
+</span></span><span class="line"><span class="cl">  R16: 2C3B2C12 (L XOR f)
+</span></span><span class="line"><span class="cl">------------------------------------------------------------ 
+</span></span><span class="line"><span class="cl">[32位互换] 结果 (R16 L16): 2C3B2C12A3BBACE4
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">[加密结果] (Hex): B0B14E7C31FE02AA
+</span></span><span class="line"><span class="cl">==================== 结束 DES 加密 ====================      
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">最终密文 (Hex): 4FA1769C70F29631B0B14E7C31FE02AA
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">开始解密...
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">&gt;&gt;&gt; 处理第 1 块 (Hex): 4FA1769C70F29631
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">==================== 开始 DES 解密 (单块) ===================
+</span></span><span class="line"><span class="cl">=                                                            输入数据 (Hex): 4FA1769C70F29631
+</span></span><span class="line"><span class="cl">密钥     (Hex): 7365637265740000
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">[密钥生成] 原始密钥 (64位): 011100110110010101100011011100100
+</span></span><span class="line"><span class="cl">1100101011101000000000000000000                              [密钥生成] PC-1置换后 (56位): 0000000000111111001111110010000
+</span></span><span class="line"><span class="cl">0110100110010000000001001                                      Round  1: 左移 1 位 -&gt; 子密钥: A0BE86442211
+</span></span><span class="line"><span class="cl">  Round  2: 左移 1 位 -&gt; 子密钥: E03606B08081
+</span></span><span class="line"><span class="cl">  Round  3: 左移 2 位 -&gt; 子密钥: 609E74420607
+</span></span><span class="line"><span class="cl">  Round  4: 左移 2 位 -&gt; 子密钥: C4F0721E2188
+</span></span><span class="line"><span class="cl">  Round  5: 左移 2 位 -&gt; 子密钥: A6C772205141
+</span></span><span class="line"><span class="cl">  Round  6: 左移 2 位 -&gt; 子密钥: EE530342A022
+</span></span><span class="line"><span class="cl">  Round  7: 左移 2 位 -&gt; 子密钥: 2B9359E40D08
+</span></span><span class="line"><span class="cl">  Round  8: 左移 2 位 -&gt; 子密钥: 0D50DB08125A
+</span></span><span class="line"><span class="cl">  Round  9: 左移 1 位 -&gt; 子密钥: 1D43D8C80560
+</span></span><span class="line"><span class="cl">  Round 10: 左移 2 位 -&gt; 子密钥: 16599908CA0C
+</span></span><span class="line"><span class="cl">  Round 11: 左移 2 位 -&gt; 子密钥: 1F2945505490
+</span></span><span class="line"><span class="cl">  Round 12: 左移 2 位 -&gt; 子密钥: 0B6C8D890029
+</span></span><span class="line"><span class="cl">  Round 13: 左移 2 位 -&gt; 子密钥: 5925AC827A00
+</span></span><span class="line"><span class="cl">  Round 14: 左移 2 位 -&gt; 子密钥: D08CA9300334
+</span></span><span class="line"><span class="cl">  Round 15: 左移 2 位 -&gt; 子密钥: D1AA26910882
+</span></span><span class="line"><span class="cl">  Round 16: 左移 1 位 -&gt; 子密钥: B0AE2E0123C4
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">[注意] 解密模式：子密钥顺序已反转
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">[初始置换 IP] 结果: 35FC4D836AB60965
+</span></span><span class="line"><span class="cl">初始 L0: 35FC4D83
+</span></span><span class="line"><span class="cl">初始 R0: 6AB60965
+</span></span><span class="line"><span class="cl">------------------------------------------------------------ 
+</span></span><span class="line"><span class="cl">Round  1:
+</span></span><span class="line"><span class="cl">  K16: B0AE2E0123C4
+</span></span><span class="line"><span class="cl">  L1: 6AB60965 (from old R)
+</span></span><span class="line"><span class="cl">  f(R,K): 93045CD9
+</span></span><span class="line"><span class="cl">  R1: A6F8115A (L XOR f)
+</span></span><span class="line"><span class="cl">Round  2:
+</span></span><span class="line"><span class="cl">  K15: D1AA26910882
+</span></span><span class="line"><span class="cl">  L2: A6F8115A (from old R)
+</span></span><span class="line"><span class="cl">  f(R,K): E5189084
+</span></span><span class="line"><span class="cl">  R2: 8FAE99E1 (L XOR f)
+</span></span><span class="line"><span class="cl">Round  3:
+</span></span><span class="line"><span class="cl">  K14: D08CA9300334
+</span></span><span class="line"><span class="cl">  L3: 8FAE99E1 (from old R)
+</span></span><span class="line"><span class="cl">  f(R,K): D46C878B
+</span></span><span class="line"><span class="cl">  R3: 729496D1 (L XOR f)
+</span></span><span class="line"><span class="cl">Round  4:
+</span></span><span class="line"><span class="cl">  K13: 5925AC827A00
+</span></span><span class="line"><span class="cl">  L4: 729496D1 (from old R)
+</span></span><span class="line"><span class="cl">  f(R,K): AF7A0F53
+</span></span><span class="line"><span class="cl">  R4: 20D496B2 (L XOR f)
+</span></span><span class="line"><span class="cl">Round  5:
+</span></span><span class="line"><span class="cl">  K12: 0B6C8D890029
+</span></span><span class="line"><span class="cl">  L5: 20D496B2 (from old R)
+</span></span><span class="line"><span class="cl">  f(R,K): B31E0DF2
+</span></span><span class="line"><span class="cl">  R5: C18A9B23 (L XOR f)
+</span></span><span class="line"><span class="cl">Round  6:
+</span></span><span class="line"><span class="cl">  K11: 1F2945505490
+</span></span><span class="line"><span class="cl">  L6: C18A9B23 (from old R)
+</span></span><span class="line"><span class="cl">  f(R,K): D9AFC90B
+</span></span><span class="line"><span class="cl">  R6: F97B5FB9 (L XOR f)
+</span></span><span class="line"><span class="cl">Round  7:
+</span></span><span class="line"><span class="cl">  K10: 16599908CA0C
+</span></span><span class="line"><span class="cl">  L7: F97B5FB9 (from old R)
+</span></span><span class="line"><span class="cl">  f(R,K): 7CBA0E4C
+</span></span><span class="line"><span class="cl">  R7: BD30956F (L XOR f)
+</span></span><span class="line"><span class="cl">Round  8:
+</span></span><span class="line"><span class="cl">  K9: 1D43D8C80560
+</span></span><span class="line"><span class="cl">  L8: BD30956F (from old R)
+</span></span><span class="line"><span class="cl">  f(R,K): 1887DA46
+</span></span><span class="line"><span class="cl">  R8: E1FC85FF (L XOR f)
+</span></span><span class="line"><span class="cl">Round  9:
+</span></span><span class="line"><span class="cl">  K8: 0D50DB08125A
+</span></span><span class="line"><span class="cl">  L9: E1FC85FF (from old R)
+</span></span><span class="line"><span class="cl">  f(R,K): 28EFD137
+</span></span><span class="line"><span class="cl">  R9: 95DF4458 (L XOR f)
+</span></span><span class="line"><span class="cl">Round 10:
+</span></span><span class="line"><span class="cl">  K7: 2B9359E40D08
+</span></span><span class="line"><span class="cl">  L10: 95DF4458 (from old R)
+</span></span><span class="line"><span class="cl">  f(R,K): 7057F913
+</span></span><span class="line"><span class="cl">  R10: 91AB7CEC (L XOR f)
+</span></span><span class="line"><span class="cl">Round 11:
+</span></span><span class="line"><span class="cl">  K6: EE530342A022
+</span></span><span class="line"><span class="cl">  L11: 91AB7CEC (from old R)
+</span></span><span class="line"><span class="cl">  f(R,K): 6448A9B5
+</span></span><span class="line"><span class="cl">  R11: F197EDED (L XOR f)
+</span></span><span class="line"><span class="cl">Round 12:
+</span></span><span class="line"><span class="cl">  K5: A6C772205141
+</span></span><span class="line"><span class="cl">  L12: F197EDED (from old R)
+</span></span><span class="line"><span class="cl">  f(R,K): 54E93256
+</span></span><span class="line"><span class="cl">  R12: C5424EBA (L XOR f)
+</span></span><span class="line"><span class="cl">Round 13:
+</span></span><span class="line"><span class="cl">  K4: C4F0721E2188
+</span></span><span class="line"><span class="cl">  L13: C5424EBA (from old R)
+</span></span><span class="line"><span class="cl">  f(R,K): 1057B4FD
+</span></span><span class="line"><span class="cl">  R13: E1C05910 (L XOR f)
+</span></span><span class="line"><span class="cl">Round 14:
+</span></span><span class="line"><span class="cl">  K3: 609E74420607
+</span></span><span class="line"><span class="cl">  L14: E1C05910 (from old R)
+</span></span><span class="line"><span class="cl">  f(R,K): F7D9E90A
+</span></span><span class="line"><span class="cl">  R14: 329BA7B0 (L XOR f)
+</span></span><span class="line"><span class="cl">Round 15:
+</span></span><span class="line"><span class="cl">  K2: E03606B08081
+</span></span><span class="line"><span class="cl">  L15: 329BA7B0 (from old R)
+</span></span><span class="line"><span class="cl">  f(R,K): E13F4440
+</span></span><span class="line"><span class="cl">  R15: 00FF1D50 (L XOR f)
+</span></span><span class="line"><span class="cl">Round 16:
+</span></span><span class="line"><span class="cl">  K1: A0BE86442211
+</span></span><span class="line"><span class="cl">  L16: 00FF1D50 (from old R)
+</span></span><span class="line"><span class="cl">  f(R,K): ED9BF922
+</span></span><span class="line"><span class="cl">  R16: DF005E92 (L XOR f)
+</span></span><span class="line"><span class="cl">------------------------------------------------------------ 
+</span></span><span class="line"><span class="cl">[32位互换] 结果 (R16 L16): DF005E9200FF1D50
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">[解密结果] (Hex): 68656C6C6F206661
+</span></span><span class="line"><span class="cl">==================== 结束 DES 解密 ====================      
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">&gt;&gt;&gt; 处理第 2 块 (Hex): B0B14E7C31FE02AA
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">==================== 开始 DES 解密 (单块) ===================
+</span></span><span class="line"><span class="cl">=                                                            输入数据 (Hex): B0B14E7C31FE02AA
+</span></span><span class="line"><span class="cl">密钥     (Hex): 7365637265740000
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">[密钥生成] 原始密钥 (64位): 011100110110010101100011011100100
+</span></span><span class="line"><span class="cl">1100101011101000000000000000000                              [密钥生成] PC-1置换后 (56位): 0000000000111111001111110010000
+</span></span><span class="line"><span class="cl">0110100110010000000001001                                      Round  1: 左移 1 位 -&gt; 子密钥: A0BE86442211
+</span></span><span class="line"><span class="cl">  Round  2: 左移 1 位 -&gt; 子密钥: E03606B08081
+</span></span><span class="line"><span class="cl">  Round  3: 左移 2 位 -&gt; 子密钥: 609E74420607
+</span></span><span class="line"><span class="cl">  Round  4: 左移 2 位 -&gt; 子密钥: C4F0721E2188
+</span></span><span class="line"><span class="cl">  Round  5: 左移 2 位 -&gt; 子密钥: A6C772205141
+</span></span><span class="line"><span class="cl">  Round  6: 左移 2 位 -&gt; 子密钥: EE530342A022
+</span></span><span class="line"><span class="cl">  Round  7: 左移 2 位 -&gt; 子密钥: 2B9359E40D08
+</span></span><span class="line"><span class="cl">  Round  8: 左移 2 位 -&gt; 子密钥: 0D50DB08125A
+</span></span><span class="line"><span class="cl">  Round  9: 左移 1 位 -&gt; 子密钥: 1D43D8C80560
+</span></span><span class="line"><span class="cl">  Round 10: 左移 2 位 -&gt; 子密钥: 16599908CA0C
+</span></span><span class="line"><span class="cl">  Round 11: 左移 2 位 -&gt; 子密钥: 1F2945505490
+</span></span><span class="line"><span class="cl">  Round 12: 左移 2 位 -&gt; 子密钥: 0B6C8D890029
+</span></span><span class="line"><span class="cl">  Round 13: 左移 2 位 -&gt; 子密钥: 5925AC827A00
+</span></span><span class="line"><span class="cl">  Round 14: 左移 2 位 -&gt; 子密钥: D08CA9300334
+</span></span><span class="line"><span class="cl">  Round 15: 左移 2 位 -&gt; 子密钥: D1AA26910882
+</span></span><span class="line"><span class="cl">  Round 16: 左移 1 位 -&gt; 子密钥: B0AE2E0123C4
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">[注意] 解密模式：子密钥顺序已反转
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">[初始置换 IP] 结果: 2C3B2C12A3BBACE4
+</span></span><span class="line"><span class="cl">初始 L0: 2C3B2C12
+</span></span><span class="line"><span class="cl">初始 R0: A3BBACE4
+</span></span><span class="line"><span class="cl">------------------------------------------------------------ 
+</span></span><span class="line"><span class="cl">Round  1:
+</span></span><span class="line"><span class="cl">  K16: B0AE2E0123C4
+</span></span><span class="line"><span class="cl">  L1: A3BBACE4 (from old R)
+</span></span><span class="line"><span class="cl">  f(R,K): 920A0F2E
+</span></span><span class="line"><span class="cl">  R1: BE31233C (L XOR f)
+</span></span><span class="line"><span class="cl">Round  2:
+</span></span><span class="line"><span class="cl">  K15: D1AA26910882
+</span></span><span class="line"><span class="cl">  L2: BE31233C (from old R)
+</span></span><span class="line"><span class="cl">  f(R,K): 42C8DCE9
+</span></span><span class="line"><span class="cl">  R2: E173700D (L XOR f)
+</span></span><span class="line"><span class="cl">Round  3:
+</span></span><span class="line"><span class="cl">  K14: D08CA9300334
+</span></span><span class="line"><span class="cl">  L3: E173700D (from old R)
+</span></span><span class="line"><span class="cl">  f(R,K): DA486AA4
+</span></span><span class="line"><span class="cl">  R3: 64794998 (L XOR f)
+</span></span><span class="line"><span class="cl">Round  4:
+</span></span><span class="line"><span class="cl">  K13: 5925AC827A00
+</span></span><span class="line"><span class="cl">  L4: 64794998 (from old R)
+</span></span><span class="line"><span class="cl">  f(R,K): 82D5154B
+</span></span><span class="line"><span class="cl">  R4: 63A66546 (L XOR f)
+</span></span><span class="line"><span class="cl">Round  5:
+</span></span><span class="line"><span class="cl">  K12: 0B6C8D890029
+</span></span><span class="line"><span class="cl">  L5: 63A66546 (from old R)
+</span></span><span class="line"><span class="cl">  f(R,K): C9BB716D
+</span></span><span class="line"><span class="cl">  R5: ADC238F5 (L XOR f)
+</span></span><span class="line"><span class="cl">Round  6:
+</span></span><span class="line"><span class="cl">  K11: 1F2945505490
+</span></span><span class="line"><span class="cl">  L6: ADC238F5 (from old R)
+</span></span><span class="line"><span class="cl">  f(R,K): C481D96D
+</span></span><span class="line"><span class="cl">  R6: A727BC2B (L XOR f)
+</span></span><span class="line"><span class="cl">Round  7:
+</span></span><span class="line"><span class="cl">  K10: 16599908CA0C
+</span></span><span class="line"><span class="cl">  L7: A727BC2B (from old R)
+</span></span><span class="line"><span class="cl">  f(R,K): C80AD43B
+</span></span><span class="line"><span class="cl">  R7: 65C8ECCE (L XOR f)
+</span></span><span class="line"><span class="cl">Round  8:
+</span></span><span class="line"><span class="cl">  K9: 1D43D8C80560
+</span></span><span class="line"><span class="cl">  L8: 65C8ECCE (from old R)
+</span></span><span class="line"><span class="cl">  f(R,K): 21455B31
+</span></span><span class="line"><span class="cl">  R8: 8662E71A (L XOR f)
+</span></span><span class="line"><span class="cl">Round  9:
+</span></span><span class="line"><span class="cl">  K8: 0D50DB08125A
+</span></span><span class="line"><span class="cl">  L9: 8662E71A (from old R)
+</span></span><span class="line"><span class="cl">  f(R,K): EB40BF7C
+</span></span><span class="line"><span class="cl">  R9: 8E8853B2 (L XOR f)
+</span></span><span class="line"><span class="cl">Round 10:
+</span></span><span class="line"><span class="cl">  K7: 2B9359E40D08
+</span></span><span class="line"><span class="cl">  L10: 8E8853B2 (from old R)
+</span></span><span class="line"><span class="cl">  f(R,K): 7B44D49F
+</span></span><span class="line"><span class="cl">  R10: FD263385 (L XOR f)
+</span></span><span class="line"><span class="cl">Round 11:
+</span></span><span class="line"><span class="cl">  K6: EE530342A022
+</span></span><span class="line"><span class="cl">  L11: FD263385 (from old R)
+</span></span><span class="line"><span class="cl">  f(R,K): B1C4E5B3
+</span></span><span class="line"><span class="cl">  R11: 3F4CB601 (L XOR f)
+</span></span><span class="line"><span class="cl">Round 12:
+</span></span><span class="line"><span class="cl">  K5: A6C772205141
+</span></span><span class="line"><span class="cl">  L12: 3F4CB601 (from old R)
+</span></span><span class="line"><span class="cl">  f(R,K): FB826C35
+</span></span><span class="line"><span class="cl">  R12: 06A45FB0 (L XOR f)
+</span></span><span class="line"><span class="cl">Round 13:
+</span></span><span class="line"><span class="cl">  K4: C4F0721E2188
+</span></span><span class="line"><span class="cl">  L13: 06A45FB0 (from old R)
+</span></span><span class="line"><span class="cl">  f(R,K): 2D61EC83
+</span></span><span class="line"><span class="cl">  R13: 122D5A82 (L XOR f)
+</span></span><span class="line"><span class="cl">Round 14:
+</span></span><span class="line"><span class="cl">  K3: 609E74420607
+</span></span><span class="line"><span class="cl">  L14: 122D5A82 (from old R)
+</span></span><span class="line"><span class="cl">  f(R,K): 9A973D7F
+</span></span><span class="line"><span class="cl">  R14: 9C3362CF (L XOR f)
+</span></span><span class="line"><span class="cl">Round 15:
+</span></span><span class="line"><span class="cl">  K2: E03606B08081
+</span></span><span class="line"><span class="cl">  L15: 9C3362CF (from old R)
+</span></span><span class="line"><span class="cl">  f(R,K): 12526FF1
+</span></span><span class="line"><span class="cl">  R15: 007F3573 (L XOR f)
+</span></span><span class="line"><span class="cl">Round 16:
+</span></span><span class="line"><span class="cl">  K1: A0BE86442211
+</span></span><span class="line"><span class="cl">  L16: 007F3573 (from old R)
+</span></span><span class="line"><span class="cl">  f(R,K): E3311305
+</span></span><span class="line"><span class="cl">  R16: 7F0271CA (L XOR f)
+</span></span><span class="line"><span class="cl">------------------------------------------------------------ 
+</span></span><span class="line"><span class="cl">[32位互换] 结果 (R16 L16): 7F0271CA007F3573
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">[解密结果] (Hex): 6E7368616E6E6701
+</span></span><span class="line"><span class="cl">==================== 结束 DES 解密 ====================      
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">最终验证:
+</span></span><span class="line"><span class="cl">  原始明文: hello fanshanng
+</span></span><span class="line"><span class="cl">  解密明文: hello fanshanng
+</span></span><span class="line"><span class="cl">  匹配成功: True
+</span></span></code></pre></td></tr></table>
+</div>
+</div></details><hr />
