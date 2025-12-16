@@ -1,0 +1,171 @@
+<img src="https://s.panlai.com/zb_users/upload/2025/06/20250618045138175019349817696.jpg-arthumbs" alt="Featured image of post The Flare-On Challenge 练习记录" /><h1 id="2015-challenge-3">2015 Challenge 3
+</h1><h2 id="0x00-查壳与环境识别">0x00 查壳与环境识别
+</h2><p>使用 DIE (Detect It Easy) 进行初步分析：</p>
+<p><img src="https://raw.githubusercontent.com/fanshanng/blog_picture/master/20251216223509.png"
+	
+	
+	
+	loading="lazy"
+	
+	
+></p>
+<p>分析结果显示程序是由 <strong>PyInstaller</strong> 打包的。</p>
+<h2 id="0x01-解包与反编译">0x01 解包与反编译
+</h2><h3 id="1-pyinstaller-解包">1. PyInstaller 解包
+</h3><p>使用 <code>pyinstxtractor.py</code> 对目标文件 <code>elfie.exe</code> (或 <code>elfie</code>) 进行解包：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">python pyinstxtractor.py elfie
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>解包后得到 <code>elfie_extracted</code> 文件夹。</p>
+<h3 id="2-字节码分析">2. 字节码分析
+</h3><p>进入解包目录，发现存在 <code>.pyc</code> 文件。
+在尝试使用反编译工具失败后，发现可以直接查看 <code>.pyc</code> 文件内容。观察到文件头魔数 <code>03 f3 0d 0a</code> 以及目录下的 <code>python27.dll</code>，确认这是 <strong>Python 2.7</strong> 环境。</p>
+<p>直接用文本编辑器查看 <code>.pyc</code> 文件，可以清晰看到 <code>base64</code>、<code>b64decode</code> 等关键字及大量混淆变量。这是 Python 2.7 字节码的一个特征：字符串（包括变量名）以未压缩的 ASCII 形式存储。</p>
+<p>反编译后的源码（或直接观察）显示程序使用了典型的 <code>exec(base64.b64decode(...))</code> 混淆方式：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">O0OO0OO00000OOOO0OOOOO0O00O0O0O0</span> <span class="o">=</span> <span class="s1">&#39;IRGppV0FJM3BRRlNwWGhNNG&#39;</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># ... 大量混淆变量定义 ...</span>
+</span></span><span class="line"><span class="cl"><span class="n">O00OO00OOO0OOOO0OOOO0OO00000OOO0</span> <span class="o">+=</span> <span class="s1">&#39;nNocTB&#39;</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">base64</span>
+</span></span><span class="line"><span class="cl"><span class="n">exec</span><span class="p">(</span><span class="n">base64</span><span class="o">.</span><span class="n">b64decode</span><span class="p">(</span><span class="n">OOO0OOOOOOOO0000O000O00O0OOOO00O</span> <span class="o">+</span> <span class="o">...</span><span class="p">))</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="0x02-去混淆">0x02 去混淆
+</h2><p>为了获取被执行的真实代码，我们不需要手动解密，只需“借力打力”。编写脚本模拟 Loader 的变量拼接过程，但将最后的 <code>exec(...)</code> 替换为文件写入操作。</p>
+<p><strong>解包脚本逻辑</strong>:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1"># ... (复制原始文件中的所有变量定义) ...</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">base64</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 原始代码: exec(base64.b64decode(...))</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># 修改为写入文件:</span>
+</span></span><span class="line"><span class="cl"><span class="n">decoded_code</span> <span class="o">=</span> <span class="n">base64</span><span class="o">.</span><span class="n">b64decode</span><span class="p">(</span><span class="n">OOO0OOOOOOOO0000O000O00O0OOOO00O</span> <span class="o">+</span> <span class="o">...</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;elfie.py&#39;</span><span class="p">,</span> <span class="s1">&#39;wb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">decoded_code</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Decoded stage 2 saved.&#39;</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>提取出的代码部分如图所示：
+<img src="https://raw.githubusercontent.com/fanshanng/blog_picture/master/20251216224333.png"
+	
+	
+	
+	loading="lazy"
+	
+	
+></p>
+<h2 id="0x03-逻辑分析">0x03 逻辑分析
+</h2><p>提取出的 <code>elfie.py</code> 是一个基于 <strong>PySide (Qt)</strong> 的图形界面应用程序。</p>
+<p>运行效果：
+<img src="https://raw.githubusercontent.com/fanshanng/blog_picture/master/20251216224503.png"
+	
+	
+	
+	loading="lazy"
+	
+	
+></p>
+<p>代码中使用了大量的 <code>getattr</code> 和字符串切片（如 <code>'txeTnialPot'[::-1]</code> 即 <code>toPlainText</code>）来隐藏 API 调用，增加了静态分析的难度。</p>
+<p><strong>核心验证逻辑</strong>:
+程序定义了一个继承自 <code>QtGui.QLineEdit</code> 的类，并在 <code>keyPressEvent</code> 中监听回车键。当用户按下回车时，触发验证函数 <code>O000OOOOOO0OOOO00000OO0O0O000OO0</code>。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">O000OOOOOO0OOOO00000OO0O0O000OO0</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># 获取用户输入: getattr(self, &#39;toPlainText&#39;)()</span>
+</span></span><span class="line"><span class="cl">        <span class="n">O0O0O0000OOO000O00000OOO000OO000</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;txeTnialPot&#39;</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">])()</span>
+</span></span><span class="line"><span class="cl">        
+</span></span><span class="line"><span class="cl">        <span class="c1"># 核心比对逻辑</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="p">(</span><span class="n">O0O0O0000OOO000O00000OOO000OO000</span> <span class="o">==</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">((</span><span class="n">OO00O00OOOO00OO000O00OO0OOOO0000</span> <span class="k">for</span> <span class="n">OO00O00OOOO00OO000O00OO0OOOO0000</span> <span class="ow">in</span> <span class="nb">reversed</span><span class="p">(</span><span class="s1">&#39;moc.no-eralf@OOOOY.sev0000L.eiflE&#39;</span><span class="p">)))):</span>
+</span></span><span class="line"><span class="cl">                <span class="bp">self</span><span class="o">.</span><span class="n">OO0O0O0O0OO0OO00000OO00O0O0000O0</span><span class="o">.</span><span class="n">setWindowTitle</span><span class="p">(</span><span class="s1">&#39;!sseccus taerg&#39;</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">                <span class="c1"># ... 显示成功状态 ...</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="0x04-flag-获取">0x04 Flag 获取
+</h2><p>分析上述比对逻辑：
+<code>reversed('moc.no-eralf@OOOOY.sev0000L.eiflE')</code> 会将字符串反转。</p>
+<p>直接反转硬编码字符串即可得到 Flag：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">Elfie.L0000ves.YOOOO@flare-on.com
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="0x05-附录现代环境运行兼容性">0x05 附录：现代环境运行兼容性
+</h2><p>直接提取的代码依赖于老旧的 <code>PySide</code> (Qt4) 库。在现代 Python 3 环境中，通常使用 <code>PySide2</code> (Qt5) 或 <code>PySide6</code> (Qt6)。</p>
+<p>为了让提取的代码在现代环境中运行，可以使用以下垫片代码（Shim）进行兼容：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">try</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="kn">from</span> <span class="nn">PySide</span> <span class="kn">import</span> <span class="n">QtGui</span><span class="p">,</span> <span class="n">QtCore</span>
+</span></span><span class="line"><span class="cl"><span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="k">try</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="kn">from</span> <span class="nn">PySide2</span> <span class="kn">import</span> <span class="n">QtGui</span><span class="p">,</span> <span class="n">QtCore</span><span class="p">,</span> <span class="n">QtWidgets</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># 将 QtWidgets 中的属性映射回 QtGui，以兼容旧代码</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="nb">dir</span><span class="p">(</span><span class="n">QtWidgets</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">QtGui</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">                <span class="nb">setattr</span><span class="p">(</span><span class="n">QtGui</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">QtWidgets</span><span class="p">,</span> <span class="n">name</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">    <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="kn">from</span> <span class="nn">PySide6</span> <span class="kn">import</span> <span class="n">QtGui</span><span class="p">,</span> <span class="n">QtCore</span><span class="p">,</span> <span class="n">QtWidgets</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="nb">dir</span><span class="p">(</span><span class="n">QtWidgets</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">QtGui</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">                <span class="nb">setattr</span><span class="p">(</span><span class="n">QtGui</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">QtWidgets</span><span class="p">,</span> <span class="n">name</span><span class="p">))</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>此外，代码中还包含两段 Base64 编码的字符串，分别对应验证成功和失败时显示的图片，感兴趣可以解码还原。</p><hr />
