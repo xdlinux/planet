@@ -1,0 +1,1165 @@
+<img src="https://s.panlai.com/upload/20241210043703173377662350175.jpg-arthumbs" alt="Featured image of post AES 学习笔记" /><h2 id="1-简介-introduction">1. 简介 (Introduction)
+</h2><p><strong>AES (Advanced Encryption Standard)</strong>，即高级加密标准，是目前全球最广泛使用的对称加密算法。它由比利时密码学家 Joan Daemen 和 Vincent Rijmen 设计，原名 <strong>Rijndael</strong>。2001年被 NIST 正式采纳为标准 (FIPS 197)，用以取代老旧的 DES。</p>
+<h3 id="11-关键参数">1.1 关键参数
+</h3><ul>
+<li><strong>分组长度 (Block Size)</strong>: 固定为 <strong>128位 (16字节)</strong>。</li>
+<li><strong>密钥长度 (Key Length)</strong>: 支持 128、192、256 位。本笔记主要讨论 <strong>AES-128</strong>。</li>
+<li><strong>轮数 (Rounds)</strong>:
+<ul>
+<li>AES-128: 10 轮</li>
+<li>AES-192: 12 轮</li>
+<li>AES-256: 14 轮</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2 id="2-数学基础-mathematical-background">2. 数学基础 (Mathematical Background)
+</h2><p>AES 的运算不是在普通的整数域上进行的，而是在 <strong>有限域 (Finite Field)</strong>，特别是 <strong>伽罗瓦域 $GF(2^8)$</strong> 上进行的。这保证了运算结果始终在一个字节（8位）范围内，且具有良好的非线性特性。</p>
+<h3 id="21-字节的表示">2.1 字节的表示
+</h3><p>一个字节 $b_7 b_6 b_5 b_4 b_3 b_2 b_1 b_0$ 可以看作是系数为 ${0, 1}$ 的多项式：
+</p>
+$$ b(x) = b_7x^7 + b_6x^6 + b_5x^5 + b_4x^4 + b_3x^3 + b_2x^2 + b_1x + b_0 $$<p>
+例如：十六进制 <code>0x57</code> (二进制 <code>01010111</code>) 对应多项式 $x^6 + x^4 + x^2 + x + 1$。</p>
+<h3 id="22-域上的加法-addition">2.2 域上的加法 (Addition)
+</h3><p>在 $GF(2^8)$ 中，加法就是多项式系数模 2 相加，等价于 <strong>异或 (XOR)</strong> 运算。
+</p>
+$$ a + b \iff a \oplus b $$<p>
+例如：<code>0x57 + 0x83 = 01010111 ^ 10000011 = 11010100 = 0xD4</code>。</p>
+<h3 id="23-域上的乘法-multiplication">2.3 域上的乘法 (Multiplication)
+</h3><p>乘法是多项式相乘后，模一个<strong>不可约多项式 (Irreducible Polynomial)</strong> $m(x)$。AES 规定的不可约多项式为：
+</p>
+$$ m(x) = x^8 + x^4 + x^3 + x + 1 \quad (\text{Hex: } 0x11B) $$<p><strong>xtime 函数</strong>:
+这是 AES 乘法的核心。<code>xtime(a)</code> 相当于 $a$ 乘以 $x$（即左移一位）。</p>
+<ul>
+<li>如果 $a$ 的最高位 $b_7 = 0$，则 <code>xtime(a) = a &lt;&lt; 1</code>。</li>
+<li>如果 $a$ 的最高位 $b_7 = 1$，则 <code>xtime(a) = (a &lt;&lt; 1) ^ 0x1B</code> (模 $m(x)$ 的结果)。</li>
+<li>任意乘法 $a \times b$ 可以通过重复 <code>xtime</code> 和加法（XOR）组合实现。</li>
+</ul>
+<hr>
+<h2 id="3-算法内部结构-internal-structure">3. 算法内部结构 (Internal Structure)
+</h2><p>AES 处理的数据单位是 <strong>状态矩阵 (State Matrix)</strong>。16 字节的输入被排列成 $4 \times 4$ 的矩阵（<strong>按列优先</strong>填充）。</p>
+$$
+\text{State} = \begin{bmatrix}
+s_{0,0} & s_{0,1} & s_{0,2} & s_{0,3} \\
+s_{1,0} & s_{1,1} & s_{1,2} & s_{1,3} \\
+s_{2,0} & s_{2,1} & s_{2,2} & s_{2,3} \\
+s_{3,0} & s_{3,1} & s_{3,2} & s_{3,3}
+\end{bmatrix}
+$$<h3 id="31-整体流程-aes-128">3.1 整体流程 (AES-128)
+</h3><ol>
+<li><strong>密钥扩展 (Key Expansion)</strong>: 将初始密钥扩展为 11 组轮密钥 ($K_0, K_1, &hellip;, K_{10}$)。</li>
+<li><strong>初始轮 (Initial Round)</strong>:
+<ul>
+<li><code>AddRoundKey</code> (与 $K_0$ 异或)</li>
+</ul>
+</li>
+<li><strong>常规轮 (Rounds 1 to 9)</strong>:
+<ul>
+<li><code>SubBytes</code> (字节代换)</li>
+<li><code>ShiftRows</code> (行移位)</li>
+<li><code>MixColumns</code> (列混合)</li>
+<li><code>AddRoundKey</code> (与 $K_i$ 异或)</li>
+</ul>
+</li>
+<li><strong>最终轮 (Final Round 10)</strong>:
+<ul>
+<li><code>SubBytes</code></li>
+<li><code>ShiftRows</code></li>
+<li><code>AddRoundKey</code> (与 $K_{10}$ 异或)</li>
+<li><em>(注意：最终轮没有 MixColumns)</em></li>
+</ul>
+</li>
+</ol>
+<hr>
+<h2 id="4-详细步骤解析-detailed-transformations">4. 详细步骤解析 (Detailed Transformations)
+</h2><h3 id="41-字节代换-subbytes">4.1 字节代换 (SubBytes)
+</h3><p>这是 AES 中唯一的<strong>非线性</strong>变换，提供了混淆性 (Confusion)。</p>
+<ul>
+<li><strong>原理</strong>: 每个字节 $b$ 被替换为 S-Box 中的对应值。</li>
+<li><strong>S-Box 构造</strong>:
+<ol>
+<li>求 $b$ 在 $GF(2^8)$ 中的乘法逆元 $b^{-1}$ (0 的逆元设为 0)。</li>
+<li>对 $b^{-1}$ 进行仿射变换 (Affine Transformation)。</li>
+</ol>
+</li>
+<li><strong>查表法</strong>: 实际实现通常直接查预计算好的 $16 \times 16$ S-Box 表。</li>
+</ul>
+<h3 id="42-行移位-shiftrows">4.2 行移位 (ShiftRows)
+</h3><p>对状态矩阵的每一行进行循环左移，提供了扩散性 (Diffusion)。</p>
+<ul>
+<li>第 0 行：不移动。</li>
+<li>第 1 行：循环左移 <strong>1</strong> 字节。</li>
+<li>第 2 行：循环左移 <strong>2</strong> 字节。</li>
+<li>第 3 行：循环左移 <strong>3</strong> 字节。</li>
+</ul>
+$$
+\begin{bmatrix}
+s_{0,0} & s_{0,1} & s_{0,2} & s_{0,3} \\
+s_{1,0} & s_{1,1} & s_{1,2} & s_{1,3} \\
+s_{2,0} & s_{2,1} & s_{2,2} & s_{2,3} \\
+s_{3,0} & s_{3,1} & s_{3,2} & s_{3,3}
+\end{bmatrix}
+\xrightarrow{\text{ShiftRows}}
+\begin{bmatrix}
+s_{0,0} & s_{0,1} & s_{0,2} & s_{0,3} \\
+s_{1,1} & s_{1,2} & s_{1,3} & s_{1,0} \\
+s_{2,2} & s_{2,3} & s_{2,0} & s_{2,1} \\
+s_{3,3} & s_{3,0} & s_{3,1} & s_{3,2}
+\end{bmatrix}
+$$<h3 id="43-列混合-mixcolumns">4.3 列混合 (MixColumns)
+</h3><p>对状态矩阵的每一列进行线性变换，进一步增强扩散性。</p>
+<ul>
+<li>
+<p><strong>原理</strong>: 将每一列视为 $GF(2^8)$ 上的多项式，与一个固定的多项式 $c(x)$ 进行模 $x^4 + 1$ 乘法。
+</p>
+$$ c(x) = 03x^3 + 01x^2 + 01x + 02 $$</li>
+<li>
+<p><strong>矩阵形式</strong>:
+</p>
+$$
+  \begin{bmatrix} b_0 \\ b_1 \\ b_2 \\ b_3 \end{bmatrix} =
+  \begin{bmatrix}
+  02 & 03 & 01 & 01 \\
+  01 & 02 & 03 & 01 \\
+  01 & 01 & 02 & 03 \\
+  03 & 01 & 01 & 02
+  \end{bmatrix}
+  \times
+  \begin{bmatrix} a_0 \\ a_1 \\ a_2 \\ a_3 \end{bmatrix}
+  $$<p>
+这里的乘法是 $GF(2^8)$ 上的乘法，加法是异或。</p>
+</li>
+</ul>
+<h3 id="44-轮密钥加-addroundkey">4.4 轮密钥加 (AddRoundKey)
+</h3><p>将状态矩阵与当前的轮密钥进行按位异或 (XOR)。这是将密钥融入密文的关键步骤。
+</p>
+$$ \text{State} = \text{State} \oplus \text{RoundKey}_i $$<hr>
+<h2 id="5-密钥扩展-key-expansion">5. 密钥扩展 (Key Expansion)
+</h2><p>AES-128 需要将 16 字节的初始密钥扩展为 176 字节（44 个字，每个字 4 字节），供 11 轮使用。
+令 $W[0 \dots 43]$ 为扩展后的字数组。</p>
+<ol>
+<li><strong>前 4 个字</strong>: 直接复制初始密钥。</li>
+<li><strong>后续字 $W[i]$</strong>:
+<ul>
+<li>如果 $i$ 是 4 的倍数:
+$$ W[i] = W[i-4] \oplus \text{SubWord}(\text{RotWord}(W[i-1])) \oplus \text{Rcon}[i/4] $$</li>
+<li>否则:
+$$ W[i] = W[i-4] \oplus W[i-1] $$</li>
+</ul>
+</li>
+</ol>
+<ul>
+<li><strong>RotWord</strong>: 字循环左移 1 字节 ($[a_0, a_1, a_2, a_3] \to [a_1, a_2, a_3, a_0]$)。</li>
+<li><strong>SubWord</strong>: 对字的每个字节应用 S-Box。</li>
+<li><strong>Rcon (轮常数)</strong>: 用于破坏对称性。$Rcon[i] = [x^{i-1}, 00, 00, 00]$ (在 $GF(2^8)$ 中)。</li>
+</ul>
+<hr>
+<h2 id="6-解密流程-decryption">6. 解密流程 (Decryption)
+</h2><p>解密是加密的逆过程，需要使用逆变换：</p>
+<ol>
+<li><strong>InvSubBytes</strong>: 使用逆 S-Box。</li>
+<li><strong>InvShiftRows</strong>: 循环右移。</li>
+<li><strong>InvMixColumns</strong>: 乘以 $c(x)$ 的逆多项式 $d(x) = 0Bx^3 + 0Dx^2 + 09x + 0E$。</li>
+<li><strong>AddRoundKey</strong>: 异或本身就是逆运算。</li>
+</ol>
+<p><strong>注意</strong>: 解密时轮密钥的使用顺序是相反的（从 $K_{10}$ 到 $K_0$）。</p>
+<hr>
+<h2 id="7-源代码">7. 源代码
+</h2><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">  1
+</span><span class="lnt">  2
+</span><span class="lnt">  3
+</span><span class="lnt">  4
+</span><span class="lnt">  5
+</span><span class="lnt">  6
+</span><span class="lnt">  7
+</span><span class="lnt">  8
+</span><span class="lnt">  9
+</span><span class="lnt"> 10
+</span><span class="lnt"> 11
+</span><span class="lnt"> 12
+</span><span class="lnt"> 13
+</span><span class="lnt"> 14
+</span><span class="lnt"> 15
+</span><span class="lnt"> 16
+</span><span class="lnt"> 17
+</span><span class="lnt"> 18
+</span><span class="lnt"> 19
+</span><span class="lnt"> 20
+</span><span class="lnt"> 21
+</span><span class="lnt"> 22
+</span><span class="lnt"> 23
+</span><span class="lnt"> 24
+</span><span class="lnt"> 25
+</span><span class="lnt"> 26
+</span><span class="lnt"> 27
+</span><span class="lnt"> 28
+</span><span class="lnt"> 29
+</span><span class="lnt"> 30
+</span><span class="lnt"> 31
+</span><span class="lnt"> 32
+</span><span class="lnt"> 33
+</span><span class="lnt"> 34
+</span><span class="lnt"> 35
+</span><span class="lnt"> 36
+</span><span class="lnt"> 37
+</span><span class="lnt"> 38
+</span><span class="lnt"> 39
+</span><span class="lnt"> 40
+</span><span class="lnt"> 41
+</span><span class="lnt"> 42
+</span><span class="lnt"> 43
+</span><span class="lnt"> 44
+</span><span class="lnt"> 45
+</span><span class="lnt"> 46
+</span><span class="lnt"> 47
+</span><span class="lnt"> 48
+</span><span class="lnt"> 49
+</span><span class="lnt"> 50
+</span><span class="lnt"> 51
+</span><span class="lnt"> 52
+</span><span class="lnt"> 53
+</span><span class="lnt"> 54
+</span><span class="lnt"> 55
+</span><span class="lnt"> 56
+</span><span class="lnt"> 57
+</span><span class="lnt"> 58
+</span><span class="lnt"> 59
+</span><span class="lnt"> 60
+</span><span class="lnt"> 61
+</span><span class="lnt"> 62
+</span><span class="lnt"> 63
+</span><span class="lnt"> 64
+</span><span class="lnt"> 65
+</span><span class="lnt"> 66
+</span><span class="lnt"> 67
+</span><span class="lnt"> 68
+</span><span class="lnt"> 69
+</span><span class="lnt"> 70
+</span><span class="lnt"> 71
+</span><span class="lnt"> 72
+</span><span class="lnt"> 73
+</span><span class="lnt"> 74
+</span><span class="lnt"> 75
+</span><span class="lnt"> 76
+</span><span class="lnt"> 77
+</span><span class="lnt"> 78
+</span><span class="lnt"> 79
+</span><span class="lnt"> 80
+</span><span class="lnt"> 81
+</span><span class="lnt"> 82
+</span><span class="lnt"> 83
+</span><span class="lnt"> 84
+</span><span class="lnt"> 85
+</span><span class="lnt"> 86
+</span><span class="lnt"> 87
+</span><span class="lnt"> 88
+</span><span class="lnt"> 89
+</span><span class="lnt"> 90
+</span><span class="lnt"> 91
+</span><span class="lnt"> 92
+</span><span class="lnt"> 93
+</span><span class="lnt"> 94
+</span><span class="lnt"> 95
+</span><span class="lnt"> 96
+</span><span class="lnt"> 97
+</span><span class="lnt"> 98
+</span><span class="lnt"> 99
+</span><span class="lnt">100
+</span><span class="lnt">101
+</span><span class="lnt">102
+</span><span class="lnt">103
+</span><span class="lnt">104
+</span><span class="lnt">105
+</span><span class="lnt">106
+</span><span class="lnt">107
+</span><span class="lnt">108
+</span><span class="lnt">109
+</span><span class="lnt">110
+</span><span class="lnt">111
+</span><span class="lnt">112
+</span><span class="lnt">113
+</span><span class="lnt">114
+</span><span class="lnt">115
+</span><span class="lnt">116
+</span><span class="lnt">117
+</span><span class="lnt">118
+</span><span class="lnt">119
+</span><span class="lnt">120
+</span><span class="lnt">121
+</span><span class="lnt">122
+</span><span class="lnt">123
+</span><span class="lnt">124
+</span><span class="lnt">125
+</span><span class="lnt">126
+</span><span class="lnt">127
+</span><span class="lnt">128
+</span><span class="lnt">129
+</span><span class="lnt">130
+</span><span class="lnt">131
+</span><span class="lnt">132
+</span><span class="lnt">133
+</span><span class="lnt">134
+</span><span class="lnt">135
+</span><span class="lnt">136
+</span><span class="lnt">137
+</span><span class="lnt">138
+</span><span class="lnt">139
+</span><span class="lnt">140
+</span><span class="lnt">141
+</span><span class="lnt">142
+</span><span class="lnt">143
+</span><span class="lnt">144
+</span><span class="lnt">145
+</span><span class="lnt">146
+</span><span class="lnt">147
+</span><span class="lnt">148
+</span><span class="lnt">149
+</span><span class="lnt">150
+</span><span class="lnt">151
+</span><span class="lnt">152
+</span><span class="lnt">153
+</span><span class="lnt">154
+</span><span class="lnt">155
+</span><span class="lnt">156
+</span><span class="lnt">157
+</span><span class="lnt">158
+</span><span class="lnt">159
+</span><span class="lnt">160
+</span><span class="lnt">161
+</span><span class="lnt">162
+</span><span class="lnt">163
+</span><span class="lnt">164
+</span><span class="lnt">165
+</span><span class="lnt">166
+</span><span class="lnt">167
+</span><span class="lnt">168
+</span><span class="lnt">169
+</span><span class="lnt">170
+</span><span class="lnt">171
+</span><span class="lnt">172
+</span><span class="lnt">173
+</span><span class="lnt">174
+</span><span class="lnt">175
+</span><span class="lnt">176
+</span><span class="lnt">177
+</span><span class="lnt">178
+</span><span class="lnt">179
+</span><span class="lnt">180
+</span><span class="lnt">181
+</span><span class="lnt">182
+</span><span class="lnt">183
+</span><span class="lnt">184
+</span><span class="lnt">185
+</span><span class="lnt">186
+</span><span class="lnt">187
+</span><span class="lnt">188
+</span><span class="lnt">189
+</span><span class="lnt">190
+</span><span class="lnt">191
+</span><span class="lnt">192
+</span><span class="lnt">193
+</span><span class="lnt">194
+</span><span class="lnt">195
+</span><span class="lnt">196
+</span><span class="lnt">197
+</span><span class="lnt">198
+</span><span class="lnt">199
+</span><span class="lnt">200
+</span><span class="lnt">201
+</span><span class="lnt">202
+</span><span class="lnt">203
+</span><span class="lnt">204
+</span><span class="lnt">205
+</span><span class="lnt">206
+</span><span class="lnt">207
+</span><span class="lnt">208
+</span><span class="lnt">209
+</span><span class="lnt">210
+</span><span class="lnt">211
+</span><span class="lnt">212
+</span><span class="lnt">213
+</span><span class="lnt">214
+</span><span class="lnt">215
+</span><span class="lnt">216
+</span><span class="lnt">217
+</span><span class="lnt">218
+</span><span class="lnt">219
+</span><span class="lnt">220
+</span><span class="lnt">221
+</span><span class="lnt">222
+</span><span class="lnt">223
+</span><span class="lnt">224
+</span><span class="lnt">225
+</span><span class="lnt">226
+</span><span class="lnt">227
+</span><span class="lnt">228
+</span><span class="lnt">229
+</span><span class="lnt">230
+</span><span class="lnt">231
+</span><span class="lnt">232
+</span><span class="lnt">233
+</span><span class="lnt">234
+</span><span class="lnt">235
+</span><span class="lnt">236
+</span><span class="lnt">237
+</span><span class="lnt">238
+</span><span class="lnt">239
+</span><span class="lnt">240
+</span><span class="lnt">241
+</span><span class="lnt">242
+</span><span class="lnt">243
+</span><span class="lnt">244
+</span><span class="lnt">245
+</span><span class="lnt">246
+</span><span class="lnt">247
+</span><span class="lnt">248
+</span><span class="lnt">249
+</span><span class="lnt">250
+</span><span class="lnt">251
+</span><span class="lnt">252
+</span><span class="lnt">253
+</span><span class="lnt">254
+</span><span class="lnt">255
+</span><span class="lnt">256
+</span><span class="lnt">257
+</span><span class="lnt">258
+</span><span class="lnt">259
+</span><span class="lnt">260
+</span><span class="lnt">261
+</span><span class="lnt">262
+</span><span class="lnt">263
+</span><span class="lnt">264
+</span><span class="lnt">265
+</span><span class="lnt">266
+</span><span class="lnt">267
+</span><span class="lnt">268
+</span><span class="lnt">269
+</span><span class="lnt">270
+</span><span class="lnt">271
+</span><span class="lnt">272
+</span><span class="lnt">273
+</span><span class="lnt">274
+</span><span class="lnt">275
+</span><span class="lnt">276
+</span><span class="lnt">277
+</span><span class="lnt">278
+</span><span class="lnt">279
+</span><span class="lnt">280
+</span><span class="lnt">281
+</span><span class="lnt">282
+</span><span class="lnt">283
+</span><span class="lnt">284
+</span><span class="lnt">285
+</span><span class="lnt">286
+</span><span class="lnt">287
+</span><span class="lnt">288
+</span><span class="lnt">289
+</span><span class="lnt">290
+</span><span class="lnt">291
+</span><span class="lnt">292
+</span><span class="lnt">293
+</span><span class="lnt">294
+</span><span class="lnt">295
+</span><span class="lnt">296
+</span><span class="lnt">297
+</span><span class="lnt">298
+</span><span class="lnt">299
+</span><span class="lnt">300
+</span><span class="lnt">301
+</span><span class="lnt">302
+</span><span class="lnt">303
+</span><span class="lnt">304
+</span><span class="lnt">305
+</span><span class="lnt">306
+</span><span class="lnt">307
+</span><span class="lnt">308
+</span><span class="lnt">309
+</span><span class="lnt">310
+</span><span class="lnt">311
+</span><span class="lnt">312
+</span><span class="lnt">313
+</span><span class="lnt">314
+</span><span class="lnt">315
+</span><span class="lnt">316
+</span><span class="lnt">317
+</span><span class="lnt">318
+</span><span class="lnt">319
+</span><span class="lnt">320
+</span><span class="lnt">321
+</span><span class="lnt">322
+</span><span class="lnt">323
+</span><span class="lnt">324
+</span><span class="lnt">325
+</span><span class="lnt">326
+</span><span class="lnt">327
+</span><span class="lnt">328
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">sys</span>
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">SBOX</span> <span class="o">=</span> <span class="p">[</span>
+</span></span><span class="line"><span class="cl">    <span class="mh">0x63</span><span class="p">,</span> <span class="mh">0x7c</span><span class="p">,</span> <span class="mh">0x77</span><span class="p">,</span> <span class="mh">0x7b</span><span class="p">,</span> <span class="mh">0xf2</span><span class="p">,</span> <span class="mh">0x6b</span><span class="p">,</span> <span class="mh">0x6f</span><span class="p">,</span> <span class="mh">0xc5</span><span class="p">,</span> <span class="mh">0x30</span><span class="p">,</span> <span class="mh">0x01</span><span class="p">,</span> <span class="mh">0x67</span><span class="p">,</span> <span class="mh">0x2b</span><span class="p">,</span> <span class="mh">0xfe</span><span class="p">,</span> <span class="mh">0xd7</span><span class="p">,</span> <span class="mh">0xab</span><span class="p">,</span> <span class="mh">0x76</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="mh">0xca</span><span class="p">,</span> <span class="mh">0x82</span><span class="p">,</span> <span class="mh">0xc9</span><span class="p">,</span> <span class="mh">0x7d</span><span class="p">,</span> <span class="mh">0xfa</span><span class="p">,</span> <span class="mh">0x59</span><span class="p">,</span> <span class="mh">0x47</span><span class="p">,</span> <span class="mh">0xf0</span><span class="p">,</span> <span class="mh">0xad</span><span class="p">,</span> <span class="mh">0xd4</span><span class="p">,</span> <span class="mh">0xa2</span><span class="p">,</span> <span class="mh">0xaf</span><span class="p">,</span> <span class="mh">0x9c</span><span class="p">,</span> <span class="mh">0xa4</span><span class="p">,</span> <span class="mh">0x72</span><span class="p">,</span> <span class="mh">0xc0</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="mh">0xb7</span><span class="p">,</span> <span class="mh">0xfd</span><span class="p">,</span> <span class="mh">0x93</span><span class="p">,</span> <span class="mh">0x26</span><span class="p">,</span> <span class="mh">0x36</span><span class="p">,</span> <span class="mh">0x3f</span><span class="p">,</span> <span class="mh">0xf7</span><span class="p">,</span> <span class="mh">0xcc</span><span class="p">,</span> <span class="mh">0x34</span><span class="p">,</span> <span class="mh">0xa5</span><span class="p">,</span> <span class="mh">0xe5</span><span class="p">,</span> <span class="mh">0xf1</span><span class="p">,</span> <span class="mh">0x71</span><span class="p">,</span> <span class="mh">0xd8</span><span class="p">,</span> <span class="mh">0x31</span><span class="p">,</span> <span class="mh">0x15</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="mh">0x04</span><span class="p">,</span> <span class="mh">0xc7</span><span class="p">,</span> <span class="mh">0x23</span><span class="p">,</span> <span class="mh">0xc3</span><span class="p">,</span> <span class="mh">0x18</span><span class="p">,</span> <span class="mh">0x96</span><span class="p">,</span> <span class="mh">0x05</span><span class="p">,</span> <span class="mh">0x9a</span><span class="p">,</span> <span class="mh">0x07</span><span class="p">,</span> <span class="mh">0x12</span><span class="p">,</span> <span class="mh">0x80</span><span class="p">,</span> <span class="mh">0xe2</span><span class="p">,</span> <span class="mh">0xeb</span><span class="p">,</span> <span class="mh">0x27</span><span class="p">,</span> <span class="mh">0xb2</span><span class="p">,</span> <span class="mh">0x75</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="mh">0x09</span><span class="p">,</span> <span class="mh">0x83</span><span class="p">,</span> <span class="mh">0x2c</span><span class="p">,</span> <span class="mh">0x1a</span><span class="p">,</span> <span class="mh">0x1b</span><span class="p">,</span> <span class="mh">0x6e</span><span class="p">,</span> <span class="mh">0x5a</span><span class="p">,</span> <span class="mh">0xa0</span><span class="p">,</span> <span class="mh">0x52</span><span class="p">,</span> <span class="mh">0x3b</span><span class="p">,</span> <span class="mh">0xd6</span><span class="p">,</span> <span class="mh">0xb3</span><span class="p">,</span> <span class="mh">0x29</span><span class="p">,</span> <span class="mh">0xe3</span><span class="p">,</span> <span class="mh">0x2f</span><span class="p">,</span> <span class="mh">0x84</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="mh">0x53</span><span class="p">,</span> <span class="mh">0xd1</span><span class="p">,</span> <span class="mh">0x00</span><span class="p">,</span> <span class="mh">0xed</span><span class="p">,</span> <span class="mh">0x20</span><span class="p">,</span> <span class="mh">0xfc</span><span class="p">,</span> <span class="mh">0xb1</span><span class="p">,</span> <span class="mh">0x5b</span><span class="p">,</span> <span class="mh">0x6a</span><span class="p">,</span> <span class="mh">0xcb</span><span class="p">,</span> <span class="mh">0xbe</span><span class="p">,</span> <span class="mh">0x39</span><span class="p">,</span> <span class="mh">0x4a</span><span class="p">,</span> <span class="mh">0x4c</span><span class="p">,</span> <span class="mh">0x58</span><span class="p">,</span> <span class="mh">0xcf</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="mh">0xd0</span><span class="p">,</span> <span class="mh">0xef</span><span class="p">,</span> <span class="mh">0xaa</span><span class="p">,</span> <span class="mh">0xfb</span><span class="p">,</span> <span class="mh">0x43</span><span class="p">,</span> <span class="mh">0x4d</span><span class="p">,</span> <span class="mh">0x33</span><span class="p">,</span> <span class="mh">0x85</span><span class="p">,</span> <span class="mh">0x45</span><span class="p">,</span> <span class="mh">0xf9</span><span class="p">,</span> <span class="mh">0x02</span><span class="p">,</span> <span class="mh">0x7f</span><span class="p">,</span> <span class="mh">0x50</span><span class="p">,</span> <span class="mh">0x3c</span><span class="p">,</span> <span class="mh">0x9f</span><span class="p">,</span> <span class="mh">0xa8</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="mh">0x51</span><span class="p">,</span> <span class="mh">0xa3</span><span class="p">,</span> <span class="mh">0x40</span><span class="p">,</span> <span class="mh">0x8f</span><span class="p">,</span> <span class="mh">0x92</span><span class="p">,</span> <span class="mh">0x9d</span><span class="p">,</span> <span class="mh">0x38</span><span class="p">,</span> <span class="mh">0xf5</span><span class="p">,</span> <span class="mh">0xbc</span><span class="p">,</span> <span class="mh">0xb6</span><span class="p">,</span> <span class="mh">0xda</span><span class="p">,</span> <span class="mh">0x21</span><span class="p">,</span> <span class="mh">0x10</span><span class="p">,</span> <span class="mh">0xff</span><span class="p">,</span> <span class="mh">0xf3</span><span class="p">,</span> <span class="mh">0xd2</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="mh">0xcd</span><span class="p">,</span> <span class="mh">0x0c</span><span class="p">,</span> <span class="mh">0x13</span><span class="p">,</span> <span class="mh">0xec</span><span class="p">,</span> <span class="mh">0x5f</span><span class="p">,</span> <span class="mh">0x97</span><span class="p">,</span> <span class="mh">0x44</span><span class="p">,</span> <span class="mh">0x17</span><span class="p">,</span> <span class="mh">0xc4</span><span class="p">,</span> <span class="mh">0xa7</span><span class="p">,</span> <span class="mh">0x7e</span><span class="p">,</span> <span class="mh">0x3d</span><span class="p">,</span> <span class="mh">0x64</span><span class="p">,</span> <span class="mh">0x5d</span><span class="p">,</span> <span class="mh">0x19</span><span class="p">,</span> <span class="mh">0x73</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="mh">0x60</span><span class="p">,</span> <span class="mh">0x81</span><span class="p">,</span> <span class="mh">0x4f</span><span class="p">,</span> <span class="mh">0xdc</span><span class="p">,</span> <span class="mh">0x22</span><span class="p">,</span> <span class="mh">0x2a</span><span class="p">,</span> <span class="mh">0x90</span><span class="p">,</span> <span class="mh">0x88</span><span class="p">,</span> <span class="mh">0x46</span><span class="p">,</span> <span class="mh">0xee</span><span class="p">,</span> <span class="mh">0xb8</span><span class="p">,</span> <span class="mh">0x14</span><span class="p">,</span> <span class="mh">0xde</span><span class="p">,</span> <span class="mh">0x5e</span><span class="p">,</span> <span class="mh">0x0b</span><span class="p">,</span> <span class="mh">0xdb</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="mh">0xe0</span><span class="p">,</span> <span class="mh">0x32</span><span class="p">,</span> <span class="mh">0x3a</span><span class="p">,</span> <span class="mh">0x0a</span><span class="p">,</span> <span class="mh">0x49</span><span class="p">,</span> <span class="mh">0x06</span><span class="p">,</span> <span class="mh">0x24</span><span class="p">,</span> <span class="mh">0x5c</span><span class="p">,</span> <span class="mh">0xc2</span><span class="p">,</span> <span class="mh">0xd3</span><span class="p">,</span> <span class="mh">0xac</span><span class="p">,</span> <span class="mh">0x62</span><span class="p">,</span> <span class="mh">0x91</span><span class="p">,</span> <span class="mh">0x95</span><span class="p">,</span> <span class="mh">0xe4</span><span class="p">,</span> <span class="mh">0x79</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="mh">0xe7</span><span class="p">,</span> <span class="mh">0xc8</span><span class="p">,</span> <span class="mh">0x37</span><span class="p">,</span> <span class="mh">0x6d</span><span class="p">,</span> <span class="mh">0x8d</span><span class="p">,</span> <span class="mh">0xd5</span><span class="p">,</span> <span class="mh">0x4e</span><span class="p">,</span> <span class="mh">0xa9</span><span class="p">,</span> <span class="mh">0x6c</span><span class="p">,</span> <span class="mh">0x56</span><span class="p">,</span> <span class="mh">0xf4</span><span class="p">,</span> <span class="mh">0xea</span><span class="p">,</span> <span class="mh">0x65</span><span class="p">,</span> <span class="mh">0x7a</span><span class="p">,</span> <span class="mh">0xae</span><span class="p">,</span> <span class="mh">0x08</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="mh">0xba</span><span class="p">,</span> <span class="mh">0x78</span><span class="p">,</span> <span class="mh">0x25</span><span class="p">,</span> <span class="mh">0x2e</span><span class="p">,</span> <span class="mh">0x1c</span><span class="p">,</span> <span class="mh">0xa6</span><span class="p">,</span> <span class="mh">0xb4</span><span class="p">,</span> <span class="mh">0xc6</span><span class="p">,</span> <span class="mh">0xe8</span><span class="p">,</span> <span class="mh">0xdd</span><span class="p">,</span> <span class="mh">0x74</span><span class="p">,</span> <span class="mh">0x1f</span><span class="p">,</span> <span class="mh">0x4b</span><span class="p">,</span> <span class="mh">0xbd</span><span class="p">,</span> <span class="mh">0x8b</span><span class="p">,</span> <span class="mh">0x8a</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="mh">0x70</span><span class="p">,</span> <span class="mh">0x3e</span><span class="p">,</span> <span class="mh">0xb5</span><span class="p">,</span> <span class="mh">0x66</span><span class="p">,</span> <span class="mh">0x48</span><span class="p">,</span> <span class="mh">0x03</span><span class="p">,</span> <span class="mh">0xf6</span><span class="p">,</span> <span class="mh">0x0e</span><span class="p">,</span> <span class="mh">0x61</span><span class="p">,</span> <span class="mh">0x35</span><span class="p">,</span> <span class="mh">0x57</span><span class="p">,</span> <span class="mh">0xb9</span><span class="p">,</span> <span class="mh">0x86</span><span class="p">,</span> <span class="mh">0xc1</span><span class="p">,</span> <span class="mh">0x1d</span><span class="p">,</span> <span class="mh">0x9e</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="mh">0xe1</span><span class="p">,</span> <span class="mh">0xf8</span><span class="p">,</span> <span class="mh">0x98</span><span class="p">,</span> <span class="mh">0x11</span><span class="p">,</span> <span class="mh">0x69</span><span class="p">,</span> <span class="mh">0xd9</span><span class="p">,</span> <span class="mh">0x8e</span><span class="p">,</span> <span class="mh">0x94</span><span class="p">,</span> <span class="mh">0x9b</span><span class="p">,</span> <span class="mh">0x1e</span><span class="p">,</span> <span class="mh">0x87</span><span class="p">,</span> <span class="mh">0xe9</span><span class="p">,</span> <span class="mh">0xce</span><span class="p">,</span> <span class="mh">0x55</span><span class="p">,</span> <span class="mh">0x28</span><span class="p">,</span> <span class="mh">0xdf</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="mh">0x8c</span><span class="p">,</span> <span class="mh">0xa1</span><span class="p">,</span> <span class="mh">0x89</span><span class="p">,</span> <span class="mh">0x0d</span><span class="p">,</span> <span class="mh">0xbf</span><span class="p">,</span> <span class="mh">0xe6</span><span class="p">,</span> <span class="mh">0x42</span><span class="p">,</span> <span class="mh">0x68</span><span class="p">,</span> <span class="mh">0x41</span><span class="p">,</span> <span class="mh">0x99</span><span class="p">,</span> <span class="mh">0x2d</span><span class="p">,</span> <span class="mh">0x0f</span><span class="p">,</span> <span class="mh">0xb0</span><span class="p">,</span> <span class="mh">0x54</span><span class="p">,</span> <span class="mh">0xbb</span><span class="p">,</span> <span class="mh">0x16</span>
+</span></span><span class="line"><span class="cl"><span class="p">]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">INV_SBOX</span> <span class="o">=</span> <span class="p">[</span>
+</span></span><span class="line"><span class="cl">    <span class="mh">0x52</span><span class="p">,</span> <span class="mh">0x09</span><span class="p">,</span> <span class="mh">0x6a</span><span class="p">,</span> <span class="mh">0xd5</span><span class="p">,</span> <span class="mh">0x30</span><span class="p">,</span> <span class="mh">0x36</span><span class="p">,</span> <span class="mh">0xa5</span><span class="p">,</span> <span class="mh">0x38</span><span class="p">,</span> <span class="mh">0xbf</span><span class="p">,</span> <span class="mh">0x40</span><span class="p">,</span> <span class="mh">0xa3</span><span class="p">,</span> <span class="mh">0x9e</span><span class="p">,</span> <span class="mh">0x81</span><span class="p">,</span> <span class="mh">0xf3</span><span class="p">,</span> <span class="mh">0xd7</span><span class="p">,</span> <span class="mh">0xfb</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="mh">0x7c</span><span class="p">,</span> <span class="mh">0xe3</span><span class="p">,</span> <span class="mh">0x39</span><span class="p">,</span> <span class="mh">0x82</span><span class="p">,</span> <span class="mh">0x9b</span><span class="p">,</span> <span class="mh">0x2f</span><span class="p">,</span> <span class="mh">0xff</span><span class="p">,</span> <span class="mh">0x87</span><span class="p">,</span> <span class="mh">0x34</span><span class="p">,</span> <span class="mh">0x8e</span><span class="p">,</span> <span class="mh">0x43</span><span class="p">,</span> <span class="mh">0x44</span><span class="p">,</span> <span class="mh">0xc4</span><span class="p">,</span> <span class="mh">0xde</span><span class="p">,</span> <span class="mh">0xe9</span><span class="p">,</span> <span class="mh">0xcb</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="mh">0x54</span><span class="p">,</span> <span class="mh">0x7b</span><span class="p">,</span> <span class="mh">0x94</span><span class="p">,</span> <span class="mh">0x32</span><span class="p">,</span> <span class="mh">0xa6</span><span class="p">,</span> <span class="mh">0xc2</span><span class="p">,</span> <span class="mh">0x23</span><span class="p">,</span> <span class="mh">0x3d</span><span class="p">,</span> <span class="mh">0xee</span><span class="p">,</span> <span class="mh">0x4c</span><span class="p">,</span> <span class="mh">0x95</span><span class="p">,</span> <span class="mh">0x0b</span><span class="p">,</span> <span class="mh">0x42</span><span class="p">,</span> <span class="mh">0xfa</span><span class="p">,</span> <span class="mh">0xc3</span><span class="p">,</span> <span class="mh">0x4e</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="mh">0x08</span><span class="p">,</span> <span class="mh">0x2e</span><span class="p">,</span> <span class="mh">0xa1</span><span class="p">,</span> <span class="mh">0x66</span><span class="p">,</span> <span class="mh">0x28</span><span class="p">,</span> <span class="mh">0xd9</span><span class="p">,</span> <span class="mh">0x24</span><span class="p">,</span> <span class="mh">0xb2</span><span class="p">,</span> <span class="mh">0x76</span><span class="p">,</span> <span class="mh">0x5b</span><span class="p">,</span> <span class="mh">0xa2</span><span class="p">,</span> <span class="mh">0x49</span><span class="p">,</span> <span class="mh">0x6d</span><span class="p">,</span> <span class="mh">0x8b</span><span class="p">,</span> <span class="mh">0xd1</span><span class="p">,</span> <span class="mh">0x25</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="mh">0x72</span><span class="p">,</span> <span class="mh">0xf8</span><span class="p">,</span> <span class="mh">0xf6</span><span class="p">,</span> <span class="mh">0x64</span><span class="p">,</span> <span class="mh">0x86</span><span class="p">,</span> <span class="mh">0x68</span><span class="p">,</span> <span class="mh">0x98</span><span class="p">,</span> <span class="mh">0x16</span><span class="p">,</span> <span class="mh">0xd4</span><span class="p">,</span> <span class="mh">0xa4</span><span class="p">,</span> <span class="mh">0x5c</span><span class="p">,</span> <span class="mh">0xcc</span><span class="p">,</span> <span class="mh">0x5d</span><span class="p">,</span> <span class="mh">0x65</span><span class="p">,</span> <span class="mh">0xb6</span><span class="p">,</span> <span class="mh">0x92</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="mh">0x6c</span><span class="p">,</span> <span class="mh">0x70</span><span class="p">,</span> <span class="mh">0x48</span><span class="p">,</span> <span class="mh">0x50</span><span class="p">,</span> <span class="mh">0xfd</span><span class="p">,</span> <span class="mh">0xed</span><span class="p">,</span> <span class="mh">0xb9</span><span class="p">,</span> <span class="mh">0xda</span><span class="p">,</span> <span class="mh">0x5e</span><span class="p">,</span> <span class="mh">0x15</span><span class="p">,</span> <span class="mh">0x46</span><span class="p">,</span> <span class="mh">0x57</span><span class="p">,</span> <span class="mh">0xa7</span><span class="p">,</span> <span class="mh">0x8d</span><span class="p">,</span> <span class="mh">0x9d</span><span class="p">,</span> <span class="mh">0x84</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="mh">0x90</span><span class="p">,</span> <span class="mh">0xd8</span><span class="p">,</span> <span class="mh">0xab</span><span class="p">,</span> <span class="mh">0x00</span><span class="p">,</span> <span class="mh">0x8c</span><span class="p">,</span> <span class="mh">0xbc</span><span class="p">,</span> <span class="mh">0xd3</span><span class="p">,</span> <span class="mh">0x0a</span><span class="p">,</span> <span class="mh">0xf7</span><span class="p">,</span> <span class="mh">0xe4</span><span class="p">,</span> <span class="mh">0x58</span><span class="p">,</span> <span class="mh">0x05</span><span class="p">,</span> <span class="mh">0xb8</span><span class="p">,</span> <span class="mh">0xb3</span><span class="p">,</span> <span class="mh">0x45</span><span class="p">,</span> <span class="mh">0x06</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="mh">0xd0</span><span class="p">,</span> <span class="mh">0x2c</span><span class="p">,</span> <span class="mh">0x1e</span><span class="p">,</span> <span class="mh">0x8f</span><span class="p">,</span> <span class="mh">0xca</span><span class="p">,</span> <span class="mh">0x3f</span><span class="p">,</span> <span class="mh">0x0f</span><span class="p">,</span> <span class="mh">0x02</span><span class="p">,</span> <span class="mh">0xc1</span><span class="p">,</span> <span class="mh">0xaf</span><span class="p">,</span> <span class="mh">0xbd</span><span class="p">,</span> <span class="mh">0x03</span><span class="p">,</span> <span class="mh">0x01</span><span class="p">,</span> <span class="mh">0x13</span><span class="p">,</span> <span class="mh">0x8a</span><span class="p">,</span> <span class="mh">0x6b</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="mh">0x3a</span><span class="p">,</span> <span class="mh">0x91</span><span class="p">,</span> <span class="mh">0x11</span><span class="p">,</span> <span class="mh">0x41</span><span class="p">,</span> <span class="mh">0x4f</span><span class="p">,</span> <span class="mh">0x67</span><span class="p">,</span> <span class="mh">0xdc</span><span class="p">,</span> <span class="mh">0xea</span><span class="p">,</span> <span class="mh">0x97</span><span class="p">,</span> <span class="mh">0xf2</span><span class="p">,</span> <span class="mh">0xcf</span><span class="p">,</span> <span class="mh">0xce</span><span class="p">,</span> <span class="mh">0xf0</span><span class="p">,</span> <span class="mh">0xb4</span><span class="p">,</span> <span class="mh">0xe6</span><span class="p">,</span> <span class="mh">0x73</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="mh">0x96</span><span class="p">,</span> <span class="mh">0xac</span><span class="p">,</span> <span class="mh">0x74</span><span class="p">,</span> <span class="mh">0x22</span><span class="p">,</span> <span class="mh">0xe7</span><span class="p">,</span> <span class="mh">0xad</span><span class="p">,</span> <span class="mh">0x35</span><span class="p">,</span> <span class="mh">0x85</span><span class="p">,</span> <span class="mh">0xe2</span><span class="p">,</span> <span class="mh">0xf9</span><span class="p">,</span> <span class="mh">0x37</span><span class="p">,</span> <span class="mh">0xe8</span><span class="p">,</span> <span class="mh">0x1c</span><span class="p">,</span> <span class="mh">0x75</span><span class="p">,</span> <span class="mh">0xdf</span><span class="p">,</span> <span class="mh">0x6e</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="mh">0x47</span><span class="p">,</span> <span class="mh">0xf1</span><span class="p">,</span> <span class="mh">0x1a</span><span class="p">,</span> <span class="mh">0x71</span><span class="p">,</span> <span class="mh">0x1d</span><span class="p">,</span> <span class="mh">0x29</span><span class="p">,</span> <span class="mh">0xc5</span><span class="p">,</span> <span class="mh">0x89</span><span class="p">,</span> <span class="mh">0x6f</span><span class="p">,</span> <span class="mh">0xb7</span><span class="p">,</span> <span class="mh">0x62</span><span class="p">,</span> <span class="mh">0x0e</span><span class="p">,</span> <span class="mh">0xaa</span><span class="p">,</span> <span class="mh">0x18</span><span class="p">,</span> <span class="mh">0xbe</span><span class="p">,</span> <span class="mh">0x1b</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="mh">0xfc</span><span class="p">,</span> <span class="mh">0x56</span><span class="p">,</span> <span class="mh">0x3e</span><span class="p">,</span> <span class="mh">0x4b</span><span class="p">,</span> <span class="mh">0xc6</span><span class="p">,</span> <span class="mh">0xd2</span><span class="p">,</span> <span class="mh">0x79</span><span class="p">,</span> <span class="mh">0x20</span><span class="p">,</span> <span class="mh">0x9a</span><span class="p">,</span> <span class="mh">0xdb</span><span class="p">,</span> <span class="mh">0xc0</span><span class="p">,</span> <span class="mh">0xfe</span><span class="p">,</span> <span class="mh">0x78</span><span class="p">,</span> <span class="mh">0xcd</span><span class="p">,</span> <span class="mh">0x5a</span><span class="p">,</span> <span class="mh">0xf4</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="mh">0x1f</span><span class="p">,</span> <span class="mh">0xdd</span><span class="p">,</span> <span class="mh">0xa8</span><span class="p">,</span> <span class="mh">0x33</span><span class="p">,</span> <span class="mh">0x88</span><span class="p">,</span> <span class="mh">0x07</span><span class="p">,</span> <span class="mh">0xc7</span><span class="p">,</span> <span class="mh">0x31</span><span class="p">,</span> <span class="mh">0xb1</span><span class="p">,</span> <span class="mh">0x12</span><span class="p">,</span> <span class="mh">0x10</span><span class="p">,</span> <span class="mh">0x59</span><span class="p">,</span> <span class="mh">0x27</span><span class="p">,</span> <span class="mh">0x80</span><span class="p">,</span> <span class="mh">0xec</span><span class="p">,</span> <span class="mh">0x5f</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="mh">0x60</span><span class="p">,</span> <span class="mh">0x51</span><span class="p">,</span> <span class="mh">0x7f</span><span class="p">,</span> <span class="mh">0xa9</span><span class="p">,</span> <span class="mh">0x19</span><span class="p">,</span> <span class="mh">0xb5</span><span class="p">,</span> <span class="mh">0x4a</span><span class="p">,</span> <span class="mh">0x0d</span><span class="p">,</span> <span class="mh">0x2d</span><span class="p">,</span> <span class="mh">0xe5</span><span class="p">,</span> <span class="mh">0x7a</span><span class="p">,</span> <span class="mh">0x9f</span><span class="p">,</span> <span class="mh">0x93</span><span class="p">,</span> <span class="mh">0xc9</span><span class="p">,</span> <span class="mh">0x9c</span><span class="p">,</span> <span class="mh">0xef</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="mh">0xa0</span><span class="p">,</span> <span class="mh">0xe0</span><span class="p">,</span> <span class="mh">0x3b</span><span class="p">,</span> <span class="mh">0x4d</span><span class="p">,</span> <span class="mh">0xae</span><span class="p">,</span> <span class="mh">0x2a</span><span class="p">,</span> <span class="mh">0xf5</span><span class="p">,</span> <span class="mh">0xb0</span><span class="p">,</span> <span class="mh">0xc8</span><span class="p">,</span> <span class="mh">0xeb</span><span class="p">,</span> <span class="mh">0xbb</span><span class="p">,</span> <span class="mh">0x3c</span><span class="p">,</span> <span class="mh">0x83</span><span class="p">,</span> <span class="mh">0x53</span><span class="p">,</span> <span class="mh">0x99</span><span class="p">,</span> <span class="mh">0x61</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="mh">0x17</span><span class="p">,</span> <span class="mh">0x2b</span><span class="p">,</span> <span class="mh">0x04</span><span class="p">,</span> <span class="mh">0x7e</span><span class="p">,</span> <span class="mh">0xba</span><span class="p">,</span> <span class="mh">0x77</span><span class="p">,</span> <span class="mh">0xd6</span><span class="p">,</span> <span class="mh">0x26</span><span class="p">,</span> <span class="mh">0xe1</span><span class="p">,</span> <span class="mh">0x69</span><span class="p">,</span> <span class="mh">0x14</span><span class="p">,</span> <span class="mh">0x63</span><span class="p">,</span> <span class="mh">0x55</span><span class="p">,</span> <span class="mh">0x21</span><span class="p">,</span> <span class="mh">0x0c</span><span class="p">,</span> <span class="mh">0x7d</span>
+</span></span><span class="line"><span class="cl"><span class="p">]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">RCON</span> <span class="o">=</span> <span class="p">[</span>
+</span></span><span class="line"><span class="cl">    <span class="mh">0x00</span><span class="p">,</span> <span class="mh">0x01</span><span class="p">,</span> <span class="mh">0x02</span><span class="p">,</span> <span class="mh">0x04</span><span class="p">,</span> <span class="mh">0x08</span><span class="p">,</span> <span class="mh">0x10</span><span class="p">,</span> <span class="mh">0x20</span><span class="p">,</span> <span class="mh">0x40</span><span class="p">,</span> <span class="mh">0x80</span><span class="p">,</span> <span class="mh">0x1B</span><span class="p">,</span> <span class="mh">0x36</span>
+</span></span><span class="line"><span class="cl"><span class="p">]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">BLOCK_SIZE</span> <span class="o">=</span> <span class="mi">16</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">pkcs7_pad</span><span class="p">(</span><span class="n">data</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">,</span> <span class="n">block_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">BLOCK_SIZE</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bytes</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">pad_len</span> <span class="o">=</span> <span class="n">block_size</span> <span class="o">-</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="o">%</span> <span class="n">block_size</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">pad_len</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">pad_len</span> <span class="o">=</span> <span class="n">block_size</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">data</span> <span class="o">+</span> <span class="nb">bytes</span><span class="p">([</span><span class="n">pad_len</span><span class="p">]</span> <span class="o">*</span> <span class="n">pad_len</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">pkcs7_unpad</span><span class="p">(</span><span class="n">data</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bytes</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="ow">not</span> <span class="n">data</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&#34;空数据不支持去填充&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">pad_len</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">pad_len</span> <span class="o">&lt;</span> <span class="mi">1</span> <span class="ow">or</span> <span class="n">pad_len</span> <span class="o">&gt;</span> <span class="n">BLOCK_SIZE</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&#34;填充长度非法&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">data</span><span class="p">[</span><span class="o">-</span><span class="n">pad_len</span><span class="p">:]</span> <span class="o">!=</span> <span class="nb">bytes</span><span class="p">([</span><span class="n">pad_len</span><span class="p">]</span> <span class="o">*</span> <span class="n">pad_len</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&#34;填充内容非法&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">data</span><span class="p">[:</span><span class="o">-</span><span class="n">pad_len</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">zero_pad_key_to_16</span><span class="p">(</span><span class="n">key</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bytes</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">key</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">16</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">key</span><span class="p">[:</span><span class="mi">16</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">key</span> <span class="o">+</span> <span class="nb">bytes</span><span class="p">(</span><span class="mi">16</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">key</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">bytes_to_state</span><span class="p">(</span><span class="n">block</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]]:</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="p">[</span><span class="nb">list</span><span class="p">(</span><span class="n">block</span><span class="p">[</span><span class="n">i</span><span class="p">::</span><span class="mi">4</span><span class="p">])[:</span><span class="mi">4</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">)]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">state_to_bytes</span><span class="p">(</span><span class="n">state</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]])</span> <span class="o">-&gt;</span> <span class="nb">bytes</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">out</span> <span class="o">=</span> <span class="nb">bytearray</span><span class="p">(</span><span class="mi">16</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">            <span class="n">out</span><span class="p">[</span><span class="n">c</span> <span class="o">*</span> <span class="mi">4</span> <span class="o">+</span> <span class="n">r</span><span class="p">]</span> <span class="o">=</span> <span class="n">state</span><span class="p">[</span><span class="n">r</span><span class="p">][</span><span class="n">c</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="nb">bytes</span><span class="p">(</span><span class="n">out</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">sub_bytes</span><span class="p">(</span><span class="n">state</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]]):</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">            <span class="n">state</span><span class="p">[</span><span class="n">r</span><span class="p">][</span><span class="n">c</span><span class="p">]</span> <span class="o">=</span> <span class="n">SBOX</span><span class="p">[</span><span class="n">state</span><span class="p">[</span><span class="n">r</span><span class="p">][</span><span class="n">c</span><span class="p">]]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">inv_sub_bytes</span><span class="p">(</span><span class="n">state</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]]):</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">            <span class="n">state</span><span class="p">[</span><span class="n">r</span><span class="p">][</span><span class="n">c</span><span class="p">]</span> <span class="o">=</span> <span class="n">INV_SBOX</span><span class="p">[</span><span class="n">state</span><span class="p">[</span><span class="n">r</span><span class="p">][</span><span class="n">c</span><span class="p">]]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">shift_rows</span><span class="p">(</span><span class="n">state</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]]):</span>
+</span></span><span class="line"><span class="cl">    <span class="n">state</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">state</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">:]</span> <span class="o">+</span> <span class="n">state</span><span class="p">[</span><span class="mi">1</span><span class="p">][:</span><span class="mi">1</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">    <span class="n">state</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">state</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">2</span><span class="p">:]</span> <span class="o">+</span> <span class="n">state</span><span class="p">[</span><span class="mi">2</span><span class="p">][:</span><span class="mi">2</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">    <span class="n">state</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="n">state</span><span class="p">[</span><span class="mi">3</span><span class="p">][</span><span class="mi">3</span><span class="p">:]</span> <span class="o">+</span> <span class="n">state</span><span class="p">[</span><span class="mi">3</span><span class="p">][:</span><span class="mi">3</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">inv_shift_rows</span><span class="p">(</span><span class="n">state</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]]):</span>
+</span></span><span class="line"><span class="cl">    <span class="n">state</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">state</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">:]</span> <span class="o">+</span> <span class="n">state</span><span class="p">[</span><span class="mi">1</span><span class="p">][:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">    <span class="n">state</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">state</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="o">-</span><span class="mi">2</span><span class="p">:]</span> <span class="o">+</span> <span class="n">state</span><span class="p">[</span><span class="mi">2</span><span class="p">][:</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">    <span class="n">state</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="n">state</span><span class="p">[</span><span class="mi">3</span><span class="p">][</span><span class="o">-</span><span class="mi">3</span><span class="p">:]</span> <span class="o">+</span> <span class="n">state</span><span class="p">[</span><span class="mi">3</span><span class="p">][:</span><span class="o">-</span><span class="mi">3</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">xtime</span><span class="p">(</span><span class="n">a</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="p">((</span><span class="n">a</span> <span class="o">&lt;&lt;</span> <span class="mi">1</span><span class="p">)</span> <span class="o">&amp;</span> <span class="mh">0xFF</span><span class="p">)</span> <span class="o">^</span> <span class="p">(</span><span class="mh">0x1B</span> <span class="k">if</span> <span class="p">(</span><span class="n">a</span> <span class="o">&amp;</span> <span class="mh">0x80</span><span class="p">)</span> <span class="k">else</span> <span class="mi">0</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">mul</span><span class="p">(</span><span class="n">a</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">b</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">res</span> <span class="o">=</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">8</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">b</span> <span class="o">&amp;</span> <span class="mi">1</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="n">res</span> <span class="o">^=</span> <span class="n">a</span>
+</span></span><span class="line"><span class="cl">        <span class="n">a</span> <span class="o">=</span> <span class="n">xtime</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">b</span> <span class="o">&gt;&gt;=</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">res</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">mix_single_column</span><span class="p">(</span><span class="n">col</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">a0</span><span class="p">,</span> <span class="n">a1</span><span class="p">,</span> <span class="n">a2</span><span class="p">,</span> <span class="n">a3</span> <span class="o">=</span> <span class="n">col</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="p">[</span>
+</span></span><span class="line"><span class="cl">        <span class="n">mul</span><span class="p">(</span><span class="n">a0</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span> <span class="o">^</span> <span class="n">mul</span><span class="p">(</span><span class="n">a1</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span> <span class="o">^</span> <span class="n">a2</span> <span class="o">^</span> <span class="n">a3</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="n">a0</span> <span class="o">^</span> <span class="n">mul</span><span class="p">(</span><span class="n">a1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span> <span class="o">^</span> <span class="n">mul</span><span class="p">(</span><span class="n">a2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span> <span class="o">^</span> <span class="n">a3</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="n">a0</span> <span class="o">^</span> <span class="n">a1</span> <span class="o">^</span> <span class="n">mul</span><span class="p">(</span><span class="n">a2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span> <span class="o">^</span> <span class="n">mul</span><span class="p">(</span><span class="n">a3</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">        <span class="n">mul</span><span class="p">(</span><span class="n">a0</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span> <span class="o">^</span> <span class="n">a1</span> <span class="o">^</span> <span class="n">a2</span> <span class="o">^</span> <span class="n">mul</span><span class="p">(</span><span class="n">a3</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">mix_columns</span><span class="p">(</span><span class="n">state</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]]):</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="n">col</span> <span class="o">=</span> <span class="p">[</span><span class="n">state</span><span class="p">[</span><span class="n">r</span><span class="p">][</span><span class="n">c</span><span class="p">]</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">)]</span>
+</span></span><span class="line"><span class="cl">        <span class="n">new_col</span> <span class="o">=</span> <span class="n">mix_single_column</span><span class="p">(</span><span class="n">col</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">            <span class="n">state</span><span class="p">[</span><span class="n">r</span><span class="p">][</span><span class="n">c</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_col</span><span class="p">[</span><span class="n">r</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">inv_mix_single_column</span><span class="p">(</span><span class="n">col</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">a0</span><span class="p">,</span> <span class="n">a1</span><span class="p">,</span> <span class="n">a2</span><span class="p">,</span> <span class="n">a3</span> <span class="o">=</span> <span class="n">col</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="p">[</span>
+</span></span><span class="line"><span class="cl">        <span class="n">mul</span><span class="p">(</span><span class="n">a0</span><span class="p">,</span> <span class="mh">0x0e</span><span class="p">)</span> <span class="o">^</span> <span class="n">mul</span><span class="p">(</span><span class="n">a1</span><span class="p">,</span> <span class="mh">0x0b</span><span class="p">)</span> <span class="o">^</span> <span class="n">mul</span><span class="p">(</span><span class="n">a2</span><span class="p">,</span> <span class="mh">0x0d</span><span class="p">)</span> <span class="o">^</span> <span class="n">mul</span><span class="p">(</span><span class="n">a3</span><span class="p">,</span> <span class="mh">0x09</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">        <span class="n">mul</span><span class="p">(</span><span class="n">a0</span><span class="p">,</span> <span class="mh">0x09</span><span class="p">)</span> <span class="o">^</span> <span class="n">mul</span><span class="p">(</span><span class="n">a1</span><span class="p">,</span> <span class="mh">0x0e</span><span class="p">)</span> <span class="o">^</span> <span class="n">mul</span><span class="p">(</span><span class="n">a2</span><span class="p">,</span> <span class="mh">0x0b</span><span class="p">)</span> <span class="o">^</span> <span class="n">mul</span><span class="p">(</span><span class="n">a3</span><span class="p">,</span> <span class="mh">0x0d</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">        <span class="n">mul</span><span class="p">(</span><span class="n">a0</span><span class="p">,</span> <span class="mh">0x0d</span><span class="p">)</span> <span class="o">^</span> <span class="n">mul</span><span class="p">(</span><span class="n">a1</span><span class="p">,</span> <span class="mh">0x09</span><span class="p">)</span> <span class="o">^</span> <span class="n">mul</span><span class="p">(</span><span class="n">a2</span><span class="p">,</span> <span class="mh">0x0e</span><span class="p">)</span> <span class="o">^</span> <span class="n">mul</span><span class="p">(</span><span class="n">a3</span><span class="p">,</span> <span class="mh">0x0b</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">        <span class="n">mul</span><span class="p">(</span><span class="n">a0</span><span class="p">,</span> <span class="mh">0x0b</span><span class="p">)</span> <span class="o">^</span> <span class="n">mul</span><span class="p">(</span><span class="n">a1</span><span class="p">,</span> <span class="mh">0x0d</span><span class="p">)</span> <span class="o">^</span> <span class="n">mul</span><span class="p">(</span><span class="n">a2</span><span class="p">,</span> <span class="mh">0x09</span><span class="p">)</span> <span class="o">^</span> <span class="n">mul</span><span class="p">(</span><span class="n">a3</span><span class="p">,</span> <span class="mh">0x0e</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">inv_mix_columns</span><span class="p">(</span><span class="n">state</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]]):</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="n">col</span> <span class="o">=</span> <span class="p">[</span><span class="n">state</span><span class="p">[</span><span class="n">r</span><span class="p">][</span><span class="n">c</span><span class="p">]</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">)]</span>
+</span></span><span class="line"><span class="cl">        <span class="n">new_col</span> <span class="o">=</span> <span class="n">inv_mix_single_column</span><span class="p">(</span><span class="n">col</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">            <span class="n">state</span><span class="p">[</span><span class="n">r</span><span class="p">][</span><span class="n">c</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_col</span><span class="p">[</span><span class="n">r</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">add_round_key</span><span class="p">(</span><span class="n">state</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]],</span> <span class="n">round_key</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">            <span class="n">state</span><span class="p">[</span><span class="n">r</span><span class="p">][</span><span class="n">c</span><span class="p">]</span> <span class="o">^=</span> <span class="n">round_key</span><span class="p">[</span><span class="n">c</span> <span class="o">*</span> <span class="mi">4</span> <span class="o">+</span> <span class="n">r</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">rot_word</span><span class="p">(</span><span class="n">w</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">w</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span> <span class="o">+</span> <span class="n">w</span><span class="p">[:</span><span class="mi">1</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">sub_word</span><span class="p">(</span><span class="n">w</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="p">[</span><span class="n">SBOX</span><span class="p">[</span><span class="n">b</span><span class="p">]</span> <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="n">w</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">key_expansion</span><span class="p">(</span><span class="n">key</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">bytes</span><span class="p">]:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">Nk</span> <span class="o">=</span> <span class="mi">4</span>
+</span></span><span class="line"><span class="cl">    <span class="n">Nb</span> <span class="o">=</span> <span class="mi">4</span>
+</span></span><span class="line"><span class="cl">    <span class="n">Nr</span> <span class="o">=</span> <span class="mi">10</span>
+</span></span><span class="line"><span class="cl">    <span class="n">w</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">Nb</span> <span class="o">*</span> <span class="p">(</span><span class="n">Nr</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))]</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">Nk</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="n">w</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">key</span><span class="p">[</span><span class="mi">4</span> <span class="o">*</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">0</span><span class="p">],</span> <span class="n">key</span><span class="p">[</span><span class="mi">4</span> <span class="o">*</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">],</span> <span class="n">key</span><span class="p">[</span><span class="mi">4</span> <span class="o">*</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">2</span><span class="p">],</span> <span class="n">key</span><span class="p">[</span><span class="mi">4</span> <span class="o">*</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">3</span><span class="p">]]</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">Nk</span><span class="p">,</span> <span class="n">Nb</span> <span class="o">*</span> <span class="p">(</span><span class="n">Nr</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)):</span>
+</span></span><span class="line"><span class="cl">        <span class="n">temp</span> <span class="o">=</span> <span class="n">w</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">][:]</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">i</span> <span class="o">%</span> <span class="n">Nk</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="n">temp</span> <span class="o">=</span> <span class="n">sub_word</span><span class="p">(</span><span class="n">rot_word</span><span class="p">(</span><span class="n">temp</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">            <span class="n">temp</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">^=</span> <span class="n">RCON</span><span class="p">[</span><span class="n">i</span> <span class="o">//</span> <span class="n">Nk</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">        <span class="n">w</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span> <span class="p">(</span><span class="n">w</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="n">Nk</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">^</span> <span class="n">temp</span><span class="p">[</span><span class="n">j</span><span class="p">])</span> <span class="o">&amp;</span> <span class="mh">0xFF</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span> <span class="p">]</span>
+</span></span><span class="line"><span class="cl">    <span class="n">round_keys</span> <span class="o">=</span> <span class="p">[]</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">Nr</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="n">rk</span> <span class="o">=</span> <span class="p">[]</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">Nb</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">            <span class="n">rk</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">w</span><span class="p">[</span><span class="n">r</span> <span class="o">*</span> <span class="n">Nb</span> <span class="o">+</span> <span class="n">c</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">        <span class="n">round_keys</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">bytes</span><span class="p">(</span><span class="n">rk</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">round_keys</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">bytes_hex</span><span class="p">(</span><span class="n">b</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">b</span><span class="o">.</span><span class="n">hex</span><span class="p">()</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">state_hex</span><span class="p">(</span><span class="n">state</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]])</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">state_to_bytes</span><span class="p">(</span><span class="n">state</span><span class="p">)</span><span class="o">.</span><span class="n">hex</span><span class="p">()</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">aes_encrypt_block</span><span class="p">(</span><span class="n">block</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">,</span> <span class="n">round_keys</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">bytes</span><span class="p">],</span> <span class="n">verbose</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bytes</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">state</span> <span class="o">=</span> <span class="n">bytes_to_state</span><span class="p">(</span><span class="n">block</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;</span><span class="se">\n</span><span class="s2">==================== 开始 AES 加密 (单块) ===================&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;输入数据 (Hex): </span><span class="si">{</span><span class="n">block</span><span class="o">.</span><span class="n">hex</span><span class="p">()</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;初始轮密钥 (Hex): </span><span class="si">{</span><span class="n">bytes_hex</span><span class="p">(</span><span class="n">round_keys</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">add_round_key</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">round_keys</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">round_idx</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;</span><span class="se">\n</span><span class="s2">-- Round </span><span class="si">{</span><span class="n">round_idx</span><span class="si">}</span><span class="s2"> --&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">sub_bytes</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;After SubBytes: </span><span class="si">{</span><span class="n">state_hex</span><span class="p">(</span><span class="n">state</span><span class="p">)</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">shift_rows</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;After ShiftRows: </span><span class="si">{</span><span class="n">state_hex</span><span class="p">(</span><span class="n">state</span><span class="p">)</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">mix_columns</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;After MixColumns: </span><span class="si">{</span><span class="n">state_hex</span><span class="p">(</span><span class="n">state</span><span class="p">)</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">add_round_key</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">round_keys</span><span class="p">[</span><span class="n">round_idx</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;AddRoundKey (</span><span class="si">{</span><span class="n">round_idx</span><span class="si">}</span><span class="s2">): </span><span class="si">{</span><span class="n">bytes_hex</span><span class="p">(</span><span class="n">round_keys</span><span class="p">[</span><span class="n">round_idx</span><span class="p">])</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;State: </span><span class="si">{</span><span class="n">state_hex</span><span class="p">(</span><span class="n">state</span><span class="p">)</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;</span><span class="se">\n</span><span class="s2">-- Final Round (10) --&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">sub_bytes</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;After SubBytes: </span><span class="si">{</span><span class="n">state_hex</span><span class="p">(</span><span class="n">state</span><span class="p">)</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">shift_rows</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;After ShiftRows: </span><span class="si">{</span><span class="n">state_hex</span><span class="p">(</span><span class="n">state</span><span class="p">)</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">add_round_key</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">round_keys</span><span class="p">[</span><span class="mi">10</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;AddRoundKey (10): </span><span class="si">{</span><span class="n">bytes_hex</span><span class="p">(</span><span class="n">round_keys</span><span class="p">[</span><span class="mi">10</span><span class="p">])</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;[加密结果] (Hex): </span><span class="si">{</span><span class="n">state_hex</span><span class="p">(</span><span class="n">state</span><span class="p">)</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;==================== 结束 AES 加密 ====================</span><span class="se">\n</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">state_to_bytes</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">aes_decrypt_block</span><span class="p">(</span><span class="n">block</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">,</span> <span class="n">round_keys</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">bytes</span><span class="p">],</span> <span class="n">verbose</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bytes</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">state</span> <span class="o">=</span> <span class="n">bytes_to_state</span><span class="p">(</span><span class="n">block</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;</span><span class="se">\n</span><span class="s2">==================== 开始 AES 解密 (单块) ===================&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;输入数据 (Hex): </span><span class="si">{</span><span class="n">block</span><span class="o">.</span><span class="n">hex</span><span class="p">()</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;终止轮密钥 (Hex): </span><span class="si">{</span><span class="n">bytes_hex</span><span class="p">(</span><span class="n">round_keys</span><span class="p">[</span><span class="mi">10</span><span class="p">])</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">add_round_key</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">round_keys</span><span class="p">[</span><span class="mi">10</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">    <span class="n">inv_shift_rows</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">inv_sub_bytes</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">round_idx</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;</span><span class="se">\n</span><span class="s2">-- Round </span><span class="si">{</span><span class="n">round_idx</span><span class="si">}</span><span class="s2"> --&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">add_round_key</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">round_keys</span><span class="p">[</span><span class="n">round_idx</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;AddRoundKey (</span><span class="si">{</span><span class="n">round_idx</span><span class="si">}</span><span class="s2">): </span><span class="si">{</span><span class="n">bytes_hex</span><span class="p">(</span><span class="n">round_keys</span><span class="p">[</span><span class="n">round_idx</span><span class="p">])</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;State: </span><span class="si">{</span><span class="n">state_hex</span><span class="p">(</span><span class="n">state</span><span class="p">)</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">inv_mix_columns</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;After InvMixColumns: </span><span class="si">{</span><span class="n">state_hex</span><span class="p">(</span><span class="n">state</span><span class="p">)</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">inv_shift_rows</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;After InvShiftRows: </span><span class="si">{</span><span class="n">state_hex</span><span class="p">(</span><span class="n">state</span><span class="p">)</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">inv_sub_bytes</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;After InvSubBytes: </span><span class="si">{</span><span class="n">state_hex</span><span class="p">(</span><span class="n">state</span><span class="p">)</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">add_round_key</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">round_keys</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;AddRoundKey (0): </span><span class="si">{</span><span class="n">bytes_hex</span><span class="p">(</span><span class="n">round_keys</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;[解密结果] (Hex): </span><span class="si">{</span><span class="n">state_hex</span><span class="p">(</span><span class="n">state</span><span class="p">)</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;==================== 结束 AES 解密 ====================</span><span class="se">\n</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">state_to_bytes</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">aes_encrypt_ecb</span><span class="p">(</span><span class="n">plaintext</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">,</span> <span class="n">verbose</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bytes</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">key16</span> <span class="o">=</span> <span class="n">zero_pad_key_to_16</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">round_keys</span> <span class="o">=</span> <span class="n">key_expansion</span><span class="p">(</span><span class="n">key16</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">padded</span> <span class="o">=</span> <span class="n">pkcs7_pad</span><span class="p">(</span><span class="n">plaintext</span><span class="p">,</span> <span class="n">BLOCK_SIZE</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;开始加密...&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;原始长度: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">plaintext</span><span class="p">)</span><span class="si">}</span><span class="s2">, 填充后长度: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">padded</span><span class="p">)</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">out</span> <span class="o">=</span> <span class="nb">bytearray</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">padded</span><span class="p">),</span> <span class="n">BLOCK_SIZE</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="n">blk</span> <span class="o">=</span> <span class="n">padded</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">i</span><span class="o">+</span><span class="n">BLOCK_SIZE</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="k">try</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;</span><span class="se">\n</span><span class="s2">&gt;&gt;&gt; 处理第 </span><span class="si">{</span><span class="n">i</span><span class="o">//</span><span class="n">BLOCK_SIZE</span> <span class="o">+</span> <span class="mi">1</span><span class="si">}</span><span class="s2"> 块: </span><span class="si">{</span><span class="n">blk</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">,</span> <span class="s1">&#39;ignore&#39;</span><span class="p">)</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;</span><span class="se">\n</span><span class="s2">&gt;&gt;&gt; 处理第 </span><span class="si">{</span><span class="n">i</span><span class="o">//</span><span class="n">BLOCK_SIZE</span> <span class="o">+</span> <span class="mi">1</span><span class="si">}</span><span class="s2"> 块 (Hex): </span><span class="si">{</span><span class="n">blk</span><span class="o">.</span><span class="n">hex</span><span class="p">()</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">ct</span> <span class="o">=</span> <span class="n">aes_encrypt_block</span><span class="p">(</span><span class="n">blk</span><span class="p">,</span> <span class="n">round_keys</span><span class="p">,</span> <span class="n">verbose</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">out</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">ct</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="nb">bytes</span><span class="p">(</span><span class="n">out</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">aes_decrypt_ecb</span><span class="p">(</span><span class="n">ciphertext</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">,</span> <span class="n">verbose</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bytes</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">key16</span> <span class="o">=</span> <span class="n">zero_pad_key_to_16</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">round_keys</span> <span class="o">=</span> <span class="n">key_expansion</span><span class="p">(</span><span class="n">key16</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">out</span> <span class="o">=</span> <span class="nb">bytearray</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;开始解密...&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">ciphertext</span><span class="p">),</span> <span class="n">BLOCK_SIZE</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="n">blk</span> <span class="o">=</span> <span class="n">ciphertext</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">i</span><span class="o">+</span><span class="n">BLOCK_SIZE</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;</span><span class="se">\n</span><span class="s2">&gt;&gt;&gt; 处理第 </span><span class="si">{</span><span class="n">i</span><span class="o">//</span><span class="n">BLOCK_SIZE</span> <span class="o">+</span> <span class="mi">1</span><span class="si">}</span><span class="s2"> 块 (Hex): </span><span class="si">{</span><span class="n">blk</span><span class="o">.</span><span class="n">hex</span><span class="p">()</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">pt</span> <span class="o">=</span> <span class="n">aes_decrypt_block</span><span class="p">(</span><span class="n">blk</span><span class="p">,</span> <span class="n">round_keys</span><span class="p">,</span> <span class="n">verbose</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">out</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">pt</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">pkcs7_unpad</span><span class="p">(</span><span class="nb">bytes</span><span class="p">(</span><span class="n">out</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">    <span class="n">raw_text</span> <span class="o">=</span> <span class="s2">&#34;hello fanshanng&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">raw_key</span> <span class="o">=</span> <span class="s2">&#34;secret&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;原始明文: </span><span class="si">{</span><span class="n">raw_text</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;原始密钥: </span><span class="si">{</span><span class="n">raw_key</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">pt</span> <span class="o">=</span> <span class="n">raw_text</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s2">&#34;utf-8&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">key_bytes</span> <span class="o">=</span> <span class="n">raw_key</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s2">&#34;utf-8&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">ct</span> <span class="o">=</span> <span class="n">aes_encrypt_ecb</span><span class="p">(</span><span class="n">pt</span><span class="p">,</span> <span class="n">key_bytes</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;</span><span class="se">\n</span><span class="s2">最终密文 (Hex): </span><span class="si">{</span><span class="n">ct</span><span class="o">.</span><span class="n">hex</span><span class="p">()</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">dec</span> <span class="o">=</span> <span class="n">aes_decrypt_ecb</span><span class="p">(</span><span class="n">ct</span><span class="p">,</span> <span class="n">key_bytes</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">dec_str</span> <span class="o">=</span> <span class="n">dec</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&#34;utf-8&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;</span><span class="se">\n</span><span class="s2">最终验证:&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;  原始明文: </span><span class="si">{</span><span class="n">raw_text</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;  解密明文: </span><span class="si">{</span><span class="n">dec_str</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;  匹配成功: </span><span class="si">{</span><span class="n">raw_text</span> <span class="o">==</span> <span class="n">dec_str</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&#34;__main__&#34;</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">main</span><span class="p">()</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><hr>
+<h2 id="8-附录运行结果详细日志">8. 附录：运行结果（详细日志）
+</h2><p>以下日志展示了对明文 <code>&quot;hello fanshanng&quot;</code> 使用密钥 <code>&quot;secret&quot;</code> 进行加密的完整内部状态。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">  1
+</span><span class="lnt">  2
+</span><span class="lnt">  3
+</span><span class="lnt">  4
+</span><span class="lnt">  5
+</span><span class="lnt">  6
+</span><span class="lnt">  7
+</span><span class="lnt">  8
+</span><span class="lnt">  9
+</span><span class="lnt"> 10
+</span><span class="lnt"> 11
+</span><span class="lnt"> 12
+</span><span class="lnt"> 13
+</span><span class="lnt"> 14
+</span><span class="lnt"> 15
+</span><span class="lnt"> 16
+</span><span class="lnt"> 17
+</span><span class="lnt"> 18
+</span><span class="lnt"> 19
+</span><span class="lnt"> 20
+</span><span class="lnt"> 21
+</span><span class="lnt"> 22
+</span><span class="lnt"> 23
+</span><span class="lnt"> 24
+</span><span class="lnt"> 25
+</span><span class="lnt"> 26
+</span><span class="lnt"> 27
+</span><span class="lnt"> 28
+</span><span class="lnt"> 29
+</span><span class="lnt"> 30
+</span><span class="lnt"> 31
+</span><span class="lnt"> 32
+</span><span class="lnt"> 33
+</span><span class="lnt"> 34
+</span><span class="lnt"> 35
+</span><span class="lnt"> 36
+</span><span class="lnt"> 37
+</span><span class="lnt"> 38
+</span><span class="lnt"> 39
+</span><span class="lnt"> 40
+</span><span class="lnt"> 41
+</span><span class="lnt"> 42
+</span><span class="lnt"> 43
+</span><span class="lnt"> 44
+</span><span class="lnt"> 45
+</span><span class="lnt"> 46
+</span><span class="lnt"> 47
+</span><span class="lnt"> 48
+</span><span class="lnt"> 49
+</span><span class="lnt"> 50
+</span><span class="lnt"> 51
+</span><span class="lnt"> 52
+</span><span class="lnt"> 53
+</span><span class="lnt"> 54
+</span><span class="lnt"> 55
+</span><span class="lnt"> 56
+</span><span class="lnt"> 57
+</span><span class="lnt"> 58
+</span><span class="lnt"> 59
+</span><span class="lnt"> 60
+</span><span class="lnt"> 61
+</span><span class="lnt"> 62
+</span><span class="lnt"> 63
+</span><span class="lnt"> 64
+</span><span class="lnt"> 65
+</span><span class="lnt"> 66
+</span><span class="lnt"> 67
+</span><span class="lnt"> 68
+</span><span class="lnt"> 69
+</span><span class="lnt"> 70
+</span><span class="lnt"> 71
+</span><span class="lnt"> 72
+</span><span class="lnt"> 73
+</span><span class="lnt"> 74
+</span><span class="lnt"> 75
+</span><span class="lnt"> 76
+</span><span class="lnt"> 77
+</span><span class="lnt"> 78
+</span><span class="lnt"> 79
+</span><span class="lnt"> 80
+</span><span class="lnt"> 81
+</span><span class="lnt"> 82
+</span><span class="lnt"> 83
+</span><span class="lnt"> 84
+</span><span class="lnt"> 85
+</span><span class="lnt"> 86
+</span><span class="lnt"> 87
+</span><span class="lnt"> 88
+</span><span class="lnt"> 89
+</span><span class="lnt"> 90
+</span><span class="lnt"> 91
+</span><span class="lnt"> 92
+</span><span class="lnt"> 93
+</span><span class="lnt"> 94
+</span><span class="lnt"> 95
+</span><span class="lnt"> 96
+</span><span class="lnt"> 97
+</span><span class="lnt"> 98
+</span><span class="lnt"> 99
+</span><span class="lnt">100
+</span><span class="lnt">101
+</span><span class="lnt">102
+</span><span class="lnt">103
+</span><span class="lnt">104
+</span><span class="lnt">105
+</span><span class="lnt">106
+</span><span class="lnt">107
+</span><span class="lnt">108
+</span><span class="lnt">109
+</span><span class="lnt">110
+</span><span class="lnt">111
+</span><span class="lnt">112
+</span><span class="lnt">113
+</span><span class="lnt">114
+</span><span class="lnt">115
+</span><span class="lnt">116
+</span><span class="lnt">117
+</span><span class="lnt">118
+</span><span class="lnt">119
+</span><span class="lnt">120
+</span><span class="lnt">121
+</span><span class="lnt">122
+</span><span class="lnt">123
+</span><span class="lnt">124
+</span><span class="lnt">125
+</span><span class="lnt">126
+</span><span class="lnt">127
+</span><span class="lnt">128
+</span><span class="lnt">129
+</span><span class="lnt">130
+</span><span class="lnt">131
+</span><span class="lnt">132
+</span><span class="lnt">133
+</span><span class="lnt">134
+</span><span class="lnt">135
+</span><span class="lnt">136
+</span><span class="lnt">137
+</span><span class="lnt">138
+</span><span class="lnt">139
+</span><span class="lnt">140
+</span><span class="lnt">141
+</span><span class="lnt">142
+</span><span class="lnt">143
+</span><span class="lnt">144
+</span><span class="lnt">145
+</span><span class="lnt">146
+</span><span class="lnt">147
+</span><span class="lnt">148
+</span><span class="lnt">149
+</span><span class="lnt">150
+</span><span class="lnt">151
+</span><span class="lnt">152
+</span><span class="lnt">153
+</span><span class="lnt">154
+</span><span class="lnt">155
+</span><span class="lnt">156
+</span><span class="lnt">157
+</span><span class="lnt">158
+</span><span class="lnt">159
+</span><span class="lnt">160
+</span><span class="lnt">161
+</span><span class="lnt">162
+</span><span class="lnt">163
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">原始明文: hello fanshanng
+</span></span><span class="line"><span class="cl">原始密钥: secret
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">开始加密...
+</span></span><span class="line"><span class="cl">原始长度: 15, 填充后长度: 16
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">&gt;&gt;&gt; 处理第 1 块: hello fanshanng
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">==================== 开始 AES 加密 (单块) ===================
+</span></span><span class="line"><span class="cl">输入数据 (Hex): 68656C6C6F2066616E7368616E6E6701
+</span></span><span class="line"><span class="cl">初始轮密钥 (Hex): 73656372657400000000000000000000
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">-- Round 1 --
+</span></span><span class="line"><span class="cl">After SubBytes: 84B05399D8E9F0792B7629157886430A
+</span></span><span class="line"><span class="cl">After ShiftRows: 84E9290AD87643792B86539978B0F015
+</span></span><span class="line"><span class="cl">After MixColumns: D742B4B2C67AE73340810CB134BEA817
+</span></span><span class="line"><span class="cl">AddRoundKey (1): 11060011747200117472001174720011
+</span></span><span class="line"><span class="cl">State: C64CB4A19208872234F30CA0602CB806
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">-- Round 2 --
+</span></span><span class="line"><span class="cl">After SubBytes: 0D5A8166C7F66F5672BDC6872891B03E
+</span></span><span class="line"><span class="cl">After ShiftRows: 0DF6C63EC7BDB06672918156685A6F87
+</span></span><span class="line"><span class="cl">After MixColumns: 75262BEBCD333CAAA5FC11340EA7F864
+</span></span><span class="line"><span class="cl">AddRoundKey (2): 53658283271782925365828327178292
+</span></span><span class="line"><span class="cl">State: 2643A968EA24BE38F69993B729B07AF6
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">-- Round 3 --
+</span></span><span class="line"><span class="cl">After SubBytes: F71AD3458736AE0742EEDCA9A5E7DA42
+</span></span><span class="line"><span class="cl">After ShiftRows: F736DC4287EEDA4542E7D307A51AAEA9
+</span></span><span class="line"><span class="cl">After MixColumns: 31A6A46CA370092C62FE11FC78D11809
+</span></span><span class="line"><span class="cl">AddRoundKey (3): A776CD4F80614FDDD304CD5EF4134FCC
+</span></span><span class="line"><span class="cl">State: 96D06923231146F1B1FADCA28CC257C5
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">-- Round 4 --
+</span></span><span class="line"><span class="cl">After SubBytes: 9070F92626825AA1C82D863A64255BA6
+</span></span><span class="line"><span class="cl">After ShiftRows: 908286A6262D5B26C825F9A164705A3A
+</span></span><span class="line"><span class="cl">After MixColumns: 86B8F4F846B7D750BC33FCC63850EEF2
+</span></span><span class="line"><span class="cl">AddRoundKey (4): D2F286F05293C92D8197047375844BBF
+</span></span><span class="line"><span class="cl">State: 544A720814241E7D3DA4F8B54DD4A54D
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">-- Round 5 --
+</span></span><span class="line"><span class="cl">After SubBytes: 20D64030FA3672FF274941D5E34806E3
+</span></span><span class="line"><span class="cl">After ShiftRows: 203641E3FA490630274840FFE3D672D5
+</span></span><span class="line"><span class="cl">After MixColumns: B86CAACA0252EF3A2988F5841B17B52B
+</span></span><span class="line"><span class="cl">AddRoundKey (5): 9D418E6DCFD247404E4543333BC1088C
+</span></span><span class="line"><span class="cl">State: 252D24A7CD80A87A67CDB6B720D6BDA7
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">-- Round 6 --
+</span></span><span class="line"><span class="cl">After SubBytes: 3FD8365CBDCDC2DA85BD4EA9B7F67A5C
+</span></span><span class="line"><span class="cl">After ShiftRows: 3FCD4E5CBDBD7A5C85F636DAB7D8C2A9
+</span></span><span class="line"><span class="cl">After MixColumns: 20308A7A9B0E10A3FCF26AFB6DE81091
+</span></span><span class="line"><span class="cl">AddRoundKey (6): C571EA8F0AA3ADCF44E6EEFC7F27E670
+</span></span><span class="line"><span class="cl">State: E54160F591ADBD6CB814840712CFF6E1
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">-- Round 7 --
+</span></span><span class="line"><span class="cl">After SubBytes: D983D0E681957A506CFA5FC5C98A42F8
+</span></span><span class="line"><span class="cl">After ShiftRows: D9955FF881FA42E66C8AD050C9837AC5
+</span></span><span class="line"><span class="cl">After MixColumns: AAF1E151A84ECEF7DD58AD4EA89FEA28
+</span></span><span class="line"><span class="cl">AddRoundKey (7): 49FFBB5D435C169207BAF86E789D1E1E
+</span></span><span class="line"><span class="cl">State: E30E5A0CEB12D865DAE25520D002F436
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">-- Round 8 --
+</span></span><span class="line"><span class="cl">After SubBytes: 11ABBEFEE9C9614D5798FCB77077BF05
+</span></span><span class="line"><span class="cl">After ShiftRows: 11C9FC05E998BFFE5777BE4D70AB61B7
+</span></span><span class="line"><span class="cl">After MixColumns: 9B82340C3BE60DE0C42D90AAD029DB2F
+</span></span><span class="line"><span class="cl">AddRoundKey (8): 978DC9E1D4D1DF73D36B271DABF63903
+</span></span><span class="line"><span class="cl">State: 0C0FFDEDEF37D2931746B7B77BDFE22C
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">-- Round 9 --
+</span></span><span class="line"><span class="cl">After SubBytes: FE765455DF9AB5DCF05AA9A9219E9871
+</span></span><span class="line"><span class="cl">After ShiftRows: FE9AA971DF5A9855F09E54DC2176B5A9
+</span></span><span class="line"><span class="cl">After MixColumns: 8A40BEC8868D5112CAF7B962C4A0C6E9
+</span></span><span class="line"><span class="cl">AddRoundKey (9): CE9FB2831A4E6DF0C9254AED62D373EE
+</span></span><span class="line"><span class="cl">State: 44DF0C4B9CC33CE203D2F38FA673B507
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">-- Final Round (10) --
+</span></span><span class="line"><span class="cl">After SubBytes: 1B9EFEB3DE2EEB987BB50D73248FD5C5
+</span></span><span class="line"><span class="cl">After ShiftRows: 1B2E0DC5DEB5D5B37B8FFE98249EEB73
+</span></span><span class="line"><span class="cl">AddRoundKey (10): 9E109A29845EF7D94D7BBD342FA8CEDA
+</span></span><span class="line"><span class="cl">[加密结果] (Hex): 853E97EC5AEB226A36F443AC0B3625A9
+</span></span><span class="line"><span class="cl">==================== 结束 AES 加密 ====================
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">最终密文 (Hex): 853E97EC5AEB226A36F443AC0B3625A9
+</span></span><span class="line"><span class="cl">开始解密...
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">&gt;&gt;&gt; 处理第 1 块 (Hex): 853E97EC5AEB226A36F443AC0B3625A9
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">==================== 开始 AES 解密 (单块) ===================
+</span></span><span class="line"><span class="cl">输入数据 (Hex): 853E97EC5AEB226A36F443AC0B3625A9
+</span></span><span class="line"><span class="cl">终止轮密钥 (Hex): 9E109A29845EF7D94D7BBD342FA8CEDA
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">-- Round 9 --
+</span></span><span class="line"><span class="cl">AddRoundKey (9): CE9FB2831A4E6DF0C9254AED62D373EE
+</span></span><span class="line"><span class="cl">State: 8A40BEC8868D5112CAF7B962C4A0C6E9
+</span></span><span class="line"><span class="cl">After InvMixColumns: FE9AA971DF5A9855F09E54DC2176B5A9
+</span></span><span class="line"><span class="cl">After InvShiftRows: FE765455DF9AB5DCF05AA9A9219E9871
+</span></span><span class="line"><span class="cl">After InvSubBytes: 0C0FFDEDEF37D2931746B7B77BDFE22C
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">-- Round 8 --
+</span></span><span class="line"><span class="cl">AddRoundKey (8): 978DC9E1D4D1DF73D36B271DABF63903
+</span></span><span class="line"><span class="cl">State: 9B82340C3BE60DE0C42D90AAD029DB2F
+</span></span><span class="line"><span class="cl">After InvMixColumns: 11C9FC05E998BFFE5777BE4D70AB61B7
+</span></span><span class="line"><span class="cl">After InvShiftRows: 11ABBEFEE9C9614D5798FCB77077BF05
+</span></span><span class="line"><span class="cl">After InvSubBytes: E30E5A0CEB12D865DAE25520D002F436
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">-- Round 7 --
+</span></span><span class="line"><span class="cl">AddRoundKey (7): 49FFBB5D435C169207BAF86E789D1E1E
+</span></span><span class="line"><span class="cl">State: AAF1E151A84ECEF7DD58AD4EA89FEA28
+</span></span><span class="line"><span class="cl">After InvMixColumns: D9955FF881FA42E66C8AD050C9837AC5
+</span></span><span class="line"><span class="cl">After InvShiftRows: D983D0E681957A506CFA5FC5C98A42F8
+</span></span><span class="line"><span class="cl">After InvSubBytes: E54160F591ADBD6CB814840712CFF6E1
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">-- Round 6 --
+</span></span><span class="line"><span class="cl">AddRoundKey (6): C571EA8F0AA3ADCF44E6EEFC7F27E670
+</span></span><span class="line"><span class="cl">State: 20308A7A9B0E10A3FCF26AFB6DE81091
+</span></span><span class="line"><span class="cl">After InvMixColumns: 3FCD4E5CBDBD7A5C85F636DAB7D8C2A9
+</span></span><span class="line"><span class="cl">After InvShiftRows: 3FD8365CBDCDC2DA85BD4EA9B7F67A5C
+</span></span><span class="line"><span class="cl">After InvSubBytes: 252D24A7CD80A87A67CDB6B720D6BDA7
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">-- Round 5 --
+</span></span><span class="line"><span class="cl">AddRoundKey (5): 9D418E6DCFD247404E4543333BC1088C
+</span></span><span class="line"><span class="cl">State: B86CAACA0252EF3A2988F5841B17B52B
+</span></span><span class="line"><span class="cl">After InvMixColumns: 203641E3FA490630274840FFE3D672D5
+</span></span><span class="line"><span class="cl">After InvShiftRows: 20D64030FA3672FF274941D5E34806E3
+</span></span><span class="line"><span class="cl">After InvSubBytes: 544A720814241E7D3DA4F8B54DD4A54D
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">-- Round 4 --
+</span></span><span class="line"><span class="cl">AddRoundKey (4): D2F286F05293C92D8197047375844BBF
+</span></span><span class="line"><span class="cl">State: 86B8F4F846B7D750BC33FCC63850EEF2
+</span></span><span class="line"><span class="cl">After InvMixColumns: 908286A6262D5B26C825F9A164705A3A
+</span></span><span class="line"><span class="cl">After InvShiftRows: 9070F92626825AA1C82D863A64255BA6
+</span></span><span class="line"><span class="cl">After InvSubBytes: 96D06923231146F1B1FADCA28CC257C5
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">-- Round 3 --
+</span></span><span class="line"><span class="cl">AddRoundKey (3): A776CD4F80614FDDD304CD5EF4134FCC
+</span></span><span class="line"><span class="cl">State: 31A6A46CA370092C62FE11FC78D11809
+</span></span><span class="line"><span class="cl">After InvMixColumns: F736DC4287EEDA4542E7D307A51AAEA9
+</span></span><span class="line"><span class="cl">After InvShiftRows: F71AD3458736AE0742EEDCA9A5E7DA42
+</span></span><span class="line"><span class="cl">After InvSubBytes: 2643A968EA24BE38F69993B729B07AF6
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">-- Round 2 --
+</span></span><span class="line"><span class="cl">AddRoundKey (2): 53658283271782925365828327178292
+</span></span><span class="line"><span class="cl">State: 75262BEBCD333CAAA5FC11340EA7F864
+</span></span><span class="line"><span class="cl">After InvMixColumns: D742B4B2C67AE73340810CB134BEA817
+</span></span><span class="line"><span class="cl">After InvShiftRows: D7BE0C33C642A8B1407AB4173481E7B2
+</span></span><span class="line"><span class="cl">After InvSubBytes: 0D5A8166C7F66F5672BDC6872891B03E
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">-- Round 1 --
+</span></span><span class="line"><span class="cl">AddRoundKey (1): 11060011747200117472001174720011
+</span></span><span class="line"><span class="cl">State: 1C5C8177B3846F4706CFC6965CE3B02F
+</span></span><span class="line"><span class="cl">After InvMixColumns: AF20457C678F85729F9F76EF9F6333EF
+</span></span><span class="line"><span class="cl">After InvShiftRows: AF637672672033EF9F8F45EF9F9F857C
+</span></span><span class="line"><span class="cl">After InvSubBytes: 1B000F1E0A5466616E7368616E6E6701
+</span></span><span class="line"><span class="cl">AddRoundKey (0): 73656372657400000000000000000000
+</span></span><span class="line"><span class="cl">[解密结果] (Hex): 68656C6C6F2066616E7368616E6E6701
+</span></span><span class="line"><span class="cl">==================== 结束 AES 解密 ====================
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">最终验证:
+</span></span><span class="line"><span class="cl">  原始明文: hello fanshanng
+</span></span><span class="line"><span class="cl">  解密明文: hello fanshanng
+</span></span><span class="line"><span class="cl">  匹配成功: True
+</span></span></code></pre></td></tr></table>
+</div>
+</div><hr />
