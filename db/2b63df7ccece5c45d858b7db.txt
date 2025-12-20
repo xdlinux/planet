@@ -216,24 +216,24 @@ v4 方案：<a class="link" href="https://source.android.google.cn/docs/security
 </span></span><span class="line"><span class="cl">    <span class="kr">public</span> <span class="kr">static</span> <span class="k">void</span> <span class="nx">hookPMS</span><span class="p">(</span><span class="nx">Context</span> <span class="nx">context</span><span class="p">,</span> <span class="nb">String</span> <span class="nx">signed</span><span class="p">,</span> <span class="nb">String</span> <span class="nx">appPkgName</span><span class="p">,</span> <span class="kr">int</span> <span class="nx">hashCode</span><span class="p">)</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">        <span class="k">try</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">            <span class="c1">// 获取全局的ActivityThread对象
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="nx">Class</span><span class="o">&lt;?&gt;</span> <span class="nx">activityThreadClass</span> <span class="o">=</span> <span class="nx">Class</span><span class="p">.</span><span class="nx">forName</span><span class="p">(</span><span class="s2">&#34;android.app.ActivityThread&#34;</span><span class="p">);</span>
+</span></span></span><span class="line"><span class="cl">            <span class="nx">Class</span><span class="o">&lt;?&gt;</span> <span class="nx">activityThreadClass</span> <span class="o">=</span> <span class="nx">Class</span><span class="p">.</span><span class="nx">forName</span><span class="p">(</span><span class="s2">&#34;android.app.ActivityThread&#34;</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">            <span class="nx">Method</span> <span class="nx">currentActivityThreadMethod</span> <span class="o">=</span>
 </span></span><span class="line"><span class="cl">                    <span class="nx">activityThreadClass</span><span class="p">.</span><span class="nx">getDeclaredMethod</span><span class="p">(</span><span class="s2">&#34;currentActivityThread&#34;</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">            <span class="nb">Object</span> <span class="nx">currentActivityThread</span> <span class="o">=</span> <span class="nx">currentActivityThreadMethod</span><span class="p">.</span><span class="nx">invoke</span><span class="p">(</span><span class="kc">null</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">            <span class="c1">// 获取ActivityThread里面原始的sPackageManager
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="nx">Field</span> <span class="nx">sPackageManagerField</span> <span class="o">=</span> <span class="nx">activityThreadClass</span><span class="p">.</span><span class="nx">getDeclaredField</span><span class="p">(</span><span class="s2">&#34;sPackageManager&#34;</span><span class="p">);</span>
+</span></span></span><span class="line"><span class="cl">            <span class="nx">Field</span> <span class="nx">sPackageManagerField</span> <span class="o">=</span> <span class="nx">activityThreadClass</span><span class="p">.</span><span class="nx">getDeclaredField</span><span class="p">(</span><span class="s2">&#34;sPackageManager&#34;</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">            <span class="nx">sPackageManagerField</span><span class="p">.</span><span class="nx">setAccessible</span><span class="p">(</span><span class="kc">true</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">            <span class="nb">Object</span> <span class="nx">sPackageManager</span> <span class="o">=</span> <span class="nx">sPackageManagerField</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="nx">currentActivityThread</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">            <span class="c1">// 准备好代{过}{滤}理对象, 用来替换原始的对象
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="nx">Class</span><span class="o">&lt;?&gt;</span> <span class="nx">iPackageManagerInterface</span> <span class="o">=</span> <span class="nx">Class</span><span class="p">.</span><span class="nx">forName</span><span class="p">(</span><span class="s2">&#34;android.content.pm.IPackageManager&#34;</span><span class="p">);</span>
+</span></span></span><span class="line"><span class="cl">            <span class="nx">Class</span><span class="o">&lt;?&gt;</span> <span class="nx">iPackageManagerInterface</span> <span class="o">=</span> <span class="nx">Class</span><span class="p">.</span><span class="nx">forName</span><span class="p">(</span><span class="s2">&#34;android.content.pm.IPackageManager&#34;</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">            <span class="nb">Object</span> <span class="nx">proxy</span> <span class="o">=</span> <span class="nb">Proxy</span><span class="p">.</span><span class="nx">newProxyInstance</span><span class="p">(</span>
 </span></span><span class="line"><span class="cl">                    <span class="nx">iPackageManagerInterface</span><span class="p">.</span><span class="nx">getClassLoader</span><span class="p">(),</span>
 </span></span><span class="line"><span class="cl">                    <span class="k">new</span> <span class="nx">Class</span><span class="o">&lt;?&gt;</span><span class="p">[]{</span><span class="nx">iPackageManagerInterface</span><span class="p">},</span>
 </span></span><span class="line"><span class="cl">                    <span class="k">new</span> <span class="nx">PmsHookBinderInvocationHandler</span><span class="p">(</span><span class="nx">sPackageManager</span><span class="p">,</span> <span class="nx">signed</span><span class="p">,</span> <span class="nx">appPkgName</span><span class="p">,</span> <span class="mi">0</span><span class="p">));</span>
 </span></span><span class="line"><span class="cl">            <span class="c1">// 1. 替换掉ActivityThread里面的 sPackageManager 字段
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="nx">sPackageManagerField</span><span class="p">.</span><span class="nx">set</span><span class="p">(</span><span class="nx">currentActivityThread</span><span class="p">,</span> <span class="nx">proxy</span><span class="p">);</span>
+</span></span></span><span class="line"><span class="cl">            <span class="nx">sPackageManagerField</span><span class="p">.</span><span class="nx">set</span><span class="p">(</span><span class="nx">currentActivityThread</span><span class="p">,</span> <span class="nx">proxy</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">            <span class="c1">// 2. 替换 ApplicationPackageManager里面的 mPM对象
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="nx">PackageManager</span> <span class="nx">pm</span> <span class="o">=</span> <span class="nx">context</span><span class="p">.</span><span class="nx">getPackageManager</span><span class="p">();</span>
+</span></span></span><span class="line"><span class="cl">            <span class="nx">PackageManager</span> <span class="nx">pm</span> <span class="o">=</span> <span class="nx">context</span><span class="p">.</span><span class="nx">getPackageManager</span><span class="p">();</span>
 </span></span><span class="line"><span class="cl">            <span class="nx">Field</span> <span class="nx">mPmField</span> <span class="o">=</span> <span class="nx">pm</span><span class="p">.</span><span class="nx">getClass</span><span class="p">().</span><span class="nx">getDeclaredField</span><span class="p">(</span><span class="s2">&#34;mPM&#34;</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">            <span class="nx">mPmField</span><span class="p">.</span><span class="nx">setAccessible</span><span class="p">(</span><span class="kc">true</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">            <span class="nx">mPmField</span><span class="p">.</span><span class="nx">set</span><span class="p">(</span><span class="nx">pm</span><span class="p">,</span> <span class="nx">proxy</span><span class="p">);</span>
@@ -475,12 +475,12 @@ v4 方案：<a class="link" href="https://source.android.google.cn/docs/security
 </span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="kc">false</span><span class="p">;</span>  
 </span></span><span class="line"><span class="cl"><span class="p">}</span>  
 </span></span><span class="line"><span class="cl"><span class="c1">//该函数的功能是在打开一个文件时进行拦截，并在满足特定条件时将文件路径替换为另一个路径  
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1">//fake_open 函数有三个参数：  
 </span></span></span><span class="line"><span class="cl"><span class="c1">//pathname：一个字符串，表示要打开的文件的路径。  
 </span></span></span><span class="line"><span class="cl"><span class="c1">//flags：一个整数，表示打开文件的方式，例如只读、只写、读写等。  
 </span></span></span><span class="line"><span class="cl"><span class="c1">//mode（可选参数）：一个整数，表示打开文件时应用的权限模式。  
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kr">int</span> <span class="nx">fake_open</span><span class="p">(</span><span class="kr">const</span> <span class="kr">char</span> <span class="o">*</span><span class="nx">pathname</span><span class="p">,</span> <span class="kr">int</span> <span class="nx">flags</span><span class="p">,</span> <span class="p">...)</span> <span class="p">{</span>  
+</span></span></span><span class="line"><span class="cl"><span class="kr">int</span> <span class="nx">fake_open</span><span class="p">(</span><span class="kr">const</span> <span class="kr">char</span> <span class="o">*</span><span class="nx">pathname</span><span class="p">,</span> <span class="kr">int</span> <span class="nx">flags</span><span class="p">,</span> <span class="p">...)</span> <span class="p">{</span>  
 </span></span><span class="line"><span class="cl">    <span class="nx">mode_t</span> <span class="nx">mode</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>  
 </span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="nx">needs_mode</span><span class="p">(</span><span class="nx">flags</span><span class="p">))</span> <span class="p">{</span>  
 </span></span><span class="line"><span class="cl">        <span class="nx">va_list</span> <span class="nx">args</span><span class="p">;</span>  
@@ -489,7 +489,7 @@ v4 方案：<a class="link" href="https://source.android.google.cn/docs/security
 </span></span><span class="line"><span class="cl">        <span class="nx">va_end</span><span class="p">(</span><span class="nx">args</span><span class="p">);</span>  
 </span></span><span class="line"><span class="cl">    <span class="p">}</span>  
 </span></span><span class="line"><span class="cl">    <span class="c1">//LOGI(&#34;open,  path: %s, flags: %d, mode: %d&#34;,pathname, flags ,mode);  
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="nx">string</span> <span class="nx">cpp_path</span><span class="o">=</span> <span class="nx">pathname</span><span class="p">;</span>  
+</span></span></span><span class="line"><span class="cl">    <span class="nx">string</span> <span class="nx">cpp_path</span><span class="o">=</span> <span class="nx">pathname</span><span class="p">;</span>  
 </span></span><span class="line"><span class="cl">    <span class="k">if</span><span class="p">(</span><span class="nx">isOrigAPK</span><span class="p">(</span><span class="nx">cpp_path</span><span class="p">)){</span>  
 </span></span><span class="line"><span class="cl">        <span class="nx">LOGI</span><span class="p">(</span><span class="s2">&#34;libc_open, redirect: %s, ---&gt;: %s&#34;</span><span class="p">,</span><span class="nx">pathname</span><span class="p">,</span> <span class="nx">fakepath</span><span class="p">.</span><span class="nx">data</span><span class="p">());</span>  
 </span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="nx">orig_open</span><span class="p">(</span><span class="s2">&#34;/data/user/0/com.zj.wuaipojie/files/base.apk&#34;</span><span class="p">,</span> <span class="nx">flags</span><span class="p">,</span> <span class="nx">mode</span><span class="p">);</span>  
@@ -499,7 +499,7 @@ v4 方案：<a class="link" href="https://source.android.google.cn/docs/security
 </span></span><span class="line"><span class="cl"><span class="p">}</span>  
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1">//该函数的功能是在打开一个文件时进行拦截，并在满足特定条件时将文件路径替换为另一个路径  
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1">//fake_openat 函数有四个参数：  
 </span></span></span><span class="line"><span class="cl"><span class="c1">//fd：一个整数，表示要打开的文件的文件描述符。  
 </span></span></span><span class="line"><span class="cl"><span class="c1">//pathname：一个字符串，表示要打开的文件的路径。  
@@ -508,7 +508,7 @@ v4 方案：<a class="link" href="https://source.android.google.cn/docs/security
 </span></span></span><span class="line"><span class="cl"><span class="c1">//openat 函数的作用类似于 open 函数，但是它使用文件描述符来指定文件路径，而不是使用文件路径本身。这样，就可以在打开文件时使用相对路径，而不必提供完整的文件路径。  
 </span></span></span><span class="line"><span class="cl"><span class="c1">//例如，如果要打开相对于当前目录的文件，可以使用 openat 函数，而不是 open 函数，因为 open 函数只能使用绝对路径。  
 </span></span></span><span class="line"><span class="cl"><span class="c1">//  
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kr">int</span> <span class="nx">fake_openat</span><span class="p">(</span><span class="kr">int</span> <span class="nx">fd</span><span class="p">,</span> <span class="kr">const</span> <span class="kr">char</span> <span class="o">*</span><span class="nx">pathname</span><span class="p">,</span> <span class="kr">int</span> <span class="nx">flags</span><span class="p">,</span> <span class="p">...)</span> <span class="p">{</span>  
+</span></span></span><span class="line"><span class="cl"><span class="kr">int</span> <span class="nx">fake_openat</span><span class="p">(</span><span class="kr">int</span> <span class="nx">fd</span><span class="p">,</span> <span class="kr">const</span> <span class="kr">char</span> <span class="o">*</span><span class="nx">pathname</span><span class="p">,</span> <span class="kr">int</span> <span class="nx">flags</span><span class="p">,</span> <span class="p">...)</span> <span class="p">{</span>  
 </span></span><span class="line"><span class="cl">    <span class="nx">mode_t</span> <span class="nx">mode</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>  
 </span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="nx">needs_mode</span><span class="p">(</span><span class="nx">flags</span><span class="p">))</span> <span class="p">{</span>  
 </span></span><span class="line"><span class="cl">        <span class="nx">va_list</span> <span class="nx">args</span><span class="p">;</span>  
@@ -536,7 +536,7 @@ v4 方案：<a class="link" href="https://source.android.google.cn/docs/security
 </span></span><span class="line"><span class="cl"><span class="c1">//该函数的功能是在执行系统调用时进行拦截，并在满足特定条件时修改系统调用的参数。  
 </span></span></span><span class="line"><span class="cl"><span class="c1">//syscall 函数是一个系统调用，是程序访问内核功能的方法之一。使用 syscall 函数可以调用大量的系统调用，它们用于实现操作系统的各种功能，例如打开文件、创建进程、分配内存等。  
 </span></span></span><span class="line"><span class="cl"><span class="c1">//  
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kr">static</span> <span class="kr">long</span> <span class="nx">fake_syscall</span><span class="p">(</span><span class="kr">long</span> <span class="nx">number</span><span class="p">,</span> <span class="p">...)</span> <span class="p">{</span>  
+</span></span></span><span class="line"><span class="cl"><span class="kr">static</span> <span class="kr">long</span> <span class="nx">fake_syscall</span><span class="p">(</span><span class="kr">long</span> <span class="nx">number</span><span class="p">,</span> <span class="p">...)</span> <span class="p">{</span>  
 </span></span><span class="line"><span class="cl">    <span class="k">void</span> <span class="o">*</span><span class="nx">arg</span><span class="p">[</span><span class="mi">7</span><span class="p">];</span>  
 </span></span><span class="line"><span class="cl">    <span class="nx">va_list</span> <span class="nx">list</span><span class="p">;</span>  
 </span></span><span class="line"><span class="cl">
@@ -563,7 +563,7 @@ v4 方案：<a class="link" href="https://source.android.google.cn/docs/security
 </span></span></span><span class="line"><span class="cl"><span class="c1">//然后，函数再次调用 GetObjectClass 和 GetMethodID 函数来获取 context 对象的类型以及 getApplicationInfo 方法的 ID。然后，函数调用 CallObjectMethod 函数来调用 getApplicationInfo 方法，获取当前应用的 ApplicationInfo 对象。  
 </span></span></span><span class="line"><span class="cl"><span class="c1">//它先调用 GetObjectClass 函数获取 ApplicationInfo 对象的类型，然后调用 GetFieldID 函数获取 sourceDir 字段的 ID。接着，函数使用 GetObjectField 函数获取 sourceDir 字段的值，并使用 GetStringUTFChars 函数将其转换为 C 字符串。最后，函数将 C 字符串保存在 origpath 全局变量中，表示当前应用的 APK 文件路径。  
 </span></span></span><span class="line"><span class="cl"><span class="c1">//最后，函数使用 GetFieldID 和 GetObjectField 函数获取 nativeLibraryDir 字段的值，并使用 GetStringUTFChars 函数将其转换为 C 字符串。函数最后调用 LOGI 函数打印库文件路径，但是并没有将其保存在全局变量中。  
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="nx">extern</span> <span class="s2">&#34;C&#34;</span> <span class="nx">JNIEXPORT</span> <span class="k">void</span> <span class="nx">JNICALL</span>  
 </span></span><span class="line"><span class="cl"><span class="nx">Java_com_zj_wuaipojie_util_SecurityUtil_hook</span><span class="p">(</span><span class="nx">JNIEnv</span> <span class="o">*</span><span class="nx">env</span><span class="p">,</span> <span class="nx">jclass</span> <span class="nx">clazz</span><span class="p">,</span> <span class="nx">jobject</span> <span class="nx">context</span><span class="p">)</span> <span class="p">{</span>  
 </span></span><span class="line"><span class="cl">    <span class="nx">jclass</span> <span class="nx">conext_class</span> <span class="o">=</span> <span class="nx">env</span><span class="o">-&gt;</span><span class="nx">GetObjectClass</span><span class="p">(</span><span class="nx">context</span><span class="p">);</span>  
@@ -575,7 +575,7 @@ v4 方案：<a class="link" href="https://source.android.google.cn/docs/security
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">    <span class="nx">env</span><span class="o">-&gt;</span><span class="nx">ReleaseStringUTFChars</span><span class="p">(</span><span class="nx">packname_js</span><span class="p">,</span> <span class="nx">pn</span><span class="p">);</span>  
 </span></span><span class="line"><span class="cl">    <span class="c1">//LOGI(&#34;packname: %s&#34;, packname.data());  
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="nx">fakepath</span><span class="o">=</span> <span class="s2">&#34;/data/user/0/&#34;</span><span class="o">+</span> <span class="nx">packname</span> <span class="o">+</span><span class="s2">&#34;/files/base.apk&#34;</span><span class="p">;</span>  
+</span></span></span><span class="line"><span class="cl">    <span class="nx">fakepath</span><span class="o">=</span> <span class="s2">&#34;/data/user/0/&#34;</span><span class="o">+</span> <span class="nx">packname</span> <span class="o">+</span><span class="s2">&#34;/files/base.apk&#34;</span><span class="p">;</span>  
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">    <span class="nx">jclass</span> <span class="nx">conext_class2</span> <span class="o">=</span> <span class="nx">env</span><span class="o">-&gt;</span><span class="nx">GetObjectClass</span><span class="p">(</span><span class="nx">context</span><span class="p">);</span>  
 </span></span><span class="line"><span class="cl">    <span class="nx">jmethodID</span> <span class="nx">methodId_pack2</span> <span class="o">=</span> <span class="nx">env</span><span class="o">-&gt;</span><span class="nx">GetMethodID</span><span class="p">(</span><span class="nx">conext_class2</span><span class="p">,</span><span class="s2">&#34;getApplicationInfo&#34;</span><span class="p">,</span><span class="s2">&#34;()Landroid/content/pm/ApplicationInfo;&#34;</span><span class="p">);</span>  
@@ -593,9 +593,9 @@ v4 方案：<a class="link" href="https://source.android.google.cn/docs/security
 </span></span><span class="line"><span class="cl">    <span class="kr">const</span> <span class="kr">char</span> <span class="o">*</span><span class="nx">nativeLibraryDir</span> <span class="o">=</span> <span class="nx">env</span><span class="o">-&gt;</span><span class="nx">GetStringUTFChars</span><span class="p">(</span><span class="nx">nativeLibraryDir_js</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>  
 </span></span><span class="line"><span class="cl">    <span class="nx">LOGI</span><span class="p">(</span><span class="s2">&#34;nativeLibraryDir: %s&#34;</span><span class="p">,</span> <span class="nx">nativeLibraryDir</span><span class="p">);</span>  
 </span></span><span class="line"><span class="cl">    <span class="c1">//LOGI(&#34;%s&#34;, &#34;Start Hook&#34;);  
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">    <span class="c1">//启动hook  
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="k">void</span> <span class="o">*</span><span class="nx">handle</span> <span class="o">=</span> <span class="nx">dlopen</span><span class="p">(</span><span class="s2">&#34;libc.so&#34;</span><span class="p">,</span><span class="nx">RTLD_NOW</span><span class="p">);</span>  
+</span></span></span><span class="line"><span class="cl">    <span class="k">void</span> <span class="o">*</span><span class="nx">handle</span> <span class="o">=</span> <span class="nx">dlopen</span><span class="p">(</span><span class="s2">&#34;libc.so&#34;</span><span class="p">,</span><span class="nx">RTLD_NOW</span><span class="p">);</span>  
 </span></span><span class="line"><span class="cl">    <span class="nx">auto</span> <span class="nx">pagesize</span> <span class="o">=</span> <span class="nx">sysconf</span><span class="p">(</span><span class="nx">_SC_PAGE_SIZE</span><span class="p">);</span>  
 </span></span><span class="line"><span class="cl">    <span class="nx">auto</span> <span class="nx">addr</span> <span class="o">=</span> <span class="p">((</span><span class="nx">uintptr_t</span><span class="p">)</span><span class="nx">dlsym</span><span class="p">(</span><span class="nx">handle</span><span class="p">,</span><span class="s2">&#34;open&#34;</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="o">-</span><span class="nx">pagesize</span><span class="p">));</span>  
 </span></span><span class="line"><span class="cl">    <span class="nx">auto</span> <span class="nx">addr2</span> <span class="o">=</span> <span class="p">((</span><span class="nx">uintptr_t</span><span class="p">)</span><span class="nx">dlsym</span><span class="p">(</span><span class="nx">handle</span><span class="p">,</span><span class="s2">&#34;openat&#34;</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="o">-</span><span class="nx">pagesize</span><span class="p">));</span>  
@@ -603,7 +603,7 @@ v4 方案：<a class="link" href="https://source.android.google.cn/docs/security
 </span></span><span class="line"><span class="cl">    <span class="nx">auto</span> <span class="nx">addr4</span> <span class="o">=</span> <span class="p">((</span><span class="nx">uintptr_t</span><span class="p">)</span><span class="nx">syscall</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="o">-</span><span class="nx">pagesize</span><span class="p">);</span>  
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">    <span class="c1">//解除部分机型open被保护  
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="nx">mprotect</span><span class="p">((</span><span class="k">void</span><span class="o">*</span><span class="p">)</span><span class="nx">addr</span><span class="p">,</span> <span class="nx">pagesize</span><span class="p">,</span> <span class="nx">PROT_READ</span> <span class="o">|</span> <span class="nx">PROT_WRITE</span> <span class="o">|</span> <span class="nx">PROT_EXEC</span><span class="p">);</span>  
+</span></span></span><span class="line"><span class="cl">    <span class="nx">mprotect</span><span class="p">((</span><span class="k">void</span><span class="o">*</span><span class="p">)</span><span class="nx">addr</span><span class="p">,</span> <span class="nx">pagesize</span><span class="p">,</span> <span class="nx">PROT_READ</span> <span class="o">|</span> <span class="nx">PROT_WRITE</span> <span class="o">|</span> <span class="nx">PROT_EXEC</span><span class="p">);</span>  
 </span></span><span class="line"><span class="cl">    <span class="nx">mprotect</span><span class="p">((</span><span class="k">void</span><span class="o">*</span><span class="p">)</span><span class="nx">addr2</span><span class="p">,</span> <span class="nx">pagesize</span><span class="p">,</span> <span class="nx">PROT_READ</span> <span class="o">|</span> <span class="nx">PROT_WRITE</span> <span class="o">|</span> <span class="nx">PROT_EXEC</span><span class="p">);</span>  
 </span></span><span class="line"><span class="cl">    <span class="nx">mprotect</span><span class="p">((</span><span class="k">void</span><span class="o">*</span><span class="p">)</span><span class="nx">addr3</span><span class="p">,</span> <span class="nx">pagesize</span><span class="p">,</span> <span class="nx">PROT_READ</span> <span class="o">|</span> <span class="nx">PROT_WRITE</span> <span class="o">|</span> <span class="nx">PROT_EXEC</span><span class="p">);</span>  
 </span></span><span class="line"><span class="cl">    <span class="nx">mprotect</span><span class="p">((</span><span class="k">void</span><span class="o">*</span><span class="p">)</span><span class="nx">addr4</span><span class="p">,</span> <span class="nx">pagesize</span><span class="p">,</span> <span class="nx">PROT_READ</span> <span class="o">|</span> <span class="nx">PROT_WRITE</span> <span class="o">|</span> <span class="nx">PROT_EXEC</span><span class="p">);</span>  
@@ -745,7 +745,7 @@ v4 方案：<a class="link" href="https://source.android.google.cn/docs/security
 <pre tabindex="0" class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="line"><span class="cl"><span class="k">fun</span> <span class="nf">checkForDebugger</span><span class="p">()</span> <span class="p">{</span>  
 </span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="nc">Debug</span><span class="p">.</span><span class="n">isDebuggerConnected</span><span class="p">())</span> <span class="p">{</span>  
 </span></span><span class="line"><span class="cl">        <span class="c1">// 如果调试器已连接，则终止应用程序  
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="nc">System</span><span class="p">.</span><span class="n">exit</span><span class="p">(</span><span class="m">0</span><span class="p">)</span>  
+</span></span></span><span class="line"><span class="cl">        <span class="nc">System</span><span class="p">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>  
 </span></span><span class="line"><span class="cl">    <span class="p">}</span>  
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span></code></pre></td></tr></table>
@@ -764,11 +764,11 @@ v4 方案：<a class="link" href="https://source.android.google.cn/docs/security
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="w"> </span><span class="kd">public</span><span class="w"> </span><span class="kt">boolean</span><span class="w"> </span><span class="nf">getAppCanDebug</span><span class="p">(</span><span class="n">Context</span><span class="w"> </span><span class="n">context</span><span class="p">)</span><span class="c1">//上下文对象为xxActivity.this</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="p">{</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kt">boolean</span><span class="w"> </span><span class="n">isDebug</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">context</span><span class="p">.</span><span class="na">getApplicationInfo</span><span class="p">()</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">null</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="p">(</span><span class="n">context</span><span class="p">.</span><span class="na">getApplicationInfo</span><span class="p">().</span><span class="na">flags</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">ApplicationInfo</span><span class="p">.</span><span class="na">FLAG_DEBUGGABLE</span><span class="p">)</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">0</span><span class="p">;</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">isDebug</span><span class="p">;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="p">}</span><span class="w">
 </span></span></span></code></pre></td></tr></table>
 </div>
 </div><ul>
@@ -783,9 +783,9 @@ v4 方案：<a class="link" href="https://source.android.google.cn/docs/security
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">ptrace_protect</span><span class="p">()</span><span class="c1">//ptrace附加自身线程 会导致此进程TracerPid 变为父进程的TracerPid 即zygote
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">{</span>
+</span></span></span><span class="line"><span class="cl"><span class="p">{</span>
 </span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">ptrace</span><span class="p">(</span><span class="n">PTRACE_TRACEME</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">);;</span><span class="c1">//返回-1即为已经被调试
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span>
+</span></span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>每个进程同时刻只能被1个调试进程ptrace ，主动ptrace本进程可以使得其他调试器无法调试</p>
@@ -839,11 +839,11 @@ v4 方案：<a class="link" href="https://source.android.google.cn/docs/security
 </span></span><span class="line"><span class="cl">    <span class="k">if</span><span class="p">(</span><span class="nb">NULL</span><span class="o">==</span><span class="n">pfile</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">    <span class="p">{</span>
 </span></span><span class="line"><span class="cl">        <span class="c1">//LOGA(&#34;SearchObjProcess popen打开命令失败!\n&#34;);
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+</span></span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">    <span class="p">}</span>
 </span></span><span class="line"><span class="cl">    <span class="c1">// 获取结果
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="c1">//LOGA(&#34;popen方案:\n&#34;);
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="k">while</span><span class="p">(</span><span class="n">fgets</span><span class="p">(</span><span class="n">buf</span><span class="p">,</span><span class="k">sizeof</span><span class="p">(</span><span class="n">buf</span><span class="p">),</span><span class="n">pfile</span><span class="p">))</span>
+</span></span></span><span class="line"><span class="cl">    <span class="c1">//LOGA(&#34;popen方案:\n&#34;);
+</span></span></span><span class="line"><span class="cl">    <span class="k">while</span><span class="p">(</span><span class="n">fgets</span><span class="p">(</span><span class="n">buf</span><span class="p">,</span><span class="k">sizeof</span><span class="p">(</span><span class="n">buf</span><span class="p">),</span><span class="n">pfile</span><span class="p">))</span>
 </span></span><span class="line"><span class="cl">    <span class="p">{</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">        <span class="kt">char</span><span class="o">*</span> <span class="n">strA</span><span class="o">=</span><span class="nb">NULL</span><span class="p">;</span>
@@ -851,14 +851,14 @@ v4 方案：<a class="link" href="https://source.android.google.cn/docs/security
 </span></span><span class="line"><span class="cl">        <span class="kt">char</span><span class="o">*</span> <span class="n">strC</span><span class="o">=</span><span class="nb">NULL</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">        <span class="kt">char</span><span class="o">*</span> <span class="n">strD</span><span class="o">=</span><span class="nb">NULL</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">        <span class="n">strA</span><span class="o">=</span><span class="n">strstr</span><span class="p">(</span><span class="n">buf</span><span class="p">,</span><span class="s">&#34;android_server&#34;</span><span class="p">);</span><span class="c1">//通过查找匹配子串判断
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="n">strB</span><span class="o">=</span><span class="n">strstr</span><span class="p">(</span><span class="n">buf</span><span class="p">,</span><span class="s">&#34;gdbserver&#34;</span><span class="p">);</span>
+</span></span></span><span class="line"><span class="cl">        <span class="n">strB</span><span class="o">=</span><span class="n">strstr</span><span class="p">(</span><span class="n">buf</span><span class="p">,</span><span class="s">&#34;gdbserver&#34;</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">        <span class="n">strC</span><span class="o">=</span><span class="n">strstr</span><span class="p">(</span><span class="n">buf</span><span class="p">,</span><span class="s">&#34;gdb&#34;</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">        <span class="n">strD</span><span class="o">=</span><span class="n">strstr</span><span class="p">(</span><span class="n">buf</span><span class="p">,</span><span class="s">&#34;fuwu&#34;</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">        <span class="k">if</span><span class="p">(</span><span class="n">strA</span> <span class="o">||</span> <span class="n">strB</span> <span class="o">||</span><span class="n">strC</span> <span class="o">||</span> <span class="n">strD</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">        <span class="p">{</span>
 </span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">            <span class="c1">// 执行到这里，判定为调试状态
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">        <span class="p">}</span>
 </span></span><span class="line"><span class="cl">    <span class="p">}</span>
 </span></span><span class="line"><span class="cl">    <span class="n">pclose</span><span class="p">(</span><span class="n">pfile</span><span class="p">);</span>
@@ -1174,7 +1174,7 @@ v4 方案：<a class="link" href="https://source.android.google.cn/docs/security
 </span></span></span><span class="line"><span class="cl"><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nl">:cond_74</span><span class="w">  
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span>return-void<span class="w">  
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">.end</span><span class="w"> </span><span class="k">method</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="k">.end</span><span class="w"> </span><span class="k">method</span><span class="w">
 </span></span></span></code></pre></td></tr></table>
 </div>
 </div><p><strong>const/4和const/16的区别？</strong></p>
@@ -1218,7 +1218,7 @@ v4 方案：<a class="link" href="https://source.android.google.cn/docs/security
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span>const-wide<span class="w"> </span><span class="nb">v0</span><span class="p">,</span><span class="w"> </span><span class="mh">0x1854460ef29</span><span class="err">L</span><span class="w">  
 </span></span></span><span class="line"><span class="cl"><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span>return-wide<span class="w"> </span><span class="nb">v0</span><span class="w">  
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">.end</span><span class="w"> </span><span class="k">method</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="k">.end</span><span class="w"> </span><span class="k">method</span><span class="w">
 </span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>-会员到期时间就是2022年12月24日。那么1854460ef29L 怎么来的呢？也就是（2022年12月24日-1970年1月1日）×365天×24小时×60分钟×60秒×1000毫秒，转换成16进制就大概是那个数了</p>

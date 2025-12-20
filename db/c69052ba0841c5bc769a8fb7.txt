@@ -39,7 +39,7 @@ s=0x7F666F6067756369LL，按r键将它转换为字符就是“\x7Ffo`guci”，�
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp">
-</span></span></span><span class="line"><span class="cl"><span class="cp"></span><span class="n">using</span> <span class="n">namespace</span> <span class="n">std</span><span class="p">;</span>
+</span></span></span><span class="line"><span class="cl"><span class="n">using</span> <span class="n">namespace</span> <span class="n">std</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
 </span></span><span class="line"><span class="cl"><span class="p">{</span>
 </span></span><span class="line"><span class="cl">    <span class="kt">char</span> <span class="n">f2</span><span class="p">[]</span> <span class="o">=</span> <span class="s">&#34;icug`of</span><span class="se">\x7F</span><span class="s">&#34;</span><span class="p">;</span>
@@ -356,39 +356,39 @@ s=0x7F666F6067756369LL，按r键将它转换为字符就是“\x7Ffo`guci”，�
 <pre tabindex="0" class="chroma"><code class="language-c++" data-lang="c++"><span class="line"><span class="cl"><span class="kt">char</span> <span class="kr">__cdecl</span> <span class="nf">sub_4014D0</span><span class="p">(</span><span class="n">LPCSTR</span> <span class="n">Destination</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl"><span class="p">{</span>
 </span></span><span class="line"><span class="cl">    <span class="n">LPCVOID</span> <span class="n">lpBuffer</span><span class="p">;</span> <span class="c1">// [esp+50h] [ebp-1Ch]
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">DWORD</span> <span class="n">NumberOfBytesWritten</span><span class="p">;</span> <span class="c1">// [esp+58h] [ebp-14h] BYREF
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">DWORD</span> <span class="n">nNumberOfBytesToWrite</span><span class="p">;</span> <span class="c1">// [esp+5Ch] [ebp-10h]
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">HGLOBAL</span> <span class="n">hResData</span><span class="p">;</span> <span class="c1">// [esp+60h] [ebp-Ch]
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">HRSRC</span> <span class="n">hResInfo</span><span class="p">;</span> <span class="c1">// [esp+64h] [ebp-8h]
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">HANDLE</span> <span class="n">hFile</span><span class="p">;</span> <span class="c1">// [esp+68h] [ebp-4h]
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span></span><span class="line"><span class="cl">    <span class="n">DWORD</span> <span class="n">NumberOfBytesWritten</span><span class="p">;</span> <span class="c1">// [esp+58h] [ebp-14h] BYREF
+</span></span></span><span class="line"><span class="cl">    <span class="n">DWORD</span> <span class="n">nNumberOfBytesToWrite</span><span class="p">;</span> <span class="c1">// [esp+5Ch] [ebp-10h]
+</span></span></span><span class="line"><span class="cl">    <span class="n">HGLOBAL</span> <span class="n">hResData</span><span class="p">;</span> <span class="c1">// [esp+60h] [ebp-Ch]
+</span></span></span><span class="line"><span class="cl">    <span class="n">HRSRC</span> <span class="n">hResInfo</span><span class="p">;</span> <span class="c1">// [esp+64h] [ebp-8h]
+</span></span></span><span class="line"><span class="cl">    <span class="n">HANDLE</span> <span class="n">hFile</span><span class="p">;</span> <span class="c1">// [esp+68h] [ebp-4h]
+</span></span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">    <span class="n">hFile</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">    <span class="n">hResData</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">    <span class="n">nNumberOfBytesToWrite</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">    <span class="n">NumberOfBytesWritten</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">    <span class="n">hResInfo</span> <span class="o">=</span> <span class="n">FindResourceA</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="p">(</span><span class="n">LPCSTR</span><span class="p">)</span><span class="mh">0x65</span><span class="p">,</span> <span class="s">&#34;AAA&#34;</span><span class="p">);</span><span class="c1">// FindResourceA 函数用于查找程序资源中的一个资源。
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="c1">// 第一个参数为 NULL，表示查找当前进程的资源。
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="c1">// 第二个参数为资源标识符，这里是 0x65。
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="c1">// 第三个参数为资源类型，这里是 &#34;AAA&#34;。
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="k">if</span> <span class="p">(</span> <span class="o">!</span><span class="n">hResInfo</span> <span class="p">)</span>
+</span></span></span><span class="line"><span class="cl">    <span class="c1">// 第一个参数为 NULL，表示查找当前进程的资源。
+</span></span></span><span class="line"><span class="cl">    <span class="c1">// 第二个参数为资源标识符，这里是 0x65。
+</span></span></span><span class="line"><span class="cl">    <span class="c1">// 第三个参数为资源类型，这里是 &#34;AAA&#34;。
+</span></span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span> <span class="o">!</span><span class="n">hResInfo</span> <span class="p">)</span>
 </span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">    <span class="n">nNumberOfBytesToWrite</span> <span class="o">=</span> <span class="n">SizeofResource</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">hResInfo</span><span class="p">);</span><span class="c1">// SizeofResource 函数用于获取资源的大小。
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="c1">// 如果资源大小为 0，表示资源无效。
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">hResData</span> <span class="o">=</span> <span class="n">LoadResource</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">hResInfo</span><span class="p">);</span>         <span class="c1">// LoadResource 函数用于加载资源。
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="k">if</span> <span class="p">(</span> <span class="o">!</span><span class="n">hResData</span> <span class="p">)</span>
+</span></span></span><span class="line"><span class="cl">    <span class="c1">// 如果资源大小为 0，表示资源无效。
+</span></span></span><span class="line"><span class="cl">    <span class="n">hResData</span> <span class="o">=</span> <span class="n">LoadResource</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">hResInfo</span><span class="p">);</span>         <span class="c1">// LoadResource 函数用于加载资源。
+</span></span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span> <span class="o">!</span><span class="n">hResData</span> <span class="p">)</span>
 </span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">    <span class="n">lpBuffer</span> <span class="o">=</span> <span class="n">LockResource</span><span class="p">(</span><span class="n">hResData</span><span class="p">);</span>            <span class="c1">// LockResource 函数用于锁定资源，并返回资源的指针。
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">sub_401005</span><span class="p">(</span><span class="n">Destination</span><span class="p">,</span> <span class="p">(</span><span class="kt">int</span><span class="p">)</span><span class="n">lpBuffer</span><span class="p">,</span> <span class="n">nNumberOfBytesToWrite</span><span class="p">);</span><span class="c1">// 异或
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">hFile</span> <span class="o">=</span> <span class="n">CreateFileA</span><span class="p">(</span><span class="s">&#34;dbapp.rtf&#34;</span><span class="p">,</span> <span class="n">GENERIC_ALL</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">CREATE_ALWAYS</span><span class="p">,</span> <span class="n">FILE_READ_ATTRIBUTES</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span><span class="c1">// CreateFileA 函数用于创建或打开一个文件。
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="c1">// 文件名为 &#34;dbapp.rtf&#34;。
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="c1">// 打开模式为 CREATE_ALWAYS，表示如果文件不存在则创建，如果存在则覆盖。
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="c1">// 文件访问权限为 GENERIC_ALL，表示完全访问权限。
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="k">if</span> <span class="p">(</span> <span class="n">hFile</span> <span class="o">==</span> <span class="p">(</span><span class="n">HANDLE</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span> <span class="p">)</span>                    <span class="c1">// 如果文件创建失败，返回 0。
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span></span></span><span class="line"><span class="cl">    <span class="n">sub_401005</span><span class="p">(</span><span class="n">Destination</span><span class="p">,</span> <span class="p">(</span><span class="kt">int</span><span class="p">)</span><span class="n">lpBuffer</span><span class="p">,</span> <span class="n">nNumberOfBytesToWrite</span><span class="p">);</span><span class="c1">// 异或
+</span></span></span><span class="line"><span class="cl">    <span class="n">hFile</span> <span class="o">=</span> <span class="n">CreateFileA</span><span class="p">(</span><span class="s">&#34;dbapp.rtf&#34;</span><span class="p">,</span> <span class="n">GENERIC_ALL</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">CREATE_ALWAYS</span><span class="p">,</span> <span class="n">FILE_READ_ATTRIBUTES</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span><span class="c1">// CreateFileA 函数用于创建或打开一个文件。
+</span></span></span><span class="line"><span class="cl">    <span class="c1">// 文件名为 &#34;dbapp.rtf&#34;。
+</span></span></span><span class="line"><span class="cl">    <span class="c1">// 打开模式为 CREATE_ALWAYS，表示如果文件不存在则创建，如果存在则覆盖。
+</span></span></span><span class="line"><span class="cl">    <span class="c1">// 文件访问权限为 GENERIC_ALL，表示完全访问权限。
+</span></span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span> <span class="n">hFile</span> <span class="o">==</span> <span class="p">(</span><span class="n">HANDLE</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span> <span class="p">)</span>                    <span class="c1">// 如果文件创建失败，返回 0。
+</span></span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span> <span class="o">!</span><span class="n">WriteFile</span><span class="p">(</span><span class="n">hFile</span><span class="p">,</span> <span class="n">lpBuffer</span><span class="p">,</span> <span class="n">nNumberOfBytesToWrite</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">NumberOfBytesWritten</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="p">)</span>
 </span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">    <span class="n">CloseHandle</span><span class="p">(</span><span class="n">hFile</span><span class="p">);</span>                           <span class="c1">// 关闭文件句柄。
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
+</span></span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span></code></pre></td></tr></table>
 </div>

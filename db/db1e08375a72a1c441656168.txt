@@ -692,12 +692,12 @@
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="c1">// 定义需要提取的起始地址和结束地址（替换为你的实际地址）
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">auto</span> <span class="n">start_addr</span> <span class="o">=</span> <span class="mh">0x000002373D8A0000</span><span class="p">;</span>
+</span></span></span><span class="line"><span class="cl"><span class="k">auto</span> <span class="n">start_addr</span> <span class="o">=</span> <span class="mh">0x000002373D8A0000</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl"><span class="k">auto</span> <span class="n">end_addr</span> <span class="o">=</span> <span class="mh">0x000002373D8A047F</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl"><span class="k">auto</span> <span class="n">file_handle</span><span class="p">,</span> <span class="n">byte_count</span><span class="p">,</span> <span class="n">i</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1">// 创建/打开1.bin文件（&#34;wb&#34;表示二进制写入模式）
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">file_handle</span> <span class="o">=</span> <span class="nf">fopen</span><span class="p">(</span><span class="s">&#34;1.bin&#34;</span><span class="p">,</span> <span class="s">&#34;wb&#34;</span><span class="p">);</span>
+</span></span></span><span class="line"><span class="cl"><span class="n">file_handle</span> <span class="o">=</span> <span class="nf">fopen</span><span class="p">(</span><span class="s">&#34;1.bin&#34;</span><span class="p">,</span> <span class="s">&#34;wb&#34;</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="p">(</span><span class="n">file_handle</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl"><span class="p">{</span>
 </span></span><span class="line"><span class="cl">    <span class="nf">Message</span><span class="p">(</span><span class="s">&#34;创建文件失败！请检查路径</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">);</span>
@@ -705,16 +705,16 @@
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1">// 计算需要导出的字节数（结束地址 - 起始地址 + 1，确保包含最后一个字节）
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">byte_count</span> <span class="o">=</span> <span class="n">end_addr</span> <span class="o">-</span> <span class="n">start_addr</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
+</span></span></span><span class="line"><span class="cl"><span class="n">byte_count</span> <span class="o">=</span> <span class="n">end_addr</span> <span class="o">-</span> <span class="n">start_addr</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1">// 循环读取每个地址的字节并写入文件
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">byte_count</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
+</span></span></span><span class="line"><span class="cl"><span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">byte_count</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl"><span class="p">{</span>
 </span></span><span class="line"><span class="cl">    <span class="nf">fputc</span><span class="p">(</span><span class="nf">Byte</span><span class="p">(</span><span class="n">start_addr</span> <span class="o">+</span> <span class="n">i</span><span class="p">),</span> <span class="n">file_handle</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1">// 关闭文件并提示成功
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nf">fclose</span><span class="p">(</span><span class="n">file_handle</span><span class="p">);</span>
+</span></span></span><span class="line"><span class="cl"><span class="nf">fclose</span><span class="p">(</span><span class="n">file_handle</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl"><span class="nf">Message</span><span class="p">(</span><span class="s">&#34;导出成功！共导出 %d 字节到 1.bin</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span> <span class="n">byte_count</span><span class="p">);</span>
 </span></span></code></pre></td></tr></table>
 </div>
@@ -810,20 +810,20 @@
 <pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="kt">char</span> <span class="kr">__fastcall</span> <span class="nf">sub_0</span><span class="p">(</span><span class="kr">__int64</span> <span class="n">a1</span><span class="p">,</span> <span class="kr">__int64</span> <span class="n">a2</span><span class="p">,</span> <span class="kr">__int64</span> <span class="n">a3</span><span class="p">,</span> <span class="kt">unsigned</span> <span class="kt">int</span> <span class="o">*</span><span class="n">a4</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl"><span class="p">{</span>
 </span></span><span class="line"><span class="cl">  <span class="kt">char</span> <span class="o">*</span><span class="n">v4</span><span class="p">;</span> <span class="c1">// rdi
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="kr">__int64</span> <span class="n">n78</span><span class="p">;</span> <span class="c1">// rcx
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="kt">char</span> <span class="n">v7</span><span class="p">;</span> <span class="c1">// [rsp+20h] [rbp+0h] BYREF
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">v8</span><span class="p">;</span> <span class="c1">// [rsp+24h] [rbp+4h]
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="kt">int</span> <span class="n">v9</span><span class="p">;</span> <span class="c1">// [rsp+44h] [rbp+24h]
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="n">_DWORD</span> <span class="n">v10</span><span class="p">[</span><span class="mi">12</span><span class="p">];</span> <span class="c1">// [rsp+68h] [rbp+48h] BYREF
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">v11</span><span class="p">;</span> <span class="c1">// [rsp+98h] [rbp+78h]
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">v12</span><span class="p">;</span> <span class="c1">// [rsp+9Ch] [rbp+7Ch]
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">v13</span><span class="p">;</span> <span class="c1">// [rsp+A0h] [rbp+80h]
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">v14</span><span class="p">;</span> <span class="c1">// [rsp+A4h] [rbp+84h]
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">n0x20</span><span class="p">;</span> <span class="c1">// [rsp+C4h] [rbp+A4h]
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">n0x20_1</span><span class="p">;</span> <span class="c1">// [rsp+E4h] [rbp+C4h]
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="n">_BYTE</span> <span class="n">v17</span><span class="p">[</span><span class="mi">44</span><span class="p">];</span> <span class="c1">// [rsp+108h] [rbp+E8h]
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="kt">int</span> <span class="n">n16</span><span class="p">;</span> <span class="c1">// [rsp+134h] [rbp+114h]
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span></span><span class="line"><span class="cl">  <span class="kr">__int64</span> <span class="n">n78</span><span class="p">;</span> <span class="c1">// rcx
+</span></span></span><span class="line"><span class="cl">  <span class="kt">char</span> <span class="n">v7</span><span class="p">;</span> <span class="c1">// [rsp+20h] [rbp+0h] BYREF
+</span></span></span><span class="line"><span class="cl">  <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">v8</span><span class="p">;</span> <span class="c1">// [rsp+24h] [rbp+4h]
+</span></span></span><span class="line"><span class="cl">  <span class="kt">int</span> <span class="n">v9</span><span class="p">;</span> <span class="c1">// [rsp+44h] [rbp+24h]
+</span></span></span><span class="line"><span class="cl">  <span class="n">_DWORD</span> <span class="n">v10</span><span class="p">[</span><span class="mi">12</span><span class="p">];</span> <span class="c1">// [rsp+68h] [rbp+48h] BYREF
+</span></span></span><span class="line"><span class="cl">  <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">v11</span><span class="p">;</span> <span class="c1">// [rsp+98h] [rbp+78h]
+</span></span></span><span class="line"><span class="cl">  <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">v12</span><span class="p">;</span> <span class="c1">// [rsp+9Ch] [rbp+7Ch]
+</span></span></span><span class="line"><span class="cl">  <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">v13</span><span class="p">;</span> <span class="c1">// [rsp+A0h] [rbp+80h]
+</span></span></span><span class="line"><span class="cl">  <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">v14</span><span class="p">;</span> <span class="c1">// [rsp+A4h] [rbp+84h]
+</span></span></span><span class="line"><span class="cl">  <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">n0x20</span><span class="p">;</span> <span class="c1">// [rsp+C4h] [rbp+A4h]
+</span></span></span><span class="line"><span class="cl">  <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">n0x20_1</span><span class="p">;</span> <span class="c1">// [rsp+E4h] [rbp+C4h]
+</span></span></span><span class="line"><span class="cl">  <span class="n">_BYTE</span> <span class="n">v17</span><span class="p">[</span><span class="mi">44</span><span class="p">];</span> <span class="c1">// [rsp+108h] [rbp+E8h]
+</span></span></span><span class="line"><span class="cl">  <span class="kt">int</span> <span class="n">n16</span><span class="p">;</span> <span class="c1">// [rsp+134h] [rbp+114h]
+</span></span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">  <span class="n">v4</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">v7</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">  <span class="k">for</span> <span class="p">(</span> <span class="n">n78</span> <span class="o">=</span> <span class="mi">78</span><span class="p">;</span> <span class="n">n78</span><span class="p">;</span> <span class="o">--</span><span class="n">n78</span> <span class="p">)</span>
 </span></span><span class="line"><span class="cl">  <span class="p">{</span>
@@ -1035,9 +1035,9 @@
 </span></span><span class="line"><span class="cl"><span class="nb">export</span> <span class="nv">CXXFLAGS</span><span class="o">=</span><span class="s2">&#34;-g -O0&#34;</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">./configure --target-list<span class="o">=</span>x86_64-softmmu <span class="se">\
-</span></span></span><span class="line"><span class="cl"><span class="se"></span>            --disable-werror <span class="se">\
-</span></span></span><span class="line"><span class="cl"><span class="se"></span>            --enable-debug <span class="se">\
-</span></span></span><span class="line"><span class="cl"><span class="se"></span>            --disable-strip
+</span></span></span><span class="line"><span class="cl">            --disable-werror <span class="se">\
+</span></span></span><span class="line"><span class="cl">            --enable-debug <span class="se">\
+</span></span></span><span class="line"><span class="cl">            --disable-strip
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">make -j<span class="k">$(</span>nproc<span class="k">)</span>
 </span></span></code></pre></td></tr></table>

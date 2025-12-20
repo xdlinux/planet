@@ -495,11 +495,178 @@ $$ W[i] = W[i-4] \oplus W[i-1] $$</li>
 </span><span class="lnt">326
 </span><span class="lnt">327
 </span><span class="lnt">328
+</span><span class="lnt">329
+</span><span class="lnt">330
+</span><span class="lnt">331
+</span><span class="lnt">332
+</span><span class="lnt">333
+</span><span class="lnt">334
+</span><span class="lnt">335
+</span><span class="lnt">336
+</span><span class="lnt">337
+</span><span class="lnt">338
+</span><span class="lnt">339
+</span><span class="lnt">340
+</span><span class="lnt">341
+</span><span class="lnt">342
+</span><span class="lnt">343
+</span><span class="lnt">344
+</span><span class="lnt">345
+</span><span class="lnt">346
+</span><span class="lnt">347
+</span><span class="lnt">348
+</span><span class="lnt">349
+</span><span class="lnt">350
+</span><span class="lnt">351
+</span><span class="lnt">352
+</span><span class="lnt">353
+</span><span class="lnt">354
+</span><span class="lnt">355
+</span><span class="lnt">356
+</span><span class="lnt">357
+</span><span class="lnt">358
+</span><span class="lnt">359
+</span><span class="lnt">360
+</span><span class="lnt">361
+</span><span class="lnt">362
+</span><span class="lnt">363
+</span><span class="lnt">364
+</span><span class="lnt">365
+</span><span class="lnt">366
+</span><span class="lnt">367
+</span><span class="lnt">368
+</span><span class="lnt">369
+</span><span class="lnt">370
+</span><span class="lnt">371
+</span><span class="lnt">372
+</span><span class="lnt">373
+</span><span class="lnt">374
+</span><span class="lnt">375
+</span><span class="lnt">376
+</span><span class="lnt">377
+</span><span class="lnt">378
+</span><span class="lnt">379
+</span><span class="lnt">380
+</span><span class="lnt">381
+</span><span class="lnt">382
+</span><span class="lnt">383
+</span><span class="lnt">384
+</span><span class="lnt">385
+</span><span class="lnt">386
+</span><span class="lnt">387
+</span><span class="lnt">388
+</span><span class="lnt">389
+</span><span class="lnt">390
+</span><span class="lnt">391
+</span><span class="lnt">392
+</span><span class="lnt">393
+</span><span class="lnt">394
+</span><span class="lnt">395
+</span><span class="lnt">396
+</span><span class="lnt">397
+</span><span class="lnt">398
+</span><span class="lnt">399
+</span><span class="lnt">400
+</span><span class="lnt">401
+</span><span class="lnt">402
+</span><span class="lnt">403
+</span><span class="lnt">404
+</span><span class="lnt">405
+</span><span class="lnt">406
+</span><span class="lnt">407
+</span><span class="lnt">408
+</span><span class="lnt">409
+</span><span class="lnt">410
+</span><span class="lnt">411
+</span><span class="lnt">412
+</span><span class="lnt">413
+</span><span class="lnt">414
+</span><span class="lnt">415
+</span><span class="lnt">416
+</span><span class="lnt">417
+</span><span class="lnt">418
+</span><span class="lnt">419
+</span><span class="lnt">420
+</span><span class="lnt">421
+</span><span class="lnt">422
+</span><span class="lnt">423
+</span><span class="lnt">424
+</span><span class="lnt">425
+</span><span class="lnt">426
+</span><span class="lnt">427
+</span><span class="lnt">428
+</span><span class="lnt">429
+</span><span class="lnt">430
+</span><span class="lnt">431
+</span><span class="lnt">432
+</span><span class="lnt">433
+</span><span class="lnt">434
+</span><span class="lnt">435
+</span><span class="lnt">436
+</span><span class="lnt">437
+</span><span class="lnt">438
+</span><span class="lnt">439
+</span><span class="lnt">440
+</span><span class="lnt">441
+</span><span class="lnt">442
+</span><span class="lnt">443
+</span><span class="lnt">444
+</span><span class="lnt">445
+</span><span class="lnt">446
+</span><span class="lnt">447
+</span><span class="lnt">448
+</span><span class="lnt">449
+</span><span class="lnt">450
+</span><span class="lnt">451
+</span><span class="lnt">452
+</span><span class="lnt">453
+</span><span class="lnt">454
+</span><span class="lnt">455
+</span><span class="lnt">456
+</span><span class="lnt">457
+</span><span class="lnt">458
+</span><span class="lnt">459
+</span><span class="lnt">460
+</span><span class="lnt">461
+</span><span class="lnt">462
+</span><span class="lnt">463
+</span><span class="lnt">464
+</span><span class="lnt">465
+</span><span class="lnt">466
+</span><span class="lnt">467
+</span><span class="lnt">468
+</span><span class="lnt">469
+</span><span class="lnt">470
+</span><span class="lnt">471
+</span><span class="lnt">472
+</span><span class="lnt">473
+</span><span class="lnt">474
+</span><span class="lnt">475
+</span><span class="lnt">476
+</span><span class="lnt">477
+</span><span class="lnt">478
+</span><span class="lnt">479
+</span><span class="lnt">480
+</span><span class="lnt">481
+</span><span class="lnt">482
+</span><span class="lnt">483
+</span><span class="lnt">484
+</span><span class="lnt">485
+</span><span class="lnt">486
+</span><span class="lnt">487
+</span><span class="lnt">488
+</span><span class="lnt">489
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">sys</span>
 </span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span>
 </span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># =============================================================================</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># AES 常量定义</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># =============================================================================</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># S-Box (Substitution Box): 用于 SubBytes 步骤的非线性替换表</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># 它是基于 GF(2^8) 上的乘法逆元和仿射变换构造的</span>
 </span></span><span class="line"><span class="cl"><span class="n">SBOX</span> <span class="o">=</span> <span class="p">[</span>
 </span></span><span class="line"><span class="cl">    <span class="mh">0x63</span><span class="p">,</span> <span class="mh">0x7c</span><span class="p">,</span> <span class="mh">0x77</span><span class="p">,</span> <span class="mh">0x7b</span><span class="p">,</span> <span class="mh">0xf2</span><span class="p">,</span> <span class="mh">0x6b</span><span class="p">,</span> <span class="mh">0x6f</span><span class="p">,</span> <span class="mh">0xc5</span><span class="p">,</span> <span class="mh">0x30</span><span class="p">,</span> <span class="mh">0x01</span><span class="p">,</span> <span class="mh">0x67</span><span class="p">,</span> <span class="mh">0x2b</span><span class="p">,</span> <span class="mh">0xfe</span><span class="p">,</span> <span class="mh">0xd7</span><span class="p">,</span> <span class="mh">0xab</span><span class="p">,</span> <span class="mh">0x76</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">    <span class="mh">0xca</span><span class="p">,</span> <span class="mh">0x82</span><span class="p">,</span> <span class="mh">0xc9</span><span class="p">,</span> <span class="mh">0x7d</span><span class="p">,</span> <span class="mh">0xfa</span><span class="p">,</span> <span class="mh">0x59</span><span class="p">,</span> <span class="mh">0x47</span><span class="p">,</span> <span class="mh">0xf0</span><span class="p">,</span> <span class="mh">0xad</span><span class="p">,</span> <span class="mh">0xd4</span><span class="p">,</span> <span class="mh">0xa2</span><span class="p">,</span> <span class="mh">0xaf</span><span class="p">,</span> <span class="mh">0x9c</span><span class="p">,</span> <span class="mh">0xa4</span><span class="p">,</span> <span class="mh">0x72</span><span class="p">,</span> <span class="mh">0xc0</span><span class="p">,</span>
@@ -519,6 +686,7 @@ $$ W[i] = W[i-4] \oplus W[i-1] $$</li>
 </span></span><span class="line"><span class="cl">    <span class="mh">0x8c</span><span class="p">,</span> <span class="mh">0xa1</span><span class="p">,</span> <span class="mh">0x89</span><span class="p">,</span> <span class="mh">0x0d</span><span class="p">,</span> <span class="mh">0xbf</span><span class="p">,</span> <span class="mh">0xe6</span><span class="p">,</span> <span class="mh">0x42</span><span class="p">,</span> <span class="mh">0x68</span><span class="p">,</span> <span class="mh">0x41</span><span class="p">,</span> <span class="mh">0x99</span><span class="p">,</span> <span class="mh">0x2d</span><span class="p">,</span> <span class="mh">0x0f</span><span class="p">,</span> <span class="mh">0xb0</span><span class="p">,</span> <span class="mh">0x54</span><span class="p">,</span> <span class="mh">0xbb</span><span class="p">,</span> <span class="mh">0x16</span>
 </span></span><span class="line"><span class="cl"><span class="p">]</span>
 </span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Inverse S-Box: 用于解密时的逆字节代换</span>
 </span></span><span class="line"><span class="cl"><span class="n">INV_SBOX</span> <span class="o">=</span> <span class="p">[</span>
 </span></span><span class="line"><span class="cl">    <span class="mh">0x52</span><span class="p">,</span> <span class="mh">0x09</span><span class="p">,</span> <span class="mh">0x6a</span><span class="p">,</span> <span class="mh">0xd5</span><span class="p">,</span> <span class="mh">0x30</span><span class="p">,</span> <span class="mh">0x36</span><span class="p">,</span> <span class="mh">0xa5</span><span class="p">,</span> <span class="mh">0x38</span><span class="p">,</span> <span class="mh">0xbf</span><span class="p">,</span> <span class="mh">0x40</span><span class="p">,</span> <span class="mh">0xa3</span><span class="p">,</span> <span class="mh">0x9e</span><span class="p">,</span> <span class="mh">0x81</span><span class="p">,</span> <span class="mh">0xf3</span><span class="p">,</span> <span class="mh">0xd7</span><span class="p">,</span> <span class="mh">0xfb</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">    <span class="mh">0x7c</span><span class="p">,</span> <span class="mh">0xe3</span><span class="p">,</span> <span class="mh">0x39</span><span class="p">,</span> <span class="mh">0x82</span><span class="p">,</span> <span class="mh">0x9b</span><span class="p">,</span> <span class="mh">0x2f</span><span class="p">,</span> <span class="mh">0xff</span><span class="p">,</span> <span class="mh">0x87</span><span class="p">,</span> <span class="mh">0x34</span><span class="p">,</span> <span class="mh">0x8e</span><span class="p">,</span> <span class="mh">0x43</span><span class="p">,</span> <span class="mh">0x44</span><span class="p">,</span> <span class="mh">0xc4</span><span class="p">,</span> <span class="mh">0xde</span><span class="p">,</span> <span class="mh">0xe9</span><span class="p">,</span> <span class="mh">0xcb</span><span class="p">,</span>
@@ -538,14 +706,24 @@ $$ W[i] = W[i-4] \oplus W[i-1] $$</li>
 </span></span><span class="line"><span class="cl">    <span class="mh">0x17</span><span class="p">,</span> <span class="mh">0x2b</span><span class="p">,</span> <span class="mh">0x04</span><span class="p">,</span> <span class="mh">0x7e</span><span class="p">,</span> <span class="mh">0xba</span><span class="p">,</span> <span class="mh">0x77</span><span class="p">,</span> <span class="mh">0xd6</span><span class="p">,</span> <span class="mh">0x26</span><span class="p">,</span> <span class="mh">0xe1</span><span class="p">,</span> <span class="mh">0x69</span><span class="p">,</span> <span class="mh">0x14</span><span class="p">,</span> <span class="mh">0x63</span><span class="p">,</span> <span class="mh">0x55</span><span class="p">,</span> <span class="mh">0x21</span><span class="p">,</span> <span class="mh">0x0c</span><span class="p">,</span> <span class="mh">0x7d</span>
 </span></span><span class="line"><span class="cl"><span class="p">]</span>
 </span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Rcon (Round Constant): 轮常数，用于密钥扩展</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># Rcon[i] 代表 x^(i-1) 在 GF(2^8) 中的值</span>
 </span></span><span class="line"><span class="cl"><span class="n">RCON</span> <span class="o">=</span> <span class="p">[</span>
 </span></span><span class="line"><span class="cl">    <span class="mh">0x00</span><span class="p">,</span> <span class="mh">0x01</span><span class="p">,</span> <span class="mh">0x02</span><span class="p">,</span> <span class="mh">0x04</span><span class="p">,</span> <span class="mh">0x08</span><span class="p">,</span> <span class="mh">0x10</span><span class="p">,</span> <span class="mh">0x20</span><span class="p">,</span> <span class="mh">0x40</span><span class="p">,</span> <span class="mh">0x80</span><span class="p">,</span> <span class="mh">0x1B</span><span class="p">,</span> <span class="mh">0x36</span>
 </span></span><span class="line"><span class="cl"><span class="p">]</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="n">BLOCK_SIZE</span> <span class="o">=</span> <span class="mi">16</span>
+</span></span><span class="line"><span class="cl"><span class="n">BLOCK_SIZE</span> <span class="o">=</span> <span class="mi">16</span>  <span class="c1"># AES 分组大小固定为 128 位 (16 字节)</span>
 </span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># =============================================================================</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># 辅助函数：填充与数据转换</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># =============================================================================</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">pkcs7_pad</span><span class="p">(</span><span class="n">data</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">,</span> <span class="n">block_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">BLOCK_SIZE</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bytes</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;
+</span></span></span><span class="line"><span class="cl"><span class="s2">    PKCS#7 填充：将数据填充到 block_size 的倍数。
+</span></span></span><span class="line"><span class="cl"><span class="s2">    填充的值等于填充的字节数。
+</span></span></span><span class="line"><span class="cl"><span class="s2">    例如：如果缺 3 个字节，就填充 0x03 0x03 0x03。
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &#34;&#34;&#34;</span>
 </span></span><span class="line"><span class="cl">    <span class="n">pad_len</span> <span class="o">=</span> <span class="n">block_size</span> <span class="o">-</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="o">%</span> <span class="n">block_size</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">pad_len</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
 </span></span><span class="line"><span class="cl">        <span class="n">pad_len</span> <span class="o">=</span> <span class="n">block_size</span>
@@ -553,6 +731,9 @@ $$ W[i] = W[i-4] \oplus W[i-1] $$</li>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">pkcs7_unpad</span><span class="p">(</span><span class="n">data</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bytes</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;
+</span></span></span><span class="line"><span class="cl"><span class="s2">    PKCS#7 去填充：读取最后一个字节确定填充长度，并移除填充。
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &#34;&#34;&#34;</span>
 </span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="ow">not</span> <span class="n">data</span><span class="p">:</span>
 </span></span><span class="line"><span class="cl">        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&#34;空数据不支持去填充&#34;</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">    <span class="n">pad_len</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
@@ -564,52 +745,96 @@ $$ W[i] = W[i-4] \oplus W[i-1] $$</li>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">zero_pad_key_to_16</span><span class="p">(</span><span class="n">key</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bytes</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;
+</span></span></span><span class="line"><span class="cl"><span class="s2">    将密钥处理为 16 字节 (128 位)。
+</span></span></span><span class="line"><span class="cl"><span class="s2">    如果不足 16 字节，右侧补 0；如果超过，截断。
+</span></span></span><span class="line"><span class="cl"><span class="s2">    (仅用于演示，生产环境应使用 KDF)
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &#34;&#34;&#34;</span>
 </span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">key</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">16</span><span class="p">:</span>
 </span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">key</span><span class="p">[:</span><span class="mi">16</span><span class="p">]</span>
 </span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">key</span> <span class="o">+</span> <span class="nb">bytes</span><span class="p">(</span><span class="mi">16</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">key</span><span class="p">))</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">bytes_to_state</span><span class="p">(</span><span class="n">block</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]]:</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;
+</span></span></span><span class="line"><span class="cl"><span class="s2">    将 16 字节的输入块转换为 4x4 的状态矩阵 (State)。
+</span></span></span><span class="line"><span class="cl"><span class="s2">    AES 规定按【列优先】顺序填充。
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &#34;&#34;&#34;</span>
 </span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="p">[</span><span class="nb">list</span><span class="p">(</span><span class="n">block</span><span class="p">[</span><span class="n">i</span><span class="p">::</span><span class="mi">4</span><span class="p">])[:</span><span class="mi">4</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">)]</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">state_to_bytes</span><span class="p">(</span><span class="n">state</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]])</span> <span class="o">-&gt;</span> <span class="nb">bytes</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;
+</span></span></span><span class="line"><span class="cl"><span class="s2">    将 4x4 状态矩阵转换回 16 字节数据 (列优先读取)。
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &#34;&#34;&#34;</span>
 </span></span><span class="line"><span class="cl">    <span class="n">out</span> <span class="o">=</span> <span class="nb">bytearray</span><span class="p">(</span><span class="mi">16</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">):</span>
 </span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">):</span>
 </span></span><span class="line"><span class="cl">            <span class="n">out</span><span class="p">[</span><span class="n">c</span> <span class="o">*</span> <span class="mi">4</span> <span class="o">+</span> <span class="n">r</span><span class="p">]</span> <span class="o">=</span> <span class="n">state</span><span class="p">[</span><span class="n">r</span><span class="p">][</span><span class="n">c</span><span class="p">]</span>
 </span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="nb">bytes</span><span class="p">(</span><span class="n">out</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># =============================================================================</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># AES 核心变换函数</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># =============================================================================</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">sub_bytes</span><span class="p">(</span><span class="n">state</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]]):</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;
+</span></span></span><span class="line"><span class="cl"><span class="s2">    SubBytes (字节代换)：
+</span></span></span><span class="line"><span class="cl"><span class="s2">    使用 S-Box 对状态矩阵中的每个字节进行非线性替换。
+</span></span></span><span class="line"><span class="cl"><span class="s2">    提供了算法的混淆性 (Confusion)。
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &#34;&#34;&#34;</span>
 </span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">):</span>
 </span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">):</span>
 </span></span><span class="line"><span class="cl">            <span class="n">state</span><span class="p">[</span><span class="n">r</span><span class="p">][</span><span class="n">c</span><span class="p">]</span> <span class="o">=</span> <span class="n">SBOX</span><span class="p">[</span><span class="n">state</span><span class="p">[</span><span class="n">r</span><span class="p">][</span><span class="n">c</span><span class="p">]]</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">inv_sub_bytes</span><span class="p">(</span><span class="n">state</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]]):</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;
+</span></span></span><span class="line"><span class="cl"><span class="s2">    InvSubBytes (逆字节代换)：
+</span></span></span><span class="line"><span class="cl"><span class="s2">    使用逆 S-Box 还原字节，用于解密。
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &#34;&#34;&#34;</span>
 </span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">):</span>
 </span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">):</span>
 </span></span><span class="line"><span class="cl">            <span class="n">state</span><span class="p">[</span><span class="n">r</span><span class="p">][</span><span class="n">c</span><span class="p">]</span> <span class="o">=</span> <span class="n">INV_SBOX</span><span class="p">[</span><span class="n">state</span><span class="p">[</span><span class="n">r</span><span class="p">][</span><span class="n">c</span><span class="p">]]</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">shift_rows</span><span class="p">(</span><span class="n">state</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]]):</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;
+</span></span></span><span class="line"><span class="cl"><span class="s2">    ShiftRows (行移位)：
+</span></span></span><span class="line"><span class="cl"><span class="s2">    对状态矩阵的每一行进行循环左移。
+</span></span></span><span class="line"><span class="cl"><span class="s2">    第0行不移，第1行左移1位，第2行左移2位，第3行左移3位。
+</span></span></span><span class="line"><span class="cl"><span class="s2">    提供了算法的扩散性 (Diffusion)。
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &#34;&#34;&#34;</span>
 </span></span><span class="line"><span class="cl">    <span class="n">state</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">state</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">:]</span> <span class="o">+</span> <span class="n">state</span><span class="p">[</span><span class="mi">1</span><span class="p">][:</span><span class="mi">1</span><span class="p">]</span>
 </span></span><span class="line"><span class="cl">    <span class="n">state</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">state</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">2</span><span class="p">:]</span> <span class="o">+</span> <span class="n">state</span><span class="p">[</span><span class="mi">2</span><span class="p">][:</span><span class="mi">2</span><span class="p">]</span>
 </span></span><span class="line"><span class="cl">    <span class="n">state</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="n">state</span><span class="p">[</span><span class="mi">3</span><span class="p">][</span><span class="mi">3</span><span class="p">:]</span> <span class="o">+</span> <span class="n">state</span><span class="p">[</span><span class="mi">3</span><span class="p">][:</span><span class="mi">3</span><span class="p">]</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">inv_shift_rows</span><span class="p">(</span><span class="n">state</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]]):</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;
+</span></span></span><span class="line"><span class="cl"><span class="s2">    InvShiftRows (逆行移位)：
+</span></span></span><span class="line"><span class="cl"><span class="s2">    对状态矩阵的每一行进行循环右移，用于解密。
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &#34;&#34;&#34;</span>
 </span></span><span class="line"><span class="cl">    <span class="n">state</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">state</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">:]</span> <span class="o">+</span> <span class="n">state</span><span class="p">[</span><span class="mi">1</span><span class="p">][:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
 </span></span><span class="line"><span class="cl">    <span class="n">state</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">state</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="o">-</span><span class="mi">2</span><span class="p">:]</span> <span class="o">+</span> <span class="n">state</span><span class="p">[</span><span class="mi">2</span><span class="p">][:</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span>
 </span></span><span class="line"><span class="cl">    <span class="n">state</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="n">state</span><span class="p">[</span><span class="mi">3</span><span class="p">][</span><span class="o">-</span><span class="mi">3</span><span class="p">:]</span> <span class="o">+</span> <span class="n">state</span><span class="p">[</span><span class="mi">3</span><span class="p">][:</span><span class="o">-</span><span class="mi">3</span><span class="p">]</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># --- GF(2^8) 数学运算辅助函数 ---</span>
+</span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">xtime</span><span class="p">(</span><span class="n">a</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;
+</span></span></span><span class="line"><span class="cl"><span class="s2">    xtime 函数：计算 a * x (在 GF(2^8) 域上)。
+</span></span></span><span class="line"><span class="cl"><span class="s2">    相当于左移一位，如果溢出则异或不可约多项式 0x1B。
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &#34;&#34;&#34;</span>
 </span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="p">((</span><span class="n">a</span> <span class="o">&lt;&lt;</span> <span class="mi">1</span><span class="p">)</span> <span class="o">&amp;</span> <span class="mh">0xFF</span><span class="p">)</span> <span class="o">^</span> <span class="p">(</span><span class="mh">0x1B</span> <span class="k">if</span> <span class="p">(</span><span class="n">a</span> <span class="o">&amp;</span> <span class="mh">0x80</span><span class="p">)</span> <span class="k">else</span> <span class="mi">0</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">mul</span><span class="p">(</span><span class="n">a</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">b</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;
+</span></span></span><span class="line"><span class="cl"><span class="s2">    GF(2^8) 上的乘法：计算 a * b。
+</span></span></span><span class="line"><span class="cl"><span class="s2">    通过重复 xtime 和条件异或实现 (类似快速幂/俄罗斯农民乘法)。
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &#34;&#34;&#34;</span>
 </span></span><span class="line"><span class="cl">    <span class="n">res</span> <span class="o">=</span> <span class="mi">0</span>
 </span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">8</span><span class="p">):</span>
 </span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">b</span> <span class="o">&amp;</span> <span class="mi">1</span><span class="p">:</span>
@@ -620,6 +845,10 @@ $$ W[i] = W[i-4] \oplus W[i-1] $$</li>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">mix_single_column</span><span class="p">(</span><span class="n">col</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;
+</span></span></span><span class="line"><span class="cl"><span class="s2">    MixColumns 的单列计算。
+</span></span></span><span class="line"><span class="cl"><span class="s2">    将列向量与固定多项式 c(x) = 03x^3 + 01x^2 + 01x + 02 相乘。
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &#34;&#34;&#34;</span>
 </span></span><span class="line"><span class="cl">    <span class="n">a0</span><span class="p">,</span> <span class="n">a1</span><span class="p">,</span> <span class="n">a2</span><span class="p">,</span> <span class="n">a3</span> <span class="o">=</span> <span class="n">col</span>
 </span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="p">[</span>
 </span></span><span class="line"><span class="cl">        <span class="n">mul</span><span class="p">(</span><span class="n">a0</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span> <span class="o">^</span> <span class="n">mul</span><span class="p">(</span><span class="n">a1</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span> <span class="o">^</span> <span class="n">a2</span> <span class="o">^</span> <span class="n">a3</span><span class="p">,</span>
@@ -630,6 +859,10 @@ $$ W[i] = W[i-4] \oplus W[i-1] $$</li>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">mix_columns</span><span class="p">(</span><span class="n">state</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]]):</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;
+</span></span></span><span class="line"><span class="cl"><span class="s2">    MixColumns (列混合)：
+</span></span></span><span class="line"><span class="cl"><span class="s2">    对状态矩阵的每一列进行线性变换，进一步增强扩散性。
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &#34;&#34;&#34;</span>
 </span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">):</span>
 </span></span><span class="line"><span class="cl">        <span class="n">col</span> <span class="o">=</span> <span class="p">[</span><span class="n">state</span><span class="p">[</span><span class="n">r</span><span class="p">][</span><span class="n">c</span><span class="p">]</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">)]</span>
 </span></span><span class="line"><span class="cl">        <span class="n">new_col</span> <span class="o">=</span> <span class="n">mix_single_column</span><span class="p">(</span><span class="n">col</span><span class="p">)</span>
@@ -638,6 +871,10 @@ $$ W[i] = W[i-4] \oplus W[i-1] $$</li>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">inv_mix_single_column</span><span class="p">(</span><span class="n">col</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;
+</span></span></span><span class="line"><span class="cl"><span class="s2">    InvMixColumns 的单列计算。
+</span></span></span><span class="line"><span class="cl"><span class="s2">    乘以 c(x) 的逆多项式 d(x) = 0Bx^3 + 0Dx^2 + 09x + 0E。
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &#34;&#34;&#34;</span>
 </span></span><span class="line"><span class="cl">    <span class="n">a0</span><span class="p">,</span> <span class="n">a1</span><span class="p">,</span> <span class="n">a2</span><span class="p">,</span> <span class="n">a3</span> <span class="o">=</span> <span class="n">col</span>
 </span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="p">[</span>
 </span></span><span class="line"><span class="cl">        <span class="n">mul</span><span class="p">(</span><span class="n">a0</span><span class="p">,</span> <span class="mh">0x0e</span><span class="p">)</span> <span class="o">^</span> <span class="n">mul</span><span class="p">(</span><span class="n">a1</span><span class="p">,</span> <span class="mh">0x0b</span><span class="p">)</span> <span class="o">^</span> <span class="n">mul</span><span class="p">(</span><span class="n">a2</span><span class="p">,</span> <span class="mh">0x0d</span><span class="p">)</span> <span class="o">^</span> <span class="n">mul</span><span class="p">(</span><span class="n">a3</span><span class="p">,</span> <span class="mh">0x09</span><span class="p">),</span>
@@ -648,6 +885,9 @@ $$ W[i] = W[i-4] \oplus W[i-1] $$</li>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">inv_mix_columns</span><span class="p">(</span><span class="n">state</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]]):</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;
+</span></span></span><span class="line"><span class="cl"><span class="s2">    InvMixColumns (逆列混合)：用于解密。
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &#34;&#34;&#34;</span>
 </span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">):</span>
 </span></span><span class="line"><span class="cl">        <span class="n">col</span> <span class="o">=</span> <span class="p">[</span><span class="n">state</span><span class="p">[</span><span class="n">r</span><span class="p">][</span><span class="n">c</span><span class="p">]</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">)]</span>
 </span></span><span class="line"><span class="cl">        <span class="n">new_col</span> <span class="o">=</span> <span class="n">inv_mix_single_column</span><span class="p">(</span><span class="n">col</span><span class="p">)</span>
@@ -656,32 +896,56 @@ $$ W[i] = W[i-4] \oplus W[i-1] $$</li>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">add_round_key</span><span class="p">(</span><span class="n">state</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]],</span> <span class="n">round_key</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;
+</span></span></span><span class="line"><span class="cl"><span class="s2">    AddRoundKey (轮密钥加)：
+</span></span></span><span class="line"><span class="cl"><span class="s2">    将状态矩阵与当前的轮密钥进行按位异或 (XOR)。
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &#34;&#34;&#34;</span>
 </span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">):</span>
 </span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">):</span>
 </span></span><span class="line"><span class="cl">            <span class="n">state</span><span class="p">[</span><span class="n">r</span><span class="p">][</span><span class="n">c</span><span class="p">]</span> <span class="o">^=</span> <span class="n">round_key</span><span class="p">[</span><span class="n">c</span> <span class="o">*</span> <span class="mi">4</span> <span class="o">+</span> <span class="n">r</span><span class="p">]</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># =============================================================================</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># 密钥扩展 (Key Expansion)</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># =============================================================================</span>
+</span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">rot_word</span><span class="p">(</span><span class="n">w</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;字循环左移：[a0, a1, a2, a3] -&gt; [a1, a2, a3, a0]&#34;&#34;&#34;</span>
 </span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">w</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span> <span class="o">+</span> <span class="n">w</span><span class="p">[:</span><span class="mi">1</span><span class="p">]</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">sub_word</span><span class="p">(</span><span class="n">w</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;字代换：对字中的每个字节应用 S-Box&#34;&#34;&#34;</span>
 </span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="p">[</span><span class="n">SBOX</span><span class="p">[</span><span class="n">b</span><span class="p">]</span> <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="n">w</span><span class="p">]</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">key_expansion</span><span class="p">(</span><span class="n">key</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">bytes</span><span class="p">]:</span>
-</span></span><span class="line"><span class="cl">    <span class="n">Nk</span> <span class="o">=</span> <span class="mi">4</span>
-</span></span><span class="line"><span class="cl">    <span class="n">Nb</span> <span class="o">=</span> <span class="mi">4</span>
-</span></span><span class="line"><span class="cl">    <span class="n">Nr</span> <span class="o">=</span> <span class="mi">10</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;
+</span></span></span><span class="line"><span class="cl"><span class="s2">    密钥扩展算法 (AES-128)：
+</span></span></span><span class="line"><span class="cl"><span class="s2">    将 16 字节初始密钥扩展为 11 组轮密钥 (每组 16 字节)。
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">Nk</span> <span class="o">=</span> <span class="mi">4</span>   <span class="c1"># 密钥长度 (字数)，AES-128 为 4</span>
+</span></span><span class="line"><span class="cl">    <span class="n">Nb</span> <span class="o">=</span> <span class="mi">4</span>   <span class="c1"># 分组长度 (字数)，固定为 4</span>
+</span></span><span class="line"><span class="cl">    <span class="n">Nr</span> <span class="o">=</span> <span class="mi">10</span>  <span class="c1"># 轮数，AES-128 为 10</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="c1"># w 存储扩展后的所有字 (4 * (Nr + 1) = 44 个字)</span>
 </span></span><span class="line"><span class="cl">    <span class="n">w</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">Nb</span> <span class="o">*</span> <span class="p">(</span><span class="n">Nr</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))]</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="c1"># 前 Nk 个字直接取自初始密钥</span>
 </span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">Nk</span><span class="p">):</span>
 </span></span><span class="line"><span class="cl">        <span class="n">w</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">key</span><span class="p">[</span><span class="mi">4</span> <span class="o">*</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">0</span><span class="p">],</span> <span class="n">key</span><span class="p">[</span><span class="mi">4</span> <span class="o">*</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">],</span> <span class="n">key</span><span class="p">[</span><span class="mi">4</span> <span class="o">*</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">2</span><span class="p">],</span> <span class="n">key</span><span class="p">[</span><span class="mi">4</span> <span class="o">*</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">3</span><span class="p">]]</span>
+</span></span><span class="line"><span class="cl">        
+</span></span><span class="line"><span class="cl">    <span class="c1"># 生成剩余的字</span>
 </span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">Nk</span><span class="p">,</span> <span class="n">Nb</span> <span class="o">*</span> <span class="p">(</span><span class="n">Nr</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)):</span>
 </span></span><span class="line"><span class="cl">        <span class="n">temp</span> <span class="o">=</span> <span class="n">w</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">][:]</span>
 </span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">i</span> <span class="o">%</span> <span class="n">Nk</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="c1"># 每 Nk 个字进行一次复杂变换：RotWord + SubWord + XOR Rcon</span>
 </span></span><span class="line"><span class="cl">            <span class="n">temp</span> <span class="o">=</span> <span class="n">sub_word</span><span class="p">(</span><span class="n">rot_word</span><span class="p">(</span><span class="n">temp</span><span class="p">))</span>
 </span></span><span class="line"><span class="cl">            <span class="n">temp</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">^=</span> <span class="n">RCON</span><span class="p">[</span><span class="n">i</span> <span class="o">//</span> <span class="n">Nk</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># W[i] = W[i-Nk] XOR temp</span>
 </span></span><span class="line"><span class="cl">        <span class="n">w</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span> <span class="p">(</span><span class="n">w</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="n">Nk</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">^</span> <span class="n">temp</span><span class="p">[</span><span class="n">j</span><span class="p">])</span> <span class="o">&amp;</span> <span class="mh">0xFF</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span> <span class="p">]</span>
+</span></span><span class="line"><span class="cl">        
+</span></span><span class="line"><span class="cl">    <span class="c1"># 将字数组重新组合成 11 个 16 字节的轮密钥</span>
 </span></span><span class="line"><span class="cl">    <span class="n">round_keys</span> <span class="o">=</span> <span class="p">[]</span>
 </span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">Nr</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
 </span></span><span class="line"><span class="cl">        <span class="n">rk</span> <span class="o">=</span> <span class="p">[]</span>
@@ -691,6 +955,10 @@ $$ W[i] = W[i-4] \oplus W[i-1] $$</li>
 </span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">round_keys</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># =============================================================================</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># 调试与输出辅助</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># =============================================================================</span>
+</span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">bytes_hex</span><span class="p">(</span><span class="n">b</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
 </span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">b</span><span class="o">.</span><span class="n">hex</span><span class="p">()</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span>
 </span></span><span class="line"><span class="cl">
@@ -699,13 +967,25 @@ $$ W[i] = W[i-4] \oplus W[i-1] $$</li>
 </span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">state_to_bytes</span><span class="p">(</span><span class="n">state</span><span class="p">)</span><span class="o">.</span><span class="n">hex</span><span class="p">()</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># =============================================================================</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># AES 加密与解密流程 (Block Level)</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># =============================================================================</span>
+</span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">aes_encrypt_block</span><span class="p">(</span><span class="n">block</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">,</span> <span class="n">round_keys</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">bytes</span><span class="p">],</span> <span class="n">verbose</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bytes</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;
+</span></span></span><span class="line"><span class="cl"><span class="s2">    加密单个 16 字节分组。
+</span></span></span><span class="line"><span class="cl"><span class="s2">    流程：AddRoundKey(Initial) -&gt; 9轮(Sub/Shift/Mix/Add) -&gt; 最终轮(Sub/Shift/Add)
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &#34;&#34;&#34;</span>
 </span></span><span class="line"><span class="cl">    <span class="n">state</span> <span class="o">=</span> <span class="n">bytes_to_state</span><span class="p">(</span><span class="n">block</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
 </span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;</span><span class="se">\n</span><span class="s2">==================== 开始 AES 加密 (单块) ===================&#34;</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;输入数据 (Hex): </span><span class="si">{</span><span class="n">block</span><span class="o">.</span><span class="n">hex</span><span class="p">()</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;初始轮密钥 (Hex): </span><span class="si">{</span><span class="n">bytes_hex</span><span class="p">(</span><span class="n">round_keys</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        
+</span></span><span class="line"><span class="cl">    <span class="c1"># 初始轮：只做 AddRoundKey</span>
 </span></span><span class="line"><span class="cl">    <span class="n">add_round_key</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">round_keys</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="c1"># 第 1 到 9 轮</span>
 </span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">round_idx</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">):</span>
 </span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
 </span></span><span class="line"><span class="cl">            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;</span><span class="se">\n</span><span class="s2">-- Round </span><span class="si">{</span><span class="n">round_idx</span><span class="si">}</span><span class="s2"> --&#34;</span><span class="p">)</span>
@@ -722,6 +1002,8 @@ $$ W[i] = W[i-4] \oplus W[i-1] $$</li>
 </span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
 </span></span><span class="line"><span class="cl">            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;AddRoundKey (</span><span class="si">{</span><span class="n">round_idx</span><span class="si">}</span><span class="s2">): </span><span class="si">{</span><span class="n">bytes_hex</span><span class="p">(</span><span class="n">round_keys</span><span class="p">[</span><span class="n">round_idx</span><span class="p">])</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;State: </span><span class="si">{</span><span class="n">state_hex</span><span class="p">(</span><span class="n">state</span><span class="p">)</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            
+</span></span><span class="line"><span class="cl">    <span class="c1"># 最终轮 (第 10 轮)：无 MixColumns</span>
 </span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
 </span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;</span><span class="se">\n</span><span class="s2">-- Final Round (10) --&#34;</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">    <span class="n">sub_bytes</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>
@@ -731,22 +1013,32 @@ $$ W[i] = W[i-4] \oplus W[i-1] $$</li>
 </span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
 </span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;After ShiftRows: </span><span class="si">{</span><span class="n">state_hex</span><span class="p">(</span><span class="n">state</span><span class="p">)</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">    <span class="n">add_round_key</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">round_keys</span><span class="p">[</span><span class="mi">10</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">    
 </span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
 </span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;AddRoundKey (10): </span><span class="si">{</span><span class="n">bytes_hex</span><span class="p">(</span><span class="n">round_keys</span><span class="p">[</span><span class="mi">10</span><span class="p">])</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;[加密结果] (Hex): </span><span class="si">{</span><span class="n">state_hex</span><span class="p">(</span><span class="n">state</span><span class="p">)</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;==================== 结束 AES 加密 ====================</span><span class="se">\n</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        
 </span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">state_to_bytes</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">aes_decrypt_block</span><span class="p">(</span><span class="n">block</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">,</span> <span class="n">round_keys</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">bytes</span><span class="p">],</span> <span class="n">verbose</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bytes</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;
+</span></span></span><span class="line"><span class="cl"><span class="s2">    解密单个 16 字节分组。
+</span></span></span><span class="line"><span class="cl"><span class="s2">    流程是加密的逆过程，注意轮密钥顺序相反。
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &#34;&#34;&#34;</span>
 </span></span><span class="line"><span class="cl">    <span class="n">state</span> <span class="o">=</span> <span class="n">bytes_to_state</span><span class="p">(</span><span class="n">block</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
 </span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;</span><span class="se">\n</span><span class="s2">==================== 开始 AES 解密 (单块) ===================&#34;</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;输入数据 (Hex): </span><span class="si">{</span><span class="n">block</span><span class="o">.</span><span class="n">hex</span><span class="p">()</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;终止轮密钥 (Hex): </span><span class="si">{</span><span class="n">bytes_hex</span><span class="p">(</span><span class="n">round_keys</span><span class="p">[</span><span class="mi">10</span><span class="p">])</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        
+</span></span><span class="line"><span class="cl">    <span class="c1"># 初始逆变换：先异或最后一轮密钥</span>
 </span></span><span class="line"><span class="cl">    <span class="n">add_round_key</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">round_keys</span><span class="p">[</span><span class="mi">10</span><span class="p">])</span>
 </span></span><span class="line"><span class="cl">    <span class="n">inv_shift_rows</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">    <span class="n">inv_sub_bytes</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="c1"># 第 9 到 1 轮 (逆序)</span>
 </span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">round_idx</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">):</span>
 </span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
 </span></span><span class="line"><span class="cl">            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;</span><span class="se">\n</span><span class="s2">-- Round </span><span class="si">{</span><span class="n">round_idx</span><span class="si">}</span><span class="s2"> --&#34;</span><span class="p">)</span>
@@ -763,21 +1055,37 @@ $$ W[i] = W[i-4] \oplus W[i-1] $$</li>
 </span></span><span class="line"><span class="cl">        <span class="n">inv_sub_bytes</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
 </span></span><span class="line"><span class="cl">            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;After InvSubBytes: </span><span class="si">{</span><span class="n">state_hex</span><span class="p">(</span><span class="n">state</span><span class="p">)</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            
+</span></span><span class="line"><span class="cl">    <span class="c1"># 最终逆变换</span>
 </span></span><span class="line"><span class="cl">    <span class="n">add_round_key</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">round_keys</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">    
 </span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
 </span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;AddRoundKey (0): </span><span class="si">{</span><span class="n">bytes_hex</span><span class="p">(</span><span class="n">round_keys</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;[解密结果] (Hex): </span><span class="si">{</span><span class="n">state_hex</span><span class="p">(</span><span class="n">state</span><span class="p">)</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;==================== 结束 AES 解密 ====================</span><span class="se">\n</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        
 </span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">state_to_bytes</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># =============================================================================</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># ECB 模式封装</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># =============================================================================</span>
+</span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">aes_encrypt_ecb</span><span class="p">(</span><span class="n">plaintext</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">,</span> <span class="n">verbose</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bytes</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;
+</span></span></span><span class="line"><span class="cl"><span class="s2">    AES-128 ECB 模式加密。
+</span></span></span><span class="line"><span class="cl"><span class="s2">    1. 处理密钥
+</span></span></span><span class="line"><span class="cl"><span class="s2">    2. 填充明文 (PKCS#7)
+</span></span></span><span class="line"><span class="cl"><span class="s2">    3. 分块加密
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &#34;&#34;&#34;</span>
 </span></span><span class="line"><span class="cl">    <span class="n">key16</span> <span class="o">=</span> <span class="n">zero_pad_key_to_16</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">    <span class="n">round_keys</span> <span class="o">=</span> <span class="n">key_expansion</span><span class="p">(</span><span class="n">key16</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">    <span class="n">padded</span> <span class="o">=</span> <span class="n">pkcs7_pad</span><span class="p">(</span><span class="n">plaintext</span><span class="p">,</span> <span class="n">BLOCK_SIZE</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    
 </span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
 </span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;开始加密...&#34;</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;原始长度: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">plaintext</span><span class="p">)</span><span class="si">}</span><span class="s2">, 填充后长度: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">padded</span><span class="p">)</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        
 </span></span><span class="line"><span class="cl">    <span class="n">out</span> <span class="o">=</span> <span class="nb">bytearray</span><span class="p">()</span>
 </span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">padded</span><span class="p">),</span> <span class="n">BLOCK_SIZE</span><span class="p">):</span>
 </span></span><span class="line"><span class="cl">        <span class="n">blk</span> <span class="o">=</span> <span class="n">padded</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">i</span><span class="o">+</span><span class="n">BLOCK_SIZE</span><span class="p">]</span>
@@ -792,11 +1100,19 @@ $$ W[i] = W[i-4] \oplus W[i-1] $$</li>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">aes_decrypt_ecb</span><span class="p">(</span><span class="n">ciphertext</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">,</span> <span class="n">verbose</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bytes</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;
+</span></span></span><span class="line"><span class="cl"><span class="s2">    AES-128 ECB 模式解密。
+</span></span></span><span class="line"><span class="cl"><span class="s2">    1. 处理密钥
+</span></span></span><span class="line"><span class="cl"><span class="s2">    2. 分块解密
+</span></span></span><span class="line"><span class="cl"><span class="s2">    3. 去填充 (PKCS#7)
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &#34;&#34;&#34;</span>
 </span></span><span class="line"><span class="cl">    <span class="n">key16</span> <span class="o">=</span> <span class="n">zero_pad_key_to_16</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">    <span class="n">round_keys</span> <span class="o">=</span> <span class="n">key_expansion</span><span class="p">(</span><span class="n">key16</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">    <span class="n">out</span> <span class="o">=</span> <span class="nb">bytearray</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    
 </span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
 </span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;开始解密...&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        
 </span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">ciphertext</span><span class="p">),</span> <span class="n">BLOCK_SIZE</span><span class="p">):</span>
 </span></span><span class="line"><span class="cl">        <span class="n">blk</span> <span class="o">=</span> <span class="n">ciphertext</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">i</span><span class="o">+</span><span class="n">BLOCK_SIZE</span><span class="p">]</span>
 </span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
@@ -811,12 +1127,18 @@ $$ W[i] = W[i-4] \oplus W[i-1] $$</li>
 </span></span><span class="line"><span class="cl">    <span class="n">raw_key</span> <span class="o">=</span> <span class="s2">&#34;secret&#34;</span>
 </span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;原始明文: </span><span class="si">{</span><span class="n">raw_text</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;原始密钥: </span><span class="si">{</span><span class="n">raw_key</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    
 </span></span><span class="line"><span class="cl">    <span class="n">pt</span> <span class="o">=</span> <span class="n">raw_text</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s2">&#34;utf-8&#34;</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">    <span class="n">key_bytes</span> <span class="o">=</span> <span class="n">raw_key</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s2">&#34;utf-8&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="c1"># 加密</span>
 </span></span><span class="line"><span class="cl">    <span class="n">ct</span> <span class="o">=</span> <span class="n">aes_encrypt_ecb</span><span class="p">(</span><span class="n">pt</span><span class="p">,</span> <span class="n">key_bytes</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;</span><span class="se">\n</span><span class="s2">最终密文 (Hex): </span><span class="si">{</span><span class="n">ct</span><span class="o">.</span><span class="n">hex</span><span class="p">()</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="c1"># 解密</span>
 </span></span><span class="line"><span class="cl">    <span class="n">dec</span> <span class="o">=</span> <span class="n">aes_decrypt_ecb</span><span class="p">(</span><span class="n">ct</span><span class="p">,</span> <span class="n">key_bytes</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">    <span class="n">dec_str</span> <span class="o">=</span> <span class="n">dec</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&#34;utf-8&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    
 </span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;</span><span class="se">\n</span><span class="s2">最终验证:&#34;</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;  原始明文: </span><span class="si">{</span><span class="n">raw_text</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;  解密明文: </span><span class="si">{</span><span class="n">dec_str</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
@@ -828,7 +1150,295 @@ $$ W[i] = W[i-4] \oplus W[i-1] $$</li>
 </span></span></code></pre></td></tr></table>
 </div>
 </div><hr>
-<h2 id="8-附录运行结果详细日志">8. 附录：运行结果（详细日志）
+<h2 id="8-代码详解">8 代码详解：
+</h2><h3 id="81列混合-code-deep-dive-mixcolumns">8.1列混合 (Code Deep Dive: MixColumns)
+</h3><p>AES 的列混合（MixColumns）是整个算法中数学味最浓、也最难理解的部分。它本质上是在 <strong>有限域 $GF(2^8)$</strong> 上进行的 <strong>矩阵乘法</strong>。</p>
+<h4 id="1-最底层xtime-x-乘法">1. 最底层：<code>xtime</code> (x 乘法)
+</h4><p>这是 AES 数学运算的基石。在有限域 $GF(2^8)$ 中，数字被视为多项式的系数。</p>
+<ul>
+<li><strong>加法/减法</strong>：就是异或 (<code>XOR</code>)。</li>
+<li><strong>乘法</strong>：比较复杂，特别是乘以 2（即多项式 $x$）。</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">xtime</span><span class="p">(</span><span class="n">a</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;
+</span></span></span><span class="line"><span class="cl"><span class="s2">    xtime 函数：计算 a * 2 (在 GF(2^8) 域上)。
+</span></span></span><span class="line"><span class="cl"><span class="s2">    相当于左移一位，如果溢出则异或不可约多项式 0x1B。
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># (a &lt;&lt; 1) &amp; 0xFF : 左移一位，相当于乘以 x。&amp; 0xFF 确保结果在 8 位以内。</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># (a &amp; 0x80)      : 检查最高位（第8位）是否为 1。</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># ^ 0x1B          : 如果最高位是 1，说明溢出了，需要减去（异或）不可约多项式 0x1B (00011011)。</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="p">((</span><span class="n">a</span> <span class="o">&lt;&lt;</span> <span class="mi">1</span><span class="p">)</span> <span class="o">&amp;</span> <span class="mh">0xFF</span><span class="p">)</span> <span class="o">^</span> <span class="p">(</span><span class="mh">0x1B</span> <span class="k">if</span> <span class="p">(</span><span class="n">a</span> <span class="o">&amp;</span> <span class="mh">0x80</span><span class="p">)</span> <span class="k">else</span> <span class="mi">0</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><strong>通俗解释</strong>：
+这就好比我们在十进制里规定“最大不能超过 99”。如果你算 $50 \times 2 = 100$，超过了，就得减去一个特定的数（比如 100）让它变回 0。
+在 AES 的 8 位世界里，如果左移导致最高位变成了 1（溢出），我们就异或 <code>0x1B</code> 来“折叠”回去。</p>
+<h4 id="2-中间层mul-通用乘法">2. 中间层：<code>mul</code> (通用乘法)
+</h4><p>有了 <code>xtime</code> (乘以 2)，我们就可以计算乘以任意数了。这里用的是**“俄罗斯农民乘法”**（也叫倍增减半法）的变体。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">mul</span><span class="p">(</span><span class="n">a</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">b</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;
+</span></span></span><span class="line"><span class="cl"><span class="s2">    GF(2^8) 上的乘法：计算 a * b。
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">res</span> <span class="o">=</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">8</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># 如果 b 的当前最低位是 1，就把当前的 a 加（异或）到结果里</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">b</span> <span class="o">&amp;</span> <span class="mi">1</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="n">res</span> <span class="o">^=</span> <span class="n">a</span>
+</span></span><span class="line"><span class="cl">        
+</span></span><span class="line"><span class="cl">        <span class="c1"># a 翻倍 (乘以 x)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">a</span> <span class="o">=</span> <span class="n">xtime</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        
+</span></span><span class="line"><span class="cl">        <span class="c1"># b 减半 (右移)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">b</span> <span class="o">&gt;&gt;=</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">res</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><strong>举例计算 $A \times 3$</strong>：</p>
+<ul>
+<li>$3$ 的二进制是 <code>00000011</code>。</li>
+<li>$A \times 3 = A \times (2 + 1) = (A \times 2) + (A \times 1)$。</li>
+<li>代码里：
+<ul>
+<li>第一轮：<code>b</code> 末位是 1，<code>res = res ^ A</code>。</li>
+<li>第二轮：<code>a</code> 变成了 <code>xtime(A)</code> (即 $2A$)，<code>b</code> 末位还是 1，<code>res = res ^ 2A</code>。</li>
+<li>结果就是 $A \oplus 2A$。</li>
+</ul>
+</li>
+</ul>
+<h4 id="3-应用层mix_single_column-矩阵变换">3. 应用层：<code>mix_single_column</code> (矩阵变换)
+</h4><p>这一步是真正的列混合。AES 规定每一列都要和一个固定的矩阵相乘。
+这个固定矩阵是：
+</p>
+$$
+\begin{bmatrix}
+2 & 3 & 1 & 1 \\
+1 & 2 & 3 & 1 \\
+1 & 1 & 2 & 3 \\
+3 & 1 & 1 & 2
+\end{bmatrix}
+$$<p>代码完全对应这个矩阵乘法公式：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">mix_single_column</span><span class="p">(</span><span class="n">col</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">a0</span><span class="p">,</span> <span class="n">a1</span><span class="p">,</span> <span class="n">a2</span><span class="p">,</span> <span class="n">a3</span> <span class="o">=</span> <span class="n">col</span>  <span class="c1"># 输入列的 4 个字节</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="p">[</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># 新的第 0 行 = 2*a0 + 3*a1 + 1*a2 + 1*a3</span>
+</span></span><span class="line"><span class="cl">        <span class="n">mul</span><span class="p">(</span><span class="n">a0</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span> <span class="o">^</span> <span class="n">mul</span><span class="p">(</span><span class="n">a1</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span> <span class="o">^</span> <span class="n">a2</span> <span class="o">^</span> <span class="n">a3</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        
+</span></span><span class="line"><span class="cl">        <span class="c1"># 新的第 1 行 = 1*a0 + 2*a1 + 3*a2 + 1*a3</span>
+</span></span><span class="line"><span class="cl">        <span class="n">a0</span> <span class="o">^</span> <span class="n">mul</span><span class="p">(</span><span class="n">a1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span> <span class="o">^</span> <span class="n">mul</span><span class="p">(</span><span class="n">a2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span> <span class="o">^</span> <span class="n">a3</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        
+</span></span><span class="line"><span class="cl">        <span class="c1"># 新的第 2 行 = 1*a0 + 1*a1 + 2*a2 + 3*a3</span>
+</span></span><span class="line"><span class="cl">        <span class="n">a0</span> <span class="o">^</span> <span class="n">a1</span> <span class="o">^</span> <span class="n">mul</span><span class="p">(</span><span class="n">a2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span> <span class="o">^</span> <span class="n">mul</span><span class="p">(</span><span class="n">a3</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">        
+</span></span><span class="line"><span class="cl">        <span class="c1"># 新的第 3 行 = 3*a0 + 1*a1 + 1*a2 + 2*a3</span>
+</span></span><span class="line"><span class="cl">        <span class="n">mul</span><span class="p">(</span><span class="n">a0</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span> <span class="o">^</span> <span class="n">a1</span> <span class="o">^</span> <span class="n">a2</span> <span class="o">^</span> <span class="n">mul</span><span class="p">(</span><span class="n">a3</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">]</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><strong>为什么是 2 和 3？</strong></p>
+<ul>
+<li>乘以 1：就是它自己（代码里直接写 <code>a2</code> 而不是 <code>mul(a2, 1)</code>）。</li>
+<li>乘以 2：调用 <code>xtime</code> 一次。</li>
+<li>乘以 3：等于 <code>xtime(a) ^ a</code>。
+AES 设计者选择 1, 2, 3 是因为它们计算最快（只需要移位和异或），同时能保证很好的扩散效果（让一个字节的变化影响到这一列的所有 4 个字节）。</li>
+</ul>
+<h3 id="82-代码详解密钥扩展-code-deep-dive-key-expansion">8.2 代码详解：密钥扩展 (Code Deep Dive: Key Expansion)
+</h3><p>AES 的密钥扩展（Key Expansion）负责把用户输入的短密钥（16字节）“拉长”成足够 11 轮加密使用的长密钥串（176字节）。</p>
+<h4 id="1-辅助变换">1. 辅助变换
+</h4><p>密钥扩展处理的基本单位是 <strong>“字” (Word)</strong>，即 4 个字节。</p>
+<ul>
+<li>
+<p><strong><code>rot_word(w)</code> (字循环左移)</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">rot_word</span><span class="p">(</span><span class="n">w</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># 输入 [a0, a1, a2, a3] -&gt; 输出 [a1, a2, a3, a0]</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">w</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span> <span class="o">+</span> <span class="n">w</span><span class="p">[:</span><span class="mi">1</span><span class="p">]</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>这很简单，就是把第一个字节移到最后去。</p>
+</li>
+<li>
+<p><strong><code>sub_word(w)</code> (字代换)</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">sub_word</span><span class="p">(</span><span class="n">w</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># 对字里的每个字节，都去查 S-Box 替换一下</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="p">[</span><span class="n">SBOX</span><span class="p">[</span><span class="n">b</span><span class="p">]</span> <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="n">w</span><span class="p">]</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>这和加密步骤里的 <code>SubBytes</code> 一样，引入非线性，防止攻击者通过线性关系推导密钥。</p>
+</li>
+</ul>
+<h4 id="2-核心逻辑key_expansion">2. 核心逻辑：<code>key_expansion</code>
+</h4><p>AES-128 需要 44 个字（$4 \times 11$ 轮 = 44 字）。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">key_expansion</span><span class="p">(</span><span class="n">key</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">bytes</span><span class="p">]:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">Nk</span> <span class="o">=</span> <span class="mi">4</span>   <span class="c1"># 原始密钥包含的字数 (16字节 / 4 = 4)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">Nb</span> <span class="o">=</span> <span class="mi">4</span>   <span class="c1"># 每轮需要的字数 (固定为 4)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">Nr</span> <span class="o">=</span> <span class="mi">10</span>  <span class="c1"># 轮数</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="c1"># w 是一个大列表，用来存这 44 个字</span>
+</span></span><span class="line"><span class="cl">    <span class="n">w</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">Nb</span> <span class="o">*</span> <span class="p">(</span><span class="n">Nr</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))]</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="c1"># 【第一步】前 4 个字 (w[0]~w[3]) 直接就是原始密钥</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">Nk</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="n">w</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">key</span><span class="p">[</span><span class="mi">4</span> <span class="o">*</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">0</span><span class="p">],</span> <span class="n">key</span><span class="p">[</span><span class="mi">4</span> <span class="o">*</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">],</span> <span class="n">key</span><span class="p">[</span><span class="mi">4</span> <span class="o">*</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">2</span><span class="p">],</span> <span class="n">key</span><span class="p">[</span><span class="mi">4</span> <span class="o">*</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">3</span><span class="p">]]</span>
+</span></span><span class="line"><span class="cl">        
+</span></span><span class="line"><span class="cl">    <span class="c1"># 【第二步】生成剩下的 40 个字 (w[4]~w[43])</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">Nk</span><span class="p">,</span> <span class="n">Nb</span> <span class="o">*</span> <span class="p">(</span><span class="n">Nr</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)):</span>
+</span></span><span class="line"><span class="cl">        <span class="n">temp</span> <span class="o">=</span> <span class="n">w</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">][:]</span>  <span class="c1"># 先取出前一个字</span>
+</span></span><span class="line"><span class="cl">        
+</span></span><span class="line"><span class="cl">        <span class="c1"># 每隔 4 个字 (i % Nk == 0)，就要进行一次“复杂变换”</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">i</span> <span class="o">%</span> <span class="n">Nk</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="c1"># 1. 循环左移 (RotWord)</span>
+</span></span><span class="line"><span class="cl">            <span class="c1"># 2. S盒代换 (SubWord)</span>
+</span></span><span class="line"><span class="cl">            <span class="n">temp</span> <span class="o">=</span> <span class="n">sub_word</span><span class="p">(</span><span class="n">rot_word</span><span class="p">(</span><span class="n">temp</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">            
+</span></span><span class="line"><span class="cl">            <span class="c1"># 3. 异或轮常数 (Rcon)</span>
+</span></span><span class="line"><span class="cl">            <span class="c1"># RCON[i // Nk] 获取当前是第几轮的常数</span>
+</span></span><span class="line"><span class="cl">            <span class="c1"># 只异或第一个字节 (temp[0])，因为 Rcon 的后三个字节都是 0</span>
+</span></span><span class="line"><span class="cl">            <span class="n">temp</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">^=</span> <span class="n">RCON</span><span class="p">[</span><span class="n">i</span> <span class="o">//</span> <span class="n">Nk</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">            
+</span></span><span class="line"><span class="cl">        <span class="c1"># 核心公式：W[i] = W[i-Nk] XOR temp</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># 也就是说：当前字 = (4个位置前的字) XOR (经过处理的前一个字)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">w</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span> <span class="p">(</span><span class="n">w</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="n">Nk</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">^</span> <span class="n">temp</span><span class="p">[</span><span class="n">j</span><span class="p">])</span> <span class="o">&amp;</span> <span class="mh">0xFF</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span> <span class="p">]</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><strong>逻辑图解</strong>：
+想象一个滑动窗口。</p>
+<ul>
+<li>大多数时候（普通列）：<code>新字 = 4个前的字 XOR 前一个字</code>。</li>
+<li>每逢 4 的倍数（第一列）：<code>新字 = 4个前的字 XOR g(前一个字)</code>。
+<ul>
+<li>函数 $g$ 就是：先左移，再代换，最后异或轮常数。</li>
+</ul>
+</li>
+</ul>
+<h4 id="3-轮常数-rcon">3. 轮常数 <code>RCON</code>
+</h4><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">RCON</span> <span class="o">=</span> <span class="p">[</span>
+</span></span><span class="line"><span class="cl">    <span class="mh">0x00</span><span class="p">,</span> <span class="mh">0x01</span><span class="p">,</span> <span class="mh">0x02</span><span class="p">,</span> <span class="mh">0x04</span><span class="p">,</span> <span class="mh">0x08</span><span class="p">,</span> <span class="mh">0x10</span><span class="p">,</span> <span class="mh">0x20</span><span class="p">,</span> <span class="mh">0x40</span><span class="p">,</span> <span class="mh">0x80</span><span class="p">,</span> <span class="mh">0x1B</span><span class="p">,</span> <span class="mh">0x36</span>
+</span></span><span class="line"><span class="cl"><span class="p">]</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><code>RCON</code> 是为了消除每一轮密钥生成的对称性。</p>
+<ul>
+<li>它只作用于每个字的<strong>第一个字节</strong>。</li>
+<li>它的值是 $x^{i-1}$ 在 $GF(2^8)$ 上的幂：
+<ul>
+<li>第1轮：$x^0 = 1$ (<code>0x01</code>)</li>
+<li>第2轮：$x^1 = 2$ (<code>0x02</code>)</li>
+<li>&hellip;</li>
+<li>第9轮：$x^8$ (溢出，变成 <code>0x1B</code>)</li>
+<li>第10轮：$x^9 = x \cdot x^8 = 2 \cdot 0x1B = 0x36$​</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2 id="9-附录运行结果详细日志">9. 附录：运行结果（详细日志）
 </h2><p>以下日志展示了对明文 <code>&quot;hello fanshanng&quot;</code> 使用密钥 <code>&quot;secret&quot;</code> 进行加密的完整内部状态。</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
