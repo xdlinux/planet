@@ -7,6 +7,8 @@
 	
 	loading="lazy"
 	
+		alt="DIE 分析结果"
+	
 	
 ></p>
 <p>分析结果显示程序是由 <strong>PyInstaller</strong> 打包的。</p>
@@ -74,23 +76,27 @@
 </span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Decoded stage 2 saved.&#39;</span><span class="p">)</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>提取出的代码部分如图所示：
-<img src="https://raw.githubusercontent.com/fanshanng/blog_picture/master/20251216224333.png"
+</div><p>提取出的代码部分如图所示：</p>
+<p><img src="https://raw.githubusercontent.com/fanshanng/blog_picture/master/20251216224333.png"
 	
 	
 	
 	loading="lazy"
+	
+		alt="提取代码"
 	
 	
 ></p>
 <h2 id="0x03-逻辑分析">0x03 逻辑分析
 </h2><p>提取出的 <code>elfie.py</code> 是一个基于 <strong>PySide (Qt)</strong> 的图形界面应用程序。</p>
-<p>运行效果：
-<img src="https://raw.githubusercontent.com/fanshanng/blog_picture/master/20251216224503.png"
+<p>运行效果：</p>
+<p><img src="https://raw.githubusercontent.com/fanshanng/blog_picture/master/20251216224503.png"
 	
 	
 	
 	loading="lazy"
+	
+		alt="运行效果"
 	
 	
 ></p>
@@ -168,4 +174,342 @@
 </span></span><span class="line"><span class="cl">                <span class="nb">setattr</span><span class="p">(</span><span class="n">QtGui</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">QtWidgets</span><span class="p">,</span> <span class="n">name</span><span class="p">))</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>此外，代码中还包含两段 Base64 编码的字符串，分别对应验证成功和失败时显示的图片，感兴趣可以解码还原。</p><hr />
+</div><p>此外，代码中还包含两段 Base64 编码的字符串，分别对应验证成功和失败时显示的图片，感兴趣可以解码还原。</p>
+<h1 id="2020-challenge-1-fidler">2020 Challenge 1: Fidler
+</h1><h2 id="挑战概述">挑战概述
+</h2><p>挑战以一个简单的点击游戏形式呈现，玩家需要通过点击猫咪赚取硬币，最终达到约1000亿硬币来赢得游戏并揭示flag。游戏使用Pygame编写，并提供了源代码（fidler.py）和可执行文件（fidler.exe）。</p>
+<h2 id="密码保护">密码保护
+</h2><p>游戏启动时会显示密码输入界面，标题为“This program is protected by Flare-On TURBO Nuke v55.7”。</p>
+<p><img src="https://raw.githubusercontent.com/fanshanng/blog_picture/master/20251225223715.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="密码界面"
+	
+	
+></p>
+<p>密码检查函数 <code>password_check(input)</code> 的逻辑如下：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">password_check</span><span class="p">(</span><span class="nb">input</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="n">altered_key</span> <span class="o">=</span> <span class="s1">&#39;hiptu&#39;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">key</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="nb">chr</span><span class="p">(</span><span class="nb">ord</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">altered_key</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="nb">input</span> <span class="o">==</span> <span class="n">key</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li><code>altered_key = 'hiptu'</code></li>
+<li>对每个字符的ASCII值减1：h(104)-1=g(103), i(105)-1=h(104), p(112)-1=o(111), t(116)-1=s(115), u(117)-1=t(116)</li>
+<li>因此，正确密码为 <code>'ghost'</code></li>
+</ul>
+<p>输入错误密码会显示“FBI警告”界面，包含幽默的威胁文本。</p>
+<p><img src="https://raw.githubusercontent.com/fanshanng/blog_picture/master/20251225223800.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="FBI 警告"
+	
+	
+></p>
+<h2 id="游戏机制">游戏机制
+</h2><ul>
+<li><strong>界面</strong>：640x480的窗口，显示猫咪图像（kittyelaine.png）、硬币计数、自动点击器计数。
+<img src="https://raw.githubusercontent.com/fanshanng/blog_picture/master/20251225223840.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="游戏界面"
+	
+	
+></li>
+<li><strong>玩法</strong>：
+<ul>
+<li>点击猫咪按钮，每次+1硬币。</li>
+<li>购买自动点击器（每10硬币一个），每秒自动增加相应数量的硬币。</li>
+</ul>
+</li>
+<li><strong>目标</strong>：赚取约1000亿硬币（100 Billion coins）。</li>
+</ul>
+<h2 id="胜利条件与flag解码">胜利条件与Flag解码
+</h2><p>在 <code>game_screen()</code> 函数中，检查胜利条件：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">target_amount</span> <span class="o">=</span> <span class="p">(</span><span class="mi">2</span><span class="o">**</span><span class="mi">36</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="mi">2</span><span class="o">**</span><span class="mi">35</span><span class="p">)</span>  <span class="c1"># 2^36 + 2^35 = 68719476736 + 34359738368 = 103079215104</span>
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="n">current_coins</span> <span class="o">&gt;</span> <span class="p">(</span><span class="n">target_amount</span> <span class="o">-</span> <span class="mi">2</span><span class="o">**</span><span class="mi">20</span><span class="p">):</span>  <span class="c1"># 2^20 = 1048576</span>
+</span></span><span class="line"><span class="cl">    <span class="k">while</span> <span class="n">current_coins</span> <span class="o">&gt;=</span> <span class="p">(</span><span class="n">target_amount</span> <span class="o">+</span> <span class="mi">2</span><span class="o">**</span><span class="mi">20</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="n">current_coins</span> <span class="o">-=</span> <span class="mi">2</span><span class="o">**</span><span class="mi">20</span>
+</span></span><span class="line"><span class="cl">    <span class="n">victory_screen</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">current_coins</span> <span class="o">/</span> <span class="mi">10</span><span class="o">**</span><span class="mi">8</span><span class="p">))</span>  <span class="c1"># token = current_coins // 100000000</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>当硬币超过 <code>target_amount - 2**20</code> 时触发胜利。</li>
+<li>实际胜利硬币数需 &gt;= <code>target_amount + 2**20</code> ≈ 103080263680。</li>
+<li>token = 103080263680 // 100000000 = 1030（向下取整）。</li>
+</ul>
+<p>Flag通过 <code>decode_flag(token)</code> 解码：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">decode_flag</span><span class="p">(</span><span class="n">frob</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="n">last_value</span> <span class="o">=</span> <span class="n">frob</span>  <span class="c1"># 初始为1030</span>
+</span></span><span class="line"><span class="cl">    <span class="n">encoded_flag</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1135</span><span class="p">,</span> <span class="mi">1038</span><span class="p">,</span> <span class="mi">1126</span><span class="p">,</span> <span class="mi">1028</span><span class="p">,</span> <span class="mi">1117</span><span class="p">,</span> <span class="mi">1071</span><span class="p">,</span> <span class="mi">1094</span><span class="p">,</span> <span class="mi">1077</span><span class="p">,</span> <span class="mi">1121</span><span class="p">,</span> <span class="mi">1087</span><span class="p">,</span> <span class="mi">1110</span><span class="p">,</span> <span class="mi">1092</span><span class="p">,</span> <span class="mi">1072</span><span class="p">,</span> <span class="mi">1095</span><span class="p">,</span> <span class="mi">1090</span><span class="p">,</span> <span class="mi">1027</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                    <span class="mi">1127</span><span class="p">,</span> <span class="mi">1040</span><span class="p">,</span> <span class="mi">1137</span><span class="p">,</span> <span class="mi">1030</span><span class="p">,</span> <span class="mi">1127</span><span class="p">,</span> <span class="mi">1099</span><span class="p">,</span> <span class="mi">1062</span><span class="p">,</span> <span class="mi">1101</span><span class="p">,</span> <span class="mi">1123</span><span class="p">,</span> <span class="mi">1027</span><span class="p">,</span> <span class="mi">1136</span><span class="p">,</span> <span class="mi">1054</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">    <span class="n">decoded_flag</span> <span class="o">=</span> <span class="p">[]</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">encoded_flag</span><span class="p">)):</span>
+</span></span><span class="line"><span class="cl">        <span class="n">c</span> <span class="o">=</span> <span class="n">encoded_flag</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">        <span class="n">val</span> <span class="o">=</span> <span class="p">(</span><span class="n">c</span> <span class="o">-</span> <span class="p">((</span><span class="n">i</span><span class="o">%</span><span class="mi">2</span><span class="p">)</span><span class="o">*</span><span class="mi">1</span> <span class="o">+</span> <span class="p">(</span><span class="n">i</span><span class="o">%</span><span class="mi">3</span><span class="p">)</span><span class="o">*</span><span class="mi">2</span><span class="p">))</span> <span class="o">^</span> <span class="n">last_value</span>
+</span></span><span class="line"><span class="cl">        <span class="n">decoded_flag</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">last_value</span> <span class="o">=</span> <span class="n">c</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="nb">chr</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">decoded_flag</span><span class="p">])</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>解码公式：<code>val = (c - ((i%2)*1 + (i%3)*2)) ^ last_value</code></li>
+<li>last_value 初始为frob（1030），每次循环后更新为c。</li>
+</ul>
+<p>运行解码脚本得到flag：<code>idle_with_kitty@flare-on.com</code></p>
+<h1 id="2020-challenge-2-garbage">2020 Challenge 2: garbage
+</h1><p>首先打开显示</p>
+<p><img src="https://raw.githubusercontent.com/fanshanng/blog_picture/master/20251225224149.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="初始界面"
+	
+	
+></p>
+<p>查DIE发现是upx壳，但是直接upx -d会报错</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cmd" data-lang="cmd"><span class="line"><span class="cl">fanshanng@Ubuntu:/mnt/d/Desktop/challenge/attachments_383/2 - garbage2/2 - garbage$ upx -d garbage.exe
+</span></span><span class="line"><span class="cl">                       Ultimate Packer for eXecutables
+</span></span><span class="line"><span class="cl">                          Copyright (C) 1996 - 2025
+</span></span><span class="line"><span class="cl">UPX 5.0.2       Markus Oberhumer, Laszlo Molnar <span class="p">&amp;</span> John Reiser   Jul 20th 2025
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        File size         Ratio      Format      Name
+</span></span><span class="line"><span class="cl">   --------------------   ------   -----------   -----------
+</span></span><span class="line"><span class="cl">upx: garbage.exe: OverlayException: invalid overlay size; file is possibly corrupt
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Unpacked 1 file: 0 ok, 1 error.
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><code>invalid overlay size; file is possibly corrupt</code>没找到是什么原因，于是去翻看<a class="link" href="https://github.com/upx/upx/blob/d7ba31cab8ce8d95d2c10e88d2ec787ac52005ef/src/packer.cpp#L574-L583"  target="_blank" rel="noopener"
+    >源代码</a></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="kt">void</span> <span class="n">Packer</span><span class="o">::</span><span class="n">checkOverlay</span><span class="p">(</span><span class="kt">unsigned</span> <span class="n">overlay</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">((</span><span class="kt">int</span><span class="p">)</span><span class="n">overlay</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="o">||</span> <span class="p">(</span><span class="n">off_t</span><span class="p">)</span><span class="n">overlay</span> <span class="o">&gt;</span> <span class="n">file_size</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="k">throw</span> <span class="n">OverlayException</span><span class="p">(</span><span class="s">&#34;invalid overlay size; file is possibly corrupt&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="n">overlay</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">info</span><span class="p">(</span><span class="s">&#34;Found overlay: %d bytes&#34;</span><span class="p">,</span> <span class="n">overlay</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="n">opt</span><span class="o">-&gt;</span><span class="n">overlay</span> <span class="o">==</span> <span class="n">opt</span><span class="o">-&gt;</span><span class="n">SKIP_OVERLAY</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="k">throw</span> <span class="n">OverlayException</span><span class="p">(</span><span class="s">&#34;file has overlay -- skipped; try &#39;--overlay=copy&#39;&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>会发现错误原因<code>overlay &gt; file_size</code>是文件头信息显示文件比实际大小大。这一点在 CFF Explorer 中也能看到：</p>
+<p><img src="https://raw.githubusercontent.com/fanshanng/blog_picture/master/20251225225035.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="CFF Explorer"
+	
+	
+></p>
+<p>文件中缺少 41472−40740 = 732 字节。
+于是我打开了010editor，在结尾补全了732个字节</p>
+<p><img src="https://raw.githubusercontent.com/fanshanng/blog_picture/master/20251225225246.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="补全字节"
+	
+	
+></p>
+<p>补全后就可以顺利脱壳了</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cmd" data-lang="cmd"><span class="line"><span class="cl">fanshanng@Ubuntu:/mnt/d/Desktop/challenge/attachments_383/2 - garbage2/2 - garbage$ upx -d garbage.exe
+</span></span><span class="line"><span class="cl">                       Ultimate Packer for eXecutables
+</span></span><span class="line"><span class="cl">                          Copyright (C) 1996 - 2025
+</span></span><span class="line"><span class="cl">UPX 5.0.2       Markus Oberhumer, Laszlo Molnar <span class="p">&amp;</span> John Reiser   Jul 20th 2025
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        File size         Ratio      Format      Name
+</span></span><span class="line"><span class="cl">   --------------------   ------   -----------   -----------
+</span></span><span class="line"><span class="cl">     80470 <span class="p">&lt;</span>-     42582   52.92%    win32/pe     garbage.exe
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Unpacked 1 file.
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>但是脱完壳后的程序还是不能直接运行</p>
+<p><img src="https://raw.githubusercontent.com/fanshanng/blog_picture/master/20251225225458.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="运行错误"
+	
+	
+></p>
+<p>这里应该是产生了<strong>无效的资源数据</strong>，在Resource Hacker可以清晰看到</p>
+<p><img src="https://raw.githubusercontent.com/fanshanng/blog_picture/master/20251225225624.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="无效资源"
+	
+	
+></p>
+<p>右键点击资源将其删除</p>
+<p><img src="https://raw.githubusercontent.com/fanshanng/blog_picture/master/20251225225716.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="删除资源"
+	
+	
+></p>
+<p>但是又会遇到另一个错误</p>
+<p><img src="https://raw.githubusercontent.com/fanshanng/blog_picture/master/20251225225852.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="导入错误"
+	
+	
+></p>
+<p>在 <strong>CFF Explorer</strong> 中查看最新文件的导入目录，可以看到模块名称缺失：</p>
+<p><img src="https://raw.githubusercontent.com/fanshanng/blog_picture/master/20251225230013.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="导入模块缺失"
+	
+	
+></p>
+<p>点击其中任何一个都会显示这些 DLL 中的函数：</p>
+<p><img src="https://raw.githubusercontent.com/fanshanng/blog_picture/master/20251225230120.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="DLL 函数"
+	
+	
+></p>
+<p>看到这些函数名，我就可以确定第一个函数是<code>kernel32.dll</code>，第二个函数是<code>shell32.dll</code>。</p>
+<p><img src="https://raw.githubusercontent.com/fanshanng/blog_picture/master/20251225230328.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="修复导入"
+	
+	
+></p>
+<p>然后就可以看到输出的flag了</p>
+<p><img src="https://raw.githubusercontent.com/fanshanng/blog_picture/master/20251225230412.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="输出flag"
+	
+	
+></p>
+<p>参考文献：</p>
+<ul>
+<li><a class="link" href="https://0xdf.gitlab.io/flare-on-2020/garbage"  target="_blank" rel="noopener"
+    >https://0xdf.gitlab.io/flare-on-2020/garbage</a></li>
+<li><a class="link" href="https://explained.re/posts/flare-on7-garbage/"  target="_blank" rel="noopener"
+    >https://explained.re/posts/flare-on7-garbage/</a></li>
+</ul><hr />
