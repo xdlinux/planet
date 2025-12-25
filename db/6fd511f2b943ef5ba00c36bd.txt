@@ -118,10 +118,36 @@
 <h2 id="3-标准化的签名体制">3. 标准化的签名体制
 </h2><h3 id="31-dsa-digital-signature-algorithm">3.1 DSA (Digital Signature Algorithm)
 </h3><p>NIST 标准（FIPS 186），1991年发布，是 ElGamal 签名的优化版本，核心改进是“运算在子群上进行”，减少签名长度和运算量。</p>
+<p><strong>参数与结构</strong>：</p>
 <ul>
-<li><strong>特点</strong>：运算在模 $p$ 的子群 (阶为 $q$) 上进行，签名长度较短。</li>
-<li><strong>签名</strong>：$r = (g^k \pmod p) \pmod q$, $s = k^{-1}(H(m) + xr) \pmod q$。</li>
-<li><strong>验证</strong>：$w = s^{-1} \pmod q$, $u_1 = H(m)w, u_2 = rw$，检查 $r \stackrel{?}{=} (g^{u_1}y^{u_2} \pmod p) \pmod q$。</li>
+<li>$p$：大素数，要求 $2^{L-1} &lt; p &lt; 2^L$，$L$ 早期标准为 $512 \leq L \leq 1024$ 且为 64 的倍数（如 512, 576, &hellip;, 1024），新标准支持更大 $L$（如 2048, 3072）。</li>
+<li>$q$：$p-1$ 的素因子，$q$ 是 160 位（或更高，取决于 $L$）的素数。</li>
+<li>$g$：生成元，$g = h^{(p-1)/q} \pmod p$，其中 $h$ 是 $[2, p-2]$ 内任取的整数，需保证 $g &gt; 1$。</li>
+<li>$h$：任意 $2 \leq h \leq p-2$，使 $g$ 满足阶为 $q$。</li>
+<li>私钥 $x \in [1, q-1]$，公钥 $y = g^x \pmod p$。</li>
+</ul>
+<p><strong>签名流程</strong>：</p>
+<ol>
+<li>选随机 $k \in [1, q-1]$。</li>
+<li>计算 $r = (g^k \pmod p) \pmod q$。</li>
+<li>计算 $s = k^{-1}(H(m) + x r) \pmod q$，$H$ 为安全哈希函数（如 SHA-1/SHA-2）。</li>
+<li>签名为 $(r, s)$。</li>
+</ol>
+<p><strong>验证流程</strong>：</p>
+<ol>
+<li>计算 $w = s^{-1} \pmod q$。</li>
+<li>计算 $u_1 = H(m) w \pmod q$，$u_2 = r w \pmod q$。</li>
+<li>计算 $v = ((g^{u_1} y^{u_2}) \pmod p) \pmod q$。</li>
+<li>验证 $v \stackrel{?}{=} r$。</li>
+</ol>
+<p><strong>补充说明</strong>：</p>
+<ul>
+<li>$p, q, g$ 的选取保证了安全性和运算效率。</li>
+<li>$g$ 的生成方式确保其在模 $p$ 的阶为 $q$ 的子群中。</li>
+<li>$k$ 必须随机且不可重用，否则私钥易泄露。</li>
+<li>$H$ 通常为 SHA-1（老标准）或 SHA-2（新标准）。</li>
+<li>早期标准 $L \in [512, 1024]$，新标准推荐 $L=2048, q=224/256$。</li>
+<li>DSA 设计初衷是避开当时的 RSA 专利，兼顾安全与性能。</li>
 </ul>
 <h3 id="32-ecdsa-elliptic-curve-dsa">3.2 ECDSA (Elliptic Curve DSA)
 </h3><p>DSA 在椭圆曲线群上的变体（FIPS 186-5），核心优势是“相同安全强度下，密钥和签名长度远短于 RSA/DSA”，是移动设备、区块链、TLS 等场景的主流方案。</p>
