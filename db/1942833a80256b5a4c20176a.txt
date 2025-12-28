@@ -1,0 +1,493 @@
+<img src="https://s.panlai.com/zb_users/upload/2025/04/20250427020155174569051569879.jpg-pcthumbs" alt="Featured image of post CISCN & CCB 2025 部分逆向方向 WP" /><h1 id="wasm-login">wasm-login
+</h1><blockquote>
+<p>某人本想在2025年12月第三个周末爆肝一个web安全登录demo，结果不仅搞到周一凌晨，他自己还忘了成功登录时的时间戳了，你能帮他找回来吗？</p>
+<p>提交格式为flag{时间戳正确时的check值}。是一个大括号内为一个32位长的小写十六进制字符串。</p>
+</blockquote>
+<p>附件：https://pan.baidu.com/share/init?surl=HbRVmm1xNPqsK4oytlt5zg  password：GAME</p>
+<p>打开附件后，发现核心文件为 <code>Wasm</code> 格式（<code>WebAssembly</code>），首先尝试使用<code>wabt</code>工具集进行逆向还原，分别生成了<code>wasm.wat</code>（文本格式 Wasm）和<code>wasm.c</code>（还原的 C 语言代码）。但还原后的<code>.c</code>文件存在大量未定义标识符，无法直接编译运行，且代码量庞大，逐行分析效率极低。</p>
+<p>随后注意到附件中存在<code>release.wasm.map</code>文件（Wasm 源码映射文件），该文件可直接转换为 JS 格式进行分析，通过映射文件快速定位到核心认证逻辑代码，大幅降低逆向成本。</p>
+<p>通过<code>release.wasm.map</code>转换后的 JS 代码，提取到核心登录认证函数<code>authenticate</code>，其完整流程如下：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">  1
+</span><span class="lnt">  2
+</span><span class="lnt">  3
+</span><span class="lnt">  4
+</span><span class="lnt">  5
+</span><span class="lnt">  6
+</span><span class="lnt">  7
+</span><span class="lnt">  8
+</span><span class="lnt">  9
+</span><span class="lnt"> 10
+</span><span class="lnt"> 11
+</span><span class="lnt"> 12
+</span><span class="lnt"> 13
+</span><span class="lnt"> 14
+</span><span class="lnt"> 15
+</span><span class="lnt"> 16
+</span><span class="lnt"> 17
+</span><span class="lnt"> 18
+</span><span class="lnt"> 19
+</span><span class="lnt"> 20
+</span><span class="lnt"> 21
+</span><span class="lnt"> 22
+</span><span class="lnt"> 23
+</span><span class="lnt"> 24
+</span><span class="lnt"> 25
+</span><span class="lnt"> 26
+</span><span class="lnt"> 27
+</span><span class="lnt"> 28
+</span><span class="lnt"> 29
+</span><span class="lnt"> 30
+</span><span class="lnt"> 31
+</span><span class="lnt"> 32
+</span><span class="lnt"> 33
+</span><span class="lnt"> 34
+</span><span class="lnt"> 35
+</span><span class="lnt"> 36
+</span><span class="lnt"> 37
+</span><span class="lnt"> 38
+</span><span class="lnt"> 39
+</span><span class="lnt"> 40
+</span><span class="lnt"> 41
+</span><span class="lnt"> 42
+</span><span class="lnt"> 43
+</span><span class="lnt"> 44
+</span><span class="lnt"> 45
+</span><span class="lnt"> 46
+</span><span class="lnt"> 47
+</span><span class="lnt"> 48
+</span><span class="lnt"> 49
+</span><span class="lnt"> 50
+</span><span class="lnt"> 51
+</span><span class="lnt"> 52
+</span><span class="lnt"> 53
+</span><span class="lnt"> 54
+</span><span class="lnt"> 55
+</span><span class="lnt"> 56
+</span><span class="lnt"> 57
+</span><span class="lnt"> 58
+</span><span class="lnt"> 59
+</span><span class="lnt"> 60
+</span><span class="lnt"> 61
+</span><span class="lnt"> 62
+</span><span class="lnt"> 63
+</span><span class="lnt"> 64
+</span><span class="lnt"> 65
+</span><span class="lnt"> 66
+</span><span class="lnt"> 67
+</span><span class="lnt"> 68
+</span><span class="lnt"> 69
+</span><span class="lnt"> 70
+</span><span class="lnt"> 71
+</span><span class="lnt"> 72
+</span><span class="lnt"> 73
+</span><span class="lnt"> 74
+</span><span class="lnt"> 75
+</span><span class="lnt"> 76
+</span><span class="lnt"> 77
+</span><span class="lnt"> 78
+</span><span class="lnt"> 79
+</span><span class="lnt"> 80
+</span><span class="lnt"> 81
+</span><span class="lnt"> 82
+</span><span class="lnt"> 83
+</span><span class="lnt"> 84
+</span><span class="lnt"> 85
+</span><span class="lnt"> 86
+</span><span class="lnt"> 87
+</span><span class="lnt"> 88
+</span><span class="lnt"> 89
+</span><span class="lnt"> 90
+</span><span class="lnt"> 91
+</span><span class="lnt"> 92
+</span><span class="lnt"> 93
+</span><span class="lnt"> 94
+</span><span class="lnt"> 95
+</span><span class="lnt"> 96
+</span><span class="lnt"> 97
+</span><span class="lnt"> 98
+</span><span class="lnt"> 99
+</span><span class="lnt">100
+</span><span class="lnt">101
+</span><span class="lnt">102
+</span><span class="lnt">103
+</span><span class="lnt">104
+</span><span class="lnt">105
+</span><span class="lnt">106
+</span><span class="lnt">107
+</span><span class="lnt">108
+</span><span class="lnt">109
+</span><span class="lnt">110
+</span><span class="lnt">111
+</span><span class="lnt">112
+</span><span class="lnt">113
+</span><span class="lnt">114
+</span><span class="lnt">115
+</span><span class="lnt">116
+</span><span class="lnt">117
+</span><span class="lnt">118
+</span><span class="lnt">119
+</span><span class="lnt">120
+</span><span class="lnt">121
+</span><span class="lnt">122
+</span><span class="lnt">123
+</span><span class="lnt">124
+</span><span class="lnt">125
+</span><span class="lnt">126
+</span><span class="lnt">127
+</span><span class="lnt">128
+</span><span class="lnt">129
+</span><span class="lnt">130
+</span><span class="lnt">131
+</span><span class="lnt">132
+</span><span class="lnt">133
+</span><span class="lnt">134
+</span><span class="lnt">135
+</span><span class="lnt">136
+</span><span class="lnt">137
+</span><span class="lnt">138
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="line"><span class="cl"><span class="cm">/**
+</span></span></span><span class="line"><span class="cl"><span class="cm"> * 执行完整的登录认证流程：
+</span></span></span><span class="line"><span class="cl"><span class="cm"> * 1. 对密码进行Base64编码
+</span></span></span><span class="line"><span class="cl"><span class="cm"> * 2. 获取当前时间戳
+</span></span></span><span class="line"><span class="cl"><span class="cm"> * 3. 构建JSON消息
+</span></span></span><span class="line"><span class="cl"><span class="cm"> * 4. 使用HMAC-SHA256进行签名
+</span></span></span><span class="line"><span class="cl"><span class="cm"> * 5. 返回最终的JSON字符串
+</span></span></span><span class="line"><span class="cl"><span class="cm">*/</span>
+</span></span><span class="line"><span class="cl"><span class="kr">export</span> <span class="kd">function</span> <span class="nx">authenticate</span><span class="p">(</span><span class="nx">username</span><span class="o">:</span> <span class="nx">string</span><span class="p">,</span> <span class="nx">password</span><span class="o">:</span> <span class="nx">string</span><span class="p">)</span><span class="o">:</span> <span class="nx">string</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="c1">// 1. Base64编码密码
+</span></span></span><span class="line"><span class="cl">  <span class="kr">const</span> <span class="nx">encodedPassword</span> <span class="o">=</span> <span class="nx">encode</span><span class="p">(</span><span class="nx">stringToUint8Array</span><span class="p">(</span><span class="nx">password</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl">  <span class="c1">//console.log(encodedPassword);
+</span></span></span><span class="line"><span class="cl">  <span class="c1">// 2. 获取当前时间戳（毫秒）
+</span></span></span><span class="line"><span class="cl">  <span class="kr">const</span> <span class="nx">timestamp</span> <span class="o">=</span> <span class="nb">Date</span><span class="p">.</span><span class="nx">now</span><span class="p">().</span><span class="nx">toString</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">  <span class="c1">//console.log(timestamp);
+</span></span></span><span class="line"><span class="cl">  <span class="c1">// 3. 构建原始JSON消息
+</span></span></span><span class="line"><span class="cl">  <span class="kr">const</span> <span class="nx">message</span> <span class="o">=</span> <span class="sb">`{\&#34;username\&#34;:\&#34;</span><span class="si">${</span><span class="nx">username</span><span class="si">}</span><span class="sb">\&#34;,\&#34;password\&#34;:\&#34;</span><span class="si">${</span><span class="nx">encodedPassword</span><span class="si">}</span><span class="sb">\&#34;}`</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="c1">//&#34;username&#34;:&#34;admin&#34;,&#34;password&#34;:&#34;&#34;}
+</span></span></span><span class="line"><span class="cl">  <span class="c1">//console.log(message);
+</span></span></span><span class="line"><span class="cl">  <span class="c1">// 4. 使用HMAC-SHA256签名
+</span></span></span><span class="line"><span class="cl">  <span class="kr">const</span> <span class="nx">signature</span> <span class="o">=</span> <span class="nx">signMessage</span><span class="p">(</span><span class="nx">message</span><span class="p">,</span> <span class="nx">timestamp</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="c1">//console.log(signature);
+</span></span></span><span class="line"><span class="cl">  <span class="c1">// 5. 构建最终的JSON消息
+</span></span></span><span class="line"><span class="cl">  <span class="kr">const</span> <span class="nx">finalMessage</span> <span class="o">=</span> <span class="sb">`{\&#34;username\&#34;:\&#34;</span><span class="si">${</span><span class="nx">username</span><span class="si">}</span><span class="sb">\&#34;,\&#34;password\&#34;:\&#34;</span><span class="si">${</span><span class="nx">encodedPassword</span><span class="si">}</span><span class="sb">\&#34;,\&#34;signature\&#34;:\&#34;</span><span class="si">${</span><span class="nx">signature</span><span class="si">}</span><span class="sb">\&#34;}`</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  
+</span></span><span class="line"><span class="cl">  <span class="k">return</span> <span class="nx">finalMessage</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="c1">//return \&#34;ok\&#34;;
+</span></span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">function</span> <span class="nx">stringToUint8Array</span><span class="p">(</span><span class="nx">str</span><span class="o">:</span> <span class="nx">string</span><span class="p">)</span><span class="o">:</span> <span class="nx">Uint8Array</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="kr">const</span> <span class="nx">arr</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Uint8Array</span><span class="p">(</span><span class="nx">str</span><span class="p">.</span><span class="nx">length</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">str</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="o">++</span><span class="nx">i</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">arr</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">=</span> <span class="nx">str</span><span class="p">.</span><span class="nx">charCodeAt</span><span class="p">(</span><span class="nx">i</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl">  <span class="k">return</span> <span class="nx">arr</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="err">@</span><span class="nx">inline</span>
+</span></span><span class="line"><span class="cl"><span class="kd">function</span> <span class="nx">fill</span><span class="p">(</span><span class="nx">ptr</span><span class="o">:</span> <span class="nx">usize</span><span class="p">,</span> <span class="nx">value</span><span class="o">:</span> <span class="nx">u8</span><span class="p">,</span> <span class="nx">length</span><span class="o">:</span> <span class="nx">u32</span><span class="p">)</span><span class="o">:</span> <span class="k">void</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="kr">const</span> <span class="nx">finalPtr</span> <span class="o">=</span> <span class="nx">ptr</span> <span class="o">+</span> <span class="nx">length</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="k">while</span><span class="p">(</span><span class="nx">ptr</span> <span class="o">&lt;</span> <span class="nx">finalPtr</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">store</span><span class="o">&lt;</span><span class="nx">u8</span><span class="o">&gt;</span><span class="p">(</span><span class="nx">ptr</span><span class="p">,</span> <span class="nx">value</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">ptr</span><span class="o">++</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="err">@</span><span class="nx">inline</span>
+</span></span><span class="line"><span class="cl"><span class="kd">function</span> <span class="nx">ArrayBufferToUint8Array</span><span class="p">(</span><span class="nx">input</span><span class="o">:</span> <span class="nx">ArrayBuffer</span><span class="p">)</span><span class="o">:</span> <span class="nx">Uint8Array</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="kr">const</span> <span class="nx">res</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Uint8Array</span><span class="p">(</span><span class="nx">input</span><span class="p">.</span><span class="nx">byteLength</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="kr">const</span> <span class="nx">inputPtr</span> <span class="o">=</span> <span class="nx">changetype</span><span class="o">&lt;</span><span class="nx">usize</span><span class="o">&gt;</span><span class="p">(</span><span class="nx">input</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">  <span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">input</span><span class="p">.</span><span class="nx">byteLength</span><span class="p">;</span> <span class="o">++</span><span class="nx">i</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">res</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">=</span> <span class="nx">load</span><span class="o">&lt;</span><span class="nx">u8</span><span class="o">&gt;</span><span class="p">(</span><span class="nx">inputPtr</span> <span class="o">+</span> <span class="nx">i</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl">  <span class="k">return</span> <span class="nx">res</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span> 
+</span></span><span class="line"><span class="cl"><span class="cm">/**
+</span></span></span><span class="line"><span class="cl"><span class="cm"> * 使用HMAC-SHA256算法对消息进行签名
+</span></span></span><span class="line"><span class="cl"><span class="cm"> * @param message 待签名的消息
+</span></span></span><span class="line"><span class="cl"><span class="cm"> * @param secret 密钥（时间戳）
+</span></span></span><span class="line"><span class="cl"><span class="cm"> * @returns 签名后的Base64字符串
+</span></span></span><span class="line"><span class="cl"><span class="cm">*/</span>
+</span></span><span class="line"><span class="cl"><span class="kd">function</span> <span class="nx">signMessage</span><span class="p">(</span><span class="nx">message</span><span class="o">:</span> <span class="nx">string</span><span class="p">,</span> <span class="nx">secret</span><span class="o">:</span> <span class="nx">string</span><span class="p">)</span><span class="o">:</span> <span class="nx">string</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="kr">const</span> <span class="nx">messageBytes</span> <span class="o">=</span> <span class="nb">String</span><span class="p">.</span><span class="nx">UTF8</span><span class="p">.</span><span class="nx">encode</span><span class="p">(</span><span class="nx">message</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="kr">const</span> <span class="nx">secretBytes</span> <span class="o">=</span> <span class="nb">String</span><span class="p">.</span><span class="nx">UTF8</span><span class="p">.</span><span class="nx">encode</span><span class="p">(</span><span class="nx">secret</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="kr">const</span> <span class="nx">signatureBytes</span> <span class="o">=</span> <span class="nx">hmacSHA256</span><span class="p">(</span><span class="nx">secretBytes</span><span class="p">,</span><span class="nx">messageBytes</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  
+</span></span><span class="line"><span class="cl">  <span class="k">return</span> <span class="nx">encode</span><span class="p">(</span><span class="nx">ArrayBufferToUint8Array</span><span class="p">(</span><span class="nx">signatureBytes</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>    
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// 实现 HMAC-SHA256 函数
+</span></span></span><span class="line"><span class="cl"><span class="kd">function</span> <span class="nx">hmacSHA256</span><span class="p">(</span><span class="nx">key</span><span class="o">:</span> <span class="nx">ArrayBuffer</span><span class="p">,</span> <span class="nx">message</span><span class="o">:</span> <span class="nx">ArrayBuffer</span><span class="p">)</span><span class="o">:</span> <span class="nx">ArrayBuffer</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="kr">const</span> <span class="nx">blockSize</span> <span class="o">=</span> <span class="mi">64</span><span class="p">;</span> <span class="c1">// SHA256 的块大小为 64 字节
+</span></span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="c1">// 填充密钥
+</span></span></span><span class="line"><span class="cl">  <span class="kr">const</span> <span class="nx">keyPtr</span> <span class="o">=</span> <span class="nx">changetype</span><span class="o">&lt;</span><span class="nx">usize</span><span class="o">&gt;</span><span class="p">(</span><span class="nx">key</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="kr">const</span> <span class="nx">paddedKey</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">ArrayBuffer</span><span class="p">(</span><span class="nx">blockSize</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="kr">const</span> <span class="nx">paddedKeyPtr</span> <span class="o">=</span> <span class="nx">changetype</span><span class="o">&lt;</span><span class="nx">usize</span><span class="o">&gt;</span><span class="p">(</span><span class="nx">paddedKey</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="k">if</span> <span class="p">(</span><span class="nx">key</span><span class="p">.</span><span class="nx">byteLength</span> <span class="o">&gt;</span> <span class="nx">blockSize</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// 如果密钥长度超过块大小，对密钥进行哈希处理
+</span></span></span><span class="line"><span class="cl">      <span class="nx">init</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">      <span class="nx">update</span><span class="p">(</span><span class="nx">keyPtr</span><span class="p">,</span> <span class="nx">key</span><span class="p">.</span><span class="nx">byteLength</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">      <span class="kr">final</span><span class="p">(</span><span class="nx">paddedKeyPtr</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span><span class="k">else</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// 填充密钥到块大小
+</span></span></span><span class="line"><span class="cl">      <span class="nx">memory</span><span class="p">.</span><span class="nx">copy</span><span class="p">(</span><span class="nx">paddedKeyPtr</span><span class="p">,</span> <span class="nx">keyPtr</span><span class="p">,</span> <span class="nx">key</span><span class="p">.</span><span class="nx">byteLength</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">      <span class="nx">fill</span><span class="p">(</span><span class="nx">paddedKeyPtr</span> <span class="o">+</span> <span class="nx">key</span><span class="p">.</span><span class="nx">byteLength</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="nx">blockSize</span> <span class="o">-</span> <span class="nx">key</span><span class="p">.</span><span class="nx">byteLength</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl">  <span class="c1">//console.log(ArrayBufferToUint8Array(paddedKey).toString());
+</span></span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="c1">// 计算 ipad 和 opad
+</span></span></span><span class="line"><span class="cl">  <span class="kr">const</span> <span class="nx">ipad</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">ArrayBuffer</span><span class="p">(</span><span class="nx">blockSize</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="kr">const</span> <span class="nx">opad</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">ArrayBuffer</span><span class="p">(</span><span class="nx">blockSize</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="kr">const</span> <span class="nx">ipadPtr</span> <span class="o">=</span> <span class="nx">changetype</span><span class="o">&lt;</span><span class="nx">usize</span><span class="o">&gt;</span><span class="p">(</span><span class="nx">ipad</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="kr">const</span> <span class="nx">opadPtr</span> <span class="o">=</span> <span class="nx">changetype</span><span class="o">&lt;</span><span class="nx">usize</span><span class="o">&gt;</span><span class="p">(</span><span class="nx">opad</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">blockSize</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="nx">store</span><span class="o">&lt;</span><span class="nx">u8</span><span class="o">&gt;</span><span class="p">(</span><span class="nx">ipadPtr</span> <span class="o">+</span> <span class="nx">i</span> <span class="p">,</span> <span class="nx">load</span><span class="o">&lt;</span><span class="nx">u8</span><span class="o">&gt;</span><span class="p">(</span><span class="nx">paddedKeyPtr</span> <span class="o">+</span> <span class="nx">i</span><span class="p">)</span> <span class="o">^</span> <span class="mh">0x76</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">      <span class="nx">store</span><span class="o">&lt;</span><span class="nx">u8</span><span class="o">&gt;</span><span class="p">(</span><span class="nx">opadPtr</span> <span class="o">+</span> <span class="nx">i</span> <span class="p">,</span> <span class="nx">load</span><span class="o">&lt;</span><span class="nx">u8</span><span class="o">&gt;</span><span class="p">(</span><span class="nx">paddedKeyPtr</span> <span class="o">+</span> <span class="nx">i</span><span class="p">)</span> <span class="o">^</span> <span class="mh">0x3C</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl">  <span class="c1">//console.log(ArrayBufferToUint8Array(ipad).toString());
+</span></span></span><span class="line"><span class="cl">  <span class="c1">//console.log(ArrayBufferToUint8Array(opad).toString());
+</span></span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="c1">// 计算 innerHash
+</span></span></span><span class="line"><span class="cl">  <span class="kr">const</span> <span class="nx">innerInput</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">ArrayBuffer</span><span class="p">(</span><span class="nx">ipad</span><span class="p">.</span><span class="nx">byteLength</span> <span class="o">+</span> <span class="nx">message</span><span class="p">.</span><span class="nx">byteLength</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="kr">const</span> <span class="nx">innerInputPtr</span> <span class="o">=</span> <span class="nx">changetype</span><span class="o">&lt;</span><span class="nx">usize</span><span class="o">&gt;</span><span class="p">(</span><span class="nx">innerInput</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="kr">const</span> <span class="nx">messagePtr</span> <span class="o">=</span> <span class="nx">changetype</span><span class="o">&lt;</span><span class="nx">usize</span><span class="o">&gt;</span><span class="p">(</span><span class="nx">message</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">memory</span><span class="p">.</span><span class="nx">copy</span><span class="p">(</span><span class="nx">innerInputPtr</span><span class="p">,</span> <span class="nx">ipadPtr</span><span class="p">,</span> <span class="nx">ipad</span><span class="p">.</span><span class="nx">byteLength</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">memory</span><span class="p">.</span><span class="nx">copy</span><span class="p">(</span><span class="nx">innerInputPtr</span> <span class="o">+</span> <span class="nx">ipad</span><span class="p">.</span><span class="nx">byteLength</span><span class="p">,</span> <span class="nx">messagePtr</span><span class="p">,</span> <span class="nx">message</span><span class="p">.</span><span class="nx">byteLength</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="c1">//console.log(ArrayBufferToUint8Array(innerInput).toString());
+</span></span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="nx">init</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">update</span><span class="p">(</span><span class="nx">innerInputPtr</span><span class="p">,</span><span class="nx">innerInput</span><span class="p">.</span><span class="nx">byteLength</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="c1">//update(ipadPtr,ipad.byteLength);
+</span></span></span><span class="line"><span class="cl">  <span class="c1">//update(messagePtr,message.byteLength);
+</span></span></span><span class="line"><span class="cl">  <span class="kr">const</span> <span class="nx">innerHash</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">ArrayBuffer</span><span class="p">(</span><span class="mi">32</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="kr">const</span> <span class="nx">innerHashPtr</span> <span class="o">=</span> <span class="nx">changetype</span><span class="o">&lt;</span><span class="nx">usize</span><span class="o">&gt;</span><span class="p">(</span><span class="nx">innerHash</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="kr">final</span><span class="p">(</span><span class="nx">innerHashPtr</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="c1">//console.log(ArrayBufferToUint8Array(innerHash).toString());
+</span></span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="c1">// 计算 outerHash
+</span></span></span><span class="line"><span class="cl">  <span class="kr">const</span> <span class="nx">outerInput</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">ArrayBuffer</span><span class="p">(</span><span class="nx">opad</span><span class="p">.</span><span class="nx">byteLength</span> <span class="o">+</span> <span class="nx">innerHash</span><span class="p">.</span><span class="nx">byteLength</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="kr">const</span> <span class="nx">outerInputPtr</span> <span class="o">=</span> <span class="nx">changetype</span><span class="o">&lt;</span><span class="nx">usize</span><span class="o">&gt;</span><span class="p">(</span><span class="nx">outerInput</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">memory</span><span class="p">.</span><span class="nx">copy</span><span class="p">(</span><span class="nx">outerInputPtr</span><span class="p">,</span> <span class="nx">innerHashPtr</span><span class="p">,</span> <span class="nx">innerHash</span><span class="p">.</span><span class="nx">byteLength</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">memory</span><span class="p">.</span><span class="nx">copy</span><span class="p">(</span><span class="nx">outerInputPtr</span> <span class="o">+</span> <span class="nx">innerHash</span><span class="p">.</span><span class="nx">byteLength</span><span class="p">,</span> <span class="nx">opadPtr</span><span class="p">,</span> <span class="nx">opad</span><span class="p">.</span><span class="nx">byteLength</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="c1">//console.log(ArrayBufferToUint8Array(outerInput).toString());
+</span></span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="nx">init</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">update</span><span class="p">(</span><span class="nx">outerInputPtr</span><span class="p">,</span><span class="nx">outerInput</span><span class="p">.</span><span class="nx">byteLength</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="c1">//update(opadPtr,opad.byteLength);
+</span></span></span><span class="line"><span class="cl">  <span class="c1">//update(innerHashPtr,innerHash.byteLength);
+</span></span></span><span class="line"><span class="cl">  <span class="kr">const</span> <span class="nx">outerHash</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">ArrayBuffer</span><span class="p">(</span><span class="mi">32</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="kr">const</span> <span class="nx">outerHashPtr</span> <span class="o">=</span> <span class="nx">changetype</span><span class="o">&lt;</span><span class="nx">usize</span><span class="o">&gt;</span><span class="p">(</span><span class="nx">outerHash</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="kr">final</span><span class="p">(</span><span class="nx">outerHashPtr</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="c1">//console.log(ArrayBufferToUint8Array(outerHash).toString());
+</span></span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="k">return</span> <span class="nx">outerHash</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>通过搜索<code>authenticate</code>相关调用，发现了<code>release.js</code>和<code>index.html</code>中的代码</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl">  <span class="kr">const</span> <span class="nx">memory</span> <span class="o">=</span> <span class="nx">exports</span><span class="p">.</span><span class="nx">memory</span> <span class="o">||</span> <span class="nx">imports</span><span class="p">.</span><span class="nx">env</span><span class="p">.</span><span class="nx">memory</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="kr">const</span> <span class="nx">adaptedExports</span> <span class="o">=</span> <span class="nb">Object</span><span class="p">.</span><span class="nx">setPrototypeOf</span><span class="p">({</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">authenticate</span><span class="p">(</span><span class="nx">username</span><span class="p">,</span> <span class="nx">password</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="c1">// assembly/index/authenticate(~lib/string/String, ~lib/string/String) =&gt; ~lib/string/String
+</span></span></span><span class="line"><span class="cl">      <span class="nx">username</span> <span class="o">=</span> <span class="nx">__retain</span><span class="p">(</span><span class="nx">__lowerString</span><span class="p">(</span><span class="nx">username</span><span class="p">)</span> <span class="o">||</span> <span class="nx">__notnull</span><span class="p">());</span>
+</span></span><span class="line"><span class="cl">      <span class="nx">password</span> <span class="o">=</span> <span class="nx">__lowerString</span><span class="p">(</span><span class="nx">password</span><span class="p">)</span> <span class="o">||</span> <span class="nx">__notnull</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">      <span class="k">try</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="nx">__liftString</span><span class="p">(</span><span class="nx">exports</span><span class="p">.</span><span class="nx">authenticate</span><span class="p">(</span><span class="nx">username</span><span class="p">,</span> <span class="nx">password</span><span class="p">)</span> <span class="o">&gt;&gt;&gt;</span> <span class="mi">0</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">      <span class="p">}</span> <span class="k">finally</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">__release</span><span class="p">(</span><span class="nx">username</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">      <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">},</span>
+</span></span><span class="line"><span class="cl">  <span class="p">},</span> <span class="nx">exports</span><span class="p">);</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>和</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="kr">import</span> <span class="p">{</span> <span class="nx">authenticate</span> <span class="p">}</span> <span class="nx">from</span> <span class="s2">&#34;./build/release.js&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">...</span>
+</span></span><span class="line"><span class="cl"><span class="c1">// 调用 WASM 中的 authenticate 函数
+</span></span></span><span class="line"><span class="cl"><span class="kr">const</span> <span class="nx">authResult</span> <span class="o">=</span> <span class="nx">authenticate</span><span class="p">(</span><span class="nx">username</span><span class="p">,</span> <span class="nx">password</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="kr">const</span> <span class="nx">authData</span> <span class="o">=</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nx">authResult</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">...</span>
+</span></span><span class="line"><span class="cl"><span class="nx">simulateServerRequest</span><span class="p">(</span><span class="nx">authData</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">              <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">response</span> <span class="p">=&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                <span class="k">if</span> <span class="p">(</span><span class="nx">response</span><span class="p">.</span><span class="nx">success</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                  <span class="c1">// 登录成功
+</span></span></span><span class="line"><span class="cl">                  <span class="nx">alert</span><span class="p">(</span><span class="s1">&#39;登录成功！&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">...</span>
+</span></span><span class="line"><span class="cl"><span class="kd">function</span> <span class="nx">simulateServerRequest</span><span class="p">(</span><span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">          <span class="k">return</span> <span class="k">new</span> <span class="nb">Promise</span><span class="p">(</span><span class="nx">resolve</span> <span class="p">=&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="c1">// 模拟网络延迟
+</span></span></span><span class="line"><span class="cl">            <span class="nx">setTimeout</span><span class="p">(()</span> <span class="p">=&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">              <span class="c1">// 实际应用中这里应该是真实的 API 请求
+</span></span></span><span class="line"><span class="cl">              <span class="c1">// 这里仅作演示，使用本地判断
+</span></span></span><span class="line"><span class="cl">              <span class="kr">const</span> <span class="nx">check</span> <span class="o">=</span> <span class="nx">CryptoJS</span><span class="p">.</span><span class="nx">MD5</span><span class="p">(</span><span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">data</span><span class="p">)).</span><span class="nx">toString</span><span class="p">(</span><span class="nx">CryptoJS</span><span class="p">.</span><span class="nx">enc</span><span class="p">.</span><span class="nx">Hex</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">              <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;Debug - Data sent to server:&#39;</span><span class="p">,</span> <span class="nx">data</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">              <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;Debug - Check value:&#39;</span><span class="p">,</span> <span class="nx">check</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">              <span class="k">if</span> <span class="p">(</span><span class="nx">check</span><span class="p">.</span><span class="nx">startsWith</span><span class="p">(</span><span class="s2">&#34;ccaf33e3512e31f3&#34;</span><span class="p">)){</span>
+</span></span><span class="line"><span class="cl">                <span class="nx">resolve</span><span class="p">({</span> <span class="nx">success</span><span class="o">:</span> <span class="kc">true</span> <span class="p">});</span>
+</span></span><span class="line"><span class="cl"><span class="p">....</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li><code>release.js</code>中对<code>authenticate</code>函数进行了 Wasm 内存管理封装，确保 JS 与 Wasm 之间的字符串参数正常传递；</li>
+<li><code>index.html</code>中明确了登录成功的判断条件：将<code>authenticate</code>返回的 JSON 数据标准化后（<code>JSON.stringify(JSON.parse(authResult))</code>），通过<code>CryptoJS.MD5</code>计算得到 32 位十六进制校验值<code>check</code>，该值必须以<code>ccaf33e3512e31f3</code>开头才判定为登录成功。</li>
+</ul>
+<p>这里需要注意原本<code>release.js</code>中的hmacSHA256等函数==并非标准的实现==，直接复刻易出现偏差，因此采用<strong>JS 脚本直接导入 Wasm 封装函数</strong>的方式，复用原始加密逻辑，仅对时间戳进行遍历爆破。（原本爆破时间很长，此处为得到时间戳后的缩短的时间范围）</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="kr">import</span> <span class="p">{</span> <span class="nx">createHash</span> <span class="p">}</span> <span class="nx">from</span> <span class="s2">&#34;node:crypto&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="kr">import</span> <span class="p">{</span> <span class="nx">authenticate</span> <span class="p">}</span> <span class="nx">from</span> <span class="s2">&#34;./build/release.js&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="kr">const</span> <span class="nx">P</span> <span class="o">=</span> <span class="s2">&#34;ccaf33e3512e31f3&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="kr">const</span> <span class="nx">u</span> <span class="o">=</span> <span class="s2">&#34;admin&#34;</span><span class="p">,</span> <span class="nx">p</span> <span class="o">=</span> <span class="s2">&#34;admin&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="kr">const</span> <span class="nx">T</span> <span class="o">=</span> <span class="p">(</span><span class="nx">x</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">(</span><span class="sr">/^\d+$/</span><span class="p">.</span><span class="nx">test</span><span class="p">(</span><span class="nx">x</span><span class="p">)</span> <span class="o">?</span> <span class="o">+</span><span class="nx">x</span> <span class="o">:</span> <span class="k">new</span> <span class="nb">Date</span><span class="p">(</span><span class="nx">x</span><span class="p">).</span><span class="nx">getTime</span><span class="p">());</span>
+</span></span><span class="line"><span class="cl"><span class="kr">const</span> <span class="nx">s</span> <span class="o">=</span> <span class="nx">T</span><span class="p">(</span><span class="nx">process</span><span class="p">.</span><span class="nx">argv</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">??</span> <span class="s2">&#34;2025-12-22T00:00:00+08:00&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="kr">const</span> <span class="nx">e</span> <span class="o">=</span> <span class="nx">T</span><span class="p">(</span><span class="nx">process</span><span class="p">.</span><span class="nx">argv</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">??</span> <span class="s2">&#34;2025-12-22T01:00:00+08:00&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">t</span> <span class="o">=</span> <span class="nx">s</span><span class="p">;</span> <span class="nx">t</span> <span class="o">&lt;=</span> <span class="nx">e</span><span class="p">;</span> <span class="nx">t</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="nb">Date</span><span class="p">.</span><span class="nx">now</span> <span class="o">=</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="nx">t</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="k">try</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kr">const</span> <span class="nx">authResult</span> <span class="o">=</span> <span class="nx">authenticate</span><span class="p">(</span><span class="nx">u</span><span class="p">,</span> <span class="nx">p</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="kr">const</span> <span class="nx">j</span> <span class="o">=</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">JSON</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nx">authResult</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl">    <span class="kr">const</span> <span class="nx">h</span> <span class="o">=</span> <span class="nx">createHash</span><span class="p">(</span><span class="s2">&#34;md5&#34;</span><span class="p">).</span><span class="nx">update</span><span class="p">(</span><span class="nx">j</span><span class="p">).</span><span class="nx">digest</span><span class="p">(</span><span class="s2">&#34;hex&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="nx">h</span><span class="p">.</span><span class="nx">startsWith</span><span class="p">(</span><span class="nx">P</span><span class="p">))</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="sb">`MD5哈希值：</span><span class="si">${</span><span class="nx">h</span><span class="si">}</span><span class="sb">`</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="sb">`正确时间戳（毫秒）：</span><span class="si">${</span><span class="nx">t</span><span class="si">}</span><span class="sb">`</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="sb">`标准化JSON：</span><span class="si">${</span><span class="nx">j</span><span class="si">}</span><span class="sb">`</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="sb">`对应日期：</span><span class="si">${</span><span class="k">new</span> <span class="nb">Date</span><span class="p">(</span><span class="nx">t</span><span class="p">).</span><span class="nx">toLocaleString</span><span class="p">()</span><span class="si">}</span><span class="sb">`</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">      <span class="k">break</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">continue</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img src="https://raw.githubusercontent.com/fanshanng/blog_picture/master/20251229004750.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="爆破结果"
+	
+	
+></p>
+<h1 id="babygame">babygame
+</h1><blockquote>
+<p>请找出隐藏的Flag。请注意只有收集了所有的金币，才能验证flag。</p>
+</blockquote>
+<p>附件：https://pan.baidu.com/share/init?surl=KI0XixtMhXvUFap3Ey4c6g password：GAME</p>
+<p>使用反编译工具<a class="link" href="https://github.com/GDRETools/gdsdecomp"  target="_blank" rel="noopener"
+    >GDRE_tools-v2.4.0-windows</a> 得到资源，可以查看代码</p>
+<p><img src="https://raw.githubusercontent.com/fanshanng/blog_picture/master/20251229005250.png"
+	
+	
+	
+	loading="lazy"
+	
+	
+></p>
+<p><img src="https://raw.githubusercontent.com/fanshanng/blog_picture/master/20251229005305.png"
+	
+	
+	
+	loading="lazy"
+	
+	
+></p>
+<p>如果没有注意到AB代换，通关游戏也能获得正确的密钥，然后直接使用cyberchef的aes解密就能得到flag
+<img src="https://raw.githubusercontent.com/fanshanng/blog_picture/master/20251229005336.png"
+	
+	
+	
+	loading="lazy"
+	
+	
+></p>
+<p>参考学习文献：</p>
+<p><a class="link" href="https://www.ruanyifeng.com/blog/2013/01/javascript_source_map.html"  target="_blank" rel="noopener"
+    >JavaScript Source Map 详解</a></p>
+<p><a class="link" href="https://xz.aliyun.com/news/13187"  target="_blank" rel="noopener"
+    >Webassembly逆向手法</a></p>
+<p><a class="link" href="https://wsxk.github.io/wasm_re/"  target="_blank" rel="noopener"
+    >wasm逆向</a></p>
+<p><a class="link" href="https://developer.chrome.com/docs/devtools/wasm?hl=zh-cn"  target="_blank" rel="noopener"
+    >调试 C/C++ WebAssembly | Chrome DevTools | Chrome for Developers</a></p>
+<p><a class="link" href="https://github.com/WebAssembly/wabt"  target="_blank" rel="noopener"
+    >https://github.com/WebAssembly/wabt</a></p><hr />
