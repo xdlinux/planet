@@ -1,0 +1,1056 @@
+<img src="https://s.panlai.com/upload/20241030113202173025912270767.jpg-arthumbs" alt="Featured image of post 大数据安全与隐私保护 (DSPP) 复习笔记" /><h1 id="大数据安全与隐私保护复习笔记">大数据安全与隐私保护复习笔记
+</h1><blockquote>
+<p>本文档基于《大数据安全与隐私保护》教材及老师高亮部分整理而成，序号仅为排版并非章节号，仅为个人学习备忘，不保证覆盖所有考点。</p>
+</blockquote>
+<hr>
+<h2 id="第一章-大数据安全的概念">第一章 大数据安全的概念
+</h2><h3 id="11-大数据安全的内涵">1.1 大数据安全的内涵
+</h3><ul>
+<li><strong>大数据服务中的安全问题</strong>：
+<ul>
+<li>系统架构与认证授权问题。</li>
+<li>利用系统漏洞攻击大数据服务系统。</li>
+<li>算法缺陷或训练数据管理漏洞，注入攻击数据。</li>
+<li>滥用合法功能发起攻击。</li>
+<li>滥用合法功能获取隐私信息。</li>
+</ul>
+</li>
+<li><strong>大数据技术在安全领域的应用</strong>：
+<ul>
+<li>用流量特征识别攻击流量；分析社交数据（微博/微信）预测突发事件并动态决策。</li>
+<li>引导网络舆论的走向以防止事态恶化。</li>
+<li>攻击者也会利用大数据与 AI（如破解验证码、关联分析获取隐私）。</li>
+</ul>
+</li>
+</ul>
+<h3 id="12大数据的五个-v-特征">1.2大数据的五个 V 特征
+</h3><ul>
+<li><strong>Volume (体量大)</strong>: 数据规模超出传统数据库的处理能力。</li>
+<li><strong>Velocity (速度快)</strong>: 数据产生和处理的时效性要求高（如流数据）。</li>
+<li><strong>Variety (类型多)</strong>: 包含结构化、半结构化（XML/JSON）、非结构化（视频/图片）数据。</li>
+<li><strong>Veracity (真实性/质量)</strong>: 数据质量参差不齐，存在噪声、伪造或异常数据。</li>
+<li><strong>Value (价值)</strong>: 价值密度低，需要通过分析挖掘其潜在价值。</li>
+</ul>
+<h3 id="13-隐私权的起源与定义">1.3 隐私权的起源与定义
+</h3><ul>
+<li><strong>起源</strong>: 1890年，布兰代斯（Brandeis）与沃伦（Warren）在《哈佛法律评论》发表《隐私权》（The Right to Privacy）。</li>
+<li><strong>定义</strong>: &ldquo;不受别人干扰的权利&rdquo; (The right to be let alone)。</li>
+<li><strong>演变</strong>: 从最初关注物理空间（住宅）的隐私，发展到关注个人信息和数据的隐私。</li>
+</ul>
+<h3 id="14-隐私与法律简史">1.4 隐私与法律（简史）
+</h3><ul>
+<li>1965：美国“中央数据银行”计划。</li>
+<li>1974：水门事件后，《隐私法》（Privacy Act of 1974）出台。</li>
+<li>2002：美国在《2002 年国土安全法》重提中央数据银行计划，命名为“万维信息触角计划”（Total Information Awareness, TIA）。</li>
+<li>2013：斯诺登事件曝光“棱镜计划”。</li>
+<li>2018-05-25：欧盟《通用数据保护条例》（GDPR）全面实施。</li>
+<li>2018-05-01：中国《信息安全技术 个人信息安全规范》开始实施（国家推荐性标准）。</li>
+</ul>
+<h3 id="本章小结">本章小结
+</h3><ul>
+<li>大数据安全涵盖两面：服务中的安全问题与大数据技术在安全中的应用。</li>
+<li>隐私与技术进步紧密相关，法律制度（如 GDPR）重塑数据隐私保护的框架与实践。</li>
+</ul>
+<hr>
+<h2 id="第二章-基础知识">第二章 基础知识
+</h2><h3 id="21-密码算法">2.1 密码算法
+</h3><h4 id="211-对称加密-symmetric-cryptography">2.1.1 对称加密 (Symmetric Cryptography)
+</h4><ul>
+<li><strong>基本原理</strong>：加密和解密使用同一个密钥。</li>
+<li><strong>设计技巧</strong>：
+<ul>
+<li><strong>代换 (Substitution)</strong>：字符替换（如 a-&gt;d）。</li>
+<li><strong>置换 (Permutation)</strong>：位置打乱（如 dog-&gt;ogd）。</li>
+</ul>
+</li>
+<li><strong>流密码 (Stream Cipher)</strong>：利用密钥生成伪随机比特流，与明文进行异或运算。</li>
+<li><strong>分组密码 (Block Cipher)</strong>：
+<ul>
+<li><strong>DES</strong>：64位分组，56位密钥（8 位奇偶校验），16 轮迭代，含初始置换、S 盒替换、P 盒置换等步骤，安全性较低。</li>
+<li><strong>三重 DES</strong>：使用 2-3 个密钥三重调用 DES，兼容单 DES；</li>
+<li><strong>AES</strong>：128位分组，支持128/192/256位密钥，安全性高，广泛使用。</li>
+<li><strong>IDEA</strong>：64 位明文分组，128 位密钥。</li>
+<li><strong>模式</strong>：ECB（电码本）、CBC（密码分组链接）、OFB（输出反馈）、CFB（密文反馈）、CTR（计数器）。</li>
+</ul>
+</li>
+</ul>
+<h4 id="212-公钥加密-public-key-cryptography">2.1.2 公钥加密 (Public Key Cryptography)
+</h4><ul>
+<li><strong>核心特点</strong>：非对称，公钥公开，私钥保密。解决密钥分发问题。</li>
+<li>用接收方公钥安全传递会话（对称）密钥：</li>
+</ul>
+<p><img src="https://raw.githubusercontent.com/fanshanng/blog_picture/master/20251223203306.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="用公钥密码传递会话(对称)密钥"
+	
+	
+></p>
+<ul>
+<li>
+<p><strong>RSA 体制</strong></p>
+<ul>
+<li>
+<p>安全性：基于大整数因子分解难题（多项式时间内无法完成）；</p>
+</li>
+<li>
+<p>数学基础：欧拉函数、欧拉定理、费马小定理；</p>
+</li>
+<li>
+<p>欧拉函数性质：素数 $p$ 的 $\varphi(p) = p-1$；若 $n = p \times q$（$p, q$ 为不同素数），则 $\varphi(n) = (p-1)(q-1)$；</p>
+</li>
+<li>
+<p>欧拉定理：若 $a$ 与 $n$ 互素，则 $a^{\varphi(n)} \equiv 1 \pmod{n}$；费马定理是其特例（$n$ 为素数时）。</p>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>复合式密码系统</strong>：<strong>对称密码</strong>（高效加密数据）+ <strong>公钥密码</strong>（加密对称密钥），平衡安全性与效率，应用于电子商务等场景。</p>
+</li>
+<li>
+<p>公钥密码体制还为<strong>数字签名</strong>提供了有效方法，一种完善的签名应满足以下三个条件:</p>
+<ol>
+<li>签名者事后<strong>不能抵赖</strong>自己的签名;</li>
+<li>任何其他人不能伪造签名;</li>
+<li>如果当事的双方关于签名的真伪发生争执， 能够在公正的仲裁者面前通过<strong>验证</strong>确认其真伪。</li>
+</ol>
+<ul>
+<li>
+<p>包含<strong>签名算法</strong>（用私钥对消息或其哈希签名）与<strong>验证算法</strong>（用公钥验证）。</p>
+<p><img src="https://raw.githubusercontent.com/fanshanng/blog_picture/master/20251223203351.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="签名算法"
+	
+	
+></p>
+<p><img src="https://raw.githubusercontent.com/fanshanng/blog_picture/master/20251223203414.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="验证算法"
+	
+	
+></p>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="22-消息完整性与-mac">2.2 消息完整性与 MAC
+</h3><ul>
+<li>设消息为 M，可用分组密码的 CBC 模式构造<strong>消息验证码</strong>（CBC-MAC）。</li>
+<li>核心思想：对消息任一分组的修改会影响最终密文分组，从而改变 MAC 值；攻击者缺乏密钥 K，无法为篡改后的 M&rsquo; 计算匹配的 MAC&rsquo;。</li>
+</ul>
+<h3 id="23-网络安全协议">2.3 网络安全协议
+</h3><ul>
+<li>
+<p><strong>IPSec</strong>（<strong>端到端安全</strong>）：IPSec(Internet协议安全)是一个工业标准网络安全协议,为IP网络通信提供透明的安全服务，可使TCP/IP通信免遭窃听和篡改，可以有效抵御网络攻击，同时保持易用性。</p>
+<ul>
+<li>IPSec有两个基本目标:①保护 IP 数据包安全；②抵御网络攻击。</li>
+<li>IPSec提供认证与加密，提升透明安全性。</li>
+</ul>
+</li>
+<li>
+<p><strong>TLS/SSL</strong>（<strong>传输层安全</strong>）：安全套接层(SSL,Secure Socket Layer)协议是Web浏览器和Web服务器之间安全交换信息的网络协议。</p>
+<ul>
+<li>SSL提供了两个基本安全服务:认证与保密。</li>
+<li>SSL提供了Web浏览器与Web服务器之间的逻辑安全管道。</li>
+</ul>
+</li>
+<li>
+<p><strong>DTLS (数据报传输层加密)</strong>：TLS 的扩展，支持 UDP 协议，适用于延迟敏感的数据包传输（如实时视频、网络电话）。</p>
+</li>
+</ul>
+<h3 id="24-身份认证">2.4 身份认证
+</h3><p>定义：确认实体身份真伪，基于 “<strong>用户知道什么</strong>（口令、PIN）、<strong>拥有什么</strong>（令牌、USB key）、<strong>是什么</strong>（生物特征）” 三类方法；</p>
+<p>身份认证的常用方法</p>
+<ul>
+<li>口令（现代实现避免明文传输与存储，加入加密或派生保护）。</li>
+<li>认证令牌（引入随机性，广泛用于高安全场景）。</li>
+<li>基于证书与 PKI（可结合智能卡在卡内完成加密运算）。</li>
+<li>生物特征（图像、指纹、声音等；提升体验，免去记忆或携带）。</li>
+</ul>
+<h3 id="25-单点登录sso与密钥分发">2.5 单点登录（SSO）与密钥分发
+</h3><p>核心思想：一次登录可访问多个相互信任的系统，理论基础为 Needham-Schroeder 协议（对称密钥版与公钥版）；</p>
+<ul>
+<li>对称密钥版为 Kerberos 的基础（建立会话密钥以保护后续通信）。</li>
+<li>公钥版提供相互身份验证（原始形式不安全，后续有改进）。</li>
+</ul>
+<h3 id="26-kerberos-协议">2.6 Kerberos 协议
+</h3><ol>
+<li>基础：对称密码体制，引入 <strong>KDC</strong>（密钥分发中心），含 <strong>AS</strong>（认证服务器）和 <strong>TGS</strong>（票据授权服务器）；</li>
+<li>核心流程：用户向 KDC 申请会话密钥，KDC 生成含有效期的密钥与票据，通过时间戳防止重放攻击；</li>
+<li>优势：结合授权机制、票据有有效期、支持双向认证与域间认证。</li>
+</ol>
+<h3 id="27-访问控制">2.7 访问控制
+</h3><p>访问控制可以定义为<strong>主体</strong>依据某些<strong>控制策略</strong>或权限对<strong>客体本身或是其资源</strong>进行授权访问。</p>
+<ul>
+<li>主体（访问发起者）、客体（被访问资源）、访问控制策略（访问规则集）</li>
+</ul>
+<p><img src="https://raw.githubusercontent.com/fanshanng/blog_picture/master/20251230201745.png"
+	
+	
+	
+	loading="lazy"
+	
+	
+></p>
+<ul>
+<li><strong>BLP 模型 (Bell-LaPadula)</strong>: 侧重<strong>机密性</strong>。
+<ul>
+<li>
+<p><em>规则</em>: <strong>No Read Up</strong> (不可读高密级), <strong>No Write Down</strong> (不可写低密级)。</p>
+</li>
+<li>
+<p>BLP“下读”模型解析图:<img src="https://raw.githubusercontent.com/fanshanng/blog_picture/master/20251223204218.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="BLP“下读”模型解析图"
+	
+	
+></p>
+</li>
+<li>
+<p>BLP&quot;上写&quot;模型解析图:<img src="https://raw.githubusercontent.com/fanshanng/blog_picture/master/20251223204319.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="BLP&#34;上写&#34;模型解析图"
+	
+	
+></p>
+</li>
+</ul>
+</li>
+<li><strong>Biba 模型</strong>: 侧重<strong>完整性</strong>。
+<ul>
+<li><em>规则</em>: <strong>No Read Down</strong> (不可读低完整性), <strong>No Write Up</strong> (不可写高完整性)。</li>
+<li>Biba 安全模型解析图:</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://raw.githubusercontent.com/fanshanng/blog_picture/master/20251223204453.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="Biba 安全模型解析图"
+	
+	
+></p>
+<h3 id="28-开放授权oauth">2.8 开放授权（OAuth）
+</h3><ol>
+<li>核心作用：用户将资源授权给第三方应用，不泄露密码，支持细粒度权限控制；</li>
+<li>实现方式：OAuth 协议（在线授权，适用于 SNS 服务）、IAM 服务（预先授权，适用于云计算）；</li>
+<li>参与实体：RO（资源所有者）、Client（第三方应用）、AS（授权服务器）、RS（资源服务器）；</li>
+<li>OAuth 2.0 四种流程：授权码授权（服务端 WEB 应用）、隐式授权（客户端 WEB 应用）、用户密码凭证（高信任场景）、客户端凭证（无需用户登录）。</li>
+</ol>
+<h3 id="本章小结-1">本章小结
+</h3><ul>
+<li>回顾了密码学基础、常用算法与操作模式，以及 MAC、数字签名等完整性与认证机制。</li>
+<li>IPSec/TLS/DTLS 提供网络层与传输层安全保障；SSO 与访问控制（BLP/Biba）奠定系统安全基石。</li>
+</ul>
+<hr>
+<h2 id="第三章-大数据服务架构及其安全">第三章 大数据服务架构及其安全
+</h2><h3 id="31-soa-架构">3.1 SOA 架构
+</h3><ol>
+<li>定义：<strong>面向服务架构</strong>（Service-Oriented Architecture），1996 年由 Gartner Group 提出，是分布式计算模式与组件模型，将应用拆分为动态可重用的服务。</li>
+<li>核心优势：<strong>代码重用、松耦合、平台独立、语言无关</strong>。</li>
+<li>组件模型：通过定义良好的中立接口（独立于硬件、操作系统、编程语言），将不同功能单元（服务）关联，实现统一交互。</li>
+<li>核心角色与操作：
+<ul>
+<li>角色：<strong>服务提供者</strong>（发布服务、响应请求）、<strong>服务注册中心</strong>（注册、分类、搜索服务）、<strong>服务使用者</strong>（查找、调用服务）；</li>
+<li>操作：<strong>发布</strong>（公开服务描述）、<strong>查找</strong>（查询满足需求的服务）、<strong>绑定</strong>（根据服务描述调用服务）。</li>
+</ul>
+</li>
+<li>实现方式：Web Services（基于 SOAP 协议）、RESTful 风格服务（基于 HTTP 协议）。</li>
+</ol>
+<h3 id="32-web-services-技术体系">3.2 Web Services 技术体系
+</h3><ul>
+<li>
+<p><strong>核心规范</strong>：</p>
+<ul>
+<li>传输规范：HTTP；</li>
+<li>消息规范（SOAP）：简单对象访问协议，<strong>基于 XML+HTTP</strong>，核心组成包括必须的 Envelope（根元素）、可选的 Headers、必须的 Body（消息负载 / 错误信息）；</li>
+<li>描述规范（WSDL）：Web 服务描述语言，通过 XML 说明服务地址与调用方法；</li>
+<li>发布与发现规范（UDDI）：统一描述、发现和集成，用于服务注册与发现；</li>
+</ul>
+</li>
+<li>
+<p><strong>扩展规范</strong>：</p>
+<ul>
+<li>消息扩展（寻址、可靠性、安全、事务等质量保障）。</li>
+<li>服务组合（BPEL4WS、BPML）：以编排组合基本服务为业务流程的复合服务。</li>
+<li>服务协作（WS-CDL, Web Services Choreography Description Language）：定义服务之间协作时的消息通信规则与顺序。</li>
+</ul>
+</li>
+<li>
+<p>特点</p>
+<ul>
+<li>
+<p><strong>松耦合交互方式</strong>，支持分布式<strong>部署、组合和使用粗粒度</strong>应用组件；</p>
+</li>
+<li>
+<p>服务层为 <strong>SOA 基础</strong>，可直接被应用调用，<strong>减少人为依赖性</strong>；</p>
+</li>
+<li>
+<p>核心特性：粗粒度、松耦合，通过精确定义的适配器通讯，不涉及底层编程细节。</p>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="33-web-services-安全ws-security">3.3 Web Services 安全（WS-Security）
+</h3><ul>
+<li>由 OASIS 等推动的标准，为 SOAP 通信补强：
+<ul>
+<li><strong>消息机密性</strong>：在请求/响应过程中加密重要信息，防止窃听与篡改。</li>
+<li><strong>客户/服务身份</strong>：核验 SOAP 请求来源与实体身份。</li>
+</ul>
+</li>
+<li>关键技术：提供<strong>消息机密性（XML Encryption）</strong>、<strong>完整性（XML Signature）</strong>（合称 WS-Security 的核心实现方式）。</li>
+</ul>
+<h3 id="34-rest">3.4 REST
+</h3><p>基于 SOAP和 WSDL的Web Services 架构属于<strong>复杂的、重量级的协议</strong>。随着 Web2.0的兴起，<strong>表述性状态转移</strong>(REST)逐步成为一个流行的架构风格。REST是一种轻量级的SOA 架构实现风格,可以完全通过 HTTP协议实现,并且能够利用缓存Cache来提高响应速度，在<strong>性能、效率和易用性</strong>上都优于基于 SOAP和 WSDL的Web Services 架构。</p>
+<p>核心思想：<strong>REST = Representation</strong>（资源表现形式，如 JSON、XML、JPEG）<strong>+ State</strong>（状态）<strong>+ Transfer</strong>（转移），即资源通过网络以某种表现形式完成状态转移；</p>
+<ul>
+<li>轻量级 SOA 实现，完全基于 HTTP；<strong>面向“资源”（Web Services面向“功能”）</strong>，通过 URL 访问，支持缓存，性能与易用性优于基于 SOAP/WSDL 的重量级方案。</li>
+<li>源自 Roy Fielding（2000）博士论文：良好设计的网络应用如状态机，用户选择链接导致状态（页面）转变。</li>
+<li><strong>RESTful 架构约束</strong>：
+<ul>
+<li>每一个 URI 代表一种资源；</li>
+<li>客户端与服务器传递资源的表现层；</li>
+<li>通过统一接口（URI）暴露资源，支持跨平台交互。</li>
+</ul>
+</li>
+</ul>
+<h3 id="35-微服务microservices">3.5 微服务（Microservices）
+</h3><ul>
+<li>将单体应用按功能、数据分解为多个边界明确、可重组的小规模子服务，服务间通过轻量级通信（如 HTTP/RESTful API）协作，<strong>各自拥有独立数据库，支持独立部署、技术异构</strong>（不同语言 / 框架开发），适配移动优先与 DevOps 流程。</li>
+<li>典型实践：亚马逊的主页由大量微服务协同构成，小型团队负责构建与运维；提升可扩展性与性能。</li>
+</ul>
+<h3 id="36-微服务中的身份认证与访问控制">3.6 微服务中的身份认证与访问控制
+</h3><ul>
+<li>
+<p><strong>API 网关模式</strong>：对外统一入口（<strong>负责认证、流控、监控</strong>），微服务在网关内暴露对应 API。</p>
+</li>
+<li>
+<p>最常见API安全保护模式：<strong>OAuth 2.0</strong>（访问授权框架）。</p>
+</li>
+<li>
+<p>参与实体：</p>
+<ul>
+<li><strong>RO</strong>（Resource Owner）：资源拥有者，有授权能力。</li>
+<li><strong>RS</strong>（Resource Server）：资源服务器，存储并提供资源访问。</li>
+<li><strong>Client</strong>（客户端/第三方应用）：代表 RO 访问资源。</li>
+<li><strong>AS</strong>（Authorization Server）：授权服务器，签发访问令牌。</li>
+</ul>
+</li>
+<li>
+<p><strong>基本流程（如下图所示）</strong>：</p>
+<ol>
+<li>客户端请求 RO 的授权（包含资源路径、操作类型、客户端身份等）。</li>
+<li>RO 批准授权，向客户端返回“授权证据”（通常由 AS 提供审批界面）。</li>
+<li>客户端向 AS 换取“访问令牌”（提交授权证据与客户端凭证）。</li>
+<li>AS 验证通过后签发访问令牌（如 bearer 类型）。</li>
+<li>客户端携令牌访问 RS 资源（令牌有效期内可重复使用）。</li>
+<li>RS 验证令牌有效性（真伪、权限、有效期）后提供服务。</li>
+</ol>
+<p><img src="https://raw.githubusercontent.com/fanshanng/blog_picture/master/20251223205550.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="OAuth 协议"
+	
+	
+></p>
+</li>
+</ul>
+<h3 id="本章小结-2">本章小结
+</h3><ul>
+<li>SOA 是现代主导架构，Web Services（SOAP）与 REST（JSON）均广泛应用</li>
+<li>架构演进：SOA (重型/SOAP) $\rightarrow$ REST (轻量) $\rightarrow$ 微服务 (细粒度)。</li>
+<li>微服务降低维护与基础设施成本，但安全挑战显著；需从通信安全、身份认证与访问控制三方面构建防护。</li>
+</ul>
+<hr>
+<h2 id="第四章-可信执行环境">第四章 可信执行环境
+</h2><h3 id="41-可信执行环境-tee">4.1 可信执行环境 (TEE)
+</h3><ul>
+<li>
+<p><strong>定义</strong>：由 GlobalPlatform (GP) 提出，是主处理器上的一个安全区域，保证代码和数据的安全性、机密性及完整性。</p>
+</li>
+<li>
+<p><strong>主要特征</strong>：与<strong>移动 OS 并行存在</strong>，<strong>运行可信应用（TA）</strong>，可访问主处理器和内存全部功能，通过<strong>硬件隔离</strong>免受其他应用影响。</p>
+</li>
+<li>
+<p><strong>核心目标</strong>：<strong>平台身份证明</strong>（远程证明）、<strong>数据安全存储</strong>（存储隔离、密封存储）、<strong>安全 I/O</strong>、<strong>系统资源完整性保障</strong>；</p>
+</li>
+<li>
+<p><strong>启动过程</strong>：</p>
+<p><img src="https://raw.githubusercontent.com/fanshanng/blog_picture/master/20251230205221.png"
+	
+	
+	
+	loading="lazy"
+	
+	
+></p>
+</li>
+<li>
+<p><strong>主要用途</strong>：风险管理、数字版权管理、电子商务信任建立、安全监测与应急响应。</p>
+</li>
+<li>
+<p><strong>支持 TEE 的嵌入式硬件技术包括</strong>：AMD 的 PSP 处理器、ARM 的 TrustZone 技术、Intel x86-64 的 SGX 扩展、MIPS 的虚拟化技术。</p>
+</li>
+<li>
+<p><strong>Rich OS 、 TEE 和 SE 的位置  ：</strong><img src="https://raw.githubusercontent.com/fanshanng/blog_picture/master/20251230211641.png"
+	
+	
+	
+	loading="lazy"
+	
+	
+></p>
+</li>
+<li>
+<p><strong>三种环境的安全和特征的比较  ：</strong><img src="https://raw.githubusercontent.com/fanshanng/blog_picture/master/20251230211831.png"
+	
+	
+	
+	loading="lazy"
+	
+	
+></p>
+</li>
+<li>
+<p><strong>与 Rich OS、SE 的对比</strong>：Rich OS 作为丰富环境是很容易受到攻击的，而 <strong>SE 虽然很难遭到攻击但是使用很有局限性</strong>，对 Rich OS 的性能和 SE 的安全， <strong>TEE 在两者间进行了折中</strong>。</p>
+</li>
+</ul>
+<table>
+  <thead>
+      <tr>
+          <th>对比维度</th>
+          <th>Rich OS（丰富操作系统）</th>
+          <th>TEE（可信执行环境）</th>
+          <th>SE（安全元件）</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>应用下载控制</td>
+          <td><strong>用户控制</strong></td>
+          <td>鉴权进程控制</td>
+          <td>鉴权进程控制</td>
+      </tr>
+      <tr>
+          <td>应用代码要求</td>
+          <td>无需校验和认证</td>
+          <td>授权前校验认证，下载时授权检查</td>
+          <td>授权前校验认证，下载时授权检查</td>
+      </tr>
+      <tr>
+          <td>认证强度</td>
+          <td>不认证</td>
+          <td>认证</td>
+          <td>强认证</td>
+      </tr>
+      <tr>
+          <td>OS 内核 / 驱动 / 库创建</td>
+          <td>灵活快速</td>
+          <td><strong>安全快速</strong></td>
+          <td>安全</td>
+      </tr>
+      <tr>
+          <td>API 丰富度</td>
+          <td>丰富</td>
+          <td>受限</td>
+          <td><strong>严格受限</strong></td>
+      </tr>
+      <tr>
+          <td>与 Rich OS 数据传输速度</td>
+          <td>非常快</td>
+          <td>非常快</td>
+          <td><strong>慢</strong></td>
+      </tr>
+      <tr>
+          <td>抗未授权软件攻击</td>
+          <td>依赖 OS 内部保护（未认证）</td>
+          <td>硬件 + 认证 OS 保护</td>
+          <td>外部软件 + 硬件 + 认证 OS 保护</td>
+      </tr>
+      <tr>
+          <td>抗外部硬件攻击</td>
+          <td>无保护，有限回滚</td>
+          <td>TEE + 主机硬件特征保护</td>
+          <td>SE <strong>强</strong>保护（不保护主机）</td>
+      </tr>
+      <tr>
+          <td>成本</td>
+          <td>仅软件，无额外开支</td>
+          <td>软硬件结合，较低额外开销</td>
+          <td>软件 + 抗干扰硬件，高额外开销</td>
+      </tr>
+      <tr>
+          <td>安全级别</td>
+          <td>低</td>
+          <td>中</td>
+          <td>高</td>
+      </tr>
+  </tbody>
+</table>
+<h3 id="42-arm-trustzone">4.2 ARM TrustZone
+</h3><ul>
+<li>将软硬件资源划分为<strong>安全世界</strong>（Secure World，处理敏感操作如指纹识别、密码处理）和<strong>非安全世界</strong>（Normal World，运行用户 OS 和普通应用），通过 <strong>Monitor Mode</strong>（监控模式）实现切换。</li>
+</ul>
+<p><img src="https://raw.githubusercontent.com/fanshanng/blog_picture/master/20251230205500.png"
+	
+	
+	
+	loading="lazy"
+	
+	
+></p>
+<h4 id="核心设计与原理">核心设计与原理
+</h4><ol>
+<li>
+<p><strong>总线设计</strong>：AMBA3 AXI 总线增加 <strong>NS（Non-Secure）控制位</strong>，**ARPROT [1]（读操作）**和 <strong>AWPROT [1]（写操作）</strong>，低电平为安全操作，高电平为非安全操作，总线解析模块验证操作合法性；</p>
+</li>
+<li>
+<p><strong>CPU 设计</strong>：</p>
+</li>
+</ol>
+<ul>
+<li>
+<p>处理器核虚拟化：每个物理核虚拟为安全核（运行安全世界代码）和非安全核（运行非安全世界代码），基于时间片轮流占用物理核；</p>
+</li>
+<li>
+<p>内存管理：安全世界和非安全世界各有虚拟 MMU，共享 TLB 和 Cache，通过 NS 位标识归属，切换时无需刷新，提升效率；</p>
+</li>
+<li>
+<p><strong>中断模型</strong>：</p>
+<ul>
+<li>
+<p>三套异常向量表：非安全世界、安全世界、Monitor 模式，基地址可通过 VBAR 寄存器修改；</p>
+</li>
+<li>
+<p>中断配置：<strong>IRQ(Interrupt Request)</strong> 作为非安全世界中断源，<strong>FIQ(Fast Interrupt Request)</strong>  作为安全世界中断源，兼顾兼容性和安全性；</p>
+<p><img src="https://raw.githubusercontent.com/fanshanng/blog_picture/master/20251230210129.png"
+	
+	
+	
+	loading="lazy"
+	
+	
+></p>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>系统模式切换</strong>：</p>
+<ul>
+<li>切换路径：非安全世界→Monitor Mode→安全世界（不可直接切换），安全世界可通过设置 NS 位跳转至非安全世界（建议在 Monitor Mode 中操作）；</li>
+<li>Monitor Mode 功能：保存当前世界状态，恢复下一个世界状态，实现模式间 CPU 状态切换。</li>
+</ul>
+</li>
+</ul>
+<ol start="3">
+<li>隔离机制</li>
+</ol>
+<ul>
+<li>
+<p><strong>内存隔离</strong>：通过 TZASC（TrustZone 地址空间控制器）划分外部 DDR 为安全 / 非安全区域，TZMA（TrustZone 内存适配器）隔离片上 ROM 和 SRAM；</p>
+</li>
+<li>
+<p><strong>外设隔离</strong>：APB 总线设备通过 AXI-to-APB bridge 连接，由 TZPC（TrustZone 保护控制器）提供 NS 控制信号，外设安全特性可动态配置（如键盘输入密码时切换为安全设备）。</p>
+</li>
+</ul>
+<h3 id="43-intel-sgx-software-guard-extensions">4.3 Intel SGX (Software Guard Extensions)
+</h3><ul>
+<li><strong>定义</strong>：Intel 对 IA 架构的扩展，通过创建 <strong>enclave</strong>（可信执行容器）保护敏感代码和数据，即使 OS 或虚拟机监控器也无法访问 enclave 内容；</li>
+<li><strong>与 TrustZone 的区别</strong>：TrustZone 将 CPU 划分为两个隔离环境，SGX 一个 CPU 可运行多个 enclave，支持并发执行；</li>
+<li><strong>安全边界</strong>：仅包含 CPU 和 enclave 自身，通过硬件机制保障机密性和完整性。</li>
+<li><strong>原理</strong>：在原有架构基础上增加指令集和内存访问机制，在内存中划分 EPC（Enclave Page Cache），enclave 映射至该区域并由内存加密引擎（MEE）加密，仅进入 CPU 时解密</li>
+<li><strong>SGX的远端验证</strong></li>
+</ul>
+<p><img src="https://raw.githubusercontent.com/fanshanng/blog_picture/master/20251230211157.png"
+	
+	
+	
+	loading="lazy"
+	
+	
+></p>
+<ul>
+<li><strong>enclave（安全容器）特征</strong>：
+<ul>
+<li>包含独立<strong>代码和数据</strong>，提供<strong>机密性</strong>和<strong>完整性</strong>保护；</li>
+<li>具有<strong>可控入口点</strong>，<strong>支持多线程</strong>，对应用程序内存拥有<strong>最高访问权限</strong>；</li>
+<li>加载的代码和数据需被<strong>度量</strong>，受 SGX 硬件保护免受外部访问；</li>
+</ul>
+</li>
+<li><strong>优势、不足与开发环境</strong>
+<ol>
+<li>优势：
+<ul>
+<li>内存加密保护运行态安全，<strong>提升内存泄漏攻击难度</strong>；</li>
+<li>可信计算基缩小至 CPU，<strong>减少系统攻击风险</strong>；</li>
+<li>支持虚拟化和容器技术，<strong>可用性强</strong>；</li>
+</ul>
+</li>
+<li>不足：
+<ul>
+<li>无法抵御<strong>侧信道攻击</strong>；</li>
+<li>enclave <strong>可用内存小</strong>，页面换入换出时系统开销大；</li>
+<li>大型程序改造难度高，<strong>编程成本高</strong>；</li>
+</ul>
+</li>
+<li>开发环境：SGX SDK 包含 API、函数库、文档、样本代码和工具，支持 C/C++ 开发，提供 Microsoft Visual Studio 插件，兼容标准开发工具。</li>
+</ol>
+</li>
+</ul>
+<h3 id="本章小结-3">本章小结
+</h3><ul>
+<li>TEE 填补了 Rich OS 与 SE 之间的空白，提供较强的安全隔离与较好的性能。</li>
+<li>ARM TrustZone 通过“双世界”隔离实现移动端安全；Intel SGX 通过内存加密与 Enclave 机制实现 PC/服务器端安全。</li>
+</ul>
+<hr>
+<h2 id="第五章-大数据处理与存储及其安全隐私">第五章 大数据处理与存储及其安全隐私
+</h2><h3 id="51-云计算基础">5.1 云计算基础
+</h3><ul>
+<li><strong>服务模式</strong>：</li>
+</ul>
+<table>
+  <thead>
+      <tr>
+          <th>服务模式</th>
+          <th>定义</th>
+          <th>典型应用</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><strong>SaaS</strong>（软件即服务）</td>
+          <td>开发商统一部署应用软件，用户按需订阅，通过互联网访问，无需维护</td>
+          <td>Salesforce Sales Cloud、Office Online、在线财务系统</td>
+      </tr>
+      <tr>
+          <td><strong>PaaS</strong>（平台即服务）</td>
+          <td>提供应用开发、测试、托管的完整平台，面向开发者</td>
+          <td>Google App Engine、微软 Azure、Salesforce <a class="link" href="https://force.com/"  target="_blank" rel="noopener"
+    >Force.com</a></td>
+      </tr>
+      <tr>
+          <td><strong>IaaS</strong>（基础设施即服务）</td>
+          <td>提供服务器、存储、网络等硬件及相关软件，为底层计算资源服务</td>
+          <td>亚马逊 AWS、阿里云、腾讯云、天翼云</td>
+      </tr>
+  </tbody>
+</table>
+<ul>
+<li><strong>核心技术</strong>：Google MapReduce, Hadoop 开源系统。</li>
+<li><strong>部署方式</strong>：</li>
+</ul>
+<ol>
+<li>公有云：由服务商运营，多用户共享基础设施，成本低，隐私安全风险较高；</li>
+<li>私有云：企业自建自用，隐私安全性最好，建设成本高，支持动态灵活的基础设施；</li>
+<li>行业云：由行业主导组织维护，向内部或相关组织提供服务，安全性与政策遵从性高于公有云；</li>
+<li>混合云：组合两种及以上云模式，保持独立且互联互通，平衡安全性与投资（如核心应用存私有云，对外服务存公有云）。</li>
+</ol>
+<h3 id="52-核心处理框架">5.2 核心处理框架
+</h3><p><strong>谷歌 MapReduce</strong></p>
+<ul>
+<li>提出背景：2004 年 OSDI 会议发布，为大规模数据批处理设计，是谷歌云计算核心技术之一；</li>
+<li>计算模型：以 Key/Value 为输入，通过 Map（按 Key 划分数据）和 Reduce（聚合相同 Key 数据）两个函数实现并行计算；</li>
+<li>核心优势：封装分布式细节（伸缩性、容错性），开发者仅需关注算法逻辑；</li>
+<li>应用场景：分布式排序、词频统计、网页倒排索引、PageRank 算法、DNA 序列分析等。</li>
+</ul>
+<p><strong>开源系统 Hadoop</strong></p>
+<ul>
+<li>起源：由 Doug Cutting 基于谷歌技术论文开发，为开源大数据分析通用平台；</li>
+<li>核心组件：HDFS（分布式文件系统）、MapReduce（并行计算引擎）、HBase（列式数据库）、Hive（数据仓库）、Zookeeper（协同工作系统）等；</li>
+<li>与谷歌技术对应关系：HDFS 对应 GFS、MapReduce 对应谷歌 MapReduce、HBase 对应 BigTable、Zookeeper 对应 Chubby。</li>
+</ul>
+<h3 id="53-安全机制sentry">5.3 安全机制：Sentry
+</h3><ol>
+<li>定位：Hadoop 开源组件，提供细粒度、基于角色的授权与多租户管理；</li>
+<li>核心价值：支持存储敏感数据、扩大数据访问权限、适配多用户场景、符合合规要求（SOX、PCI 等）；</li>
+<li>访问控制：支持服务器、数据库、表、列、URL 级别的细粒度权限控制，可通过视图屏蔽敏感数据；</li>
+<li>授权模型：基于 RBAC（角色访问控制），权限绑定角色，角色关联用户组，统一通过 Kerberos 实现安全认证；</li>
+<li>核心组件：Binding（对接不同查询引擎，接管授权）、Policy Engine（权限匹配判定）、Policy Provider（读取预设权限规则）。</li>
+</ol>
+<h3 id="54-同态加密-homomorphic-encryption">5.4 同态加密 (Homomorphic Encryption)
+</h3><ul>
+<li>核心问题：解决密文数据的计算难题，使云端无需解密即可处理数据，避免明文泄露；</li>
+<li>定义：<strong>设加密操作 E，对明文操作 f，存在 F 使得 F (E (m))=E (f (m))，则 E 为 f 的同态加密算法</strong>；</li>
+<li>发展历程：RSA 支持乘法同态、Paillier 支持加法同态，2009 年 IBM 提出全同态加密算法（仍存在计算效率问题）；</li>
+<li>应用场景：不可信设备上的密文计算，如云端编译、格式转换、数据统计等。</li>
+</ul>
+<h3 id="55-私有信息检索-pir">5.5 私有信息检索 (PIR)
+</h3><ul>
+<li>定义：用户在不泄露查询信息（身份、内容）的前提下，完成数据库查询；</li>
+<li>应用场景：疾病治疗查询、股票信息查询、定位服务等隐私敏感场景；</li>
+<li>解决方案：信息论 PIR（多数据库副本 + 编码隐藏查询）、计算性 PIR（基于数学困难假设，阻止多项式时间内破解查询信息）。</li>
+</ul>
+<h3 id="56-虚拟化技术及其安全未标亮">5.6 虚拟化技术及其安全（未标亮）
+</h3><h4 id="561-虚拟化定义与分类">5.6.1 虚拟化定义与分类
+</h4><ol>
+<li>本质：抽象计算机资源，使用户以统一方式访问，不受物理配置限制；</li>
+<li>分类：服务器虚拟化（虚拟多台隔离虚拟机）、存储虚拟化（统一整合存储资源）、应用虚拟化（解除应用与软硬件耦合）、平台虚拟化（提供统一开发接口）、桌面虚拟化（桌面环境与终端解耦）。</li>
+</ol>
+<h4 id="562-虚拟机技术">5.6.2 虚拟机技术
+</h4><ol>
+<li>核心组件：虚拟机监控器（VMM/Hypervisor），分为 Type-1（直接运行在裸机）和 Type-2（介于宿主 OS 与硬件之间）；</li>
+<li>虚拟机（Guest-OS）：具备完整系统资源（处理器、内存、网络设备等），与物理服务器运行逻辑一致，支持多 OS 并发隔离运行；</li>
+<li>安全风险：同一物理机上的虚拟机存在数据泄露风险（如 Intel Meltdown、Spectre 漏洞，可导致跨虚拟机信息窃取）；</li>
+<li>防护措施：内核页表隔离（KPTI），分离内核与用户进程内存，代价是系统调用开销增加。</li>
+</ol>
+<h4 id="563-容器技术以-docker-为例">5.6.3 容器技术（以 Docker 为例）
+</h4><ol>
+<li>本质：操作系统级虚拟化，复用本地主机 OS，比虚拟机更轻量；</li>
+<li>核心概念：
+<ul>
+<li>镜像（Images）：文件层次结构 + 运行元数据，Dockerfile 指令构建；</li>
+<li>容器（Container）：镜像的运行实例，隔离且安全，可启动、停止、删除；</li>
+<li>仓库（Repositories）：集中存储镜像，分公有（如 Docker Hub）和私有仓库；</li>
+</ul>
+</li>
+<li>核心优势：资源隔离、环境一致、轻量化、“一次构建，随处使用”；</li>
+<li>安全防护：
+<ul>
+<li>攻击风险：Docker API 滥用可导致远程代码执行、恶意软件隐藏；</li>
+<li>防护措施：基于角色的访问控制（RBAC）、加密秘密存储、TLS 隧道传输秘密、沙箱容器（如 gVisor）增强隔离。</li>
+</ul>
+</li>
+</ol>
+<h4 id="564-基于虚拟机的入侵分析">5.6.4 基于虚拟机的入侵分析
+</h4><ol>
+<li>传统日志缺陷：依赖可能被篡改的 OS，日志信息不完备；</li>
+<li>ReVirt 系统：将 Guest OS 置于虚拟机中，VMM 在独立域记录日志，避免日志篡改，完整记录非确定性事件（如中断、用户输入），支持入侵行为重放分析。</li>
+</ol>
+<h3 id="57-安全多方计算-smc">5.7 安全多方计算 (SMC)
+</h3><ul>
+<li><strong>定义</strong>：多个参与方，每一个参与方拥有一个秘密信息，他们希望利用这些秘密信息作为输入，共同计算一个函数。安全多方计算是<strong>无可信第三方的保护隐私计算协议</strong>。</li>
+<li><strong>模型</strong>：
+<ul>
+<li><strong>半诚实模型</strong>：如果所有参与者都是诚实的或者半诚实的，称此模型为半诚实模型，其中的攻击者是被动的。</li>
+<li><strong>恶意模型</strong>：存在恶意参与者的模型称为恶意模型，其中的攻击者是主动的。</li>
+</ul>
+</li>
+<li><strong>经典案例</strong>：百万富翁问题（比谁更有钱但不透露具体金额）、平均工资问题。</li>
+</ul>
+<h3 id="58-大数据存储安全">5.8 大数据存储安全
+</h3><ul>
+<li><strong>GFS</strong>（Google 文件系统）
+<ul>
+<li>定位：<strong>谷歌分布式文件系统</strong>，为云计算提供海量存储，非开源；</li>
+<li>设计特点：采用廉价商用机器，软件容错，将服务器故障视为正常现象，多维度保障数据安全与服务连续性；</li>
+<li>影响：启发开源 HDFS，推动后续分布式文件系统发展。</li>
+</ul>
+</li>
+<li><strong>BigTable</strong>
+<ul>
+<li>定位：建立在 GFS 之上的结构化数据存储架构，谷歌多项服务（地图、Youtube、Gmail）的底层存储；</li>
+<li>数据模型：分布式多维表格，通过行关键字、列关键字、时间戳索引，数据均视为字符串，需用户自行定义结构。</li>
+</ul>
+</li>
+<li><strong>系统</strong>：GFS (Google分布式文件系统), BigTable（基于GFS的分布式数据库，列式存储）, Dropbox 架构。</li>
+<li><strong>数据完整性机制</strong>：
+<ul>
+<li>核心角色：用户（数据所有者）、云服务器（存储方）、<strong>第三方审计者</strong>（<strong>TPA</strong>，代用户完成审计）；</li>
+<li>潜在风险：外部攻击破坏数据、云服务器为节省成本删除闲置数据或隐瞒数据损坏；</li>
+<li>解决方案：<strong>POR</strong>（Proofs of Retrievability数据可恢复性证明），可有效<strong>识别</strong>数据损坏并<strong>恢复</strong>损坏文件。</li>
+</ul>
+</li>
+<li><strong>数据去重</strong>：
+<ul>
+<li><strong>MLE (Message-Locked Encryption)</strong>：消息锁定加密，实现密文去重。</li>
+<li><strong>PoW (Proof of Ownership)</strong>：拥有权证明，防止攻击者通过哈希值“盗取”文件访问权。</li>
+</ul>
+</li>
+</ul>
+<h3 id="本章小结-4">本章小结
+</h3><ul>
+<li>云安全核心在于“数据不可见但可计算”（同态加密）与“查询不可知”（PIR）。</li>
+<li>存储安全关注完整性审计（POR/PDP）与高效存储（去重/MLE）。</li>
+</ul>
+<hr>
+<h2 id="第六章-大数据共享及其安全隐私">第六章 大数据共享及其安全隐私
+</h2><h3 id="61-隐私概念与度量">6.1 隐私概念与度量
+</h3><ul>
+<li><strong>定义</strong>：不受干扰的权利（布兰代斯）。</li>
+<li><strong>分类</strong>：身份隐私、属性隐私、社交隐私等。</li>
+<li><strong>量化度量</strong>：用 “披露风险” 描述隐私保护效果，即攻击者借助背景知识揭露敏感数据的概率；<strong>完美隐私</strong>（披露风险为 0）仅存在于特定假设场景，现实中难以实现。</li>
+</ul>
+<h3 id="62-数据匿名化技术">6.2 数据匿名化技术
+</h3><ul>
+<li>
+<p><strong>核心目标</strong>：隐匿数据主体标识，平衡数据可用性与隐私保护。</p>
+</li>
+<li>
+<p><strong>操作</strong>：</p>
+<ul>
+<li><strong>抑制 (Suppression)</strong>：隐去特定属性值。</li>
+<li><strong>泛化 (Generalization)</strong>：将具体值替换为更宽泛的区间（如精确年龄 -&gt; 年龄段）。</li>
+<li><strong>聚合 (Aggregation)</strong>：统计汇总。</li>
+</ul>
+</li>
+<li>
+<p><strong>发布 - 遗忘模型</strong>：数据管理员匿名化处理后发布数据，不再追踪后续流转，但该模型存在明显缺陷，易被反匿名化突破。（识别身份信息-抑制-泛化-聚合）</p>
+</li>
+</ul>
+<h3 id="63-隐私保护模型">6.3 隐私保护模型
+</h3><ul>
+<li><strong>K - 匿名模型</strong>：通过泛化 / 抑制使每个准标识符（QID，如邮编 + 生日 + 性别）组至少包含 K 条记录，<strong>抵御记录链接攻击，但无法防范属性链接攻击。</strong></li>
+<li><strong>L - 多样性模型</strong>：弥补 K - 匿名缺陷，要求每个 QID 组的敏感属性至少包含 L 个不同值，防止攻击者通过群组敏感值占比推导个体隐私。</li>
+<li><strong>T - 相近模型</strong>：进一步要求 QID 组中敏感属性的分布与原始数据分布距离不超过阈值 T，避免敏感值过于集中或相近导致的隐私泄露。</li>
+<li><strong>局限性</strong>：此类模型依赖对攻击者背景知识的假设，现实中易被突破，陷入 “模型提出 - 被攻破” 的循环。</li>
+</ul>
+<h3 id="64-差分隐私-differential-privacy">6.4 差分隐私 (Differential Privacy)
+</h3><ul>
+<li><strong>优势</strong>：不依赖攻击者背景知识假设，即使攻击者知晓除一条记录外的所有数据，仍能提供隐私保护，且具备严谨的数学理论支撑。</li>
+<li><strong>原理</strong>：通过<strong>添加噪声</strong>（如拉普拉斯噪声）来掩盖个体影响，保证攻击者无法判断特定个体是否在数据集中。</li>
+</ul>
+<h3 id="本章小结-5">本章小结
+</h3><ul>
+<li>传统匿名模型（k-匿名 -&gt; l-多样性 -&gt; t-相近）逐步修补漏洞，但难以抵御背景知识攻击。</li>
+<li>差分隐私提供了数学上可证明的隐私保障，是当前主流标准。</li>
+</ul>
+<hr>
+<h2 id="第七章-大数据算法及其安全">第七章 大数据算法及其安全
+</h2><ul>
+<li><strong>知识构建四要素</strong>：假设（明确方向）、模型（确定计算方法）、实践（验证修正）、理论（推广应用），算法设计需围绕四要素逐步完善。</li>
+</ul>
+<h3 id="71-大数据算法基础">7.1 大数据算法基础
+</h3><ul>
+<li><strong>搜索引擎核心算法</strong>（标亮）
+<ul>
+<li><strong>TF/IDF 模型</strong>：用于计算查询与网页的相关性，核心是 “<strong>词频（TF）× 逆文本频率（IDF）</strong>” 加权求和。TF 为关键词在网页中的归一化出现频率（避免长网页占优），IDF 反映关键词稀缺性（公式为 lg (D/Dw)，D 为总网页数，Dw 为含该关键词的网页数）。</li>
+<li><strong>PageRank 算法</strong>：评估网页质量，基于 “数量假设（入链越多越重要）” 和 “质量假设（高权重页面入链更具价值）”，通过递归迭代计算网页得分，最终收敛至真实值，需结合稀疏矩阵技巧降低计算量。</li>
+</ul>
+</li>
+<li>协同过滤推荐算法
+<ul>
+<li>传统方法：
+<ul>
+<li>基于用户：通过 KNN 找到相似偏好用户，推荐邻居喜欢的物品，但存在数据稀疏性和扩展性差的问题；</li>
+<li>聚类模型：将相似用户归为群组，基于群组偏好推荐，粒度难平衡（粗粒度准确率低，细粒度计算量大）；</li>
+<li>内容搜索法：根据商品属性构造查询条件推荐，适用于用户购买量少的场景。</li>
+</ul>
+</li>
+<li>改进方案（亚马逊 Item-based 算法）：预先计算物品间相似度（基于用户历史行为），推荐与用户喜欢物品相似的商品，解决稀疏性和扩展性问题，支持实时响应。</li>
+</ul>
+</li>
+<li>机器学习算法
+<ul>
+<li>定义：系统通过经验自动改进性能，根据样本集推算世界模型，核心是泛化能力（对未知样本的判断能力）。</li>
+<li>三要素：一致性假设（样本集与真实世界性质一致）、样本空间划分（寻找决策分界面）、泛化能力。</li>
+<li>分类与代表算法：
+<ul>
+<li>监督学习（有标签数据训练）：决策树、K - 近邻、逻辑回归、SVM；</li>
+<li>无监督学习（无标签数据找规律）：关联算法、K - 均值聚类；</li>
+<li>强化学习（试错 + 奖励机制）：马尔可夫决策过程、蒙特卡洛算法；</li>
+<li>半监督学习（混合标签与无标签数据）：GANs（生成式对抗网络）。</li>
+</ul>
+</li>
+<li>通用步骤：数据划分（训练 / 验证 / 测试）→数据建模→模型训练→测试评估→实际应用→调优迭代。</li>
+</ul>
+</li>
+<li>众包技术
+<ul>
+<li>定义：协调大量不固定参与者完成 “微工作”，解决单个人或软件难以处理的问题（如外卖配送、数据标注）。</li>
+<li>核心要素：请求者（发布任务）、工人（执行任务）、智能任务（HITs），需解决平台选择、激励机制、质量控制、任务管理等问题。</li>
+</ul>
+</li>
+</ul>
+<h3 id="72-对大数据算法的攻击">7.2 对大数据算法的攻击
+</h3><h4 id="721-推荐攻击">7.2.1 推荐攻击
+</h4><ol>
+<li>攻击目标：干扰推荐系统（如协同过滤算法）的预测结果，分为 “推攻击”（<strong>提升</strong>目标项目推荐频率）和 “核攻击”（<strong>降低</strong>目标项目推荐频率）。</li>
+<li>攻击方式：注入虚假用户（托攻击），通过模仿真实用户偏好成为目标用户的 “近邻”，或关联目标项目与流行项目，篡改项目相似度矩阵，引导推荐结果偏移。</li>
+<li>示例：攻击者为提升项目 6 的推荐率，注入 3 个虚假用户，模仿 User 的评分偏好并给项目 6 打满分，使推荐系统误判 User 对项目 6 感兴趣。</li>
+</ol>
+<h4 id="722-搜索引擎优化seo作弊">7.2.2 搜索引擎优化（SEO）作弊
+</h4><ol>
+<li>攻击目的：利用搜索引擎漏洞提高网页排名，获取更多流量。</li>
+<li>常见手段：<strong>重复关键词</strong>（隐藏式罗列）、<strong>买卖链接</strong>（批量创建垃圾网站引流）、<strong>雇佣水军注入垃圾评论</strong>（植入目标链接）。</li>
+<li>反作弊逻辑：将作弊行为视为 “噪声”，通过解卷积算法消除 —— 作弊手段具有非随机性和时间相关性，采集一段时间的作弊特征后可精准识别并还原真实排名。</li>
+</ol>
+<h4 id="723-诱导分类器错误分类">7.2.3 诱导分类器错误分类
+</h4><ol>
+<li>攻击场景：针对安全领域的机器学习分类器（如恶意软件检测、垃圾邮件分类）。</li>
+<li>攻击原理：利用分类器依赖的 “非本质特征”（如恶意 PDF 文件尺寸小），通过简单修改（如植入无效内容增大文件尺寸、添加 4 行代码）使恶意样本逃逸检测。</li>
+<li>案例：修改 500 个恶意 PDF 样本后，PDFrate 和 Hidost 分类器均判为无害；Gmail 恶意软件分类器的逃逸率接近 50%。</li>
+</ol>
+<h4 id="724-诱骗视觉分类算法">7.2.4 诱骗视觉分类算法
+</h4><ol>
+<li>攻击方式：在物理世界中对目标物体进行轻微修改（如在停车标志上加贴纸、喷漆），使深度神经网络分类器产生误判（如将 “停止标志” 识别为 “限速标志”）。</li>
+<li>核心特点：对抗样本的扰动微小，人类视觉难以察觉，但能突破算法分类边界。</li>
+</ol>
+<h4 id="725-对抗攻击核心技术">7.2.5 对抗攻击核心技术
+</h4><ol>
+<li>定义：通过对原始样本添加特定扰动，构造对抗样本，使模型产生错误分类，根源是模型训练样本覆盖不全，导致模型决策边界与真实边界存在差异。</li>
+<li>典型攻击方法：
+<ul>
+<li><strong>快速梯度攻击（FGSM）</strong>：白盒攻击，沿模型梯度最大方向添加全局微小扰动，效率高，支持源 / 目标误分类；</li>
+<li><strong>雅克比映射攻击（JSMA）</strong>：仅扰动对分类影响大的像素点，以最少修改实现攻击；</li>
+<li><strong>深度欺骗攻击</strong>：迭代式扰动样本，逐步推向模型决策边界另一侧，属于白盒攻击；</li>
+<li><strong>边界攻击</strong>：黑盒攻击，仅需模型分类输出，先找到对抗样本，再向原始样本方向逼近，保持对抗性的同时最小化扰动。</li>
+</ul>
+</li>
+</ol>
+<h3 id="章节小结">章节小结
+</h3><ol>
+<li>核心算法：涵盖搜索引擎（TF/IDF 相关性计算、PageRank 网页质量评估）、协同过滤推荐（含亚马逊 Item-based 改进方案）、机器学习（四类学习模式及通用训练流程），以及众包技术，核心是通过建模提取数据规律并实现泛化应用。</li>
+<li>安全风险：主要包括推荐攻击（注入虚假用户）、SEO 作弊（篡改排名）、分类器诱导错误、视觉算法诱骗、对抗攻击（构造对抗样本），攻击核心是利用算法漏洞或特征缺陷干扰决策结果。</li>
+</ol>
+<h2 id="第八章-大数据服务的认证与访问控制">第八章 大数据服务的认证与访问控制
+</h2><h3 id="81-身份认证">8.1 身份认证
+</h3><ul>
+<li><strong>定义与作用</strong>：验证用户身份，确定其是否具备资源访问权限，分为<strong>消息认证</strong>（保障信息完整性、不可否认性）和<strong>用户身份认证</strong>（鉴别用户身份），涵盖<strong>识别</strong>（确认身份）与<strong>验证</strong>（确认合法性）两个环节。</li>
+<li><strong>系统组成</strong>：包括认证服务器、客户端、认证设备，通过单向 / 双向认证协议实现，主流为 <strong>AAA 认证系统</strong>（认证 + 授权 + 审计）。</li>
+<li><strong>认证即分类</strong>：利用机器学习分析用户行为特征（击键、步态）进行持续认证。</li>
+<li><strong>基本认证逻辑</strong>：基于 “你有什么（物件）、你知道什么（信息）、你是谁（体貌特征）” 三类核心维度设计。</li>
+<li><strong>分类器式认证</strong>：将身份认证视为机器学习分类器，融合 IP 地址、地理位置、登录习惯等多维度隐式信号，输出访问可能性（实数值），需离散化为 0/1 决策，存在错误接受 / 拒绝风险。</li>
+<li><strong>常用认证方式及特点</strong></li>
+</ul>
+<table>
+  <thead>
+      <tr>
+          <th>认证方式</th>
+          <th>核心原理</th>
+          <th>优势</th>
+          <th>风险与不足</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>静态密码</td>
+          <td>用户名 + 固定密码验证</td>
+          <td>简单易用、成本低</td>
+          <td>易遭受字典攻击、窃听、重放攻击，安全性弱</td>
+      </tr>
+      <tr>
+          <td>动态口令</td>
+          <td>基于不确定因子生成一次性口令（短信验证码、动态令牌）</td>
+          <td>一次一密，安全性高于静态密码</td>
+          <td>短信可能被拦截、令牌数据库泄露风险</td>
+      </tr>
+      <tr>
+          <td>USB Key 认证</td>
+          <td>软硬件结合，内置密钥 / 数字证书，支持冲击 / 响应或 PKI 模式</td>
+          <td>双因素认证，安全性强</td>
+          <td>依赖硬件设备，丢失易导致权限风险</td>
+      </tr>
+      <tr>
+          <td>CA 认证</td>
+          <td>由 CA 机构签发数字证书（X.509 等标准），验证持有者合法性</td>
+          <td>适用于多场景，可保障交易 / 通信安全</td>
+          <td>证书管理复杂，需防止伪造篡改</td>
+      </tr>
+      <tr>
+          <td>生物识别</td>
+          <td>基于生理特征（指纹、人脸）或行为特征，需活体检测</td>
+          <td>唯一性强，用户体验好</td>
+          <td>生物特征泄露后无法更改，易被假体攻击</td>
+      </tr>
+      <tr>
+          <td><strong>多因子认证</strong></td>
+          <td>组合两种及以上认证方式（如 “静态密码 + 动态口令”“生物识别 + USB Key”“密码 + 生物特征 + 地理位置”）</td>
+          <td>多重验证，安全性远高于单一认证方式，攻击难度极大</td>
+          <td>流程相对繁琐，依赖多种认证介质 / 条件，易因某一环节故障影响使用</td>
+      </tr>
+  </tbody>
+</table>
+<h3 id="82-访问控制">8.2 访问控制
+</h3><ul>
+<li><strong>传统模式</strong>：DAC (自主), MAC (强制), RBAC (基于角色)。</li>
+<li><strong>云环境/细粒度</strong>：
+<ul>
+<li><strong>ABAC (基于属性)</strong>：基于用户、资源、环境属性制定策略，支持细粒度控制。</li>
+<li><strong>FE (函数加密)</strong>：支持细粒度访问控制的加密原语。在保障数据机密性的同时，支持灵活的加密数据访问控制。</li>
+</ul>
+</li>
+<li><strong>CryptDB</strong> 是 MIT 推出的开源加密数据库查询代理工具，适配 MySQL，以 “应用 - 代理 - 数据库” 架构实现明文与应用交互、密文与数据库交互，支持加密数据的简单操作，保障数据存储安全，已被 Google、SAP 等企业借鉴应用。</li>
+</ul>
+<hr>
+<h2 id="第九章-大数据采集及其安全隐私">第九章 大数据采集及其安全隐私
+</h2><h3 id="91-匿名通信">9.1 匿名通信
+</h3><ul>
+<li>
+<p><strong>框架三要素</strong>：<strong>匿名属性、敌手能力、网络类型</strong>。</p>
+<ul>
+<li>匿名属性：<strong>不可辨识性</strong>（无法识别用户身份与行为）、<strong>不可关联性</strong>（操作与主体无关联）、<strong>不可观测性</strong>（无法分辨特定收发事件）；</li>
+<li>网络类型划分
+<ol>
+<li>路径拓扑：瀑布型（固定通信路径）、自由型（任意长度路径，匿名性更强）；</li>
+<li>路由机制：单播（主流选择，兼顾效率与部署难度）、组播、广播、任意播；</li>
+<li>路径类型：简单路径（无循环，中继节点唯一）、复杂路径（可循环，中继节点可重复）。</li>
+</ol>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>技术方案</strong>：</p>
+<ul>
+<li><strong>Mix 网络</strong>：通过混合节点打乱消息顺序。</li>
+<li><strong>洋葱路由 (Onion Routing / Tor)</strong>：多层加密，逐跳解密，中间节点只知前后跳，不知源与宿。</li>
+<li><strong>泛洪算法</strong>：广播消息以隐藏接收者。</li>
+</ul>
+<table>
+  <thead>
+      <tr>
+          <th>技术类型</th>
+          <th>核心原理</th>
+          <th>特点</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>基于 Mix 算法</td>
+          <td>单个或瀑布型 Mix 节点，接收加密数据后解密、重序、增加冗余，再转发</td>
+          <td>匿名性高，时延高，不适用于实时通信</td>
+      </tr>
+      <tr>
+          <td>基于洋葱路由</td>
+          <td>源路由技术，层层加密封装数据，中间节点仅解密获取下一跳地址并剥层</td>
+          <td>双向实时通信，效率低、扩展性差</td>
+      </tr>
+      <tr>
+          <td>基于泛洪算法</td>
+          <td>基于 flooding/epidemic 算法，路径不固定，中间节点未知收发方</td>
+          <td>仍处实验室阶段，带宽需求大，稳定性不足</td>
+      </tr>
+  </tbody>
+</table>
+</li>
+</ul>
+<h3 id="92-https-核心特性">9.2 HTTPS 核心特性
+</h3><p><strong>定义</strong>：<strong>HTTP 的安全版</strong>，基于 SSL/TLS 构建，解决 HTTP 明文传输的劫持、数据泄露问题；</p>
+<p><strong>关键问题</strong>：</p>
+<ul>
+<li>资源消耗：服务器 CPU 负荷、内存占用、网络流量略有增加（Gmail 案例显示增幅较低）；</li>
+<li>时延：新连接需 4 个 RTT（<strong>DNS 查询 + TCP 握手 + TLS 握手 + HTTP 连接</strong>），会话恢复可降至 3 个 RTT，<strong>TLS 1.3 支持 0-RTT 会话恢复</strong>；</li>
+<li>证书成本：需部署 SSL 安全证书，增加运营成本。</li>
+</ul>
+<h3 id="93-ssltls-安全风险">9.3 SSL/TLS 安全风险
+</h3><p>典型漏洞：“心脏流血”（OpenSSL 心跳扩展未做长度检查，导致内存泄露）；</p>
+<p>其他攻击：CBC 填充模式攻击（Lucky Thirteen、POODLE 等）、RC4 加密漏洞、密钥交换与会话恢复缺陷攻击。</p>
+<h3 id="94-端到端加密-e2ee">9.4 端到端加密 (E2EE)
+</h3><p><strong>原理</strong>：<strong>发送方本地加密、接收方本地解密</strong>，传输媒介（如谷歌、微软服务器）仅能访问密文，无法获取明文；</p>
+<p><strong>典型应用</strong>：PGP 电子邮件加密、加密即时通信软件；</p>
+<p><strong>局限</strong>：易用性差，与主流通讯软件相比功能有限，用户接受度低。</p><hr />
