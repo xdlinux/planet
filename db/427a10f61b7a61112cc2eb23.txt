@@ -41,7 +41,20 @@
 
 
 <div class="wp-block-image">
-<figure class="aligncenter size-full"><img loading="lazy" decoding="async" width="286" height="239" src="https://www.xiaozonglin.cn/wp-content/uploads/2025/11/image-1.png" alt="" class="wp-image-438"/><figcaption class="wp-element-caption">图1 存储博客网站信息</figcaption></figure>
+<figure data-wp-context="{&quot;imageId&quot;:&quot;69553c09a19df&quot;}" data-wp-interactive="core/image" data-wp-key="69553c09a19df" class="aligncenter size-full wp-lightbox-container"><img loading="lazy" decoding="async" width="286" height="239" data-wp-class--hide="state.isContentHidden" data-wp-class--show="state.isContentVisible" data-wp-init="callbacks.setButtonStyles" data-wp-on--click="actions.showLightbox" data-wp-on--load="callbacks.setButtonStyles" data-wp-on-window--resize="callbacks.setButtonStyles" src="https://www.xiaozonglin.cn/wp-content/uploads/2025/11/image-1.png" alt="" class="wp-image-438"/><button
+			class="lightbox-trigger"
+			type="button"
+			aria-haspopup="dialog"
+			aria-label="放大"
+			data-wp-init="callbacks.initTriggerButton"
+			data-wp-on--click="actions.showLightbox"
+			data-wp-style--right="state.imageButtonRight"
+			data-wp-style--top="state.imageButtonTop"
+		>
+			<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="none" viewBox="0 0 12 12">
+				<path fill="#fff" d="M2 0a2 2 0 0 0-2 2v2h1.5V2a.5.5 0 0 1 .5-.5h2V0H2Zm2 10.5H2a.5.5 0 0 1-.5-.5V8H0v2a2 2 0 0 0 2 2h2v-1.5ZM8 12v-1.5h2a.5.5 0 0 0 .5-.5V8H12v2a2 2 0 0 1-2 2H8Zm2-12a2 2 0 0 1 2 2v2h-1.5V2a.5.5 0 0 0-.5-.5H8V0h2Z" />
+			</svg>
+		</button><figcaption class="wp-element-caption">图1 存储博客网站信息</figcaption></figure>
 </div>
 
 
@@ -49,7 +62,20 @@
 
 
 <div class="wp-block-image">
-<figure class="aligncenter size-full"><img loading="lazy" decoding="async" width="511" height="55" src="https://www.xiaozonglin.cn/wp-content/uploads/2025/11/image-2.png" alt="" class="wp-image-439" srcset="https://www.xiaozonglin.cn/wp-content/uploads/2025/11/image-2.png 511w, https://www.xiaozonglin.cn/wp-content/uploads/2025/11/image-2-300x32.png 300w" sizes="auto, (max-width: 511px) 100vw, 511px" /><figcaption class="wp-element-caption">图 2&nbsp;预先设置一些常见的页面URI进行穷举</figcaption></figure>
+<figure data-wp-context="{&quot;imageId&quot;:&quot;69553c09a1d1e&quot;}" data-wp-interactive="core/image" data-wp-key="69553c09a1d1e" class="aligncenter size-full wp-lightbox-container"><img loading="lazy" decoding="async" width="511" height="55" data-wp-class--hide="state.isContentHidden" data-wp-class--show="state.isContentVisible" data-wp-init="callbacks.setButtonStyles" data-wp-on--click="actions.showLightbox" data-wp-on--load="callbacks.setButtonStyles" data-wp-on-window--resize="callbacks.setButtonStyles" src="https://www.xiaozonglin.cn/wp-content/uploads/2025/11/image-2.png" alt="" class="wp-image-439" srcset="https://www.xiaozonglin.cn/wp-content/uploads/2025/11/image-2.png 511w, https://www.xiaozonglin.cn/wp-content/uploads/2025/11/image-2-300x32.png 300w" sizes="auto, (max-width: 511px) 100vw, 511px" /><button
+			class="lightbox-trigger"
+			type="button"
+			aria-haspopup="dialog"
+			aria-label="放大"
+			data-wp-init="callbacks.initTriggerButton"
+			data-wp-on--click="actions.showLightbox"
+			data-wp-style--right="state.imageButtonRight"
+			data-wp-style--top="state.imageButtonTop"
+		>
+			<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="none" viewBox="0 0 12 12">
+				<path fill="#fff" d="M2 0a2 2 0 0 0-2 2v2h1.5V2a.5.5 0 0 1 .5-.5h2V0H2Zm2 10.5H2a.5.5 0 0 1-.5-.5V8H0v2a2 2 0 0 0 2 2h2v-1.5ZM8 12v-1.5h2a.5.5 0 0 0 .5-.5V8H12v2a2 2 0 0 1-2 2H8Zm2-12a2 2 0 0 1 2 2v2h-1.5V2a.5.5 0 0 0-.5-.5H8V0h2Z" />
+			</svg>
+		</button><figcaption class="wp-element-caption">图 2&nbsp;预先设置一些常见的页面URI进行穷举</figcaption></figure>
 </div>
 
 
@@ -65,7 +91,20 @@
 
 
 <div class="wp-block-image">
-<figure class="aligncenter size-full"><img loading="lazy" decoding="async" width="322" height="354" src="https://www.xiaozonglin.cn/wp-content/uploads/2025/11/image-4.png" alt="" class="wp-image-441" srcset="https://www.xiaozonglin.cn/wp-content/uploads/2025/11/image-4.png 322w, https://www.xiaozonglin.cn/wp-content/uploads/2025/11/image-4-273x300.png 273w" sizes="auto, (max-width: 322px) 100vw, 322px" /><figcaption class="wp-element-caption">图 3&nbsp;传递给AI的数据</figcaption></figure>
+<figure data-wp-context="{&quot;imageId&quot;:&quot;69553c09a205f&quot;}" data-wp-interactive="core/image" data-wp-key="69553c09a205f" class="aligncenter size-full wp-lightbox-container"><img loading="lazy" decoding="async" width="322" height="354" data-wp-class--hide="state.isContentHidden" data-wp-class--show="state.isContentVisible" data-wp-init="callbacks.setButtonStyles" data-wp-on--click="actions.showLightbox" data-wp-on--load="callbacks.setButtonStyles" data-wp-on-window--resize="callbacks.setButtonStyles" src="https://www.xiaozonglin.cn/wp-content/uploads/2025/11/image-4.png" alt="" class="wp-image-441" srcset="https://www.xiaozonglin.cn/wp-content/uploads/2025/11/image-4.png 322w, https://www.xiaozonglin.cn/wp-content/uploads/2025/11/image-4-273x300.png 273w" sizes="auto, (max-width: 322px) 100vw, 322px" /><button
+			class="lightbox-trigger"
+			type="button"
+			aria-haspopup="dialog"
+			aria-label="放大"
+			data-wp-init="callbacks.initTriggerButton"
+			data-wp-on--click="actions.showLightbox"
+			data-wp-style--right="state.imageButtonRight"
+			data-wp-style--top="state.imageButtonTop"
+		>
+			<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="none" viewBox="0 0 12 12">
+				<path fill="#fff" d="M2 0a2 2 0 0 0-2 2v2h1.5V2a.5.5 0 0 1 .5-.5h2V0H2Zm2 10.5H2a.5.5 0 0 1-.5-.5V8H0v2a2 2 0 0 0 2 2h2v-1.5ZM8 12v-1.5h2a.5.5 0 0 0 .5-.5V8H12v2a2 2 0 0 1-2 2H8Zm2-12a2 2 0 0 1 2 2v2h-1.5V2a.5.5 0 0 0-.5-.5H8V0h2Z" />
+			</svg>
+		</button><figcaption class="wp-element-caption">图 3&nbsp;传递给AI的数据</figcaption></figure>
 </div>
 
 
@@ -81,7 +120,20 @@
 
 
 <div class="wp-block-image">
-<figure class="aligncenter size-full"><img loading="lazy" decoding="async" width="465" height="248" src="https://www.xiaozonglin.cn/wp-content/uploads/2025/11/image-6.png" alt="" class="wp-image-443" srcset="https://www.xiaozonglin.cn/wp-content/uploads/2025/11/image-6.png 465w, https://www.xiaozonglin.cn/wp-content/uploads/2025/11/image-6-300x160.png 300w" sizes="auto, (max-width: 465px) 100vw, 465px" /><figcaption class="wp-element-caption">图 4&nbsp;人工抽检界面</figcaption></figure>
+<figure data-wp-context="{&quot;imageId&quot;:&quot;69553c09a23d7&quot;}" data-wp-interactive="core/image" data-wp-key="69553c09a23d7" class="aligncenter size-full wp-lightbox-container"><img loading="lazy" decoding="async" width="465" height="248" data-wp-class--hide="state.isContentHidden" data-wp-class--show="state.isContentVisible" data-wp-init="callbacks.setButtonStyles" data-wp-on--click="actions.showLightbox" data-wp-on--load="callbacks.setButtonStyles" data-wp-on-window--resize="callbacks.setButtonStyles" src="https://www.xiaozonglin.cn/wp-content/uploads/2025/11/image-6.png" alt="" class="wp-image-443" srcset="https://www.xiaozonglin.cn/wp-content/uploads/2025/11/image-6.png 465w, https://www.xiaozonglin.cn/wp-content/uploads/2025/11/image-6-300x160.png 300w" sizes="auto, (max-width: 465px) 100vw, 465px" /><button
+			class="lightbox-trigger"
+			type="button"
+			aria-haspopup="dialog"
+			aria-label="放大"
+			data-wp-init="callbacks.initTriggerButton"
+			data-wp-on--click="actions.showLightbox"
+			data-wp-style--right="state.imageButtonRight"
+			data-wp-style--top="state.imageButtonTop"
+		>
+			<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="none" viewBox="0 0 12 12">
+				<path fill="#fff" d="M2 0a2 2 0 0 0-2 2v2h1.5V2a.5.5 0 0 1 .5-.5h2V0H2Zm2 10.5H2a.5.5 0 0 1-.5-.5V8H0v2a2 2 0 0 0 2 2h2v-1.5ZM8 12v-1.5h2a.5.5 0 0 0 .5-.5V8H12v2a2 2 0 0 1-2 2H8Zm2-12a2 2 0 0 1 2 2v2h-1.5V2a.5.5 0 0 0-.5-.5H8V0h2Z" />
+			</svg>
+		</button><figcaption class="wp-element-caption">图 4&nbsp;人工抽检界面</figcaption></figure>
 </div>
 
 
@@ -93,15 +145,54 @@
 
 
 
-<figure class="wp-block-image size-large"><img loading="lazy" decoding="async" width="1024" height="410" src="https://www.xiaozonglin.cn/wp-content/uploads/2025/11/Figure_1-1024x410.png" alt="" class="wp-image-449" srcset="https://www.xiaozonglin.cn/wp-content/uploads/2025/11/Figure_1-1024x410.png 1024w, https://www.xiaozonglin.cn/wp-content/uploads/2025/11/Figure_1-300x120.png 300w, https://www.xiaozonglin.cn/wp-content/uploads/2025/11/Figure_1-768x307.png 768w, https://www.xiaozonglin.cn/wp-content/uploads/2025/11/Figure_1-1200x480.png 1200w, https://www.xiaozonglin.cn/wp-content/uploads/2025/11/Figure_1.png 1500w" sizes="auto, (max-width: 1024px) 100vw, 1024px" /></figure>
+<figure data-wp-context="{&quot;imageId&quot;:&quot;69553c09a272c&quot;}" data-wp-interactive="core/image" data-wp-key="69553c09a272c" class="wp-block-image size-large wp-lightbox-container"><img loading="lazy" decoding="async" width="1024" height="410" data-wp-class--hide="state.isContentHidden" data-wp-class--show="state.isContentVisible" data-wp-init="callbacks.setButtonStyles" data-wp-on--click="actions.showLightbox" data-wp-on--load="callbacks.setButtonStyles" data-wp-on-window--resize="callbacks.setButtonStyles" src="https://www.xiaozonglin.cn/wp-content/uploads/2025/11/Figure_1-1024x410.png" alt="" class="wp-image-449" srcset="https://www.xiaozonglin.cn/wp-content/uploads/2025/11/Figure_1-1024x410.png 1024w, https://www.xiaozonglin.cn/wp-content/uploads/2025/11/Figure_1-300x120.png 300w, https://www.xiaozonglin.cn/wp-content/uploads/2025/11/Figure_1-768x307.png 768w, https://www.xiaozonglin.cn/wp-content/uploads/2025/11/Figure_1-1200x480.png 1200w, https://www.xiaozonglin.cn/wp-content/uploads/2025/11/Figure_1.png 1500w" sizes="auto, (max-width: 1024px) 100vw, 1024px" /><button
+			class="lightbox-trigger"
+			type="button"
+			aria-haspopup="dialog"
+			aria-label="放大"
+			data-wp-init="callbacks.initTriggerButton"
+			data-wp-on--click="actions.showLightbox"
+			data-wp-style--right="state.imageButtonRight"
+			data-wp-style--top="state.imageButtonTop"
+		>
+			<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="none" viewBox="0 0 12 12">
+				<path fill="#fff" d="M2 0a2 2 0 0 0-2 2v2h1.5V2a.5.5 0 0 1 .5-.5h2V0H2Zm2 10.5H2a.5.5 0 0 1-.5-.5V8H0v2a2 2 0 0 0 2 2h2v-1.5ZM8 12v-1.5h2a.5.5 0 0 0 .5-.5V8H12v2a2 2 0 0 1-2 2H8Zm2-12a2 2 0 0 1 2 2v2h-1.5V2a.5.5 0 0 0-.5-.5H8V0h2Z" />
+			</svg>
+		</button></figure>
 
 
 
-<figure class="wp-block-image size-large"><img loading="lazy" decoding="async" width="1024" height="577" src="https://www.xiaozonglin.cn/wp-content/uploads/2025/11/Figure_2-1024x577.png" alt="" class="wp-image-450" srcset="https://www.xiaozonglin.cn/wp-content/uploads/2025/11/Figure_2-1024x577.png 1024w, https://www.xiaozonglin.cn/wp-content/uploads/2025/11/Figure_2-300x169.png 300w, https://www.xiaozonglin.cn/wp-content/uploads/2025/11/Figure_2-768x433.png 768w, https://www.xiaozonglin.cn/wp-content/uploads/2025/11/Figure_2-1536x866.png 1536w, https://www.xiaozonglin.cn/wp-content/uploads/2025/11/Figure_2-1200x677.png 1200w, https://www.xiaozonglin.cn/wp-content/uploads/2025/11/Figure_2.png 1706w" sizes="auto, (max-width: 1024px) 100vw, 1024px" /></figure>
+<figure data-wp-context="{&quot;imageId&quot;:&quot;69553c09a2a15&quot;}" data-wp-interactive="core/image" data-wp-key="69553c09a2a15" class="wp-block-image size-large wp-lightbox-container"><img loading="lazy" decoding="async" width="1024" height="577" data-wp-class--hide="state.isContentHidden" data-wp-class--show="state.isContentVisible" data-wp-init="callbacks.setButtonStyles" data-wp-on--click="actions.showLightbox" data-wp-on--load="callbacks.setButtonStyles" data-wp-on-window--resize="callbacks.setButtonStyles" src="https://www.xiaozonglin.cn/wp-content/uploads/2025/11/Figure_2-1024x577.png" alt="" class="wp-image-450" srcset="https://www.xiaozonglin.cn/wp-content/uploads/2025/11/Figure_2-1024x577.png 1024w, https://www.xiaozonglin.cn/wp-content/uploads/2025/11/Figure_2-300x169.png 300w, https://www.xiaozonglin.cn/wp-content/uploads/2025/11/Figure_2-768x433.png 768w, https://www.xiaozonglin.cn/wp-content/uploads/2025/11/Figure_2-1536x866.png 1536w, https://www.xiaozonglin.cn/wp-content/uploads/2025/11/Figure_2-1200x677.png 1200w, https://www.xiaozonglin.cn/wp-content/uploads/2025/11/Figure_2.png 1706w" sizes="auto, (max-width: 1024px) 100vw, 1024px" /><button
+			class="lightbox-trigger"
+			type="button"
+			aria-haspopup="dialog"
+			aria-label="放大"
+			data-wp-init="callbacks.initTriggerButton"
+			data-wp-on--click="actions.showLightbox"
+			data-wp-style--right="state.imageButtonRight"
+			data-wp-style--top="state.imageButtonTop"
+		>
+			<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="none" viewBox="0 0 12 12">
+				<path fill="#fff" d="M2 0a2 2 0 0 0-2 2v2h1.5V2a.5.5 0 0 1 .5-.5h2V0H2Zm2 10.5H2a.5.5 0 0 1-.5-.5V8H0v2a2 2 0 0 0 2 2h2v-1.5ZM8 12v-1.5h2a.5.5 0 0 0 .5-.5V8H12v2a2 2 0 0 1-2 2H8Zm2-12a2 2 0 0 1 2 2v2h-1.5V2a.5.5 0 0 0-.5-.5H8V0h2Z" />
+			</svg>
+		</button></figure>
 
 
 
-<figure class="wp-block-image size-large"><img loading="lazy" decoding="async" width="1024" height="577" src="https://www.xiaozonglin.cn/wp-content/uploads/2025/11/Figure_3-1024x577.png" alt="" class="wp-image-451" srcset="https://www.xiaozonglin.cn/wp-content/uploads/2025/11/Figure_3-1024x577.png 1024w, https://www.xiaozonglin.cn/wp-content/uploads/2025/11/Figure_3-300x169.png 300w, https://www.xiaozonglin.cn/wp-content/uploads/2025/11/Figure_3-768x433.png 768w, https://www.xiaozonglin.cn/wp-content/uploads/2025/11/Figure_3-1536x866.png 1536w, https://www.xiaozonglin.cn/wp-content/uploads/2025/11/Figure_3-1200x677.png 1200w, https://www.xiaozonglin.cn/wp-content/uploads/2025/11/Figure_3.png 1706w" sizes="auto, (max-width: 1024px) 100vw, 1024px" /></figure>
+<figure data-wp-context="{&quot;imageId&quot;:&quot;69553c09a2cf6&quot;}" data-wp-interactive="core/image" data-wp-key="69553c09a2cf6" class="wp-block-image size-large wp-lightbox-container"><img loading="lazy" decoding="async" width="1024" height="577" data-wp-class--hide="state.isContentHidden" data-wp-class--show="state.isContentVisible" data-wp-init="callbacks.setButtonStyles" data-wp-on--click="actions.showLightbox" data-wp-on--load="callbacks.setButtonStyles" data-wp-on-window--resize="callbacks.setButtonStyles" src="https://www.xiaozonglin.cn/wp-content/uploads/2025/11/Figure_3-1024x577.png" alt="" class="wp-image-451" srcset="https://www.xiaozonglin.cn/wp-content/uploads/2025/11/Figure_3-1024x577.png 1024w, https://www.xiaozonglin.cn/wp-content/uploads/2025/11/Figure_3-300x169.png 300w, https://www.xiaozonglin.cn/wp-content/uploads/2025/11/Figure_3-768x433.png 768w, https://www.xiaozonglin.cn/wp-content/uploads/2025/11/Figure_3-1536x866.png 1536w, https://www.xiaozonglin.cn/wp-content/uploads/2025/11/Figure_3-1200x677.png 1200w, https://www.xiaozonglin.cn/wp-content/uploads/2025/11/Figure_3.png 1706w" sizes="auto, (max-width: 1024px) 100vw, 1024px" /><button
+			class="lightbox-trigger"
+			type="button"
+			aria-haspopup="dialog"
+			aria-label="放大"
+			data-wp-init="callbacks.initTriggerButton"
+			data-wp-on--click="actions.showLightbox"
+			data-wp-style--right="state.imageButtonRight"
+			data-wp-style--top="state.imageButtonTop"
+		>
+			<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="none" viewBox="0 0 12 12">
+				<path fill="#fff" d="M2 0a2 2 0 0 0-2 2v2h1.5V2a.5.5 0 0 1 .5-.5h2V0H2Zm2 10.5H2a.5.5 0 0 1-.5-.5V8H0v2a2 2 0 0 0 2 2h2v-1.5ZM8 12v-1.5h2a.5.5 0 0 0 .5-.5V8H12v2a2 2 0 0 1-2 2H8Zm2-12a2 2 0 0 1 2 2v2h-1.5V2a.5.5 0 0 0-.5-.5H8V0h2Z" />
+			</svg>
+		</button></figure>
 
 
 
