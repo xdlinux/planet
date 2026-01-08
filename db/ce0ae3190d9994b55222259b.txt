@@ -1,0 +1,4 @@
+<h2 id="intro-breaking-up-with-my-server">Intro: Breaking Up with My Server</h2>
+<p>Big news: NCC has moved house!</p>
+<p>It started when Alibaba Cloud slid into my DMs like a bureaucratic ex, demanding I fix some ICP filing I forgot years ago. I tried to re-apply multiple times, but got rejected every time (turns out I checked the wrong jurisdiction box&hellip; <strong>massive facepalm</strong>).<br>
+On top of that, my old 200M server was running like a <strong>potato</strong> (This server does not being promised with any mininum bandwith, they just tell you the peak is 200Mbps). It was lagging so hard I thought I was on dial-up. So, I found Hostdare&rsquo;s CN2 GIA route in the US. $12 a month, no lag, and bandwidth that actually works? <strong>Stonks</strong>. 📈</p><hr />
