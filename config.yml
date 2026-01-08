@@ -21,6 +21,8 @@ feeds:
   - "https://hhzm.win/rss.xml"
   - "https://hiangzahoong.github.io/atom.xml"
   - "https://blog.nancunchild.cn/feed/"
+  - "https://blog.nancunchild.cn/en/feed/"
+  - "https://blog.nancunchild.cn/ja/feed/"
   - "https://note.stalomeow.com/rss.xml"
   - "https://guzhengsvt.github.io/zh-cn/index.xml"
   - "https://blog.lolicons.top/sub/rss.xml"
