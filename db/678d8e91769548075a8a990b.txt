@@ -1,0 +1,47 @@
+<p>真正的链接，本不该是一场精打细算的生意。</p>
+<p><a href="https://www.xiaozonglin.cn/swap-system-based-on-equality-principle/">整活：基于对等原则的流量交换系统</a>最先出现在<a href="https://www.xiaozonglin.cn">林林杂语</a>。</p>
+<hr />
+<p>起因是我在“开往-友链接力”项目审核的时候，偶尔遇到一些博客站长非常在意自己的流量，在审核通过之前不把链接挂上去，觉得提前挂是开往占了便宜。被恶心到了，于是我想着做一套基于对等原则的流量交换系统（也就是一个链接跳转），这样链接双方给彼此的流量就是接近的，谁也不占谁的便宜。</p>
+
+
+
+<p>这个系统的功能非常简单，只需要给一个跳转的路由传从哪里来和到哪里去，加一些判断逻辑就可以了。下午四处查文档花了一点时间。</p>
+
+
+
+<p>系统具有以下特性：</p>
+
+
+
+<ul class="wp-block-list">
+<li><strong>静默跳转</strong>：跳转时没有提示页面，非常丝滑</li>
+
+
+
+<li><strong>非对等阻拦</strong>：当流量不对等时对跳转进行阻拦，将访客送回原地址，决不让另一方占任何便宜，做到真正的对等</li>
+</ul>
+
+
+
+<p>流量在交换的过程中可以有20%的透支，也就是一个方向的流量大于另一个方向流量的1.2倍才会阻拦，避免频繁出现阻拦的情况，优化访客体验。</p>
+
+
+
+<p>代码实现得比较简单，计数机制没有区分是不是同一个访客，没有针对访客滥用刷次数建立防护机制。</p>
+
+
+
+<figure class="wp-block-video aligncenter"><video height="1468" style="aspect-ratio: 2560 / 1468;" width="2560" controls src="https://www.xiaozonglin.cn/wp-content/uploads/2026/01/20260116_165934.mp4"></video><figcaption class="wp-element-caption">跳转过程非常丝滑，访客感受不到有中间页面</figcaption></figure>
+
+
+
+<figure class="wp-block-video aligncenter"><video height="1468" style="aspect-ratio: 2560 / 1468;" width="2560" controls src="https://www.xiaozonglin.cn/wp-content/uploads/2026/01/20260116_170256.mp4"></video><figcaption class="wp-element-caption">当流量出现不对等时，中间页面会将访客送回原页面</figcaption></figure>
+
+
+
+<p>“开往-友链接力”项目本来就是一个流量交换项目。且不论流量对不想靠博客赚钱的博主有什么意义，<strong>如果吝惜自己那可怜的流量又想要别人链接给自己流量，这跟贫穷的守财奴有什么区别？</strong></p>
+
+
+
+<p>项目地址：<a href="https://github.com/Xiaozonglin/swap-system-based-on-equality-principle">Xiaozonglin/swap-system-based-on-equality-principle: 基于对等原则的流量交换系统</a></p>
+<p><a href="https://www.xiaozonglin.cn/swap-system-based-on-equality-principle/">整活：基于对等原则的流量交换系统</a>最先出现在<a href="https://www.xiaozonglin.cn">林林杂语</a>。</p>
