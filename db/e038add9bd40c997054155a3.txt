@@ -1,0 +1,2 @@
+One of NCC's old machine is outdated and not support new encryption options beside weak DSS encryption. That is about how NCC repair this and compile a new OpenSSL and OpenSSH on the old machine.<hr /><h2 id="patch-this-and-that">Patch this and that</h2>
+<p>To be honest, NCC has not translate this article from zh-CN to en yet. Cuz NCC is a bit lazy recently.</p>
