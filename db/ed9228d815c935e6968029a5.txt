@@ -234,4 +234,4 @@
 <p><a href="https://github.com/Xiaozonglin/webpage-visit-feeling-score">Xiaozonglin/webpage-visit-feeling-score: 博客访问体验量化评估方法的失败探索尝试</a></p>
 
 
-<ol class="wp-block-footnotes"><li id="e59afa37-c251-49bf-bc65-775dec15493a">孙聪妮.视觉元素在网页设计中的应用与研究[J].卫星电视与宽带多媒体,2019,(19):56-57 <a href="#e59afa37-c251-49bf-bc65-775dec15493a-link" aria-label="跳转到脚注引用 1">↩︎</a></li></ol><p><a href="https://www.xiaozonglin.cn/a-failed-exploratory-attempt-at-quantifying-blog-visit-experience/">博客访问体验量化评估方法的失败探索尝试</a>最先出现在<a href="https://www.xiaozonglin.cn">林林杂语</a>。</p>
+<ol class="wp-block-footnotes"><li id="e59afa37-c251-49bf-bc65-775dec15493a">孙聪妮.视觉元素在网页设计中的应用与研究[J].卫星电视与宽带多媒体,2019,(19):56-57 <a href="#e59afa37-c251-49bf-bc65-775dec15493a-link" aria-label="跳转到脚注引用 1"><img src="https://s.w.org/images/core/emoji/17.0.2/72x72/21a9.png" alt="↩" class="wp-smiley" style="height: 1em; max-height: 1em;" />︎</a></li></ol><p><a href="https://www.xiaozonglin.cn/a-failed-exploratory-attempt-at-quantifying-blog-visit-experience/">博客访问体验量化评估方法的失败探索尝试</a>最先出现在<a href="https://www.xiaozonglin.cn">林林杂语</a>。</p>
