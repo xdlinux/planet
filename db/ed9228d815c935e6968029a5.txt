@@ -171,7 +171,7 @@
 
 
 <div class="wp-block-image">
-<figure class="aligncenter size-full is-resized"><a href="https://www.xiaozonglin.cn/wp-content/uploads/2026/01/image.png"><img fetchpriority="high" decoding="async" width="670" height="892" src="https://www.xiaozonglin.cn/wp-content/uploads/2026/01/image.png" alt="" class="wp-image-659" style="aspect-ratio:0.7511303511303511;width:362px;height:auto" srcset="https://www.xiaozonglin.cn/wp-content/uploads/2026/01/image.png 670w, https://www.xiaozonglin.cn/wp-content/uploads/2026/01/image-225x300.png 225w" sizes="(max-width: 670px) 100vw, 670px" /></a><figcaption class="wp-element-caption">图一 检测结果</figcaption></figure>
+<figure class="aligncenter size-full is-resized"><a href="https://www.xiaozonglin.cn/wp-content/uploads/2026/01/image.png"><img decoding="async" width="670" height="892" src="https://www.xiaozonglin.cn/wp-content/uploads/2026/01/image.png" alt="" class="wp-image-659" style="aspect-ratio:0.7511303511303511;width:362px;height:auto" srcset="https://www.xiaozonglin.cn/wp-content/uploads/2026/01/image.png 670w, https://www.xiaozonglin.cn/wp-content/uploads/2026/01/image-225x300.png 225w" sizes="(max-width: 670px) 100vw, 670px" /></a><figcaption class="wp-element-caption">图一 检测结果</figcaption></figure>
 </div>
 
 
@@ -179,7 +179,7 @@
 
 
 <div class="wp-block-image">
-<figure class="aligncenter size-full"><a href="https://www.xiaozonglin.cn/wp-content/uploads/2026/01/image-1.png"><img decoding="async" width="976" height="628" src="https://www.xiaozonglin.cn/wp-content/uploads/2026/01/image-1.png" alt="" class="wp-image-660" srcset="https://www.xiaozonglin.cn/wp-content/uploads/2026/01/image-1.png 976w, https://www.xiaozonglin.cn/wp-content/uploads/2026/01/image-1-300x193.png 300w, https://www.xiaozonglin.cn/wp-content/uploads/2026/01/image-1-768x494.png 768w" sizes="(max-width: 976px) 100vw, 976px" /></a><figcaption class="wp-element-caption">图二 分数生成代码</figcaption></figure>
+<figure class="aligncenter size-full"><a href="https://www.xiaozonglin.cn/wp-content/uploads/2026/01/image-1.png"><img loading="lazy" decoding="async" width="976" height="628" src="https://www.xiaozonglin.cn/wp-content/uploads/2026/01/image-1.png" alt="" class="wp-image-660" srcset="https://www.xiaozonglin.cn/wp-content/uploads/2026/01/image-1.png 976w, https://www.xiaozonglin.cn/wp-content/uploads/2026/01/image-1-300x193.png 300w, https://www.xiaozonglin.cn/wp-content/uploads/2026/01/image-1-768x494.png 768w" sizes="auto, (max-width: 976px) 100vw, 976px" /></a><figcaption class="wp-element-caption">图二 分数生成代码</figcaption></figure>
 </div>
 
 
@@ -199,7 +199,7 @@
 
 
 <div class="wp-block-image">
-<figure class="aligncenter size-large is-resized"><a href="https://www.xiaozonglin.cn/wp-content/uploads/2026/01/image-2.png"><img decoding="async" width="905" height="1024" src="https://www.xiaozonglin.cn/wp-content/uploads/2026/01/image-2-905x1024.png" alt="" class="wp-image-661" style="aspect-ratio:0.883797795033165;width:546px;height:auto" srcset="https://www.xiaozonglin.cn/wp-content/uploads/2026/01/image-2-905x1024.png 905w, https://www.xiaozonglin.cn/wp-content/uploads/2026/01/image-2-265x300.png 265w, https://www.xiaozonglin.cn/wp-content/uploads/2026/01/image-2-768x869.png 768w, https://www.xiaozonglin.cn/wp-content/uploads/2026/01/image-2-1200x1358.png 1200w, https://www.xiaozonglin.cn/wp-content/uploads/2026/01/image-2.png 1212w" sizes="(max-width: 905px) 100vw, 905px" /></a><figcaption class="wp-element-caption">图三 拿我自己的博客进去测试一下</figcaption></figure>
+<figure class="aligncenter size-large is-resized"><a href="https://www.xiaozonglin.cn/wp-content/uploads/2026/01/image-2.png"><img loading="lazy" decoding="async" width="905" height="1024" src="https://www.xiaozonglin.cn/wp-content/uploads/2026/01/image-2-905x1024.png" alt="" class="wp-image-661" style="aspect-ratio:0.883797795033165;width:546px;height:auto" srcset="https://www.xiaozonglin.cn/wp-content/uploads/2026/01/image-2-905x1024.png 905w, https://www.xiaozonglin.cn/wp-content/uploads/2026/01/image-2-265x300.png 265w, https://www.xiaozonglin.cn/wp-content/uploads/2026/01/image-2-768x869.png 768w, https://www.xiaozonglin.cn/wp-content/uploads/2026/01/image-2-1200x1358.png 1200w, https://www.xiaozonglin.cn/wp-content/uploads/2026/01/image-2.png 1212w" sizes="auto, (max-width: 905px) 100vw, 905px" /></a><figcaption class="wp-element-caption">图三 拿我自己的博客进去测试一下</figcaption></figure>
 </div>
 
 
