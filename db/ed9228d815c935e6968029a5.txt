@@ -171,7 +171,7 @@
 
 
 <div class="wp-block-image">
-<figure class="aligncenter size-full is-resized"><a href="https://www.xiaozonglin.cn/wp-content/uploads/2026/01/image.png"><img decoding="async" width="670" height="892" src="https://www.xiaozonglin.cn/wp-content/uploads/2026/01/image.png" alt="" class="wp-image-659" style="aspect-ratio:0.7511303511303511;width:362px;height:auto" srcset="https://www.xiaozonglin.cn/wp-content/uploads/2026/01/image.png 670w, https://www.xiaozonglin.cn/wp-content/uploads/2026/01/image-225x300.png 225w" sizes="(max-width: 670px) 100vw, 670px" /></a><figcaption class="wp-element-caption">图一 检测结果</figcaption></figure>
+<figure class="aligncenter size-full is-resized"><a href="https://www.xiaozonglin.cn/wp-content/uploads/2026/01/image.png"><img loading="lazy" decoding="async" width="670" height="892" src="https://www.xiaozonglin.cn/wp-content/uploads/2026/01/image.png" alt="" class="wp-image-659" style="aspect-ratio:0.7511303511303511;width:362px;height:auto" srcset="https://www.xiaozonglin.cn/wp-content/uploads/2026/01/image.png 670w, https://www.xiaozonglin.cn/wp-content/uploads/2026/01/image-225x300.png 225w" sizes="auto, (max-width: 670px) 100vw, 670px" /></a><figcaption class="wp-element-caption">图一 检测结果</figcaption></figure>
 </div>
 
 
