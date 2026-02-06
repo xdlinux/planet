@@ -33,7 +33,7 @@
 
 
 <div class="wp-block-image">
-<figure class="aligncenter size-large"><img loading="lazy" decoding="async" width="1024" height="322" src="https://www.xiaozonglin.cn/wp-content/uploads/2025/09/image-1024x322.png" alt="" class="wp-image-382" srcset="https://www.xiaozonglin.cn/wp-content/uploads/2025/09/image-1024x322.png 1024w, https://www.xiaozonglin.cn/wp-content/uploads/2025/09/image-300x94.png 300w, https://www.xiaozonglin.cn/wp-content/uploads/2025/09/image-768x241.png 768w, https://www.xiaozonglin.cn/wp-content/uploads/2025/09/image.png 1111w" sizes="auto, (max-width: 1024px) 100vw, 1024px" /><figcaption class="wp-element-caption">用 OneNote 画的超级丑的图</figcaption></figure>
+<figure class="aligncenter size-large"><img data-recalc-dims="1" loading="lazy" decoding="async" width="580" height="182" src="https://i0.wp.com/www.xiaozonglin.cn/wp-content/uploads/2025/09/image.png?resize=580%2C182&#038;ssl=1" alt="" class="wp-image-382" srcset="https://i0.wp.com/www.xiaozonglin.cn/wp-content/uploads/2025/09/image.png?resize=1024%2C322&amp;ssl=1 1024w, https://i0.wp.com/www.xiaozonglin.cn/wp-content/uploads/2025/09/image.png?resize=300%2C94&amp;ssl=1 300w, https://i0.wp.com/www.xiaozonglin.cn/wp-content/uploads/2025/09/image.png?resize=768%2C241&amp;ssl=1 768w, https://i0.wp.com/www.xiaozonglin.cn/wp-content/uploads/2025/09/image.png?w=1111&amp;ssl=1 1111w" sizes="auto, (max-width: 580px) 100vw, 580px" /><figcaption class="wp-element-caption">用 OneNote 画的超级丑的图</figcaption></figure>
 </div>
 
 
@@ -144,7 +144,7 @@ tree.write('result-tech.xml', encoding = 'utf-8', xml_declaration = True)</code>
 
 
 <div class="wp-block-image">
-<figure class="aligncenter size-full"><img loading="lazy" decoding="async" width="321" height="202" src="https://www.xiaozonglin.cn/wp-content/uploads/2025/09/image-1.png" alt="" class="wp-image-383" srcset="https://www.xiaozonglin.cn/wp-content/uploads/2025/09/image-1.png 321w, https://www.xiaozonglin.cn/wp-content/uploads/2025/09/image-1-300x189.png 300w" sizes="auto, (max-width: 321px) 100vw, 321px" /><figcaption class="wp-element-caption">一句玩笑话</figcaption></figure>
+<figure class="aligncenter size-full"><img data-recalc-dims="1" loading="lazy" decoding="async" width="321" height="202" src="https://i0.wp.com/www.xiaozonglin.cn/wp-content/uploads/2025/09/image-1.png?resize=321%2C202&#038;ssl=1" alt="" class="wp-image-383" srcset="https://i0.wp.com/www.xiaozonglin.cn/wp-content/uploads/2025/09/image-1.png?w=321&amp;ssl=1 321w, https://i0.wp.com/www.xiaozonglin.cn/wp-content/uploads/2025/09/image-1.png?resize=300%2C189&amp;ssl=1 300w" sizes="auto, (max-width: 321px) 100vw, 321px" /><figcaption class="wp-element-caption">一句玩笑话</figcaption></figure>
 </div>
 
 
@@ -156,7 +156,7 @@ tree.write('result-tech.xml', encoding = 'utf-8', xml_declaration = True)</code>
 
 
 <div class="wp-block-image">
-<figure class="aligncenter size-large"><img loading="lazy" decoding="async" width="1024" height="372" src="https://www.xiaozonglin.cn/wp-content/uploads/2025/09/image-2-1024x372.png" alt="" class="wp-image-384" srcset="https://www.xiaozonglin.cn/wp-content/uploads/2025/09/image-2-1024x372.png 1024w, https://www.xiaozonglin.cn/wp-content/uploads/2025/09/image-2-300x109.png 300w, https://www.xiaozonglin.cn/wp-content/uploads/2025/09/image-2-768x279.png 768w, https://www.xiaozonglin.cn/wp-content/uploads/2025/09/image-2-1200x436.png 1200w, https://www.xiaozonglin.cn/wp-content/uploads/2025/09/image-2.png 1522w" sizes="auto, (max-width: 1024px) 100vw, 1024px" /><figcaption class="wp-element-caption">用飞书画的模式图，比较漂亮</figcaption></figure>
+<figure class="aligncenter size-large"><img data-recalc-dims="1" loading="lazy" decoding="async" width="580" height="211" src="https://i0.wp.com/www.xiaozonglin.cn/wp-content/uploads/2025/09/image-2.png?resize=580%2C211&#038;ssl=1" alt="" class="wp-image-384" srcset="https://i0.wp.com/www.xiaozonglin.cn/wp-content/uploads/2025/09/image-2.png?resize=1024%2C372&amp;ssl=1 1024w, https://i0.wp.com/www.xiaozonglin.cn/wp-content/uploads/2025/09/image-2.png?resize=300%2C109&amp;ssl=1 300w, https://i0.wp.com/www.xiaozonglin.cn/wp-content/uploads/2025/09/image-2.png?resize=768%2C279&amp;ssl=1 768w, https://i0.wp.com/www.xiaozonglin.cn/wp-content/uploads/2025/09/image-2.png?resize=1200%2C436&amp;ssl=1 1200w, https://i0.wp.com/www.xiaozonglin.cn/wp-content/uploads/2025/09/image-2.png?w=1522&amp;ssl=1 1522w" sizes="auto, (max-width: 580px) 100vw, 580px" /><figcaption class="wp-element-caption">用飞书画的模式图，比较漂亮</figcaption></figure>
 </div>
 
 
@@ -172,7 +172,7 @@ tree.write('result-tech.xml', encoding = 'utf-8', xml_declaration = True)</code>
 
 
 <div class="wp-block-image">
-<figure class="aligncenter size-large"><img loading="lazy" decoding="async" width="1024" height="445" src="https://www.xiaozonglin.cn/wp-content/uploads/2025/09/image-3-1024x445.png" alt="" class="wp-image-385" srcset="https://www.xiaozonglin.cn/wp-content/uploads/2025/09/image-3-1024x445.png 1024w, https://www.xiaozonglin.cn/wp-content/uploads/2025/09/image-3-300x130.png 300w, https://www.xiaozonglin.cn/wp-content/uploads/2025/09/image-3-768x333.png 768w, https://www.xiaozonglin.cn/wp-content/uploads/2025/09/image-3-1200x521.png 1200w, https://www.xiaozonglin.cn/wp-content/uploads/2025/09/image-3.png 1513w" sizes="auto, (max-width: 1024px) 100vw, 1024px" /></figure>
+<figure class="aligncenter size-large"><img data-recalc-dims="1" loading="lazy" decoding="async" width="580" height="252" src="https://i0.wp.com/www.xiaozonglin.cn/wp-content/uploads/2025/09/image-3.png?resize=580%2C252&#038;ssl=1" alt="" class="wp-image-385" srcset="https://i0.wp.com/www.xiaozonglin.cn/wp-content/uploads/2025/09/image-3.png?resize=1024%2C445&amp;ssl=1 1024w, https://i0.wp.com/www.xiaozonglin.cn/wp-content/uploads/2025/09/image-3.png?resize=300%2C130&amp;ssl=1 300w, https://i0.wp.com/www.xiaozonglin.cn/wp-content/uploads/2025/09/image-3.png?resize=768%2C333&amp;ssl=1 768w, https://i0.wp.com/www.xiaozonglin.cn/wp-content/uploads/2025/09/image-3.png?resize=1200%2C521&amp;ssl=1 1200w, https://i0.wp.com/www.xiaozonglin.cn/wp-content/uploads/2025/09/image-3.png?w=1513&amp;ssl=1 1513w" sizes="auto, (max-width: 580px) 100vw, 580px" /></figure>
 </div>
 
 
