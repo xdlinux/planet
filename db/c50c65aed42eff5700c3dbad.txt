@@ -7,9 +7,9 @@
 这种架构，别说现在的云服务器，就算是二十年前的电脑也能跑得飞快，而且配合 CDN 简直是0成本并行接待，速度起飞。</p>
 <h2 id="hugo初始化">hugo初始化</h2>
 <p>Hugo 不像 WordPress 需要复杂的环境，它只是一个命令行工具。运行这个指令可以直接得到它需要的文件结构：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>hugo new site . --force
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>hugo new site . --force
 </span></span></code></pre></div><p>为了方便后续管理，强烈建议使用 Git 或者你喜欢的版本跟踪器来跟踪整个项目：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>git init
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>git init
 </span></span><span style="display:flex;"><span>git checkout main
 </span></span><span style="display:flex;"><span>git add .
 </span></span><span style="display:flex;"><span>git commit -m <span style="color:#e6db74">&#34;initialize&#34;</span>

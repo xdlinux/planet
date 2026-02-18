@@ -1,11 +1,11 @@
 <h2 id="背景">背景</h2>
 <p>NCC有一些很老的机器，老嵌入式设备和一些CentOS虚拟机，这次就遇到学校安装candence virtuoso软件的机器。原先是RHEL6，在NCC进行换源之后变成了CentOS6.5 。但是仍然有一个大麻烦，SSH版本太老，只支持DSS密钥，当现代终端连接时会出现如下提示：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-powershell" data-lang="powershell"><span style="display:flex;"><span>PS C:\Users\NanCunChild&gt; ssh <span style="color:#ae81ff">192.168</span>.114.246
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-powershell" data-lang="powershell"><span style="display:flex;"><span>PS C:\Users\NanCunChild&gt; ssh <span style="color:#ae81ff">192.168</span>.114.246
 </span></span><span style="display:flex;"><span>Unable to negotiate with <span style="color:#ae81ff">192.168</span>.114.246 port <span style="color:#ae81ff">22</span><span style="color:#960050;background-color:#1e0010">:</span> no matching host key type found. Their offer<span style="color:#960050;background-color:#1e0010">:</span> ssh-rsa,ssh-dss
 </span></span></code></pre></div><p>先说解决方案，一次性使用的话直接输入：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-powershell" data-lang="powershell"><span style="display:flex;"><span>ssh -o HostKeyAlgorithms=+ssh-dss -o PubkeyAcceptedKeyTypes=+ssh-dss xxx.xxx.xxx.xxx
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-powershell" data-lang="powershell"><span style="display:flex;"><span>ssh -o HostKeyAlgorithms=+ssh-dss -o PubkeyAcceptedKeyTypes=+ssh-dss xxx.xxx.xxx.xxx
 </span></span></code></pre></div><p>如果需要经常连接，可以在本机 <code>.ssh/config</code> 中将其进行标记，这样以后都会允许DSS密钥：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>Host {IP} HostKeyAlgorithms +ssh-dss PubkeyAcceptedKeyTypes +ssh-dss
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>Host {IP} HostKeyAlgorithms +ssh-dss PubkeyAcceptedKeyTypes +ssh-dss
 </span></span></code></pre></div><p>如果是那些神神叨叨的网络安全研究人员，此时就会建议你直接升级OpenSSH，以支持最新的加密。但是这个也是最麻烦的，之后NCC给大家整活演示一下。</p>
 <h2 id="ssh的历史">SSH的历史</h2>
 <h3 id="1-开天辟地嗅探器危机与-tatu-的反击-1995">1. 开天辟地：嗅探器危机与 Tatu 的反击 (1995)</h3>

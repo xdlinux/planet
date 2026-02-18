@@ -1,0 +1,60 @@
+<h2 id="pokapoka栏目统一警告">Pokapoka栏目统一警告</h2>
+<p>本栏目所有文章仅供安全研究与技术交流，漏洞已反馈或测试仅限于本人授权范围内的设备。
+请勿尝试修改他人房卡或进入未授权区域，否则可能触犯法律。</p>
+<h2 id="前情提要">前情提要</h2>
+<p>NCC来到酒店，想要在自己出去的一个小时中仍然让空调开着，这样回来就能有最舒适的温度啦。可惜现在酒店的插卡取电装置都使用了读卡器，而不是以前很简单的光探测开关，如果把唯一一张卡放在那里，那NCC就进不去啦。</p>
+<p>盯着手上的那张房卡，NCC想到了好方法，使用NFC复制！把内容都读取出来，然后模拟卡。</p>
+<h2 id="ic卡前置知识">IC卡前置知识</h2>
+<p>别被术语绕晕：卡片技术分级
+​市面上的卡片和称呼五花八门（ID、IC、RFID……），为了看清本质，我们可以按安全等级或者发展历史将它们分为三类：
+​</p>
+<ul>
+<li>
+<p>只读存储卡 (RO Memory Card)</p>
+<ul>
+<li>​代表：磁条卡 (Magnetic Stripe Card) / 只读存储卡 (RO Memory Card)。</li>
+</ul>
+<p>- ​原理：静态明文存储，类似录音带，数据明文记录。</p>
+<ul>
+<li>​安全性：易被 <strong>侧信道攻击</strong> 或 <strong>重放攻击</strong> 。</li>
+</ul>
+</li>
+<li>
+<p>非接触式逻辑加密卡 (Contactless Memory Card)</p>
+<ul>
+<li>
+<p>代表：Mifare Classic (M1)、HID iCLASS Legacy。</p>
+</li>
+<li>
+<p>​特征：遵循 <strong>ISO 14443 Type A</strong> 协议（部分）。</p>
+</li>
+<li>
+<p>​原理：卡内有存储区和简单的逻辑电路。使用专有的 <strong>Crypto-1</strong> 流加密算法。它的本质依然是“存储器”，只是在读写前加了一道“口令验证”。</p>
+</li>
+<li>
+<p>​安全性：验证漏洞，noise分析逆向，硬嵌套攻击。</p>
+</li>
+</ul>
+</li>
+<li>
+<p>双界面CPU卡 (Dual Interface CPU Card)</p>
+<ul>
+<li>
+<p>​代表：身份证、银行 IC 卡、Mifare DESFire。</p>
+</li>
+<li>
+<p>​特征：内置微型单片机（MCU）甚至操作系统（COS）。</p>
+</li>
+<li>
+<p>原理：挑战-响应机制，不是“被读取”，而是“在对话”。读卡器发随机数（Challenge），卡片用私钥计算后回传结果（Response），私钥永不出卡。</p>
+</li>
+<li>
+<p>安全性：极高，目前基本无法通过“复制”破解。方向需要转向芯片漏洞或者攻击服务器来拿到密钥而不是卡本身。</p>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="深入-mifare-classic-1k-s50">深入 Mifare Classic 1K (S50)</h3>
+<p>既然NCC决定动手Hack，那就必须了解我们手中的“靶子”到底长什么样。Mifare Classic 1K（简称M1卡）不仅是酒店房卡，也是很多门禁卡、饭卡的前身。</p>
+<h4 id="1-地图全貌存储结构-memory-structure">1. 地图全貌：存储结构 (Memory Structure)</h4>
+<p>这就好比一个有16个抽屉的柜子，每个抽屉里有4个小盒子。</p><hr />
