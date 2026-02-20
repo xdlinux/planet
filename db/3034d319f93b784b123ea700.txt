@@ -1,1 +1,1 @@
-<p>这是NCC第一次使用Hugo编写博客的尝试，再也不用怕有坏人打NCC的WordPress啦！CDN分发也会超方便！</p><hr />
+<p>这是NCC第一次使用Hugo编写博客的尝试，再也不用怕有坏人打NCC的WordPress啦！CDN分发也会超方便！</p><hr /><p>这是NCC第一次使用Hugo编写博客的尝试，再也不用怕有坏人打NCC的WordPress啦！CDN分发也会超方便！</p>

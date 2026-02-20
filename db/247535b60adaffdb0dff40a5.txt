@@ -1,4 +1,4 @@
-<h2 id="pokapoka栏目统一警告">Pokapoka栏目统一警告</h2>
+敲击敲击IC卡<hr /><h2 id="pokapoka栏目统一警告">Pokapoka栏目统一警告</h2>
 <p>本栏目所有文章仅供安全研究与技术交流，漏洞已反馈或测试仅限于本人授权范围内的设备。
 请勿尝试修改他人房卡或进入未授权区域，否则可能触犯法律。</p>
 <h2 id="前情提要">前情提要</h2>
@@ -57,4 +57,149 @@
 <h3 id="深入-mifare-classic-1k-s50">深入 Mifare Classic 1K (S50)</h3>
 <p>既然NCC决定动手Hack，那就必须了解我们手中的“靶子”到底长什么样。Mifare Classic 1K（简称M1卡）不仅是酒店房卡，也是很多门禁卡、饭卡的前身。</p>
 <h4 id="1-地图全貌存储结构-memory-structure">1. 地图全貌：存储结构 (Memory Structure)</h4>
-<p>这就好比一个有16个抽屉的柜子，每个抽屉里有4个小盒子。</p><hr />
+<p>这就好比一个有16个抽屉的柜子，每个抽屉里有4个小盒子。</p>
+<ul>
+<li>
+<p><strong>总容量</strong>：1024 字节 (1KB)。</p>
+</li>
+<li>
+<p><strong>分区 (Sectors)</strong>：共有 <strong>16个扇区</strong> (Sector 0 - Sector 15)。</p>
+</li>
+<li>
+<p><strong>区块 (Blocks)</strong>：每个扇区有 <strong>4个区块</strong> (Block 0 - Block 3)，每个区块 <strong>16字节</strong>。</p>
+</li>
+</ul>
+<p><strong>特别注意这两个特殊区域：</strong></p>
+<ul>
+<li>
+<p><strong>Sector 0, Block 0 (厂商块/Manufacturer Block)</strong>：</p>
+<ul>
+<li>
+<p>这是卡片的“身份证”。包含唯一标识符和厂商数据。</p>
+</li>
+<li>
+<p><strong>出厂固化</strong>：在正规卡上，这里是<strong>只读</strong>的。</p>
+</li>
+<li>
+<p><strong>黑客特供</strong>：市面上的“UID卡”或“CUID卡”可以通过特殊指令修改这里，从而完美克隆一张卡片的ID。</p>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>每个扇区的 Block 3 (尾块/Sector Trailer)</strong>：</p>
+<ul>
+<li>
+<p>这是每个扇区的“控制室”。绝对不能乱写，否则扇区会锁死变砖。</p>
+</li>
+<li>
+<p>结构如下： <code>[ Key A (6字节) ] [ 存取控制位 (4字节) ] [ Key B (6字节) ]</code></p>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="2-加密与验证crypto-1-协议">2. 加密与验证：Crypto-1 协议</h4>
+<p>M1卡不像U盘插上就能读，它和读卡器之间有一个“对暗号”的过程。</p>
+<ul>
+<li>
+<p><strong>算法</strong>：<strong>Crypto-1</strong>。这是一个私有的流加密算法。</p>
+</li>
+<li>
+<p><strong>流程</strong>：</p>
+<ol>
+<li>
+<p>读卡器呼叫卡片。</p>
+</li>
+<li>
+<p>卡片发送随机数（Challenge）。</p>
+</li>
+<li>
+<p>读卡器用密钥（Key A或Key B）加密这个随机数并寄回。</p>
+</li>
+<li>
+<p>卡片验证，如果正确，双方建立加密通道。</p>
+</li>
+</ol>
+</li>
+<li>
+<p><strong>漏洞</strong>：NCC使用的 Flipper Zero 之所以能秒解，是因为Crypto-1算法的随机数生成器（PRNG）极其脆弱。通过 **Nested Attack ** 或 <strong>Darkside Attack</strong>，可以在不知道密码的情况下，利用漏洞反推密钥。</p>
+</li>
+</ul>
+<h4 id="3-核心机制存取控制位-access-bits">3. 核心机制：存取控制位 (Access Bits)</h4>
+<p>在每个扇区的 Block 3 中，中间那 4 个字节决定了谁有资格读写数据。</p>
+<ul>
+<li>
+<p><strong>默认值</strong>：<code>FF 07 80 69</code></p>
+<ul>
+<li>这意味着：Key A 是万能钥匙（可读写所有数据，可修改Key B），Key B 也是万能的。</li>
+</ul>
+</li>
+<li>
+<p><strong>危险操作</strong>：控制位有冗余校验机制（正反存）。如果你算错了控制位并写入，这个扇区就会<strong>永久锁死</strong>，再也无法认证（这就是传说中的“写死卡”）。</p>
+</li>
+</ul>
+<h4 id="4-校验位规则详解-the-checksum-rules">4. 校验位规则详解 (The Checksum Rules)</h4>
+<p>这是NCC最关心的部分。卡片里其实藏着两层校验：</p>
+<p><strong>(1) 物理层校验：BCC (Block Check Character)</strong> 这位于 <strong>Sector 0, Block 0</strong> 的第 5 个字节。它的作用是验证 UID 是否传输出错。</p>
+<ul>
+<li>
+<p><strong>规则</strong>：<strong>异或校验 (XOR Checksum)</strong>。</p>
+</li>
+<li>
+<p><strong>公式</strong>：<code>UID0 ^ UID1 ^ UID2 ^ UID3 = BCC</code></p>
+</li>
+<li>
+<p><strong>例子</strong>：如果 UID 是 <code>11 22 33 44</code>，那么 BCC = <code>11 ^ 22 ^ 33 ^ 44</code>。如果不符合这个规则，读卡器连理都不理这张卡。</p>
+</li>
+</ul>
+<p>既然有13个扇区，那有很多空间放东西，可以弱水三千只取一瓢饮，只用一个扇区，也可以全部扇区都用上。为了工程上的方便，往往只用一个扇区，重要信息再加密一下。</p>
+<h2 id="pokapoka">Pokapoka</h2>
+<p>使用flipper zero的NFC读取功能往上面一放，发现它马上通过默认密码找到了几乎所有扇区的密钥并解密了数据。但是对于11扇区却遍历了整个小词典也没找到，看来不是各种大厂家的常用密码，接下来我们要通过攻击读卡器来尝试抓取读卡器找卡要11扇区内容时请求是什么。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>MF Classic System Dictionary
+</span></span><span style="display:flex;"><span>Unlocking sector: 11
+</span></span><span style="display:flex;"><span>---1860/3824---
+</span></span><span style="display:flex;"><span>Keys found: 30/32
+</span></span><span style="display:flex;"><span>Sectors Read: 15/16
+</span></span><span style="display:flex;"><span>@ Skip
+</span></span></code></pre></div><p>在decrypt failed界面按一下skip，然后会有一个extract选项，选中它，然后靠近读卡器进行抓包，抓到之后为了速度就直接传到手机上进行解密，目前手机算力已经能轻松应对这种运算了。5秒左右就能完成解算，如果让flipper zero本地运算则需要大约20分钟。解算完成后会提示已将密钥放入词典（吐槽这个功能，怎么什么都往词典里放，整的卡多了会变慢，太不优雅了）。
+完成后，再次使用NFC读取功能靠近卡片，此时会提示全部解密成功。整个卡的数据完全拿到，可以进行emulate功能冒充房卡了。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>Mfkey32 (Extract MF Keys)
+</span></span><span style="display:flex;"><span>1 New Key added to User Dict.
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>89E65C89E65C
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Done
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Calculated Keys (5)
+</span></span><span style="display:flex;"><span>Sector 11 - Key A - 89E65C89E65C
+</span></span><span style="display:flex;"><span>Sector 11 - Key A - 89E65C89E65C
+</span></span><span style="display:flex;"><span>Sector 11 - Key A - 89E65C89E65C
+</span></span><span style="display:flex;"><span>Sector 11 - Key A - 89E65C89E65C
+</span></span><span style="display:flex;"><span>Sector 11 - Key A - 89E65C89E65C
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Unique (1)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>89E65C89E65C
+</span></span></code></pre></div><p>接下来可以找一个空白UID卡直接使用flipper zero进行写入，不过身上没有携带这个（下次得记得至少带两张），于是转向另一个方向：逆向内容。
+dump一下数据，抓到的内容如下：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>Sector: 10
+</span></span><span style="display:flex;"><span>40 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+</span></span><span style="display:flex;"><span>41 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+</span></span><span style="display:flex;"><span>42 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+</span></span><span style="display:flex;"><span>43 FF FF FF FF FF FF FF 07 80 69 FF FF FF FF FF FF
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Sector: 11
+</span></span><span style="display:flex;"><span>44 A4 2D 27 F1 EE 02 91 6B 00 00 00 00 00 00 00 00
+</span></span><span style="display:flex;"><span>45 00 21 1A 02 05 0F 30 1A 02 06 0F 00 08 03 09 00
+</span></span><span style="display:flex;"><span>46 00 00 00 00 00 00 00 00 00 00 00 00 00 E6 5C AA
+</span></span><span style="display:flex;"><span>47 89 E6 5C 89 E6 5C 78 77 88 69 ?? ?? ?? ?? ?? ??
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Sector: 12
+</span></span><span style="display:flex;"><span>48 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+</span></span><span style="display:flex;"><span>49 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+</span></span><span style="display:flex;"><span>50 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+</span></span><span style="display:flex;"><span>51 FF FF FF FF FF FF FF 07 80 69 FF FF FF FF FF FF
+</span></span></code></pre></div><p>NCC住在309号房间，订房日期为2026年2月5日到6日，能看到44区块应该是卡的相关ID，以及住房软件的配套识别ID。
+观察45区块， Hex 数据 <code>1A 02 05</code>，这显然采用了BCD 编码，对应日期 <code>26-02-05</code>。紧随其后的 <code>08 03 09</code> 则直接映射了楼层信息为8楼309室。</p>
+<p>值得注意的是 Block 46 的数据结构。在修改了日期数据后，若直接写入卡片通常会导致刷卡失败，这暗示 Block 46 存储了用于完整性验证的校验和。如果真的要免费续住或者弄出万能卡，需要分析更多样本或者逆向管理软件重算校验位完成完美伪造。</p>
+<p>第47区块的为key A，这里还能看到内容就是 <em>89 E6 5C 89 E6 5C</em> ，三个字节重复了一次（这都要偷懒），随后三位 <em>78 77 88</em> 为存取控制位，确定能读取和修改什么，它的规则是“读取鉴权位”-“存储鉴权位”-“密码修改鉴权位”。</p>
+<p>我们可以合理推断，改动这个2月6日的终止日期就可以让我有一个这个房间的永久卡。修改房间地址就可以打开任意房间的门，这让我有点想起我之前玩的名叫「else heart.break()」游戏，弄清了世界原理，所有的门都是敞开的啦。</p>
