@@ -108,4 +108,8 @@
 
 
 <p>文毕。</p>
+
+
+
+<p><strong>本文实验均在许可条件下进行，实验操作仅限在自有设备上实验，未经授权对公共网络或他人设备实施该行为属于违法犯罪。</strong></p>
 <p><a href="https://www.xiaozonglin.cn/acrylic-wifi-phishing/">使用 Acrylic 复现百团大战 WiFi 钓鱼攻击：关于 Klutton 学长记录的补充</a>最先出现在<a href="https://www.xiaozonglin.cn">林林杂语</a>。</p>
