@@ -1,0 +1,1 @@
+(*/ω＼*)<hr /><p>根据应用包名抓取日志：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">adb shell pidof -s [package name]</span><br><span class="line">adb logcat -v color --pid=[pid]</span><br></pre></td></tr></table></figure>
