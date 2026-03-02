@@ -1,0 +1,93 @@
+<p>我对开往项目的未来充满信心，我相信项目将迎来更辉煌的篇章。</p>
+<p><a href="https://www.xiaozonglin.cn/resignation-from-the-position-of-maintenance-team-lead-of-the-travellings-project/">关于辞去“开往友链接力”项目维护组负责人的辞呈</a>最先出现在<a href="https://www.xiaozonglin.cn">林林杂语</a>。</p>
+<hr />
+<p>亲爱的开往项目社区，<br>尊敬的项目创始人逊狼，<br>维护组、巡查组的各位同事们：</p>
+
+
+
+<p>我在此宣布，我将在不久后辞去开往项目维护组负责人一职。</p>
+
+
+
+<p>在我负责开往项目各项事务的四年多来，我受到了来自维护组的同事、博主、网友以及家人的鼓励和支持。他们的支持让我备受鼓舞，坚持在维护项目这条路上走下来。能与各位一起改进开往项目，是我的荣幸。在这里，我对与我并肩处理项目事务的维护组成员、利用零碎时间为项目做贡献的巡查组成员、向我们提出宝贵意见的社区成员、在我遇到困难时给予支持的家人，以及所有使用开往、向我们反馈问题的访客，表示由衷的敬意和衷心的感谢。</p>
+
+
+
+<p>在大家的共同努力下，开往官网变得更加美观，跳转页更加多样，项目的知名度也稳步提升。截至撰写本辞呈时，项目仓库的 Star 数量已经突破 1500 个。我在浏览博客留下评论时，偶尔遇到认出我的博主；也欣慰地看到，许多博主将开往作为发现同好、串门交流的窗口。这一切都让我深感自豪。</p>
+
+
+
+<p>为确保项目平稳过渡，我已制定以下计划：</p>
+
+
+
+<ol start="1" class="wp-block-list">
+<li>项目现状：项目的代码、议题和讨论均托管在 GitHub 上，目前服务稳定，状态良好。</li>
+
+
+
+<li>继任者：根据项目运维规定，并经过慎重考量，我提名 Kegongteng 接任项目维护组的负责人。他自 2024 年 4 月起加入维护组，长期负责项目的文案工作，熟悉项目各方面的情况。我对他稳步推进改革、沉着应对挑战的能力充满信心，并将全力支持他完成过渡。</li>
+
+
+
+<li>过渡期：接下来的一段时间里，我将作为顾问协助 Kegongteng 熟悉各项职责，日常决策将由他牵头负责。</li>
+
+
+
+<li>权限移交：开往的组织权限将在本周内完成移交。域名、服务器等关键基础设施的移交方式，将由维护组后续根据需求共同商议决定。</li>
+</ol>
+
+
+
+<p>在项目的成长过程中，我们听到了来自社区的各种声音，其中既有鼓励也有批评。这些不同的视角，始终是推动开往前行的宝贵动力。我深信，一个健康的开源项目正是在倾听、讨论与迭代中不断完善的。此刻，虽然我选择卸下负责人的职责，但这份对项目“孩子”般的珍视之情丝毫未减。我将继续以社区成员的身份，关注并支持开往的未来发展。大家仍可通过我的社交媒体或个人博客与我联系。</p>
+
+
+
+<p>我对开往项目的未来充满信心，我相信项目将迎来更辉煌的篇章。</p>
+
+
+
+<p>最后，再次致以我最诚挚的谢意。</p>
+
+
+
+<p>祝好， </p>
+
+
+
+<p class="has-text-align-right">林林</p>
+
+
+<div class="wp-block-image">
+<figure data-wp-context="{&quot;imageId&quot;:&quot;69a3fe4385aea&quot;}" data-wp-interactive="core/image" data-wp-key="69a3fe4385aea" class="aligncenter size-large wp-lightbox-container"><picture loading="lazy" decoding="async" data-wp-class--hide="state.isContentHidden" data-wp-class--show="state.isContentVisible" data-wp-init="callbacks.setButtonStyles" data-wp-on--click="actions.showLightbox" data-wp-on--load="callbacks.setButtonStyles" data-wp-on-window--resize="callbacks.setButtonStyles" class="wp-image-693"><source type="image/avif" srcset="https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/02/43c4fb69586e6abd97290d23764cb7a4-724x1024.jpg.avif 724w, https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/02/43c4fb69586e6abd97290d23764cb7a4-212x300.jpg.avif 212w, https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/02/43c4fb69586e6abd97290d23764cb7a4-768x1086.jpg.avif 768w, https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/02/43c4fb69586e6abd97290d23764cb7a4-1086x1536.jpg.avif 1086w, https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/02/43c4fb69586e6abd97290d23764cb7a4-1448x2048.jpg.avif 1448w, https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/02/43c4fb69586e6abd97290d23764cb7a4-1200x1697.jpg.avif 1200w, https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/02/43c4fb69586e6abd97290d23764cb7a4.jpg.avif 1786w" sizes="auto, (max-width: 724px) 100vw, 724px"/><source type="image/webp" srcset="https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/02/43c4fb69586e6abd97290d23764cb7a4-724x1024.jpg.webp 724w, https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/02/43c4fb69586e6abd97290d23764cb7a4-212x300.jpg.webp 212w, https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/02/43c4fb69586e6abd97290d23764cb7a4-768x1086.jpg.webp 768w, https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/02/43c4fb69586e6abd97290d23764cb7a4-1086x1536.jpg.webp 1086w, https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/02/43c4fb69586e6abd97290d23764cb7a4-1448x2048.jpg.webp 1448w, https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/02/43c4fb69586e6abd97290d23764cb7a4-1200x1697.jpg.webp 1200w, https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/02/43c4fb69586e6abd97290d23764cb7a4.jpg.webp 1786w" sizes="auto, (max-width: 724px) 100vw, 724px"/><img loading="lazy" decoding="async" width="724" height="1024" data-wp-class--hide="state.isContentHidden" data-wp-class--show="state.isContentVisible" data-wp-init="callbacks.setButtonStyles" data-wp-on--click="actions.showLightbox" data-wp-on--load="callbacks.setButtonStyles" data-wp-on-window--resize="callbacks.setButtonStyles" src="https://www.xiaozonglin.cn/wp-content/uploads/2026/02/43c4fb69586e6abd97290d23764cb7a4-724x1024.jpg" alt="" class="wp-image-693" srcset="https://www.xiaozonglin.cn/wp-content/uploads/2026/02/43c4fb69586e6abd97290d23764cb7a4-724x1024.jpg 724w, https://www.xiaozonglin.cn/wp-content/uploads/2026/02/43c4fb69586e6abd97290d23764cb7a4-212x300.jpg 212w, https://www.xiaozonglin.cn/wp-content/uploads/2026/02/43c4fb69586e6abd97290d23764cb7a4-768x1086.jpg 768w, https://www.xiaozonglin.cn/wp-content/uploads/2026/02/43c4fb69586e6abd97290d23764cb7a4-1086x1536.jpg 1086w, https://www.xiaozonglin.cn/wp-content/uploads/2026/02/43c4fb69586e6abd97290d23764cb7a4-1448x2048.jpg 1448w, https://www.xiaozonglin.cn/wp-content/uploads/2026/02/43c4fb69586e6abd97290d23764cb7a4-1200x1697.jpg 1200w, https://www.xiaozonglin.cn/wp-content/uploads/2026/02/43c4fb69586e6abd97290d23764cb7a4.jpg 1786w" sizes="auto, (max-width: 724px) 100vw, 724px"/></picture><button
+			class="lightbox-trigger"
+			type="button"
+			aria-haspopup="dialog"
+			aria-label="放大"
+			data-wp-init="callbacks.initTriggerButton"
+			data-wp-on--click="actions.showLightbox"
+			data-wp-style--right="state.imageButtonRight"
+			data-wp-style--top="state.imageButtonTop"
+		>
+			<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="none" viewBox="0 0 12 12">
+				<path fill="#fff" d="M2 0a2 2 0 0 0-2 2v2h1.5V2a.5.5 0 0 1 .5-.5h2V0H2Zm2 10.5H2a.5.5 0 0 1-.5-.5V8H0v2a2 2 0 0 0 2 2h2v-1.5ZM8 12v-1.5h2a.5.5 0 0 0 .5-.5V8H12v2a2 2 0 0 1-2 2H8Zm2-12a2 2 0 0 1 2 2v2h-1.5V2a.5.5 0 0 0-.5-.5H8V0h2Z" />
+			</svg>
+		</button></figure>
+</div>
+
+<div class="wp-block-image">
+<figure data-wp-context="{&quot;imageId&quot;:&quot;69a3fe43863bd&quot;}" data-wp-interactive="core/image" data-wp-key="69a3fe43863bd" class="aligncenter size-large wp-lightbox-container"><picture loading="lazy" decoding="async" data-wp-class--hide="state.isContentHidden" data-wp-class--show="state.isContentVisible" data-wp-init="callbacks.setButtonStyles" data-wp-on--click="actions.showLightbox" data-wp-on--load="callbacks.setButtonStyles" data-wp-on-window--resize="callbacks.setButtonStyles" class="wp-image-694"><source type="image/avif" srcset="https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/02/d689045b2c3837e0d08b16c5ad7df0ab-724x1024.jpg.avif 724w, https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/02/d689045b2c3837e0d08b16c5ad7df0ab-212x300.jpg.avif 212w, https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/02/d689045b2c3837e0d08b16c5ad7df0ab-768x1086.jpg.avif 768w, https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/02/d689045b2c3837e0d08b16c5ad7df0ab-1086x1536.jpg.avif 1086w, https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/02/d689045b2c3837e0d08b16c5ad7df0ab-1448x2048.jpg.avif 1448w, https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/02/d689045b2c3837e0d08b16c5ad7df0ab-1200x1697.jpg.avif 1200w, https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/02/d689045b2c3837e0d08b16c5ad7df0ab.jpg.avif 1786w" sizes="auto, (max-width: 724px) 100vw, 724px"/><source type="image/webp" srcset="https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/02/d689045b2c3837e0d08b16c5ad7df0ab-724x1024.jpg.webp 724w, https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/02/d689045b2c3837e0d08b16c5ad7df0ab-212x300.jpg.webp 212w" sizes="auto, (max-width: 724px) 100vw, 724px"/><img loading="lazy" decoding="async" width="724" height="1024" data-wp-class--hide="state.isContentHidden" data-wp-class--show="state.isContentVisible" data-wp-init="callbacks.setButtonStyles" data-wp-on--click="actions.showLightbox" data-wp-on--load="callbacks.setButtonStyles" data-wp-on-window--resize="callbacks.setButtonStyles" src="https://www.xiaozonglin.cn/wp-content/uploads/2026/02/d689045b2c3837e0d08b16c5ad7df0ab-724x1024.jpg" alt="" class="wp-image-694" srcset="https://www.xiaozonglin.cn/wp-content/uploads/2026/02/d689045b2c3837e0d08b16c5ad7df0ab-724x1024.jpg 724w, https://www.xiaozonglin.cn/wp-content/uploads/2026/02/d689045b2c3837e0d08b16c5ad7df0ab-212x300.jpg 212w, https://www.xiaozonglin.cn/wp-content/uploads/2026/02/d689045b2c3837e0d08b16c5ad7df0ab-768x1086.jpg 768w, https://www.xiaozonglin.cn/wp-content/uploads/2026/02/d689045b2c3837e0d08b16c5ad7df0ab-1086x1536.jpg 1086w, https://www.xiaozonglin.cn/wp-content/uploads/2026/02/d689045b2c3837e0d08b16c5ad7df0ab-1448x2048.jpg 1448w, https://www.xiaozonglin.cn/wp-content/uploads/2026/02/d689045b2c3837e0d08b16c5ad7df0ab-1200x1697.jpg 1200w, https://www.xiaozonglin.cn/wp-content/uploads/2026/02/d689045b2c3837e0d08b16c5ad7df0ab.jpg 1786w" sizes="auto, (max-width: 724px) 100vw, 724px"/></picture><button
+			class="lightbox-trigger"
+			type="button"
+			aria-haspopup="dialog"
+			aria-label="放大"
+			data-wp-init="callbacks.initTriggerButton"
+			data-wp-on--click="actions.showLightbox"
+			data-wp-style--right="state.imageButtonRight"
+			data-wp-style--top="state.imageButtonTop"
+		>
+			<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="none" viewBox="0 0 12 12">
+				<path fill="#fff" d="M2 0a2 2 0 0 0-2 2v2h1.5V2a.5.5 0 0 1 .5-.5h2V0H2Zm2 10.5H2a.5.5 0 0 1-.5-.5V8H0v2a2 2 0 0 0 2 2h2v-1.5ZM8 12v-1.5h2a.5.5 0 0 0 .5-.5V8H12v2a2 2 0 0 1-2 2H8Zm2-12a2 2 0 0 1 2 2v2h-1.5V2a.5.5 0 0 0-.5-.5H8V0h2Z" />
+			</svg>
+		</button></figure>
+</div><p><a href="https://www.xiaozonglin.cn/resignation-from-the-position-of-maintenance-team-lead-of-the-travellings-project/">关于辞去“开往友链接力”项目维护组负责人的辞呈</a>最先出现在<a href="https://www.xiaozonglin.cn">林林杂语</a>。</p>

@@ -1,0 +1,73 @@
+<p>记录我升级鸿蒙6系统后的一些体验。</p>
+<p><a href="https://www.xiaozonglin.cn/harmonyos-6/">HarmonyOS 6初体验</a>最先出现在<a href="https://www.xiaozonglin.cn">林林杂语</a>。</p>
+<hr />
+<p>晚上，咖啡豆子突然问我：“你手机用的是华为吗？有升级 HarmonyOS 6 吗？”起初注意过设置里有升级鸿蒙 6 公测版的选项，但没关注。如今被问到，才在网上看看，群里问问。去年春节买的手机如今也可以用上鸿蒙操作系统了。</p>
+
+
+
+<p>从安卓的鸿蒙 4 升级到鸿蒙 6，升级前我有一些顾虑：</p>
+
+
+
+<ul class="wp-block-list">
+<li>应用数据会丢吗？</li>
+
+
+
+<li>学校要求的软件能否兼容？</li>
+
+
+
+<li>没有备案的软件可以使用吗？</li>
+
+
+
+<li>……</li>
+</ul>
+
+
+
+<p>咖啡豆子晚上因为忍不住好奇就先更新了，我早上找了一些回答，问咖啡豆子，明确了一些信息：</p>
+
+
+
+<ul class="wp-block-list">
+<li>在更新之前系统会进行数据备份，开机后使用微信会自动回复聊天记录，软件数据不会丢。</li>
+
+
+
+<li>暂不支持鸿蒙的应用会变成“卓易通”版的应用，软件数据也不会丢，功能也都能正常使用，再也不怕把 2Fa 软件里的数据丢掉了。</li>
+
+
+
+<li>鸿蒙操作系统的应用商店有我们学校使用的定制款学习通，至于能不能签到就要开学之后试。</li>
+</ul>
+
+
+
+<p>早上，带着一些忐忑，我点下那个更新按钮。手机自己进行下载、备份、安装，整个流程用时不短，备份时还不能切屏，好在我没有什么要用手机处理的事情。接近中午，手机才向我展现出“鸿蒙版”的新面目。</p>
+
+
+
+<p>新系统，微信、QQ、支付宝…几乎所有应用都需要重新登录。鸿蒙最开始惊艳我的一点是：输入法在将短信收到的验证码填进去之后会随即把短信标为已读并划去通知。这个体验点真的很小，虽然我手动把消息划掉也用不了多少时间，但真方便不少。</p>
+
+
+
+<p>临近中午用网易云音乐听歌，虽然网易云音乐还是安卓版，但体验上优化不少。我不需要进入网易云音乐就可以实现音乐的操控。比起此前将音乐控制放在控制中心，这样我连下划调出控制中心的步骤都省了。</p>
+
+
+<div class="wp-block-image">
+<figure class="aligncenter size-large"><picture loading="lazy" decoding="async" class="wp-image-892"><source type="image/avif" srcset="https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/02/e43f0f5428fbbe814a3642e2106c39d6-1024x173.jpg.avif 1024w, https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/02/e43f0f5428fbbe814a3642e2106c39d6-300x51.jpg.avif 300w, https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/02/e43f0f5428fbbe814a3642e2106c39d6-768x130.jpg.avif 768w, https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/02/e43f0f5428fbbe814a3642e2106c39d6-1200x203.jpg.avif 1200w, https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/02/e43f0f5428fbbe814a3642e2106c39d6.jpg.avif 1224w" sizes="auto, (max-width: 1024px) 100vw, 1024px"/><source type="image/webp" srcset="https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/02/e43f0f5428fbbe814a3642e2106c39d6-1024x173.jpg.webp 1024w, https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/02/e43f0f5428fbbe814a3642e2106c39d6-300x51.jpg.webp 300w, https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/02/e43f0f5428fbbe814a3642e2106c39d6-768x130.jpg.webp 768w, https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/02/e43f0f5428fbbe814a3642e2106c39d6-1200x203.jpg.webp 1200w, https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/02/e43f0f5428fbbe814a3642e2106c39d6.jpg.webp 1224w" sizes="auto, (max-width: 1024px) 100vw, 1024px"/><img loading="lazy" decoding="async" width="1024" height="173" src="https://www.xiaozonglin.cn/wp-content/uploads/2026/02/e43f0f5428fbbe814a3642e2106c39d6-1024x173.jpg" alt="" class="wp-image-892" srcset="https://www.xiaozonglin.cn/wp-content/uploads/2026/02/e43f0f5428fbbe814a3642e2106c39d6-1024x173.jpg 1024w, https://www.xiaozonglin.cn/wp-content/uploads/2026/02/e43f0f5428fbbe814a3642e2106c39d6-300x51.jpg 300w, https://www.xiaozonglin.cn/wp-content/uploads/2026/02/e43f0f5428fbbe814a3642e2106c39d6-768x130.jpg 768w, https://www.xiaozonglin.cn/wp-content/uploads/2026/02/e43f0f5428fbbe814a3642e2106c39d6-1200x203.jpg 1200w, https://www.xiaozonglin.cn/wp-content/uploads/2026/02/e43f0f5428fbbe814a3642e2106c39d6.jpg 1224w" sizes="auto, (max-width: 1024px) 100vw, 1024px"/></picture><figcaption class="wp-element-caption">感觉像是苹果的灵动岛？</figcaption></figure>
+</div>
+
+
+<p>听说 QQ 和微信少了很多功能，如今用了一天，并没有感觉到什么不方便。微信的消息通知还是跟安卓时的一样，估计是我禁止自启动了。欸，鸿蒙 6 好像连应用启动管理的设置都没有了（都是系统来管的嘛）。</p>
+
+
+
+<p>下拉呼出通知栏，解锁手机，滑动退出这些操作都很丝滑。在鸿蒙用安卓应用（比如 Chrome）感觉有些问题，我在编辑文章的时候经常触发黑屏。</p>
+
+
+
+<p>目前总的来说，鸿蒙系统惊艳了我，给不时要输验证码的我方便不少，流畅的使用体验也让我舒心不少。</p>
+<p><a href="https://www.xiaozonglin.cn/harmonyos-6/">HarmonyOS 6初体验</a>最先出现在<a href="https://www.xiaozonglin.cn">林林杂语</a>。</p>
