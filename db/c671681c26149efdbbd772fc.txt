@@ -1,0 +1,571 @@
+<img src="https://s.panlai.com/zb_users/upload/2025/12/bizhihui_com_202512251766676307400401.jpg-arthumbs" alt="Featured image of post 绕过某邦企业壳 Root/Frida 检测" /><p>本文基于 <a class="link" href="https://xiaoeeyu.github.io/2025/06/05/%E7%BB%95%E8%BF%87%E6%9F%90%E9%82%A6%E4%BC%81%E4%B8%9A%E5%A3%B3root%E3%80%81frida%E6%A3%80%E6%B5%8B/"  target="_blank" rel="noopener"
+    >xiaoeeyu 的文章</a> 做了一次复现，主要记录我自己的分析过程和实践结果。</p>
+<h2 id="0x00---环境">0x00   环境
+</h2><ul>
+<li><strong>设备</strong>: Xiaomi MI 8（Android 10，已 Root）</li>
+<li><strong>工具</strong>: Frida 17.3.2</li>
+<li><strong>App 版本</strong>: v5.12.0</li>
+</ul>
+<h2 id="0x01-查壳与威胁建模">0x01 查壳与威胁建模
+</h2><p>使用 <code>ApkCheckPack</code> 对目标 APK 进行全面扫描，结果如下：
+<img src="https://raw.githubusercontent.com/fanshanng/blog_picture/master/20260310161515.png"
+	
+	
+	
+	loading="lazy"
+	
+	
+></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cmd" data-lang="cmd"><span class="line"><span class="cl">APK检测工具 - 扫描配置:
+</span></span><span class="line"><span class="cl">- 检测类型: ROOT(true) 模拟器(true) 反调试(true) 代理(true) SDK(true) ...
+</span></span><span class="line"><span class="cl">...
+</span></span><span class="line"><span class="cl">- 加固特征扫描结果
+</span></span><span class="line"><span class="cl">    - Soname  梆梆安全（定制版） -<span class="p">&gt;</span> lib/arm64-v8a/libDexHelper.so
+</span></span><span class="line"><span class="cl">    - Soname  梆梆安全（企业版） -<span class="p">&gt;</span> lib/arm64-v8a/libDexHelper.so
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">- 安全检测特征扫描结果
+</span></span><span class="line"><span class="cl">    - ROOT检测特征: 检测 su 文件 (/sbin/su, /system/xbin/su...), Magisk, SuperSU 等
+</span></span><span class="line"><span class="cl">    - 模拟器检测特征: 检测 qemu_pipe, goldfish 内核, 默认 IMEI 等
+</span></span><span class="line"><span class="cl">    - 反调试检测特征: 检测 TracerPid, ro.debuggable, Frida-gadget, XposedBridge 等
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><strong>分析结论</strong>：</p>
+<ol>
+<li><strong>加固厂商</strong>：确认为 <strong>梆梆安全 (BangBang)</strong> 企业定制版。核心逻辑在 <code>libDexHelper.so</code> 中。</li>
+<li><strong>防御机制</strong>：
+<ul>
+<li><strong>Root 检测</strong>：覆盖了文件路径、包名和属性检测。这也是需要 Shamiko 的主要原因。</li>
+<li><strong>环境检测</strong>：包含模拟器和反调试检测。</li>
+<li><strong>第三方 SDK</strong>：集成了腾讯云、阿里实人认证等 SDK，这些 SDK 本身也可能带有一定的安全校验，增加逆向干扰。</li>
+</ul>
+</li>
+</ol>
+<h2 id="0x02-初步分析">0x02 初步分析
+</h2><p>打开应用后，很明显出现了 Root 检测提示。
+<img src="https://raw.githubusercontent.com/fanshanng/blog_picture/master/20260309184048.png"
+	
+	
+	
+	loading="lazy"
+	
+	
+></p>
+<p>采用隐藏 Magisk + <a class="link" href="https://magiskcn.com/shamiko-install.html"  target="_blank" rel="noopener"
+    >Shamiko</a> 的方式来绕过 Root 检测：隐藏 Magisk，刷入 Shamiko 模块，并在重启后配置排除列表。</p>
+<p><img src="https://raw.githubusercontent.com/fanshanng/blog_picture/master/ops-coffee-1773131496521.png"
+	
+	
+	
+	loading="lazy"
+	
+	
+></p>
+<p>处理完成后，打开 App，Root 检测提示消失。
+但我并没有遇到原文作者提到的“<code>frida-server</code> 运行即闪退”情况，不管点击注册还是登录都未触发闪退。</p>
+<p><img src="https://raw.githubusercontent.com/fanshanng/blog_picture/master/20260309193744.png"
+	
+	
+	
+	loading="lazy"
+	
+	
+></p>
+<p>并且我使用的确实是默认端口。</p>
+<p><img src="https://raw.githubusercontent.com/fanshanng/blog_picture/master/20260309194017.png"
+	
+	
+	
+	loading="lazy"
+	
+	
+></p>
+<p>考虑到可能是 App 版本差异，我没有继续深究这个现象，先尝试简单 Hook 检测逻辑。
+<img src="https://raw.githubusercontent.com/fanshanng/blog_picture/master/20260309201658.png"
+	
+	
+	
+	loading="lazy"
+	
+	
+></p>
+<p>可以看到它会检测 Frida 的核心组件（<code>frida-agent</code>）并阻止注入。</p>
+<h2 id="0x03-hook-pthread_create">0x03 Hook <code>pthread_create</code>
+</h2><h3 id="hook-思路和原理分析">Hook 思路和原理分析
+</h3><p><code>pthread_create</code> 是 Android/Linux 开发中最常用的创建线程的 API。在加固或者反调试的场景中，壳通常会创建一些可以在后台偷偷运行的线程，即“检测线程”。</p>
+<blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">pthread_create</span><span class="p">(</span><span class="kt">pthread_t</span> <span class="o">*</span><span class="kr">thread</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                  <span class="k">const</span> <span class="kt">pthread_attr_t</span> <span class="o">*</span><span class="n">attr</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                  <span class="kt">void</span> <span class="o">*</span><span class="p">(</span><span class="o">*</span><span class="n">start_routine</span><span class="p">)(</span><span class="kt">void</span> <span class="o">*</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">                  <span class="kt">void</span> <span class="o">*</span><span class="n">arg</span><span class="p">);</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li><code>thread</code>: 返回创建的线程 ID。</li>
+<li><code>attr</code>: 线程属性（可以为 NULL）。</li>
+<li><code>start_routine</code>: 线程执行函数。</li>
+<li><code>arg</code>: 传入线程函数的参数。</li>
+</ul>
+</blockquote>
+<p>这些线程的任务通常包括：</p>
+<ol>
+<li><strong>轮询文件系统</strong>：检查 <code>/proc/self/maps</code> 是否有 Frida 相关 so，或者 <code>/sys/class/</code> 下是否有痕迹。</li>
+<li><strong>端口扫描</strong>：检查本地 27042 (frida-server 默认端口)。</li>
+<li><strong>完整性校验</strong>：检查特定函数（如 <code>open</code>, <code>read</code>）的头部字节是否被修改（Inline Hook 检测）。</li>
+</ol>
+<p>因此，逆向分析的第一步通常是先记录线程入口地址。如果某个线程入口位于壳的 SO（如 <code>libDexHelper.so</code>）范围内，这个线程就值得重点关注。</p>
+<h3 id="第一次尝试">第一次尝试
+</h3><p>根据上述思路，我们首先尝试 Hook <code>libc.so</code> 的 <code>pthread_create</code> 函数，以此来定位检测线程的入口。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="line"><span class="cl"><span class="kd">var</span> <span class="nx">pth</span> <span class="o">=</span> <span class="nx">Module</span><span class="p">.</span><span class="nx">findExportByName</span><span class="p">(</span><span class="s2">&#34;libc.so&#34;</span><span class="p">,</span> <span class="s2">&#34;pthread_create&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nx">Interceptor</span><span class="p">.</span><span class="nx">attach</span><span class="p">(</span><span class="nx">pth</span><span class="p">,</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">onEnter</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">args</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="kd">var</span> <span class="nx">entry</span> <span class="o">=</span> <span class="nx">args</span><span class="p">[</span><span class="mi">2</span><span class="p">];</span> <span class="c1">// 线程函数入口
+</span></span></span><span class="line"><span class="cl">        <span class="kd">var</span> <span class="nx">module</span> <span class="o">=</span> <span class="nx">Process</span><span class="p">.</span><span class="nx">findModuleByAddress</span><span class="p">(</span><span class="nx">entry</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="p">(</span><span class="nx">module</span><span class="p">)</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&#34;Thread from: &#34;</span> <span class="o">+</span> <span class="nx">module</span><span class="p">.</span><span class="nx">name</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">});</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img src="https://raw.githubusercontent.com/fanshanng/blog_picture/master/20260310135212.png"
+	
+	
+	
+	loading="lazy"
+	
+	
+></p>
+<p><strong>结果</strong>：<code>Process terminated</code>
+App 启动即崩溃 (Crash)。</p>
+<blockquote>
+<p>企业级加固壳（如梆梆）常会检查 <code>pthread_create</code> 前几个字节是否被改写。如果检测到 Inline Hook，通常会触发崩溃或退出。因此，直接 Hook 这类敏感 libc 函数风险较高。</p>
+</blockquote>
+<h2 id="0x04-hook-clone">0x04 Hook <code>clone</code>
+</h2><p>既然 <code>pthread_create</code> 被检测，那我们向下深入一层。在 Linux/Android 中，线程创建最终是通过 <code>clone</code> 系统调用实现的。</p>
+<blockquote>
+<p><code>pthread_create</code> 的调用流程</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="n">pthread_create</span><span class="p">()</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="err">↓</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="n">分配线程控制块</span><span class="err">（</span><span class="n">TCB</span><span class="err">）、</span><span class="n">栈空间等</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="err">↓</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="n">设置调度策略</span><span class="o">/</span><span class="n">属性</span><span class="err">（</span><span class="n">可选</span><span class="err">）</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="err">↓</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="n">调用</span><span class="w"> </span><span class="nf">clone</span><span class="p">()</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="err">↓</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="n">内核创建</span><span class="w"> </span><span class="n">task_struct</span><span class="err">（</span><span class="n">共享</span><span class="w"> </span><span class="n">mm</span><span class="err">、</span><span class="n">fs</span><span class="err">、</span><span class="n">files</span><span class="err">、</span><span class="n">sighand</span><span class="w"> </span><span class="n">等</span><span class="err">）</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="err">↓</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="n">新线程执行</span><span class="w"> </span><span class="nf">start_routine</span><span class="p">(</span><span class="n">arg</span><span class="p">)</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div></blockquote>
+<p><strong>策略</strong>：Hook <code>libc.so</code> 中的 <code>clone</code> 函数。</p>
+<p>过程：</p>
+<ol>
+<li>
+<p><strong>定位调用栈</strong>：首先 Hook <code>clone</code> 并打印堆栈，发现 <code>clone</code> 是被 <code>libc.so</code> 中的 <code>pthread_create</code> 调用的。</p>
+</li>
+<li>
+<p><strong>静态分析 <code>libc</code></strong>：将手机中的 <code>/system/lib64/libc.so</code> 拉取出来，使用 IDA 反编译 <code>pthread_create</code> 函数。</p>
+</li>
+<li>
+<p><strong>寻找赋值点</strong>：
+在 <code>pthread_create</code> 的伪代码中，我们可以看到在调用 <code>clone</code> 之前，有一行关键的代码：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl">  <span class="o">*</span><span class="p">(</span><span class="n">_QWORD</span> <span class="o">*</span><span class="p">)(</span><span class="n">v28</span> <span class="o">+</span> <span class="mi">96</span><span class="p">)</span> <span class="o">=</span> <span class="n">v51</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="o">*</span><span class="p">(</span><span class="n">_QWORD</span> <span class="o">*</span><span class="p">)(</span><span class="n">v28</span> <span class="o">+</span> <span class="mi">104</span><span class="p">)</span> <span class="o">=</span> <span class="n">v52</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="o">*</span><span class="p">(</span><span class="n">_DWORD</span> <span class="o">*</span><span class="p">)(</span><span class="n">v28</span> <span class="o">+</span> <span class="mi">20</span><span class="p">)</span> <span class="o">=</span> <span class="nf">getpid</span><span class="p">(</span><span class="n">inited</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="k">if</span> <span class="p">(</span> <span class="p">(</span><span class="kt">unsigned</span> <span class="kt">int</span><span class="p">)</span><span class="nf">clone</span><span class="p">(</span><span class="n">__pthread_start</span><span class="p">,</span> <span class="n">v17</span><span class="p">,</span> <span class="mi">4001536</span><span class="p">,</span> <span class="n">v28</span><span class="p">,</span> <span class="n">v28</span> <span class="o">+</span> <span class="mi">16</span><span class="p">,</span> <span class="n">v21</span> <span class="o">+</span> <span class="mi">8</span><span class="p">,</span> <span class="n">v28</span> <span class="o">+</span> <span class="mi">16</span><span class="p">)</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span> <span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><strong>结论</strong>：<code>pthread_create</code> 会把线程入口函数写入结构体的 <strong>+96</strong> 偏移，并把该结构体指针传给 <code>clone</code>。因此在 Hook <code>clone</code> 时，读取 <code>args[3]</code> 指针的 <code>+96</code> 偏移，即可拿到真实线程入口。</p>
+</li>
+</ol>
+<blockquote>
+<p>注意：</p>
+<p>在第一次反编译手机的 <code>libc.so</code> 时，我看到偏移量是 <strong>48 (0x30)</strong> 而不是 96。
+这是因为我分析的是 <strong>32位 (ARM)</strong> 的库 (<code>/system/lib/libc.so</code>)。
+而目标 App 运行在 <strong>64位 (ARM64)</strong> 环境下，所以需要分析 <code>/system/lib64/libc.so</code>，才能得到对应的 <strong>96 (0x60)</strong> 偏移。</p>
+</blockquote>
+<p><strong>验证脚本 (<code>trace_clone.js</code>)</strong>：</p>
+<p>为了增强脚本的兼容性（应对部分 Frida 版本在 Spawn 早期 <code>Module.findExportByName</code> 找不到符号的问题），我们在实际脚本中增加了一个 <code>get_export</code> 的封装。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="line"><span class="cl"><span class="cm">/* trace_clone.js */</span>
+</span></span><span class="line"><span class="cl"><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&#34;[*] 开始 Hook clone 以定位检测线程...&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// 兼容性封装：在不同 Frida 版本中查找导出符号
+</span></span></span><span class="line"><span class="cl"><span class="kd">function</span> <span class="nx">get_export</span><span class="p">(</span><span class="nx">name</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="nx">Module</span><span class="p">.</span><span class="nx">findGlobalExportByName</span><span class="p">)</span> <span class="k">return</span> <span class="nx">Module</span><span class="p">.</span><span class="nx">findGlobalExportByName</span><span class="p">(</span><span class="nx">name</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="nx">Module</span><span class="p">.</span><span class="nx">getGlobalExportByName</span><span class="p">)</span> <span class="k">return</span> <span class="nx">Module</span><span class="p">.</span><span class="nx">getGlobalExportByName</span><span class="p">(</span><span class="nx">name</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="nx">Module</span><span class="p">.</span><span class="nx">findExportByName</span><span class="p">)</span> <span class="k">return</span> <span class="nx">Module</span><span class="p">.</span><span class="nx">findExportByName</span><span class="p">(</span><span class="kc">null</span><span class="p">,</span> <span class="nx">name</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="k">try</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="kd">var</span> <span class="nx">libc</span> <span class="o">=</span> <span class="nx">Process</span><span class="p">.</span><span class="nx">getModuleByName</span><span class="p">(</span><span class="s2">&#34;libc.so&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="p">(</span><span class="nx">libc</span><span class="p">)</span> <span class="k">return</span> <span class="nx">libc</span><span class="p">.</span><span class="nx">findExportByName</span><span class="p">(</span><span class="nx">name</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span> <span class="k">catch</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{}</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="kc">null</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">var</span> <span class="nx">clone</span> <span class="o">=</span> <span class="nx">get_export</span><span class="p">(</span><span class="s2">&#34;clone&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="p">(</span><span class="nx">clone</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">Interceptor</span><span class="p">.</span><span class="nx">attach</span><span class="p">(</span><span class="nx">clone</span><span class="p">,</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">onEnter</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">args</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="k">try</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                <span class="c1">// clone 的参数 args[3] 是 pthread_internal_t 指针
+</span></span></span><span class="line"><span class="cl">                <span class="c1">// 在 Android 中，偏移 96 处存储了线程入口函数 (start_routine)
+</span></span></span><span class="line"><span class="cl">                <span class="kd">var</span> <span class="nx">struct_ptr</span> <span class="o">=</span> <span class="nx">args</span><span class="p">[</span><span class="mi">3</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">                <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">struct_ptr</span><span class="p">.</span><span class="nx">isNull</span><span class="p">())</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                    <span class="kd">var</span> <span class="nx">start_routine</span> <span class="o">=</span> <span class="nx">struct_ptr</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span><span class="mi">96</span><span class="p">).</span><span class="nx">readPointer</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">                    
+</span></span><span class="line"><span class="cl">                    <span class="c1">// 检查入口函数是否属于加固壳的 SO (libDexHelper.so)
+</span></span></span><span class="line"><span class="cl">                    <span class="kd">var</span> <span class="nx">module</span> <span class="o">=</span> <span class="nx">Process</span><span class="p">.</span><span class="nx">findModuleByAddress</span><span class="p">(</span><span class="nx">start_routine</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">                    <span class="k">if</span> <span class="p">(</span><span class="nx">module</span> <span class="o">&amp;&amp;</span> <span class="nx">module</span><span class="p">.</span><span class="nx">name</span><span class="p">.</span><span class="nx">indexOf</span><span class="p">(</span><span class="s2">&#34;libDexHelper&#34;</span><span class="p">)</span> <span class="o">!==</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                         <span class="kd">var</span> <span class="nx">offset</span> <span class="o">=</span> <span class="nx">start_routine</span><span class="p">.</span><span class="nx">sub</span><span class="p">(</span><span class="nx">module</span><span class="p">.</span><span class="nx">base</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">                         <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&#34;[+] 发现可疑线程 | 模块: &#34;</span> <span class="o">+</span> <span class="nx">module</span><span class="p">.</span><span class="nx">name</span> <span class="o">+</span> <span class="s2">&#34; | 基址: &#34;</span> <span class="o">+</span> <span class="nx">module</span><span class="p">.</span><span class="nx">base</span> <span class="o">+</span> <span class="s2">&#34; | 入口: &#34;</span> <span class="o">+</span> <span class="nx">start_routine</span> <span class="o">+</span> <span class="s2">&#34; | 偏移: &#34;</span> <span class="o">+</span> <span class="nx">offset</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">                    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">                <span class="p">}</span>
+</span></span><span class="line"><span class="cl">            <span class="p">}</span> <span class="k">catch</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{}</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">});</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&#34;[-] 未找到 clone 函数&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><strong>结果</strong>：
+成功输出了检测线程的偏移地址，随后 App 依然崩溃（因为我们只是观测，没阻止检测）。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">[MI 8::com.bybit.app ]-&gt; [+] 发现可疑线程 | 模块: libDexHelper.so | 基址: 0x77a4306000 | 入口: 0x77a435a814 | 偏移: 0x54814
+</span></span><span class="line"><span class="cl">[+] 发现可疑线程 | 模块: libDexHelper.so | 基址: 0x77a4306000 | 入口: 0x77a4357304 | 偏移: 0x51304
+</span></span><span class="line"><span class="cl">[+] 发现可疑线程 | 模块: libDexHelper.so | 基址: 0x77a4306000 | 入口: 0x77a4362034 | 偏移: 0x5c034
+</span></span><span class="line"><span class="cl">[+] 发现可疑线程 | 模块: libDexHelper.so | 基址: 0x77a4306000 | 入口: 0x77a436256c | 偏移: 0x5c56c
+</span></span><span class="line"><span class="cl">[+] 发现可疑线程 | 模块: libDexHelper.so | 基址: 0x77a4306000 | 入口: 0x77a43688c8 | 偏移: 0x628c8
+</span></span><span class="line"><span class="cl">Process terminated
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>我们捕获到了以下关键偏移 (基于 <code>libDexHelper.so</code>)：</p>
+<ul>
+<li><code>0x54814</code></li>
+<li><code>0x51304</code></li>
+<li><code>0x5C034</code></li>
+<li><code>0x5C56C</code></li>
+<li><code>0x628C8</code></li>
+</ul>
+<hr>
+<h2 id="0x05-hook-dlopen">0x05 Hook <code>dlopen</code>
+</h2><p>我们需要在 <code>libDexHelper.so</code> 加载后、检测线程启动前尽快 Hook <strong><code>android_dlopen_ext</code></strong> 并完成 Patch。</p>
+<ol>
+<li><strong>Patch 策略</strong>：将上述 5 个偏移处的函数代码，修改为直接返回 (<strong>RET</strong>)。</li>
+<li><strong>指令选择</strong>：
+<ul>
+<li><code>RET</code> (Return): <code>0xC0 03 5F D6</code> (ARM64)</li>
+</ul>
+</li>
+</ol>
+<h3 id="完整脚本-hook_dlopenjs">完整脚本 (<code>hook_dlopen.js</code>)
+</h3><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="line"><span class="cl"><span class="kd">var</span> <span class="nx">OFFSETS</span> <span class="o">=</span> <span class="p">[</span>
+</span></span><span class="line"><span class="cl">    <span class="mh">0x54814</span><span class="p">,</span> <span class="mh">0x51304</span><span class="p">,</span> <span class="mh">0x5C034</span><span class="p">,</span> <span class="mh">0x5C56C</span><span class="p">,</span> <span class="mh">0x628C8</span>
+</span></span><span class="line"><span class="cl"><span class="p">];</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">function</span> <span class="nx">patch_ret</span><span class="p">(</span><span class="nx">base</span><span class="p">,</span> <span class="nx">offset</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">var</span> <span class="nx">target</span> <span class="o">=</span> <span class="nx">base</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span><span class="nx">offset</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="k">try</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">Memory</span><span class="p">.</span><span class="nx">patchCode</span><span class="p">(</span><span class="nx">target</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">code</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">           <span class="c1">// ARM64: RET (直接返回) -&gt; C0 03 5F D6
+</span></span></span><span class="line"><span class="cl">           <span class="nx">code</span><span class="p">.</span><span class="nx">writeByteArray</span><span class="p">([</span><span class="mh">0xC0</span><span class="p">,</span> <span class="mh">0x03</span><span class="p">,</span> <span class="mh">0x5F</span><span class="p">,</span> <span class="mh">0xD6</span><span class="p">]);</span>
+</span></span><span class="line"><span class="cl">        <span class="p">});</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&#34;[+] 已Patch检测线程: &#34;</span> <span class="o">+</span> <span class="nx">target</span> <span class="o">+</span> <span class="s2">&#34; (Offset: &#34;</span> <span class="o">+</span> <span class="nx">offset</span><span class="p">.</span><span class="nx">toString</span><span class="p">(</span><span class="mi">16</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&#34;)&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&#34;[-] Patch失败: &#34;</span> <span class="o">+</span> <span class="nx">e</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// 兼容性封装：在不同 Frida 版本中查找导出符号
+</span></span></span><span class="line"><span class="cl"><span class="kd">function</span> <span class="nx">get_export</span><span class="p">(</span><span class="nx">name</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="nx">Module</span><span class="p">.</span><span class="nx">findGlobalExportByName</span><span class="p">)</span> <span class="k">return</span> <span class="nx">Module</span><span class="p">.</span><span class="nx">findGlobalExportByName</span><span class="p">(</span><span class="nx">name</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="nx">Module</span><span class="p">.</span><span class="nx">getGlobalExportByName</span><span class="p">)</span> <span class="k">return</span> <span class="nx">Module</span><span class="p">.</span><span class="nx">getGlobalExportByName</span><span class="p">(</span><span class="nx">name</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="nx">Module</span><span class="p">.</span><span class="nx">findExportByName</span><span class="p">)</span> <span class="k">return</span> <span class="nx">Module</span><span class="p">.</span><span class="nx">findExportByName</span><span class="p">(</span><span class="kc">null</span><span class="p">,</span> <span class="nx">name</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="k">try</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="kd">var</span> <span class="nx">libc</span> <span class="o">=</span> <span class="nx">Process</span><span class="p">.</span><span class="nx">getModuleByName</span><span class="p">(</span><span class="s2">&#34;libc.so&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="p">(</span><span class="nx">libc</span><span class="p">)</span> <span class="k">return</span> <span class="nx">libc</span><span class="p">.</span><span class="nx">findExportByName</span><span class="p">(</span><span class="nx">name</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span> <span class="k">catch</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{}</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="kc">null</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">var</span> <span class="nx">dlopen</span> <span class="o">=</span> <span class="nx">get_export</span><span class="p">(</span><span class="s2">&#34;android_dlopen_ext&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="p">(</span><span class="nx">dlopen</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">var</span> <span class="nx">is_patched</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">Interceptor</span><span class="p">.</span><span class="nx">attach</span><span class="p">(</span><span class="nx">dlopen</span><span class="p">,</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">onLeave</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">retval</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="p">(</span><span class="nx">is_patched</span><span class="p">)</span> <span class="k">return</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="kd">var</span> <span class="nx">mod</span> <span class="o">=</span> <span class="nx">Process</span><span class="p">.</span><span class="nx">findModuleByName</span><span class="p">(</span><span class="s2">&#34;libDexHelper.so&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="p">(</span><span class="nx">mod</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                <span class="nx">is_patched</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">                
+</span></span><span class="line"><span class="cl">                <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&#34;[*] 捕获 libDexHelper.so 加载 | 基址: &#34;</span> <span class="o">+</span> <span class="nx">mod</span><span class="p">.</span><span class="nx">base</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">                <span class="nx">OFFSETS</span><span class="p">.</span><span class="nx">forEach</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">off</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                    <span class="nx">patch_ret</span><span class="p">(</span><span class="nx">mod</span><span class="p">.</span><span class="nx">base</span><span class="p">,</span> <span class="nx">off</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">                <span class="p">});</span>
+</span></span><span class="line"><span class="cl">            <span class="p">}</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">});</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&#34;[-] 未找到 android_dlopen_ext&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="效果验证">效果验证
+</h3><p>运行命令：<code>frida -U -f com.bybit.app -l hook_dlopen.js</code>
+终端输出（成功示例）：
+<img src="https://raw.githubusercontent.com/fanshanng/blog_picture/master/20260310174723.png"
+	
+	
+	
+	loading="lazy"
+	
+	
+></p>
+<p>App 成功进入主界面，无闪退，Frida 连接稳定。</p>
+<hr>
+<h2 id="0x06-复盘总结">0x06 复盘总结
+</h2><h3 id="61-查壳">6.1 查壳
+</h3><ul>
+<li><strong>特征识别</strong>: 使用 <code>ApkCheckPack</code> 这类工具可以快速确认加固特征。对梆梆企业壳来说，<code>libDexHelper.so</code> 是比较明确的线索。</li>
+<li><strong>Root 检测对抗</strong>: 传统的 <code>su</code> 改名方式效果有限。实际测试里，<code>Magisk + Shamiko</code> 这类按应用隔离 Root 痕迹的方案更稳定。</li>
+</ul>
+<h3 id="62-从-pthread_create-到-clone">6.2 从 <code>pthread_create</code> 到 <code>clone</code>
+</h3><ul>
+<li>
+<p><strong>API 调用链</strong>:
+Android 中的线程创建并非一步到位的，而是一个层层递进的过程：
+<code>Java Thread</code> -&gt; <code>Native pthread_create</code> (NDK/Libc) -&gt; <code>clone</code> syscall (Kernel Interface) -&gt; <code>Kernel</code>。</p>
+</li>
+<li>
+<p><strong>为什么 Hook <code>pthread_create</code> 失败？</strong>
+壳在初始化阶段可能会校验 <code>pthread_create</code> 的指令头，或监控该函数是否被 Hook。直接附加到这个点位，容易触发崩溃。</p>
+</li>
+<li>
+<p><strong>为什么 <code>clone</code> 有效？</strong>
+<code>clone</code> 位于更底层，直接与内核交互。很多壳对它的防护没有上层 API 那么激进，因此是一个可行的观测点。</p>
+</li>
+<li>
+<p><strong>源码分析</strong>:
+通过反编译手机中的 <code>libc.so</code> (64位)，找到了 <code>pthread_create</code> 调用 <code>clone</code> 的部分：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="c1">// 伪代码片段 (IDA 64-bit libc.so)
+</span></span></span><span class="line"><span class="cl"><span class="c1">// v51: start_routine (用户线程函数)
+</span></span></span><span class="line"><span class="cl"><span class="c1">// v52: user_arg (用户参数)
+</span></span></span><span class="line"><span class="cl"><span class="c1">// v28: pthread_internal_t* (线程控制块指针)
+</span></span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="o">*</span><span class="p">(</span><span class="n">_QWORD</span> <span class="o">*</span><span class="p">)(</span><span class="n">v28</span> <span class="o">+</span> <span class="mi">96</span><span class="p">)</span> <span class="o">=</span> <span class="n">v51</span><span class="p">;</span>   <span class="c1">// [关键] 将真实线程入口存入 +96
+</span></span></span><span class="line"><span class="cl"><span class="o">*</span><span class="p">(</span><span class="n">_QWORD</span> <span class="o">*</span><span class="p">)(</span><span class="n">v28</span> <span class="o">+</span> <span class="mi">104</span><span class="p">)</span> <span class="o">=</span> <span class="n">v52</span><span class="p">;</span>  <span class="c1">// [关键] 将参数存入 +104
+</span></span></span><span class="line"><span class="cl"><span class="o">*</span><span class="p">(</span><span class="n">_DWORD</span> <span class="o">*</span><span class="p">)(</span><span class="n">v28</span> <span class="o">+</span> <span class="mi">20</span><span class="p">)</span> <span class="o">=</span> <span class="nf">getpid</span><span class="p">(</span><span class="n">inited</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// 调用 clone
+</span></span></span><span class="line"><span class="cl"><span class="c1">// 参数1: __pthread_start (系统包装函数)
+</span></span></span><span class="line"><span class="cl"><span class="c1">// 参数3: flags
+</span></span></span><span class="line"><span class="cl"><span class="c1">// 参数4: v28 (arg，即它的 pthread_internal_t 指针)
+</span></span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="p">(</span> <span class="p">(</span><span class="kt">unsigned</span> <span class="kt">int</span><span class="p">)</span><span class="nf">clone</span><span class="p">(</span><span class="n">__pthread_start</span><span class="p">,</span> <span class="n">v17</span><span class="p">,</span> <span class="mi">4001536</span><span class="p">,</span> <span class="n">v28</span><span class="p">,</span> <span class="n">v28</span> <span class="o">+</span> <span class="mi">16</span><span class="p">,</span> <span class="n">v21</span> <span class="o">+</span> <span class="mi">8</span><span class="p">,</span> <span class="n">v28</span> <span class="o">+</span> <span class="mi">16</span><span class="p">)</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span> <span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><strong>两个关键发现</strong>：</p>
+<ol>
+<li><strong>Wrapper 机制</strong>：<code>clone</code> 的第一个参数不是业务线程函数，而是系统的 <code>__pthread_start</code>，用于初始化线程环境（TLS、Stack Guard 等）。</li>
+<li><strong>Arg 传递</strong>：<code>clone</code> 的第4个参数 (<code>v28</code>/<code>arg</code>) 实际上是一个指向 <code>pthread_internal_t</code> 的指针。系统把 <code>start_routine</code> 藏在了这个结构体的 <strong>+96</strong> 偏移处。</li>
+</ol>
+</li>
+</ul>
+<h3 id="63-动态库加载">6.3 动态库加载
+</h3><ul>
+<li><strong><code>android_dlopen_ext</code> vs <code>dlopen</code></strong>:
+在 Android 高版本中，系统加载 SO 往往直接通过 <code>android_dlopen_ext</code>。Hook 这个函数可以让我们拦截到系统加载任何 SO 的动作。</li>
+<li><strong>执行顺序</strong>:
+<ol>
+<li>检测到 <code>libDexHelper.so</code> 正在加载。</li>
+<li>此时 SO 的基址 (<code>base</code>) 已经确定。</li>
+<li>在 <code>onLeave</code> 阶段通常可以拿到稳定基址并尽快完成 Patch（是否早于具体检测逻辑，取决于壳的实现时机）。</li>
+<li>通过 <code>Memory.patchCode</code> 修改目标函数入口，减少后续检测线程执行风险。</li>
+</ol>
+</li>
+</ul>
+<h3 id="64-内存修补-patching">6.4 内存修补 (Patching)
+</h3><ul>
+<li><strong>NOP (<code>0x1F2003D5</code>)</strong>：空指令，CPU 会继续执行下一条。如果后续仍有检测调用，NOP 本身不能阻断流程。</li>
+<li><strong>RET (<code>0xC0035FD6</code>)</strong>：让函数立即返回。用于这种场景时，通常比 NOP 更直接。</li>
+</ul>
+<p><em>(引用：本文思路参考 <a class="link" href="https://xiaoeeyu.github.io/2025/06/05/%E7%BB%95%E8%BF%87%E6%9F%90%E9%82%A6%E4%BC%81%E4%B8%9A%E5%A3%B3root%E3%80%81frida%E6%A3%80%E6%B5%8B/"  target="_blank" rel="noopener"
+    >xiaoeeyu - 绕过某邦企业壳root、frida检测</a>)</em></p><hr />

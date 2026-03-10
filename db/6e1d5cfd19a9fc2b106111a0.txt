@@ -142,8 +142,10 @@ $$ \text{State} = \text{State} \oplus \text{RoundKey}_i $$<hr>
 <li><strong>后续字 $W[i]$</strong>:
 <ul>
 <li>如果 $i$ 是 4 的倍数:
+
 $$ W[i] = W[i-4] \oplus \text{SubWord}(\text{RotWord}(W[i-1])) \oplus \text{Rcon}[i/4] $$</li>
 <li>否则:
+
 $$ W[i] = W[i-4] \oplus W[i-1] $$</li>
 </ul>
 </li>
