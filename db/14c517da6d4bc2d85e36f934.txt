@@ -1,0 +1,169 @@
+经常会有老机器需要进行SSH连接，而默认连接会出现不支持该密钥的提示，此时使用 `HostKeyAlgorithms` 和 `PubkeyAcceptedKeyTypes` 参数指定支持就好了。很少有教程专门讲这一点，还得翻SSH官方命令手册去看，而且讲怎么升级的教程就更少了，所以NCC这次就正好补一补空白<hr /><h2 id="背景">背景</h2>
+<p>NCC有一些很老的机器，老嵌入式设备和一些CentOS虚拟机，这次就遇到学校安装candence virtuoso软件的机器。原先是RHEL6，在NCC进行换源之后变成了CentOS6.5 。但是仍然有一个大麻烦，SSH版本太老，只支持DSS密钥，当现代终端连接时会出现如下提示：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-powershell" data-lang="powershell"><span style="display:flex;"><span>PS C:\Users\NanCunChild&gt; ssh <span style="color:#ae81ff">192.168</span>.114.246
+</span></span><span style="display:flex;"><span>Unable to negotiate with <span style="color:#ae81ff">192.168</span>.114.246 port <span style="color:#ae81ff">22</span><span style="color:#960050;background-color:#1e0010">:</span> no matching host key type found. Their offer<span style="color:#960050;background-color:#1e0010">:</span> ssh-rsa,ssh-dss
+</span></span></code></pre></div><p>先说解决方案，一次性使用的话直接输入：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-powershell" data-lang="powershell"><span style="display:flex;"><span>ssh -o HostKeyAlgorithms=+ssh-dss -o PubkeyAcceptedKeyTypes=+ssh-dss xxx.xxx.xxx.xxx
+</span></span></code></pre></div><p>如果需要经常连接，可以在本机 <code>.ssh/config</code> 中将其进行标记，这样以后都会允许DSS密钥：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>Host {IP} HostKeyAlgorithms +ssh-dss PubkeyAcceptedKeyTypes +ssh-dss
+</span></span></code></pre></div><p>如果是那些神神叨叨的网络安全研究人员，此时就会建议你直接升级OpenSSH，以支持最新的加密。但是这个也是最麻烦的，之后NCC给大家整活演示一下。</p>
+<h2 id="ssh的历史">SSH的历史</h2>
+<h3 id="1-开天辟地嗅探器危机与-tatu-的反击-1995">1. 开天辟地：嗅探器危机与 Tatu 的反击 (1995)</h3>
+<ul>
+<li>
+<p><strong>背景：</strong> 1995 年春，芬兰赫尔辛基理工大学（Helsinki University of Technology）。当时互联网是基于信任的，大家都用 <strong>rlogin</strong> 和 <strong>Telnet</strong>。</p>
+</li>
+<li>
+<p><strong>事件：</strong> 研究员 <strong>Tatu Ylönen</strong> 发现学校网络遭到大规模的密码嗅探攻击（Password Sniffing）。黑客潜伏在网络节点，截获明文传输的用户名和密码。</p>
+</li>
+<li>
+<p><strong>诞生：</strong> Tatu 没有坐以待毙，他在几个月内写出了 <strong>SSH-1</strong>。它的核心逻辑很简单但革命性：<strong>先建立加密隧道，再在隧道里跑认证和数据。</strong></p>
+</li>
+<li>
+<p><strong>发布：</strong> 1995 年 7 月，SSH-1 作为一个自由软件发布。到年底，它已经有了 20,000 个用户，迅速成为 Unix 系统的标配。</p>
+</li>
+</ul>
+<h3 id="2-分裂与商业化自由软件的困境">2. 分裂与商业化：自由软件的困境</h3>
+<ul>
+<li>
+<p>Tatu 随后成立了 <em>SSH Communications Security</em> 公司，随着 SSH 的普及，后续版本的许可证变得越来越严格，并逐渐走向商业闭源。</p>
+</li>
+<li>
+<p>这导致开源社区无法继续自由使用 SSH 的最新版本。此时，SSH 分裂为“商业版”和“最后留存的自由版”。</p>
+</li>
+</ul>
+<h3 id="3-救世主-openbsdopenssh-的诞生-1999">3. 救世主 OpenBSD：OpenSSH 的诞生 (1999)</h3>
+<p>这是 OpenSSH 真正统治世界的关键转折点。现在仍然能看到一个特别丑的黄色大河豚web网页可以下载OpenSSH，这就是OpenBSD整的版本。</p>
+<ul>
+<li>
+<p><strong>Björn Grönvall</strong> 基于 SSH 1.2.12（最后一个真正自由的版本）维护了一个叫 <strong>OSSH</strong> 的分支。</p>
+</li>
+<li>
+<p><strong>OpenBSD 的介入：</strong> 以“代码洁癖”和“安全至上”著称的 OpenBSD 团队（由 Theo de Raadt 领导）注意到了 OSSH。他们决定 fork 这个项目，并进行了彻底的代码审计。</p>
+</li>
+<li>
+<p><strong>大清洗：</strong> OpenBSD 开发者移除了所有不必要的代码、修复了潜在的缓冲区溢出漏洞，并将其重新命名为 <strong>OpenSSH</strong>。</p>
+</li>
+<li>
+<p><strong>结果：</strong> 1999 年 12 月，随 OpenBSD 2.6 发布的 OpenSSH 迅速被移植到 Linux（Red Hat, Debian 等）。因为它<strong>完全免费、代码极其干净、且没有专利纠纷</strong>，它迅速击败了商业版 SSH，成为了事实上的全球标准。</p>
+</li>
+</ul>
+<h2 id="dss的不安全性">DSS的不安全性</h2>
+<h3 id="1-算力维度的直观解释1024-位的纸老虎">1. 算力维度的直观解释：1024 位的纸老虎</h3>
+<p>DSS（Digital Signature Standard）在 FIPS 186-2 标准中被强制限制密钥长度为 <strong>1024 位</strong> (L=1024, N=160)。</p>
+<ul>
+<li>
+<p><strong>技术原理：</strong> DSA 的安全性基于<strong>离散对数问题 (Discrete Logarithm Problem, DLP)</strong>。</p>
+</li>
+<li>
+<p><strong>算力对比（直观例子）：</strong></p>
+<ul>
+<li>
+<p><strong>1998年：</strong> 破解 1024 位可能需要举全球算力耗时几十年。</p>
+</li>
+<li>
+<p><strong>2015年（Logjam 攻击）：</strong> 研究表明，国家级攻击者（如 NSA）有能力预先计算出常用 1024 位素数的“查找表”。一旦表建好，破解一个个体连接只需几分钟。</p>
+</li>
+<li>
+<p><strong>2025年：</strong> 随着云计算和专用硬件（FPGA/ASIC）的发展，1024 位 DLP 的破解难度对于拥有超级计算机的组织来说，就像是<strong>用推土机撞烂木门</strong>一样简单。</p>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>结论：</strong> 1024 位的锁在今天就是“防君子不防小人”。而 DSA 协议设计导致它<strong>无法</strong>简单地增加密钥长度到 2048 位以上（虽然 FIPS 186-3 后来允许了，但 OpenSSH 的 <code>ssh-dss</code> 实现一直停留在 1024 位以保持兼容性，直到被废弃）。</p>
+</li>
+</ul>
+<h3 id="2-致命的随机数缺陷-the-nonce-failure">2. 致命的随机数缺陷 (The Nonce Failure)</h3>
+<p>这是 DSA 真正的死穴，也是它比 RSA 脆弱得多的原因。</p>
+<ul>
+<li>
+<p><strong>原理：</strong> DSA 在签名时需要生成一个随机数 $k$（Nonce）。</p>
+</li>
+<li>
+<p>公式（数学展示）：</p>
+<p>签名过程涉及计算 $s = k^{-1}(H(m) + x \cdot r) \mod q$。</p>
+<p>这里 $x$ 是你的私钥。</p>
+</li>
+<li>
+<p>灾难场景：</p>
+<p>如果你的服务器或电脑的随机数生成器（RNG）不好（比如嵌入式设备熵不足），导致你在两次不同的签名中使用了相同的 $k$。</p>
+<p>攻击者拿到这两个签名 $(r, s_1)$ 和 $(r, s_2)$，只需要做小学级别的代数运算，就能直接计算出你的私钥 $x$。</p>
+</li>
+<li>
+<p><strong>案例：</strong> 著名的 <strong>索尼 PS3 破解事件</strong> 就是因为索尼的 ECDSA 实现中，$k$ 是个常数……导致私钥直接被黑客算出来了。RSA 对随机数就没有这么敏感，随机数差一点只是容易被猜，而不是直接暴露私钥。</p>
+</li>
+</ul>
+<h2 id="救火与预防">救火与预防</h2>
+<p>CentOS 6 默认的 OpenSSH 版本很老（比如 5.3），不支持 Ed25519，甚至不支持很多现代加密套件。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#f92672">[</span>nancunchild@work-eda ~<span style="color:#f92672">]</span>$ ssh -version
+</span></span><span style="display:flex;"><span>OpenSSH_5.3p1, OpenSSL 1.0.1e-fips <span style="color:#ae81ff">11</span> Feb <span style="color:#ae81ff">2013</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>nancunchild@work-eda ~<span style="color:#f92672">]</span>$ ssh-keygen -t ed25519 -f /etc/ssh/ssh_host_ed25519_key -N <span style="color:#e6db74">&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>unknown key type ed25519
+</span></span></code></pre></div><p><strong>核心问题：</strong> <code>yum update</code> 已经没用了（vault都没人管了），且系统自带的 OpenSSL 都是太古版本，而新版 OpenSSH 需要新版 OpenSSL。</p>
+<p>只能 <strong>旁路编译安装</strong> 来解决问题了。这一步可以自己做一个docker容器跑系统环境进行编译，也可以直接大胆动手在生产机上面编译。docker好处是好管理没有奇奇怪怪的依赖，直接上手的好处是好测试，跑通了就能用了。</p>
+<h2 id="旧瓶装新酒">旧瓶装新酒</h2>
+<blockquote>
+<p>写在动手之前
+记得一定、一定要有备用连接方式！我们接下来做的一切都是在修改SSH本身，这是站在桥上换桥板的工作！请务必使用任何可能的备用方式作为SSH弄坏时的兜底，VNC，Telnet等都可以！NCC是因为能直接连上PVE的web终端，而且做好了快照所以直接动手了。请参照者一定三思！</p>
+</blockquote>
+<p>网安工程师们站着说话不腰疼，给这个CentOS6更新软件谈何容易。这玩意官方都没在维护了，vault规范在这些年间都更换过标准和URL，这次真得技术考古。</p>
+<p>首先我们确定目标，需要在这个机器上编译安装一个SSHD，那么我们就需要对应的glibc，而且在编译它之前我们还需要编译新的OpenSSL来支持加密算法，不然SSHD没有依赖。</p>
+<p>那还说啥，整呗（NCC全程使用root账户操作，不要这样学NCC ）：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># 先编译新的OpenSSL</span>
+</span></span><span style="display:flex;"><span>cd /usr/local/src 
+</span></span><span style="display:flex;"><span>wget https://www.openssl.org/source/openssl-1.1.1w.tar.gz 
+</span></span><span style="display:flex;"><span>tar -xzvf openssl-1.1.1w.tar.gz 
+</span></span><span style="display:flex;"><span>cd openssl-1.1.1w
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>./config --prefix<span style="color:#f92672">=</span>/opt/ssh-upgrade/openssl --openssldir<span style="color:#f92672">=</span>/opt/ssh-upgrade/openssl shared zlib 
+</span></span><span style="display:flex;"><span>make 
+</span></span><span style="display:flex;"><span>make install
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 再来OpenSSH</span>
+</span></span><span style="display:flex;"><span>wget https://cdn.openbsd.org/pub/OpenBSD/OpenSSH/portable/openssh-9.8p1.tar.gz 
+</span></span><span style="display:flex;"><span>tar -xzvf openssh-9.8p1.tar.gz
+</span></span><span style="display:flex;"><span>cd openssh-9.8p1
+</span></span><span style="display:flex;"><span>./configure <span style="color:#ae81ff">\ </span>--prefix<span style="color:#f92672">=</span>/usr/local/openssh <span style="color:#ae81ff">\ </span>--sysconfdir<span style="color:#f92672">=</span>/etc/ssh <span style="color:#ae81ff">\ </span>--with-ssl-dir<span style="color:#f92672">=</span>/usr/local/ssl-new <span style="color:#ae81ff">\ </span>--with-zlib <span style="color:#ae81ff">\ </span>--with-pam <span style="color:#ae81ff">\ </span>--with-md5-passwords <span style="color:#ae81ff">\ </span>LDFLAGS<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;-L/usr/local/ssl-new/lib -Wl,-rpath=/usr/local/ssl-new/lib&#34;</span>
+</span></span><span style="display:flex;"><span>make
+</span></span><span style="display:flex;"><span>make install
+</span></span></code></pre></div><p>其中居然只出现了一次路径报错和一次小依赖报错，然后make就这样成了，第一次如此顺利的编译哇！马上来试试：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>/usr/local/openssh/bin/ssh-keygen -t ed25519 -f /etc/ssh/ssh_host_ed25519_key -N <span style="color:#e6db74">&#34;&#34;</span>
+</span></span></code></pre></div><p>此时会显示密钥的指纹信息，没有其它报错就说明成了。
+但是！很重要的一点！我们目前只是编译好了这个软件，系统并没有默认来使用它，我们接下来开始换掉承重柱，编辑 <code>/etc/init.d/sshd</code> ，里面会有SSHD和KEYGEN两个变量，把它们都改为新路径，这里是 <code>/usr/local/openssh/sbin/sshd</code> 和 <code>/usr/local/openssh/bin/ssh-keygen</code> 。还有很多旧字段，NCC在这里简单列举一下：</p>
+<p>注释掉：
+RSAAuthentication
+GSSAPIAuthentication
+GSSAPICleanupCredentials
+HostKey /etc/ssh/ssh_host_key
+HostKey /etc/ssh/ssh_host_dsa_key</p>
+<p>添加：
+HostKey /etc/ssh/ssh_host_rsa_key
+HostKey /etc/ssh/ssh_host_ed25519_key</p>
+<p>修改完成之后运行 <code>/usr/local/openssh/sbin/sshd -t</code> ，没有报错就成功啦！直接大胆 <code>service sshd restart</code> 就好啦！
+NCC终端显示如下：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#f92672">[</span>root@work-eda openssh-9.8p1<span style="color:#f92672">]</span><span style="color:#75715e"># /usr/local/openssh/sbin/sshd -t</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@work-eda openssh-9.8p1<span style="color:#f92672">]</span><span style="color:#75715e"># service sshd restart</span>
+</span></span><span style="display:flex;"><span>Stopping sshd:                                             <span style="color:#f92672">[</span>  OK  <span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>Starting sshd:                                             <span style="color:#f92672">[</span>  OK  <span style="color:#f92672">]</span>
+</span></span></code></pre></div><p>其实NCC还是想把它替代老的OpenSSL和OpenSSH的，只是担心原本yum管理的包手动去修改了可能造成问题。正规做法其实也是将它们都打包为rpm包，然后使用yum管理安装，直接改动将士yum数据库中软件不匹配。但是既然CentOS6已经死了，暴力操作也没什么问题：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>mv /usr/bin/ssh /usr/bin/ssh.old 
+</span></span><span style="display:flex;"><span>mv /usr/sbin/sshd /usr/sbin/sshd.old 
+</span></span><span style="display:flex;"><span>mv /usr/bin/ssh-keygen /usr/bin/ssh-keygen.old
+</span></span><span style="display:flex;"><span>mv /usr/bin/scp /usr/bin/scp.old 
+</span></span><span style="display:flex;"><span>mv /usr/bin/sftp /usr/bin/sftp.old
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>ln -s /usr/local/openssh/bin/ssh /usr/bin/ssh
+</span></span><span style="display:flex;"><span>ln -s /usr/local/openssh/sbin/sshd /usr/sbin/sshd
+</span></span><span style="display:flex;"><span>ln -s /usr/local/openssh/bin/ssh-keygen /usr/bin/ssh-keygen
+</span></span><span style="display:flex;"><span>ln -s /usr/local/openssh/bin/scp /usr/bin/scp
+</span></span><span style="display:flex;"><span>ln -s /usr/local/openssh/bin/sftp /usr/bin/sftp
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># 移动前</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>nancunchild@work-eda ~<span style="color:#f92672">]</span>$ ssh -V
+</span></span><span style="display:flex;"><span>OpenSSH_5.3p1, OpenSSL 1.0.1e-fips <span style="color:#ae81ff">11</span> Feb <span style="color:#ae81ff">2013</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 移动并创建软链接后</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>nancunchild@work-eda ~<span style="color:#f92672">]</span>$ ssh -V
+</span></span><span style="display:flex;"><span>OpenSSH_9.8p1, OpenSSL 1.1.1w  <span style="color:#ae81ff">11</span> Sep <span style="color:#ae81ff">2023</span>
+</span></span></code></pre></div><p>在这里NCC能找到的也就只有 <code>OpenSSL 1.1.1w</code> 了，虽然已经出到了3.6.0，但是新版本重构太大没法在不改CentOS其它依赖的情况下跑起来。这次就算弄完啦，重启服务，再拍个快照就完成啦！</p>
+<p>本文历史讲解和算法简介部分使用Gemini3.0Pro-Preview完成，感谢哈基米帮忙！感谢Google赞助！</p>
