@@ -1373,28 +1373,36 @@ Spawned <code>com.zhenxi.hunter</code>. Resuming main thread!</p>
 </span></span></code></pre></td></tr></table>
 </div>
 </div></details>
-<p><strong>方法调用频次统计</strong>：</p>
+<p>高频方法（按调用次数）：</p>
 <ol>
-<li><code>getZhenxiInfoH</code> 高达 21 次</li>
-<li><code>getZhenxiInfoZ</code> 高达 13 次</li>
-<li><code>getZhenxiInfoK</code> 6 次</li>
+<li><code>getZhenxiInfoH</code>（21 次）</li>
 </ol>
-<p><strong>结论</strong>：设备属性读取与环境风险探测是 Hunter 的核心主干流量。</p>
-<p>日志说明：下面这组日志说明 v1.6 已成功进入 NativeEngine 全量方法映射阶段。</p>
-<details>
-<summary>点击展开：日志输出</summary>
-<blockquote>
-<p>[-] libhunter.so not loaded yet, skip native attach in this phase
-[+] hook dlopen @ 0x78ff6f2014
-[+] hook android_dlopen_ext @ 0x78ff6f20ac
-[*] hookhunter v1.6 nativeengine focus installed
-[+] hook NativeEngine.getZhenxiInfo1 overloads=1
-[+] hook NativeEngine.getZhenxiInfo3 overloads=1
-[+] hook NativeEngine.getZhenxiInfo4 overloads=1
-[+] hook NativeEngine.getZhenxiInfoF overloads=1
-[JAVA_NE] getZhenxiInfo1() =&gt; a_NSw6KjQ+MS,b_NTA5MUM8RT,c_29048414,e_ehwrEnRaXE,f_MzowNTQxMj</p>
-</blockquote>
-</details>
+<ul>
+<li>典型输入：<code>ro.build.display.id</code>、<code>ro.boot.verifiedbootstate</code>、<code>ro.secure</code>。</li>
+<li>说明：系统属性读取主通道（对应 DeviceBaseInfo/环境基础特征）。</li>
+</ul>
+<ol start="2">
+<li><code>getZhenxiInfoZ</code>（13 次）</li>
+</ol>
+<ul>
+<li>与 <code>H</code> 类似，用于补充读取属性值（含空值键探测）。</li>
+</ul>
+<ol start="3">
+<li><code>getZhenxiInfoK</code>（6 次）</li>
+</ol>
+<ul>
+<li>典型输入：<code>/proc/mounts</code>、<code>/proc/self/mountstats</code>、<code>/proc/self/mountinfo</code>。</li>
+<li>说明：容器/挂载环境探测（docker/lxc 关键词）。</li>
+</ul>
+<p>稳定输出方法（2 次，双日志一致）：</p>
+<ol>
+<li><code>getZhenxiInfo1</code> =&gt; <code>a_/b_/c_/e_/f_</code> 聚合串</li>
+<li><code>getZhenxiInfo3</code> =&gt; <code>Check Find Root File</code> 风险项</li>
+<li><code>getZhenxiInfo4</code> =&gt; 进程风险项（另一个样本中出现 <code>sh</code> 进程）</li>
+<li><code>getZhenxiInfoOFLI</code> =&gt; 文件描述符清单</li>
+<li><code>getZhenxiInfoLLLI</code> =&gt; 已加载 so/镜像清单
+<strong>结论</strong>：设备属性读取与环境风险探测是 Hunter 的核心主干流量。</li>
+</ol>
 <h3 id="0x028-第八阶段核心方法精准追踪">0x02.8 第八阶段：核心方法精准追踪
 </h3><p>聚焦 9 个核心方法：</p>
 <ol>
@@ -1903,7 +1911,6 @@ Spawned <code>com.zhenxi.hunter</code>. Resuming main thread!</p>
 </span><span class="lnt">275
 </span><span class="lnt">276
 </span><span class="lnt">277
-</span><span class="lnt">278
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="cm">/*
@@ -2172,7 +2179,6 @@ Spawned <code>com.zhenxi.hunter</code>. Resuming main thread!</p>
 </span></span><span class="line"><span class="cl">    <span class="c1">// ========== 五、启动入口 ==========
 </span></span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">    <span class="k">try</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;========== Hunter 最终学习脚本启动 ==========&#39;</span> <span class="p">);</span>
 </span></span><span class="line"><span class="cl">        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;目标类: &#39;</span> <span class="o">+</span> <span class="nx">TARGET_CLASS</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;策略: 高价值方法追踪 + 中文结构化输出 + 只观测不篡改&#39;</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">
@@ -2204,9 +2210,8 @@ Spawned <code>com.zhenxi.hunter</code>. Resuming main thread!</p>
 . . . .
 . . . .   Connected to MI 8 (id=6ca0abb6)
 Spawned <code>com.zhenxi.hunter</code>. Resuming main thread!
-[MI 8::com.zhenxi.hunter ]-&gt; ========== Hunter 最终学习脚本启动 ==========
+[MI 8::com.zhenxi.hunter ]-&gt;
 目标类: com.zhenxi.hunter.NativeEngine
-策略: 高价值方法追踪 + 中文结构化输出 + 只观测不篡改
 已安装 Hook -&gt; getZhenxiInfo1，重载数=1，用途=设备指纹聚合（a</em>/b_/c_/e_/f_）
 已安装 Hook -&gt; getZhenxiInfo3，重载数=1，用途=Root 文件/路径风险检测
 已安装 Hook -&gt; getZhenxiInfo4，重载数=1，用途=可疑进程检测
