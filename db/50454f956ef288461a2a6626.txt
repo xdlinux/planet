@@ -1,7 +1,7 @@
 <p>欢迎交换友链，请先添加本站链接后留言或邮件告知~ (￣▽￣)~*</p>
 <ul>
 <li><strong>名称</strong>: 梵殇-fanshanng</li>
-<li><strong>简介</strong>: 安卓逆向 / CTF / 摸鱼</li>
+<li><strong>简介</strong>: 神秘安卓逆向壬</li>
 <li><strong>链接</strong>: <a class="link" href="https://fanshanng.cn/"  target="_blank" rel="noopener"
     >https://fanshanng.cn/</a></li>
 <li><strong>图标</strong>: <a class="link" href="https://fanshanng.cn/img/avatar_hu_58bcd85c4ac14ce.png"  target="_blank" rel="noopener"
@@ -16,7 +16,7 @@
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl">- <span class="nt">title</span><span class="p">:</span><span class="w"> </span><span class="l">梵殇-fanshanng</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l">安卓逆向 / CTF / 摸鱼</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l">神秘安卓逆向壬</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">website</span><span class="p">:</span><span class="w"> </span><span class="l">https://fanshanng.cn/</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l">https://fanshanng.cn/img/avatar_hu_58bcd85c4ac14ce.png</span><span class="w">
 </span></span></span></code></pre></td></tr></table>
