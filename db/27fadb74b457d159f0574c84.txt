@@ -2305,73 +2305,55 @@ risk=[检测当前程序被Hook,当前手机存在hook框架]}
 <li><code>getZhenxiInfo1()</code></li>
 </ol>
 <p>日志说明：该返回值用于证明 <code>a_/b_/c_/e_/f_</code> 聚合字段已经被命中。</p>
-<details>
-<summary>点击展开：日志输出</summary>
 <blockquote>
 <p>a_NSw6KjQ+MS,b_NTA5MUM8RT,c_29048414,e_ehwrEnRaXE,f_MzowNTQxMj</p>
 </blockquote>
-</details>
 <p>该返回与 NativeDeviceFingerprint 中的 <code>a_/b_/c_/e_/f_</code> 聚合字段高度对应。</p>
 <ol start="2">
 <li><code>getZhenxiInfo3()</code></li>
 </ol>
 <p>日志说明：该风险列表用于证明 root/hook 路径检测命中。</p>
-<details>
-<summary>点击展开：日志输出</summary>
 <blockquote>
 <p>risk=[com.zhenxi.hunter:hunter_main_process, /system/lib64/libzygisk.so, /sbin/su, /sbin/.magisk]</p>
 </blockquote>
-</details>
 <p>说明 root/hook 相关痕迹可通过文件与路径信号直接采集。</p>
 <ol start="3">
 <li><code>getZhenxiInfo4(...)</code></li>
 </ol>
 <p>日志说明：该输出用于证明存在进程维度的风险画像。</p>
-<details>
-<summary>点击展开：日志输出</summary>
 <blockquote>
 <p>risk=[other pid -&gt; &hellip; (pid name: sh/cat/grep/ls/logcat)&hellip;]</p>
 </blockquote>
-</details>
 <p>说明存在进程维度的实时风险画像能力。</p>
 <ol start="4">
 <li><code>getZhenxiInfoH/Z</code></li>
 </ol>
 <p>日志说明：该组日志用于证明关键系统属性被持续读取并参与判断。</p>
-<details>
-<summary>点击展开：日志输出</summary>
 <blockquote>
 <p>ro.build.display.id =&gt; QKQ1.190828.002 test-keys
 ro.boot.verifiedbootstate =&gt; green
 ro.debuggable =&gt; 0
 ro.secure =&gt; 1</p>
 </blockquote>
-</details>
 <p>说明基础系统属性属于高频输入，且存在重复校验行为。</p>
 <ol start="5">
 <li><code>getZhenxiInfoK(...)</code></li>
 </ol>
 <p>日志说明：该结果用于证明当前样本环境未触发容器特征命中。</p>
-<details>
-<summary>点击展开：日志输出</summary>
 <blockquote>
 <p>/proc/mounts + docker,lxc_volumns =&gt; <null>
 /proc/self/mountstats + docker,lxc_volumns =&gt; <null>
 /proc/self/mountinfo + docker,lxc_volumns =&gt; <null></p>
 </blockquote>
-</details>
 <p>该样本环境下容器特征未命中。</p>
 <ol start="6">
 <li><code>getZhenxiInfoF()</code></li>
 </ol>
 <p>日志说明：该输出用于证明链路内置了完整性与 Hook 框架检测。</p>
-<details>
-<summary>点击展开：日志输出</summary>
 <blockquote>
 <p>{title=检测到libart.so被修改
 risk=[检测当前程序被Hook,当前手机存在hook框架]}</p>
 </blockquote>
-</details>
 <p>这是最关键的一条：采集链路内置完整性与 Hook 框架检测。</p>
 <h2 id="0x04-最终映射表方法---字段---风险意义">0x04 最终映射表（方法 -&gt; 字段 -&gt; 风险意义）
 </h2><table>
