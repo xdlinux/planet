@@ -68,10 +68,12 @@ $$</li>
 <p>无穷大与无界变量关系：</p>
 <ul>
 <li>无穷大指数列趋于无穷（任选一数，存在无穷子项大于该数）
+
 $$
 \forall M \gt 0 ,\exist N \gt 0,当 n \gt N时,恒有\left\vert x_n \right\vert \gt M
 $$</li>
 <li>无界变量，指任选一数，数列存在一数大于该数
+
 $$
 \forall M \gt 0 ,\exist N \gt 0,使得\left\vert x_N \right\vert \gt M
 $$</li>

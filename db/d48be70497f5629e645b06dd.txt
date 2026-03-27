@@ -185,6 +185,7 @@ $$<p>
 </h3><ul>
 <li>目标函数：$\max z=\sum^{n}_{j=1}c_jx_j=CX$</li>
 <li>系数矩阵：
+
 $$
 A=
 \begin{bmatrix}
@@ -197,12 +198,14 @@ $$</li>
 <li>资源向量：$b=\begin{bmatrix} b_1\\ \vdots \\ b_m\\ \end{bmatrix}$</li>
 <li>决策变量向量：$X=(x_1,x_2,\cdots , x_n)^T$</li>
 <li>约束条件：
+
 $$
 \begin{cases}
 \sum^{n}_{j=1}a_{ij}x_j=b_i,&i=1,2,\cdots,m\\
 x_j \ge 0,& j=1,2,\cdots,n\\
 \end{cases}
 $$
+
 $$
 \begin{cases}
 AX=b\\

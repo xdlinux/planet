@@ -16,6 +16,7 @@
 <li><strong>光子能量</strong>：$E = h\nu$</li>
 <li><strong>阈频</strong>：$\nu_0 = \dfrac{W_0}{h}$，$\nu < \nu_0$ 无光电子逸出</li>
 <li><strong>光电效应方程</strong>：<br>
+
 $$
   E_k^{\text{max}} = \frac{1}{2}\mu v^2_m = h\nu - W_0
   $$</li>
@@ -58,10 +59,12 @@ $$
 氢原子玻尔结构
 </h5><ul>
 <li>电子绕原子核运动的轨道角动量量子化：<br>
+
 $$
   L = n\hbar,\quad n=1,2,3,\dots
   $$</li>
 <li>能级公式：<br>
+
 $$
   E_n = -\frac{13.6\ \text{eV}}{n^2}
   $$</li>
@@ -73,6 +76,7 @@ $$
 </h5><ul>
 <li>电子在稳定轨道上运动时不辐射能量。</li>
 <li>电子在不同能级之间跃迁时吸收或发射能量：<br>
+
 $$
   \Delta E = h\nu
   $$</li>
@@ -82,6 +86,7 @@ $$
 康普顿效应
 </h5><ul>
 <li>高能光子与电子散射后波长增加：<br>
+
 $$
   \Delta\lambda = \lambda' - \lambda = \frac{h}{m_ec}(1-\cos\theta)
   $$</li>
@@ -93,6 +98,7 @@ $$
 </h5><ul>
 <li>能量量子化假设：电磁场能量按 $E=nh\nu$ 离散取值。</li>
 <li>普朗克公式：<br>
+
 $$
   u(\nu,T)=\frac{8\pi h\nu^3}{c^3}\frac{1}{e^{h\nu/kT}-1}
   $$</li>
@@ -113,14 +119,17 @@ $$
 德布罗意关系
 </h5><ul>
 <li>波长：<br>
+
 $$
   \lambda = \frac{h}{p}
   $$</li>
 <li>矢量形式：<br>
+
 $$
   \vec p = \hbar \vec k
   $$</li>
 <li>频率：<br>
+
 $$
   E = h\nu = \hbar\omega
   $$</li>
@@ -135,10 +144,12 @@ $$
 </h4><ul>
 <li>微观粒子的位置与动量不能同时被精确测定，存在测量极限。</li>
 <li>海森堡测不准关系：<br>
+
 $$
   \Delta x \cdot \Delta p_x \geq \frac{\hbar}{2}
   $$</li>
 <li>能量与时间之间的测不准关系：<br>
+
 $$
   \Delta E \cdot \Delta t \geq \frac{\hbar}{2}
   $$</li>
@@ -160,10 +171,12 @@ $$
 1.2.3 波函数归一化
 </h4><ul>
 <li><strong>归一化条件</strong>：空间内找到粒子概率为 1。<br>
+
 $$
   \int_{-\infty}^{\infty} \psi^* (\vec r,t) \psi (\vec r,t) dV = 1
   $$</li>
 <li><strong>归一化波函数求法</strong>
+
 $$
   \int_{-\infty}^{\infty} |\Psi(\vec r,t)|^2 dV = A^2 \int_{-\infty}^{\infty} |\psi(\vec r,t)|^2 dV = 1
   $$
@@ -199,6 +212,7 @@ $$<p>
 <ul>
 <li>$\vec{k}$：波矢，$|\vec{k}| = k$</li>
 <li>$\omega$：角频率，满足能量关系<br>
+
 $$
 E = \hbar \omega = \frac{\hbar^2 k^2}{2m}
 $$</li>
@@ -328,10 +342,12 @@ $$
 $$<p><strong>4. 将算符作用到波函数上</strong></p>
 <ul>
 <li>动能算符：
+
 $$
 \hat{T} = \frac{\hat{p}^2}{2m} = -\frac{\hbar^2}{2m}\nabla^2
 $$</li>
 <li>总能量算符：
+
 $$
 \hat{H} = \hat{T} + V(\vec{r},t) = -\frac{\hbar^2}{2m}\nabla^2 + V(\vec{r},t)
 $$</li>
@@ -350,6 +366,7 @@ $$<p><strong>说明</strong></p>
 <ul>
 <li>这是非相对论情况下的时间依赖薛定谔方程。</li>
 <li>对自由粒子 ($V=0$) 简化为：
+
 $$
 i\hbar \frac{\partial \psi}{\partial t} = -\frac{\hbar^2}{2m}\nabla^2 \psi
 $$</li>
@@ -374,6 +391,7 @@ $$<p>
 <ul>
 <li>$c_n$ 为展开系数，表示体系处于 $\phi_n$ 态的概率幅；</li>
 <li>概率为 $|c_n|^2$，需满足：
+
 $$
 \sum_n |c_n|^2 = 1
 $$</li>
@@ -434,10 +452,12 @@ $$<ul>
 <p><strong>5. 本征函数与能量</strong></p>
 <ul>
 <li>归一化波函数：
+
 $$
 \phi_n(x) = \sqrt{\frac{2}{L}} \sin\left(\frac{n\pi x}{L}\right), \quad n=1,2,3,\dots
 $$</li>
 <li>能量本征值：
+
 $$
 E_n = \frac{n^2 \pi^2 \hbar^2}{2mL^2}, \quad n=1,2,3,\dots
 $$</li>
@@ -524,6 +544,7 @@ $$<p>
 解为勒让德多项式 $P_l(x)$。</p>
 <ul>
 <li>正交性：
+
 $$
 \int_{-1}^{1} P_l(x) P_{l'}(x)\,dx = \frac{2}{2l+1}\delta_{ll'}
 $$</li>
@@ -661,6 +682,7 @@ $$<p>
 算符（Operator）是作用在函数空间或态空间上的运算规则。在量子力学中，物理量通过算符来刻画，波函数是算符作用的对象。</p>
 <ul>
 <li>若 $A$ 是一个算符，对波函数 $\psi$ 的作用记为<br>
+
 $$
      A\psi(x)
      $$</li>
@@ -680,6 +702,7 @@ $$
 <p><strong>算符的对易关系</strong></p>
 <ul>
 <li>两个算符 $A, B$ 的对易子定义为<br>
+
 $$
      [A,B] = AB - BA
      $$</li>
@@ -691,6 +714,7 @@ $$
 <p><strong>厄米算符</strong></p>
 <ul>
 <li>定义：若算符 $A$ 满足<br>
+
 $$
      \langle \psi | A\varphi \rangle = \langle A\psi | \varphi \rangle
      $$
@@ -713,10 +737,12 @@ $$
 在位置表象下：</p>
 <ul>
 <li>坐标算符<br>
+
 $$
      \hat{x} = x
      $$</li>
 <li>动量算符<br>
+
 $$
      \hat{p} = -i\hbar \frac{\partial}{\partial x}
      $$</li>
@@ -735,6 +761,7 @@ $$
 <p><strong>物理量的测量与本征方程</strong></p>
 <ul>
 <li>测量某一物理量 $A$，等价于求解算符 $\hat{A}$ 的本征方程：<br>
+
 $$
      \hat{A}\psi_a = a\psi_a
      $$</li>
@@ -864,10 +891,12 @@ $$
 <p><strong>完备性与正交性</strong></p>
 <ul>
 <li>完备性：
+
 $$
      \sum_n |\phi_n\rangle \langle \phi_n| = I
      $$</li>
 <li>正交性：
+
 $$
      \langle \phi_m | \phi_n \rangle = \delta_{mn}
      $$</li>
@@ -883,10 +912,12 @@ $$
 <ul>
 <li>基底：$|x\rangle$</li>
 <li>波函数表示：<br>
+
 $$
      \psi(x) = \langle x|\psi\rangle
      $$</li>
 <li>算符作用：
+
 $$
      \hat{x} \psi(x) = x \psi(x), \quad \hat{p}_x \psi(x) = -i\hbar \frac{\partial}{\partial x}\psi(x)
      $$</li>
@@ -897,10 +928,12 @@ $$
 <ul>
 <li>基底：$|p\rangle$</li>
 <li>波函数表示：
+
 $$
      \phi(p) = \langle p|\psi\rangle
      $$</li>
 <li>算符作用：
+
 $$
      \hat{p} \phi(p) = p \phi(p), \quad \hat{x} \phi(p) = i\hbar \frac{\partial}{\partial p}\phi(p)
      $$</li>
@@ -911,6 +944,7 @@ $$
 <ul>
 <li>基底：哈密顿算符的本征态 $|E_n\rangle$</li>
 <li>态矢量表示：
+
 $$
      |\psi\rangle = \sum_n c_n |E_n\rangle, \quad c_n = \langle E_n|\psi\rangle
      $$</li>
@@ -921,9 +955,11 @@ $$
 <p><strong>表象之间的变换</strong></p>
 <ul>
 <li>不同表象之间通过傅里叶变换联系：<br>
+
 $$
      \phi(p) = \frac{1}{\sqrt{2\pi\hbar}} \int_{-\infty}^{\infty} \psi(x) e^{-ipx/\hbar} dx
      $$
+
 $$
      \psi(x) = \frac{1}{\sqrt{2\pi\hbar}} \int_{-\infty}^{\infty} \phi(p) e^{ipx/\hbar} dp
      $$</li>
@@ -1019,10 +1055,12 @@ $$
 <p><strong>本征值</strong></p>
 <ul>
 <li>角动量平方：
+
 $$
      L = \sqrt{l(l+1)} \hbar
      $$</li>
 <li>角动量 $z$ 分量：
+
 $$
      L_z = m\hbar
      $$</li>
@@ -1061,14 +1099,17 @@ $$
 <p><strong>能量修正</strong></p>
 <ul>
 <li>零阶：<br>
+
 $$
      E_n^{(0)} , \quad \psi_n^{(0)}
      $$</li>
 <li>一阶：<br>
+
 $$
      E_n^{(1)} = \langle \psi_n^{(0)} | \hat{H}' | \psi_n^{(0)} \rangle
      $$</li>
 <li>二阶：<br>
+
 $$
      E_n^{(2)} = \sum_{m \neq n} \frac{|\langle \psi_m^{(0)} | \hat{H}' | \psi_n^{(0)} \rangle|^2}{E_n^{(0)} - E_m^{(0)}}
      $$</li>
@@ -1175,6 +1216,7 @@ $$
 <li>自旋量子数为 $s = 1/2$。</li>
 <li>自旋有两个可能的投影 $m_s = \pm 1/2$。</li>
 <li>自旋引入了额外的磁矩：
+
 $$
      \vec{\mu}_s = -g_s \frac{e}{2m_e} \vec{S}, \quad g_s \approx 2
      $$</li>
@@ -1190,6 +1232,7 @@ $$
 <ul>
 <li>自旋是内禀角动量，不依赖空间坐标。</li>
 <li>其算符满足角动量对易关系：
+
 $$
      [\hat{S}_i, \hat{S}_j] = i\hbar \epsilon_{ijk} \hat{S}_k
      $$</li>
@@ -1242,6 +1285,7 @@ $$
 <p><strong>自旋-1/2 粒子</strong></p>
 <ul>
 <li>自旋态空间二维，取基底：
+
 $$
      |\uparrow\rangle = \begin{pmatrix}1\\0\end{pmatrix}, \quad
      |\downarrow\rangle = \begin{pmatrix}0\\1\end{pmatrix}
@@ -1272,6 +1316,7 @@ $$
 <p><strong>自旋-轨道耦合</strong></p>
 <ul>
 <li>电子轨道角动量 $\vec{L}$ 与自旋 $\vec{S}$ 耦合：
+
 $$
      \hat{H}_{\text{SO}} = \xi(r)\, \vec{L} \cdot \vec{S}
      $$</li>
@@ -1342,6 +1387,7 @@ $$
 <p><strong>对称性</strong></p>
 <ul>
 <li>$\hat{H}$ 在交换粒子算符下保持不变：
+
 $$
      [\hat{H}, \hat{P}_{ij}] = 0
      $$</li>
@@ -1357,6 +1403,7 @@ $$
 <p><strong>对称性要求</strong></p>
 <ul>
 <li>波函数必须满足交换对称性：
+
 $$
      \hat{P}_{ij} \Psi(\dots, \vec{r}_i, \vec{r}_j, \dots) =
      \pm \Psi(\dots, \vec{r}_i, \vec{r}_j, \dots)
@@ -1370,6 +1417,7 @@ $$
 <ul>
 <li>玻色子：对称化和式。</li>
 <li>费米子：反对称化行列式（Slater 行列式）：
+
 $$
      \Psi(\vec{r}_1, \dots, \vec{r}_N) = \frac{1}{\sqrt{N!}}
      \begin{vmatrix}
@@ -1391,6 +1439,7 @@ $$
 <ul>
 <li>对于自旋为半整数的全同费米子，任何两粒子不能占据完全相同的量子态。</li>
 <li>即：
+
 $$
      \Psi(\text{同一量子态}) = 0
      $$</li>
