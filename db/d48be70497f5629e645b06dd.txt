@@ -1,12 +1,12 @@
 <h1>最优化理论与方法</h1><p>作者：孤筝（lvbowen040427@163.com）</p>
         
-          <h1 id="最优化问题">
+          <h2 id="最优化问题">
 <a class="header-anchor" href="#%e6%9c%80%e4%bc%98%e5%8c%96%e9%97%ae%e9%a2%98"></a>
 最优化问题
-</h1><h2 id="数学模型">
+</h2><h3 id="数学模型">
 <a class="header-anchor" href="#%e6%95%b0%e5%ad%a6%e6%a8%a1%e5%9e%8b"></a>
 数学模型
-</h2>$$
+</h3>$$
 \min f(\vec{x}),\vec{x}\in \vec{R^{n}}
 $$$$
 \text{s.t.}{
@@ -21,10 +21,10 @@ $$<p>
 <li>$f(\vec{x})$ 称为目标函数</li>
 <li>s.t.（subject to ，受限于），称为约束条件</li>
 </ul>
-<h2 id="分类">
+<h3 id="分类">
 <a class="header-anchor" href="#%e5%88%86%e7%b1%bb"></a>
 分类
-</h2><ol>
+</h3><ol>
 <li>时间
 <ol>
 <li>静态问题</li>
@@ -50,10 +50,10 @@ $$<p>
 </ol>
 </li>
 </ol>
-<h2 id="二次型矩阵">
+<h3 id="二次型矩阵">
 <a class="header-anchor" href="#%e4%ba%8c%e6%ac%a1%e5%9e%8b%e7%9f%a9%e9%98%b5"></a>
 二次型矩阵
-</h2><p>二次型：
+</h3><p>二次型：
 </p>
 $$
 \begin{align}
@@ -80,10 +80,10 @@ $$
 -2 & 0 & \frac{1}{2}\\
 0 & \frac{1}{2} & -3\\
 \end{bmatrix}
-$$<h2 id="hessen-矩阵">
+$$<h3 id="hessen-矩阵">
 <a class="header-anchor" href="#hessen-%e7%9f%a9%e9%98%b5"></a>
 Hessen 矩阵
-</h2><p>以二元二次函数为例：
+</h3><p>以二元二次函数为例：
 </p>
 $$
 \nabla^2 f(x_1,x_2)=
@@ -91,27 +91,27 @@ $$
 \frac{\partial^2 f}{\partial x_1^2} & \frac{\partial^2 f}{\partial x_1 \partial x_2}\\
 \frac{\partial^2 f}{\partial x_2 \partial x_1} & \frac{\partial^2 f}{\partial x_2^2}\\
 \end{bmatrix}
-$$<h2 id="可行解">
+$$<h3 id="可行解">
 <a class="header-anchor" href="#%e5%8f%af%e8%a1%8c%e8%a7%a3"></a>
 可行解
-</h2><ul>
+</h3><ul>
 <li>可行解：满足所有约束条件的解。</li>
 <li>可行集（容许集，可行域）：所有可行解构成的集合。</li>
 <li>优化问题：在可行集中找出使得目标函数取得最大值或最小值的点。</li>
 <li>驻点：$\nabla f(x_0)=0$ ，称 $x_0$ 为驻点。</li>
 <li>鞍点：$x_0$ 为驻点，但不为极值点时，称为鞍点。</li>
 </ul>
-<h2 id="凸集">
+<h3 id="凸集">
 <a class="header-anchor" href="#%e5%87%b8%e9%9b%86"></a>
 凸集
-</h2><h3 id="定义">
+</h3><h4 id="定义">
 <a class="header-anchor" href="#%e5%ae%9a%e4%b9%89"></a>
 定义
-</h3><p>在平面当中，一个图形内部的两个点连线仍然在图形内部，则该图形称为凸集。</p>
-<h3 id="性质">
+</h4><p>在平面当中，一个图形内部的两个点连线仍然在图形内部，则该图形称为凸集。</p>
+<h4 id="性质">
 <a class="header-anchor" href="#%e6%80%a7%e8%b4%a8"></a>
 性质
-</h3><ol>
+</h4><ol>
 <li>凸集的交集为凸集</li>
 <li>凸集的等比例缩放为凸集</li>
 <li>凸集的和集（非并集）是凸集
@@ -121,68 +121,68 @@ $$<h2 id="可行解">
 </li>
 <li>凸集的线性组合是凸集。</li>
 </ol>
-<h3 id="常见凸集">
+<h4 id="常见凸集">
 <a class="header-anchor" href="#%e5%b8%b8%e8%a7%81%e5%87%b8%e9%9b%86"></a>
 常见凸集
-</h3><ol>
+</h4><ol>
 <li>空集</li>
 <li>整个欧氏空间 $\vec{R^n}$</li>
 <li>超空间 $H=\{x \in \vec{R^n} | a_1x_1+a_2x_2+\cdots +a_nx_n=b\}$</li>
 <li>半空间 $H^+=\{x \in \vec{R^n} | a_1x_1+a_2x_2+\cdots +a_nx_n \ge b\}$</li>
 </ol>
-<h3 id="凸组合">
+<h4 id="凸组合">
 <a class="header-anchor" href="#%e5%87%b8%e7%bb%84%e5%90%88"></a>
 凸组合
-</h3><p>设 $x_i \in \vec{R^n},i=1,2,\cdots ,k$ ，实数 $\lambda_i \ge 0,\sum^k_{i=1}\lambda_i=1$ ，则 $x=\sum^k_{i=1}\lambda_ix_i$ 称为 $x_1,x_2,\cdots , x_k$ 的凸组合。<br>
+</h4><p>设 $x_i \in \vec{R^n},i=1,2,\cdots ,k$ ，实数 $\lambda_i \ge 0,\sum^k_{i=1}\lambda_i=1$ ，则 $x=\sum^k_{i=1}\lambda_ix_i$ 称为 $x_1,x_2,\cdots , x_k$ 的凸组合。<br>
 凸集中任意有限个点的凸组合仍然在该凸集中。</p>
-<h3 id="极点">
+<h4 id="极点">
 <a class="header-anchor" href="#%e6%9e%81%e7%82%b9"></a>
 极点
-</h3><p>设 $D$ 为凸集，$x \in D$ ，若 $D$ 中不存在两个相异的点 $y,z$ 及某一实数 $\alpha \in (0,1)$ 使得 $x=\alpha y+(1-\alpha)z$ ，则称 $x$ 为 $D$ 的极点。</p>
+</h4><p>设 $D$ 为凸集，$x \in D$ ，若 $D$ 中不存在两个相异的点 $y,z$ 及某一实数 $\alpha \in (0,1)$ 使得 $x=\alpha y+(1-\alpha)z$ ，则称 $x$ 为 $D$ 的极点。</p>
 <p>人话：以平面五边形为例，极点为其顶点；以半圆形为例，顶点为其直径两个顶点及半圆边。</p>
-<h2 id="凸函数">
+<h3 id="凸函数">
 <a class="header-anchor" href="#%e5%87%b8%e5%87%bd%e6%95%b0"></a>
 凸函数
-</h2><h3 id="定义-1">
+</h3><h4 id="定义-1">
 <a class="header-anchor" href="#%e5%ae%9a%e4%b9%89-1"></a>
 定义
-</h3><p>定义在一个凸集上的函数 $f(x)$ ，如果对于凸集当中任意两个点 $x_1,x_2$ ，函数满足
+</h4><p>定义在一个凸集上的函数 $f(x)$ ，如果对于凸集当中任意两个点 $x_1,x_2$ ，函数满足
 </p>
 $$
 f(\alpha x_1+(1-\alpha)x_2) \le \alpha f(x_1)+(1-\alpha)f(x_2)
 $$<p>
 则称该函数为凸函数。<br>
 当取小于号 $\lt$ 时，称为严格凸函数。</p>
-<h3 id="判断">
+<h4 id="判断">
 <a class="header-anchor" href="#%e5%88%a4%e6%96%ad"></a>
 判断
-</h3><ol>
+</h4><ol>
 <li>多元函数的 Hessen 矩阵为半正定矩阵——&gt;多元函数为凸函数。</li>
 <li>多元函数的 Hessen 矩阵为正定矩阵——&gt;多元函数为严格凸函数。</li>
 <li>多元线性（一次）函数是 $\vec{R^n}$ 上的凸函数。</li>
 </ol>
-<h2 id="凸优化问题">
+<h3 id="凸优化问题">
 <a class="header-anchor" href="#%e5%87%b8%e4%bc%98%e5%8c%96%e9%97%ae%e9%a2%98"></a>
 凸优化问题
-</h2><h3 id="定义-2">
+</h3><h4 id="定义-2">
 <a class="header-anchor" href="#%e5%ae%9a%e4%b9%89-2"></a>
 定义
-</h3><p>目标函数和约束函数都是凸函数的优化问题。</p>
+</h4><p>目标函数和约束函数都是凸函数的优化问题。</p>
 <ul>
 <li>凸优化的可行集为凸集</li>
 <li>任何局部最优解是全剧最优解</li>
 <li>如果目标函数为严格凸函数，则局部最优解存在且唯一</li>
 </ul>
-<h1 id="线性规划">
+<h2 id="线性规划">
 <a class="header-anchor" href="#%e7%ba%bf%e6%80%a7%e8%a7%84%e5%88%92"></a>
 线性规划
-</h1><h2 id="形式">
+</h2><h3 id="形式">
 <a class="header-anchor" href="#%e5%bd%a2%e5%bc%8f"></a>
 形式
-</h2><h3 id="非标准形式">
+</h3><h4 id="非标准形式">
 <a class="header-anchor" href="#%e9%9d%9e%e6%a0%87%e5%87%86%e5%bd%a2%e5%bc%8f"></a>
 非标准形式
-</h3><ul>
+</h4><ul>
 <li>目标函数：$\max z=\sum^{n}_{j=1}c_jx_j=CX$</li>
 <li>系数矩阵：
 
@@ -213,10 +213,10 @@ X \ge \vec{0}
 \end{cases}
 $$</li>
 </ul>
-<h3 id="标准形式">
+<h4 id="标准形式">
 <a class="header-anchor" href="#%e6%a0%87%e5%87%86%e5%bd%a2%e5%bc%8f"></a>
 标准形式
-</h3><ol>
+</h4><ol>
 <li>极大问题极小化</li>
 <li>松弛变量：对于 $\le$ 约束，引入松弛变量迫使等号成立</li>
 <li>剩余变量：对于 $\ge$ 约束，引入剩余变量迫使等号成立</li>
@@ -231,10 +231,10 @@ h_j(x_1,x_2,\cdots,x_n)=0&(j=1,2,\cdots)\\
 x_j \ge 0\\
 \end{cases}
 \end{cases}
-$$<h2 id="基矩阵">
+$$<h3 id="基矩阵">
 <a class="header-anchor" href="#%e5%9f%ba%e7%9f%a9%e9%98%b5"></a>
 基矩阵
-</h2><ul>
+</h3><ul>
 <li>基（基矩阵）：系数矩阵中最大非奇异子矩阵。
 <ul>
 <li>若系数矩阵 $A$ 为 $m \times n$ 矩阵，$rank(A)=m$，则基矩阵为任意 $m \times m$ 的非奇异子矩阵。</li>
@@ -247,20 +247,20 @@ $$<h2 id="基矩阵">
 <li>基本可行解：满足 $\text{s.t.}$ 非负条件式的基本解。</li>
 <li>最优基可行解：所有基本可行解中，使得函数值达到最优值的基可行解。</li>
 </ul>
-<h2 id="线性规划解性质">
+<h3 id="线性规划解性质">
 <a class="header-anchor" href="#%e7%ba%bf%e6%80%a7%e8%a7%84%e5%88%92%e8%a7%a3%e6%80%a7%e8%b4%a8"></a>
 线性规划解性质
-</h2><ol>
+</h3><ol>
 <li>线性规划可行集为凸集</li>
 <li>若有最优解，必定在可行集顶点取得</li>
 </ol>
-<h2 id="单纯形法">
+<h3 id="单纯形法">
 <a class="header-anchor" href="#%e5%8d%95%e7%ba%af%e5%bd%a2%e6%b3%95"></a>
 单纯形法
-</h2><h3 id="判别数检验数">
+</h3><h4 id="判别数检验数">
 <a class="header-anchor" href="#%e5%88%a4%e5%88%ab%e6%95%b0%e6%a3%80%e9%aa%8c%e6%95%b0"></a>
 判别数（检验数）
-</h3><p>每一个未知数对应一个判别数
+</h4><p>每一个未知数对应一个判别数
 </p>
 $$
 \sigma_j=C^T_J \vec{P_j}-c_j=\sum^{m}_{i=1}c_ia_{ij}-c_j
@@ -273,17 +273,17 @@ $$<ul>
 </ul>
 <p><strong>各个判别数都小于等于零时，基可行解为最优解。</strong></p>
 <p>一般基变量判别数为零。</p>
-<h3 id="基变换">
+<h4 id="基变换">
 <a class="header-anchor" href="#%e5%9f%ba%e5%8f%98%e6%8d%a2"></a>
 基变换
-</h3><h4 id="选取基矩阵">
+</h4><h5 id="选取基矩阵">
 <a class="header-anchor" href="#%e9%80%89%e5%8f%96%e5%9f%ba%e7%9f%a9%e9%98%b5"></a>
 选取基矩阵
-</h4><p>优先选取单位矩阵为基矩阵。计算出初始基可行解和判别数。</p>
-<h4 id="画初始单纯形表">
+</h5><p>优先选取单位矩阵为基矩阵。计算出初始基可行解和判别数。</p>
+<h5 id="画初始单纯形表">
 <a class="header-anchor" href="#%e7%94%bb%e5%88%9d%e5%a7%8b%e5%8d%95%e7%ba%af%e5%bd%a2%e8%a1%a8"></a>
 画初始单纯形表
-</h4><table>
+</h5><table>
   <thead>
       <tr>
           <th></th>
@@ -337,75 +337,75 @@ $$<ul>
       </tr>
   </tbody>
 </table>
-<h4 id="选取合适的进基列">
+<h5 id="选取合适的进基列">
 <a class="header-anchor" href="#%e9%80%89%e5%8f%96%e5%90%88%e9%80%82%e7%9a%84%e8%bf%9b%e5%9f%ba%e5%88%97"></a>
 选取合适的进基列
-</h4><p>判别数大于零，则该列有分量大于零，选该列为进基列 $P_j$，对应变量为进基变量 $x_j$。</p>
-<h4 id="选取主元">
+</h5><p>判别数大于零，则该列有分量大于零，选该列为进基列 $P_j$，对应变量为进基变量 $x_j$。</p>
+<h5 id="选取主元">
 <a class="header-anchor" href="#%e9%80%89%e5%8f%96%e4%b8%bb%e5%85%83"></a>
 选取主元
-</h4><p>挑选该进基列中大于零的元素 $a_{ij}$，将 $b$ 中对应元素 $b_j$ 除选取元素，比较结果取最小值，该元素 $a_{ij}$ 为主元。<br>
+</h5><p>挑选该进基列中大于零的元素 $a_{ij}$，将 $b$ 中对应元素 $b_j$ 除选取元素，比较结果取最小值，该元素 $a_{ij}$ 为主元。<br>
 <em><strong>若判别数大于零，该列元素均小于零，则该线性规划无最优解。</strong></em></p>
-<h4 id="初等行变换">
+<h5 id="初等行变换">
 <a class="header-anchor" href="#%e5%88%9d%e7%ad%89%e8%a1%8c%e5%8f%98%e6%8d%a2"></a>
 初等行变换
-</h4><p>将主元变换为 1，该列其他系数元素变为 0 。
+</h5><p>将主元变换为 1，该列其他系数元素变为 0 。
 <strong>几何含义：更换可行域顶点。</strong></p>
-<h4 id="出基列">
+<h5 id="出基列">
 <a class="header-anchor" href="#%e5%87%ba%e5%9f%ba%e5%88%97"></a>
 出基列
-</h4><p>根据系数矩阵选取新的基矩阵，与原来基矩阵相比，被替代的的列为出基列，对应变量为出基变量。<br>
+</h5><p>根据系数矩阵选取新的基矩阵，与原来基矩阵相比，被替代的的列为出基列，对应变量为出基变量。<br>
 计算判别数，列出单纯形表。</p>
-<h4 id="新一轮基变换">
+<h5 id="新一轮基变换">
 <a class="header-anchor" href="#%e6%96%b0%e4%b8%80%e8%bd%ae%e5%9f%ba%e5%8f%98%e6%8d%a2"></a>
 新一轮基变换
-</h4><p>判别数行发生变化，若产生新的大于零判别数，选取该列为新进基列，选取主元，做初等行变换。</p>
-<h4 id="结果">
+</h5><p>判别数行发生变化，若产生新的大于零判别数，选取该列为新进基列，选取主元，做初等行变换。</p>
+<h5 id="结果">
 <a class="header-anchor" href="#%e7%bb%93%e6%9e%9c"></a>
 结果
-</h4><p>判别数均小于等于零时，$\vec{b}$ 的值为基变量值，非基变量取值为 0，合计构成最优解，带入目标函数计算得最小值。</p>
-<h3 id="单纯形法适用条件">
+</h5><p>判别数均小于等于零时，$\vec{b}$ 的值为基变量值，非基变量取值为 0，合计构成最优解，带入目标函数计算得最小值。</p>
+<h4 id="单纯形法适用条件">
 <a class="header-anchor" href="#%e5%8d%95%e7%ba%af%e5%bd%a2%e6%b3%95%e9%80%82%e7%94%a8%e6%9d%a1%e4%bb%b6"></a>
 单纯形法适用条件
-</h3><ol>
+</h4><ol>
 <li>非齐次项元素非负。</li>
 <li>存在可行解。</li>
 <li>松弛变量与非基变量的值相乘之和等于零。</li>
 <li>凸可行域，线性规划问题。</li>
 <li>可行解集合有限。</li>
 </ol>
-<h2 id="人工变量法">
+<h3 id="人工变量法">
 <a class="header-anchor" href="#%e4%ba%ba%e5%b7%a5%e5%8f%98%e9%87%8f%e6%b3%95"></a>
 人工变量法
-</h2><p>系数矩阵中又不包含单位矩阵时，往往采用添加人工变量的方法来人为构造一个单位矩阵。</p>
+</h3><p>系数矩阵中又不包含单位矩阵时，往往采用添加人工变量的方法来人为构造一个单位矩阵。</p>
 <p>设线性规划问题的约束条件是 $\sum^{n}_{j=1}a_{ij}=b_i(i=1,2,\cdots ,m)$，分别给每个约束条件加上人工变量 $x_{n+1},x_{n+2},\cdots,x_{n+m}$，以其为基变量（构成单位矩阵），其余变量为 0，得到一组可行解 $x^{(0)}=(0,0,\cdots,0,b_1,b_2,\cdots,b_m)^T$。<br>
 在此基础上经过基变换求解，得到不含非零人工变量的最优解。</p>
 <p>若当所有判别数小于零时，仍有非零人工变量，说明原问题无可行解。</p>
-<h2 id="大-m-法">
+<h3 id="大-m-法">
 <a class="header-anchor" href="#%e5%a4%a7-m-%e6%b3%95"></a>
 大 M 法
-</h2><p>对于最小化问题，在约束条件中加入人工变量后，令人工变量在目标函数中的系数为 M（$M \in \vec{R^+}$）。<br>
+</h3><p>对于最小化问题，在约束条件中加入人工变量后，令人工变量在目标函数中的系数为 M（$M \in \vec{R^+}$）。<br>
 为求得最小目标函数值，需要不断进行基变换，使得人工变量取值为 0。对于最大化问题，$M \in \vec{R^-}$。</p>
-<h2 id="退化情形">
+<h3 id="退化情形">
 <a class="header-anchor" href="#%e9%80%80%e5%8c%96%e6%83%85%e5%bd%a2"></a>
 退化情形
-</h2><p>若单纯形法陷入循环，该问题存在最优解，可通过以下方法避免循环发生。</p>
-<h3 id="摄动法">
+</h3><p>若单纯形法陷入循环，该问题存在最优解，可通过以下方法避免循环发生。</p>
+<h4 id="摄动法">
 <a class="header-anchor" href="#%e6%91%84%e5%8a%a8%e6%b3%95"></a>
 摄动法
-</h3><h3 id="修正单纯形法">
+</h4><h4 id="修正单纯形法">
 <a class="header-anchor" href="#%e4%bf%ae%e6%ad%a3%e5%8d%95%e7%ba%af%e5%bd%a2%e6%b3%95"></a>
 修正单纯形法
-</h3><h1 id="线性规划对偶理论">
+</h4><h2 id="线性规划对偶理论">
 <a class="header-anchor" href="#%e7%ba%bf%e6%80%a7%e8%a7%84%e5%88%92%e5%af%b9%e5%81%b6%e7%90%86%e8%ae%ba"></a>
 线性规划对偶理论
-</h1><h2 id="线性规划对偶问题形式">
+</h2><h3 id="线性规划对偶问题形式">
 <a class="header-anchor" href="#%e7%ba%bf%e6%80%a7%e8%a7%84%e5%88%92%e5%af%b9%e5%81%b6%e9%97%ae%e9%a2%98%e5%bd%a2%e5%bc%8f"></a>
 线性规划对偶问题形式
-</h2><h3 id="对称形式">
+</h3><h4 id="对称形式">
 <a class="header-anchor" href="#%e5%af%b9%e7%a7%b0%e5%bd%a2%e5%bc%8f"></a>
 对称形式
-</h3><p>原问题
+</h4><p>原问题
 </p>
 $$
 \begin{cases}
@@ -434,10 +434,10 @@ $$<p>对应关系：</p>
 <li>（3）原问题的目标函数为最小化，则它的对偶问题目标函数为最大化；</li>
 <li>（4）原问题的约束条件为“≥”，它的对偶问题的约束条件为“≤”。</li>
 </ul>
-<h3 id="非对称形式">
+<h4 id="非对称形式">
 <a class="header-anchor" href="#%e9%9d%9e%e5%af%b9%e7%a7%b0%e5%bd%a2%e5%bc%8f"></a>
 非对称形式
-</h3><p>原问题
+</h4><p>原问题
 </p>
 $$
 \begin{cases}
@@ -459,47 +459,47 @@ $$
 \vec{y} \text{无约束}
 \end{cases}
 \end{cases}
-$$<h3 id="一般情形">
+$$<h4 id="一般情形">
 <a class="header-anchor" href="#%e4%b8%80%e8%88%ac%e6%83%85%e5%bd%a2"></a>
 一般情形
-</h3><p>原问题同时含有 $\le,\ge,=$ 几种约束，先引入松弛变量和剩余变量将约束统一为 $=$，再使用非对称形式方法做出对偶。</p>
+</h4><p>原问题同时含有 $\le,\ge,=$ 几种约束，先引入松弛变量和剩余变量将约束统一为 $=$，再使用非对称形式方法做出对偶。</p>
 <p><img src="https://cdn.jsdelivr.net/gh/GuZhengSVT/Hugo-media//photo/%E5%8E%9F%E9%97%AE%E9%A2%98%E4%B8%8E%E5%AF%B9%E5%81%B6%E9%97%AE%E9%A2%98%E5%AF%B9%E5%BA%94%E5%85%B3%E7%B3%BB%E8%A1%A81.png" alt="原问题与对偶问题对应关系表1.png">
 <img src="https://cdn.jsdelivr.net/gh/GuZhengSVT/Hugo-media//photo/%E5%8E%9F%E9%97%AE%E9%A2%98%E4%B8%8E%E5%AF%B9%E5%81%B6%E9%97%AE%E9%A2%98%E5%AF%B9%E5%BA%94%E5%85%B3%E7%B3%BB%E8%A1%A82.png" alt="原问题与对偶问题对应关系表2.png"></p>
-<h2 id="对偶单纯形法">
+<h3 id="对偶单纯形法">
 <a class="header-anchor" href="#%e5%af%b9%e5%81%b6%e5%8d%95%e7%ba%af%e5%bd%a2%e6%b3%95"></a>
 对偶单纯形法
-</h2><ul>
+</h3><ul>
 <li>单纯形法：先保证 $\vec{b} \ge 0$，再根据检验数 $\le 0$ 迭代。</li>
 <li>对偶单纯形法：先保证检验数 $\le 0$，再根据 $\vec{b} \ge 0$ 迭代。</li>
 </ul>
-<h3 id="确保检验数">
+<h4 id="确保检验数">
 <a class="header-anchor" href="#%e7%a1%ae%e4%bf%9d%e6%a3%80%e9%aa%8c%e6%95%b0"></a>
 确保检验数 $\le 0$
-</h3><h3 id="选取出基">
+</h4><h4 id="选取出基">
 <a class="header-anchor" href="#%e9%80%89%e5%8f%96%e5%87%ba%e5%9f%ba"></a>
 选取出基
-</h3><p>存在 $b_i \lt 0$，其中最小 $\min b_i$ 所在的行为出基行。对应变量为出基变量。</p>
-<h3 id="选取进基">
+</h4><p>存在 $b_i \lt 0$，其中最小 $\min b_i$ 所在的行为出基行。对应变量为出基变量。</p>
+<h4 id="选取进基">
 <a class="header-anchor" href="#%e9%80%89%e5%8f%96%e8%bf%9b%e5%9f%ba"></a>
 选取进基
-</h3><p>检验数除以出基行为负值的系数（$a_{ij} \lt 0$），结果最小值对应列为进基列，对应进基向量。</p>
-<h3 id="行变换">
+</h4><p>检验数除以出基行为负值的系数（$a_{ij} \lt 0$），结果最小值对应列为进基列，对应进基向量。</p>
+<h4 id="行变换">
 <a class="header-anchor" href="#%e8%a1%8c%e5%8f%98%e6%8d%a2"></a>
 行变换
-</h3><p>将进基列用行变换变成能匹配基矩阵（单位阵）的形式，此时 $\vec{b}$ 也有变化。<br>
+</h4><p>将进基列用行变换变成能匹配基矩阵（单位阵）的形式，此时 $\vec{b}$ 也有变化。<br>
 重新计算检验数，确保不大于零。</p>
-<h3 id="新一轮基变换-1">
+<h4 id="新一轮基变换-1">
 <a class="header-anchor" href="#%e6%96%b0%e4%b8%80%e8%bd%ae%e5%9f%ba%e5%8f%98%e6%8d%a2-1"></a>
 新一轮基变换
-</h3><p>若有负值 $b_i \lt 0$，选取最小的 $\min b_i$ 进行下一轮基变换。</p>
-<h3 id="结果-1">
+</h4><p>若有负值 $b_i \lt 0$，选取最小的 $\min b_i$ 进行下一轮基变换。</p>
+<h4 id="结果-1">
 <a class="header-anchor" href="#%e7%bb%93%e6%9e%9c-1"></a>
 结果
-</h3><p>当所有 $b_i \ge 0$ 时，$\vec{b}$ 构成基变量最优解部分，非基变量最优解部分为 0 。<br>
+</h4><p>当所有 $b_i \ge 0$ 时，$\vec{b}$ 构成基变量最优解部分，非基变量最优解部分为 0 。<br>
 带入目标函数求得最优值（最大｜最小）。</p>
-<h1 id="灵敏度分析">
+<h2 id="灵敏度分析">
 <a class="header-anchor" href="#%e7%81%b5%e6%95%8f%e5%ba%a6%e5%88%86%e6%9e%90"></a>
 灵敏度分析
-</h1>
+</h2>
         
         <hr><p>本文2025-05-10首发于<a href='https://guzhengsvt.cn/'>孤筝の温暖小家</a>，最后修改于2025-05-10</p><p>本博客所有文章除特别声明外，均采用 BY-NC-SA 许可协议。转载请注明出处！</p><hr />
