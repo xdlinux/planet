@@ -1,0 +1,335 @@
+<p>跟同学参加了西电的星火杯，做了一个服务教学的 AI 应用。</p>
+<p><a href="https://www.xiaozonglin.cn/spark-bei-participate-small-ji/">星火杯参赛小记：XDWe——驱动教学相长的AI智能学习助手</a>最先出现在<a href="https://www.xiaozonglin.cn">林林杂语</a>。</p>
+<hr />
+<p>前段时间，学院发了关于星火杯的报名文件。上个学期就听说过星火杯，但没想到这学期刚开学就要提交作品，没有做什么事先准备。</p>
+
+
+
+<p>3月8日晚点名结束后，我与一位同学在图书馆用“腾讯元器”做了一个 AI 问答服务，零代码平台开发这个并不难，但一个小时弄出作品还是给这位同学比较大的震撼。星火杯有支持提交零代码平台开发的智能体的赛道，我打算就这样交上去。</p>
+
+
+
+<p>当天晚上，那位同学找我，我们和另外一位同学沟通一些想法，初步确定往“教-学-管-评”智能体方向去做，设计一个平台来服务教育教学。</p>
+
+
+<div class="wp-block-image">
+<figure class="aligncenter size-full is-resized"><picture fetchpriority="high" decoding="async" class="wp-image-1060"><source type="image/avif" srcset="https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/image-7.png.avif 801w, https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/image-7-300x244.png.avif 300w, https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/image-7-768x625.png.avif 768w" sizes="(max-width: 801px) 100vw, 801px"/><source type="image/webp" srcset="https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/image-7.png.webp 801w, https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/image-7-300x244.png.webp 300w, https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/image-7-768x625.png.webp 768w" sizes="(max-width: 801px) 100vw, 801px"/><img fetchpriority="high" decoding="async" width="801" height="652" src="https://www.xiaozonglin.cn/wp-content/uploads/2026/03/image-7.png" alt="" class="wp-image-1060" style="aspect-ratio:1.228561538219467;width:377px;height:auto" srcset="https://www.xiaozonglin.cn/wp-content/uploads/2026/03/image-7.png 801w, https://www.xiaozonglin.cn/wp-content/uploads/2026/03/image-7-300x244.png 300w, https://www.xiaozonglin.cn/wp-content/uploads/2026/03/image-7-768x625.png 768w" sizes="(max-width: 801px) 100vw, 801px"/></picture><figcaption class="wp-element-caption">当天我们三个初步的想法</figcaption></figure>
+</div>
+
+
+<p>智能体知识库本身其实就是一个 RAG 系统，我将此前做 RAG 的代码基本照搬过来，大致用 flask + langchain 做了一个后端出来。姚焱夫同学负责前端，此前他并没有接触过前端的开发，现用现学，很快就了解了前端项目的文件结构、代码逻辑，非常厉害。孟子钦同学将我们聚到一起，对一些想法进行了完善。</p>
+
+
+
+<hr class="wp-block-separator aligncenter has-alpha-channel-opacity"/>
+
+
+
+<p>通过我们的观察，大学的课堂教学过程中存在一些问题，例如：</p>
+
+
+
+<figure class="wp-block-gallery aligncenter has-nested-images columns-default is-cropped wp-block-gallery-1 is-layout-flex wp-block-gallery-is-layout-flex">
+<figure class="wp-block-image size-large"><a href="https://www.xiaozonglin.cn/wp-content/uploads/2026/03/image.png" target="_blank" rel=" noreferrer noopener"><picture decoding="async" data-id="1020" class="wp-image-1020"><source type="image/avif" srcset="https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/image-1024x578.png.avif 1024w, https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/image-300x169.png.avif 300w, https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/image-768x434.png.avif 768w, https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/image-1200x677.png.avif 1200w, https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/image.png.avif 1435w" sizes="(max-width: 1024px) 100vw, 1024px"/><source type="image/webp" srcset="https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/image-1024x578.png.webp 1024w, https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/image-300x169.png.webp 300w, https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/image-768x434.png.webp 768w, https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/image-1200x677.png.webp 1200w, https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/image.png.webp 1435w" sizes="(max-width: 1024px) 100vw, 1024px"/><img decoding="async" width="1024" height="578" data-id="1020" src="https://www.xiaozonglin.cn/wp-content/uploads/2026/03/image-1024x578.png" alt="" class="wp-image-1020" srcset="https://www.xiaozonglin.cn/wp-content/uploads/2026/03/image-1024x578.png 1024w, https://www.xiaozonglin.cn/wp-content/uploads/2026/03/image-300x169.png 300w, https://www.xiaozonglin.cn/wp-content/uploads/2026/03/image-768x434.png 768w, https://www.xiaozonglin.cn/wp-content/uploads/2026/03/image-1200x677.png 1200w, https://www.xiaozonglin.cn/wp-content/uploads/2026/03/image.png 1435w" sizes="(max-width: 1024px) 100vw, 1024px"/></picture></a></figure>
+
+
+
+<figure class="wp-block-image size-large"><a href="https://www.xiaozonglin.cn/wp-content/uploads/2026/03/image-1.png" target="_blank" rel=" noreferrer noopener"><picture decoding="async" data-id="1021" class="wp-image-1021"><source type="image/avif" srcset="https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/image-1-1024x579.png.avif 1024w, https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/image-1-300x170.png.avif 300w, https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/image-1-768x434.png.avif 768w, https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/image-1-1200x679.png.avif 1200w, https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/image-1.png.avif 1434w" sizes="(max-width: 1024px) 100vw, 1024px"/><source type="image/webp" srcset="https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/image-1-1024x579.png.webp 1024w, https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/image-1-300x170.png.webp 300w, https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/image-1-768x434.png.webp 768w, https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/image-1-1200x679.png.webp 1200w, https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/image-1.png.webp 1434w" sizes="(max-width: 1024px) 100vw, 1024px"/><img decoding="async" width="1024" height="579" data-id="1021" src="https://www.xiaozonglin.cn/wp-content/uploads/2026/03/image-1-1024x579.png" alt="" class="wp-image-1021" srcset="https://www.xiaozonglin.cn/wp-content/uploads/2026/03/image-1-1024x579.png 1024w, https://www.xiaozonglin.cn/wp-content/uploads/2026/03/image-1-300x170.png 300w, https://www.xiaozonglin.cn/wp-content/uploads/2026/03/image-1-768x434.png 768w, https://www.xiaozonglin.cn/wp-content/uploads/2026/03/image-1-1200x679.png 1200w, https://www.xiaozonglin.cn/wp-content/uploads/2026/03/image-1.png 1434w" sizes="(max-width: 1024px) 100vw, 1024px"/></picture></a></figure>
+
+
+
+<figure class="wp-block-image size-large"><a href="https://www.xiaozonglin.cn/wp-content/uploads/2026/03/image-2.png" target="_blank" rel=" noreferrer noopener"><picture loading="lazy" decoding="async" data-id="1022" class="wp-image-1022"><source type="image/avif" srcset="https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/image-2-1024x573.png.avif 1024w, https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/image-2-300x168.png.avif 300w, https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/image-2-768x430.png.avif 768w, https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/image-2-1200x671.png.avif 1200w, https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/image-2.png.avif 1444w" sizes="auto, (max-width: 1024px) 100vw, 1024px"/><source type="image/webp" srcset="https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/image-2-1024x573.png.webp 1024w, https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/image-2-300x168.png.webp 300w, https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/image-2-768x430.png.webp 768w, https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/image-2-1200x671.png.webp 1200w, https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/image-2.png.webp 1444w" sizes="auto, (max-width: 1024px) 100vw, 1024px"/><img loading="lazy" decoding="async" width="1024" height="573" data-id="1022" src="https://www.xiaozonglin.cn/wp-content/uploads/2026/03/image-2-1024x573.png" alt="" class="wp-image-1022" srcset="https://www.xiaozonglin.cn/wp-content/uploads/2026/03/image-2-1024x573.png 1024w, https://www.xiaozonglin.cn/wp-content/uploads/2026/03/image-2-300x168.png 300w, https://www.xiaozonglin.cn/wp-content/uploads/2026/03/image-2-768x430.png 768w, https://www.xiaozonglin.cn/wp-content/uploads/2026/03/image-2-1200x671.png 1200w, https://www.xiaozonglin.cn/wp-content/uploads/2026/03/image-2.png 1444w" sizes="auto, (max-width: 1024px) 100vw, 1024px"/></picture></a></figure>
+
+
+
+<figure class="wp-block-image size-large"><a href="https://www.xiaozonglin.cn/wp-content/uploads/2026/03/image-3.png" target="_blank" rel=" noreferrer noopener"><picture loading="lazy" decoding="async" data-id="1023" class="wp-image-1023"><source type="image/avif" srcset="https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/image-3-1024x575.png.avif 1024w, https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/image-3-300x168.png.avif 300w, https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/image-3-768x431.png.avif 768w, https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/image-3-1200x673.png.avif 1200w, https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/image-3.png.avif 1438w" sizes="auto, (max-width: 1024px) 100vw, 1024px"/><source type="image/webp" srcset="https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/image-3-1024x575.png.webp 1024w, https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/image-3-300x168.png.webp 300w, https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/image-3-768x431.png.webp 768w, https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/image-3-1200x673.png.webp 1200w, https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/image-3.png.webp 1438w" sizes="auto, (max-width: 1024px) 100vw, 1024px"/><img loading="lazy" decoding="async" width="1024" height="575" data-id="1023" src="https://www.xiaozonglin.cn/wp-content/uploads/2026/03/image-3-1024x575.png" alt="" class="wp-image-1023" srcset="https://www.xiaozonglin.cn/wp-content/uploads/2026/03/image-3-1024x575.png 1024w, https://www.xiaozonglin.cn/wp-content/uploads/2026/03/image-3-300x168.png 300w, https://www.xiaozonglin.cn/wp-content/uploads/2026/03/image-3-768x431.png 768w, https://www.xiaozonglin.cn/wp-content/uploads/2026/03/image-3-1200x673.png 1200w, https://www.xiaozonglin.cn/wp-content/uploads/2026/03/image-3.png 1438w" sizes="auto, (max-width: 1024px) 100vw, 1024px"/></picture></a></figure>
+<figcaption class="blocks-gallery-caption wp-element-caption">从“教、学、管、评”四个角度对教学过程问题的分析（点击图片可跳转到图片文件）</figcaption></figure>
+
+
+
+<p>针对这些问题，我们用我们的项目给出解决方案：</p>
+
+
+
+<ul class="wp-block-list">
+<li>提供大模型问答功能，回答问题</li>
+
+
+
+<li>教师可以针对学生提出的问题给出权威回答，完成知识沉淀</li>
+
+
+
+<li>知识库可以添加文档、资料，充分利用教学材料</li>
+
+
+
+<li>使用大模型对学生的学习情况进行总结，方便老师分析</li>
+</ul>
+
+
+
+<p>这是关于系统问答与知识库功能的流程动图：学生向学习助手提出问题，学习助手在知识库中检索相关资料附在问题后交给大模型，大模型回答学生；教师可以在管理后台看到学生提出的问题并给出权威答案，权威答案沉淀到知识库中，下一次有学生提出类似的问题，大模型将被要求根据权威答案生成回答。</p>
+
+
+<div class="wp-block-image">
+<figure class="aligncenter size-full"><img loading="lazy" decoding="async" width="1080" height="608" src="https://www.xiaozonglin.cn/wp-content/uploads/2026/03/闭环生态-1-1.gif" alt="" class="wp-image-1030"/></figure>
+</div>
+
+
+<p>这是关于系统架构的动图：前端用 Vue 进行开发，后端由 Python Flask 提供服务，使用 Qwen 开源模型。</p>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" decoding="async" width="1080" height="608" src="https://www.xiaozonglin.cn/wp-content/uploads/2026/03/前后端-1.gif" alt="" class="wp-image-1034"/></figure>
+
+
+
+<p>以上两张动图都是用 manim 制作的，截取自我们的项目介绍视频。PPT 的模板来自人智院的刘卓东学长。由于视频文件比较大，内容就是这两个动图加上功能的演示，所以介绍视频的链接附在本文的附录。</p>
+
+
+
+<hr class="wp-block-separator aligncenter has-alpha-channel-opacity"/>
+
+
+
+<p>结合我与 Gemini、ChatGPT的对话记录，总结在开发过程中遇到的问题。</p>
+
+
+
+<p><strong>环境依赖问题</strong><br>这个问题我愿意给到“夯爆了”，配环境的时候基本都会出现各种各样的依赖问题，要么是 Python 版本太低或者太高了，要么是<code>langchain_community</code>的版本跟其他依赖不匹配……langchain两个大版本的接口有很大的差异。每次遇到这种问题问 ai 折腾一两个小时估计都折腾不好，用一下搜索引擎很快就解决了。</p>
+
+
+<div class="wp-block-image is-style-default">
+<figure class="aligncenter size-full"><picture loading="lazy" decoding="async" class="wp-image-1038"><source type="image/avif" srcset="https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/image-4.png.avif 871w, https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/image-4-300x88.png.avif 300w, https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/image-4-768x226.png.avif 768w" sizes="auto, (max-width: 871px) 100vw, 871px"/><source type="image/webp" srcset="https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/image-4.png.webp 871w, https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/image-4-300x88.png.webp 300w, https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/image-4-768x226.png.webp 768w" sizes="auto, (max-width: 871px) 100vw, 871px"/><img loading="lazy" decoding="async" width="871" height="256" src="https://www.xiaozonglin.cn/wp-content/uploads/2026/03/image-4.png" alt="" class="wp-image-1038" srcset="https://www.xiaozonglin.cn/wp-content/uploads/2026/03/image-4.png 871w, https://www.xiaozonglin.cn/wp-content/uploads/2026/03/image-4-300x88.png 300w, https://www.xiaozonglin.cn/wp-content/uploads/2026/03/image-4-768x226.png 768w" sizes="auto, (max-width: 871px) 100vw, 871px"/></picture><figcaption class="wp-element-caption">之前发的一条QQ空间</figcaption></figure>
+</div>
+
+
+<p>在与 ChatGPT 沟通的过程中，遇到开发中最麻烦的两个模块<code>create_retrieval_chain</code>和<code>create_stuff_documents_chain</code>。根据我们 ChatGPT 同学之前的回答，它应该是知道由<code>langchain_classic</code>这个包的，但不知道为什么它在这及之后就忘记这两个模块被移到<code>langchain_classic</code>里面去了。我也是头脑不清醒，跟着它折腾半天，最后不得不找谷歌看看。（其实谷歌应该是第一选项才对，但是我懒，喜欢让 ai 直接给答案）</p>
+
+
+<div class="wp-block-image">
+<figure class="aligncenter size-large"><picture loading="lazy" decoding="async" class="wp-image-1049"><source type="image/avif" srcset="https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/image-5-1024x247.png.avif 1024w, https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/image-5-300x72.png.avif 300w, https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/image-5-768x186.png.avif 768w, https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/image-5.png.avif 1167w" sizes="auto, (max-width: 1024px) 100vw, 1024px"/><source type="image/webp" srcset="https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/image-5-1024x247.png.webp 1024w, https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/image-5-300x72.png.webp 300w, https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/image-5-768x186.png.webp 768w, https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/image-5.png.webp 1167w" sizes="auto, (max-width: 1024px) 100vw, 1024px"/><img loading="lazy" decoding="async" width="1024" height="247" src="https://www.xiaozonglin.cn/wp-content/uploads/2026/03/image-5-1024x247.png" alt="" class="wp-image-1049" srcset="https://www.xiaozonglin.cn/wp-content/uploads/2026/03/image-5-1024x247.png 1024w, https://www.xiaozonglin.cn/wp-content/uploads/2026/03/image-5-300x72.png 300w, https://www.xiaozonglin.cn/wp-content/uploads/2026/03/image-5-768x186.png 768w, https://www.xiaozonglin.cn/wp-content/uploads/2026/03/image-5.png 1167w" sizes="auto, (max-width: 1024px) 100vw, 1024px"/></picture><figcaption class="wp-element-caption">ChatGPT“正儿八经”地给出错误回答</figcaption></figure>
+</div>
+
+
+<p>我在谷歌上搜索了一下这个导入语句，马上就找到了 <a href="https://stackoverflow.com/questions/79807773/using-create-retrieval-chain-due-to-retrievalqa-deprecation/79810604#79810604">python &#8211; Using create_retrieval_chain due to RetrievalQA deprecation &#8211; Stack Overflow</a> 这个帖子，将<code>langchain</code>改成<code>langchain_classic</code>，问题就这样解决了。</p>
+
+
+
+<p>在与 Gemini 谈话的过程中，估计是训练数据过时了或者没有搜索到合适的资料，它反复提醒我：“导包错误：LangChain 较新版本中，记忆和链模块应从<code>langchain.memory</code>和<code>langchain.chains</code>导入，而不是<code>langchain_classic</code>。”还好我自己知道，没在同一个地方摔倒第二次。</p>
+
+
+
+<p>在开发的过程中也遇到过依赖地狱，不过折腾几次全部使用新版本就解决了。</p>
+
+
+<div class="wp-block-image is-style-default">
+<figure class="aligncenter size-large"><picture loading="lazy" decoding="async" class="wp-image-1056"><source type="image/avif" srcset="https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/image-6-1024x565.png.avif 1024w, https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/image-6-300x166.png.avif 300w, https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/image-6-768x424.png.avif 768w, https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/image-6.png.avif 1180w" sizes="auto, (max-width: 1024px) 100vw, 1024px"/><source type="image/webp" srcset="https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/image-6-1024x565.png.webp 1024w, https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/image-6-300x166.png.webp 300w, https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/image-6-768x424.png.webp 768w, https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/image-6.png.webp 1180w" sizes="auto, (max-width: 1024px) 100vw, 1024px"/><img loading="lazy" decoding="async" width="1024" height="565" src="https://www.xiaozonglin.cn/wp-content/uploads/2026/03/image-6-1024x565.png" alt="" class="wp-image-1056" srcset="https://www.xiaozonglin.cn/wp-content/uploads/2026/03/image-6-1024x565.png 1024w, https://www.xiaozonglin.cn/wp-content/uploads/2026/03/image-6-300x166.png 300w, https://www.xiaozonglin.cn/wp-content/uploads/2026/03/image-6-768x424.png 768w, https://www.xiaozonglin.cn/wp-content/uploads/2026/03/image-6.png 1180w" sizes="auto, (max-width: 1024px) 100vw, 1024px"/></picture><figcaption class="wp-element-caption">ChatGPT的聊天截图</figcaption></figure>
+</div>
+
+
+<p><strong>Prompt拼接问题</strong><br>这个问题也挺搞心态，没找到什么比较好的解决方案，后面用曲线救国的方式解决了。属于是治本不行就治标吧。</p>
+
+
+
+<div class="wp-block-kevinbatdorf-code-block-pro cbp-unblur-on-hover" data-code-block-pro-font-family="Code-Pro-JetBrains-Mono" style="font-size:clamp(14px, .875rem, 21px);font-family:Code-Pro-JetBrains-Mono,ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;line-height:clamp(20px, 1.25rem, 30px);--cbp-tab-width:2;tab-size:var(--cbp-tab-width, 2)"><span style="display:flex;align-items:center;padding:10px 0px 0 16px;font-size:0.8em;width:100%;text-align:left;background-color:#FFFFFF;font-style:italic;color:#000000"><span style="border-bottom:1px solid rgba(0, 0, 0, 0.2)">Python</span></span><span role="button" tabindex="0" style="color:#000000;display:none" aria-label="复制" class="code-block-pro-copy-button"><pre class="code-block-pro-copy-button-pre" aria-hidden="true"><textarea class="code-block-pro-copy-button-textarea" tabindex="-1" aria-hidden="true" readonly>if '&lt;|im_end|>' in token or '&lt;|im_start|>' in token:
+  token = token.replace('&lt;|im_end|>', '').replace('&lt;|im_start|>', '')
+  if not token.strip():
+    continue</textarea></pre><svg xmlns="http://www.w3.org/2000/svg" style="width:24px;height:24px" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path class="with-check" stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"></path><path class="without-check" stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path></svg></span><pre class="shiki light-plus" style="background-color: #FFFFFF" tabindex="0"><code><span class="line"><span style="color: #AF00DB">if</span><span style="color: #000000"> </span><span style="color: #A31515">&#39;&lt;|im_end|&gt;&#39;</span><span style="color: #000000"> </span><span style="color: #0000FF">in</span><span style="color: #000000"> token </span><span style="color: #0000FF">or</span><span style="color: #000000"> </span><span style="color: #A31515">&#39;&lt;|im_start|&gt;&#39;</span><span style="color: #000000"> </span><span style="color: #0000FF">in</span><span style="color: #000000"> token:</span></span>
+<span class="line"><span style="color: #000000">  token = token.replace(</span><span style="color: #A31515">&#39;&lt;|im_end|&gt;&#39;</span><span style="color: #000000">, </span><span style="color: #A31515">&#39;&#39;</span><span style="color: #000000">).replace(</span><span style="color: #A31515">&#39;&lt;|im_start|&gt;&#39;</span><span style="color: #000000">, </span><span style="color: #A31515">&#39;&#39;</span><span style="color: #000000">)</span></span>
+<span class="line"><span style="color: #000000">  </span><span style="color: #AF00DB">if</span><span style="color: #000000"> </span><span style="color: #0000FF">not</span><span style="color: #000000"> token.strip():</span></span>
+<span class="line"><span style="color: #000000">    </span><span style="color: #AF00DB">continue</span></span></code></pre></div>
+
+
+
+<hr class="wp-block-separator aligncenter has-alpha-channel-opacity"/>
+
+
+
+<p>我在后端开发好之后让 ai 写了一份接口文档，供负责前端的姚同学阅读。原本以为 git 和前后端协作这方面会出现一些问题，结果并没有我想的那样困难。在帮忙装后端环境的时候出现了一个问题，关于 cuda 的问题：</p>
+
+
+
+<p>我在装 pytorch 的时候，Gemini 给的命令<code>pip install --pre torch --index-url https://download.pytorch.org/whl/nightly/cu128</code>能用，而cu129的预编译包却找不到。没办法，只好让同学降级，后面我在代码里也适配了没有 cuda 的环境。</p>
+
+
+
+<p>答辩之前，代码之外，团队协作的过程中出现一些小插曲，经过沟通顺利解决。团队的负责人需要跟进比赛的时间点，熟悉项目并协调准备好材料，带领团队推进。</p>
+
+
+
+<p>准备答辩时将材料交给皓子学长过目，大佬给了一些诸如突出显示关键词之类的建议。</p>
+
+
+
+<hr class="wp-block-separator aligncenter has-alpha-channel-opacity"/>
+
+
+
+<p>3 月 26 日晚上，我参加了网安密码学部的院级答辩。将答辩的录音转文字进行分析，结合答辩时的一些主观感受，发现答辩中暴露的一些问题：</p>
+
+
+
+<ul class="wp-block-list">
+<li>答辩的时候超时了，后面关于项目优势和未来展望的部分没讲到。</li>
+
+
+
+<li>问辩的时候展现项目的必要性还不够，相对于通用大模型的不可替代性没讲清楚。</li>
+
+
+
+<li>产品对于老师留言提醒的功能做得还不够完善，例如：如果多个学生针对同一问题给老师留言，老师会收到多个邮件。</li>
+</ul>
+
+
+<div class="wp-block-image">
+<figure class="aligncenter size-large"><picture loading="lazy" decoding="async" class="wp-image-1072"><source type="image/avif" srcset="https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/image-8-1024x314.png.avif 1024w, https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/image-8-300x92.png.avif 300w, https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/image-8-768x235.png.avif 768w, https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/image-8.png.avif 1146w" sizes="auto, (max-width: 1024px) 100vw, 1024px"/><source type="image/webp" srcset="https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/image-8-1024x314.png.webp 1024w, https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/image-8-300x92.png.webp 300w, https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/image-8-768x235.png.webp 768w, https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/image-8.png.webp 1146w" sizes="auto, (max-width: 1024px) 100vw, 1024px"/><img loading="lazy" decoding="async" width="1024" height="314" src="https://www.xiaozonglin.cn/wp-content/uploads/2026/03/image-8-1024x314.png" alt="" class="wp-image-1072" srcset="https://www.xiaozonglin.cn/wp-content/uploads/2026/03/image-8-1024x314.png 1024w, https://www.xiaozonglin.cn/wp-content/uploads/2026/03/image-8-300x92.png 300w, https://www.xiaozonglin.cn/wp-content/uploads/2026/03/image-8-768x235.png 768w, https://www.xiaozonglin.cn/wp-content/uploads/2026/03/image-8.png 1146w" sizes="auto, (max-width: 1024px) 100vw, 1024px"/></picture><figcaption class="wp-element-caption">Deepseek给出的分析</figcaption></figure>
+</div>
+
+
+<p>差不多要 29 日学院里统计分数后才会出结果，这段时间可以对提出的不完善的功能进行一下优化。如果被推荐到学校里，完善完善，校赛再战。</p>
+
+
+
+<p>与浦彦松学长交流了一下答辩的事情，学长给了一些建议：</p>
+
+
+
+<ul class="wp-block-list">
+<li>不要列技术架构，关于技术的设计和改进可以提，但是要有数据、对比。</li>
+
+
+
+<li>答辩不需要讲解技术，讲创新点，细节就说后续会优化。</li>
+
+
+
+<li>背景只需要一两页。</li>
+
+
+
+<li>不要有长段文字，图片的视觉冲击力好过红色标记。</li>
+
+
+
+<li>PPT 很重要。</li>
+</ul>
+
+
+
+<hr class="wp-block-separator aligncenter has-alpha-channel-opacity"/>
+
+
+
+<p>让 ai 完善了一下留言邮件提醒的逻辑，学生提交留言提醒之后会先在最近 24 小时的留言里匹配相似度，如果发现有相似度高于 0.85 的留言，则不会给老师发送邮件通知。</p>
+
+
+<div class="wp-block-image">
+<figure class="aligncenter size-full"><picture loading="lazy" decoding="async" class="wp-image-1083"><source type="image/avif" srcset="https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/ab31090e1de718210b2a46d2b7797811.png.avif 810w, https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/ab31090e1de718210b2a46d2b7797811-300x52.png.avif 300w, https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/ab31090e1de718210b2a46d2b7797811-768x134.png.avif 768w" sizes="auto, (max-width: 810px) 100vw, 810px"/><source type="image/webp" srcset="https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/ab31090e1de718210b2a46d2b7797811.png.webp 810w, https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/ab31090e1de718210b2a46d2b7797811-300x52.png.webp 300w, https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/ab31090e1de718210b2a46d2b7797811-768x134.png.webp 768w" sizes="auto, (max-width: 810px) 100vw, 810px"/><img loading="lazy" decoding="async" width="810" height="141" src="https://www.xiaozonglin.cn/wp-content/uploads/2026/03/ab31090e1de718210b2a46d2b7797811.png" alt="" class="wp-image-1083" srcset="https://www.xiaozonglin.cn/wp-content/uploads/2026/03/ab31090e1de718210b2a46d2b7797811.png 810w, https://www.xiaozonglin.cn/wp-content/uploads/2026/03/ab31090e1de718210b2a46d2b7797811-300x52.png 300w, https://www.xiaozonglin.cn/wp-content/uploads/2026/03/ab31090e1de718210b2a46d2b7797811-768x134.png 768w" sizes="auto, (max-width: 810px) 100vw, 810px"/></picture><figcaption class="wp-element-caption">例如学生提交了两条相同的留言</figcaption></figure>
+</div>
+
+
+<p>在我们完善代码的时候微信发来消息，我们的项目没有被推荐到校赛，这次主体赛我们到这里就结束了。我们队伍里面讨论了一下，决定将这个项目做完。“无论还有没有机会，无论结没结束，咱们都尽量把这个项目完成。不管成没成功，都是自己做的一个项目。”</p>
+
+
+<div class="wp-block-image">
+<figure class="aligncenter size-full is-resized"><picture loading="lazy" decoding="async" class="wp-image-1084"><source type="image/avif" srcset="https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/83a8abf4-5236-49c2-b94c-f24d7c2331a1.png.avif 579w, https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/83a8abf4-5236-49c2-b94c-f24d7c2331a1-300x180.png.avif 300w" sizes="auto, (max-width: 579px) 100vw, 579px"/><source type="image/webp" srcset="https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/83a8abf4-5236-49c2-b94c-f24d7c2331a1.png.webp 579w, https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/83a8abf4-5236-49c2-b94c-f24d7c2331a1-300x180.png.webp 300w" sizes="auto, (max-width: 579px) 100vw, 579px"/><img loading="lazy" decoding="async" width="579" height="348" src="https://www.xiaozonglin.cn/wp-content/uploads/2026/03/83a8abf4-5236-49c2-b94c-f24d7c2331a1.png" alt="" class="wp-image-1084" style="aspect-ratio:1.6638365016154482;width:413px;height:auto" srcset="https://www.xiaozonglin.cn/wp-content/uploads/2026/03/83a8abf4-5236-49c2-b94c-f24d7c2331a1.png 579w, https://www.xiaozonglin.cn/wp-content/uploads/2026/03/83a8abf4-5236-49c2-b94c-f24d7c2331a1-300x180.png 300w" sizes="auto, (max-width: 579px) 100vw, 579px"/></picture><figcaption class="wp-element-caption">学校流程系统的通知</figcaption></figure>
+</div>
+
+
+<p>我们梳理了尚未完成的工作，大致分成三个部分：</p>
+
+
+
+<ul class="wp-block-list">
+<li>项目 README 的实现效果部分目前缺省，没有直观的展现</li>
+
+
+
+<li>资料库内容还不够丰富，有待充实后发布版本</li>
+
+
+
+<li>暂时还没有对于 RAG 投毒的防御措施</li>
+</ul>
+
+
+
+<hr class="wp-block-separator aligncenter has-alpha-channel-opacity"/>
+
+
+
+<p><a href="https://www.zhihu.com/question/653424464/answer/2010773868898427209" target="_blank" rel="noreferrer noopener">假如LLM无限上下文了，RAG还有意义吗？</a> 这篇回答给我提供了一个可能的优化方向，即“主动RAG，让模型自己决定查什么”。</p>
+
+
+
+<p>原先的问答代码是这样的，用户提问→系统检索→模型生成，整个生成过程只检索一次知识库，属于是一个比较普通的 RAG 流程。以下是关于这一流程的生动的图片，图片中红色的内容为投毒内容，暂时不考虑这一点。</p>
+
+
+<div class="wp-block-image">
+<figure class="aligncenter size-full"><picture loading="lazy" decoding="async" class="wp-image-1088"><source type="image/avif" srcset="https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/image-9.png.avif 996w, https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/image-9-300x168.png.avif 300w, https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/image-9-768x430.png.avif 768w" sizes="auto, (max-width: 996px) 100vw, 996px"/><source type="image/webp" srcset="https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/image-9.png.webp 996w, https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/image-9-300x168.png.webp 300w, https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/image-9-768x430.png.webp 768w" sizes="auto, (max-width: 996px) 100vw, 996px"/><img loading="lazy" decoding="async" width="996" height="558" src="https://www.xiaozonglin.cn/wp-content/uploads/2026/03/image-9.png" alt="" class="wp-image-1088" srcset="https://www.xiaozonglin.cn/wp-content/uploads/2026/03/image-9.png 996w, https://www.xiaozonglin.cn/wp-content/uploads/2026/03/image-9-300x168.png 300w, https://www.xiaozonglin.cn/wp-content/uploads/2026/03/image-9-768x430.png 768w" sizes="auto, (max-width: 996px) 100vw, 996px"/></picture><figcaption class="wp-element-caption">图片来自<em><strong>Certifiably Robust RAG against Retrieval Corruption</strong></em>(arXiv:2405.15556)</figcaption></figure>
+</div>
+
+
+<p>我让 Gemini 根据主动检索的概念对代码进行修改，修改后的 ai 可以自己决定要不要检索知识库，如果是寒暄之类的提问可以直接回答，跳过检索步骤。可以进一步对代码进行优化，让 AI 自己决定检索词。</p>
+
+
+<div class="wp-block-image">
+<figure class="aligncenter size-large"><picture loading="lazy" decoding="async" class="wp-image-1090"><source type="image/avif" srcset="https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/image-10-1024x173.png.avif 1024w, https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/image-10-300x51.png.avif 300w, https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/image-10-768x130.png.avif 768w, https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/image-10-1200x203.png.avif 1200w, https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/image-10.png.avif 1347w" sizes="auto, (max-width: 1024px) 100vw, 1024px"/><source type="image/webp" srcset="https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/image-10-1024x173.png.webp 1024w, https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/image-10-300x51.png.webp 300w, https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/image-10-768x130.png.webp 768w, https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/image-10-1200x203.png.webp 1200w, https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/image-10.png.webp 1347w" sizes="auto, (max-width: 1024px) 100vw, 1024px"/><img loading="lazy" decoding="async" width="1024" height="173" src="https://www.xiaozonglin.cn/wp-content/uploads/2026/03/image-10-1024x173.png" alt="" class="wp-image-1090" srcset="https://www.xiaozonglin.cn/wp-content/uploads/2026/03/image-10-1024x173.png 1024w, https://www.xiaozonglin.cn/wp-content/uploads/2026/03/image-10-300x51.png 300w, https://www.xiaozonglin.cn/wp-content/uploads/2026/03/image-10-768x130.png 768w, https://www.xiaozonglin.cn/wp-content/uploads/2026/03/image-10-1200x203.png 1200w, https://www.xiaozonglin.cn/wp-content/uploads/2026/03/image-10.png 1347w" sizes="auto, (max-width: 1024px) 100vw, 1024px"/></picture><figcaption class="wp-element-caption">当提问“栈是什么东西”时，检索被重写为“栈”</figcaption></figure>
+</div>
+
+
+<hr class="wp-block-separator aligncenter has-alpha-channel-opacity"/>
+
+
+
+<p>关于抗投毒，<strong>TrustRAG: Enhancing Robustness and Trustworthiness in RAG</strong>(arXiv:2501.00879) 提供了一种可行的方法，主要通过 k-均值聚类和大模型自评估来过滤恶意投毒文档。因为懒，目前文档数量比较少，没有什么过滤的必要。</p>
+
+
+
+<p>项目 README 的实现效果需要实际应用之后才能拿到数据，不方便摆太多的数字。</p>
+
+
+
+<p>3 月 29 日晚上，在推完主动检索的修改之后，将新生成的向量知识库上传到 GitHub，发了一个版本。目前的开发任务差不多就完成了。</p>
+
+
+<div class="wp-block-image">
+<figure class="aligncenter size-large is-resized"><picture loading="lazy" decoding="async" class="wp-image-1094"><source type="image/avif" srcset="https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/image-13-1024x692.png.avif 1024w, https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/image-13-300x203.png.avif 300w, https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/image-13-768x519.png.avif 768w, https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/image-13-1536x1039.png.avif 1536w, https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/image-13-1200x811.png.avif 1200w, https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/image-13.png.avif 1834w" sizes="auto, (max-width: 1024px) 100vw, 1024px"/><source type="image/webp" srcset="https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/image-13-1024x692.png.webp 1024w, https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/image-13-300x203.png.webp 300w, https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/image-13-768x519.png.webp 768w, https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/image-13-1536x1039.png.webp 1536w, https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/image-13-1200x811.png.webp 1200w, https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/image-13.png.webp 1834w" sizes="auto, (max-width: 1024px) 100vw, 1024px"/><img loading="lazy" decoding="async" width="1024" height="692" src="https://www.xiaozonglin.cn/wp-content/uploads/2026/03/image-13-1024x692.png" alt="" class="wp-image-1094" style="aspect-ratio:1.4790680053040348;width:476px;height:auto" srcset="https://www.xiaozonglin.cn/wp-content/uploads/2026/03/image-13-1024x692.png 1024w, https://www.xiaozonglin.cn/wp-content/uploads/2026/03/image-13-300x203.png 300w, https://www.xiaozonglin.cn/wp-content/uploads/2026/03/image-13-768x519.png 768w, https://www.xiaozonglin.cn/wp-content/uploads/2026/03/image-13-1536x1039.png 1536w, https://www.xiaozonglin.cn/wp-content/uploads/2026/03/image-13-1200x811.png 1200w, https://www.xiaozonglin.cn/wp-content/uploads/2026/03/image-13.png 1834w" sizes="auto, (max-width: 1024px) 100vw, 1024px"/></picture><figcaption class="wp-element-caption">Release Note</figcaption></figure>
+</div>
+
+
+<p>3 月 29 日中午，就在我们知道我们这个项目没有被推荐到学校过后不久，学部把选拔赛的获奖名单发出来了，我们项目获得选拔赛的一等奖。到此，算是“有始有终”。</p>
+
+
+
+<hr class="wp-block-separator aligncenter has-alpha-channel-opacity"/>
+
+
+
+<p><strong>致谢</strong></p>
+
+
+
+<p>感谢负责进行前端开发工作的姚焱夫同学、负责协调与 UI 图标设计工作的孟子钦同学、给我们提供宝贵建议的皓子大佬和浦彦松学长与提供 PPT 的刘卓东学长。与此同时，我在大创课题组所做的工作在本次比赛开发 AI 应用过程中给我提供帮助，感谢苗教授和负责指导我们的博士师兄。</p>
+
+
+
+<p><strong>附录</strong></p>
+
+
+
+<ol class="wp-block-list">
+<li>项目代码仓库：<a href="https://github.com/Xiaozonglin/shallowseek" target="_blank" rel="noreferrer noopener">Xiaozonglin/shallowseek: Teacher-Augmented AI Learning System for Xidian University</a></li>
+
+
+
+<li>项目展示视频：<a href="https://gist.github.com/Xiaozonglin/2954257501bb5516d8c898fb6ab322dd" target="_blank" rel="noreferrer noopener">XDWe manim展示视频代码</a> <a href="https://gist.github.com/Xiaozonglin/2954257501bb5516d8c898fb6ab322dd?permalink_comment_id=6052388#gistcomment-6052388" target="_blank" rel="noreferrer noopener">XDWe项目介绍视频</a></li>
+
+
+
+<li>大佬推荐的 PPT 设计视频：<br><a href="https://www.bilibili.com/video/BV1yW4y1b7iX/" target="_blank" rel="noreferrer noopener">PPT遇上大段文字，这样排版更清晰！_哔哩哔哩</a><br><a href="https://www.bilibili.com/video/BV1S14y1S7zo/" target="_blank" rel="noreferrer noopener">大段文字并且很多要点，要怎么排版呢？这个视频就教会你！_哔哩哔哩</a></li>
+</ol>
+<p><a href="https://www.xiaozonglin.cn/spark-bei-participate-small-ji/">星火杯参赛小记：XDWe——驱动教学相长的AI智能学习助手</a>最先出现在<a href="https://www.xiaozonglin.cn">林林杂语</a>。</p>
