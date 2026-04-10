@@ -1,6 +1,22 @@
 <p>跟同学参加了西电的星火杯，做了一个服务教学的 AI 应用。</p>
 <p><a href="https://www.xiaozonglin.cn/spark-bei-participate-small-ji/">星火杯参赛小记：XDWe——驱动教学相长的AI智能学习助手</a>最先出现在<a href="https://www.xiaozonglin.cn">林林杂语</a>。</p>
 <hr />
+<p>本篇文章使用时间顺序整理和撰写，大致就是比赛的流程。我们在几次答辩后根据新情况对代码进行优化，于是就有每次答辩之后紧跟着的改进和优化。我们项目的大致信息如下：</p>
+
+
+
+<figure class="wp-block-table aligncenter"><table class="has-fixed-layout"><tbody><tr><td class="has-text-align-center" data-align="center">项目名称</td><td class="has-text-align-center" data-align="center">XDWe：驱动教学相长的AI智能学习助手<br>XDAgent：一个AI驱动的师生交流互动平台</td></tr><tr><td class="has-text-align-center" data-align="center">所属赛道</td><td class="has-text-align-center" data-align="center">大学生创业计划竞赛赛道-新一代信息技术赛道（主体赛）<br>大模型智能体开发挑战专项赛-“教-学-管-评”智能体（专项赛）</td></tr><tr><td class="has-text-align-center" data-align="center">所获奖项</td><td class="has-text-align-center" data-align="center">2026年星火杯网络安全与密码学部选拔赛一等奖</td></tr></tbody></table></figure>
+
+
+
+<p>目前专项赛还在进行，本文会持续更新，记录我们参加星火杯的完整的过程。</p>
+
+
+
+<h2 class="wp-block-heading has-text-align-center">前言：从一些想法开始</h2>
+
+
+
 <p>前段时间，学院发了关于星火杯的报名文件。上个学期就听说过星火杯，但没想到这学期刚开学就要提交作品，没有做什么事先准备。</p>
 
 
@@ -22,6 +38,10 @@
 
 
 <hr class="wp-block-separator aligncenter has-alpha-channel-opacity"/>
+
+
+
+<h2 class="wp-block-heading has-text-align-center">设计与开发</h2>
 
 
 
@@ -167,6 +187,14 @@
 
 
 
+<h2 class="wp-block-heading has-text-align-center">主体赛初赛</h2>
+
+
+
+<h3 class="wp-block-heading has-text-align-center">答辩出现的问题</h3>
+
+
+
 <p>3 月 26 日晚上，我参加了网安密码学部的院级答辩。将答辩的录音转文字进行分析，结合答辩时的一些主观感受，发现答辩中暴露的一些问题：</p>
 
 
@@ -223,6 +251,10 @@
 
 
 
+<h3 class="wp-block-heading has-text-align-center">针对问题进行的一些优化</h3>
+
+
+
 <p>让 ai 完善了一下留言邮件提醒的逻辑，学生提交留言提醒之后会先在最近 24 小时的留言里匹配相似度，如果发现有相似度高于 0.85 的留言，则不会给老师发送邮件通知。</p>
 
 
@@ -257,10 +289,6 @@
 
 
 
-<hr class="wp-block-separator aligncenter has-alpha-channel-opacity"/>
-
-
-
 <p><a href="https://www.zhihu.com/question/653424464/answer/2010773868898427209" target="_blank" rel="noreferrer noopener">假如LLM无限上下文了，RAG还有意义吗？</a> 这篇回答给我提供了一个可能的优化方向，即“主动RAG，让模型自己决定查什么”。</p>
 
 
@@ -281,10 +309,6 @@
 </div>
 
 
-<hr class="wp-block-separator aligncenter has-alpha-channel-opacity"/>
-
-
-
 <p>关于抗投毒，<strong>TrustRAG: Enhancing Robustness and Trustworthiness in RAG</strong>(arXiv:2501.00879) 提供了一种可行的方法，主要通过 k-均值聚类和大模型自评估来过滤恶意投毒文档。因为懒，目前文档数量比较少，没有什么过滤的必要。</p>
 
 
@@ -301,7 +325,11 @@
 </div>
 
 
-<p>3 月 29 日中午，就在我们知道我们这个项目没有被推荐到学校过后不久，学部把选拔赛的获奖名单发出来了，我们项目获得选拔赛的一等奖。到此，算是“有始有终”。</p>
+<p>3 月 29 日中午，就在我们知道我们这个项目没有被推荐到学校过后不久，学部把选拔赛的获奖名单发出来了，我们项目获得选拔赛的一等奖。到此，主体赛算是“有始有终”。</p>
+
+
+
+<p>至此，可以跟主体赛说拜拜了。</p>
 
 
 
@@ -309,11 +337,97 @@
 
 
 
+<h2 class="wp-block-heading has-text-align-center">智能体专项赛</h2>
+
+
+
+<h3 class="wp-block-heading has-text-align-center">初赛答辩</h3>
+
+
+
+<p id="专项赛">清明节时，我与姚焱夫同学在原有的基础上准备专项赛初赛答辩的PPT。专项赛答辩的时间比主体赛还短，只有3分钟时间，问辩时间也只有2分钟，这对我们来说是一个挑战。吸取之前主体赛答辩背景讲太多的教训，我们将四个方面的背景整合到一页。我们参加的是“教-学-管-评”智能体开发挑战专项赛，将这四个方面一起展示感觉更有冲击力。同时，我们避免出现大段的文字，只留关键词，然后用我自己的审美稍微排版了一下，感觉还行？PPT后面的创新之处也使用这样的排版。</p>
+
+
+<div class="wp-block-image">
+<figure class="aligncenter size-large"><picture loading="lazy" decoding="async" class="wp-image-1149"><source type="image/avif" srcset="https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/image-11-1024x577.png.avif 1024w, https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/image-11-300x169.png.avif 300w, https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/image-11-768x433.png.avif 768w, https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/image-11-1536x865.png.avif 1536w, https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/image-11-1200x676.png.avif 1200w, https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/image-11.png.avif 1923w" sizes="auto, (max-width: 1024px) 100vw, 1024px"/><source type="image/webp" srcset="https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/image-11-1024x577.png.webp 1024w, https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/image-11-300x169.png.webp 300w, https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/image-11-768x433.png.webp 768w, https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/image-11-1536x865.png.webp 1536w, https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/image-11-1200x676.png.webp 1200w, https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/image-11.png.webp 1923w" sizes="auto, (max-width: 1024px) 100vw, 1024px"/><img loading="lazy" decoding="async" width="1024" height="577" src="https://www.xiaozonglin.cn/wp-content/uploads/2026/03/image-11-1024x577.png" alt="" class="wp-image-1149" srcset="https://www.xiaozonglin.cn/wp-content/uploads/2026/03/image-11-1024x577.png 1024w, https://www.xiaozonglin.cn/wp-content/uploads/2026/03/image-11-300x169.png 300w, https://www.xiaozonglin.cn/wp-content/uploads/2026/03/image-11-768x433.png 768w, https://www.xiaozonglin.cn/wp-content/uploads/2026/03/image-11-1536x865.png 1536w, https://www.xiaozonglin.cn/wp-content/uploads/2026/03/image-11-1200x676.png 1200w, https://www.xiaozonglin.cn/wp-content/uploads/2026/03/image-11.png 1923w" sizes="auto, (max-width: 1024px) 100vw, 1024px"/></picture><figcaption class="wp-element-caption">参加专项赛初赛答辩的ppt-背景</figcaption></figure>
+</div>
+
+
+<p>4 月 9 日晚上，我与姚焱夫同学准备次日早上的专项赛初赛答辩。我们又一次咨询了皓子学长。大佬给了我们很多建议，比如“可以吹自己已经部署使用了一段时间，请了多少个老师同学试用，评分均分多少分”“未来展望，直接落地得了，引入多模态大模型，这种用绘图技术结合下多好”等等。我们对创新之处作了一些修改。</p>
+
+
+<div class="wp-block-image">
+<figure class="aligncenter size-large"><picture loading="lazy" decoding="async" class="wp-image-1150"><source type="image/avif" srcset="https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/image-12-1024x575.png.avif 1024w, https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/image-12-300x168.png.avif 300w, https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/image-12-768x431.png.avif 768w, https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/image-12-1536x862.png.avif 1536w, https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/image-12-1200x674.png.avif 1200w, https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/image-12.png.avif 1920w" sizes="auto, (max-width: 1024px) 100vw, 1024px"/><source type="image/webp" srcset="https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/image-12-1024x575.png.webp 1024w, https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/image-12-300x168.png.webp 300w, https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/image-12-768x431.png.webp 768w, https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/image-12-1536x862.png.webp 1536w, https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/image-12-1200x674.png.webp 1200w, https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/image-12.png.webp 1920w" sizes="auto, (max-width: 1024px) 100vw, 1024px"/><img loading="lazy" decoding="async" width="1024" height="575" src="https://www.xiaozonglin.cn/wp-content/uploads/2026/03/image-12-1024x575.png" alt="" class="wp-image-1150" srcset="https://www.xiaozonglin.cn/wp-content/uploads/2026/03/image-12-1024x575.png 1024w, https://www.xiaozonglin.cn/wp-content/uploads/2026/03/image-12-300x168.png 300w, https://www.xiaozonglin.cn/wp-content/uploads/2026/03/image-12-768x431.png 768w, https://www.xiaozonglin.cn/wp-content/uploads/2026/03/image-12-1536x862.png 1536w, https://www.xiaozonglin.cn/wp-content/uploads/2026/03/image-12-1200x674.png 1200w, https://www.xiaozonglin.cn/wp-content/uploads/2026/03/image-12.png 1920w" sizes="auto, (max-width: 1024px) 100vw, 1024px"/></picture><figcaption class="wp-element-caption">参加专项赛初赛答辩的ppt-创新之处</figcaption></figure>
+</div>
+
+
+<p>次日早上，姚同学前去答辩。姚同学不愧是大佬，结构清晰，回答自信。</p>
+
+
+<div class="wp-block-image">
+<figure class="aligncenter size-large"><picture loading="lazy" decoding="async" class="wp-image-1153"><source type="image/avif" srcset="https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/image-14-1024x685.png.avif 1024w, https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/image-14-300x201.png.avif 300w, https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/image-14-768x514.png.avif 768w, https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/image-14.png.avif 1150w" sizes="auto, (max-width: 1024px) 100vw, 1024px"/><source type="image/webp" srcset="https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/image-14-1024x685.png.webp 1024w, https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/image-14-300x201.png.webp 300w, https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/image-14-768x514.png.webp 768w, https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/image-14.png.webp 1150w" sizes="auto, (max-width: 1024px) 100vw, 1024px"/><img loading="lazy" decoding="async" width="1024" height="685" src="https://www.xiaozonglin.cn/wp-content/uploads/2026/03/image-14-1024x685.png" alt="" class="wp-image-1153" srcset="https://www.xiaozonglin.cn/wp-content/uploads/2026/03/image-14-1024x685.png 1024w, https://www.xiaozonglin.cn/wp-content/uploads/2026/03/image-14-300x201.png 300w, https://www.xiaozonglin.cn/wp-content/uploads/2026/03/image-14-768x514.png 768w, https://www.xiaozonglin.cn/wp-content/uploads/2026/03/image-14.png 1150w" sizes="auto, (max-width: 1024px) 100vw, 1024px"/></picture><figcaption class="wp-element-caption">Deepseek评这次答辩</figcaption></figure>
+</div>
+
+
+<hr class="wp-block-separator aligncenter has-alpha-channel-opacity"/>
+
+
+
+<h3 class="wp-block-heading has-text-align-center">功能的改进</h3>
+
+
+
+<p>4 月 9 日，我们看了一下我们的那些展望。姚同学想着用 opencode 把多模态实现了，结果 Deepseek 把代码实现之后，发现它把后端登录、注册的路由给删了。我让同学好好骂一骂 ai。</p>
+
+
+<div class="wp-block-image">
+<figure class="aligncenter size-large"><picture loading="lazy" decoding="async" class="wp-image-1154"><source type="image/avif" srcset="https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/6fd1a23e8174d9ba58ea6d98c36871cc-1024x637.jpeg.avif 1024w, https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/6fd1a23e8174d9ba58ea6d98c36871cc-300x187.jpeg.avif 300w, https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/6fd1a23e8174d9ba58ea6d98c36871cc-768x478.jpeg.avif 768w, https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/6fd1a23e8174d9ba58ea6d98c36871cc-1536x956.jpeg.avif 1536w, https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/6fd1a23e8174d9ba58ea6d98c36871cc-2048x1274.jpeg.avif 2048w, https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/6fd1a23e8174d9ba58ea6d98c36871cc-1200x747.jpeg.avif 1200w, https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/6fd1a23e8174d9ba58ea6d98c36871cc-1980x1232.jpeg.avif 1980w" sizes="auto, (max-width: 1024px) 100vw, 1024px"/><source type="image/webp" srcset="https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/6fd1a23e8174d9ba58ea6d98c36871cc-1024x637.jpeg.webp 1024w, https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/6fd1a23e8174d9ba58ea6d98c36871cc-300x187.jpeg.webp 300w, https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/6fd1a23e8174d9ba58ea6d98c36871cc-768x478.jpeg.webp 768w, https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/6fd1a23e8174d9ba58ea6d98c36871cc-1536x956.jpeg.webp 1536w, https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/6fd1a23e8174d9ba58ea6d98c36871cc-2048x1274.jpeg.webp 2048w, https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/6fd1a23e8174d9ba58ea6d98c36871cc-1200x747.jpeg.webp 1200w, https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/6fd1a23e8174d9ba58ea6d98c36871cc-1980x1232.jpeg.webp 1980w" sizes="auto, (max-width: 1024px) 100vw, 1024px"/><img loading="lazy" decoding="async" width="1024" height="637" src="https://www.xiaozonglin.cn/wp-content/uploads/2026/03/6fd1a23e8174d9ba58ea6d98c36871cc-1024x637.jpeg" alt="" class="wp-image-1154" srcset="https://www.xiaozonglin.cn/wp-content/uploads/2026/03/6fd1a23e8174d9ba58ea6d98c36871cc-1024x637.jpeg 1024w, https://www.xiaozonglin.cn/wp-content/uploads/2026/03/6fd1a23e8174d9ba58ea6d98c36871cc-300x187.jpeg 300w, https://www.xiaozonglin.cn/wp-content/uploads/2026/03/6fd1a23e8174d9ba58ea6d98c36871cc-768x478.jpeg 768w, https://www.xiaozonglin.cn/wp-content/uploads/2026/03/6fd1a23e8174d9ba58ea6d98c36871cc-1536x956.jpeg 1536w, https://www.xiaozonglin.cn/wp-content/uploads/2026/03/6fd1a23e8174d9ba58ea6d98c36871cc-2048x1274.jpeg 2048w, https://www.xiaozonglin.cn/wp-content/uploads/2026/03/6fd1a23e8174d9ba58ea6d98c36871cc-1200x747.jpeg 1200w, https://www.xiaozonglin.cn/wp-content/uploads/2026/03/6fd1a23e8174d9ba58ea6d98c36871cc-1980x1232.jpeg 1980w" sizes="auto, (max-width: 1024px) 100vw, 1024px"/></picture><figcaption class="wp-element-caption">ai再一次闯祸</figcaption></figure>
+</div>
+
+
+<p>这次专项赛立了这些 flag，如果进校赛的话要在比赛之前做好。</p>
+
+
+
+<ul class="wp-block-list">
+<li>多模态问答</li>
+
+
+
+<li>知识库自动管理（Python爬虫）</li>
+
+
+
+<li>基于 TrustRAG 的抗投毒机制</li>
+
+
+
+<li>更智能的 Agent 功能</li>
+
+
+
+<li>预留对接学校的系统</li>
+
+
+
+<li>使用 Java Spring AI 作为后端架构，贴合实际部署的情况</li>
+</ul>
+
+
+
+<hr class="wp-block-separator aligncenter has-alpha-channel-opacity"/>
+
+
+
+<h2 class="wp-block-heading has-text-align-center">致谢与附录</h2>
+
+
+
 <p><strong>致谢</strong></p>
 
 
 
-<p>感谢负责进行前端开发工作的姚焱夫同学、负责协调与 UI 图标设计工作的孟子钦同学、给我们提供宝贵建议的皓子大佬和浦彦松学长与提供 PPT 的刘卓东学长。与此同时，我在大创课题组所做的工作在本次比赛开发 AI 应用过程中给我提供帮助，感谢苗教授和负责指导我们的博士师兄。</p>
+<p>感谢负责进行前端开发工作的姚焱夫同学、负责协调与 UI 图标设计工作的孟子钦同学、给我们提供宝贵建议的皓子大佬和浦彦松学长与提供 PPT 的刘卓东学长。与此同时，我在大创课题组所做的工作在本次比赛开发 AI 应用过程中给我提供帮助，感谢苗教授和负责指导我们的张博士师兄。</p>
 
 
 
