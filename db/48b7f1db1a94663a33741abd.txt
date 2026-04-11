@@ -415,6 +415,14 @@
 
 
 
+<hr class="wp-block-separator aligncenter has-alpha-channel-opacity"/>
+
+
+
+<h4 class="wp-block-heading has-text-align-center">图文问答（多模态问答）</h4>
+
+
+
 <p>关于多模态部分，我和姚焱夫同学弄了几次没弄好，opencv和ocr好像都差点意思，大模型已读乱回。</p>
 
 
@@ -543,6 +551,26 @@ self.llm = AutoModelForVision2Seq.from_pretrained(
 
 
 
+<h4 class="wp-block-heading has-text-align-center">知识库自动管理（爬虫）</h4>
+
+
+<div class="wp-block-image">
+<figure class="aligncenter size-large"><picture loading="lazy" decoding="async" class="wp-image-1187"><source type="image/avif" srcset="https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/image-15-1024x283.png.avif 1024w, https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/image-15-300x83.png.avif 300w, https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/image-15-768x212.png.avif 768w, https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/image-15-1536x424.png.avif 1536w, https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/image-15-1200x331.png.avif 1200w, https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/image-15.png.avif 1634w" sizes="auto, (max-width: 1024px) 100vw, 1024px"/><source type="image/webp" srcset="https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/image-15-1024x283.png.webp 1024w, https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/image-15-300x83.png.webp 300w, https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/image-15-768x212.png.webp 768w, https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/image-15-1536x424.png.webp 1536w, https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/image-15-1200x331.png.webp 1200w, https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/image-15.png.webp 1634w" sizes="auto, (max-width: 1024px) 100vw, 1024px"/><img loading="lazy" decoding="async" width="1024" height="283" src="https://www.xiaozonglin.cn/wp-content/uploads/2026/03/image-15-1024x283.png" alt="" class="wp-image-1187" srcset="https://www.xiaozonglin.cn/wp-content/uploads/2026/03/image-15-1024x283.png 1024w, https://www.xiaozonglin.cn/wp-content/uploads/2026/03/image-15-300x83.png 300w, https://www.xiaozonglin.cn/wp-content/uploads/2026/03/image-15-768x212.png 768w, https://www.xiaozonglin.cn/wp-content/uploads/2026/03/image-15-1536x424.png 1536w, https://www.xiaozonglin.cn/wp-content/uploads/2026/03/image-15-1200x331.png 1200w, https://www.xiaozonglin.cn/wp-content/uploads/2026/03/image-15.png 1634w" sizes="auto, (max-width: 1024px) 100vw, 1024px"/></picture><figcaption class="wp-element-caption">我关于爬虫流程的想法</figcaption></figure>
+</div>
+
+
+<p>以上是我用Mermaid画的一个大致的流程，经过确认这也是姚焱夫同学想要的效果：我们设定一些网址，脚本爬取这些网址的网页内容，经过大模型以及一些人工设定的规则清洗后变成干净的markdown文档，存在知识库文件夹中。</p>
+
+
+
+<p><a href="https://cloud.tencent.com/developer/article/2508025">RAG知识库搭建-文档预处理-数据清洗：基于异步的AI文本批处理系统实践-腾讯云开发者社区</a> 这篇文章提供了一个可以借鉴的system prompt。基于此，我们设定知识库负责清洗的llm的system prompt。</p>
+
+
+
+<hr class="wp-block-separator aligncenter has-alpha-channel-opacity"/>
+
+
+
 <h2 class="wp-block-heading has-text-align-center">姚焱夫：<br>You can just build things.</h2>
 
 
@@ -551,7 +579,7 @@ self.llm = AutoModelForVision2Seq.from_pretrained(
 
 
 
-<p>作为非cs专业学生，其实我对编程方面并不算特别熟悉，不管是编程基础还是工作流程熟练度都没办法和宗林相比。小到Git，终端的使用和开发环境的搭建，大到前端开发，vibe coding的使用，还有项目的协作，我学习到的东西真的很多很多。以前作为兴趣浅尝辄止的东西，在这次实践过程中真的深入了很多。虽然学的是电子信息，但其实我一直是对计科，人智和具身这些方面更感兴趣，所以当其他人都在学习单片机，如火如荼准备电赛的时候，我毅然决然地放弃了之前参加电赛的想法，转而学习自己感兴趣的内容。不仅把竞赛方向换到了更喜欢的Robomaster，也有了参加科研的想法。</p>
+<p>作为非cs专业学生，其实我对编程方面并不算特别熟悉，不管是编程基础还是工作流程熟练度都没办法和宗林相比。小到Git，终端的使用和开发环境的搭建，大到前端开发，vibe coding的使用，还有项目的协作，我学习到的东西真的很多很多。以前作为兴趣浅尝辄止的东西，在这次实践过程中真的深入了很多。虽然学的是电子信息，但其实我一直是对计科、人智和具身这些方面更感兴趣，所以当其他人都在学习单片机，如火如荼准备电赛的时候，我毅然决然地放弃了之前参加电赛的想法，转而学习自己感兴趣的内容。不仅把竞赛方向换到了更喜欢的Robomaster，也有了参加科研的想法。</p>
 
 
 
