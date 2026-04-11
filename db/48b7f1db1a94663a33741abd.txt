@@ -415,6 +415,178 @@
 
 
 
+<p>关于多模态部分，我和姚焱夫同学弄了几次没弄好，opencv和ocr好像都差点意思，大模型已读乱回。</p>
+
+
+<div class="wp-block-image">
+<figure class="aligncenter size-large"><picture loading="lazy" decoding="async" class="wp-image-1173"><source type="image/avif" srcset="https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/e82702012294ef837e2b180d720bf174-1024x543.png.avif 1024w, https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/e82702012294ef837e2b180d720bf174-300x159.png.avif 300w, https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/e82702012294ef837e2b180d720bf174-768x407.png.avif 768w, https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/e82702012294ef837e2b180d720bf174-1536x815.png.avif 1536w, https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/e82702012294ef837e2b180d720bf174-2048x1086.png.avif 2048w, https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/e82702012294ef837e2b180d720bf174-1200x636.png.avif 1200w, https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/e82702012294ef837e2b180d720bf174-1980x1050.png.avif 1980w" sizes="auto, (max-width: 1024px) 100vw, 1024px"/><source type="image/webp" srcset="https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/e82702012294ef837e2b180d720bf174-1024x543.png.webp 1024w, https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/e82702012294ef837e2b180d720bf174-300x159.png.webp 300w, https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/e82702012294ef837e2b180d720bf174-768x407.png.webp 768w, https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/e82702012294ef837e2b180d720bf174-1536x815.png.webp 1536w, https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/e82702012294ef837e2b180d720bf174-2048x1086.png.webp 2048w, https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/e82702012294ef837e2b180d720bf174-1200x636.png.webp 1200w, https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/e82702012294ef837e2b180d720bf174-1980x1050.png.webp 1980w" sizes="auto, (max-width: 1024px) 100vw, 1024px"/><img loading="lazy" decoding="async" width="1024" height="543" src="https://www.xiaozonglin.cn/wp-content/uploads/2026/03/e82702012294ef837e2b180d720bf174-1024x543.png" alt="" class="wp-image-1173" srcset="https://www.xiaozonglin.cn/wp-content/uploads/2026/03/e82702012294ef837e2b180d720bf174-1024x543.png 1024w, https://www.xiaozonglin.cn/wp-content/uploads/2026/03/e82702012294ef837e2b180d720bf174-300x159.png 300w, https://www.xiaozonglin.cn/wp-content/uploads/2026/03/e82702012294ef837e2b180d720bf174-768x407.png 768w, https://www.xiaozonglin.cn/wp-content/uploads/2026/03/e82702012294ef837e2b180d720bf174-1536x815.png 1536w, https://www.xiaozonglin.cn/wp-content/uploads/2026/03/e82702012294ef837e2b180d720bf174-2048x1086.png 2048w, https://www.xiaozonglin.cn/wp-content/uploads/2026/03/e82702012294ef837e2b180d720bf174-1200x636.png 1200w, https://www.xiaozonglin.cn/wp-content/uploads/2026/03/e82702012294ef837e2b180d720bf174-1980x1050.png 1980w" sizes="auto, (max-width: 1024px) 100vw, 1024px"/></picture><figcaption class="wp-element-caption">比如这一张，明明没有用算法库里的东西，ai还是回答algorithm</figcaption></figure>
+</div>
+
+
+<p>我们打算使用<code>Qwen/Qwen2-VL-2B-Instruct</code>来实现多模态功能，但在回答含文字的内容时效果还是不怎么好。根据 <a href="https://help.aliyun.com/zh/model-studio/vision#b2f52327d13hq">如何使用Qwen3.6模型实现视觉理解</a> 这篇文档的介绍，我打算使用<code>Qwen/Qwen3-VL-2B-Instruct</code>试试，速度快，又具备文档解析、复杂题目解答的能力。我先对原本的后端代码进行一些拆分，给500行的代码瘦瘦身。</p>
+
+
+
+<p>在独立出数据模型时出现了问题。后端使用SQLAlchemy创建数据模型，我将数据模型独立到一个<code>models.py</code>文件中，如下：</p>
+
+
+
+<div class="wp-block-kevinbatdorf-code-block-pro cbp-has-line-numbers" data-code-block-pro-font-family="Code-Pro-JetBrains-Mono" style="font-size:clamp(14px, .875rem, 21px);font-family:Code-Pro-JetBrains-Mono,ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;--cbp-line-number-color:#000000;--cbp-line-number-width:calc(2 * 0.6 * .875rem);line-height:clamp(20px, 1.25rem, 30px);--cbp-tab-width:2;tab-size:var(--cbp-tab-width, 2)"><span style="display:flex;align-items:center;padding:10px 0px 0 16px;font-size:0.8em;width:100%;text-align:left;background-color:#FFFFFF;font-style:italic;color:#000000"><span style="border-bottom:1px solid rgba(0, 0, 0, 0.2)">Python</span></span><span role="button" tabindex="0" style="color:#000000;display:none" aria-label="复制" class="code-block-pro-copy-button"><pre class="code-block-pro-copy-button-pre" aria-hidden="true"><textarea class="code-block-pro-copy-button-textarea" tabindex="-1" aria-hidden="true" readonly>import os
+from dotenv import load_dotenv
+load_dotenv()
+from datetime import datetime
+import flask
+from flask_sqlalchemy import SQLAlchemy
+from flask_login import UserMixin
+
+app = flask.Flask(__name__)
+app.config.update(
+    SQLALCHEMY_DATABASE_URI=os.getenv('DATABASE_URL'),
+    SQLALCHEMY_TRACK_MODIFICATIONS=False,
+)
+
+db = SQLAlchemy(app)
+
+class User(UserMixin, db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(20), unique=True, nullable=False)
+    ...
+
+class Question(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    content = db.Column(db.String(1000), nullable=False)
+    ...
+
+class Message(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    content = db.Column(db.String(1000), nullable=False)
+    ...</textarea></pre><svg xmlns="http://www.w3.org/2000/svg" style="width:24px;height:24px" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path class="with-check" stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"></path><path class="without-check" stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path></svg></span><pre class="shiki light-plus" style="background-color: #FFFFFF" tabindex="0"><code><span class="line"><span style="color: #AF00DB">import</span><span style="color: #000000"> os</span></span>
+<span class="line"><span style="color: #AF00DB">from</span><span style="color: #000000"> dotenv </span><span style="color: #AF00DB">import</span><span style="color: #000000"> load_dotenv</span></span>
+<span class="line"><span style="color: #000000">load_dotenv()</span></span>
+<span class="line"><span style="color: #AF00DB">from</span><span style="color: #000000"> datetime </span><span style="color: #AF00DB">import</span><span style="color: #000000"> datetime</span></span>
+<span class="line"><span style="color: #AF00DB">import</span><span style="color: #000000"> flask</span></span>
+<span class="line"><span style="color: #AF00DB">from</span><span style="color: #000000"> flask_sqlalchemy </span><span style="color: #AF00DB">import</span><span style="color: #000000"> SQLAlchemy</span></span>
+<span class="line"><span style="color: #AF00DB">from</span><span style="color: #000000"> flask_login </span><span style="color: #AF00DB">import</span><span style="color: #000000"> UserMixin</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #000000">app = flask.Flask(</span><span style="color: #001080">__name__</span><span style="color: #000000">)</span></span>
+<span class="line"><span style="color: #000000">app.config.update(</span></span>
+<span class="line"><span style="color: #000000">    </span><span style="color: #001080">SQLALCHEMY_DATABASE_URI</span><span style="color: #000000">=os.getenv(</span><span style="color: #A31515">&#39;DATABASE_URL&#39;</span><span style="color: #000000">),</span></span>
+<span class="line"><span style="color: #000000">    </span><span style="color: #001080">SQLALCHEMY_TRACK_MODIFICATIONS</span><span style="color: #000000">=</span><span style="color: #0000FF">False</span><span style="color: #000000">,</span></span>
+<span class="line"><span style="color: #000000">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #000000">db = SQLAlchemy(app)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #0000FF">class</span><span style="color: #000000"> </span><span style="color: #267F99">User</span><span style="color: #000000">(</span><span style="color: #267F99">UserMixin</span><span style="color: #000000">, </span><span style="color: #267F99">db</span><span style="color: #000000">.</span><span style="color: #267F99">Model</span><span style="color: #000000">):</span></span>
+<span class="line"><span style="color: #000000">    </span><span style="color: #795E26">id</span><span style="color: #000000"> = db.Column(db.Integer, </span><span style="color: #001080">primary_key</span><span style="color: #000000">=</span><span style="color: #0000FF">True</span><span style="color: #000000">)</span></span>
+<span class="line"><span style="color: #000000">    username = db.Column(db.String(</span><span style="color: #098658">20</span><span style="color: #000000">), </span><span style="color: #001080">unique</span><span style="color: #000000">=</span><span style="color: #0000FF">True</span><span style="color: #000000">, </span><span style="color: #001080">nullable</span><span style="color: #000000">=</span><span style="color: #0000FF">False</span><span style="color: #000000">)</span></span>
+<span class="line"><span style="color: #000000">    ...</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #0000FF">class</span><span style="color: #000000"> </span><span style="color: #267F99">Question</span><span style="color: #000000">(</span><span style="color: #267F99">db</span><span style="color: #000000">.</span><span style="color: #267F99">Model</span><span style="color: #000000">):</span></span>
+<span class="line"><span style="color: #000000">    </span><span style="color: #795E26">id</span><span style="color: #000000"> = db.Column(db.Integer, </span><span style="color: #001080">primary_key</span><span style="color: #000000">=</span><span style="color: #0000FF">True</span><span style="color: #000000">)</span></span>
+<span class="line"><span style="color: #000000">    content = db.Column(db.String(</span><span style="color: #098658">1000</span><span style="color: #000000">), </span><span style="color: #001080">nullable</span><span style="color: #000000">=</span><span style="color: #0000FF">False</span><span style="color: #000000">)</span></span>
+<span class="line"><span style="color: #000000">    ...</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #0000FF">class</span><span style="color: #000000"> </span><span style="color: #267F99">Message</span><span style="color: #000000">(</span><span style="color: #267F99">db</span><span style="color: #000000">.</span><span style="color: #267F99">Model</span><span style="color: #000000">):</span></span>
+<span class="line"><span style="color: #000000">    </span><span style="color: #795E26">id</span><span style="color: #000000"> = db.Column(db.Integer, </span><span style="color: #001080">primary_key</span><span style="color: #000000">=</span><span style="color: #0000FF">True</span><span style="color: #000000">)</span></span>
+<span class="line"><span style="color: #000000">    content = db.Column(db.String(</span><span style="color: #098658">1000</span><span style="color: #000000">), </span><span style="color: #001080">nullable</span><span style="color: #000000">=</span><span style="color: #0000FF">False</span><span style="color: #000000">)</span></span>
+<span class="line"><span style="color: #000000">    ...</span></span></code></pre></div>
+
+
+
+<p>然后在<code>main.py</code>中将原本的数据模型替换为<code>from modules.models import User, Question, Message</code>，发现失败。后面将上面代码中的<code>db</code>改成从<code>main.py</code>导入，出现循环导入的错误。Gemini推荐使用工厂模式来解决这个问题。但我懒，把数据模型又给搬回去了，没用这个。</p>
+
+
+
+<div class="wp-block-kevinbatdorf-code-block-pro cbp-has-line-numbers" data-code-block-pro-font-family="Code-Pro-JetBrains-Mono" style="font-size:clamp(14px, .875rem, 21px);font-family:Code-Pro-JetBrains-Mono,ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;--cbp-line-number-color:#000000;--cbp-line-number-width:calc(2 * 0.6 * .875rem);line-height:clamp(20px, 1.25rem, 30px);--cbp-tab-width:2;tab-size:var(--cbp-tab-width, 2)"><span style="display:flex;align-items:center;padding:10px 0px 0 16px;font-size:0.8em;width:100%;text-align:left;background-color:#FFFFFF;font-style:italic;color:#000000"><span style="border-bottom:1px solid rgba(0, 0, 0, 0.2)">Python</span></span><span role="button" tabindex="0" style="color:#000000;display:none" aria-label="复制" class="code-block-pro-copy-button"><pre class="code-block-pro-copy-button-pre" aria-hidden="true"><textarea class="code-block-pro-copy-button-textarea" tabindex="-1" aria-hidden="true" readonly>from transformers import AutoProcessor, AutoModelForVision2Seq
+
+model_name = "Qwen/Qwen3-VL-2B-Instruct" 
+
+self.processor = AutoProcessor.from_pretrained(model_name, trust_remote_code=True)
+self.llm = AutoModelForVision2Seq.from_pretrained(
+  model_name,
+  torch_dtype=self.dtype,
+  device_map="auto" if self.device == "cuda" else None,
+  trust_remote_code=True
+)</textarea></pre><svg xmlns="http://www.w3.org/2000/svg" style="width:24px;height:24px" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path class="with-check" stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"></path><path class="without-check" stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path></svg></span><pre class="shiki light-plus" style="background-color: #FFFFFF" tabindex="0"><code><span class="line"><span style="color: #AF00DB">from</span><span style="color: #000000"> transformers </span><span style="color: #AF00DB">import</span><span style="color: #000000"> AutoProcessor, AutoModelForVision2Seq</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #000000">model_name = </span><span style="color: #A31515">&quot;Qwen/Qwen3-VL-2B-Instruct&quot;</span><span style="color: #000000"> </span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #0000FF">self</span><span style="color: #000000">.processor = AutoProcessor.from_pretrained(model_name, </span><span style="color: #001080">trust_remote_code</span><span style="color: #000000">=</span><span style="color: #0000FF">True</span><span style="color: #000000">)</span></span>
+<span class="line"><span style="color: #0000FF">self</span><span style="color: #000000">.llm = AutoModelForVision2Seq.from_pretrained(</span></span>
+<span class="line"><span style="color: #000000">  model_name,</span></span>
+<span class="line"><span style="color: #000000">  </span><span style="color: #001080">torch_dtype</span><span style="color: #000000">=</span><span style="color: #0000FF">self</span><span style="color: #000000">.dtype,</span></span>
+<span class="line"><span style="color: #000000">  </span><span style="color: #001080">device_map</span><span style="color: #000000">=</span><span style="color: #A31515">&quot;auto&quot;</span><span style="color: #000000"> </span><span style="color: #AF00DB">if</span><span style="color: #000000"> </span><span style="color: #0000FF">self</span><span style="color: #000000">.device == </span><span style="color: #A31515">&quot;cuda&quot;</span><span style="color: #000000"> </span><span style="color: #AF00DB">else</span><span style="color: #000000"> </span><span style="color: #0000FF">None</span><span style="color: #000000">,</span></span>
+<span class="line"><span style="color: #000000">  </span><span style="color: #001080">trust_remote_code</span><span style="color: #000000">=</span><span style="color: #0000FF">True</span></span>
+<span class="line"><span style="color: #000000">)</span></span></code></pre></div>
+
+
+
+<p>在导入过程中发现我的transformers库没有AutoModelForVision2Seq，搜索之后发现 <a href="https://github.com/modelscope/ms-swift/issues/8200">ImportError: cannot import name &#8216;AutoModelForVision2Seq&#8217; from &#8216;transformers&#8217; · Issue #8200 · modelscope/ms-swift</a> 这位与我遇到了同样的问题，也是在用这个模型时发现无法导入。将transformers调整为4.57.6就解决了。</p>
+
+
+
+<p>使用了Qwen3之后，模型就能够读懂图片了。</p>
+
+
+
+<figure class="wp-block-gallery aligncenter has-nested-images columns-default is-cropped wp-block-gallery-2 is-layout-flex wp-block-gallery-is-layout-flex">
+<figure class="wp-block-image size-large"><picture loading="lazy" decoding="async" data-id="1176" class="wp-image-1176"><source type="image/avif" srcset="https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/cc5ec25fce966017efb2914b6337054c-1022x1024.png.avif 1022w, https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/cc5ec25fce966017efb2914b6337054c-300x300.png.avif 300w, https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/cc5ec25fce966017efb2914b6337054c-150x150.png.avif 150w, https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/cc5ec25fce966017efb2914b6337054c-768x770.png.avif 768w, https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/cc5ec25fce966017efb2914b6337054c-70x70.png.avif 70w, https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/cc5ec25fce966017efb2914b6337054c-1200x1203.png.avif 1200w, https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/cc5ec25fce966017efb2914b6337054c.png.avif 1290w" sizes="auto, (max-width: 1022px) 100vw, 1022px"/><source type="image/webp" srcset="https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/cc5ec25fce966017efb2914b6337054c-1022x1024.png.webp 1022w, https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/cc5ec25fce966017efb2914b6337054c-300x300.png.webp 300w, https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/cc5ec25fce966017efb2914b6337054c-150x150.png.webp 150w, https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/cc5ec25fce966017efb2914b6337054c-768x770.png.webp 768w, https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/cc5ec25fce966017efb2914b6337054c-70x70.png.webp 70w, https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/cc5ec25fce966017efb2914b6337054c-1200x1203.png.webp 1200w, https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/cc5ec25fce966017efb2914b6337054c.png.webp 1290w" sizes="auto, (max-width: 1022px) 100vw, 1022px"/><img loading="lazy" decoding="async" width="1022" height="1024" data-id="1176" src="https://www.xiaozonglin.cn/wp-content/uploads/2026/03/cc5ec25fce966017efb2914b6337054c-1022x1024.png" alt="" class="wp-image-1176" srcset="https://www.xiaozonglin.cn/wp-content/uploads/2026/03/cc5ec25fce966017efb2914b6337054c-1022x1024.png 1022w, https://www.xiaozonglin.cn/wp-content/uploads/2026/03/cc5ec25fce966017efb2914b6337054c-300x300.png 300w, https://www.xiaozonglin.cn/wp-content/uploads/2026/03/cc5ec25fce966017efb2914b6337054c-150x150.png 150w, https://www.xiaozonglin.cn/wp-content/uploads/2026/03/cc5ec25fce966017efb2914b6337054c-768x770.png 768w, https://www.xiaozonglin.cn/wp-content/uploads/2026/03/cc5ec25fce966017efb2914b6337054c-70x70.png 70w, https://www.xiaozonglin.cn/wp-content/uploads/2026/03/cc5ec25fce966017efb2914b6337054c-1200x1203.png 1200w, https://www.xiaozonglin.cn/wp-content/uploads/2026/03/cc5ec25fce966017efb2914b6337054c.png 1290w" sizes="auto, (max-width: 1022px) 100vw, 1022px"/></picture><figcaption class="wp-element-caption">同时给定图片和问题，要求根据图片回答指定的问题</figcaption></figure>
+
+
+
+<figure class="wp-block-image size-large"><picture loading="lazy" decoding="async" data-id="1182" class="wp-image-1182"><source type="image/avif" srcset="https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/09a46e5987b1529577d7051b97602dd0-1024x1002.png.avif 1024w, https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/09a46e5987b1529577d7051b97602dd0-300x293.png.avif 300w, https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/09a46e5987b1529577d7051b97602dd0-768x751.png.avif 768w, https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/09a46e5987b1529577d7051b97602dd0-1200x1174.png.avif 1200w, https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/09a46e5987b1529577d7051b97602dd0.png.avif 1233w" sizes="auto, (max-width: 1024px) 100vw, 1024px"/><source type="image/webp" srcset="https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/09a46e5987b1529577d7051b97602dd0-1024x1002.png.webp 1024w, https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/09a46e5987b1529577d7051b97602dd0-300x293.png.webp 300w, https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/09a46e5987b1529577d7051b97602dd0-768x751.png.webp 768w, https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/09a46e5987b1529577d7051b97602dd0-1200x1174.png.webp 1200w, https://www.xiaozonglin.cn/wp-content/compressx-nextgen/uploads/2026/03/09a46e5987b1529577d7051b97602dd0.png.webp 1233w" sizes="auto, (max-width: 1024px) 100vw, 1024px"/><img loading="lazy" decoding="async" width="1024" height="1002" data-id="1182" src="https://www.xiaozonglin.cn/wp-content/uploads/2026/03/09a46e5987b1529577d7051b97602dd0-1024x1002.png" alt="" class="wp-image-1182" srcset="https://www.xiaozonglin.cn/wp-content/uploads/2026/03/09a46e5987b1529577d7051b97602dd0-1024x1002.png 1024w, https://www.xiaozonglin.cn/wp-content/uploads/2026/03/09a46e5987b1529577d7051b97602dd0-300x293.png 300w, https://www.xiaozonglin.cn/wp-content/uploads/2026/03/09a46e5987b1529577d7051b97602dd0-768x751.png 768w, https://www.xiaozonglin.cn/wp-content/uploads/2026/03/09a46e5987b1529577d7051b97602dd0-1200x1174.png 1200w, https://www.xiaozonglin.cn/wp-content/uploads/2026/03/09a46e5987b1529577d7051b97602dd0.png 1233w" sizes="auto, (max-width: 1024px) 100vw, 1024px"/></picture><figcaption class="wp-element-caption">不给文字，让ai分析图片，可以看出ai解释图片内容的能力不错</figcaption></figure>
+</figure>
+
+
+
+<hr class="wp-block-separator aligncenter has-alpha-channel-opacity"/>
+
+
+
+<h2 class="wp-block-heading has-text-align-center">姚焱夫：<br>You can just build things.</h2>
+
+
+
+<p>Hi，这里是XDwe团队姚焱夫。作为我第一个真正意义上的项目，我感觉这次体验很棒。</p>
+
+
+
+<p>作为非cs专业学生，其实我对编程方面并不算特别熟悉，不管是编程基础还是工作流程熟练度都没办法和宗林相比。小到Git，终端的使用和开发环境的搭建，大到前端开发，vibe coding的使用，还有项目的协作，我学习到的东西真的很多很多。以前作为兴趣浅尝辄止的东西，在这次实践过程中真的深入了很多。虽然学的是电子信息，但其实我一直是对计科，人智和具身这些方面更感兴趣，所以当其他人都在学习单片机，如火如荼准备电赛的时候，我毅然决然地放弃了之前参加电赛的想法，转而学习自己感兴趣的内容。不仅把竞赛方向换到了更喜欢的Robomaster，也有了参加科研的想法。</p>
+
+
+
+<p>这次比赛便是我学习cs的一个初尝。放弃了电院和物理院的比赛，我转而和网信院的同学组队，开发了这个ai问答平台。我能明显的感受到，在这个项目过程中，我是深度沉浸，高度投入的。最开始的时候恨不得把每天的时间都投到项目里面。当然，这期间我的开发能力也得到了飞快的增长，我开始越来越像一个真正的开发者。</p>
+
+
+
+<p>想法的构建和具体的实施，都是我们团队经过商讨之后共同完成的，这种协作的工作方式不仅能最大化每个人的能力，大大提高项目的实现效率，而且对以后的工作裨益无穷。我一直相信卓越不是一蹴而就，所以我一开始就告诉自己，不要太看重成绩，注重学习的过程。虽然主体赛道没能进入校赛，但是我们优化过的项目在专项赛道貌似得到了很高的评价。事实证明，如果你认真去做了，就算结果不一定如你所愿，但也一定不会差到哪儿去。</p>
+
+
+
+<p>技术之外，我还学到了很多。比如之前一直不怎么重视ppt的重要性……但事实是，ppt就是评委了解项目的唯一渠道，不仅要要重视它，甚至还得弄得夸张点……再比如这次的专项赛答辩。因为我其实是一个非常outgoing的人，所以我一直相信自己肯定能做到，也没给自己太大压力。答辩前一天认真准备了一下，第二天轻装上阵，做了一次还算不错的答辩。</p>
+
+
+
+<p>所以，你真的不能吗？你真的不行吗？<br>未必。</p>
+
+
+
+<p class="has-text-align-left">无论是电信科转战cs的决定，还是项目的每一个实现，都在告诉我</p>
+
+
+
+<p class="has-text-align-center"><strong>You can just build things.</strong></p>
+
+
+
+<p class="has-text-align-left">给自己一点压力，给自己一点信心，然后JUST DO IT.</p>
+
+
+
+<p class="has-text-align-left">感谢：特别感谢宗林在技术方面对我的帮助~宗林是一个技术栈十分全面的大佬，工作认真负责，是一个特别优秀的队友。<br>特别感谢子钦对项目在构思，改进和设计方面的贡献~虽然子钦在项目中期因为身体原因产生过退出的想法，但是后来还是坚持下来了，这让我很感动。正如我所秉持的观念，Every one matters.一个人都不能少。<br>特别感谢我自己，你从不缺乏勇气和自信，Keep going！</p>
+
+
+
 <hr class="wp-block-separator aligncenter has-alpha-channel-opacity"/>
 
 
