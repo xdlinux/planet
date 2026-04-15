@@ -1,0 +1,25 @@
+<p>我是一个喜欢立 Flag，但是有时没什么动力来推进选题和项目。写个置顶文章，就当是我写过了。 ICanMana [&#8230;]</p>
+<p><a href="https://www.xiaozonglin.cn/article-potential-topics/">文章选题汇总</a>最先出现在<a href="https://www.xiaozonglin.cn">林林杂语</a>。</p>
+<hr />
+<p>我是一个喜欢立 Flag，但是有时没什么动力来推进选题和项目。写个置顶文章，<s>就当是我写过了</s>。</p>
+
+
+
+<p><strong>ICanManage：大学生事务管理应用</strong><br>想着写个小东西可以把大学的事项都整到一个应用当中，番茄ToDo和口袋清单感觉都差点意思，西电学长开发的XDYou缺乏待办管理的功能，系统自带的日历难添加那种没有特定时间的待办。</p>
+
+
+
+<p><strong>大创过程记录：面向大模型抗投毒的检索增强生成技术</strong><br>如题，还没开始整，也就还没开始写。</p>
+
+
+
+<p><strong>npm供应链投毒攻击</strong><br>整理了一些参考材料扔草稿里了，很怕写成一篇记录几次投毒事件的流水账。</p>
+
+
+
+<p><strong>英语打卡系统：用 ai 写全栈</strong><br>如题，这段时间抽不出身跟老师讨论。在考虑我自己要从中获得什么，总不能在vibe coding然后整天都是在跟ai对话，什么都没学到。</p>
+
+
+
+<p><strong><s>如何让博客实现赛博永生？</s></strong><br>Mayx大佬一直在尝试让他的博客实现永恒，本文尝试讨论WordPress博客实现赛博永生的方法。因为没什么好唠的，所以暂时划掉。</p>
+<p><a href="https://www.xiaozonglin.cn/article-potential-topics/">文章选题汇总</a>最先出现在<a href="https://www.xiaozonglin.cn">林林杂语</a>。</p>
