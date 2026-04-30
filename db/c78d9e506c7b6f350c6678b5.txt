@@ -1,0 +1,169 @@
+<p>任务要求：使用Debian纯命令行构建自己的WordPress网站，并通过一些方法支持http://linli [&#8230;]</p>
+<p><a href="https://www.xiaozonglin.cn/build-wordpress-with-pure-commandline/">再见面板：Debian构建WordPress</a>最先出现在<a href="https://www.xiaozonglin.cn">林林杂语</a>。</p>
+<hr />
+<p>任务要求：使用Debian纯命令行构建自己的WordPress网站，并通过一些方法支持<code>http://linlin.zzo</code>访问。</p>
+
+
+
+<div class="wp-block-kevinbatdorf-code-block-pro cbp-has-line-numbers" data-code-block-pro-font-family="Code-Pro-JetBrains-Mono" style="font-size:clamp(14px, .875rem, 21px);font-family:Code-Pro-JetBrains-Mono,ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;--cbp-line-number-color:#000000;--cbp-line-number-width:calc(2 * 0.6 * .875rem);line-height:clamp(20px, 1.25rem, 30px);--cbp-tab-width:2;tab-size:var(--cbp-tab-width, 2)"><span style="display:flex;align-items:center;padding:10px 0px 0 16px;font-size:0.8em;width:100%;text-align:left;background-color:#FFFFFF;font-style:italic;color:#000000"><span style="border-bottom:1px solid rgba(0, 0, 0, 0.2)">Bash</span></span><span role="button" tabindex="0" style="color:#000000;display:none" aria-label="复制" class="code-block-pro-copy-button"><pre class="code-block-pro-copy-button-pre" aria-hidden="true"><textarea class="code-block-pro-copy-button-textarea" tabindex="-1" aria-hidden="true" readonly>linlinzzo@linlinzzo:~$ cat /etc/os-release
+PRETTY_NAME="Debian GNU/Linux 13 (trixie)"
+NAME="Debian GNU/Linux"
+VERSION_ID="13"
+VERSION="13 (trixie)"
+VERSION_CODENAME=trixie
+DEBIAN_VERSION_FULL=13.4
+ID=debian
+HOME_URL="https://www.debian.org/"
+SUPPORT_URL="https://www.debian.org/support"
+BUG_REPORT_URL="https://bugs.debian.org/"</textarea></pre><svg xmlns="http://www.w3.org/2000/svg" style="width:24px;height:24px" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path class="with-check" stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"></path><path class="without-check" stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path></svg></span><pre class="shiki light-plus" style="background-color: #FFFFFF" tabindex="0"><code><span class="line"><span style="color: #795E26">linlinzzo@linlinzzo:~$</span><span style="color: #000000"> </span><span style="color: #A31515">cat</span><span style="color: #000000"> </span><span style="color: #A31515">/etc/os-release</span></span>
+<span class="line"><span style="color: #001080">PRETTY_NAME</span><span style="color: #000000">=</span><span style="color: #A31515">&quot;Debian GNU/Linux 13 (trixie)&quot;</span></span>
+<span class="line"><span style="color: #001080">NAME</span><span style="color: #000000">=</span><span style="color: #A31515">&quot;Debian GNU/Linux&quot;</span></span>
+<span class="line"><span style="color: #001080">VERSION_ID</span><span style="color: #000000">=</span><span style="color: #A31515">&quot;13&quot;</span></span>
+<span class="line"><span style="color: #001080">VERSION</span><span style="color: #000000">=</span><span style="color: #A31515">&quot;13 (trixie)&quot;</span></span>
+<span class="line"><span style="color: #001080">VERSION_CODENAME</span><span style="color: #000000">=</span><span style="color: #A31515">trixie</span></span>
+<span class="line"><span style="color: #001080">DEBIAN_VERSION_FULL</span><span style="color: #000000">=</span><span style="color: #098658">13.4</span></span>
+<span class="line"><span style="color: #001080">ID</span><span style="color: #000000">=</span><span style="color: #A31515">debian</span></span>
+<span class="line"><span style="color: #001080">HOME_URL</span><span style="color: #000000">=</span><span style="color: #A31515">&quot;https://www.debian.org/&quot;</span></span>
+<span class="line"><span style="color: #001080">SUPPORT_URL</span><span style="color: #000000">=</span><span style="color: #A31515">&quot;https://www.debian.org/support&quot;</span></span>
+<span class="line"><span style="color: #001080">BUG_REPORT_URL</span><span style="color: #000000">=</span><span style="color: #A31515">&quot;https://bugs.debian.org/&quot;</span></span></code></pre></div>
+
+
+
+<p>安装所需要的应用</p>
+
+
+
+<div class="wp-block-kevinbatdorf-code-block-pro cbp-has-line-numbers" data-code-block-pro-font-family="Code-Pro-JetBrains-Mono" style="font-size:clamp(14px, .875rem, 21px);font-family:Code-Pro-JetBrains-Mono,ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;--cbp-line-number-color:#000000;--cbp-line-number-width:calc(1 * 0.6 * .875rem);line-height:clamp(20px, 1.25rem, 30px);--cbp-tab-width:2;tab-size:var(--cbp-tab-width, 2)"><span style="display:flex;align-items:center;padding:10px 0px 0 16px;font-size:0.8em;width:100%;text-align:left;background-color:#FFFFFF;font-style:italic;color:#000000"><span style="border-bottom:1px solid rgba(0, 0, 0, 0.2)">Bash</span></span><span role="button" tabindex="0" style="color:#000000;display:none" aria-label="复制" class="code-block-pro-copy-button"><pre class="code-block-pro-copy-button-pre" aria-hidden="true"><textarea class="code-block-pro-copy-button-textarea" tabindex="-1" aria-hidden="true" readonly>sudo apt install -y php-fpm # PHP
+sudo apt install nginx</textarea></pre><svg xmlns="http://www.w3.org/2000/svg" style="width:24px;height:24px" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path class="with-check" stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"></path><path class="without-check" stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path></svg></span><pre class="shiki light-plus" style="background-color: #FFFFFF" tabindex="0"><code><span class="line"><span style="color: #795E26">sudo</span><span style="color: #000000"> </span><span style="color: #A31515">apt</span><span style="color: #000000"> </span><span style="color: #A31515">install</span><span style="color: #000000"> </span><span style="color: #0000FF">-y</span><span style="color: #000000"> </span><span style="color: #A31515">php-fpm</span><span style="color: #000000"> </span><span style="color: #008000"># PHP</span></span>
+<span class="line"><span style="color: #795E26">sudo</span><span style="color: #000000"> </span><span style="color: #A31515">apt</span><span style="color: #000000"> </span><span style="color: #A31515">install</span><span style="color: #000000"> </span><span style="color: #A31515">nginx</span></span></code></pre></div>
+
+
+
+<p>安装 nginx 的时候报错<code>Not attempting to start NGINX, port 80 is already in use.</code>，当我通过<a href="https://www.runoob.com/w3cnote/linux-check-port-usage.html">Linux 查看端口占用情况 | 菜鸟教程</a>的方法去检查端口占用的时候发现lsof和netstat命令都不存在，用apt把lsof安装一下。发现是apache把80端口给占了。</p>
+
+
+
+<div class="wp-block-kevinbatdorf-code-block-pro cbp-has-line-numbers" data-code-block-pro-font-family="Code-Pro-JetBrains-Mono" style="font-size:clamp(14px, .875rem, 21px);font-family:Code-Pro-JetBrains-Mono,ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;--cbp-line-number-color:#000000;--cbp-line-number-width:calc(1 * 0.6 * .875rem);line-height:clamp(20px, 1.25rem, 30px);--cbp-tab-width:2;tab-size:var(--cbp-tab-width, 2)"><span style="display:flex;align-items:center;padding:10px 0px 0 16px;font-size:0.8em;width:100%;text-align:left;background-color:#FFFFFF;font-style:italic;color:#000000"><span style="border-bottom:1px solid rgba(0, 0, 0, 0.2)">Bash</span></span><span role="button" tabindex="0" style="color:#000000;display:none" aria-label="复制" class="code-block-pro-copy-button"><pre class="code-block-pro-copy-button-pre" aria-hidden="true"><textarea class="code-block-pro-copy-button-textarea" tabindex="-1" aria-hidden="true" readonly>linlinzzo@linlinzzo:~$ sudo lsof -i:80
+COMMAND  PID     USER FD   TYPE DEVICE SIZE/OFF NODE NAME
+apache2 9027     root 4u  IPv6  35905      0t0  TCP *:http (LISTEN)
+apache2 9030 www-data 4u  IPv6  35905      0t0  TCP *:http (LISTEN)
+apache2 9031 www-data 4u  IPv6  35905      0t0  TCP *:http (LISTEN)
+apache2 9032 www-data 4u  IPv6  35905      0t0  TCP *:http (LISTEN)
+apache2 9033 www-data 4u  IPv6  35905      0t0  TCP *:http (LISTEN)
+apache2 9034 www-data 4u  IPv6  35905      0t0  TCP *:http (LISTEN)</textarea></pre><svg xmlns="http://www.w3.org/2000/svg" style="width:24px;height:24px" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path class="with-check" stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"></path><path class="without-check" stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path></svg></span><pre class="shiki light-plus" style="background-color: #FFFFFF" tabindex="0"><code><span class="line"><span style="color: #795E26">linlinzzo@linlinzzo:~$</span><span style="color: #000000"> </span><span style="color: #A31515">sudo</span><span style="color: #000000"> </span><span style="color: #A31515">lsof</span><span style="color: #000000"> </span><span style="color: #0000FF">-i:80</span></span>
+<span class="line"><span style="color: #795E26">COMMAND</span><span style="color: #000000">  </span><span style="color: #A31515">PID</span><span style="color: #000000">     </span><span style="color: #A31515">USER</span><span style="color: #000000"> </span><span style="color: #A31515">FD</span><span style="color: #000000">   </span><span style="color: #A31515">TYPE</span><span style="color: #000000"> </span><span style="color: #A31515">DEVICE</span><span style="color: #000000"> </span><span style="color: #A31515">SIZE/OFF</span><span style="color: #000000"> </span><span style="color: #A31515">NODE</span><span style="color: #000000"> </span><span style="color: #A31515">NAME</span></span>
+<span class="line"><span style="color: #795E26">apache2</span><span style="color: #000000"> </span><span style="color: #098658">9027</span><span style="color: #000000">     </span><span style="color: #A31515">root</span><span style="color: #000000"> </span><span style="color: #098658">4</span><span style="color: #A31515">u</span><span style="color: #000000">  </span><span style="color: #A31515">IPv6</span><span style="color: #000000">  </span><span style="color: #098658">35905</span><span style="color: #000000">      </span><span style="color: #098658">0</span><span style="color: #A31515">t0</span><span style="color: #000000">  </span><span style="color: #A31515">TCP</span><span style="color: #000000"> </span><span style="color: #0000FF">*</span><span style="color: #A31515">:http</span><span style="color: #000000"> (LISTEN)</span></span>
+<span class="line"><span style="color: #795E26">apache2</span><span style="color: #000000"> </span><span style="color: #098658">9030</span><span style="color: #000000"> </span><span style="color: #A31515">www-data</span><span style="color: #000000"> </span><span style="color: #098658">4</span><span style="color: #A31515">u</span><span style="color: #000000">  </span><span style="color: #A31515">IPv6</span><span style="color: #000000">  </span><span style="color: #098658">35905</span><span style="color: #000000">      </span><span style="color: #098658">0</span><span style="color: #A31515">t0</span><span style="color: #000000">  </span><span style="color: #A31515">TCP</span><span style="color: #000000"> </span><span style="color: #0000FF">*</span><span style="color: #A31515">:http</span><span style="color: #000000"> (LISTEN)</span></span>
+<span class="line"><span style="color: #795E26">apache2</span><span style="color: #000000"> </span><span style="color: #098658">9031</span><span style="color: #000000"> </span><span style="color: #A31515">www-data</span><span style="color: #000000"> </span><span style="color: #098658">4</span><span style="color: #A31515">u</span><span style="color: #000000">  </span><span style="color: #A31515">IPv6</span><span style="color: #000000">  </span><span style="color: #098658">35905</span><span style="color: #000000">      </span><span style="color: #098658">0</span><span style="color: #A31515">t0</span><span style="color: #000000">  </span><span style="color: #A31515">TCP</span><span style="color: #000000"> </span><span style="color: #0000FF">*</span><span style="color: #A31515">:http</span><span style="color: #000000"> (LISTEN)</span></span>
+<span class="line"><span style="color: #795E26">apache2</span><span style="color: #000000"> </span><span style="color: #098658">9032</span><span style="color: #000000"> </span><span style="color: #A31515">www-data</span><span style="color: #000000"> </span><span style="color: #098658">4</span><span style="color: #A31515">u</span><span style="color: #000000">  </span><span style="color: #A31515">IPv6</span><span style="color: #000000">  </span><span style="color: #098658">35905</span><span style="color: #000000">      </span><span style="color: #098658">0</span><span style="color: #A31515">t0</span><span style="color: #000000">  </span><span style="color: #A31515">TCP</span><span style="color: #000000"> </span><span style="color: #0000FF">*</span><span style="color: #A31515">:http</span><span style="color: #000000"> (LISTEN)</span></span>
+<span class="line"><span style="color: #795E26">apache2</span><span style="color: #000000"> </span><span style="color: #098658">9033</span><span style="color: #000000"> </span><span style="color: #A31515">www-data</span><span style="color: #000000"> </span><span style="color: #098658">4</span><span style="color: #A31515">u</span><span style="color: #000000">  </span><span style="color: #A31515">IPv6</span><span style="color: #000000">  </span><span style="color: #098658">35905</span><span style="color: #000000">      </span><span style="color: #098658">0</span><span style="color: #A31515">t0</span><span style="color: #000000">  </span><span style="color: #A31515">TCP</span><span style="color: #000000"> </span><span style="color: #0000FF">*</span><span style="color: #A31515">:http</span><span style="color: #000000"> (LISTEN)</span></span>
+<span class="line"><span style="color: #795E26">apache2</span><span style="color: #000000"> </span><span style="color: #098658">9034</span><span style="color: #000000"> </span><span style="color: #A31515">www-data</span><span style="color: #000000"> </span><span style="color: #098658">4</span><span style="color: #A31515">u</span><span style="color: #000000">  </span><span style="color: #A31515">IPv6</span><span style="color: #000000">  </span><span style="color: #098658">35905</span><span style="color: #000000">      </span><span style="color: #098658">0</span><span style="color: #A31515">t0</span><span style="color: #000000">  </span><span style="color: #A31515">TCP</span><span style="color: #000000"> </span><span style="color: #0000FF">*</span><span style="color: #A31515">:http</span><span style="color: #000000"> (LISTEN)</span></span></code></pre></div>
+
+
+
+<p>把apache卸载之后就可以用systemctl启动nginx了。</p>
+
+
+
+<p>正要打算从官网下载MySQL，结果发现wget没装，把wget装一下，然后安装MySQL。</p>
+
+
+
+<div class="wp-block-kevinbatdorf-code-block-pro cbp-has-line-numbers" data-code-block-pro-font-family="Code-Pro-JetBrains-Mono" style="font-size:clamp(14px, .875rem, 21px);font-family:Code-Pro-JetBrains-Mono,ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;--cbp-line-number-color:#000000;--cbp-line-number-width:calc(1 * 0.6 * .875rem);line-height:clamp(20px, 1.25rem, 30px);--cbp-tab-width:2;tab-size:var(--cbp-tab-width, 2)"><span style="display:flex;align-items:center;padding:10px 0px 0 16px;font-size:0.8em;width:100%;text-align:left;background-color:#FFFFFF;font-style:italic;color:#000000"><span style="border-bottom:1px solid rgba(0, 0, 0, 0.2)">SQL</span></span><span role="button" tabindex="0" style="color:#000000;display:none" aria-label="复制" class="code-block-pro-copy-button"><pre class="code-block-pro-copy-button-pre" aria-hidden="true"><textarea class="code-block-pro-copy-button-textarea" tabindex="-1" aria-hidden="true" readonly>CREATE USER '111'@'localhost' IDENTIFIED BY '111';
+CREATE DATABASE lin;
+GRANT ALL PRIVILEGES ON lin.* TO '111'@'localhost';</textarea></pre><svg xmlns="http://www.w3.org/2000/svg" style="width:24px;height:24px" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path class="with-check" stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"></path><path class="without-check" stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path></svg></span><pre class="shiki light-plus" style="background-color: #FFFFFF" tabindex="0"><code><span class="line"><span style="color: #0000FF">CREATE</span><span style="color: #000000"> </span><span style="color: #0000FF">USER</span><span style="color: #000000"> &#39;</span><span style="color: #795E26">111</span><span style="color: #000000">&#39;@</span><span style="color: #A31515">&#39;localhost&#39;</span><span style="color: #000000"> IDENTIFIED </span><span style="color: #0000FF">BY</span><span style="color: #000000"> </span><span style="color: #A31515">&#39;111&#39;</span><span style="color: #000000">;</span></span>
+<span class="line"><span style="color: #0000FF">CREATE</span><span style="color: #000000"> </span><span style="color: #0000FF">DATABASE</span><span style="color: #000000"> </span><span style="color: #795E26">lin</span><span style="color: #000000">;</span></span>
+<span class="line"><span style="color: #0000FF">GRANT</span><span style="color: #000000"> ALL PRIVILEGES </span><span style="color: #0000FF">ON</span><span style="color: #000000"> lin.* </span><span style="color: #0000FF">TO</span><span style="color: #000000"> </span><span style="color: #A31515">&#39;111&#39;</span><span style="color: #000000">@</span><span style="color: #A31515">&#39;localhost&#39;</span><span style="color: #000000">;</span></span></code></pre></div>
+
+
+
+<p>用<code>ip addr</code>看虚拟环境的IP，通过设置hosts文件让<code>linlin.zzo</code>指向虚拟环境。因为Nginx的配置文件是照搬网上的，一开始看日志是root设置错了还没有设置好访问权限，改好后还是报错，发现是php-fpm的路径不对。用where命令找不到php-fpm。通过下面的方法找到.sock的地址。</p>
+
+
+
+<div class="wp-block-kevinbatdorf-code-block-pro cbp-has-line-numbers" data-code-block-pro-font-family="Code-Pro-JetBrains-Mono" style="font-size:clamp(14px, .875rem, 21px);font-family:Code-Pro-JetBrains-Mono,ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;--cbp-line-number-color:#000000;--cbp-line-number-width:calc(2 * 0.6 * .875rem);line-height:clamp(20px, 1.25rem, 30px);--cbp-tab-width:2;tab-size:var(--cbp-tab-width, 2)"><span style="display:flex;align-items:center;padding:10px 0px 0 16px;font-size:0.8em;width:100%;text-align:left;background-color:#FFFFFF;font-style:italic;color:#000000"><span style="border-bottom:1px solid rgba(0, 0, 0, 0.2)">Bash</span></span><span role="button" tabindex="0" style="color:#000000;display:none" aria-label="复制" class="code-block-pro-copy-button"><pre class="code-block-pro-copy-button-pre" aria-hidden="true"><textarea class="code-block-pro-copy-button-textarea" tabindex="-1" aria-hidden="true" readonly>linlinzzo@linlinzzo:/etc/nginx/conf.d$ sudo systemctl status php8.4-fpm
+● php8.4-fpm.service - The PHP 8.4 FastCGI Process Manager
+     Loaded: loaded (/usr/lib/systemd/system/php8.4-fpm.service; enabled; preset: enabled)
+(...)
+linlinzzo@linlinzzo:/etc/nginx/conf.d$ cat /usr/lib/systemd/system/php8.4-fpm.service
+(...)
+&#91;Service&#93;
+Type=notify
+ExecStart=/usr/sbin/php-fpm8.4 --nodaemonize --fpm-config /etc/php/8.4/fpm/php-fpm.conf
+ExecStartPost=-/usr/lib/php/php-fpm-socket-helper install /run/php/php-fpm.sock /etc/php/8.4/fpm/pool.d/www.conf 84
+ExecStopPost=-/usr/lib/php/php-fpm-socket-helper remove /run/php/php-fpm.sock /etc/php/8.4/fpm/pool.d/www.conf 84
+(...)</textarea></pre><svg xmlns="http://www.w3.org/2000/svg" style="width:24px;height:24px" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path class="with-check" stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"></path><path class="without-check" stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path></svg></span><pre class="shiki light-plus" style="background-color: #FFFFFF" tabindex="0"><code><span class="line"><span style="color: #795E26">linlinzzo@linlinzzo:/etc/nginx/conf.d$</span><span style="color: #000000"> </span><span style="color: #A31515">sudo</span><span style="color: #000000"> </span><span style="color: #A31515">systemctl</span><span style="color: #000000"> </span><span style="color: #A31515">status</span><span style="color: #000000"> </span><span style="color: #A31515">php8.4-fpm</span></span>
+<span class="line"><span style="color: #795E26">●</span><span style="color: #000000"> </span><span style="color: #A31515">php8.4-fpm.service</span><span style="color: #000000"> </span><span style="color: #A31515">-</span><span style="color: #000000"> </span><span style="color: #A31515">The</span><span style="color: #000000"> </span><span style="color: #A31515">PHP</span><span style="color: #000000"> </span><span style="color: #098658">8.4</span><span style="color: #000000"> </span><span style="color: #A31515">FastCGI</span><span style="color: #000000"> </span><span style="color: #A31515">Process</span><span style="color: #000000"> </span><span style="color: #A31515">Manager</span></span>
+<span class="line"><span style="color: #000000">     </span><span style="color: #795E26">Loaded:</span><span style="color: #000000"> </span><span style="color: #A31515">loaded</span><span style="color: #000000"> (/usr/lib/systemd/system/php8.4-fpm.service; </span><span style="color: #795E26">enabled</span><span style="color: #000000">; </span><span style="color: #795E26">preset:</span><span style="color: #000000"> </span><span style="color: #A31515">enabled</span><span style="color: #000000">)</span></span>
+<span class="line"><span style="color: #000000">(</span><span style="color: #795E26">...</span><span style="color: #000000">)</span></span>
+<span class="line"><span style="color: #795E26">linlinzzo@linlinzzo:/etc/nginx/conf.d$</span><span style="color: #000000"> </span><span style="color: #A31515">cat</span><span style="color: #000000"> </span><span style="color: #A31515">/usr/lib/systemd/system/php8.4-fpm.service</span></span>
+<span class="line"><span style="color: #000000">(</span><span style="color: #795E26">...</span><span style="color: #000000">)</span></span>
+<span class="line"><span style="color: #000000">&#91;Service&#93;</span></span>
+<span class="line"><span style="color: #001080">Type</span><span style="color: #000000">=</span><span style="color: #A31515">notify</span></span>
+<span class="line"><span style="color: #001080">ExecStart</span><span style="color: #000000">=</span><span style="color: #A31515">/usr/sbin/php-fpm8.4</span><span style="color: #000000"> </span><span style="color: #795E26">--nodaemonize</span><span style="color: #000000"> </span><span style="color: #0000FF">--fpm-config</span><span style="color: #000000"> </span><span style="color: #A31515">/etc/php/8.4/fpm/php-fpm.conf</span></span>
+<span class="line"><span style="color: #001080">ExecStartPost</span><span style="color: #000000">=</span><span style="color: #A31515">-/usr/lib/php/php-fpm-socket-helper</span><span style="color: #000000"> </span><span style="color: #795E26">install</span><span style="color: #000000"> </span><span style="color: #A31515">/run/php/php-fpm.sock</span><span style="color: #000000"> </span><span style="color: #A31515">/etc/php/8.4/fpm/pool.d/www.conf</span><span style="color: #000000"> </span><span style="color: #098658">84</span></span>
+<span class="line"><span style="color: #001080">ExecStopPost</span><span style="color: #000000">=</span><span style="color: #A31515">-/usr/lib/php/php-fpm-socket-helper</span><span style="color: #000000"> </span><span style="color: #795E26">remove</span><span style="color: #000000"> </span><span style="color: #A31515">/run/php/php-fpm.sock</span><span style="color: #000000"> </span><span style="color: #A31515">/etc/php/8.4/fpm/pool.d/www.conf</span><span style="color: #000000"> </span><span style="color: #098658">84</span></span>
+<span class="line"><span style="color: #000000">(</span><span style="color: #795E26">...</span><span style="color: #000000">)</span></span></code></pre></div>
+
+
+<div class="wp-block-image">
+<figure class="aligncenter size-large"><img fetchpriority="high" decoding="async" width="1024" height="273" src="https://www.xiaozonglin.cn/wp-content/uploads/2026/04/image-9-1024x273.png" alt="" class="wp-image-1298" srcset="https://www.xiaozonglin.cn/wp-content/uploads/2026/04/image-9-1024x273.png 1024w, https://www.xiaozonglin.cn/wp-content/uploads/2026/04/image-9-300x80.png 300w, https://www.xiaozonglin.cn/wp-content/uploads/2026/04/image-9-768x205.png 768w, https://www.xiaozonglin.cn/wp-content/uploads/2026/04/image-9-1536x409.png 1536w, https://www.xiaozonglin.cn/wp-content/uploads/2026/04/image-9-1200x320.png 1200w, https://www.xiaozonglin.cn/wp-content/uploads/2026/04/image-9.png 1816w" sizes="(max-width: 1024px) 100vw, 1024px" /></figure>
+</div>
+
+
+<p>这下可以显示出页面了，提示说需要安装一个PHP拓展，那我们安装一下。</p>
+
+
+
+<div class="wp-block-kevinbatdorf-code-block-pro cbp-has-line-numbers" data-code-block-pro-font-family="Code-Pro-JetBrains-Mono" style="font-size:clamp(14px, .875rem, 21px);font-family:Code-Pro-JetBrains-Mono,ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;--cbp-line-number-color:#000000;--cbp-line-number-width:calc(1 * 0.6 * .875rem);line-height:clamp(20px, 1.25rem, 30px);--cbp-tab-width:2;tab-size:var(--cbp-tab-width, 2)"><span style="display:flex;align-items:center;padding:10px 0px 0 16px;font-size:0.8em;width:100%;text-align:left;background-color:#FFFFFF;font-style:italic;color:#000000"><span style="border-bottom:1px solid rgba(0, 0, 0, 0.2)">Bash</span></span><span role="button" tabindex="0" style="color:#000000;display:none" aria-label="复制" class="code-block-pro-copy-button"><pre class="code-block-pro-copy-button-pre" aria-hidden="true"><textarea class="code-block-pro-copy-button-textarea" tabindex="-1" aria-hidden="true" readonly>linlinzzo@linlinzzo:/etc/nginx/conf.d$ sudo apt install php-mysqli
+Note, selecting 'php8.4-mysql' instead of 'php-mysqli'
+...</textarea></pre><svg xmlns="http://www.w3.org/2000/svg" style="width:24px;height:24px" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path class="with-check" stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"></path><path class="without-check" stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path></svg></span><pre class="shiki light-plus" style="background-color: #FFFFFF" tabindex="0"><code><span class="line"><span style="color: #795E26">linlinzzo@linlinzzo:/etc/nginx/conf.d$</span><span style="color: #000000"> </span><span style="color: #A31515">sudo</span><span style="color: #000000"> </span><span style="color: #A31515">apt</span><span style="color: #000000"> </span><span style="color: #A31515">install</span><span style="color: #000000"> </span><span style="color: #A31515">php-mysqli</span></span>
+<span class="line"><span style="color: #795E26">Note,</span><span style="color: #000000"> </span><span style="color: #A31515">selecting</span><span style="color: #000000"> </span><span style="color: #A31515">&#39;php8.4-mysql&#39;</span><span style="color: #000000"> </span><span style="color: #A31515">instead</span><span style="color: #000000"> </span><span style="color: #A31515">of</span><span style="color: #000000"> </span><span style="color: #A31515">&#39;php-mysqli&#39;</span></span>
+<span class="line"><span style="color: #795E26">...</span></span></code></pre></div>
+
+
+
+<p>安装好之后回到刚才的安装界面设置管理账户的用户名和密码，接下来通过WordPress自带的迁移功能进行迁移。</p>
+
+
+
+<p>WordPress无论是自己上传插件文件还是从插件市场上安装都需要配置FTP信息，奇怪，为什么我在我服务器上不用这些信息。我不太想配置FTP，所以直接在Windows把压缩包传到Debian然后解压。</p>
+
+
+
+<p>当我启用导入插件并将我这个博客的导出文件传进去时，发生了<strong>413 Request Entity Too Large</strong>。我在Nginx的配置文件中加了一行放宽一下限制：<code>client_max_body_size 100M;</code>。</p>
+
+
+
+<p>这样大致就OK了。</p>
+
+
+<div class="wp-block-image">
+<figure class="aligncenter size-large"><img decoding="async" width="1024" height="582" src="https://www.xiaozonglin.cn/wp-content/uploads/2026/04/image-10-1024x582.png" alt="" class="wp-image-1299" srcset="https://www.xiaozonglin.cn/wp-content/uploads/2026/04/image-10-1024x582.png 1024w, https://www.xiaozonglin.cn/wp-content/uploads/2026/04/image-10-300x170.png 300w, https://www.xiaozonglin.cn/wp-content/uploads/2026/04/image-10-768x436.png 768w, https://www.xiaozonglin.cn/wp-content/uploads/2026/04/image-10-1536x873.png 1536w, https://www.xiaozonglin.cn/wp-content/uploads/2026/04/image-10-2048x1164.png 2048w, https://www.xiaozonglin.cn/wp-content/uploads/2026/04/image-10-1200x682.png 1200w, https://www.xiaozonglin.cn/wp-content/uploads/2026/04/image-10-1980x1125.png 1980w" sizes="(max-width: 1024px) 100vw, 1024px" /></figure>
+</div>
+
+
+<p><strong>附录</strong></p>
+
+
+
+<ul class="wp-block-list">
+<li><a href="https://zhuanlan.zhihu.com/p/638649740">在Ubuntu中安装Deb包的3个命令行工具 &#8211; 知乎</a></li>
+
+
+
+<li><a href="https://zhuanlan.zhihu.com/p/701415683">在Linux/Ubuntu/Debian系统中使用 tar 压缩文件 &#8211; 知乎</a></li>
+
+
+
+<li><a href="https://www.runoob.com/linux/linux-comm-tar.html">Linux tar 命令 | 菜鸟教程</a></li>
+
+
+
+<li><a href="https://www.runoob.com/mysql/mysql-administration.html">MySQL 管理 | 菜鸟教程</a></li>
+</ul>
+
+
+<div class="wp-block-image">
+<figure class="aligncenter size-full is-resized"><img decoding="async" width="688" height="643" src="https://www.xiaozonglin.cn/wp-content/uploads/2026/04/image-11.png" alt="" class="wp-image-1301" style="aspect-ratio:1.069999451844543;width:404px;height:auto" srcset="https://www.xiaozonglin.cn/wp-content/uploads/2026/04/image-11.png 688w, https://www.xiaozonglin.cn/wp-content/uploads/2026/04/image-11-300x280.png 300w" sizes="(max-width: 688px) 100vw, 688px" /><figcaption class="wp-element-caption">未完待续</figcaption></figure>
+</div><p><a href="https://www.xiaozonglin.cn/build-wordpress-with-pure-commandline/">再见面板：Debian构建WordPress</a>最先出现在<a href="https://www.xiaozonglin.cn">林林杂语</a>。</p>
