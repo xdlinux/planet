@@ -529,7 +529,7 @@ self.llm = AutoModelForVision2Seq.from_pretrained(
 
 
 
-<p>在导入过程中发现我的transformers库没有AutoModelForVision2Seq，搜索之后发现 <a href="https://github.com/modelscope/ms-swift/issues/8200">ImportError: cannot import name &#8216;AutoModelForVision2Seq&#8217; from &#8216;transformers&#8217; · Issue #8200 · modelscope/ms-swift</a> 这位与我遇到了同样的问题，也是在用这个模型时发现无法导入。将transformers调整为4.57.6就解决了。</p>
+<p>在导入过程中发现我的transformers库没有<code>AutoModelForVision2Seq</code>，搜索之后发现 <a href="https://github.com/modelscope/ms-swift/issues/8200">ImportError: cannot import name &#8216;AutoModelForVision2Seq&#8217; from &#8216;transformers&#8217; · Issue #8200 · modelscope/ms-swift</a> 这位与我遇到了同样的问题，也是在用这个模型时发现无法导入。将transformers调整为4.57.6就解决了。</p>
 
 
 
@@ -565,6 +565,42 @@ self.llm = AutoModelForVision2Seq.from_pretrained(
 
 <p><a href="https://cloud.tencent.com/developer/article/2508025">RAG知识库搭建-文档预处理-数据清洗：基于异步的AI文本批处理系统实践-腾讯云开发者社区</a> 这篇文章提供了一个可以借鉴的system prompt。基于此，我们设定知识库负责清洗的llm的system prompt。</p>
 
+
+
+<p>因为初赛的结果一直没出来，所以这些功能的改进就搁置了。</p>
+
+
+
+<hr class="wp-block-separator aligncenter has-alpha-channel-opacity"/>
+
+
+
+<h4 class="wp-block-heading has-text-align-center">专项赛入围校赛</h4>
+
+
+
+<p>4 月 30 日，等了许久的专项赛初赛结果终于出来了。意料之中，进校赛了。看来需要把这个东西再完善完善。</p>
+
+
+<div class="wp-block-image">
+<figure class="aligncenter size-large"><img loading="lazy" decoding="async" width="1024" height="346" src="https://www.xiaozonglin.cn/wp-content/uploads/2026/03/5816ac042a41c02cf38d2a7780724141-1024x346.jpg" alt="" class="wp-image-1290" srcset="https://www.xiaozonglin.cn/wp-content/uploads/2026/03/5816ac042a41c02cf38d2a7780724141-1024x346.jpg 1024w, https://www.xiaozonglin.cn/wp-content/uploads/2026/03/5816ac042a41c02cf38d2a7780724141-300x101.jpg 300w, https://www.xiaozonglin.cn/wp-content/uploads/2026/03/5816ac042a41c02cf38d2a7780724141-768x260.jpg 768w, https://www.xiaozonglin.cn/wp-content/uploads/2026/03/5816ac042a41c02cf38d2a7780724141-1200x406.jpg 1200w, https://www.xiaozonglin.cn/wp-content/uploads/2026/03/5816ac042a41c02cf38d2a7780724141.jpg 1283w" sizes="auto, (max-width: 1024px) 100vw, 1024px" /><figcaption class="wp-element-caption">666，还有第二关</figcaption></figure>
+</div>
+
+
+<p><a href="https://mp.weixin.qq.com/s/4nUo_-y0Kd23wKlyry60SQ">阿里面试官冷笑：&#8221;5000 份文档扔进去就算建好知识库了？难怪你的 RAG 答非所问。&#8221; 我无言以对&#8230;</a> 这篇文章给了 RAG 系统里面的一些坑点以及对应的解决方案，从文章的评论区了解到可以用 MinerU 之类的工具对文档进行解析，以及不推荐使用固定 token 数量进行划分。（最近微信公众号经常给我推一些关于 AI 和 RAG 的文章，要做的东西越来越多）</p>
+
+
+
+<p>项目的代码随着一版一版的迭代，已经变成一座屎山了，现在直接往上面做优化有种屎上雕花的感觉。自己也有种感觉，代码写得厉害还不如在 PPT 中美言几句。哎，后面抽时间再系统看看 Deeptoai RAG 的教程。前几天试着用了一下 Claude Code + Deepseek v4 flash，费用感觉还可以，AI 还会主动问我问题明确细节，接下来可以让 AI 完善一下。然后可以使用 <a href="https://github.com/forrestchang/andrej-karpathy-skills">forrestchang/andrej-karpathy-skills</a> 让 AI 贡献代码规范一点。</p>
+
+
+
+<p>文章评论区的一位大佬（说是老乡）提供了另一个优化的角度，安全方面需要考虑一下防提示词注入。</p>
+
+
+<div class="wp-block-image">
+<figure class="aligncenter size-large"><img loading="lazy" decoding="async" width="1024" height="200" src="https://www.xiaozonglin.cn/wp-content/uploads/2026/03/image-16-1024x200.png" alt="" class="wp-image-1294" srcset="https://www.xiaozonglin.cn/wp-content/uploads/2026/03/image-16-1024x200.png 1024w, https://www.xiaozonglin.cn/wp-content/uploads/2026/03/image-16-300x59.png 300w, https://www.xiaozonglin.cn/wp-content/uploads/2026/03/image-16-768x150.png 768w, https://www.xiaozonglin.cn/wp-content/uploads/2026/03/image-16-1536x300.png 1536w, https://www.xiaozonglin.cn/wp-content/uploads/2026/03/image-16-1200x234.png 1200w, https://www.xiaozonglin.cn/wp-content/uploads/2026/03/image-16.png 1738w" sizes="auto, (max-width: 1024px) 100vw, 1024px" /><figcaption class="wp-element-caption">无名大佬（foo相当于匿名）给的建议</figcaption></figure>
+</div>
 
 
 <hr class="wp-block-separator aligncenter has-alpha-channel-opacity"/>
