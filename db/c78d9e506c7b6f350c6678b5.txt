@@ -142,7 +142,16 @@ Note, selecting 'php8.4-mysql' instead of 'php-mysqli'
 <figure class="aligncenter size-large"><img decoding="async" width="1024" height="582" src="https://www.xiaozonglin.cn/wp-content/uploads/2026/04/image-10-1024x582.png" alt="" class="wp-image-1299" srcset="https://www.xiaozonglin.cn/wp-content/uploads/2026/04/image-10-1024x582.png 1024w, https://www.xiaozonglin.cn/wp-content/uploads/2026/04/image-10-300x170.png 300w, https://www.xiaozonglin.cn/wp-content/uploads/2026/04/image-10-768x436.png 768w, https://www.xiaozonglin.cn/wp-content/uploads/2026/04/image-10-1536x873.png 1536w, https://www.xiaozonglin.cn/wp-content/uploads/2026/04/image-10-2048x1164.png 2048w, https://www.xiaozonglin.cn/wp-content/uploads/2026/04/image-10-1200x682.png 1200w, https://www.xiaozonglin.cn/wp-content/uploads/2026/04/image-10-1980x1125.png 1980w" sizes="(max-width: 1024px) 100vw, 1024px" /></figure>
 </div>
 
+<div class="wp-block-image">
+<figure class="aligncenter size-full is-resized"><img decoding="async" width="688" height="643" src="https://www.xiaozonglin.cn/wp-content/uploads/2026/04/image-11.png" alt="" class="wp-image-1301" style="aspect-ratio:1.069999451844543;width:404px;height:auto" srcset="https://www.xiaozonglin.cn/wp-content/uploads/2026/04/image-11.png 688w, https://www.xiaozonglin.cn/wp-content/uploads/2026/04/image-11-300x280.png 300w" sizes="(max-width: 688px) 100vw, 688px" /><figcaption class="wp-element-caption">未完待续</figcaption></figure>
+</div>
 
+
+<p>用VirtualBox安装虚拟机之后，使用普通用户登录发现没有sudo权限，改成root身份，后面配置就不用敲sudo了。</p>
+
+
+
+<div class="wp-block-group"><div class="wp-block-group__inner-container is-layout-constrained wp-block-group-is-layout-constrained">
 <p><strong>附录</strong></p>
 
 
@@ -162,8 +171,5 @@ Note, selecting 'php8.4-mysql' instead of 'php-mysqli'
 
 <li><a href="https://www.runoob.com/mysql/mysql-administration.html">MySQL 管理 | 菜鸟教程</a></li>
 </ul>
-
-
-<div class="wp-block-image">
-<figure class="aligncenter size-full is-resized"><img decoding="async" width="688" height="643" src="https://www.xiaozonglin.cn/wp-content/uploads/2026/04/image-11.png" alt="" class="wp-image-1301" style="aspect-ratio:1.069999451844543;width:404px;height:auto" srcset="https://www.xiaozonglin.cn/wp-content/uploads/2026/04/image-11.png 688w, https://www.xiaozonglin.cn/wp-content/uploads/2026/04/image-11-300x280.png 300w" sizes="(max-width: 688px) 100vw, 688px" /><figcaption class="wp-element-caption">未完待续</figcaption></figure>
-</div><p><a href="https://www.xiaozonglin.cn/build-wordpress-with-pure-commandline/">再见面板：Debian构建WordPress</a>最先出现在<a href="https://www.xiaozonglin.cn">林林杂语</a>。</p>
+</div></div>
+<p><a href="https://www.xiaozonglin.cn/build-wordpress-with-pure-commandline/">再见面板：Debian构建WordPress</a>最先出现在<a href="https://www.xiaozonglin.cn">林林杂语</a>。</p>
