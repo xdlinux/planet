@@ -587,8 +587,162 @@ self.llm = AutoModelForVision2Seq.from_pretrained(
 </div>
 
 
-<p><a href="https://mp.weixin.qq.com/s/4nUo_-y0Kd23wKlyry60SQ">阿里面试官冷笑：&#8221;5000 份文档扔进去就算建好知识库了？难怪你的 RAG 答非所问。&#8221; 我无言以对&#8230;</a> 这篇文章给了 RAG 系统里面的一些坑点以及对应的解决方案，从文章的评论区了解到可以用 MinerU 之类的工具对文档进行解析，以及不推荐使用固定 token 数量进行划分。（最近微信公众号经常给我推一些关于 AI 和 RAG 的文章，要做的东西越来越多）</p>
+<p><a href="https://mp.weixin.qq.com/s/4nUo_-y0Kd23wKlyry60SQ">阿里面试官冷笑：&#8221;5000 份文档扔进去就算建好知识库了？难怪你的 RAG 答非所问。&#8221; 我无言以对&#8230;</a> 这篇文章给了 RAG 系统里面的一些坑点以及对应的解决方案，从文章的评论区了解到可以用 MinerU 之类的工具对文档进行解析，以及不推荐使用固定 token 数量进行划分。（最近微信公众号经常给我推一些关于 AI 和 RAG 的文章，要做的东西越来越多）<br>又刷到 <a href="https://zhuanlan.zhihu.com/p/1900486359417853286">MarkItDown：微软开源的文档转 Markdown 工具及其在 LLM 时代的应用 &#8211; 知乎</a> 这篇文章，貌似可以使用MarkItDown来构建我们的知识库工作流。</p>
 
+
+
+<p>尝试使用MarkItDown来解析微信公众号文章里的图片，代码如下：</p>
+
+
+
+<div class="wp-block-kevinbatdorf-code-block-pro cbp-has-line-numbers" data-code-block-pro-font-family="Code-Pro-JetBrains-Mono" style="font-size:clamp(14px, .875rem, 21px);font-family:Code-Pro-JetBrains-Mono,ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;--cbp-line-number-color:#000000;--cbp-line-number-width:calc(2 * 0.6 * .875rem);line-height:clamp(20px, 1.25rem, 30px);--cbp-tab-width:2;tab-size:var(--cbp-tab-width, 2)"><span style="display:flex;align-items:center;padding:10px 0px 0 16px;font-size:0.8em;width:100%;text-align:left;background-color:#FFFFFF;font-style:italic;color:#000000"><span style="border-bottom:1px solid rgba(0, 0, 0, 0.2)">Python</span></span><span role="button" tabindex="0" style="color:#000000;display:none" aria-label="复制" class="code-block-pro-copy-button"><pre class="code-block-pro-copy-button-pre" aria-hidden="true"><textarea class="code-block-pro-copy-button-textarea" tabindex="-1" aria-hidden="true" readonly>import requests
+from markitdown import MarkItDown
+from bs4 import BeautifulSoup
+import os
+from typing import List, Tuple
+import urllib.parse
+# from openai import OpenAI 
+
+def wechat_article_to_markdown_with_ocr(article_url: str, image_dir: str = "./wechat_images", use_llm: bool = False) -> str:
+    headers = {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
+    }
+    if use_llm:
+        # client = OpenAI(api_key="YOUR_API_KEY")
+        # md = MarkItDown(llm_client=client, llm_model="gpt-4o")
+        md = MarkItDown()
+    else:
+        md = MarkItDown(enable_plugins=True)
+    try:
+        response = requests.get(article_url, headers=headers, timeout=10)
+        response.raise_for_status()
+        response.encoding = 'utf-8'
+        soup = BeautifulSoup(response.text, 'html.parser')
+    except Exception as e:
+        return f"Error fetching article: {e}"
+    content_div = soup.find(id='js_content')
+    img_tags = content_div.find_all('img') if content_div else soup.find_all('img')
+    os.makedirs(image_dir, exist_ok=True)
+    final_markdown_parts = []
+    for idx, img in enumerate(img_tags):
+        img_url = img.get('data-src') or img.get('src')
+        if not img_url or 'data:image' in img_url:
+            continue
+        img_url = urllib.parse.urljoin(article_url, img_url).strip()
+        try:
+            img_res = requests.get(img_url, headers=headers, timeout=15)
+            img_res.raise_for_status()
+            ext = ".jpg"
+            ctype = img_res.headers.get('content-type', '')
+            if 'png' in ctype: ext = ".png"
+            elif 'webp' in ctype: ext = ".webp"
+            
+            file_name = f"image_{idx+1}{ext}"
+            local_path = os.path.join(image_dir, file_name)
+            
+            with open(local_path, 'wb') as f:
+                f.write(img_res.content)
+            abs_local_path = os.path.abspath(local_path)
+            result = md.convert(abs_local_path)
+            ocr_text = result.markdown.strip()
+            image_md_block = f"### 图片 {idx+1} 内容解析\n\n"
+            if ocr_text:
+                image_md_block += ocr_text
+            else:
+                image_md_block += f"!&#91;图片_{idx+1}&#93;({local_path})"
+            
+            final_markdown_parts.append(image_md_block)
+            print(f"已处理图片 {idx+1}: {file_name}")
+
+        except Exception as e:
+            print(f"处理图片 {idx+1} 失败: {e}")
+
+    return "\n\n---\n\n".join(final_markdown_parts)
+
+if __name__ == "__main__":
+    url = "https://mp.weixin.qq.com/s/xxx"
+    md_output = wechat_article_to_markdown_with_ocr(url, use_llm=False)
+    with open("parsed_article.md", "w", encoding="utf-8") as f:
+        f.write(md_output)
+    print("解析完成！")</textarea></pre><svg xmlns="http://www.w3.org/2000/svg" style="width:24px;height:24px" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path class="with-check" stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"></path><path class="without-check" stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path></svg></span><pre class="shiki light-plus" style="background-color: #FFFFFF" tabindex="0"><code><span class="line"><span style="color: #AF00DB">import</span><span style="color: #000000"> requests</span></span>
+<span class="line"><span style="color: #AF00DB">from</span><span style="color: #000000"> markitdown </span><span style="color: #AF00DB">import</span><span style="color: #000000"> MarkItDown</span></span>
+<span class="line"><span style="color: #AF00DB">from</span><span style="color: #000000"> bs4 </span><span style="color: #AF00DB">import</span><span style="color: #000000"> BeautifulSoup</span></span>
+<span class="line"><span style="color: #AF00DB">import</span><span style="color: #000000"> os</span></span>
+<span class="line"><span style="color: #AF00DB">from</span><span style="color: #000000"> typing </span><span style="color: #AF00DB">import</span><span style="color: #000000"> List, Tuple</span></span>
+<span class="line"><span style="color: #AF00DB">import</span><span style="color: #000000"> urllib.parse</span></span>
+<span class="line"><span style="color: #008000"># from openai import OpenAI </span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #0000FF">def</span><span style="color: #000000"> </span><span style="color: #795E26">wechat_article_to_markdown_with_ocr</span><span style="color: #000000">(</span><span style="color: #001080">article_url</span><span style="color: #000000">: </span><span style="color: #267F99">str</span><span style="color: #000000">, </span><span style="color: #001080">image_dir</span><span style="color: #000000">: </span><span style="color: #267F99">str</span><span style="color: #000000"> = </span><span style="color: #A31515">&quot;./wechat_images&quot;</span><span style="color: #000000">, </span><span style="color: #001080">use_llm</span><span style="color: #000000">: </span><span style="color: #267F99">bool</span><span style="color: #000000"> = </span><span style="color: #0000FF">False</span><span style="color: #000000">) -&gt; </span><span style="color: #267F99">str</span><span style="color: #000000">:</span></span>
+<span class="line"><span style="color: #000000">    headers = {</span></span>
+<span class="line"><span style="color: #000000">        </span><span style="color: #A31515">&#39;User-Agent&#39;</span><span style="color: #000000">: </span><span style="color: #A31515">&#39;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36&#39;</span></span>
+<span class="line"><span style="color: #000000">    }</span></span>
+<span class="line"><span style="color: #000000">    </span><span style="color: #AF00DB">if</span><span style="color: #000000"> use_llm:</span></span>
+<span class="line"><span style="color: #000000">        </span><span style="color: #008000"># client = OpenAI(api_key=&quot;YOUR_API_KEY&quot;)</span></span>
+<span class="line"><span style="color: #000000">        </span><span style="color: #008000"># md = MarkItDown(llm_client=client, llm_model=&quot;gpt-4o&quot;)</span></span>
+<span class="line"><span style="color: #000000">        md = MarkItDown()</span></span>
+<span class="line"><span style="color: #000000">    </span><span style="color: #AF00DB">else</span><span style="color: #000000">:</span></span>
+<span class="line"><span style="color: #000000">        md = MarkItDown(</span><span style="color: #001080">enable_plugins</span><span style="color: #000000">=</span><span style="color: #0000FF">True</span><span style="color: #000000">)</span></span>
+<span class="line"><span style="color: #000000">    </span><span style="color: #AF00DB">try</span><span style="color: #000000">:</span></span>
+<span class="line"><span style="color: #000000">        response = requests.get(article_url, </span><span style="color: #001080">headers</span><span style="color: #000000">=headers, </span><span style="color: #001080">timeout</span><span style="color: #000000">=</span><span style="color: #098658">10</span><span style="color: #000000">)</span></span>
+<span class="line"><span style="color: #000000">        response.raise_for_status()</span></span>
+<span class="line"><span style="color: #000000">        response.encoding = </span><span style="color: #A31515">&#39;utf-8&#39;</span></span>
+<span class="line"><span style="color: #000000">        soup = BeautifulSoup(response.text, </span><span style="color: #A31515">&#39;html.parser&#39;</span><span style="color: #000000">)</span></span>
+<span class="line"><span style="color: #000000">    </span><span style="color: #AF00DB">except</span><span style="color: #000000"> </span><span style="color: #267F99">Exception</span><span style="color: #000000"> </span><span style="color: #AF00DB">as</span><span style="color: #000000"> e:</span></span>
+<span class="line"><span style="color: #000000">        </span><span style="color: #AF00DB">return</span><span style="color: #000000"> </span><span style="color: #0000FF">f</span><span style="color: #A31515">&quot;Error fetching article: </span><span style="color: #0000FF">{</span><span style="color: #000000">e</span><span style="color: #0000FF">}</span><span style="color: #A31515">&quot;</span></span>
+<span class="line"><span style="color: #000000">    content_div = soup.find(</span><span style="color: #001080">id</span><span style="color: #000000">=</span><span style="color: #A31515">&#39;js_content&#39;</span><span style="color: #000000">)</span></span>
+<span class="line"><span style="color: #000000">    img_tags = content_div.find_all(</span><span style="color: #A31515">&#39;img&#39;</span><span style="color: #000000">) </span><span style="color: #AF00DB">if</span><span style="color: #000000"> content_div </span><span style="color: #AF00DB">else</span><span style="color: #000000"> soup.find_all(</span><span style="color: #A31515">&#39;img&#39;</span><span style="color: #000000">)</span></span>
+<span class="line"><span style="color: #000000">    os.makedirs(image_dir, </span><span style="color: #001080">exist_ok</span><span style="color: #000000">=</span><span style="color: #0000FF">True</span><span style="color: #000000">)</span></span>
+<span class="line"><span style="color: #000000">    final_markdown_parts = []</span></span>
+<span class="line"><span style="color: #000000">    </span><span style="color: #AF00DB">for</span><span style="color: #000000"> idx, img </span><span style="color: #AF00DB">in</span><span style="color: #000000"> </span><span style="color: #795E26">enumerate</span><span style="color: #000000">(img_tags):</span></span>
+<span class="line"><span style="color: #000000">        img_url = img.get(</span><span style="color: #A31515">&#39;data-src&#39;</span><span style="color: #000000">) </span><span style="color: #0000FF">or</span><span style="color: #000000"> img.get(</span><span style="color: #A31515">&#39;src&#39;</span><span style="color: #000000">)</span></span>
+<span class="line"><span style="color: #000000">        </span><span style="color: #AF00DB">if</span><span style="color: #000000"> </span><span style="color: #0000FF">not</span><span style="color: #000000"> img_url </span><span style="color: #0000FF">or</span><span style="color: #000000"> </span><span style="color: #A31515">&#39;data:image&#39;</span><span style="color: #000000"> </span><span style="color: #0000FF">in</span><span style="color: #000000"> img_url:</span></span>
+<span class="line"><span style="color: #000000">            </span><span style="color: #AF00DB">continue</span></span>
+<span class="line"><span style="color: #000000">        img_url = urllib.parse.urljoin(article_url, img_url).strip()</span></span>
+<span class="line"><span style="color: #000000">        </span><span style="color: #AF00DB">try</span><span style="color: #000000">:</span></span>
+<span class="line"><span style="color: #000000">            img_res = requests.get(img_url, </span><span style="color: #001080">headers</span><span style="color: #000000">=headers, </span><span style="color: #001080">timeout</span><span style="color: #000000">=</span><span style="color: #098658">15</span><span style="color: #000000">)</span></span>
+<span class="line"><span style="color: #000000">            img_res.raise_for_status()</span></span>
+<span class="line"><span style="color: #000000">            ext = </span><span style="color: #A31515">&quot;.jpg&quot;</span></span>
+<span class="line"><span style="color: #000000">            ctype = img_res.headers.get(</span><span style="color: #A31515">&#39;content-type&#39;</span><span style="color: #000000">, </span><span style="color: #A31515">&#39;&#39;</span><span style="color: #000000">)</span></span>
+<span class="line"><span style="color: #000000">            </span><span style="color: #AF00DB">if</span><span style="color: #000000"> </span><span style="color: #A31515">&#39;png&#39;</span><span style="color: #000000"> </span><span style="color: #0000FF">in</span><span style="color: #000000"> ctype: ext = </span><span style="color: #A31515">&quot;.png&quot;</span></span>
+<span class="line"><span style="color: #000000">            </span><span style="color: #AF00DB">elif</span><span style="color: #000000"> </span><span style="color: #A31515">&#39;webp&#39;</span><span style="color: #000000"> </span><span style="color: #0000FF">in</span><span style="color: #000000"> ctype: ext = </span><span style="color: #A31515">&quot;.webp&quot;</span></span>
+<span class="line"><span style="color: #000000">            </span></span>
+<span class="line"><span style="color: #000000">            file_name = </span><span style="color: #0000FF">f</span><span style="color: #A31515">&quot;image_</span><span style="color: #0000FF">{</span><span style="color: #000000">idx+</span><span style="color: #098658">1</span><span style="color: #0000FF">}{</span><span style="color: #000000">ext</span><span style="color: #0000FF">}</span><span style="color: #A31515">&quot;</span></span>
+<span class="line"><span style="color: #000000">            local_path = os.path.join(image_dir, file_name)</span></span>
+<span class="line"><span style="color: #000000">            </span></span>
+<span class="line"><span style="color: #000000">            </span><span style="color: #AF00DB">with</span><span style="color: #000000"> </span><span style="color: #795E26">open</span><span style="color: #000000">(local_path, </span><span style="color: #A31515">&#39;wb&#39;</span><span style="color: #000000">) </span><span style="color: #AF00DB">as</span><span style="color: #000000"> f:</span></span>
+<span class="line"><span style="color: #000000">                f.write(img_res.content)</span></span>
+<span class="line"><span style="color: #000000">            abs_local_path = os.path.abspath(local_path)</span></span>
+<span class="line"><span style="color: #000000">            result = md.convert(abs_local_path)</span></span>
+<span class="line"><span style="color: #000000">            ocr_text = result.markdown.strip()</span></span>
+<span class="line"><span style="color: #000000">            image_md_block = </span><span style="color: #0000FF">f</span><span style="color: #A31515">&quot;### 图片 </span><span style="color: #0000FF">{</span><span style="color: #000000">idx+</span><span style="color: #098658">1</span><span style="color: #0000FF">}</span><span style="color: #A31515"> 内容解析</span><span style="color: #EE0000">\n\n</span><span style="color: #A31515">&quot;</span></span>
+<span class="line"><span style="color: #000000">            </span><span style="color: #AF00DB">if</span><span style="color: #000000"> ocr_text:</span></span>
+<span class="line"><span style="color: #000000">                image_md_block += ocr_text</span></span>
+<span class="line"><span style="color: #000000">            </span><span style="color: #AF00DB">else</span><span style="color: #000000">:</span></span>
+<span class="line"><span style="color: #000000">                image_md_block += </span><span style="color: #0000FF">f</span><span style="color: #A31515">&quot;!&#91;图片_</span><span style="color: #0000FF">{</span><span style="color: #000000">idx+</span><span style="color: #098658">1</span><span style="color: #0000FF">}</span><span style="color: #A31515">&#93;(</span><span style="color: #0000FF">{</span><span style="color: #000000">local_path</span><span style="color: #0000FF">}</span><span style="color: #A31515">)&quot;</span></span>
+<span class="line"><span style="color: #000000">            </span></span>
+<span class="line"><span style="color: #000000">            final_markdown_parts.append(image_md_block)</span></span>
+<span class="line"><span style="color: #000000">            </span><span style="color: #795E26">print</span><span style="color: #000000">(</span><span style="color: #0000FF">f</span><span style="color: #A31515">&quot;已处理图片 </span><span style="color: #0000FF">{</span><span style="color: #000000">idx+</span><span style="color: #098658">1</span><span style="color: #0000FF">}</span><span style="color: #A31515">: </span><span style="color: #0000FF">{</span><span style="color: #000000">file_name</span><span style="color: #0000FF">}</span><span style="color: #A31515">&quot;</span><span style="color: #000000">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #000000">        </span><span style="color: #AF00DB">except</span><span style="color: #000000"> </span><span style="color: #267F99">Exception</span><span style="color: #000000"> </span><span style="color: #AF00DB">as</span><span style="color: #000000"> e:</span></span>
+<span class="line"><span style="color: #000000">            </span><span style="color: #795E26">print</span><span style="color: #000000">(</span><span style="color: #0000FF">f</span><span style="color: #A31515">&quot;处理图片 </span><span style="color: #0000FF">{</span><span style="color: #000000">idx+</span><span style="color: #098658">1</span><span style="color: #0000FF">}</span><span style="color: #A31515"> 失败: </span><span style="color: #0000FF">{</span><span style="color: #000000">e</span><span style="color: #0000FF">}</span><span style="color: #A31515">&quot;</span><span style="color: #000000">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #000000">    </span><span style="color: #AF00DB">return</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;</span><span style="color: #EE0000">\n\n</span><span style="color: #A31515">---</span><span style="color: #EE0000">\n\n</span><span style="color: #A31515">&quot;</span><span style="color: #000000">.join(final_markdown_parts)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #AF00DB">if</span><span style="color: #000000"> </span><span style="color: #001080">__name__</span><span style="color: #000000"> == </span><span style="color: #A31515">&quot;__main__&quot;</span><span style="color: #000000">:</span></span>
+<span class="line"><span style="color: #000000">    url = </span><span style="color: #A31515">&quot;https://mp.weixin.qq.com/s/xxx&quot;</span></span>
+<span class="line"><span style="color: #000000">    md_output = wechat_article_to_markdown_with_ocr(url, </span><span style="color: #001080">use_llm</span><span style="color: #000000">=</span><span style="color: #0000FF">False</span><span style="color: #000000">)</span></span>
+<span class="line"><span style="color: #000000">    </span><span style="color: #AF00DB">with</span><span style="color: #000000"> </span><span style="color: #795E26">open</span><span style="color: #000000">(</span><span style="color: #A31515">&quot;parsed_article.md&quot;</span><span style="color: #000000">, </span><span style="color: #A31515">&quot;w&quot;</span><span style="color: #000000">, </span><span style="color: #001080">encoding</span><span style="color: #000000">=</span><span style="color: #A31515">&quot;utf-8&quot;</span><span style="color: #000000">) </span><span style="color: #AF00DB">as</span><span style="color: #000000"> f:</span></span>
+<span class="line"><span style="color: #000000">        f.write(md_output)</span></span>
+<span class="line"><span style="color: #000000">    </span><span style="color: #795E26">print</span><span style="color: #000000">(</span><span style="color: #A31515">&quot;解析完成！&quot;</span><span style="color: #000000">)</span></span></code></pre></div>
+
+
+
+<p>在没有使用llm的情况下都回退成了<code>![1](./wechat_images\1.jpg)</code>这样的形式，但我又不太像再折腾llm的代码，于是尝试安装一个MinerU引擎看看。感觉效果也不太好。</p>
+
+
+<div class="wp-block-image">
+<figure class="aligncenter size-large"><img loading="lazy" decoding="async" width="1024" height="588" src="https://www.xiaozonglin.cn/wp-content/uploads/2026/03/image-17-1024x588.png" alt="" class="wp-image-1346" srcset="https://www.xiaozonglin.cn/wp-content/uploads/2026/03/image-17-1024x588.png 1024w, https://www.xiaozonglin.cn/wp-content/uploads/2026/03/image-17-300x172.png 300w, https://www.xiaozonglin.cn/wp-content/uploads/2026/03/image-17-768x441.png 768w, https://www.xiaozonglin.cn/wp-content/uploads/2026/03/image-17-1536x883.png 1536w, https://www.xiaozonglin.cn/wp-content/uploads/2026/03/image-17-2048x1177.png 2048w, https://www.xiaozonglin.cn/wp-content/uploads/2026/03/image-17-1200x690.png 1200w, https://www.xiaozonglin.cn/wp-content/uploads/2026/03/image-17-1980x1138.png 1980w" sizes="auto, (max-width: 1024px) 100vw, 1024px" /><figcaption class="wp-element-caption">使用MinerU解析公众号文章的图片</figcaption></figure>
+</div>
 
 
 <p>项目的代码随着一版一版的迭代，已经变成一座屎山了，现在直接往上面做优化有种屎上雕花的感觉。自己也有种感觉，代码写得厉害还不如在 PPT 中美言几句。哎，后面抽时间再系统看看 Deeptoai RAG 的教程。前几天试着用了一下 Claude Code + Deepseek v4 flash，费用感觉还可以，AI 还会主动问我问题明确细节，接下来可以让 AI 完善一下。然后可以使用 <a href="https://github.com/forrestchang/andrej-karpathy-skills">forrestchang/andrej-karpathy-skills</a> 让 AI 贡献代码规范一点。</p>
